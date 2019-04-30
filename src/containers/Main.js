@@ -1,0 +1,35 @@
+import React from 'react'
+import { Switch, Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import AuthForm from '../components/Sigin/AuthForm'
+import { authUser } from '../store/actions/auth'
+import Trips from './Trips';
+import withAuth from '../hocs/withAuth';
+import ErrorPage from '../components/Other/ErrorPage'
+import AdminHome from './AdminHome'
+import Itinerary from './Itinerary';
+
+const Main = props => {
+    const { authUser} = props
+    return (
+        <div className="container-fluid hero">
+            <Switch>
+                {/* <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props}/>}></Route> */}
+                <Route exact path="/signin" render={props => <AuthForm onAuth={authUser} buttonText="Sign in" heading="Welcome Back." {...props}/>}></Route>
+                {/*<Route exact path="/signup" render={props => <AuthForm onAuth={authUser} buttonText="Sign up" heading="Join Today." {...props}/>}></Route> */}
+                <Route exact path="/trips" component={withAuth(Trips)}/>
+                <Route exact path="/trips/:tripId/home" component={withAuth(AdminHome)}/>
+                <Route exact path="/trips/:tripId/create" component={withAuth(Itinerary)}/>
+                <Route component={ErrorPage} />
+            </Switch>
+        </div>
+    )
+} 
+
+const mapStateToProps = state => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+export default withRouter(connect(mapStateToProps, { authUser })(Main))
