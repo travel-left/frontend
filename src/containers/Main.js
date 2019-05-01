@@ -8,6 +8,7 @@ import withAuth from '../hocs/withAuth';
 import ErrorPage from '../components/Other/ErrorPage'
 import AdminHome from './AdminHome'
 import Itinerary from './Itinerary';
+import Manage from './Manage';
 
 const Main = props => {
     const { authUser} = props
@@ -20,6 +21,7 @@ const Main = props => {
                 <Route exact path="/trips" component={withAuth(Trips)}/>
                 <Route exact path="/trips/:tripId/home" component={withAuth(AdminHome)}/>
                 <Route exact path="/trips/:tripId/create" component={withAuth(Itinerary)}/>
+                <Route exact path="/trips/:tripId/manage" component={withAuth(Manage)}/>
                 <Route component={ErrorPage} />
             </Switch>
         </div>
