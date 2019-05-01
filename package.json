@@ -15,7 +15,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
-  "proxy": "http://localhost:2100",
+  "proxy": "https://agile-inlet-97588.herokuapp.com/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
