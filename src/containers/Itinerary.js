@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import EventForm from '../components/Itinerary/Event/EventForm';
-import DayList from '../components/Itinerary/Day/DayList';
-import ItineraryList from "../components/Itinerary/ItineraryList";
-import EventList from '../components/Itinerary/Event/EventList';
-import { apiCall } from "../services/api";
-import DayForm from '../components/Itinerary/Day/DayForm';
+import EventForm from '../components/Itinerary/Event/EventForm'
+import DayList from '../components/Itinerary/Day/DayList'
+import ItineraryList from "../components/Itinerary/ItineraryList"
+import EventList from '../components/Itinerary/Event/EventList'
+import { apiCall } from "../services/api"
+import DayForm from '../components/Itinerary/Day/DayForm'
 
 // An event has a title, a date, a time start, a time end, a summary, a picture, a link, and link text
 // A list has events in it
