@@ -38,8 +38,13 @@ class Itinerary extends Component {
         apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohort/all`)
         .then(data => {
             return this.setState({
-                itineraries: data.cohorts.map(c => c.itinerary),
-                currentItinerary: data.itineraries[0],
+                itineraries: data.cohorts.map(c => {
+                    return {
+                        ...c.itinerary,
+                        title: c.title
+                    }
+                }),
+                currentItinerary: data.cohorts[0].itinerary,
                 showItineraryList: true
             })
         })
