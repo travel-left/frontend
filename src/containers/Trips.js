@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { apiCall } from '../services/api'
 import { connect } from 'react-redux'
-import { setCurrentTrip } from '../store/actions/trip';
+import { setCurrentTrip, addTrip } from '../store/actions/trip';
+import TripForm from '../components/Trips/TripForm';
 
 class Trips extends Component {
     state = {
@@ -41,10 +42,31 @@ class Trips extends Component {
         this.props.history.push(`/trips/${selectedTrip._id}/home`)
     }
 
+    showTripForm = () => {
+        this.setState({
+            showTripForm: true
+        })
+    }
+
+    addTrip = trip => {
+        apiCall('post', `/api/trip/${this.props.user._id}`, trip)
+        .then(data => {
+            this.props.addTrip(data.trip)
+            return this.setState(prevState => {
+                return {
+                    trips: [
+                        ...prevState.trips,
+                        data.trip
+                    ]
+                }
+            })
+        })
+        
+    }
+
     render(){
         const { user } = this.props
-        let tripTiles = null
-        let content = null
+        let tripTiles, content, tripForm = null
 
         if(this.state.showTrips) {
             tripTiles = this.state.trips.map(trip => {
@@ -74,16 +96,22 @@ class Trips extends Component {
                     </div>
                     <div className="row">
                         <div className="welcomeMessage">   
-                            <button>Add a Trip <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                            <button onClick={this.showTripForm}>Add a Trip <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </div>
             )
         }
+        if(this.state.showTripForm)  {
+            tripForm = <TripForm submit={this.addTrip}/>
+        }
 
         return (
             <div className='container'>
                 {content}
+                <div className="row">
+                    {tripForm}  
+                </div>
             </div>
     
         )
@@ -91,4 +119,4 @@ class Trips extends Component {
     
 }
 
-export default connect(null, { setCurrentTrip })(Trips);
+export default connect(null, { setCurrentTrip, addTrip })(Trips);
