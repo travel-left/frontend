@@ -17,19 +17,42 @@ class Manage extends Component {
         })
     }
 
+    addUser = email => {
+
+        let newUser = {
+            email: email,
+            password: 'password',
+            accessType: 'user',
+            currentTrip: this.props.currentTrip.id
+        }
+
+        apiCall('post', '/api/auth/signup', newUser)
+        .then(() => {
+            return this.setState(prevState => {
+                return {
+                    users: [
+                        ...prevState.users,
+                        newUser
+                    ]
+                }
+            })
+        })
+    }
+
     render() {
         return (
             <div className="container manage">
-                <h1>Manage your Trip!</h1>
+                <h1>Manage your {this.props.currentTrip.name} Trip!</h1>
                 <div className="row">   
                     <div className="col-1"></div>
-                    <div className="col-7">
+                    <div className="col-6">
                         <UserList users={this.state.users}/>
                     </div>
-                    <div className="col-3">
-                        <UserForm/>
-                    </div>
                     <div className="col-1"></div>
+                    <div className="col-4">
+                        <UserForm submit={this.addUser} />
+                    </div>
+                    
                 </div>
             </div>
         )
