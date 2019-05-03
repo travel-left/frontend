@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import UserList from '../components/Manage/UserList';
 import UserForm from '../components/Manage/UserForm';
 import { apiCall } from '../services/api';
+import CohortForm from '../components/Manage/CohortForm';
 
 class Manage extends Component {
     state = {
@@ -39,6 +40,24 @@ class Manage extends Component {
         })
     }
 
+    addCohort = title => {
+        const newCohort = {
+            title: title
+        }
+        apiCall('post', `/api/trip/${this.props.currentTrip.id}/cohort`, newCohort)
+        .then(data => {
+            // return this.setState(prevState => {
+            //     return {
+            //         users: [
+            //             ...prevState.users,
+            //             newUser
+            //         ]
+            //     }
+            // })
+            return console.log(data)
+        })
+    }
+
     render() {
         return (
             <div className="container manage">
@@ -51,6 +70,7 @@ class Manage extends Component {
                     <div className="col-1"></div>
                     <div className="col-4">
                         <UserForm submit={this.addUser} />
+                        <CohortForm submit={this.addCohort} />
                     </div>
                     
                 </div>
