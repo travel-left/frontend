@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import NotificationForm from '../components/Communicate/NotificationForm';
+import NotificationList from '../components/Communicate/NotificationList';
 
 class Communicate extends Component {
 
@@ -12,9 +15,25 @@ class Communicate extends Component {
 
     render() {
         return (
-            <h1>I am the Communicate container</h1>
+            <div className="container">
+                <h1>Communicate with your {this.props.currentTrip.name} travelers! </h1>
+                <div className="row">
+                    <div className="col">
+                        <NotificationList />
+                    </div>
+                    <div className="col">
+                        <NotificationForm />
+                    </div>
+                </div>
+            </div>
         )
     }
 }
 
-export default Communicate
+const mapStateToProps = state => {
+    return {
+        currentTrip: state.currentTrip
+    }
+}
+
+export default connect(mapStateToProps, null)(Communicate)
