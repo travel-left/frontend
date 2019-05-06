@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../services/api'
 import { connect } from 'react-redux'
-import { setCurrentTrip, addTrip } from '../store/actions/trip';
+import { setCurrentTrip } from '../store/actions/trip';
 import TripForm from '../components/Trips/TripForm';
 
 class Trips extends Component {
@@ -13,19 +13,14 @@ class Trips extends Component {
     
     constructor(props){
         super(props)
-        if(this.props.user.trips){
-            this.props.user.trips.forEach(trip => {
-                apiCall('get', `/api/trip/${trip._id}`)
-                .then(response => {
-                    this.setState(prevState => {
-                        return prevState.trips.push(response.trip)
-                    })
-                })
-                .then(() => {
-                    this.setState({showTrips: true})
-                })
+        apiCall('get', `/api/users/${this.props.user._id}/trips`)
+        .then(data => {
+            console.log(data)
+            this.setState({
+                trips: data.trips,
+                showTrips: true
             })
-        }
+        })
     }
 
     selectTrip = e => {
@@ -51,7 +46,6 @@ class Trips extends Component {
     addTrip = trip => {
         apiCall('post', `/api/trip/${this.props.user._id}`, trip)
         .then(data => {
-            this.props.addTrip(data.trip)
             return this.setState(prevState => {
                 return {
                     trips: [
@@ -119,4 +113,4 @@ class Trips extends Component {
     
 }
 
-export default connect(null, { setCurrentTrip, addTrip })(Trips);
+export default connect(null, { setCurrentTrip })(Trips);
