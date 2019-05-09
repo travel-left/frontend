@@ -9,7 +9,11 @@ class Notification extends Component {
 
     render() {
         return (
-            <h2>Notification </h2>
+            <div className="container">
+                <div className="row">
+                    <h4>{this.props.text}</h4>
+                </div>
+            </div>
         )
     }
 }
