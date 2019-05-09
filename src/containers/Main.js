@@ -3,12 +3,13 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import AuthForm from '../components/Sigin/AuthForm'
 import { authUser } from '../store/actions/auth'
-import Trips from './Trips';
-import withAuth from '../hocs/withAuth';
+import Trips from './Trips'
+import withAuth from '../hocs/withAuth'
 import ErrorPage from '../components/Other/ErrorPage'
 import AdminHome from './AdminHome'
-import Itinerary from './Itinerary';
-import Manage from './Manage';
+import Itinerary from './Itinerary'
+import Manage from './Manage'
+import Communicate from './Communicate'
 
 const Main = props => {
     const { authUser} = props
@@ -22,6 +23,7 @@ const Main = props => {
                 <Route exact path="/trips/:tripId/home" component={withAuth(AdminHome)}/>
                 <Route exact path="/trips/:tripId/create" component={withAuth(Itinerary)}/>
                 <Route exact path="/trips/:tripId/manage" component={withAuth(Manage)}/>
+                <Route exact path="/trips/:tripId/communicate" component={withAuth(Communicate)}/>
                 <Route component={ErrorPage} />
             </Switch>
         </div>

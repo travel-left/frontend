@@ -15,8 +15,8 @@ class AdminHome extends Component {
                 return this.props.history.push(`/trips/${this.props.currentTrip.id}/create`)
             case 'manage':
                 return this.props.history.push(`/trips/${this.props.currentTrip.id}/manage`)
-            case 'connect':
-                this.props.history.push(`/trips/${this.props.currentTrip.id}/connect`)
+            case 'communicate':
+                return this.props.history.push(`/trips/${this.props.currentTrip.id}/communicate`)
             default:
                 this.props.history.push('/trips')
         }
@@ -36,7 +36,7 @@ class AdminHome extends Component {
                     <div className="welcomeMessage">   
                         <button name='create' onClick={this.onButtonClick}> <i class="fa fa-map-marker" aria-hidden="true"></i> Create</button>
                         <button name='manage' onClick={this.onButtonClick}> <i class="fa fa-users" aria-hidden="true"></i> Manage</button>
-                        <button> <i class="fa fa-comments" aria-hidden="true"></i> Communicate</button>
+                        <button name='communicate' onClick={this.onButtonClick}> <i class="fa fa-comments" aria-hidden="true"></i> Communicate</button>
                     </div>
                 </div>
             </div>

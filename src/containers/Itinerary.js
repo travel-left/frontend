@@ -30,11 +30,7 @@ class Itinerary extends Component {
     constructor(props){
         super(props)
 
-        //set current itinerary
-        //get all days
-        //set current day
-        //get events
-        //set current event
+        //get all the cohorts
         apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohort/all`)
         .then(data => {
             return this.setState({
@@ -54,7 +50,7 @@ class Itinerary extends Component {
         .then(data => {
             return this.setState({
                 days: data.days,
-                currentDayId: data.days[0]._id,
+                currentDayId: data.days.length > 0 ? data.days[0]._id : null,
                 showDayList: true,
                 showNewDayButton: true
             })
