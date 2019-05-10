@@ -1,29 +1,13 @@
 import React, { Component } from "react"
-import { apiCall } from "../../../services/api";
 
 class Event extends Component {
-
-    state = {
-        show: true
-    }
 
     constructor(props) {
         super(props)
     }
 
     deleteEvent = () => {
-        console.log('hello')
-        apiCall('delete', `/api/itinerary/event/${this.props.event._id}`)
-        .then(() => {
-
-        })
-        .catch(err => {
-            console.log(err)
-        })
-        this.setState({
-            show: false
-        })
-
+        this.props.removeEvent(this.props.event._id)
     }
 
     render() {
@@ -47,7 +31,7 @@ class Event extends Component {
                 break;
         }
         return (
-            <div className={"card event-tile " + (this.state.show ? 'show' : 'd-none')} style={{ width: '100%' }} >
+            <div className={"card event-tile"} style={{ width: '100%' }} >
                 <div class="card-body event">
                     <h5 class="card-title"><strong> { event.title }</strong><i class={`fa ${iconString} pull-right`} aria-hidden="true"></i></h5>
                     <h6 class="card-title pull-right"><strong></strong></h6>
