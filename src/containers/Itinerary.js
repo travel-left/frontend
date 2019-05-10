@@ -170,8 +170,20 @@ class Itinerary extends Component {
 
     }
 
-    hideEventList = () => {
-        this.setState({showEventList: false})
+    removeDay = dayId => {
+        apiCall('delete', `/api/itinerary/day/${dayId}`)
+        .then(() => {
+            return this.setState(prevState => {
+                return {
+                    ...prevState,
+                    days: prevState.days.filter(day => dayId !== day._id),
+                    showEventList: false
+                }
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     render() {
@@ -185,7 +197,7 @@ class Itinerary extends Component {
         }
 
         if(this.state.showDayList) {
-            dayList = <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} hideEvents={this.hideEventList}/>
+            dayList = <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay}/>
         }else {
             //TODO: render an empty list
         }
