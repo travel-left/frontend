@@ -186,28 +186,35 @@ class Itinerary extends Component {
         })
     }
 
+    removeEvent = eventId => {
+        apiCall('delete', `/api/itinerary/event/${eventId}`)
+        .then(() => {
+            return this.setState(prevState => {
+                return {
+                    ...prevState,
+                    events: prevState.events.filter(event => eventId !== event._id)
+                }
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     render() {
         let itineraryList, dayList, eventList, eventForm, dayForm, newDayButton = null
         eventList = <h3>Select a day to view and add events!</h3>
 
         if(this.state.showItineraryList) {
             itineraryList = <ItineraryList submit={this.setCurrentItinerary} itineraries={this.state.itineraries} currentItinerary={this.state.currentItinerary}/>
-        }else {
-            //TODO: render an empty list
         }
 
         if(this.state.showDayList) {
             dayList = <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay}/>
-        }else {
-            //TODO: render an empty list
         }
 
         if(this.state.showEventList) {
-            // <EventList dayId={this.state.currentDay} 
-            eventList = this.state.events.length > 0 ? <EventList dayId={this.state.currentDay} events={this.state.events}/> : <h3>Select a day with events or add a new one!</h3>
-        }
-        else{
-
+            eventList = this.state.events.length > 0 ? <EventList events={this.state.events} removeEvent={this.removeEvent}/> : <h3>Select a day with events or add a new one!</h3>
         }
 
         if(this.state.showEventForm && this.state.currentDayId) {
