@@ -14,7 +14,7 @@ class Communicate extends Component {
     constructor(props) {
         super(props)
 
-        apiCall('get', `/api/notification/${this.props.user._id}`)
+        apiCall('get', `/api/notification/${this.props.currentTrip.id}`)
         .then(data => {
             return this.setState({
                 notifications: data.notifications,
@@ -24,14 +24,14 @@ class Communicate extends Component {
     }
 
     createNotification = text => {
-        apiCall('post', `/api/notification/${this.props.user._id}`, {text: text})
+        apiCall('post', `/api/notification/${this.props.currentTrip.id}`, {text: text})
         .then(data => {
             return this.setState(prevState => {
                 return {
                     notifications: [
                         ...prevState.notifications,
                         {
-                            user_id: this.props.user._id,
+                            trip_id: this.props.currentTrip.id,
                             text: text
                         }
                     ]
