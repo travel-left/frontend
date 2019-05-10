@@ -2,14 +2,14 @@ import React, { Component } from "react"
 import Slideshow from '../Other/Slideshow'
 
 class AuthForm extends Component {
-
+    
+    state = {
+        email: '',
+        password: '',
+        error: null
+    }
     constructor(props) {
         super(props)
-        this.state = {
-            email: "",
-            password: "",
-            error: null
-        }
     }
 
     handleChange = e => {
@@ -23,7 +23,7 @@ class AuthForm extends Component {
         const authType = this.props.signUp ? 'signup' : 'signin'
         this.props.onAuth(authType, this.state)
         .then(() => {
-            this.props.history.push('/trips')
+            return this.props.history.push('/trips')
         })
         .catch(err => {
             console.log(err)
