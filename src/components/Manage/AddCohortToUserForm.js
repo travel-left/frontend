@@ -8,7 +8,6 @@ class AddCohortToUserForm extends Component {
 
     constructor(props) {
         super(props)
-
     }
 
     handleChange = e => {
@@ -19,12 +18,12 @@ class AddCohortToUserForm extends Component {
 
     handleSubmitEvent = event => {
         event.preventDefault()
-        console.log(this.state.cohort)
         this.props.submit(this.state.cohort)
     }
 
     render() {
-        let cohortOptions = this.props.cohorts.map(cohort => {
+        let {cohorts} = this.props
+        let cohortOptions = cohorts.map(cohort => {
             return <option value={cohort._id}>{cohort.title}</option>
         })          
 
