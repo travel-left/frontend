@@ -50,24 +50,28 @@ class Manage extends Component {
     }
 
     addCohort = title => {
+        let {currentTrip} = this.props
         const newCohort = {
             title: title
         }
-        apiCall('post', `/api/trip/${this.props.currentTrip.id}/cohort`, newCohort)
-        .then(data => {
-            // return this.setState(prevState => {
-            //     return {
-            //         users: [
-            //             ...prevState.users,
-            //             newUser
-            //         ]
-            //     }
-            // })
-            return console.log(data)
+        apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort)
+        .then(() => {
+            return this.setState(prevState => {
+                return {
+                    ...prevState,
+                    cohorts: [
+                        ...prevState.cohorts,
+                        {
+                            trip_id: currentTrip.id,
+                            title: title
+                        }
+                    ]
+                }
+            })
         })
     }
 
-    addCohortToUser = (cohort) => {
+    addCohortToUser = cohort => {
         let updatedUser = {
             ...this.state.selectedUser,
             currentCohort: cohort
@@ -78,19 +82,18 @@ class Manage extends Component {
             return this.setState(prevState => {
                 return {
                     users: prevState.users.map(user => {
-                        if(user._id == updatedUser._id) {
-                            return {
+                        return user._id == updatedUser._id 
+                        ?
+                            {
                                 ...updatedUser,
                                 currentCohort: this.state.cohorts.filter(c => c._id === updatedUser.currentCohort)[0]
                             }
-                        } else {
-                            return user
-                        }
+                        :
+                            user
                     })
                 }
             })
         })
-        console.log(updatedUser)
     }
 
     toggleAddCohortToUserForm = user => {
@@ -101,19 +104,21 @@ class Manage extends Component {
     }
 
     render() {
+        let {currentTrip} = this.props
+        let {cohorts, users} = this.state
         let addCohortToUserForm = null
 
         if(this.state.showAddCohortToUserForm) {
-            addCohortToUserForm = <AddCohortToUserForm cohorts={this.state.cohorts} submit={this.addCohortToUser} />
+            addCohortToUserForm = <AddCohortToUserForm cohorts={cohorts} submit={this.addCohortToUser} />
         }
 
         return (
             <div className="container manage">
-                <h1>Manage your {this.props.currentTrip.name} Trip!</h1>
+                <h1>Manage your {currentTrip.name} Trip!</h1>
                 <div className="row">   
                     <div className="col-1"></div>
                     <div className="col-6">
-                        <UserList users={this.state.users} toggleAddCohortToUserForm = {this.toggleAddCohortToUserForm}/>
+                        <UserList users={users} toggleAddCohortToUserForm = {this.toggleAddCohortToUserForm}/>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4">
@@ -126,7 +131,6 @@ class Manage extends Component {
             </div>
         )
     }
-
 }
 
 const mapStateToProps = state => {
