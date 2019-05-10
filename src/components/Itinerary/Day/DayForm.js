@@ -8,12 +8,9 @@ class DayForm extends Component {
     
     constructor(props){
         super(props)
-
     }
 
     handleInputChange = e => {
-        console.log(e.target.name)
-        console.log(e.target.value)
         this.setState({
             date: e.target.value
         })
@@ -21,7 +18,6 @@ class DayForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        console.log(this.state.date)
         this.props.submit(this.state.date)
     }
 
