@@ -24,14 +24,15 @@ class Communicate extends Component {
     }
 
     createNotification = text => {
+        let {currentTrip} = this.props
         apiCall('post', `/api/notification/${this.props.currentTrip.id}`, {text: text})
-        .then(data => {
+        .then(() => {
             return this.setState(prevState => {
                 return {
                     notifications: [
                         ...prevState.notifications,
                         {
-                            trip_id: this.props.currentTrip.id,
+                            trip_id: currentTrip.id,
                             text: text
                         }
                     ]
@@ -41,14 +42,17 @@ class Communicate extends Component {
     }
 
     render() {
-        let notificationsList = null
+        let {showNotificationsList, notifications} = this.state
+        let {currentTrip} = this.props
+        let notificationsList = showNotificationsList 
+        ?
+            <NotificationList notifications={notifications} />
+        :   
+            null
 
-        if(this.state.showNotificationsList === true) {
-            notificationsList = <NotificationList notifications={this.state.notifications} />
-        }
         return (
             <div className="container">
-                <h1>Communicate with your {this.props.currentTrip.name} travelers! </h1>
+                <h1>Communicate with your {currentTrip.name} travelers! </h1>
                 <div className="row">
                     <div className="col">
                         {notificationsList}
