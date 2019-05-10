@@ -15,8 +15,7 @@ class Trips extends Component {
         super(props)
         apiCall('get', `/api/users/${this.props.user._id}/trips`)
         .then(data => {
-            console.log(data)
-            this.setState({
+            return this.setState({
                 trips: data.trips,
                 showTrips: true
             })
@@ -24,8 +23,6 @@ class Trips extends Component {
     }
 
     selectTrip = e => {
-        //dispatch select trip
-        //route to that trips home
         let selectedTrip = this.state.trips.filter(trip => trip._id === e.target.name)[0]
 
         this.props.setCurrentTrip({
@@ -55,15 +52,15 @@ class Trips extends Component {
                 }
             })
         })
-        
     }
 
     render(){
-        const { user } = this.props
+        let { user } = this.props
+        let { showTrips, showTripForm, trips } = this.state
         let tripTiles, content, tripForm = null
 
-        if(this.state.showTrips) {
-            tripTiles = this.state.trips.map(trip => {
+        if(showTrips) {
+            tripTiles = trips.map(trip => {
                 return (
                     <div className="container">
                         <div className="item blue">
@@ -96,7 +93,7 @@ class Trips extends Component {
                 </div>
             )
         }
-        if(this.state.showTripForm)  {
+        if(showTripForm)  {
             tripForm = <TripForm submit={this.addTrip}/>
         }
 
@@ -107,10 +104,8 @@ class Trips extends Component {
                     {tripForm}  
                 </div>
             </div>
-    
         )
     }
-    
 }
 
 export default connect(null, { setCurrentTrip })(Trips);
