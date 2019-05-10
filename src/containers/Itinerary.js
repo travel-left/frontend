@@ -73,7 +73,6 @@ class Itinerary extends Component {
     }
 
     setCurrentItinerary = itinerary => {
-        console.log(itinerary)
         apiCall('get', `/api/itinerary/${itinerary}/days`)
         .then(data => {
             return this.setState({
@@ -90,7 +89,8 @@ class Itinerary extends Component {
         .then(data => {
             return this.setState({
                 showEventList: false,
-                events: null
+                events: null,
+                currentItinerary: itinerary
             })
         })
     }
