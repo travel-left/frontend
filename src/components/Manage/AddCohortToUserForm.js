@@ -11,31 +11,25 @@ class AddCohortToUserForm extends Component {
     }
 
     handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
+        e.preventDefault()
+        this.props.submit({
+            cohort_id: e.target.value,
+            id: this.props.userId
         })
     }
 
-    handleSubmitEvent = event => {
-        event.preventDefault()
-        this.props.submit(this.state.cohort)
-    }
-
     render() {
-        let {cohorts} = this.props
-        let cohortOptions = cohorts.map(cohort => {
+        let {currentCohort, cohorts} = this.props
+        let cohortList = cohorts.map(cohort => {
+            console.log('the selected cohort is ' + cohort.title)
             return <option value={cohort._id}>{cohort.title}</option>
-        })          
+        })
 
         return (
             <div>
-                <form onSubmit={this.handleSubmitEvent}>
-                    <select value={this.state.cohort} name='cohort' onChange={this.handleChange}>
-                        <option value="" disabled selected>Select a Cohort</option>
-                        { cohortOptions }
-                    </select>
-                    <button type="submit" className="btn btn-primary float-right" style={{backgroundColor: '#079992'}}>SUBMIT</button>
-                </form>
+                <select value={currentCohort._id} name='cohort' onChange={this.handleChange}>
+                    { cohortList }
+                </select>
             </div>
         )
     }

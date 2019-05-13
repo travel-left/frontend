@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import UserList from '../components/Manage/UserList';
-import UserForm from '../components/Manage/UserForm';
-import { apiCall } from '../services/api';
-import CohortForm from '../components/Manage/CohortForm';
-import AddCohortToUserForm from '../components/Manage/AddCohortToUserForm';
+import UserList from '../components/Manage/UserList'
+import UserForm from '../components/Manage/UserForm'
+import { apiCall } from '../services/api'
+import CohortForm from '../components/Manage/CohortForm'
+import AddCohortToUserForm from '../components/Manage/AddCohortToUserForm'
+import CohortList from "../components/Manage/CohortList"
 
 class Manage extends Component {
     state = {
         users: [],
         showAddCohortToUserForm: false,
         cohorts: [],
+        currentCohort: {},
         selectedUser: {}
     }
 
@@ -56,61 +58,32 @@ class Manage extends Component {
         }
         apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort)
         .then(() => {
-            return this.setState(prevState => {
-                return {
-                    ...prevState,
-                    cohorts: [
-                        ...prevState.cohorts,
-                        {
-                            trip_id: currentTrip.id,
-                            title: title
-                        }
-                    ]
-                }
-            })
+            return apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
+        })
+        .then(data => {
+            return this.setState({cohorts: data.cohorts})
         })
     }
 
-    addCohortToUser = cohort => {
+    addCohortToUser = user => {
+        console.log(user)
         let updatedUser = {
-            ...this.state.selectedUser,
-            currentCohort: cohort
+            currentCohort: user.cohort_id
         }
 
-        apiCall('put', `/api/users/${this.state.selectedUser._id}`, updatedUser)
+        apiCall('put', `/api/users/${user.id}`, updatedUser)
         .then(() => {
-            return this.setState(prevState => {
-                return {
-                    users: prevState.users.map(user => {
-                        return user._id == updatedUser._id 
-                        ?
-                            {
-                                ...updatedUser,
-                                currentCohort: this.state.cohorts.filter(c => c._id === updatedUser.currentCohort)[0]
-                            }
-                        :
-                            user
-                    })
-                }
-            })
+            return apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
         })
-    }
-
-    toggleAddCohortToUserForm = user => {
-        return this.setState({
-            showAddCohortToUserForm: true,
-            selectedUser: user
+        .then(data => {
+            return this.setState({users: data.users})
         })
+        
     }
 
     render() {
         let {currentTrip} = this.props
         let {cohorts, users} = this.state
-        let addCohortToUserForm = null
-
-        if(this.state.showAddCohortToUserForm) {
-            addCohortToUserForm = <AddCohortToUserForm cohorts={cohorts} submit={this.addCohortToUser} />
-        }
 
         return (
             <div className="container manage">
@@ -118,13 +91,13 @@ class Manage extends Component {
                 <div className="row">   
                     <div className="col-1"></div>
                     <div className="col-6">
-                        <UserList users={users} toggleAddCohortToUserForm = {this.toggleAddCohortToUserForm}/>
+                        <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4">
                         <UserForm submit={this.addUser} />
                         <CohortForm submit={this.addCohort} />
-                        {addCohortToUserForm}
+                        <CohortList cohorts={cohorts}/>
                     </div>
                     
                 </div>
