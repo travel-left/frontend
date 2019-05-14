@@ -9,25 +9,26 @@ import CohortList from "../components/Manage/CohortList"
 class Manage extends Component {
     state = {
         users: [],
-        showAddCohortToUserForm: false,
-        cohorts: [],
-        selectedUser: {}
+        cohorts: []
     }
 
     constructor(props){
         super(props)
+        this.getAndSetUsers()
+        this.getAndSetCohorts()
+    }
 
-        this.getAndSetUsers(this.props.currentTrip.id)
-        apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
+    getAndSetUsers = () => {
+        apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
         .then(data => {
-            return this.setState({cohorts: data.cohorts})
+            return this.setState({users: data.users})
         })
     }
 
-    getAndSetUsers = currentTripId => {
-        apiCall('get', `/api/users/trip/${currentTripId}`)
+    getAndSetCohorts = () => {
+        apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
         .then(data => {
-            return this.setState({users: data.users})
+            return this.setState({cohorts: data.cohorts})
         })
     }
 
@@ -41,7 +42,7 @@ class Manage extends Component {
 
         apiCall('post', '/api/auth/signup', newUser)
         .then(() => {
-            return this.getAndSetUsers(this.props.currentTrip.id)
+            return this.getAndSetUsers()
         })
     }
 
@@ -52,10 +53,7 @@ class Manage extends Component {
         }
         apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort)
         .then(() => {
-            return apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
-        })
-        .then(data => {
-            return this.setState({cohorts: data.cohorts})
+            return this.getAndSetCohorts()
         })
     }
 
@@ -65,11 +63,8 @@ class Manage extends Component {
         }
         apiCall('put', `/api/users/${user.id}`, updatedUser)
         .then(() => {
-            return apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
+            return this.getAndSetUsers()
         })
-        .then(data => {
-            return this.setState({users: data.users})
-        })   
     }
 
     render() {

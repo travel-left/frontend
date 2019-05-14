@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 
 class AddCohortToUserForm extends Component {
 
-    state = {
-        cohort: ''
-    }
-
     constructor(props) {
         super(props)
     }
