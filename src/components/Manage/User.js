@@ -14,11 +14,18 @@ class User extends Component {
 
     render() {
         let {user, cohorts, addCohortToUser} = this.props
+        let cohortList = null
+
+        if(cohorts.length > 0) {
+            cohortList = <AddCohortToUserForm userId={user._id} currentCohort={user.currentCohort} cohorts={cohorts} submit={addCohortToUser}/> 
+        } else {
+            cohortList = <span>Add a cohort</span>
+        }
         return (
             <li className="list-group-item" style={{minHeight: '', display: '', flexDirection: '', alignItems: ''}}>
                 <div className="row">
                     <div className="col">{user.email}</div>
-                    <AddCohortToUserForm userId={user._id} currentCohort={user.currentCohort} cohorts={cohorts} submit={addCohortToUser}/>
+                    {cohortList}
                 </div>
             </li>
         )

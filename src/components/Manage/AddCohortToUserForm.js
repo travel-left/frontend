@@ -20,16 +20,21 @@ class AddCohortToUserForm extends Component {
 
     render() {
         let {currentCohort, cohorts} = this.props
-        let cohortList = cohorts.map(cohort => {
-            console.log('the selected cohort is ' + cohort.title)
-            return <option value={cohort._id}>{cohort.title}</option>
-        })
+        let options = cohorts.map(cohort => (<option value={cohort._id}>{cohort.title}</option>))
+        let cohortList = currentCohort
+            ? 
+                <select value={currentCohort._id} name='cohort' onChange={this.handleChange}>
+                    {options}
+                </select>
+            : 
+               <select name='cohort' onChange={this.handleChange}>
+                    <option disabled selected >Select a cohort</option>
+                    {options}
+                </select>
 
         return (
             <div>
-                <select value={currentCohort._id} name='cohort' onChange={this.handleChange}>
-                    { cohortList }
-                </select>
+                {cohortList}
             </div>
         )
     }

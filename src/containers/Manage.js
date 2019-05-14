@@ -4,7 +4,6 @@ import UserList from '../components/Manage/UserList'
 import UserForm from '../components/Manage/UserForm'
 import { apiCall } from '../services/api'
 import CohortForm from '../components/Manage/CohortForm'
-import AddCohortToUserForm from '../components/Manage/AddCohortToUserForm'
 import CohortList from "../components/Manage/CohortList"
 
 class Manage extends Component {
@@ -12,25 +11,27 @@ class Manage extends Component {
         users: [],
         showAddCohortToUserForm: false,
         cohorts: [],
-        currentCohort: {},
         selectedUser: {}
     }
 
     constructor(props){
         super(props)
-        apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
-        .then(data => {
-            return this.setState({users: data.users})
-        })
 
+        this.getAndSetUsers(this.props.currentTrip.id)
         apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
         .then(data => {
             return this.setState({cohorts: data.cohorts})
         })
     }
 
-    addUser = email => {
+    getAndSetUsers = currentTripId => {
+        apiCall('get', `/api/users/trip/${currentTripId}`)
+        .then(data => {
+            return this.setState({users: data.users})
+        })
+    }
 
+    addUser = email => {
         let newUser = {
             email: email,
             password: 'password',
@@ -40,14 +41,7 @@ class Manage extends Component {
 
         apiCall('post', '/api/auth/signup', newUser)
         .then(() => {
-            return this.setState(prevState => {
-                return {
-                    users: [
-                        ...prevState.users,
-                        newUser
-                    ]
-                }
-            })
+            return this.getAndSetUsers(this.props.currentTrip.id)
         })
     }
 
@@ -66,19 +60,16 @@ class Manage extends Component {
     }
 
     addCohortToUser = user => {
-        console.log(user)
         let updatedUser = {
             currentCohort: user.cohort_id
         }
-
         apiCall('put', `/api/users/${user.id}`, updatedUser)
         .then(() => {
             return apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
         })
         .then(data => {
             return this.setState({users: data.users})
-        })
-        
+        })   
     }
 
     render() {
@@ -99,7 +90,6 @@ class Manage extends Component {
                         <CohortForm submit={this.addCohort} />
                         <CohortList cohorts={cohorts}/>
                     </div>
-                    
                 </div>
             </div>
         )
