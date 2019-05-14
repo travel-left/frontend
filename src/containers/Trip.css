@@ -1,0 +1,117 @@
+/* TRIP TILES */
+div.item {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    margin: 10px 1%;
+    max-width: 310px;
+    max-height: 205px;
+    width: 100%;
+    background: #000000;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+  }
+  
+  div.item * {
+    box-sizing: border-box;
+  }
+  
+  div.item img {
+    max-width: 100%;
+    vertical-align: top;
+    height: auto;
+    opacity: 1;
+  }
+  
+  div.item:hover img{
+      filter: grayscale(100%);
+      opacity: .3;
+  }
+  
+  div.item:hover button{
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      transition: .9s;
+  }
+  
+  div.item button:hover {
+    background: #82ccdd;
+    cursor: pointer;
+  }
+  
+  button:focus {outline:0;}
+  
+  div.item button:active {
+    background: #3c6382;
+    transition: .2s;
+  }
+  
+  
+  div.item * {
+      transition:all .3s ease-in-out;
+  }
+  
+  div.item button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: none;
+    color: #ffffff;
+    border-radius: 13px;
+    font-size: 1.4em;
+    border: 3px solid rgba(130,204,208, .2);
+    width: 65%;
+    height: 60px;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: .3s;
+  }
+  
+  div.item a {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+  }
+  
+  div.item.blue {
+    background-color: #34495e;
+  }
+
+  /* COHORT HOME */
+
+.welcomeMessage {
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 10vh auto 4vh auto;
+}
+
+.welcomeMessage button {
+    min-height: 45px;
+    min-width: 175px;
+    color: white;
+    background: #82ccdd;
+    cursor: pointer;
+    border-radius: 13px;
+    font-size: 1.3em;
+    padding: 15px 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .welcomeMessage button:hover i{
+    color: #34495e;
+    transition: .2s;
+  }
+  
+  .welcomeMessage button:active {
+    background-color: #34495e;
+    transition: .4s;
+  }
+  
+  .welcomeMessage button:active i{
+    color: #ffffff;
+    transition: .2s;
+  }

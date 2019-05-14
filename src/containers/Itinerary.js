@@ -6,6 +6,7 @@ import ItineraryList from "../components/Itinerary/ItineraryList"
 import EventList from '../components/Itinerary/Event/EventList'
 import { apiCall } from "../services/api"
 import DayForm from '../components/Itinerary/Day/DayForm'
+import './Itinerary.css'
 
 class Itinerary extends Component {
     state = {

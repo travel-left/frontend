@@ -1,0 +1,32 @@
+/* AUTHFORM */
+.authform {
+    margin-top: 15vh;
+    padding-bottom: 3vh;
+    background: rgba(248, 248, 248, 0.9);
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.2), 0px 18px 23px rgba(0, 0, 0, 0.1);
+  }
+  
+  .authform img {
+    padding: 20px 0px;
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+  .authform h1 {
+    font-size: 1.3em;
+    text-align: center;
+  }
+  form.signin {
+    margin: auto auto;
+  }
+  
+  .signin input {
+    margin: 10px 10px 10px 10px;
+  }
+  
+  form.signin a {
+    margin-top: 10px;
+    float: left;
+    font-size: .5em;
+    font-weight: lighter;
+  }

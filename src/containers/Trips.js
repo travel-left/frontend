@@ -3,6 +3,7 @@ import { apiCall } from '../services/api'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../store/actions/trip';
 import TripForm from '../components/Trips/TripForm';
+import './Trip.css'
 
 class Trips extends Component {
     state = {

@@ -1,0 +1,35 @@
+/* COHORT HOME */
+
+.welcomeMessage {
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 10vh auto 4vh auto;
+}
+
+.welcomeMessage button {
+    min-height: 45px;
+    min-width: 175px;
+    color: white;
+    background: #82ccdd;
+    cursor: pointer;
+    border-radius: 13px;
+    font-size: 1.3em;
+    padding: 15px 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .welcomeMessage button:hover i{
+    color: #34495e;
+    transition: .2s;
+  }
+  
+  .welcomeMessage button:active {
+    background-color: #34495e;
+    transition: .4s;
+  }
+  
+  .welcomeMessage button:active i{
+    color: #ffffff;
+    transition: .2s;
+  }

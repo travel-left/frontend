@@ -1,0 +1,40 @@
+/* NAVBAR */
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+nav {
+  min-height: 84px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.hero {
+    background-color: #f8f9f9;
+    height: 100vh;
+}
+  
+.user-email {
+  color: #82ccdd;
+}
+.user-email:hover {
+  color: #0a3d62;
+  cursor: pointer;
+}
+
+.greeting {
+  letter-spacing: 1px;
+  margin: auto 30px auto 30px;
+}
+
+.nav-app-link {
+  color: #0a3d62;
+}
+
+.nav-app-link:hover {
+  cursor: pointer;
+  color: #82ccdd;
+  transition: .2s;
+}
+
+.navbar-brand-left {
+  color: #0a3d62;;
+}

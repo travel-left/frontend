@@ -1,0 +1,135 @@
+/* ITINERARY */
+.itinerary-header-image {
+    /* min-height: 15vh; */
+    width: auto;
+    height: 15vw;
+    padding-left: 0px;
+    margin-left: -17px;
+    margin-right: -17px;
+    margin-bottom: 25px;
+    background-size: 100%;
+    background-image: url("https://images.unsplash.com/photo-1429153243204-48d8e868f40d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2800&q=100&h=700");
+    color: white;
+    
+}
+
+div.itinerary-header-title {
+    display: inline-block;
+    z-index: 1;
+    position: absolute;
+    margin-top: -120px;
+    color: white;
+    font-size: 2em;
+    margin-left: 5vw;
+}
+
+.itinerary-list {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: .5em;
+    display: inline-block;
+}
+
+.day-list {
+    border-right: 2px solid #95afc0;
+    padding: 10px 10px 50px 10px;
+}
+
+.day-list h4 {
+    margin-bottom: 25px;
+}
+
+.day {
+    border-top: none;
+    cursor: pointer;
+    transition: .6s;
+}
+
+.day:hover {
+    border-top: none;
+    cursor: pointer;
+    border-left: 6px solid #95afc0;
+    background-color: #dff9fb;
+}
+
+.day .card-body i {
+    margin-top: -20%;
+    font-size: 1.6em;
+}
+
+.day.selected {
+    border-left: 6px solid #95afc0;
+    background-color: #dff9fb;
+    cursor: default;
+}
+
+.day i {
+    opacity: 0;
+    transition: .2s ease-in-out;
+}
+.day.selected i{
+    opacity: 1;
+}
+
+.day.selected i.fa-trash {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.day.selected i.fa-trash:hover {
+    cursor: pointer;
+    color:#eb2f06;
+}
+
+.card-body input {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.card-body textarea {
+	margin-right: 7px;
+	margin-left: 7px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.card-body select {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.day-form button{
+    margin-right: 100px;
+}
+
+.day-form {
+    
+}
+
+/* EVENT */
+.event-tile {
+    transition: .3s;
+    margin: 10px 0px;
+}
+  
+.event-tile:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.card-body.event i {
+    padding: 4px 4px;
+}
+
+
+.card-body.event i.fa-trash {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.card-body.event i.fa-trash:hover {
+    cursor: pointer;
+    color:#eb2f06;
+}
