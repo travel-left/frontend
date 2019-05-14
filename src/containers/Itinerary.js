@@ -67,9 +67,6 @@ class Itinerary extends Component {
         .then(() => this.getAndSetEvents())
         .catch(err => {
             console.log(err)
-            this.setState({
-                currentItinerary: 'error getting itineraries'
-            })
         })
     }
 
@@ -81,6 +78,7 @@ class Itinerary extends Component {
                 days: data.days,
                 currentDayId: null,
                 showDayList: true,
+                showEventList: false,
                 showNewDayButton: true
             })
         })
