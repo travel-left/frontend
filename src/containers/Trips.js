@@ -9,7 +9,8 @@ class Trips extends Component {
     state = {
         trips: [],
         showTrips: false,
-        showTripForm: false
+        showTripForm: false,
+        showNewTripButton: true
     }
     
     constructor(props){
@@ -37,6 +38,7 @@ class Trips extends Component {
 
     showTripForm = () => {
         this.setState({
+            showNewTripButton: false,
             showTripForm: true
         })
     }
@@ -49,7 +51,9 @@ class Trips extends Component {
                     trips: [
                         ...prevState.trips,
                         data.trip
-                    ]
+                    ],
+                    showTripForm: false,
+                    showNewTripButton: true
                 }
             })
         })
@@ -57,8 +61,8 @@ class Trips extends Component {
 
     render(){
         let { user } = this.props
-        let { showTrips, showTripForm, trips } = this.state
-        let tripTiles, content, tripForm = null
+        let { showTrips, showTripForm, trips, showNewTripButton } = this.state
+        let tripTiles, content, tripForm, newTripButton = null
 
         if(showTrips) {
             tripTiles = trips.map(trip => {
@@ -73,12 +77,18 @@ class Trips extends Component {
             })
         }
 
+        if(showNewTripButton) {
+            newTripButton = <button onClick={this.showTripForm} class='new-trip'><i class="fa fa-plus fa-3x"></i>
+                                <br></br>New Trip
+                            </button>
+        }
+
         if(user) {
             content = (
                 <div>
                     <div className="row">
                         <div className="welcomeMessage">   
-                            <h2>Which trip would you like to go on?</h2>
+                            <h2>Which trip would you like to coordinate?</h2>
                         </div>
                     </div>
                     <div className="row">
@@ -88,22 +98,23 @@ class Trips extends Component {
                     </div>
                     <div className="row">
                         <div className="welcomeMessage">   
-                            <button onClick={this.showTripForm}>Add a Trip <i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                            {newTripButton}
                         </div>
                     </div>
                 </div>
             )
         }
         if(showTripForm)  {
-            tripForm = <TripForm submit={this.addTrip}/>
+            tripForm = 
+            <div className="col-6 welcomeMessage">
+                <TripForm submit={this.addTrip}/>
+            </div>
         }
 
         return (
-            <div className='container'>
+            <div className='container' style={{display: 'flex', flexDirection: 'column'}}>
                 {content}
-                <div className="row">
-                    {tripForm}  
-                </div>
+                {tripForm}  
             </div>
         )
     }

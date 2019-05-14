@@ -85,33 +85,29 @@ div.item {
 .welcomeMessage {
     font-weight: 300;
     letter-spacing: 1px;
-    margin: 10vh auto 4vh auto;
+    margin: 2vh auto 2vh auto;
 }
 
-.welcomeMessage button {
-    min-height: 45px;
-    min-width: 175px;
-    color: white;
-    background: #82ccdd;
+button.new-trip {
+    padding: 60px 70px 60px 70px;
+    color: #c8d6e5;
+    font-size: 20px;
+    border: 3px solid #c8d6e5;
+    transition: .2s ease-in-out;
+    border-radius: 4px;
+}
+
+button.new-trip:hover {
+    color: #0a58ce;
+    background-color: #83c9f4;
+    border: 3px solid #8395a7;
     cursor: pointer;
-    border-radius: 13px;
-    font-size: 1.3em;
-    padding: 15px 15px;
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-  
-  .welcomeMessage button:hover i{
-    color: #34495e;
-    transition: .2s;
-  }
-  
-  .welcomeMessage button:active {
-    background-color: #34495e;
-    transition: .4s;
-  }
-  
-  .welcomeMessage button:active i{
-    color: #ffffff;
-    transition: .2s;
-  }
+}
+
+.trip-form input {
+    margin-top: 15px;
+}
+
+.trip-form button {
+    margin-top: 15px;
+}

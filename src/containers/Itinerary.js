@@ -219,7 +219,7 @@ class Itinerary extends Component {
 
         return (
             <div class="">
-                <div className="itinerary-header-image">
+                <div className="itinerary-header-image" style={{backgroundImage: `url(${this.props.currentTrip.image})`}}>
                 </div>
                 <div className="itinerary-header-title">
                     <div>Create your {this.props.currentTrip.name} 
