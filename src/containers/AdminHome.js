@@ -8,23 +8,25 @@ class AdminHome extends Component {
     }
 
     onButtonClick = e => {
-        console.log(e.target.name)
-        switch (e.target.name) {
+        let {history, currentTrip} = this.props
 
+        switch (e.target.name) {
             case 'create':
-                return this.props.history.push(`/trips/${this.props.currentTrip.id}/create`)
+                return history.push(`/trips/${currentTrip.id}/create`)
             case 'manage':
-                return this.props.history.push(`/trips/${this.props.currentTrip.id}/manage`)
+                return history.push(`/trips/${currentTrip.id}/manage`)
             case 'communicate':
-                return this.props.history.push(`/trips/${this.props.currentTrip.id}/communicate`)
+                return history.push(`/trips/${currentTrip.id}/communicate`)
             default:
-                this.props.history.push('/trips')
+                history.push('/trips')
         }
     }
 
     render() {
+        let {currentTrip} = this.props
         let question = 'What would you like to do on your trip' 
-        question += this.props.currentTrip.name ? ` to ${this.props.currentTrip.name}` : ''
+        question += currentTrip.name ? ` to ${currentTrip.name}` : ''
+        
         return (
             <div className="container">
                     <div className="row">

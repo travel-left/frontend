@@ -1,30 +1,20 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Notification from './Notification'
 
-class NotificationList extends Component {
+const NotificationList = ({notifications}) => {
 
-    constructor(props) {
-        super(props)
-    }
+    let list = notifications.map(n => {
+            return <Notification text={n.text} />
+        })
 
-    render() {
-        let list = null
-
-        if(this.props.notifications) {
-            list = this.props.notifications.map(n => {
-                return <Notification text={n.text} />
-            })
-        }
-
-        return (
-            <div className="container">
-                <h2>Notification List</h2>
-                <div className="row">
-                    {list}
-                </div>
+    return (
+        <div className="container">
+            <h2>Notification List</h2>
+            <div className="row">
+                {list}
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default NotificationList

@@ -11,33 +11,34 @@ class Navbar extends Component {
     }
 
     render(){
-        let greeting = null
-
-        if(this.props.currentUser.user.email){
-            greeting = <a onClick='' >Hello, <span className='user-email'>{this.props.currentUser.user.email}</span>!</a>
-        }
+        let {currentUser} = this.props
+        let greeting = currentUser.user.email
+            ?
+                <a onClick='' >Hello, <span className='user-email'>{this.props.currentUser.user.email}</span>!</a>
+            :
+                null
         return (
-        <nav className="navbar navbar-expand">
-            <div className="container-fluid">
-                <div className="navbar-header">
-                    <Link to="/trips" className="navbar-brand">
-                        <img className='navbar-brand-left' src='/LEFT.png' style={{"maxWidth":"50px"}}alt="Home" />
-                    </Link>
+            <nav className="navbar navbar-expand">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <Link to="/trips" className="navbar-brand">
+                            <img className='navbar-brand-left' src='/LEFT.png' style={{"maxWidth":"50px"}}alt="Home" />
+                        </Link>
+                    </div>
+                    <div className="nav navbar-nav navbar-right">
+                        <ul className="nav navbar-nav navbar-right">
+                            <li className='greeting'>
+                                { greeting }
+                            </li>
+                        </ul>
+                        <ul className="nav navbar-nav navbar-right">
+                            <li className='nav-app-link'>
+                            <a onClick={this.signout}><i className="fa fa-mobile fa-2x" aria-hidden="true"></i> <i className="fa fa-download fa-2x" aria-hidden="true"></i></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div className="nav navbar-nav navbar-right">
-                    <ul className="nav navbar-nav navbar-right">
-                        <li className='greeting'>
-                            { greeting }
-                        </li>
-                    </ul>
-                    <ul className="nav navbar-nav navbar-right">
-                        <li className='nav-app-link'>
-                        <a onClick={this.signout}><i className="fa fa-mobile fa-2x" aria-hidden="true"></i> <i className="fa fa-download fa-2x" aria-hidden="true"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+            </nav>
         )
     }
 }

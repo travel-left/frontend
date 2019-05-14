@@ -1,26 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import UserList from '../components/Manage/UserList';
-import UserForm from '../components/Manage/UserForm';
-import { apiCall } from '../services/api';
-import CohortForm from '../components/Manage/CohortForm';
-import AddCohortToUserForm from '../components/Manage/AddCohortToUserForm';
+import UserList from '../components/Manage/UserList'
+import UserForm from '../components/Manage/UserForm'
+import { apiCall } from '../services/api'
+import CohortForm from '../components/Manage/CohortForm'
+import CohortList from "../components/Manage/CohortList"
 
 class Manage extends Component {
     state = {
         users: [],
-        showAddCohortToUserForm: false,
-        cohorts: [],
-        selectedUser: {}
+        cohorts: []
     }
 
     constructor(props){
         super(props)
+        this.getAndSetUsers()
+        this.getAndSetCohorts()
+    }
+
+    getAndSetUsers = () => {
         apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
         .then(data => {
             return this.setState({users: data.users})
         })
+    }
 
+    getAndSetCohorts = () => {
         apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
         .then(data => {
             return this.setState({cohorts: data.cohorts})
@@ -28,7 +33,6 @@ class Manage extends Component {
     }
 
     addUser = email => {
-
         let newUser = {
             email: email,
             password: 'password',
@@ -38,95 +42,53 @@ class Manage extends Component {
 
         apiCall('post', '/api/auth/signup', newUser)
         .then(() => {
-            return this.setState(prevState => {
-                return {
-                    users: [
-                        ...prevState.users,
-                        newUser
-                    ]
-                }
-            })
+            return this.getAndSetUsers()
         })
     }
 
     addCohort = title => {
+        let {currentTrip} = this.props
         const newCohort = {
             title: title
         }
-        apiCall('post', `/api/trip/${this.props.currentTrip.id}/cohort`, newCohort)
-        .then(data => {
-            // return this.setState(prevState => {
-            //     return {
-            //         users: [
-            //             ...prevState.users,
-            //             newUser
-            //         ]
-            //     }
-            // })
-            return console.log(data)
-        })
-    }
-
-    addCohortToUser = (cohort) => {
-        let updatedUser = {
-            ...this.state.selectedUser,
-            currentCohort: cohort
-        }
-
-        apiCall('put', `/api/users/${this.state.selectedUser._id}`, updatedUser)
+        apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort)
         .then(() => {
-            return this.setState(prevState => {
-                return {
-                    users: prevState.users.map(user => {
-                        if(user._id == updatedUser._id) {
-                            return {
-                                ...updatedUser,
-                                currentCohort: this.state.cohorts.filter(c => c._id === updatedUser.currentCohort)[0]
-                            }
-                        } else {
-                            return user
-                        }
-                    })
-                }
-            })
+            return this.getAndSetCohorts()
         })
-        console.log(updatedUser)
     }
 
-    toggleAddCohortToUserForm = user => {
-        return this.setState({
-            showAddCohortToUserForm: true,
-            selectedUser: user
+    addCohortToUser = user => {
+        let updatedUser = {
+            currentCohort: user.cohort_id
+        }
+        apiCall('put', `/api/users/${user.id}`, updatedUser)
+        .then(() => {
+            return this.getAndSetUsers()
         })
     }
 
     render() {
-        let addCohortToUserForm = null
-
-        if(this.state.showAddCohortToUserForm) {
-            addCohortToUserForm = <AddCohortToUserForm cohorts={this.state.cohorts} submit={this.addCohortToUser} />
-        }
+        let {currentTrip} = this.props
+        let {cohorts, users} = this.state
 
         return (
             <div className="container manage">
-                <h1>Manage your {this.props.currentTrip.name} Trip!</h1>
+                <h1>Manage your {currentTrip.name} Trip!</h1>
                 <div className="row">   
                     <div className="col-1"></div>
                     <div className="col-6">
-                        <UserList users={this.state.users} toggleAddCohortToUserForm = {this.toggleAddCohortToUserForm}/>
+                        <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
                     </div>
                     <div className="col-1"></div>
                     <div className="col-4">
                         <UserForm submit={this.addUser} />
                         <CohortForm submit={this.addCohort} />
-                        {addCohortToUserForm}
+                        <CohortList cohorts={cohorts}/>
                     </div>
-                    
                 </div>
             </div>
         )
     }
-
 }
 
 const mapStateToProps = state => {

@@ -23,12 +23,13 @@ class CohortForm extends Component {
     }
 
     render() {
+        let {title} = this.state
         return (
             <div className="userForm">
                 <form onSubmit={this.handleSubmit}>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <input value={this.state.title} onChange={this.handleChange} type="text" class="form-control" name='title' placeholder="Cohort Name"/>
+                            <input value={title} onChange={this.handleChange} type="text" class="form-control" name='title' placeholder="Cohort Name"/>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Cohort</button>

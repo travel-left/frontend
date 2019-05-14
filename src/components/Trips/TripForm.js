@@ -14,8 +14,6 @@ class TripForm extends Component {
     }
 
     handleInputChange = e => {
-        console.log(e.target.name)
-        console.log(e.target.value)
         const updatedTrip = {
             ...this.state.trip
         }
@@ -27,7 +25,6 @@ class TripForm extends Component {
 
     handleSubmitEvent = event => {
         event.preventDefault()
-        console.log(this.state.trip)
         this.props.submit(this.state.trip)
     }
 

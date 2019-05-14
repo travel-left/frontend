@@ -22,12 +22,13 @@ class NotificationForm extends Component {
     }
 
     render() {
+        let {text} = this.state
         return (
             <div className="userForm">
                 <form onSubmit={this.handleSubmit}>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <input value={this.state.text} onChange={this.handleChange} type="text" class="form-control" name='text' placeholder="Your notification message"/>
+                            <input value={text} onChange={this.handleChange} type="text" class="form-control" name='text' placeholder="Your notification message"/>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Create Notification</button>

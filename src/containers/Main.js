@@ -11,8 +11,8 @@ import Itinerary from './Itinerary'
 import Manage from './Manage'
 import Communicate from './Communicate'
 
-const Main = props => {
-    const { authUser} = props
+const Main = ({authUser}) => {
+
     return (
         <div className="container-fluid hero">
             <Switch>

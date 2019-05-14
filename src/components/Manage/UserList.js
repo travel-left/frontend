@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import User from './User';
 
-const UserList = ({users, toggleAddCohortToUserForm}) => {
+const UserList = ({users, cohorts, addCohortToUser, currentCohort}) => {
     let userList = users.map(user => {
-        return <User user={user} toggleAddCohortToUserForm={toggleAddCohortToUserForm}/>
+        return <User user={user} cohorts={cohorts} addCohortToUser={addCohortToUser}/>
     })
     return (
         <div className="userList">
