@@ -46,6 +46,7 @@
     /* background-color: #dff9fb; */
     cursor: default;
     border: 1px solid #4FCBD0;
+    
 }
 
 .day i {
@@ -84,10 +85,6 @@
 	margin-right: 10px;
 	margin-bottom: 10px;
 	margin-top: 10px;
-}
-
-.day-form button{
-    margin-right: 100px;
 }
 
 /* EVENT */

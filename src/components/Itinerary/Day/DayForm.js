@@ -27,7 +27,7 @@ class DayForm extends Component {
         return (
             <div className='date-form'>
                 <form onSubmit={this.handleSubmitEvent} className='form-inline'>
-                    <div class="card" style={{width: 'auto'}} >
+                    <div class="card" >
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">Select a date</h6>
                             <h5 class="card-title">  

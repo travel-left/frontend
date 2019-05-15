@@ -22,10 +22,10 @@ class Day extends Component {
                 <div class="card day selected">
                     <div class="card-body">
                         <h4 class="card-title mb-2 text-muted" style={{display: 'inline-block', marginRight: '.2em'}}><Moment date={date} format="MMM"/></h4>
+                        <i class="fa fa-trash pull-right" aria-hidden="true" onClick={this.deleteDay} style={{paddingTop: '15px', paddingLeft: '10px', fontSize: '18px'}}></i>
                         <h4 class="card-title mb-2" style={{color: 'rgb(79, 203, 208)', display: 'inline-block'}}><Moment date={date} format="Do"/></h4>
                         <hr/>
                         <h5 class="card-title text-muted"><Moment date={this.props.date} format="dddd"/> </h5>
-                        <i class="fa fa-trash pull-right" aria-hidden="true" onClick={this.deleteDay} style={{paddingTop: '10px'}}></i>
                     </div>
                 </div>
             )
@@ -41,7 +41,7 @@ class Day extends Component {
             )
 
         return (
-            <div className='col-2' style={{display: 'inline-block'}}>
+            <div className='col' style={{paddingLeft: '10px', paddingRight: '10px'}}>
                 {day}
             </div>
         )

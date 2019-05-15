@@ -228,12 +228,15 @@ class Itinerary extends Component {
                 </div>
                 <div className="container">
                     <div class="row">
-                        <div className="col-12">
+                        <div className="col-9">
                             <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4>
                             { dayList }
                         </div>
-                            {/* { dayForm }
-                            { newDayButton } */}
+                        <div className="col-3">
+                            { dayForm }
+                            { newDayButton }
+                        </div>
+
                         {/* <div class="col-8">
                                 <div style={{width: '100%', display: 'inline-block'}}>
                                     <button class="btn btn-lg float-right" style={{backgroundColor: '#38ada9', color: 'white'}} onClick={this.onNewEventClick}>

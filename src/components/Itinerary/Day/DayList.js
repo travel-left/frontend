@@ -12,7 +12,7 @@ const DayList = ({days, currentDayId, removeDay, setCurrentDay}) => {
     })
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
         { dayList }
         </div>
     )
