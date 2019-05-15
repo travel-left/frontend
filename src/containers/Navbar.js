@@ -23,7 +23,7 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <Link to="/trips" className="navbar-brand">
-                            <img className='navbar-brand-left' src='/LEFT.png' style={{"maxWidth":"50px"}}alt="Home" />
+                            <strong style={{fontSize: '2em', color: '#4FCBD0'}}>left.</strong>
                         </Link>
                     </div>
                     <div className="nav navbar-nav navbar-right">
