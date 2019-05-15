@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './Dashboard.css'
+import NumberTile from '../components/AdminHome/NumberTile'
+
 class Dashboard extends Component {
 
     constructor(props){
@@ -25,30 +27,9 @@ class Dashboard extends Component {
                 <div className="col-10" >
                     <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>By the Numbers</strong></h4>
                     <div className="row" style={{display: 'flex', flexDirection:'row', justifyContent: 'center', marginTop: '15px', marginLeft: '20px', marginRight: '20px'}}>
-                        <div className="col-4">
-                            <div className="card" style={{width: '22rem', boxShadow: 'rgba(0, 0, 0, 0.25) -2px -1px 16px 0px'}}>
-                                <div className="card-body">
-                                    <h2 className="card-title" style={{color: '#4FCBD0'}}>   <strong>36</strong>   </h2>
-                                    <h5 className="card-subtitle mb-2 text-muted">Days until the trip</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card" style={{width: '22rem', boxShadow: 'rgba(0, 0, 0, 0.25) -2px -1px 16px 0px'}}>
-                                <div className="card-body">
-                                    <h2 className="card-title" style={{color: '#4FCBD0'}}>   <strong>19</strong>   </h2>
-                                    <h5 className="card-subtitle mb-2 text-muted">Travelers ready to go</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-4">
-                            <div className="card" style={{width: '22rem', boxShadow: 'rgba(0, 0, 0, 0.25) -2px -1px 16px 0px'}}>
-                                <div className="card-body">
-                                    <h2 className="card-title" style={{color: '#4FCBD0'}}>   <strong>24</strong>   </h2>
-                                    <h5 className="card-subtitle mb-2 text-muted">Events planned</h5>
-                                </div>
-                            </div>
-                        </div>
+                        <NumberTile phrase='Days until the trip' number={36} />
+                        <NumberTile phrase='Travelers ready to go' number={19} />
+                        <NumberTile phrase='Events planned' number={24} />
                     </div>
                 </div>
             </div>
