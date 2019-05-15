@@ -5,6 +5,7 @@ import './App.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from './containers/Navbar'
 import Main from './containers/Main'
+import SideNav from "./containers/SideNav";
 import { setAuthorizationToken, setCurrentUser } from './store/actions/auth'
 import jwtDecode from 'jwt-decode'
 
@@ -24,7 +25,16 @@ const App = () => (
         <Router>
             <div className="">
                 <Navbar/>
-                <Main/>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-2">
+                            <SideNav />
+                        </div>
+                        <div className="col-10" style={{backgroundColor: '#ECEDED', height: '100vw'}}>
+                            <Main />
+                        </div>
+                    </div>
+                </div>
             </div>
         </Router>
     </Provider>
