@@ -13,16 +13,6 @@
     
 }
 
-div.itinerary-header-title {
-    display: inline-block;
-    z-index: 1;
-    position: absolute;
-    margin-top: -120px;
-    color: white;
-    font-size: 2em;
-    margin-left: 5vw;
-}
-
 .itinerary-list {
     padding-left: 15px;
     padding-right: 15px;
@@ -35,21 +25,16 @@ div.itinerary-header-title {
     padding: 10px 10px 50px 10px;
 }
 
-.day-list h4 {
-    margin-bottom: 25px;
-}
-
 .day {
+    min-height: 165px;
     border-top: none;
     cursor: pointer;
-    transition: .6s;
+    transition: .3s ease-in-out;
+    border: 1px solid white;
 }
 
 .day:hover {
-    border-top: none;
     cursor: pointer;
-    border-left: 6px solid #95afc0;
-    background-color: #dff9fb;
 }
 
 .day .card-body i {
@@ -58,9 +43,9 @@ div.itinerary-header-title {
 }
 
 .day.selected {
-    border-left: 6px solid #95afc0;
-    background-color: #dff9fb;
+    /* background-color: #dff9fb; */
     cursor: default;
+    border: 1px solid #4FCBD0;
 }
 
 .day i {
@@ -103,10 +88,6 @@ div.itinerary-header-title {
 
 .day-form button{
     margin-right: 100px;
-}
-
-.day-form {
-    
 }
 
 /* EVENT */

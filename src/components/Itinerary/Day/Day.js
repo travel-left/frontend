@@ -19,27 +19,29 @@ class Day extends Component {
         let {isCurrentDay, date} = this.props
         let day = isCurrentDay
             ? (
-                <div class="card day selected" style={{width: 'auto'}}>
+                <div class="card day selected">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted"><Moment date={date} format="MMM Do"/></h6>
-                        <h5 class="card-title"><Moment date={this.props.date} format="dddd"/> </h5>
-                        <i class="fa fa-trash" aria-hidden="true" onClick={this.deleteDay} style={{ zIndex: 10}}></i>
-                        <i class="fa fa-arrow-circle-o-right fa-2x pull-right" aria-hidden="true" ></i>
+                        <h4 class="card-title mb-2 text-muted" style={{display: 'inline-block', marginRight: '.2em'}}><Moment date={date} format="MMM"/></h4>
+                        <h4 class="card-title mb-2" style={{color: 'rgb(79, 203, 208)', display: 'inline-block'}}><Moment date={date} format="Do"/></h4>
+                        <hr/>
+                        <h5 class="card-title text-muted"><Moment date={this.props.date} format="dddd"/> </h5>
+                        <i class="fa fa-trash pull-right" aria-hidden="true" onClick={this.deleteDay} style={{paddingTop: '10px'}}></i>
                     </div>
                 </div>
             )
             : (
-                <div class="card day" style={{width: 'auto'}} onClick={this.onDayClick}>
+                <div class="card day" onClick={this.onDayClick}>
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted"><Moment date={date} format="MMM Do"/></h6>
-                        <h5 class="card-title"><Moment date={this.props.date} format="dddd"/> </h5>
-                        <i class="fa fa-arrow-circle-o-right fa-2x pull-right" aria-hidden="true" ></i>
+                        <h4 class="card-title mb-2 text-muted" style={{display: 'inline-block', marginRight: '.2em'}}><Moment date={date} format="MMM"/></h4>
+                        <h4 class="card-title mb-2" style={{color: 'rgb(79, 203, 208)', display: 'inline-block'}}><Moment date={date} format="Do"/></h4>
+                        <hr/>
+                        <h5 class="card-title text-muted"><Moment date={this.props.date} format="dddd"/> </h5>
                     </div>
                 </div> 
             )
 
         return (
-            <div>
+            <div className='col-2' style={{display: 'inline-block'}}>
                 {day}
             </div>
         )

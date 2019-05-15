@@ -221,21 +221,20 @@ class Itinerary extends Component {
             <div class="">
                 {/* <div className="itinerary-header-image" style={{backgroundImage: `url(${this.props.currentTrip.image})`}}>
                 </div> */}
-                <div className="itinerary-header-title">
-                    <div>Create your {this.props.currentTrip.name} 
+                <div >
+                    <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Itinerary for your {this.props.currentTrip.name} 
                     { itineraryList } 
-                    Itinerary </div>
+                    Cohort </strong></h4>
                 </div>
                 <div className="container">
                     <div class="row">
-                        <div class="days col-3">
-                            <div className='day-list'>   
-                                { dayList }
-                                { dayForm }
-                                { newDayButton }
-                            </div>
+                        <div className="col-12">
+                            <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4>
+                            { dayList }
                         </div>
-                        <div class="col-8">
+                            {/* { dayForm }
+                            { newDayButton } */}
+                        {/* <div class="col-8">
                                 <div style={{width: '100%', display: 'inline-block'}}>
                                     <button class="btn btn-lg float-right" style={{backgroundColor: '#38ada9', color: 'white'}} onClick={this.onNewEventClick}>
                                         <i class="fa fa-plus-square" aria-hidden="true"></i> New Event
@@ -243,7 +242,7 @@ class Itinerary extends Component {
                                 </div>
                             { eventList }
                             { eventForm }
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div> 

@@ -13,10 +13,8 @@ const DayList = ({days, currentDayId, removeDay, setCurrentDay}) => {
 
     return (
         <div>
-            <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4>
-            { dayList }
+        { dayList }
         </div>
-
     )
 }
 
