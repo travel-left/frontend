@@ -16,7 +16,7 @@ class ItineraryList extends Component {
 
         return (
             <div className='itinerary-list'>
-                <select value={currentItinerary} class="custom-select" onChange={this.handleChange}>
+                <select value={currentItinerary._id} class="custom-select" onChange={this.handleChange}>
                     {list}
                 </select>
             </div>

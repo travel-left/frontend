@@ -1,0 +1,28 @@
+/* NAVBAR */
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+.navbar.navbar-expand {
+    min-height: 84px;
+    margin-left: 30px;
+    margin-right: 30px;
+    background-color: #FCFEFB;
+}
+  
+.greeting {
+  letter-spacing: 1px;
+  margin: auto 30px auto 30px;
+}
+
+.nav-app-link {
+  color: #4FCBD0;
+}
+
+.nav-app-link:hover {
+  cursor: pointer;
+  color: #82ccdd;
+  transition: .2s;
+}
+
+.navbar-brand-left {
+  color: #4FCBD0;
+}

@@ -6,6 +6,7 @@ import ItineraryList from "../components/Itinerary/ItineraryList"
 import EventList from '../components/Itinerary/Event/EventList'
 import { apiCall } from "../services/api"
 import DayForm from '../components/Itinerary/Day/DayForm'
+import './Itinerary.css'
 
 class Itinerary extends Component {
     state = {
@@ -67,9 +68,6 @@ class Itinerary extends Component {
         .then(() => this.getAndSetEvents())
         .catch(err => {
             console.log(err)
-            this.setState({
-                currentItinerary: 'error getting itineraries'
-            })
         })
     }
 
@@ -81,6 +79,7 @@ class Itinerary extends Component {
                 days: data.days,
                 currentDayId: null,
                 showDayList: true,
+                showEventList: false,
                 showNewDayButton: true
             })
         })
@@ -212,38 +211,40 @@ class Itinerary extends Component {
 
         if(this.state.showNewDayButton) {
             newDayButton = (
-                <button class="btn btn-lg" style={{backgroundColor: '#38ada9', color: 'white', marginTop: '25px'}} onClick={this.onNewDayClick}>
-                    <i class="fa fa-plus-square" aria-hidden="true"></i> New Day
-                </button>
+                <button class="btn btn-lg" style={{marginTop: '-15px'}} onClick={this.onNewDayClick}>New Day</button>
             )
         }
 
         return (
             <div class="">
-                <div className="itinerary-header-image">
-                </div>
-                <div className="itinerary-header-title">
-                    <div>Create your {this.props.currentTrip.name} 
-                    { itineraryList } 
-                    Itinerary </div>
+                {/* <div className="itinerary-header-image" style={{backgroundImage: `url(${this.props.currentTrip.image})`}}>
+                </div> */}
+                <div >
+                    <h2 style={{marginTop: '30px', marginLeft: '30px', color: '#4FCBD0', marginBottom: '30px'}}>
+                        Itinerary for your {this.props.currentTrip.name} 
+                        { itineraryList } 
+                        Cohort
+                    </h2>
                 </div>
                 <div className="container">
                     <div class="row">
-                        <div class="days col-3">
-                            <div className='day-list'>   
-                                { dayList }
-                                { dayForm }
-                                { newDayButton }
-                            </div>
+                        <div className="col-9">
+                            {/* <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4> */}
+                            { dayList }
                         </div>
-                        <div class="col-8">
-                                <div style={{width: '100%', display: 'inline-block'}}>
-                                    <button class="btn btn-lg float-right" style={{backgroundColor: '#38ada9', color: 'white'}} onClick={this.onNewEventClick}>
-                                        <i class="fa fa-plus-square" aria-hidden="true"></i> New Event
-                                    </button>
-                                </div>
+                        <div className="col-3">
+                            { newDayButton }
+                            { dayForm }
+                        </div>
+                    </div>
+                    <hr style={{marginTop: '50px', marginBottom: '40px'}}/>
+                    <div className="row">
+                        <div class="col-9" >
                             { eventList }
                             { eventForm }
+                        </div>
+                        <div className="col-3">
+                            <button class="btn btn-lg" onClick={this.onNewEventClick}>New Event</button>
                         </div>
                     </div>
                 </div>

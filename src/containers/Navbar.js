@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../store/actions/auth'
+import './Navbar.css'
 
 class Navbar extends Component {
 
@@ -14,7 +15,7 @@ class Navbar extends Component {
         let {currentUser} = this.props
         let greeting = currentUser.user.email
             ?
-                <a onClick='' >Hello, <span className='user-email'>{this.props.currentUser.user.email}</span>!</a>
+                <span>Hello, <a onClick=''> {this.props.currentUser.user.email}</a>!</span>
             :
                 null
         return (
@@ -22,7 +23,7 @@ class Navbar extends Component {
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <Link to="/trips" className="navbar-brand">
-                            <img className='navbar-brand-left' src='/LEFT.png' style={{"maxWidth":"50px"}}alt="Home" />
+                            <strong style={{fontSize: '2em', color: '#4FCBD0'}}>left.</strong>
                         </Link>
                     </div>
                     <div className="nav navbar-nav navbar-right">

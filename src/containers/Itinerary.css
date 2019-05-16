@@ -1,0 +1,109 @@
+/* ITINERARY */
+.itinerary-header-image {
+    /* min-height: 15vh; */
+    width: auto;
+    height: 15vw;
+    padding-left: 0px;
+    margin-left: -17px;
+    margin-right: -17px;
+    margin-bottom: 25px;
+    background-size: 100%;
+    /* background-image: url("https://images.unsplash.com/photo-1429153243204-48d8e868f40d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2800&q=100&h=700"); */
+    color: white;
+    
+}
+
+.itinerary-list {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: .5em;
+    display: inline-block;
+}
+
+.day-list {
+    border-right: 2px solid #95afc0;
+    padding: 10px 10px 50px 10px;
+}
+
+.day {
+    min-height: 165px;
+    border-top: none;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    border: 1px solid white;
+}
+
+.day:hover {
+    cursor: pointer;
+}
+
+.day .card-body i {
+    margin-top: -20%;
+    font-size: 1.6em;
+}
+
+.day.selected {
+    /* background-color: #dff9fb; */
+    cursor: default;
+    border: 1px solid #4FCBD0;
+    
+}
+
+.day i {
+    opacity: 0;
+    transition: .2s ease-in-out;
+}
+.day.selected i{
+    opacity: 1;
+}
+
+.day.selected i.fa-trash {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.day.selected i.fa-trash:hover {
+    cursor: pointer;
+    color:#eb2f06;
+}
+
+.card-body input {
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.card-body textarea {
+	margin-right: 7px;
+	margin-left: 7px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.card-body select {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+/* EVENT */
+.event-tile {
+    transition: .3s;
+    margin: 10px 0px;
+}
+  
+.card-body.event i {
+    padding: 4px 4px;
+}
+
+
+.card-body.event i.fa-trash {
+    cursor: pointer;
+    transition: .2s ease-in-out;
+}
+
+.card-body.event i.fa-trash:hover {
+    cursor: pointer;
+    color:#eb2f06;
+}

@@ -1,0 +1,9 @@
+a.nav-link {
+    color: #625D66;
+    margin-top: 20px;
+}
+
+a.nav-link.active {
+    line-height: 30px;
+    background-color: #4FCBD0 !important;
+}

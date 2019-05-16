@@ -32,19 +32,15 @@ class TripForm extends Component {
         let { name, image } = this.state.trip
 
         return (
-            <div className="trip-form">
-                <form onSubmit={this.handleSubmitEvent}>
-                    <div className="form-row">
-                        <div className="col">
-                        {/* name */}
-                            <input name='name' className="form-control" type="text" value={name} onChange={this.handleInputChange} placeholder="Trip Name"/>
-                        </div>
-                        <div className="col">
-                        {/* image */}
-                            <input name='image' className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com"/>
-                        </div>
+            <div className="container trip-form" >
+                <form onSubmit={this.handleSubmitEvent} style={{display: 'flex', flexDirection: 'column'}}>
+                    <div className="form-row" style={{justifyContent: 'center'}}>
+                        <h3>Enter your trip details:</h3>
+                        <input name='name' className="form-control col-8" type="text" value={name} onChange={this.handleInputChange} placeholder="Trip Name"/>
+                        <input name='image' className="form-control col-8" type="text" value={image} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com"/>
+                        <button type="submit" className="btn btn-primary float-right col-5" style={{backgroundColor: '#83c9f4', color: '#fbfef9'}}>SUBMIT</button>
                     </div>
-                    <button type="submit" className="btn btn-primary float-right" style={{backgroundColor: '#079992'}}>SUBMIT</button>
+                    
                 </form>
             </div>
         )
