@@ -4,6 +4,7 @@ import NotificationForm from '../components/Communicate/NotificationForm';
 import NotificationList from '../components/Communicate/NotificationList';
 import { apiCall } from '../services/api';
 import Contact from '../components/Communicate/Contact';
+import ContactForm from '../components/Communicate/ContactForm';
 
 class Communicate extends Component {
 
@@ -69,6 +70,9 @@ class Communicate extends Component {
                         </div>
                     </div>
                     <div className="col-3">
+                        <button class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New Contact</button> 
+                        {/* onClick={this.onNewEventClick} */}
+                        <ContactForm />
                     </div>
                 </div>
                 <div className="row">
