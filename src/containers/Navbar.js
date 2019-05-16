@@ -15,7 +15,7 @@ class Navbar extends Component {
         let {currentUser} = this.props
         let greeting = currentUser.user.email
             ?
-                <a onClick='' >Hello, <span className='user-email'>{this.props.currentUser.user.email}</span>!</a>
+                <span>Hello, <a onClick=''> {this.props.currentUser.user.email}</a>!</span>
             :
                 null
         return (

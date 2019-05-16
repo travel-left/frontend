@@ -211,9 +211,7 @@ class Itinerary extends Component {
 
         if(this.state.showNewDayButton) {
             newDayButton = (
-                <button class="btn btn-lg" style={{backgroundColor: '#38ada9', color: 'white', marginTop: '25px'}} onClick={this.onNewDayClick}>
-                    <i class="fa fa-plus-square" aria-hidden="true"></i> New Day
-                </button>
+                <button class="btn btn-lg" style={{marginTop: '-15px'}} onClick={this.onNewDayClick}>New Day</button>
             )
         }
 
@@ -222,30 +220,32 @@ class Itinerary extends Component {
                 {/* <div className="itinerary-header-image" style={{backgroundImage: `url(${this.props.currentTrip.image})`}}>
                 </div> */}
                 <div >
-                    <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Itinerary for your {this.props.currentTrip.name} 
-                    { itineraryList } 
-                    Cohort </strong></h4>
+                    <h2 style={{marginTop: '30px', marginLeft: '30px', color: '#4FCBD0', marginBottom: '30px'}}>
+                        Itinerary for your {this.props.currentTrip.name} 
+                        { itineraryList } 
+                        Cohort
+                    </h2>
                 </div>
                 <div className="container">
                     <div class="row">
                         <div className="col-9">
-                            <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4>
+                            {/* <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4> */}
                             { dayList }
                         </div>
                         <div className="col-3">
-                            { dayForm }
                             { newDayButton }
+                            { dayForm }
                         </div>
-
-                        {/* <div class="col-8">
-                                <div style={{width: '100%', display: 'inline-block'}}>
-                                    <button class="btn btn-lg float-right" style={{backgroundColor: '#38ada9', color: 'white'}} onClick={this.onNewEventClick}>
-                                        <i class="fa fa-plus-square" aria-hidden="true"></i> New Event
-                                    </button>
-                                </div>
+                    </div>
+                    <hr style={{marginTop: '50px', marginBottom: '40px'}}/>
+                    <div className="row">
+                        <div class="col-9" >
                             { eventList }
                             { eventForm }
-                        </div> */}
+                        </div>
+                        <div className="col-3">
+                            <button class="btn btn-lg" onClick={this.onNewEventClick}>New Event</button>
+                        </div>
                     </div>
                 </div>
             </div> 

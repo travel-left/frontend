@@ -13,3 +13,22 @@ body {
 .btn-primary {
     border: none;
 }
+
+button.btn.btn-lg {
+    width: 140px;
+    background-color: #188FA7;
+    color: #fbfef9;
+}
+
+a {
+    color: #188FA7 !important;
+}
+
+a.active {
+    color: white !important;
+}
+
+/* HEADERS */
+h1, h2, h3, h4, h5 {
+    color: #4FCBD0 !important;
+}

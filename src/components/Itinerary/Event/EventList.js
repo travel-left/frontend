@@ -8,7 +8,7 @@ const EventList = ({events, removeEvent}) => {
     })
     return (
         <div className="event-list">
-            <div class="row">
+            <div class="row" style={{justifyContent: 'center'}}>
                 { eventList }
             </div>
         </div>

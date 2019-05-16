@@ -8,14 +8,6 @@
     background-color: #FCFEFB;
 }
   
-.user-email {
-  color: #4FCBD0;
-}
-.user-email:hover {
-  color: #0a3d62;
-  cursor: pointer;
-}
-
 .greeting {
   letter-spacing: 1px;
   margin: auto 30px auto 30px;
