@@ -9,8 +9,12 @@ import ContactForm from '../components/Communicate/ContactForm';
 class Communicate extends Component {
 
     state = {
+        contacts: [],
+        showContactList: false,
+        showContactForm: false,
         notifications: [],
-        showNotificationsList: false
+        showNotificationsList: false,
+        showNotificationsForm: false
     }
 
     constructor(props) {
@@ -43,14 +47,40 @@ class Communicate extends Component {
         })
     }
 
+    createContact = contact => {
+        apiCall('post', `/api/contact`, {trip_id: this.props.currentTrip.id, ...contact})
+        .then(() => {
+            return this.setState(prevState => {
+                return {
+                    contacts: [
+                        ...prevState.contacts,
+                        contact
+                    ],
+                    showContactForm: false
+                }
+            })
+        })
+    }
+
+    onNewContactClick = () => {
+        this.setState({
+            showContactForm: true
+        })
+    }
+
     render() {
-        let {showNotificationsList, notifications} = this.state
+        let {showNotificationsList, notifications, showContactForm} = this.state
         let {currentTrip} = this.props
+        let contactForm = null
         let notificationsList = showNotificationsList 
         ?
             <NotificationList notifications={notifications} />
         :   
             null
+
+        if(showContactForm) {
+            contactForm = <ContactForm submit={this.createContact}/>
+        }
 
         return (
             <div className='container'>
@@ -70,9 +100,8 @@ class Communicate extends Component {
                         </div>
                     </div>
                     <div className="col-3">
-                        <button class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New Contact</button> 
-                        {/* onClick={this.onNewEventClick} */}
-                        <ContactForm />
+                        <button onClick={this.onNewContactClick} class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New Contact</button> 
+                        {contactForm}
                     </div>
                 </div>
                 <div className="row">
