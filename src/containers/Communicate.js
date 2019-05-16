@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import NotificationForm from '../components/Communicate/NotificationForm';
 import NotificationList from '../components/Communicate/NotificationList';
 import { apiCall } from '../services/api';
-import Contact from '../components/Communicate/Contact';
+import ContactList from '../components/Communicate/ContactList';
 import ContactForm from '../components/Communicate/ContactForm';
 
 class Communicate extends Component {
@@ -25,6 +25,14 @@ class Communicate extends Component {
             return this.setState({
                 notifications: data.notifications,
                 showNotificationsList: true
+            })
+        })
+
+        apiCall('get', `/api/trip/${this.props.currentTrip.id}/contacts`)
+        .then(data => {
+            return this.setState({
+                contacts: data.contacts,
+                showContactList: true
             })
         })
     }
@@ -69,9 +77,9 @@ class Communicate extends Component {
     }
 
     render() {
-        let {showNotificationsList, notifications, showContactForm} = this.state
+        let {showNotificationsList, notifications, showContactForm, showContactList, contacts} = this.state
         let {currentTrip} = this.props
-        let contactForm = null
+        let contactForm, contactList = null
         let notificationsList = showNotificationsList 
         ?
             <NotificationList notifications={notifications} />
@@ -82,22 +90,16 @@ class Communicate extends Component {
             contactForm = <ContactForm submit={this.createContact}/>
         }
 
+        if(showContactList) {
+            contactList = <ContactList contacts={contacts} />
+        }
+
         return (
             <div className='container'>
                 <div className="row">
                     <div className="col-9">
                         <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Emergency Contacts</strong></h4>
-                        <div className="row" style={{justifyContent: 'center'}}>
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                            <Contact />
-                        </div>
+                        {contactList}
                     </div>
                     <div className="col-3">
                         <button onClick={this.onNewContactClick} class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New Contact</button> 
