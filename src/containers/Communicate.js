@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import NotificationForm from '../components/Communicate/NotificationForm';
 import NotificationList from '../components/Communicate/NotificationList';
 import { apiCall } from '../services/api';
+import Contact from '../components/Communicate/Contact';
 
 class Communicate extends Component {
 
@@ -51,14 +52,36 @@ class Communicate extends Component {
             null
 
         return (
-            <div className="container">
-                <h1>Communicate with your {currentTrip.name} travelers! </h1>
+            <div className='container'>
                 <div className="row">
-                    <div className="col">
-                        {notificationsList}
+                    <div className="col-9">
+                        <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Emergency Contacts</strong></h4>
+                        <div className="row" style={{justifyContent: 'center'}}>
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                            <Contact />
+                        </div>
                     </div>
-                    <div className="col">
-                        <NotificationForm submit={this.createNotification}/>
+                    <div className="col-3">
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-9">
+                        <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Notifications</strong></h4>
+                        <div className="col">
+                            {notificationsList}
+                        </div>
+                        <div className="col">
+                            <NotificationForm submit={this.createNotification}/>
+                        </div>
+                    </div>
+                    <div className="col-3">
                     </div>
                 </div>
             </div>
