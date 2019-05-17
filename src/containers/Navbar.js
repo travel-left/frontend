@@ -19,7 +19,7 @@ class Navbar extends Component {
             :
                 null
         return (
-            <nav className="navbar navbar-expand">
+            <nav className="navbar navbar-expand container-fluid">
                 <div className="container-fluid">
                     <div className="navbar-header">
                         <Link to="/trips" className="navbar-brand">
