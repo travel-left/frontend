@@ -22,12 +22,25 @@ class User extends Component {
             cohortList = <span>Add a cohort</span>
         }
         return (
-            <li className="list-group-item" style={{minHeight: '', display: '', flexDirection: '', alignItems: ''}}>
-                <div className="row">
-                    <div className="col">{user.email}</div>
-                    {cohortList}
+            <div class="card">
+                <div class="row no-gutters" style={{justifyContent: 'space-around'}}>
+                    <div class="col-1">
+                        <img src="..." class="card-img" alt="..."  style={{padding: '15px 5px 15px 5px'}}></img>
+                    </div>
+                    <div class="col-2">
+                        <p class="card-text" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted">First Last</small></p>
+                    </div>
+                    <div class="col-3" style={{flexGrow: 2}}>
+                        <p class="card-text" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted">{user.email}</small></p>
+                    </div>
+                    <div class="col-2">
+                        {cohortList}
+                    </div>
+                    <div class="col-2">
+                        <p class="card-text pull-right" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted" >Pending</small></p>
+                    </div>
                 </div>
-            </li>
+            </div>
         )
     }
 }

@@ -31,7 +31,7 @@ class UserForm extends Component {
                             <input value={email} onChange={this.handleChange} type="email" class="form-control" name='email' placeholder="Email"/>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Add User</button>
+                    <button type="submit" class="btn btn-lg">Add User</button>
                 </form>
             </div>
         )

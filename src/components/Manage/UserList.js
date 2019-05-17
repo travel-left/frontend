@@ -7,11 +7,14 @@ const UserList = ({users, cohorts, addCohortToUser, currentCohort}) => {
     })
     return (
         <div className="userList">
-            <h2>Travelers</h2>
-            <div className="row">
-                <div className="col">Email</div>
-                <div className="col">Cohort</div>
+            <div className="row" style={{justifyContent: 'space-around'}}>
+                <div className="col-1"></div>
+                <div className="col-2"><h5>Name</h5></div>
+                <div className="col-3"><h5>Email</h5></div>
+                <div className="col-2"><h5>Cohort</h5></div>
+                <div className="col-2"><h5>Status</h5></div>
             </div>
+            <hr/>
             <ul class="list-group" style={{display: 'flex', flexDirection: 'column'}}>
                 {userList}
             </ul>
