@@ -9,7 +9,11 @@ import CohortList from "../components/Manage/CohortList"
 class Manage extends Component {
     state = {
         users: [],
-        cohorts: []
+        cohorts: [],
+        showNewUserButton: true,
+        showNewCohortButton: true,
+        showNewUserForm: false,
+        showNewCohortForm: false
     }
 
     constructor(props){
@@ -44,6 +48,11 @@ class Manage extends Component {
         .then(() => {
             return this.getAndSetUsers()
         })
+
+        this.setState({
+            showNewUserButton: true,
+            showNewUserForm: false
+        })
     }
 
     addCohort = title => {
@@ -54,6 +63,11 @@ class Manage extends Component {
         apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort)
         .then(() => {
             return this.getAndSetCohorts()
+        })
+
+        this.setState({
+            showNewCohortButton: true,
+            showNewCohortForm: false
         })
     }
 
@@ -67,23 +81,67 @@ class Manage extends Component {
         })
     }
 
+    onNewUserClick = () => {
+        this.setState({
+            showNewUserForm: true,
+            showNewUserButton: false
+        })
+    }
+
+    onNewCohortClick = () => {
+        this.setState({
+            showNewCohortForm: true,
+            showNewCohortButton: false
+        })
+    }
+
     render() {
         let {currentTrip} = this.props
-        let {cohorts, users} = this.state
+        let {cohorts, users, showNewCohortForm, showNewUserForm, showNewCohortButton, showNewUserButton} = this.state
+        let userForm, cohortForm, userButton, cohortButton = null
+
+        if(showNewUserForm) {
+            userForm = <UserForm submit={this.addUser} />
+        }
+
+        if(showNewCohortForm) {
+            cohortForm = <CohortForm submit={this.addCohort} />
+        }
+
+        if(showNewUserButton) {
+            userButton = <button onClick={this.onNewUserClick} class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New User</button> 
+        }
+
+        if(showNewCohortButton) {
+            cohortButton = <button onClick={this.onNewCohortClick} class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New Cohort</button> 
+        }
 
         return (
             <div className="container manage">
-                <h1>Manage your {currentTrip.name} Trip!</h1>
-                <div className="row">   
-                    <div className="col-1"></div>
-                    <div className="col-6">
-                        <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
+                <div className="users" style={{marginTop: '30px'}}>
+                    <h2>Travelers</h2>
+                    <div className="row">   
+                        <div className="col-8">
+                            <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col-3">
+                            {userButton}
+                            {userForm}
+                        </div>
                     </div>
-                    <div className="col-1"></div>
-                    <div className="col-4">
-                        <UserForm submit={this.addUser} />
-                        <CohortForm submit={this.addCohort} />
-                        <CohortList cohorts={cohorts}/>
+                </div>
+                <div className="cohorts" style={{marginTop: '30px'}}>
+                    <h2>Cohorts</h2>
+                    <div className="row">   
+                        <div className="col-8">
+                            <CohortList cohorts={cohorts}/>
+                        </div>
+                        <div className="col-1"></div>
+                        <div className="col-3">
+                            {cohortButton}
+                            {cohortForm}
+                        </div>
                     </div>
                 </div>
             </div>

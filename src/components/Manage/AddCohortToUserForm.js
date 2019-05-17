@@ -29,7 +29,7 @@ class AddCohortToUserForm extends Component {
                 </select>
 
         return (
-            <div>
+            <div style={{ padding: '15px 5px 15px 5px'}}>
                 {cohortList}
             </div>
         )
