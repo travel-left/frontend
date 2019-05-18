@@ -25,8 +25,8 @@ const App = () => (
         <Router>
             <div className="">
                 <Navbar/>
-                <div className="container-fluid">
-                    {localStorage.token ? 
+                <div className="container-fluid" style={{backgroundColor: '#ECEDED', height: '100vw'}}>
+                    {/* {localStorage.token ? 
                         <div className="row">
                             <div className="col-2">
                                 <SideNav />
@@ -35,13 +35,9 @@ const App = () => (
                                 <Main />
                             </div>
                         </div>
-                    :
-                    <div className="row">
-                        <div className="col-12" style={{backgroundColor: '#ECEDED', height: '100vw'}}>
-                            <Main />
-                        </div>
-                    </div>
-                    }
+                    : */}
+                    <Main />
+                    {/* } */}
                 </div>
             </div>
         </Router>
