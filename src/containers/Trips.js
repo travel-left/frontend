@@ -78,7 +78,7 @@ class Trips extends Component {
         }
 
         if(showNewTripButton) {
-            newTripButton = <button style={{margin: '40px 30px 40px 30px'}}onClick={this.showTripForm} class='btn btn-lg'>ADD NEW TRIP</button>
+            newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
         }
 
         if(user) {
@@ -95,7 +95,7 @@ class Trips extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="welcomeMessage">   
+                        <div className="" style={{justifyContent: 'center'}}>   
                             {newTripButton}
                         </div>
                     </div>
@@ -110,11 +110,11 @@ class Trips extends Component {
         }
         return (
             <div className="row">
-                <div className="col-2" style={{padding: '0px 0px 30px 0px', backgroundColor: 'white', height: '100vh'}} >
-                    <div>
+                <div className="col-2" style={{padding: '0px 0px 30px 0px', backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 1px 0px 20px'}} >
+                    <div className='row' style={{justifyContent: 'center'}}>
                         {newTripButton}
                     </div>
-                    <div >
+                    <div className='trips-side-bar'>
                         <ul class="list-group">
                             <a href='#' class="list-group-item list-group-item-action active justify-content-between align-items-center">
                                 All Trips

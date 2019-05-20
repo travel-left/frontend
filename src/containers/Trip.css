@@ -111,3 +111,19 @@ button.new-trip:hover {
 .trip-form button {
     margin-top: 15px;
 }
+
+.trips-side-bar ul>a{
+    color: #717171;
+    font-weight: 500;
+    border-radius: 0% !important;
+}
+
+.trips-side-bar ul>a.active {
+    background-color: #0F61D8;
+    border: none;
+    border-radius: 0%;
+}
+
+.trips-side-bar ul>a>span{
+    background-color: #0F61D8;
+}
