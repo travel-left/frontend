@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { setCurrentTrip } from '../store/actions/trip';
 import TripForm from '../components/Trips/TripForm';
 import './Trip.css'
+import Alert from '../components/Other/Alert';
 
 class Trips extends Component {
     state = {
@@ -141,7 +142,7 @@ class Trips extends Component {
                 <div className="col-10">
                     <div className="row">
                         <div className="col-12">
-                            <div class="alert alert-info" role="alert" style={{margin: '15px 50px 30px 0px', backgroundColor: 'white', border: 'none', color: 'blue'}}>A simple info alert—check it out!</div>
+                            <Alert />
                         </div>
                     </div>
                     <div className="row">
