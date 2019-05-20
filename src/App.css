@@ -70,4 +70,15 @@ button.btn-lg.btn-square.dark {
     padding: 12px 28px;
     border-radius: 0%;
     border: none;
+    text-transform: uppercase;
+}
+
+button.btn-lg.btn-square.light {
+    color: #FBFBFB;
+    background-color: #8ECFF5;
+    font-size: .9em;
+    padding: 12px 28px;
+    border-radius: 0%;
+    border: none;
+    text-transform: uppercase;
 }

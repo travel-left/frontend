@@ -148,32 +148,29 @@ class Trips extends Component {
                     <div className="row">
                         <div className="col-8">
                         <div className="userList">
-                            <div className="card">
-                                <div className="row" style={{justifyContent: 'space-around'}}>
-                                    <div className="col-1"></div>
-                                    <div className="col-2" style={{borderBottom: '2px solid blue'}}><h5>Trip Name</h5></div>
-                                    <div className="col-3"><h5></h5></div>
-                                    <div className="col-2"><h5>Date</h5></div>
-                                    <div className="col-2"><h5>Status</h5></div>
-                                </div>
+                            <div className="card trip-list-header" style={{height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px'}}>
+                                <div className="col-1" ></div>
+                                <div className="col-2" style={{borderBottom: '2px solid #0F61D8'}}>Trip Name</div>
+                                <div className="col-3" ></div>
+                                <div className="col-2" >Date</div>
+                                <div className="col-2" >Status</div>
                             </div>
-                            <hr/>
-                            <ul class="list-group" style={{display: 'flex', flexDirection: 'column'}}>
-                                <div class="card" style={{minHeight: '80px'}}>
-                                    <div class="row no-gutters" style={{justifyContent: 'space-around'}}>
-                                        <div class="col-1">
-                                            <img src="..." class="card-img" alt="..."  style={{padding: '15px 5px 15px 5px'}}></img>
+                            <ul className="list-group" style={{display: 'flex', flexDirection: 'column'}}>
+                                <div className="card" style={{minHeight: '80px', boxShadow: 'rgb(136, 136, 136) 0px 0px 8px'}}>
+                                    <div className="row no-gutters" style={{justifyContent: 'space-around', height: '100px', flexDirection: 'row', alignItems: 'center',}}>
+                                        <div className="col-2 pull-left">
+                                            <img src="https://images.unsplash.com/photo-1484318571209-661cf29a69c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" className="card-img" alt="..."></img>
                                         </div>
-                                        <div class="col-2">
-                                            <p class="card-text" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted">South Africa</small></p>
+                                        <div className="col-2">
+                                            <p className="card-text" style={{padding: '15px 5px 15px 5px', fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>South Africa</p>
                                         </div>
-                                        <div class="col-3" style={{flexGrow: 2}}>
+                                        <div className="col-2" >
                                         </div>
-                                        <div class="col-2">
-                                            <p class="card-text" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted">June 12</small></p>
+                                        <div className="col-2">
+                                            <p className="card-text" style={{padding: '15px 5px 15px 5px', color: '#A3A3A3'}}>June 12</p>
                                         </div>
-                                        <div class="col-2">
-                                            <p class="card-text pull-right" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted" >Planning</small></p>
+                                        <div className="col-2">
+                                            <p className="card-text" style={{padding: '15px 5px 15px 5px'}}><span class="badge badge-primary badge-pill" style={{padding: '5px 10px', backgroundColor: '#8ECFF5'}}>PLANNING</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -181,22 +178,22 @@ class Trips extends Component {
                         </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: 'white', height: '100vh'}}>
-                            <div class="card" style={{}}>
-                                <img src="..." class="card-img-top" alt="..."></img>
-                                <div class="card-body">
-                                    <h5 class="card-title">Trip to Austrailia</h5>
-                                    <button className="btn btn-lg">Edit</button>
+                            <div class="card" style={{border: 'none'}}>
+                                <img src="https://images.unsplash.com/photo-1484318571209-661cf29a69c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" class="card-img-top" style={{boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%'}}alt="..."></img>
+                                <div class="card-body" style={{marginTop: '20px'}}>
+                                    <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>Trip to South Africa</span>  
+                                    <button className="btn btn-lg btn-square dark pull-right">Edit</button>
                                     <p class="card-text">Planned for sophonmores and juniors who didn't get to attend lasts year trip</p>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Date <span>Jun 31</span></li>
-                                    <li class="list-group-item">Status <span>PLANNING</span></li>
-                                    <li class="list-group-item">Total Invited <span>215</span></li>
-                                    <li class="list-group-item">Total Confirmed <span>85</span></li>
+                                    <li class="list-group-item">Date <span className='pull-right' style={{color: '#0B62D4'}}>Jun 31</span></li>
+                                    <li class="list-group-item">Status <span className='pull-right badge badge-primary badge-pill' style={{padding: '5px 10px', backgroundColor: '#8ECFF5'}}>PLANNING</span></li>
+                                    <li class="list-group-item">Total Invited <span className='pull-right badge badge-primary badge-pill' style={{padding: '5px 10px', backgroundColor: '#0F61D8'}}>215</span></li>
+                                    <li class="list-group-item">Total Confirmed <span className='pull-right badge badge-primary badge-pill' style={{padding: '5px 10px', backgroundColor: '#0F61D8'}}>85</span></li>
                                 </ul>
                                 <div class="card-body">
-                                    <button className="btn btn-lg">DUPLICATE</button>
-                                    <button className="btn btn-lg">ARCHIVE</button>
+                                    <button className="btn btn-lg btn-square light">DUPLICATE</button>
+                                    <button className="btn btn-lg btn-square light pull-right">ARCHIVE</button>
                                 </div>
                             </div>
                         </div>

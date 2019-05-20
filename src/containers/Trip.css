@@ -127,3 +127,9 @@ button.new-trip:hover {
 .trips-side-bar ul>a>span{
     background-color: #0F61D8;
 }
+
+.trip-list-header div{
+    text-transform: uppercase;
+    font-size: .9em;
+    font-weight: 600;
+}
