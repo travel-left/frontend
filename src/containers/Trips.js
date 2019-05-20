@@ -141,22 +141,24 @@ class Trips extends Component {
                 <div className="col-10">
                     <div className="row">
                         <div className="col-12">
-                            <div class="alert alert-info" role="alert">A simple info alert—check it out!</div>
+                            <div class="alert alert-info" role="alert" style={{margin: '15px 50px 30px 0px', backgroundColor: 'white', border: 'none', color: 'blue'}}>A simple info alert—check it out!</div>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-8">
                         <div className="userList">
-                            <div className="row" style={{justifyContent: 'space-around'}}>
-                                <div className="col-1"></div>
-                                <div className="col-2"><h5>Trip Name</h5></div>
-                                <div className="col-3"><h5></h5></div>
-                                <div className="col-2"><h5>Date</h5></div>
-                                <div className="col-2"><h5>Status</h5></div>
+                            <div className="card">
+                                <div className="row" style={{justifyContent: 'space-around'}}>
+                                    <div className="col-1"></div>
+                                    <div className="col-2" style={{borderBottom: '2px solid blue'}}><h5>Trip Name</h5></div>
+                                    <div className="col-3"><h5></h5></div>
+                                    <div className="col-2"><h5>Date</h5></div>
+                                    <div className="col-2"><h5>Status</h5></div>
+                                </div>
                             </div>
                             <hr/>
                             <ul class="list-group" style={{display: 'flex', flexDirection: 'column'}}>
-                                <div class="card">
+                                <div class="card" style={{minHeight: '80px'}}>
                                     <div class="row no-gutters" style={{justifyContent: 'space-around'}}>
                                         <div class="col-1">
                                             <img src="..." class="card-img" alt="..."  style={{padding: '15px 5px 15px 5px'}}></img>
@@ -181,17 +183,19 @@ class Trips extends Component {
                             <div class="card" style={{}}>
                                 <img src="..." class="card-img-top" alt="..."></img>
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <h5 class="card-title">Trip to Austrailia</h5>
+                                    <button className="btn btn-lg">Edit</button>
+                                    <p class="card-text">Planned for sophonmores and juniors who didn't get to attend lasts year trip</p>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <li class="list-group-item">Date <span>Jun 31</span></li>
+                                    <li class="list-group-item">Status <span>PLANNING</span></li>
+                                    <li class="list-group-item">Total Invited <span>215</span></li>
+                                    <li class="list-group-item">Total Confirmed <span>85</span></li>
                                 </ul>
                                 <div class="card-body">
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
+                                    <button className="btn btn-lg">DUPLICATE</button>
+                                    <button className="btn btn-lg">ARCHIVE</button>
                                 </div>
                             </div>
                         </div>

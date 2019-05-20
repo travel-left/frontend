@@ -19,26 +19,29 @@ class Navbar extends Component {
             :
                 null
         return (
-            <nav className="navbar navbar-expand container-fluid">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <Link to="/trips" className="navbar-brand">
-                            <strong style={{fontSize: '2em', color: '#4FCBD0'}}>left.</strong>
+            <nav className="navbar navbar-expand container-fluid" style={{paddingLeft: '50px', paddingRight: '50px'}}>
+                    <div className="navbar-header navbar-brand">
+                        <Link to="/trips" className="">
+                            <strong className='logo'>left.</strong>
                         </Link>
                     </div>
-                    <div className="nav navbar-nav navbar-right">
-                        <ul className="nav navbar-nav navbar-right">
-                            <li className='greeting'>
+                    <div className="nav-item">
+                        <button className="btn-lg btn-round light" style={{marginLeft: '30px'}}>
+                            Trips
+                        </button>
+                    </div>
+                    <div className="nav navbar-nav ml-auto">
+                        <ul className="navbar-nav">
+                            <li className='greeting nav-item'>
                                 { greeting }
                             </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <li className='nav-app-link'>
-                            <a onClick={this.signout}><i className="fa fa-mobile fa-2x" aria-hidden="true"></i> <i className="fa fa-download fa-2x" aria-hidden="true"></i></a>
+                            <li className='nav-app-link nav-item'>
+                                <a onClick={this.signout}><i className="fa fa-mobile fa-2x" aria-hidden="true"></i> <i className="fa fa-download fa-2x" aria-hidden="true"></i></a>
                             </li>
                         </ul>
                     </div>
-                </div>
             </nav>
         )
     }

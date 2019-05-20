@@ -4,7 +4,8 @@
 .navbar.navbar-expand {
     min-height: 84px;
     margin-right: 30px;
-    background-color: #FCFEFB;
+    background-color: #0F61D8;
+    color: #FBFBFB;
 }
   
 .greeting {
@@ -13,15 +14,20 @@
 }
 
 .nav-app-link {
-  color: #4FCBD0;
+    color: #8ECFF5;
 }
-
 .nav-app-link:hover {
   cursor: pointer;
   color: #82ccdd;
   transition: .2s;
 }
 
-.navbar-brand-left {
-  color: #4FCBD0;
+.logo {
+    font-size: 2em;
+    color: #FBFBFB;
+    font-weight: 900;
+}
+
+a:hover {
+    text-decoration: none;
 }
