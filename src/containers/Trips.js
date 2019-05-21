@@ -13,7 +13,8 @@ class Trips extends Component {
         trips: [],
         showTrips: false,
         showTripForm: false,
-        showNewTripButton: true
+        showNewTripButton: true,
+        selectedTrip: {}
     }
     
     constructor(props){
@@ -22,7 +23,8 @@ class Trips extends Component {
         .then(data => {
             return this.setState({
                 trips: data.trips,
-                showTrips: true
+                showTrips: true,
+                selectedTrip: data.trips[0]
             })
         })
     }
@@ -62,9 +64,15 @@ class Trips extends Component {
         })
     }
 
+    setSelectedTrip = tripId => {
+        this.setState({
+            selectedTrip: this.state.trips.filter(t => t._id == tripId)[0]
+        })
+    }
+
     render(){
         let { user } = this.props
-        let { showTrips, showTripForm, trips, showNewTripButton } = this.state
+        let { showTrips, showTripForm, trips, showNewTripButton, selectedTrip } = this.state
         let tripTiles, content, tripForm, newTripButton = null
 
         if(showTrips) {
@@ -157,11 +165,11 @@ class Trips extends Component {
                                 <div className="col-2" >Date</div>
                                 <div className="col-2" >Status</div>
                             </div>
-                            <TripList trips={trips}/>
+                            <TripList trips={trips} setSelectedTrip={this.setSelectedTrip}/>
                         </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
-                            <TripInfo />
+                            <TripInfo image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart}/>
                         </div>
                     </div>
                 </div>
