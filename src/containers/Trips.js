@@ -5,6 +5,7 @@ import { setCurrentTrip } from '../store/actions/trip';
 import TripForm from '../components/Trips/TripForm';
 import './Trip.css'
 import Alert from '../components/Other/Alert';
+import TripList from '../components/Trips/TripList';
 
 class Trips extends Component {
     state = {
@@ -147,7 +148,7 @@ class Trips extends Component {
                     </div>
                     <div className="row">
                         <div className="col-8">
-                        <div className="userList">
+                        <div className="">
                             <div className="card trip-list-header" style={{height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px'}}>
                                 <div className="col-1" ></div>
                                 <div className="col-2" style={{borderBottom: '2px solid #0F61D8'}}>Trip Name</div>
@@ -155,29 +156,11 @@ class Trips extends Component {
                                 <div className="col-2" >Date</div>
                                 <div className="col-2" >Status</div>
                             </div>
-                            <ul className="list-group" style={{display: 'flex', flexDirection: 'column'}}>
-                                <div className="card" style={{minHeight: '80px', boxShadow: 'rgb(136, 136, 136) 0px 0px 8px'}}>
-                                    <div className="row no-gutters" style={{justifyContent: 'space-around', height: '100px', flexDirection: 'row', alignItems: 'center',}}>
-                                        <div className="col-2 pull-left">
-                                            <img src="https://images.unsplash.com/photo-1484318571209-661cf29a69c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" className="card-img" alt="..."></img>
-                                        </div>
-                                        <div className="col-2">
-                                            <p className="card-text" style={{padding: '15px 5px 15px 5px', fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>South Africa</p>
-                                        </div>
-                                        <div className="col-2" >
-                                        </div>
-                                        <div className="col-2">
-                                            <p className="card-text" style={{padding: '15px 5px 15px 5px', color: '#A3A3A3'}}>June 12</p>
-                                        </div>
-                                        <div className="col-2">
-                                            <p className="card-text" style={{padding: '15px 5px 15px 5px'}}><span class="badge badge-primary badge-pill" style={{padding: '5px 10px', backgroundColor: '#8ECFF5'}}>PLANNING</span></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ul>
+                            
+                            <TripList />
                         </div>
                         </div>
-                        <div className="col-4" style={{backgroundColor: 'white', height: '100vh'}}>
+                        <div className="col-4" style={{backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
                             <div class="card" style={{border: 'none'}}>
                                 <img src="https://images.unsplash.com/photo-1484318571209-661cf29a69c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" class="card-img-top" style={{boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%'}}alt="..."></img>
                                 <div class="card-body" style={{marginTop: '20px'}}>

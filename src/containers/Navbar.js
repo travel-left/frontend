@@ -30,6 +30,11 @@ class Navbar extends Component {
                             Trips
                         </button>
                     </div>
+                    <div className="nav-item">
+                        <button className="btn-lg btn-round clear" style={{marginLeft: '30px'}}>
+                            Account
+                        </button>
+                    </div>
                     <div className="nav navbar-nav ml-auto">
                         <ul className="navbar-nav">
                             <li className='greeting nav-item'>
