@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './Trip.css'
 
 class Trip extends Component {
 
@@ -19,10 +20,10 @@ class Trip extends Component {
                     <div className="col-2 pull-left">
                         <img src={image} className="card-img" alt="..."></img>
                     </div>
-                    <div className="col-2">
+                    <div className="col-2 hover">
                         <p className="card-text" style={{padding: '15px 5px 15px 5px', fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>{name}</p>
                     </div>
-                    <div className="col-2" >
+                    <div className="col-2 hover" style={{height: '100%'}}>
                     </div>
                     <div className="col-2">
                         <p className="card-text" style={{padding: '15px 5px 15px 5px', color: '#A3A3A3'}}>{date}</p>
