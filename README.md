@@ -1,4 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Before you start
+
+Install node and npm https://nodejs.org/en/
+Install nodemon globally https://www.npmjs.com/package/nodemon
+'npm install'
+'npm start'
 
 ## Available Scripts
 
