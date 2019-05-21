@@ -4,136 +4,72 @@ import './Dashboard.css'
 import NumberTile from '../components/AdminHome/NumberTile'
 import { setCurrentTrip } from '../store/actions/trip'
 import { apiCall } from '../services/api'
+import Alert from '../components/Other/Alert';
 
 class Dashboard extends Component {
 
     state = {
-        trips: [],
-        showTrips: false,
-        showTripForm: false,
-        showNewTripButton: true
+
     }
 
     constructor(props){
         super(props)
-        apiCall('get', `/api/users/${this.props.user._id}/trips`)
-        .then(data => {
-            return this.setState({
-                trips: data.trips,
-                showTrips: true
-            })
-        })
-        //get the admin's cohorts
-        //get the admin's users
-        //get the admin's places of interest
-        //get the admin's itineraries
+
     }
 
-    selectTrip = e => {
-        let selectedTrip = this.state.trips.filter(trip => trip._id === e.target.name)[0]
+    selectFeature = e => {
+        console.log(e.target.name)
+        let {history, currentTrip} = this.props
 
-        this.props.setCurrentTrip({
-            id: selectedTrip._id,
-            name: selectedTrip.name,
-            image: selectedTrip.image
-        })
-
-        this.props.history.push(`/trips/${selectedTrip._id}/home`)
-    }
-
-    showTripForm = () => {
-        this.setState({
-            showNewTripButton: false,
-            showTripForm: true
-        })
-    }
-
-    addTrip = trip => {
-        apiCall('post', `/api/trip/${this.props.user._id}`, trip)
-        .then(data => {
-            return this.setState(prevState => {
-                return {
-                    trips: [
-                        ...prevState.trips,
-                        data.trip
-                    ],
-                    showTripForm: false,
-                    showNewTripButton: true
-                }
-            })
-        })
+        switch (e.target.name) {
+            case 'itinerary':
+                return history.push(`/trips/${currentTrip._id}/itinerary`)
+            case 'travelers':
+                return history.push(`/trips/${currentTrip._id}/manage`)
+            case 'communicate':
+                return history.push(`/trips/${currentTrip._id}/communicate`)
+            default:
+                return history.push('/trips')
+        }
     }
 
     render() {
-        let { user } = this.props
-        let { showTrips, showTripForm, trips, showNewTripButton } = this.state
-        let tripTiles, content, tripForm, newTripButton = null
-        if(showNewTripButton) {
-            newTripButton = <button onClick={this.showTripForm} class='new-trip'><i class="fa fa-plus fa-3x"></i>
-                                <br></br>New Trip
-                            </button>
-        }
-        if(showTrips) {
-            tripTiles = trips.map(trip => {
-                return (
-                    <div className="container">
-                        <div className="item blue">
-                            <img src={trip.image}/>
-                            <button name={trip._id} onClick={this.selectTrip}className=""> <i className="fa fa-globe" aria-hidden="true"></i> {trip.name}</button>
+        return (
+            <div className="row">
+                <div className="col-2" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 1px 0px 20px'}} >
+                    <div className='row' style={{justifyContent: 'center'}}>
+                        <div class="card" style={{border: 'none', backgroundColor:'#FBFBFB'}}>
+                            <img className='card-img-top' src={this.props.currentTrip.image} style={{boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%'}}></img>
+                            <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600', margin: '15px 15px'}}>Trip to {this.props.currentTrip.name}</span> 
                         </div>
                     </div>
-                )
-            })
-        }
-
-        // if(showNewTripButton) {
-        //     newTripButton = <button onClick={this.showTripForm} class='new-trip'><i class="fa fa-plus fa-3x"></i>
-        //                         <br></br>New Trip
-        //                     </button>
-        // }
-
-        // if(user) {
-        //     content = (
-        //         <div>
-        //             <div className="row">
-        //                 <div className="welcomeMessage">   
-        //                     <h2>Which trip would you like to coordinate?</h2>
-        //                 </div>
-        //             </div>
-        //             <div className="row">
-        //                 <div className="col-12">
-        //                     {tripTiles}
-        //                 </div>
-        //             </div>
-        //             <div className="row">
-        //                 <div className="welcomeMessage">   
-        //                     {newTripButton}
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     )
-        // }
-        // if(showTripForm)  {
-        //     tripForm = 
-        //     <div className="col-6 welcomeMessage">
-        //         <TripForm submit={this.addTrip}/>
-        //     </div>
-        // }
-
-        return (
-            <div>
-                <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>By the Numbers</strong></h4>
-                <div className="row" style={{display: 'flex', flexDirection:'row', justifyContent: 'center', marginTop: '15px', marginLeft: '20px', marginRight: '20px'}}>
-                    <NumberTile phrase='Days until the trip' number={36} />
-                    <NumberTile phrase='Travelers ready to go' number={19} />
-                    <NumberTile phrase='Events planned' number={24} />
+                    <hr/>
+                    <div className='dashboard-side-bar'>
+                        <ul class="list-group list-group-flush" style={{backgroundColor: '#FBFBFB'}}>
+                            <a onClick={this.selectFeature} name='info' style={{margin: '25px 10px', color: '#0B62D4', fontWeight: '600'}}>Trip Information</a>
+                            <a onClick={this.selectFeature} name='itinerary' style={{margin: '25px 10px', color: '#0B62D4', fontWeight: '600'}}>Itinerary</a>
+                            <a onClick={this.selectFeature} name='docs' style={{margin: '25px 10px', color: '#0B62D4', fontWeight: '600'}}>Documents</a>
+                            <a onClick={this.selectFeature} name='travelers' style={{margin: '25px 10px', color: '#0B62D4', fontWeight: '600'}}>Travelers</a>
+                            <a onClick={this.selectFeature} name='mobile' style={{margin: '25px 10px', color: '#0B62D4', fontWeight: '600'}}>Mobile App</a>
+                            <a onClick={this.selectFeature} name='communicate' style={{margin: '25px 10px', color: '#0B62D4', fontWeight: '600'}}>Communicate</a>
+                        </ul>
+                    </div>
                 </div>
-                <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Your Trips</strong></h4>
-                {tripTiles}
-                <div className="row">
-                        <div className="welcomeMessage">   
-                            {newTripButton}
+                <div className="col-10">
+                    <div className="row">
+                        <div className="col-12">
+                            <Alert />
                         </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-8">
+                        <div className="">
+                        </div>
+                        </div>
+                        <div className="col-4" style={{backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         )

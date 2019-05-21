@@ -30,11 +30,12 @@ class Trips extends Component {
     }
 
     selectTrip = tripId => {
-        this.props.setCurrentTrip({
-            ...this.state.trips.filter(t => t._id == tripId)[0]
-        })
+        console.log(this.state.trips.filter(t => t._id == tripId)[0])
+        this.props.setCurrentTrip(
+            this.state.trips.filter(t => t._id == tripId)[0]
+        )
 
-        this.props.history.push(`/trips/${tripId}/home`)
+        this.props.history.push(`/trips/${tripId}/edit`)
     }
 
     showTripForm = () => {
@@ -134,7 +135,7 @@ class Trips extends Component {
                             <TripList trips={trips} setSelectedTrip={this.setSelectedTrip}/>
                         </div>
                         </div>
-                        <div className="col-4" style={{backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
+                        <div className="col-4" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
                             <TripInfo id={selectedTrip._id} image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/>
                         </div>
                     </div>

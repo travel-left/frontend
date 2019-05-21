@@ -25,7 +25,7 @@ const App = () => (
         <Router>
             <div className="">
                 <Navbar/>
-                <div className="container-fluid" style={{backgroundColor: '#ECEDED', height: '100vw'}}>
+                <div className="container-fluid" style={{backgroundColor: '#ECEDED'}}>
                     {/* {localStorage.token ? 
                         <div className="row">
                             <div className="col-2">
