@@ -157,7 +157,7 @@ class Trips extends Component {
                                 <div className="col-2" >Status</div>
                             </div>
                             
-                            <TripList />
+                            <TripList trips={trips}/>
                         </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>

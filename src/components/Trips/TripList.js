@@ -2,13 +2,11 @@ import React from 'react'
 import Trip from './Trip';
 
 
-const TripList = ({}) => {
+const TripList = ({trips}) => {
+    let list = trips.map(t => <Trip image={t.image} name={t.name}/>)
     return (
         <ul className="list-group" style={{display: 'flex', flexDirection: 'column'}}>
-            <Trip />
-            <Trip />
-            <Trip />
-            <Trip />
+            {list}
         </ul>
     )
 }
