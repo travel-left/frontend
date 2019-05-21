@@ -29,16 +29,12 @@ class Trips extends Component {
         })
     }
 
-    selectTrip = e => {
-        let selectedTrip = this.state.trips.filter(trip => trip._id === e.target.name)[0]
-
+    selectTrip = tripId => {
         this.props.setCurrentTrip({
-            id: selectedTrip._id,
-            name: selectedTrip.name,
-            image: selectedTrip.image
+            ...this.state.trips.filter(t => t._id == tripId)[0]
         })
 
-        this.props.history.push(`/trips/${selectedTrip._id}/home`)
+        this.props.history.push(`/trips/${tripId}/home`)
     }
 
     showTripForm = () => {
@@ -76,43 +72,13 @@ class Trips extends Component {
         let tripTiles, content, tripForm, newTripButton = null
 
         if(showTrips) {
-            tripTiles = trips.map(trip => {
-                return (
-                    <div className="container">
-                        <div className="item blue">
-                            <img src={trip.image}/>
-                            <button name={trip._id} onClick={this.selectTrip}className=""> <i className="fa fa-globe" aria-hidden="true"></i> {trip.name}</button>
-                        </div>
-                    </div>
-                )
-            })
+
         }
 
         if(showNewTripButton) {
             newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
         }
 
-        if(user) {
-            content = (
-                <div>
-                    <div className="row">
-                        <div className="welcomeMessage">   
-                            <h2>Which trip would you like to coordinate?</h2>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            {tripTiles}
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="" style={{justifyContent: 'center'}}>   
-                            {newTripButton}
-                        </div>
-                    </div>
-                </div>
-            )
-        }
         if(showTripForm)  {
             tripForm = 
             <div className="col-6 welcomeMessage">
@@ -169,7 +135,7 @@ class Trips extends Component {
                         </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
-                            <TripInfo image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart}/>
+                            <TripInfo id={selectedTrip._id} image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/>
                         </div>
                     </div>
                 </div>
