@@ -9,9 +9,7 @@ export default (state = DEFAULT_STATE, action) => {
     switch (action.type) {
         case SET_CURRENT_TRIP:
             return {
-                id: action.currentTrip.id,
-                name: action.currentTrip.name,
-                image: action.currentTrip.image
+                ...action.trip
             }
         default:
             return state;

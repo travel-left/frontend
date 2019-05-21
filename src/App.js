@@ -25,15 +25,19 @@ const App = () => (
         <Router>
             <div className="">
                 <Navbar/>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-2">
-                            <SideNav />
+                <div className="container-fluid" style={{backgroundColor: '#ECEDED'}}>
+                    {/* {localStorage.token ? 
+                        <div className="row">
+                            <div className="col-2">
+                                <SideNav />
+                            </div>
+                            <div className="col-10" style={{backgroundColor: '#ECEDED', height: '100vw'}}>
+                                <Main />
+                            </div>
                         </div>
-                        <div className="col-10" style={{backgroundColor: '#ECEDED', height: '100vw'}}>
-                            <Main />
-                        </div>
-                    </div>
+                    : */}
+                    <Main />
+                    {/* } */}
                 </div>
             </div>
         </Router>

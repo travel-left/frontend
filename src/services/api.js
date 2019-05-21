@@ -43,5 +43,5 @@ export async function getBackground(location){
       }
       return response.json()
     })
-  }
+}
   
