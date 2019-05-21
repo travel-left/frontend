@@ -14,7 +14,7 @@ const Trip = ({name, image, date, status}) => {
                 <div className="col-2" >
                 </div>
                 <div className="col-2">
-                    <p className="card-text" style={{padding: '15px 5px 15px 5px', color: '#A3A3A3'}}>June 12</p>
+                    <p className="card-text" style={{padding: '15px 5px 15px 5px', color: '#A3A3A3'}}>{date}</p>
                 </div>
                 <div className="col-2">
                     <p className="card-text" style={{padding: '15px 5px 15px 5px'}}><span class="badge badge-primary badge-pill" style={{padding: '5px 10px', backgroundColor: '#8ECFF5'}}>PLANNING</span></p>

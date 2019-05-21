@@ -3,7 +3,7 @@ import Trip from './Trip';
 
 
 const TripList = ({trips}) => {
-    let list = trips.map(t => <Trip image={t.image} name={t.name}/>)
+    let list = trips.map(t => <Trip image={t.image} name={t.name} date={t.dateStart}/>)
     return (
         <ul className="list-group" style={{display: 'flex', flexDirection: 'column'}}>
             {list}
