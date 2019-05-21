@@ -18,7 +18,7 @@ class Trip extends Component {
             <div className="card" onClick={this.onTripClick} style={{minHeight: '80px', boxShadow: 'rgb(136, 136, 136) 0px 0px 8px', marginBottom: '10px'}}>
                 <div className="row no-gutters" style={{justifyContent: 'space-around', height: '100px', flexDirection: 'row', alignItems: 'center',}}>
                     <div className="col-2 pull-left">
-                        <img src={image} className="card-img" alt="..."></img>
+                        <img src={image} className="card-img" alt="..." style={{maxHeight: '90px'}}></img>
                     </div>
                     <div className="col-2 hover">
                         <p className="card-text" style={{padding: '15px 5px 15px 5px', fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>{name}</p>
