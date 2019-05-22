@@ -6,6 +6,7 @@ import { apiCall } from '../services/api'
 import CohortForm from '../components/Manage/CohortForm'
 import CohortList from "../components/Manage/CohortList"
 import Alert from "../components/Other/Alert";
+import UserInfo from '../components/Manage/UserInfo';
 
 class Manage extends Component {
     state = {
@@ -124,10 +125,10 @@ class Manage extends Component {
                         <Alert />
                     </div>
                 </div>
-                <h2>People on this Trip</h2>
-                <p>Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary</p>
                 <div className="row">
                     <div className="col-8">
+                        <h2>People on this Trip</h2>
+                        <p>Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary</p>
                         <div className="">
                             <div className="card trip-list-header" style={{height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px'}}>
                                 <div className="col-1" ></div>
@@ -140,7 +141,7 @@ class Manage extends Component {
                         </div>
                     </div>
                     <div className="col-4" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
-                        {/* <TripInfo id={selectedTrip._id} image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/> */}
+                        <UserInfo />
                     </div>
                 </div>
             </div>
