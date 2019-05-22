@@ -11,7 +11,7 @@ class TripInfo extends Component {
     }
 
     render() {
-        let {name, date, image} = this.props
+        let {name, date, image, description} = this.props
 
         return (
             <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
@@ -19,7 +19,7 @@ class TripInfo extends Component {
                 <div class="card-body" style={{marginTop: '20px'}}>
                     <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>Trip to {name}</span>  
                     <button onClick={this.onEditClick} className="btn btn-lg btn-square dark pull-right">Edit</button>
-                    <p class="card-text">Planned for sophonmores and juniors who didn't get to attend lasts year trip</p>
+                    <p class="card-text">{description}</p>
                 </div>
                 <ul class="list-group list-group-flush" style={{backgroundColor: '#FBFBFB'}}>
                     <li class="list-group-item" style={{backgroundColor: '#FBFBFB'}}>Date <span className='pull-right' style={{color: '#0B62D4'}}>{date}</span></li>
