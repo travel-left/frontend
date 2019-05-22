@@ -5,6 +5,7 @@ import UserForm from '../components/Manage/UserForm'
 import { apiCall } from '../services/api'
 import CohortForm from '../components/Manage/CohortForm'
 import CohortList from "../components/Manage/CohortList"
+import Alert from "../components/Other/Alert";
 
 class Manage extends Component {
     state = {
@@ -23,14 +24,14 @@ class Manage extends Component {
     }
 
     getAndSetUsers = () => {
-        apiCall('get', `/api/users/trip/${this.props.currentTrip.id}`)
+        apiCall('get', `/api/users/trip/${this.props.currentTrip._id}`)
         .then(data => {
             return this.setState({users: data.users})
         })
     }
 
     getAndSetCohorts = () => {
-        apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohorts`)
+        apiCall('get', `/api/trip/${this.props.currentTrip._id}/cohorts`)
         .then(data => {
             return this.setState({cohorts: data.cohorts})
         })
@@ -117,34 +118,60 @@ class Manage extends Component {
         }
 
         return (
-            <div className="container manage">
-                <div className="users" style={{marginTop: '30px'}}>
-                    <h2>Travelers</h2>
-                    <div className="row">   
-                        <div className="col-8">
-                            <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
-                        </div>
-                        <div className="col-1"></div>
-                        <div className="col-3">
-                            {userButton}
-                            {userForm}
-                        </div>
+            <div>
+                <div className="row">
+                    <div className="col-12">
+                        <Alert />
                     </div>
                 </div>
-                <div className="cohorts" style={{marginTop: '30px'}}>
-                    <h2>Cohorts</h2>
-                    <div className="row">   
-                        <div className="col-8">
-                            <CohortList cohorts={cohorts}/>
+                <h2>People on this Trip</h2>
+                <p>Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary</p>
+                <div className="row">
+                    <div className="col-8">
+                        <div className="">
+                            <div className="card trip-list-header" style={{height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px'}}>
+                                <div className="col-1" ></div>
+                                <div className="col-3" style={{borderBottom: '2px solid #0F61D8'}}>Name</div>
+                                <div className="col-3" >Email</div>
+                                <div className="col-3" >Cohort</div>
+                                <div className="col-2" >Status</div>
+                            </div>
+                            <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
                         </div>
-                        <div className="col-1"></div>
-                        <div className="col-3">
-                            {cohortButton}
-                            {cohortForm}
-                        </div>
+                    </div>
+                    <div className="col-4" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
+                        {/* <TripInfo id={selectedTrip._id} image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/> */}
                     </div>
                 </div>
             </div>
+            // <div className="container manage">
+            //     <div className="users" style={{marginTop: '30px'}}>
+            //         <h2>Travelers</h2>
+            //         <div className="row">   
+            //             <div className="col-8">
+            //                 <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
+            //             </div>
+            //             <div className="col-1"></div>
+            //             <div className="col-3">
+            //                 {userButton}
+            //                 {userForm}
+            //             </div>
+            //         </div>
+            //     </div>
+            //     <div className="cohorts" style={{marginTop: '30px'}}>
+            //         <h2>Cohorts</h2>
+            //         <div className="row">   
+            //             <div className="col-8">
+            //                 <CohortList cohorts={cohorts}/>
+            //             </div>
+            //             <div className="col-1"></div>
+            //             <div className="col-3">
+            //                 {cohortButton}
+            //                 {cohortForm}
+            //             </div>
+            //         </div>
+            //     </div>
+            // </div>
         )
     }
 }

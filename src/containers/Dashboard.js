@@ -11,7 +11,8 @@ import TripInformation from '../components/TripInformation/TripInformation';
 const Dashboard = () => {
     return (
         <div className='row'>  
-            <SideNavigation />
+            {/* col-2 */}
+            <SideNavigation /> 
             <div className="col-10">
                 <Switch>
                     <Route exact path="/trips/:tripId/edit" component={withAuth(TripInformation)}/>
