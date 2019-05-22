@@ -22,22 +22,22 @@ class User extends Component {
             cohortList = <span>Add a cohort</span>
         }
         return (
-            <div class="card">
-                <div class="row no-gutters" style={{justifyContent: 'space-around'}}>
-                    <div class="col-1">
-                        <img src="..." class="card-img" alt="..."  style={{padding: '15px 5px 15px 5px'}}></img>
+            <div className="card" onClick={this.onTripClick} style={{minHeight: '80px', boxShadow: 'rgb(136, 136, 136) 0px 0px 8px', marginBottom: '10px'}}>
+                <div className="row no-gutters" style={{justifyContent: 'space-around', height: '100px', flexDirection: 'row', alignItems: 'center',}}>
+                    <div className="col-1">
+                        <img src="https://pbs.twimg.com/profile_images/1114204041431605249/p_TkPVR-_400x400.png" className="card-img" alt="..." style={{maxHeight: '60px', maxWidth: '60px', borderRadius: '50%', marginLeft: '15px'}}></img>
                     </div>
-                    <div class="col-2">
-                        <p class="card-text" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted">First Last</small></p>
+                    <div className="col-3 hover">
+                        <p className="card-text" style={{padding: '15px 5px 15px 5px', fontSize: '1em', color: '#3A3A3A', fontWeight: '600', marginLeft: '25px'}}>Jordan Boudreau</p>
                     </div>
-                    <div class="col-3" style={{flexGrow: 2}}>
-                        <p class="card-text" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted">{user.email}</small></p>
+                    <div className="col-3 hover">
+                        <p className="card-text" style={{padding: '15px 0px', fontSize: '1em', color: '#3A3A3A', fontWeight: '600'}}>{user.email}</p>
                     </div>
-                    <div class="col-2">
-                        {cohortList}
+                    <div className="col-3">
+                        <p className="card-text" style={{padding: '15px 5px 15px 0px', color: '#A3A3A3'}}>{cohortList}</p>
                     </div>
-                    <div class="col-2">
-                        <p class="card-text pull-right" style={{padding: '15px 5px 15px 5px'}}><small class="text-muted" >Pending</small></p>
+                    <div className="col-2">
+                        <p className="card-text" style={{padding: '15px 5px 15px 5px'}}><span class="badge badge-primary badge-pill" style={{padding: '5px 10px', backgroundColor: '#8ECFF5'}}>PLANNING</span></p>
                     </div>
                 </div>
             </div>

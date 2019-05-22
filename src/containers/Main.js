@@ -10,6 +10,7 @@ import Itinerary from './Itinerary'
 import Manage from './Manage'
 import Communicate from './Communicate'
 import Dashboard from './Dashboard'
+import withSideNav from '../hocs/withSideNav';
 
 const Main = ({authUser}) => {
 
@@ -19,10 +20,7 @@ const Main = ({authUser}) => {
             <Route exact path="/signin" render={props => <AuthForm onAuth={authUser} buttonText="Sign in" heading="Welcome Back." {...props}/>}></Route>
             {/*<Route exact path="/signup" render={props => <AuthForm onAuth={authUser} buttonText="Sign up" heading="Join Today." {...props}/>}></Route> */}
             <Route exact path="/trips" component={withAuth(Trips)}/>
-            <Route exact path="/trips/:tripId/edit" component={withAuth(Dashboard)}/>
-            <Route exact path="/trips/:tripId/itinerary" component={withAuth(Itinerary)}/>
-            <Route exact path="/trips/:tripId/manage" component={withAuth(Manage)}/>
-            <Route exact path="/trips/:tripId/communicate" component={withAuth(Communicate)}/>
+            <Route path="/trips/:tripId" component={withAuth(Dashboard)}/>
             <Route component={ErrorPage} />
         </Switch>
     )
