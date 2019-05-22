@@ -10,10 +10,11 @@ class SideNavigation extends Component {
     }
 
     selectFeature = e => {
-        console.log(e.target.name)
         let {history, currentTrip} = this.props
 
         switch (e.target.name) {
+            case 'info':
+                return history.push(`/trips/${currentTrip._id}/edit`)
             case 'itinerary':
                 return history.push(`/trips/${currentTrip._id}/itinerary`)
             case 'travelers':
@@ -21,7 +22,7 @@ class SideNavigation extends Component {
             case 'communicate':
                 return history.push(`/trips/${currentTrip._id}/communicate`)
             default:
-                return history.push('/trips')
+                return
         }
     }
 
