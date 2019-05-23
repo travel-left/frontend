@@ -136,7 +136,7 @@ class Trips extends Component {
                         </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
-                            <TripInfo id={selectedTrip._id} image={selectedTrip.image} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/>
+                            <TripInfo id={selectedTrip._id} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 class AddCohortToUserForm extends Component {
-
     constructor(props) {
         super(props)
     }
@@ -15,24 +14,22 @@ class AddCohortToUserForm extends Component {
     }
 
     render() {
-        let {currentCohort, cohorts} = this.props
-        let options = cohorts.map(cohort => (<option value={cohort._id}>{cohort.title}</option>))
-        let cohortList = currentCohort
-            ? 
-                <select value={currentCohort._id} name='cohort' onChange={this.handleChange}>
-                    {options}
-                </select>
-            : 
-               <select name='cohort' onChange={this.handleChange}>
-                    <option disabled selected >Select a cohort</option>
-                    {options}
-                </select>
-
-        return (
-            <div >
-                {cohortList}
-            </div>
+        let { currentCohort, cohorts } = this.props
+        let options = cohorts.map(cohort => <option value={cohort._id}>{cohort.title}</option>)
+        let cohortList = currentCohort ? (
+            <select value={currentCohort._id} name="cohort" onChange={this.handleChange}>
+                {options}
+            </select>
+        ) : (
+            <select name="cohort" onChange={this.handleChange}>
+                <option disabled selected>
+                    Select a cohort
+                </option>
+                {options}
+            </select>
         )
+
+        return <div>{cohortList}</div>
     }
 }
 

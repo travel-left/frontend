@@ -4,11 +4,10 @@ import thunk from 'redux-thunk'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-
 const loadState = () => {
     try {
         const serializedState = localStorage.getItem('state')
-        if(serializedState === null) {
+        if (serializedState === null) {
             return undefined
         }
         return JSON.parse(serializedState)
@@ -22,20 +21,18 @@ const saveState = state => {
         console.log('state is being saved')
         const serializedState = JSON.stringify(state)
         localStorage.setItem('state', serializedState)
-    } catch (err){
+    } catch (err) {
         console.log(err)
     }
 }
 
-export function configureStore(){
+export function configureStore() {
     const persistedState = loadState()
-    const store  = createStore(
+    const store = createStore(
         rootReducer,
         persistedState,
-        composeEnhancers(
-            applyMiddleware(thunk)
-        )
-    );
+        composeEnhancers(applyMiddleware(thunk))
+    )
 
     store.subscribe(() => {
         saveState(store.getState())

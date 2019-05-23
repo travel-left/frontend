@@ -1,9 +1,8 @@
 ## Before you start
 
-Install node and npm https://nodejs.org/en/
-Install nodemon globally https://www.npmjs.com/package/nodemon
+Install node and npm https://nodejs.org/en/<br>
+Install nodemon globally https://www.npmjs.com/package/nodemon<br>
 'npm install'
-'npm start'
 
 ## Available Scripts
 

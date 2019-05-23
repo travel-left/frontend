@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-export default function withAuth (ComponentToBeRendered) {
+export default function withAuth(ComponentToBeRendered) {
     class Authenticate extends Component {
-        componentWillMount(){
-            if(!this.props.isAuthenticated){
-                this.props.history.push("/signin")
+        componentWillMount() {
+            if (!this.props.isAuthenticated) {
+                this.props.history.push('/signin')
             }
         }
 
-        componentWillUpdate(){
-            if(!this.props.isAuthenticated){
-                this.props.history.push("/signin")
+        componentWillUpdate() {
+            if (!this.props.isAuthenticated) {
+                this.props.history.push('/signin')
             }
         }
 
@@ -29,4 +29,3 @@ export default function withAuth (ComponentToBeRendered) {
 
     return connect(mapStateToProps)(Authenticate)
 }
-

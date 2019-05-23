@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import EventForm from '../components/Itinerary/Event/EventForm'
 import DayList from '../components/Itinerary/Day/DayList'
-import ItineraryList from "../components/Itinerary/ItineraryList"
+import ItineraryList from '../components/Itinerary/ItineraryList'
 import EventList from '../components/Itinerary/Event/EventList'
-import { apiCall } from "../services/api"
+import { apiCall } from '../services/api'
 import DayForm from '../components/Itinerary/Day/DayForm'
 import './Itinerary.css'
 
@@ -17,15 +17,14 @@ class Itinerary extends Component {
         currentDayId: null,
         showItineraryList: false,
         showEventList: false,
-        showDayList: false, 
+        showDayList: false,
         showEventForm: false,
         showDayForm: false,
         showNewDayButton: true
     }
 
     getAndSetItineraries = () => {
-        return apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohort/all`)
-        .then(data => {
+        return apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohort/all`).then(data => {
             return this.setState({
                 itineraries: data.cohorts.map(c => {
                     return {
@@ -40,8 +39,7 @@ class Itinerary extends Component {
     }
 
     getAndSetDays = () => {
-        return apiCall('get', `/api/itinerary/${this.state.currentItinerary._id}/days`)
-        .then(data => {
+        return apiCall('get', `/api/itinerary/${this.state.currentItinerary._id}/days`).then(data => {
             return this.setState({
                 days: data.days,
                 currentDayId: data.days.length > 0 ? data.days[0]._id : null,
@@ -52,52 +50,50 @@ class Itinerary extends Component {
     }
 
     getAndSetEvents = () => {
-        return apiCall('get', `/api/itinerary/day/${this.state.currentDayId}/events`)
-        .then(data => {
+        return apiCall('get', `/api/itinerary/day/${this.state.currentDayId}/events`).then(data => {
             return this.setState({
                 showEventList: true,
                 events: data.events
             })
         })
     }
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.getAndSetItineraries()
-        .then(() => this.getAndSetDays())
-        .then(() => this.getAndSetEvents())
-        .catch(err => {
-            console.log(err)
-        })
+            .then(() => this.getAndSetDays())
+            .then(() => this.getAndSetEvents())
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     setCurrentItinerary = itinerary => {
         apiCall('get', `/api/itinerary/${itinerary}/days`)
-        .then(data => {
-            return this.setState({
-                currentItinerary: this.state.itineraries.filter(i => i._id === itinerary)[0],
-                days: data.days,
-                currentDayId: null,
-                showDayList: true,
-                showEventList: false,
-                showNewDayButton: true
+            .then(data => {
+                return this.setState({
+                    currentItinerary: this.state.itineraries.filter(i => i._id === itinerary)[0],
+                    days: data.days,
+                    currentDayId: null,
+                    showDayList: true,
+                    showEventList: false,
+                    showNewDayButton: true
+                })
             })
-        })
-        .then(() => {
-            return apiCall('get', `/api/itinerary/day/${this.state.currentDayId}/events`)
-        })
-        .then(data => {
-            return this.setState({
-                showEventList: false,
-                events: null,
-                currentItinerary: itinerary
+            .then(() => {
+                return apiCall('get', `/api/itinerary/day/${this.state.currentDayId}/events`)
             })
-        })
+            .then(data => {
+                return this.setState({
+                    showEventList: false,
+                    events: null,
+                    currentItinerary: itinerary
+                })
+            })
     }
 
     setCurrentDay = day => {
-        apiCall('get', `/api/itinerary/day/${day}/events`)
-        .then(data => {
+        apiCall('get', `/api/itinerary/day/${day}/events`).then(data => {
             this.setState({
                 currentDayId: day,
                 showEventList: true,
@@ -114,7 +110,7 @@ class Itinerary extends Component {
             showEventList: false
         })
     }
-    
+
     onNewDayClick = () => {
         this.setState({
             showDayForm: true,
@@ -124,8 +120,7 @@ class Itinerary extends Component {
 
     submitEvent = event => {
         event.day_id = this.state.currentDayId
-        apiCall('post', `/api/itinerary/event`, event)
-        .then(() => this.setCurrentDay(this.state.currentDayId))
+        apiCall('post', `/api/itinerary/event`, event).then(() => this.setCurrentDay(this.state.currentDayId))
     }
 
     submitDay = date => {
@@ -136,82 +131,89 @@ class Itinerary extends Component {
 
         let dayId = null
         apiCall('post', `/api/itinerary/day`, day)
-        .then(data => {
-            dayId = data._id
-            return apiCall('get', `/api/itinerary/${this.state.currentItinerary._id}/days`)
-        })
-        .then(data => {
-            return this.setState({
-                days: data.days,
-                currentDayId: dayId,
-                showDayList: true,
-                showNewDayButton: true,
-                showDayForm: false
+            .then(data => {
+                dayId = data._id
+                return apiCall('get', `/api/itinerary/${this.state.currentItinerary._id}/days`)
             })
-        })
-        .then(() => {
-            return this.getAndSetEvents()
-        })
+            .then(data => {
+                return this.setState({
+                    days: data.days,
+                    currentDayId: dayId,
+                    showDayList: true,
+                    showNewDayButton: true,
+                    showDayForm: false
+                })
+            })
+            .then(() => {
+                return this.getAndSetEvents()
+            })
     }
 
     removeDay = dayId => {
         apiCall('delete', `/api/itinerary/day/${dayId}`)
-        .then(() => {
-            return this.setState(prevState => {
-                return {
-                    ...prevState,
-                    days: prevState.days.filter(day => dayId !== day._id),
-                    showEventList: false
-                }
+            .then(() => {
+                return this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        days: prevState.days.filter(day => dayId !== day._id),
+                        showEventList: false
+                    }
+                })
             })
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     removeEvent = eventId => {
         apiCall('delete', `/api/itinerary/event/${eventId}`)
-        .then(() => {
-            return this.setState(prevState => {
-                return {
-                    ...prevState,
-                    events: prevState.events.filter(event => eventId !== event._id)
-                }
+            .then(() => {
+                return this.setState(prevState => {
+                    return {
+                        ...prevState,
+                        events: prevState.events.filter(event => eventId !== event._id)
+                    }
+                })
             })
-        })
-        .catch(err => {
-            console.log(err)
-        })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     render() {
-        let itineraryList, dayList, eventList, eventForm, dayForm, newDayButton = null
+        let itineraryList,
+            dayList,
+            eventList,
+            eventForm,
+            dayForm,
+            newDayButton = null
         eventList = <h3>Select a day to view and add events!</h3>
 
-        if(this.state.showItineraryList) {
-            itineraryList = <ItineraryList submit={this.setCurrentItinerary} itineraries={this.state.itineraries} currentItinerary={this.state.currentItinerary}/>
+        if (this.state.showItineraryList) {
+            itineraryList = <ItineraryList submit={this.setCurrentItinerary} itineraries={this.state.itineraries} currentItinerary={this.state.currentItinerary} />
         }
 
-        if(this.state.showDayList) {
-            dayList = <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay}/>
+        if (this.state.showDayList) {
+            dayList = <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay} />
         }
 
-        if(this.state.showEventList) {
-            eventList = this.state.events.length > 0 ? <EventList events={this.state.events} removeEvent={this.removeEvent}/> : <h3>Select a day with events or add a new one!</h3>
+        if (this.state.showEventList) {
+            eventList = this.state.events.length > 0 ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
         }
 
-        if(this.state.showEventForm && this.state.currentDayId) {
-            eventForm = <EventForm submit={this.submitEvent}/>
+        if (this.state.showEventForm && this.state.currentDayId) {
+            eventForm = <EventForm submit={this.submitEvent} />
         }
 
-        if(this.state.showDayForm) {
-            dayForm = <DayForm submit={this.submitDay}/>
+        if (this.state.showDayForm) {
+            dayForm = <DayForm submit={this.submitDay} />
         }
 
-        if(this.state.showNewDayButton) {
+        if (this.state.showNewDayButton) {
             newDayButton = (
-                <button class="btn btn-lg" style={{marginTop: '-15px'}} onClick={this.onNewDayClick}>New Day</button>
+                <button class="btn btn-lg" style={{ marginTop: '-15px' }} onClick={this.onNewDayClick}>
+                    New Day
+                </button>
             )
         }
 
@@ -219,10 +221,10 @@ class Itinerary extends Component {
             <div class="">
                 {/* <div className="itinerary-header-image" style={{backgroundImage: `url(${this.props.currentTrip.image})`}}>
                 </div> */}
-                <div >
-                    <h2 style={{marginTop: '30px', marginLeft: '30px', color: '#4FCBD0', marginBottom: '30px'}}>
-                        Itinerary for your {this.props.currentTrip.name} 
-                        { itineraryList } 
+                <div>
+                    <h2 style={{ marginTop: '30px', marginLeft: '30px', color: '#4FCBD0', marginBottom: '30px' }}>
+                        Itinerary for your {this.props.currentTrip.name}
+                        {itineraryList}
                         Cohort
                     </h2>
                 </div>
@@ -230,25 +232,27 @@ class Itinerary extends Component {
                     <div class="row">
                         <div className="col-9">
                             {/* <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4> */}
-                            { dayList }
+                            {dayList}
                         </div>
                         <div className="col-3">
-                            { newDayButton }
-                            { dayForm }
+                            {newDayButton}
+                            {dayForm}
                         </div>
                     </div>
-                    <hr style={{marginTop: '50px', marginBottom: '40px'}}/>
+                    <hr style={{ marginTop: '50px', marginBottom: '40px' }} />
                     <div className="row">
-                        <div class="col-9" >
-                            { eventList }
-                            { eventForm }
+                        <div class="col-9">
+                            {eventList}
+                            {eventForm}
                         </div>
                         <div className="col-3">
-                            <button class="btn btn-lg" onClick={this.onNewEventClick}>New Event</button>
+                            <button class="btn btn-lg" onClick={this.onNewEventClick}>
+                                New Event
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         )
     }
 }
@@ -259,4 +263,7 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(Itinerary)
+export default connect(
+    mapStateToProps,
+    null
+)(Itinerary)

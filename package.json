@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@travelleft/prettier-config": "^1.1.0",
     "axios": "^0.18.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
@@ -15,7 +16,6 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
-  "proxy": "http://localhost:8081",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -30,5 +30,7 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "prettier": "@travelleft/prettier-config",
+  "proxy": "http://localhost:8081"
 }
