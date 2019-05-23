@@ -7,6 +7,7 @@ class TripInformation extends Component {
     }
 
     render() {
+        let {currentTrip, description, status} = this.props
         return (
             <div>
                 <div className="row">
@@ -20,9 +21,10 @@ class TripInformation extends Component {
                         <p>Edit your trip information here</p>
                         <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
                             <div class="card-body" style={{marginTop: '20px'}}>
-                                <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>Trip to </span>  
-                                <button onClick={this.onEditClick} className="btn btn-lg btn-square dark pull-right">Edit</button>
-                                <p class="card-text">Planned for sophonmores and juniors who didn't get to attend lasts year trip</p>
+                                <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>{currentTrip.name} </span>  
+                                <br/>
+                                <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>{currentTrip.status} </span>  
+                                <p class="card-text">{currentTrip.description}</p>
                             </div>
                         </div>
                     </div>
