@@ -11,16 +11,14 @@ class TripInfo extends Component {
     }
 
     render() {
-        let { name, date, image, description } = this.props
+        let {name, date, image, description} = this.props
 
         return (
-            <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
-                <img src={image} class="card-img-top" style={{ boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%', marginTop: '15px' }} alt="..." />
-                <div class="card-body" style={{ marginTop: '20px' }}>
-                    <span style={{ fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600' }}>Trip to {name}</span>
-                    <button onClick={this.onEditClick} className="btn btn-lg btn-square dark pull-right">
-                        Edit
-                    </button>
+            <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
+                <img src={image} class="card-img-top" style={{boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%', marginTop: '15px'}}alt="..."></img>
+                <div class="card-body" style={{marginTop: '20px'}}>
+                    <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>Trip to {name}</span>  
+                    <button onClick={this.onEditClick} className="btn btn-lg btn-square dark pull-right">Edit</button>
                     <p class="card-text">{description}</p>
                 </div>
                 <ul class="list-group list-group-flush" style={{ backgroundColor: '#FBFBFB' }}>
