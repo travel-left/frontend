@@ -33,7 +33,7 @@ class Trip extends Component {
                     <div className="col-2">
                         <p className="card-text" style={{ padding: '15px 5px 15px 5px' }}>
                             <span class="badge badge-primary badge-pill" style={{ padding: '5px 10px', backgroundColor: '#8ECFF5' }}>
-                                PLANNING
+                                {status}
                             </span>
                         </p>
                     </div>
