@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import NotificationForm from '../components/Communicate/NotificationForm';
-import NotificationList from '../components/Communicate/NotificationList';
-import { apiCall } from '../services/api';
-import ContactList from '../components/Communicate/ContactList';
-import ContactForm from '../components/Communicate/ContactForm';
+import NotificationForm from '../components/Communicate/NotificationForm'
+import NotificationList from '../components/Communicate/NotificationList'
+import { apiCall } from '../services/api'
+import ContactList from '../components/Communicate/ContactList'
+import ContactForm from '../components/Communicate/ContactForm'
 
 class Communicate extends Component {
-
     state = {
         contacts: [],
         showContactList: false,
@@ -20,16 +19,14 @@ class Communicate extends Component {
     constructor(props) {
         super(props)
 
-        apiCall('get', `/api/notification/${this.props.currentTrip.id}`)
-        .then(data => {
+        apiCall('get', `/api/notification/${this.props.currentTrip.id}`).then(data => {
             return this.setState({
                 notifications: data.notifications,
                 showNotificationsList: true
             })
         })
 
-        apiCall('get', `/api/trip/${this.props.currentTrip.id}/contacts`)
-        .then(data => {
+        apiCall('get', `/api/trip/${this.props.currentTrip.id}/contacts`).then(data => {
             return this.setState({
                 contacts: data.contacts,
                 showContactList: true
@@ -38,9 +35,8 @@ class Communicate extends Component {
     }
 
     createNotification = text => {
-        let {currentTrip} = this.props
-        apiCall('post', `/api/notification/${this.props.currentTrip.id}`, {text: text})
-        .then(() => {
+        let { currentTrip } = this.props
+        apiCall('post', `/api/notification/${this.props.currentTrip.id}`, { text: text }).then(() => {
             return this.setState(prevState => {
                 return {
                     notifications: [
@@ -56,14 +52,10 @@ class Communicate extends Component {
     }
 
     createContact = contact => {
-        apiCall('post', `/api/contact`, {trip_id: this.props.currentTrip.id, ...contact})
-        .then(() => {
+        apiCall('post', `/api/contact`, { trip_id: this.props.currentTrip.id, ...contact }).then(() => {
             return this.setState(prevState => {
                 return {
-                    contacts: [
-                        ...prevState.contacts,
-                        contact
-                    ],
+                    contacts: [...prevState.contacts, contact],
                     showContactForm: false
                 }
             })
@@ -77,47 +69,47 @@ class Communicate extends Component {
     }
 
     render() {
-        let {showNotificationsList, notifications, showContactForm, showContactList, contacts} = this.state
-        let {currentTrip} = this.props
-        let contactForm, contactList = null
-        let notificationsList = showNotificationsList 
-        ?
-            <NotificationList notifications={notifications} />
-        :   
-            null
+        let { showNotificationsList, notifications, showContactForm, showContactList, contacts } = this.state
+        let { currentTrip } = this.props
+        let contactForm,
+            contactList = null
+        let notificationsList = showNotificationsList ? <NotificationList notifications={notifications} /> : null
 
-        if(showContactForm) {
-            contactForm = <ContactForm submit={this.createContact}/>
+        if (showContactForm) {
+            contactForm = <ContactForm submit={this.createContact} />
         }
 
-        if(showContactList) {
+        if (showContactList) {
             contactList = <ContactList contacts={contacts} />
         }
 
         return (
-            <div className='container'>
+            <div className="container">
                 <div className="row">
                     <div className="col-9">
-                        <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Emergency Contacts</strong></h4>
+                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
+                            <strong>Emergency Contacts</strong>
+                        </h4>
                         {contactList}
                     </div>
                     <div className="col-3">
-                        <button onClick={this.onNewContactClick} class="btn btn-lg" style={{marginTop: '50px', fontSize: '.9em'}}>New Contact</button> 
+                        <button onClick={this.onNewContactClick} class="btn btn-lg" style={{ marginTop: '50px', fontSize: '.9em' }}>
+                            New Contact
+                        </button>
                         {contactForm}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-9">
-                        <h4 style={{marginTop: '30px', marginLeft: '30px'}}><strong>Notifications</strong></h4>
+                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
+                            <strong>Notifications</strong>
+                        </h4>
+                        <div className="col">{notificationsList}</div>
                         <div className="col">
-                            {notificationsList}
-                        </div>
-                        <div className="col">
-                            <NotificationForm submit={this.createNotification}/>
+                            <NotificationForm submit={this.createNotification} />
                         </div>
                     </div>
-                    <div className="col-3">
-                    </div>
+                    <div className="col-3" />
                 </div>
             </div>
         )
@@ -130,4 +122,7 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(Communicate)
+export default connect(
+    mapStateToProps,
+    null
+)(Communicate)

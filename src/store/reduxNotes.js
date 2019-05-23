@@ -4,14 +4,13 @@
 const initialState = {
     counter: 0
 }
-//COMPONENT 
-//dispatches 
+//COMPONENT
+//dispatches
 //ACTION - an information package
-store.dispatch({type: 'ACTION_TYPE', payload: {}})
+store.dispatch({ type: 'ACTION_TYPE', payload: {} })
 //reaches
 
 //MIDDLEWARE
-
 
 //REDUCERS - pure functions that receive action and old state, return new state
 const rootReducer = (state = initialState, action) => {
@@ -22,23 +21,20 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 payload: action.payload
             }
-    
+
         default:
-            return state;
+            return state
     }
 }
 //update
 //STORE - holds the entire application state
-const store = createStore(rootReducer);
+const store = createStore(rootReducer)
 store.getState()
 //triggers
 //SUBSCRIPTIONS - keeps track of when state changes
-store.subscribe(() => {
-    
-})
+store.subscribe(() => {})
 //notify (pass updated state as props)
 //COMPONENT
-
 
 //a component becomes a container when
 export default connect(mapStateToProps)(Component)

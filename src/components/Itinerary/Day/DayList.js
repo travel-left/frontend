@@ -1,21 +1,16 @@
-import React from "react"
-import Day from './Day';
+import React from 'react'
+import Day from './Day'
 
-const DayList = ({days, currentDayId, removeDay, setCurrentDay}) => {
-
+const DayList = ({ days, currentDayId, removeDay, setCurrentDay }) => {
     let dayList = days.map(day => {
-        return day._id === currentDayId
-        ?
-            <Day key={day._id} date={day.date} dayId={day._id} setCurrentDay={setCurrentDay} isCurrentDay={true} removeDay={removeDay}/>
-        :
-            <Day key={day._id} date={day.date} dayId={day._id} setCurrentDay={setCurrentDay} isCurrentDay={false} removeDay={removeDay}/>
+        return day._id === currentDayId ? (
+            <Day key={day._id} date={day.date} dayId={day._id} setCurrentDay={setCurrentDay} isCurrentDay={true} removeDay={removeDay} />
+        ) : (
+            <Day key={day._id} date={day.date} dayId={day._id} setCurrentDay={setCurrentDay} isCurrentDay={false} removeDay={removeDay} />
+        )
     })
 
-    return (
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-        { dayList }
-        </div>
-    )
+    return <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{dayList}</div>
 }
 
 export default DayList

@@ -1,7 +1,6 @@
 import React from 'react'
 
-const Notification = ({text}) => {
-
+const Notification = ({ text }) => {
     return (
         <div className="container">
             <div className="row">

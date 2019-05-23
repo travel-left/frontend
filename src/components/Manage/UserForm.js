@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 class UserForm extends Component {
-
     state = {
         email: ''
     }
@@ -22,16 +21,18 @@ class UserForm extends Component {
     }
 
     render() {
-        let {email} = this.state
+        let { email } = this.state
         return (
             <div className="userForm">
                 <form onSubmit={this.handleSubmit}>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <input value={email} onChange={this.handleChange} type="email" class="form-control" name='email' placeholder="Email"/>
+                            <input value={email} onChange={this.handleChange} type="email" class="form-control" name="email" placeholder="Email" />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-lg">Add User</button>
+                    <button type="submit" class="btn btn-lg">
+                        Add User
+                    </button>
                 </form>
             </div>
         )

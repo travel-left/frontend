@@ -10,11 +10,11 @@ import jwtDecode from 'jwt-decode'
 
 const store = configureStore()
 
-if(localStorage.token) {
+if (localStorage.token) {
     setAuthorizationToken(localStorage.token)
     try {
         store.dispatch(setCurrentUser(jwtDecode(localStorage.token)))
-    }catch(e){
+    } catch (e) {
         store.dispatch(setCurrentUser({}))
     }
 }
@@ -23,8 +23,8 @@ const App = () => (
     <Provider store={store}>
         <Router>
             <div className="">
-                <Navbar/>
-                <div className="container-fluid" style={{backgroundColor: '#ECEDED'}}>
+                <Navbar />
+                <div className="container-fluid" style={{ backgroundColor: '#ECEDED' }}>
                     <Main />
                 </div>
             </div>

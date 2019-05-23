@@ -1,8 +1,7 @@
-
-import { combineReducers } from "redux"
+import { combineReducers } from 'redux'
 import currentUser from './currentUser'
 import errors from './errors'
-import currentTrip from "./currentTrip";
+import currentTrip from './currentTrip'
 
 //reducers specify how the application's state reduces in response to actions sent to the store.
 //Actions describe 'what happened', but don't describe how the application's state changes.
