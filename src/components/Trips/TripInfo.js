@@ -11,7 +11,7 @@ class TripInfo extends Component {
     }
 
     render() {
-        let { name, date, image, description } = this.props
+        let { name, date, image, description, status } = this.props
 
         return (
             <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
@@ -33,7 +33,7 @@ class TripInfo extends Component {
                     <li class="list-group-item" style={{ backgroundColor: '#FBFBFB' }}>
                         Status{' '}
                         <span className="pull-right badge badge-primary badge-pill" style={{ padding: '5px 10px', backgroundColor: '#8ECFF5' }}>
-                            PLANNING
+                            {status}
                         </span>
                     </li>
                     <li class="list-group-item" style={{ backgroundColor: '#FBFBFB' }}>
