@@ -30,3 +30,18 @@
     font-size: .5em;
     font-weight: lighter;
   }
+
+.signin>div>input {
+    border-bottom: 1px solid grey;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.signin>div>input:focus {
+    outline: 0 !important;
+}
+
+.signin>div>label {
+    color: #717171;
+}

@@ -92,3 +92,7 @@ button.btn-lg.btn-round.clear {
     min-width: 100px;
     border-radius: 2em / 2.5em;
 }
+
+input:focus{
+    outline: none !important;
+}
