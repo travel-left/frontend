@@ -5,7 +5,8 @@ import { apiCall } from '../../services/api'
 
 class Documents extends Component {
     state = {
-        documents: []
+        documents: [],
+        showDocumentsList: false
     }
 
     constructor(props) {
@@ -16,9 +17,12 @@ class Documents extends Component {
     getDocuments() {
         const id = this.props.currentTrip._id
         apiCall('get', `/api/documents/${id}`).then(documents => {
-            this.setState(() => {
-                return { documents: documents }
-            })
+            if (documents.length > 0) {
+                this.setState({
+                    documents: documents,
+                    showDocumentsList: true
+                })
+            }
         })
     }
 
@@ -36,10 +40,14 @@ class Documents extends Component {
 
     render() {
         let documents = this.state.documents
+        let showDocumentsList = null
+        if (this.state.showDocumentsList) {
+            showDocumentsList = <DocumentList documents={documents} />
+        }
         return (
             <>
                 <DocumentForm submit={this.handleSubmit} />
-                {documents.length > 0 ? <DocumentList documents={documents} /> : null}
+                {showDocumentsList}
             </>
         )
     }
