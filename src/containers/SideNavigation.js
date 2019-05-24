@@ -20,6 +20,8 @@ class SideNavigation extends Component {
                 return history.push(`/trips/${currentTrip._id}/manage`)
             case 'communicate':
                 return history.push(`/trips/${currentTrip._id}/communicate`)
+            case 'documents':
+                return history.push(`/trips/${currentTrip._id}/documents`)
             default:
                 return
         }
@@ -44,7 +46,7 @@ class SideNavigation extends Component {
                         <a onClick={this.selectFeature} name="itinerary" style={{ margin: '25px 10px', color: '#0B62D4', fontWeight: '600' }}>
                             Itinerary
                         </a>
-                        <a onClick={this.selectFeature} name="docs" style={{ margin: '25px 10px', color: '#0B62D4', fontWeight: '600' }}>
+                        <a onClick={this.selectFeature} name="documents" style={{ margin: '25px 10px', color: '#0B62D4', fontWeight: '600' }}>
                             Documents
                         </a>
                         <a onClick={this.selectFeature} name="travelers" style={{ margin: '25px 10px', color: '#0B62D4', fontWeight: '600' }}>
