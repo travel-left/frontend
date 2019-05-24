@@ -7,10 +7,7 @@ const NotificationList = ({ notifications }) => {
     })
 
     return (
-        <div className="container">
-            <h2>Notification List</h2>
-            <div className="row">{list}</div>
-        </div>
+            <div className="">{list}</div>
     )
 }
 

@@ -5,6 +5,8 @@ import NotificationList from '../components/Communicate/NotificationList'
 import { apiCall } from '../services/api'
 import ContactList from '../components/Communicate/ContactList'
 import ContactForm from '../components/Communicate/ContactForm'
+import Alert from "../components/Other/Alert";
+import DashboardHeader from '../components/Other/DashboardHeader';
 
 class Communicate extends Component {
     state = {
@@ -19,14 +21,14 @@ class Communicate extends Component {
     constructor(props) {
         super(props)
 
-        apiCall('get', `/api/notification/${this.props.currentTrip.id}`).then(data => {
+        apiCall('get', `/api/notification/${this.props.currentTrip._id}`).then(data => {
             return this.setState({
                 notifications: data.notifications,
                 showNotificationsList: true
             })
         })
 
-        apiCall('get', `/api/trip/${this.props.currentTrip.id}/contacts`).then(data => {
+        apiCall('get', `/api/trip/${this.props.currentTrip._id}/contacts`).then(data => {
             return this.setState({
                 contacts: data.contacts,
                 showContactList: true
@@ -36,7 +38,7 @@ class Communicate extends Component {
 
     createNotification = text => {
         let { currentTrip } = this.props
-        apiCall('post', `/api/notification/${this.props.currentTrip.id}`, { text: text }).then(() => {
+        apiCall('post', `/api/notification/${this.props.currentTrip._id}`, { text: text }).then(() => {
             return this.setState(prevState => {
                 return {
                     notifications: [
@@ -52,7 +54,7 @@ class Communicate extends Component {
     }
 
     createContact = contact => {
-        apiCall('post', `/api/contact`, { trip_id: this.props.currentTrip.id, ...contact }).then(() => {
+        apiCall('post', `/api/contact`, { trip_id: this.props.currentTrip._id, ...contact }).then(() => {
             return this.setState(prevState => {
                 return {
                     contacts: [...prevState.contacts, contact],
@@ -84,32 +86,35 @@ class Communicate extends Component {
         }
 
         return (
-            <div className="container">
+            <div class="">
                 <div className="row">
-                    <div className="col-9">
+                    <div className="col-12">
+                        <Alert />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-8">
+                        <DashboardHeader title='Communicate' description='Add emergency contacts, create and send notifications, and make sure everyone is on the same page!'/>
                         <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
                             <strong>Emergency Contacts</strong>
                         </h4>
                         {contactList}
-                    </div>
-                    <div className="col-3">
-                        <button onClick={this.onNewContactClick} class="btn btn-lg" style={{ marginTop: '50px', fontSize: '.9em' }}>
-                            New Contact
-                        </button>
-                        {contactForm}
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-9">
                         <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
                             <strong>Notifications</strong>
                         </h4>
-                        <div className="col">{notificationsList}</div>
-                        <div className="col">
-                            <NotificationForm submit={this.createNotification} />
+                        {notificationsList}
+                    </div>
+                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
+                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
+                            <div class="card-body" style={{ marginTop: '20px' }}>
+                                <button onClick={this.onNewContactClick} class="btn btn-lg btn-square light" style={{ marginTop: '50px', fontSize: '.9em' }}>
+                                    New Contact
+                                </button>
+                                {contactForm}
+                                <NotificationForm submit={this.createNotification} />
+                            </div>
                         </div>
                     </div>
-                    <div className="col-3" />
                 </div>
             </div>
         )
