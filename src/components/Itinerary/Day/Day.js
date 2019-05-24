@@ -22,7 +22,7 @@ class Day extends Component {
                     <h4 class="card-title mb-2 text-muted" style={{ display: 'inline-block', marginRight: '.2em' }}>
                         <Moment date={date} format="MMM" />
                     </h4>
-                    <h4 class="card-title mb-2" style={{ color: 'rgb(79, 203, 208)', display: 'inline-block' }}>
+                    <h4 class="card-title mb-2" style={{ color: '#0B62D4', display: 'inline-block' }}>
                         <Moment date={date} format="Do" />
                     </h4>
                     <hr />
@@ -38,7 +38,7 @@ class Day extends Component {
                     <h4 class="card-title mb-2 text-muted" style={{ display: 'inline-block', marginRight: '.2em' }}>
                         <Moment date={date} format="MMM" />
                     </h4>
-                    <h4 class="card-title mb-2" style={{ color: 'rgb(79, 203, 208)', display: 'inline-block' }}>
+                    <h4 class="card-title mb-2" style={{ color: '#0B62D4', display: 'inline-block' }}>
                         <Moment date={date} format="Do" />
                     </h4>
                     <hr />
