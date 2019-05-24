@@ -1,22 +1,33 @@
 import React, { Component } from 'react'
 import DocumentForm from './DocumentForm'
+import DocumentList from './DocumentList'
 import { apiCall } from '../../services/api'
 
 class Documents extends Component {
     state = {
-        name: '',
-        link: ''
+        documents: []
     }
 
     constructor(props) {
         super(props)
+        this.getDocuments()
+    }
+
+    getDocuments() {
+        const id = this.props.currentTrip._id
+        apiCall('get', `/api/documents/${id}`).then(documents => {
+            this.setState(() => {
+                return { documents: documents }
+            })
+        })
     }
 
     handleSubmit = e => {
         const id = this.props.currentTrip._id
-        apiCall('post', `/api/document/${id}`, e)
+        apiCall('post', `/api/documents/${id}`, e)
             .then(() => {
                 console.log('Document Submitted')
+                this.getDocuments()
             })
             .catch(err => {
                 console.log(err)
@@ -24,13 +35,12 @@ class Documents extends Component {
     }
 
     render() {
-        let { name, link } = this.state
+        let documents = this.state.documents
         return (
-            <div>
-                <div>Create Document</div>
+            <>
                 <DocumentForm submit={this.handleSubmit} />
-                <div>Documents</div>
-            </div>
+                {documents.length > 0 ? <DocumentList documents={documents} /> : null}
+            </>
         )
     }
 }
