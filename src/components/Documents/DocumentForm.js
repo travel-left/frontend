@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 class DocumentForm extends Component {
     state = {
         name: '',
-        link: ''
+        link: '',
+        description: ''
     }
 
     constructor(props) {
@@ -22,13 +23,17 @@ class DocumentForm extends Component {
     }
 
     render() {
-        let { name, link } = this.state
+        let { name, link, description } = this.state
         return (
             <form onSubmit={this.handleSubmit}>
                 <div class="form-row">
                     <div class="form-group col-10">
-                        <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="New Form" />
-                        <input value={link} onChange={this.handleChange} type="url" class="form-control" name="link" placeholder="https://www.google.com" />
+                        <label for="name">Name</label>
+                        <input value={name} onChange={this.handleChange} id="name" type="text" class="form-control" name="name" placeholder="New Document" />
+                        <label for="description">Description</label>
+                        <textarea value={description} onChange={this.handleChange} id="description" name="description" placeholder="Description" class="form-control" rows="3" />
+                        <label for="link">Link to Document</label>
+                        <input value={link} onChange={this.handleChange} type="url" id="link" class="form-control" name="link" placeholder="https://www.google.com" />
                     </div>
                 </div>
                 <button type="submit" class="btn btn-lg" style={{ fontSize: '.9em' }}>
