@@ -30,7 +30,7 @@ class CohortForm extends Component {
                             <input value={title} onChange={this.handleChange} type="text" class="form-control" name="title" placeholder="Cohort Name" />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-lg">
+                    <button type="submit" class="btn btn-lg btn-square dark pull-right">
                         Add Cohort
                     </button>
                 </form>
