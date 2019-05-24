@@ -35,7 +35,7 @@ class ContactForm extends Component {
                         <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="tim@apple.com" />
                     </div>
                 </div>
-                <button type="submit" class="btn btn-lg" style={{ fontSize: '.9em' }}>
+                <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
                     Create Contact
                 </button>
             </form>

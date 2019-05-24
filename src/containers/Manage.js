@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import UserList from '../components/Manage/UserList'
-import UserForm from '../components/Manage/UserForm'
 import { apiCall } from '../services/api'
-import CohortForm from '../components/Manage/CohortForm'
 import CohortList from '../components/Manage/CohortList'
 import Alert from '../components/Other/Alert'
 import UserInfo from '../components/Manage/UserInfo'
@@ -13,9 +11,7 @@ class Manage extends Component {
         users: [],
         cohorts: [],
         showNewUserButton: true,
-        showNewCohortButton: true,
-        showNewUserForm: false,
-        showNewCohortForm: false
+        showNewCohortButton: true
     }
 
     constructor(props) {
@@ -41,7 +37,7 @@ class Manage extends Component {
             email: email,
             password: 'password',
             accessType: 'user',
-            currentTrip: this.props.currentTrip.id
+            currentTrip: this.props.currentTrip._id
         }
 
         apiCall('post', '/api/auth/signup', newUser).then(() => {
@@ -59,7 +55,7 @@ class Manage extends Component {
         const newCohort = {
             title: title
         }
-        apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort).then(() => {
+        apiCall('post', `/api/trip/${currentTrip._id}/cohort`, newCohort).then(() => {
             return this.getAndSetCohorts()
         })
 
@@ -95,34 +91,6 @@ class Manage extends Component {
     render() {
         let { currentTrip } = this.props
         let { cohorts, users, showNewCohortForm, showNewUserForm, showNewCohortButton, showNewUserButton } = this.state
-        let userForm,
-            cohortForm,
-            userButton,
-            cohortButton = null
-
-        if (showNewUserForm) {
-            userForm = <UserForm submit={this.addUser} />
-        }
-
-        if (showNewCohortForm) {
-            cohortForm = <CohortForm submit={this.addCohort} />
-        }
-
-        if (showNewUserButton) {
-            userButton = (
-                <button onClick={this.onNewUserClick} class="btn btn-lg" style={{ marginTop: '50px', fontSize: '.9em' }}>
-                    New User
-                </button>
-            )
-        }
-
-        if (showNewCohortButton) {
-            cohortButton = (
-                <button onClick={this.onNewCohortClick} class="btn btn-lg" style={{ marginTop: '50px', fontSize: '.9em' }}>
-                    New Cohort
-                </button>
-            )
-        }
 
         return (
             <div>
@@ -149,38 +117,10 @@ class Manage extends Component {
                         </div>
                     </div>
                     <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <UserInfo />
+                        <UserInfo showTravelerButton={showNewUserButton} showCohortButton={showNewCohortButton} showNewCohortForm={showNewCohortForm} showNewUserForm={showNewUserForm} addUser={this.addUser} addCohort={this.addCohort} />
                     </div>
                 </div>
             </div>
-            // <div className="container manage">
-            //     <div className="users" style={{marginTop: '30px'}}>
-            //         <h2>Travelers</h2>
-            //         <div className="row">
-            //             <div className="col-8">
-            //                 <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser}/>
-            //             </div>
-            //             <div className="col-1"></div>
-            //             <div className="col-3">
-            //                 {userButton}
-            //                 {userForm}
-            //             </div>
-            //         </div>
-            //     </div>
-            //     <div className="cohorts" style={{marginTop: '30px'}}>
-            //         <h2>Cohorts</h2>
-            //         <div className="row">
-            //             <div className="col-8">
-            //                 <CohortList cohorts={cohorts}/>
-            //             </div>
-            //             <div className="col-1"></div>
-            //             <div className="col-3">
-            //                 {cohortButton}
-            //                 {cohortForm}
-            //             </div>
-            //         </div>
-            //     </div>
-            // </div>
         )
     }
 }

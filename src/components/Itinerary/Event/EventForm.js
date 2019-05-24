@@ -37,20 +37,20 @@ class EventForm extends Component {
         let { title, timeStart, timeEnd, summary, image, link, linkText } = this.state.event
 
         return (
-            <div className="card event-tile" style={{ width: '50vw' }}>
+            <div className="card event-tile" style={{ width: '100%' }}>
                 <div className="card-body">
                     <form onSubmit={this.handleSubmitEvent}>
                         <div className="form-row">
-                            <div className="col">
+                            <div className="col-5">
                                 {/* title */}
-                                <input name="title" className="form-control" type="text" value={title} onChange={this.handleInputChange} placeholder="Event title..." />
+                                <input name="title" className="form-control" type="text" value={title} onChange={this.handleInputChange} placeholder="Title" />
                             </div>
                             <div className="col" />
                             {/* category */}
-                            <div className="col">
+                            <div className="col-6">
                                 <select id="inputState" className="form-control" name="category" value={this.state.category} onChange={this.handleInputChange}>
                                     <option value="" disabled selected>
-                                        Select a Category
+                                        Category
                                     </option>
                                     <option value="event">Event</option>
                                     <option value="transportation">Transportation</option>
@@ -59,12 +59,14 @@ class EventForm extends Component {
                             </div>
                         </div>
                         <div className="form-row">
-                            <div className="col">
+                            <div className="col-6">
                                 {/* time start */}
-                                <input name="timeStart" placeholder="9:00" className="form-control" type="time" value={timeStart.toString()} onChange={this.handleInputChange} />
+                                Start:
+                                <input name="timeStart" className="form-control" type="time" value={timeStart.toString()} onChange={this.handleInputChange} />
                             </div>
                             <div className="col">
                                 {/* time start */}
+                                End:
                                 <input name="timeEnd" className="form-control" type="time" value={timeEnd.toString()} onChange={this.handleInputChange} />
                             </div>
                             <div className="col" />
@@ -89,7 +91,7 @@ class EventForm extends Component {
                             </div>
                             <div className="col" />
                         </div>
-                        <button type="submit" className="btn btn-primary float-right" style={{ backgroundColor: '#079992' }}>
+                        <button type="submit" className="btn btn-lg btn-square dark pull-right">
                             SUBMIT
                         </button>
                     </form>
