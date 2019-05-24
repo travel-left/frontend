@@ -38,7 +38,7 @@ class DocumentForm extends Component {
                             <input value={link} onChange={this.handleChange} type="url" id="link" class="form-control" name="link" placeholder="https://www.google.com" />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-lg" style={{ fontSize: '.9em' }}>
+                    <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
                         Create Document
                     </button>
                 </form>

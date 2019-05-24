@@ -7,12 +7,9 @@ const DocumentList = ({ documents }) => {
     })
 
     return (
-        <>
-            <h3 class="text-center">Documents</h3>
-            <ul className="row" className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
-                {list}
-            </ul>
-        </>
+        <ul className="row" className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
+            {list}
+        </ul>
     )
 }
 
