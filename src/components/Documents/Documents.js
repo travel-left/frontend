@@ -40,10 +40,7 @@ class Documents extends Component {
 
     render() {
         let documents = this.state.documents
-        let showDocumentsList = null
-        if (this.state.showDocumentsList) {
-            showDocumentsList = <DocumentList documents={documents} />
-        }
+        let showDocumentsList = this.state.showDocumentsList ? <DocumentList documents={documents} /> : null
         return (
             <>
                 <DocumentForm submit={this.handleSubmit} />
