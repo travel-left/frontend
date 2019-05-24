@@ -32,8 +32,8 @@ class DayForm extends Component {
                             <h5 class="card-title">
                                 <input name="date" className="form-control" type="date" value={date} style={{ width: '100%' }} onChange={this.handleInputChange} />
                             </h5>
-                            <button class="btn btn-md" style={{ backgroundColor: '#38ada9', color: 'white' }} onClick={this.handleSubmit}>
-                                <i class="fa fa-plus-square" aria-hidden="true" /> SUBMIT
+                            <button class="btn btn-lg btn-square dark pull-right"  onClick={this.handleSubmit}>
+                                SUBMIT
                             </button>
                         </div>
                     </div>

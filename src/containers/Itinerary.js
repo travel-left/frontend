@@ -7,6 +7,8 @@ import EventList from '../components/Itinerary/Event/EventList'
 import { apiCall } from '../services/api'
 import DayForm from '../components/Itinerary/Day/DayForm'
 import './Itinerary.css'
+import Alert from '../components/Other/Alert';
+import DashboardHeader from '../components/Other/DashboardHeader';
 
 class Itinerary extends Component {
     state = {
@@ -211,7 +213,7 @@ class Itinerary extends Component {
 
         if (this.state.showNewDayButton) {
             newDayButton = (
-                <button class="btn btn-lg" style={{ marginTop: '-15px' }} onClick={this.onNewDayClick}>
+                <button className="btn btn-lg btn-square light" onClick={this.onNewDayClick}>
                     New Day
                 </button>
             )
@@ -219,36 +221,34 @@ class Itinerary extends Component {
 
         return (
             <div class="">
-                {/* <div className="itinerary-header-image" style={{backgroundImage: `url(${this.props.currentTrip.image})`}}>
-                </div> */}
-                <div>
-                    <h2 style={{ marginTop: '30px', marginLeft: '30px', color: '#4FCBD0', marginBottom: '30px' }}>
-                        Itinerary for your {this.props.currentTrip.name}
-                        {itineraryList}
-                        Cohort
-                    </h2>
+                <div className="row">
+                    <div className="col-12">
+                        <Alert />
+                    </div>
                 </div>
-                <div className="container">
-                    <div class="row">
-                        <div className="col-9">
-                            {/* <h4>Select a day <i className="fa fa-calendar-o" aria-hidden="true" style={{paddingLeft: '10px'}}></i></h4> */}
+                <div className="row">
+                    <div className="col-8">
+                        <DashboardHeader title='Itinerary' description='Set the trip activities, accommodations, flights, addresses, checklists, forms and more'/>
+                        <div>
                             {dayList}
                         </div>
-                        <div className="col-3">
-                            {newDayButton}
-                            {dayForm}
+                        <div>
+                            {eventList}
                         </div>
                     </div>
-                    <hr style={{ marginTop: '50px', marginBottom: '40px' }} />
-                    <div className="row">
-                        <div class="col-9">
-                            {eventList}
+                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
+                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
+                            <div class="card-body" style={{ marginTop: '20px' }}>
+                            <span style={{ fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600', display: 'block' }}>Cohort: {itineraryList}</span>
+                            {newDayButton}
+                            <br/>
+                            <br/>
+                            {dayForm}
+                            <button class="btn btn-lg btn-square light" onClick={this.onNewEventClick}>
+                            New Event
+                            </button>
                             {eventForm}
                         </div>
-                        <div className="col-3">
-                            <button class="btn btn-lg" onClick={this.onNewEventClick}>
-                                New Event
-                            </button>
                         </div>
                     </div>
                 </div>
