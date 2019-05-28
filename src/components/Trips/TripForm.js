@@ -4,7 +4,10 @@ class TripForm extends Component {
     state = {
         trip: {
             name: '',
-            image: ''
+            image: '',
+            dateStart: '',
+            dateEnd: '',
+            description: ''
         }
     }
 
@@ -27,20 +30,29 @@ class TripForm extends Component {
         this.props.submit(this.state.trip)
     }
 
+    closeForm = () => {
+        this.props.hide()
+    }
+
     render() {
-        let { name, image } = this.state.trip
+        let { name, image, dateStart, dateEnd, description } = this.state.trip
 
         return (
-            <div className="container trip-form">
-                <form onSubmit={this.handleSubmitEvent} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div className="form-row" style={{ justifyContent: 'center' }}>
-                        <h3>Enter your trip details:</h3>
-                        <input name="name" className="form-control col-8" type="text" value={name} onChange={this.handleInputChange} placeholder="Trip Name" />
-                        <input name="image" className="form-control col-8" type="text" value={image} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
-                        <button type="submit" className="btn btn-primary float-right col-5" style={{ backgroundColor: '#83c9f4', color: '#fbfef9' }}>
-                            SUBMIT
-                        </button>
+            <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
+                <h3 class="text-center">Enter your trip details: <span onClick={this.closeForm}>X</span></h3>
+                <form onSubmit={this.handleSubmitEvent} >
+                    <div className="form-row" >
+                        <div className="form-group col-10">
+                            <input name="name" className="form-control col-8" type="text" value={name} onChange={this.handleInputChange} placeholder="Trip Name" />
+                            <input name="image" className="form-control col-8" type="text" value={image} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
+                            <input name="dateStart" className="form-control col-8" type="date" value={dateStart} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
+                            <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
+                            <textarea name="description" className="form-control col-8" type="text" value={description} onChange={this.handleInputChange} placeholder="A description for your trip"></textarea>
+                        </div>
                     </div>
+                    <button type="submit" className="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
+                        SUBMIT
+                    </button>
                 </form>
             </div>
         )

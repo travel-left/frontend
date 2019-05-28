@@ -30,18 +30,21 @@ class Trips extends Component {
     }
 
     selectTrip = tripId => {
-        console.log(this.state.trips.filter(t => t._id == tripId)[0])
         this.props.setCurrentTrip(
             this.state.trips.filter(t => t._id == tripId)[0]
         )
-
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
     showTripForm = () => {
         this.setState({
-            showNewTripButton: false,
             showTripForm: true
+        })
+    }
+
+    hideTripForm = () => {
+        this.setState({
+            showTripForm: false
         })
     }
 
@@ -55,7 +58,7 @@ class Trips extends Component {
                         data.trip
                     ],
                     showTripForm: false,
-                    showNewTripButton: true
+                    selectedTrip: data.trip
                 }
             })
         })
@@ -69,16 +72,12 @@ class Trips extends Component {
 
     render(){
         let { user } = this.props
-        let { showTrips, showTripForm, trips, showNewTripButton, selectedTrip } = this.state
+        let { showTrips, showTripForm, trips, selectedTrip } = this.state
 
         let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip}/> : null
         let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/> : null
-        let newTripButton = showNewTripButton ? (<button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>) : null
-        let tripForm = showTripForm ? (
-            <div className="col-6 welcomeMessage">
-                <TripForm submit={this.addTrip}/>
-            </div>) 
-            : null
+        let newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
+        let tripForm = showTripForm ? <TripForm submit={this.addTrip} hide={this.hideTripForm} /> : null
 
         return (
             <div className="row">
@@ -130,7 +129,7 @@ class Trips extends Component {
                             </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
-                            {tripInfo}
+                            {tripForm || tripInfo}
                         </div>
                     </div>
                 </div>
