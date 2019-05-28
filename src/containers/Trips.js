@@ -23,25 +23,28 @@ class Trips extends Component {
         .then(data => {
             return this.setState({
                 trips: data.trips,
-                showTrips: true,
+                showTrips: data.trips.length > 0,
                 selectedTrip: data.trips[0]
             })
         })
     }
 
     selectTrip = tripId => {
-        console.log(this.state.trips.filter(t => t._id == tripId)[0])
         this.props.setCurrentTrip(
             this.state.trips.filter(t => t._id == tripId)[0]
         )
-
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
     showTripForm = () => {
         this.setState({
-            showNewTripButton: false,
             showTripForm: true
+        })
+    }
+
+    hideTripForm = () => {
+        this.setState({
+            showTripForm: false
         })
     }
 
@@ -55,7 +58,7 @@ class Trips extends Component {
                         data.trip
                     ],
                     showTripForm: false,
-                    showNewTripButton: true
+                    selectedTrip: data.trip
                 }
             })
         })
@@ -69,23 +72,13 @@ class Trips extends Component {
 
     render(){
         let { user } = this.props
-        let { showTrips, showTripForm, trips, showNewTripButton, selectedTrip } = this.state
-        let tripTiles, content, tripForm, newTripButton = null
+        let { showTrips, showTripForm, trips, selectedTrip } = this.state
 
-        if(showTrips) {
+        let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip}/> : null
+        let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/> : null
+        let newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
+        let tripForm = showTripForm ? <TripForm submit={this.addTrip} hide={this.hideTripForm} /> : null
 
-        }
-
-        if(showNewTripButton) {
-            newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
-        }
-
-        if(showTripForm)  {
-            tripForm = 
-            <div className="col-6 welcomeMessage">
-                <TripForm submit={this.addTrip}/>
-            </div>
-        }
         return (
             <div className="row">
                 <div className="col-2" style={{padding: '0px 0px 30px 0px', backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 1px 0px 20px'}} >
@@ -124,19 +117,19 @@ class Trips extends Component {
                     </div>
                     <div className="row">
                         <div className="col-8">
-                        <div className="">
-                            <div className="card trip-list-header" style={{height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px'}}>
-                                <div className="col-1" ></div>
-                                <div className="col-2" style={{borderBottom: '2px solid #0F61D8'}}>Trip Name</div>
-                                <div className="col-3" ></div>
-                                <div className="col-2" >Date</div>
-                                <div className="col-2" >Status</div>
+                            <div className="">
+                                <div className="card trip-list-header" style={{height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px'}}>
+                                    <div className="col-1" ></div>
+                                    <div className="col-2" style={{borderBottom: '2px solid #0F61D8'}}>Trip Name</div>
+                                    <div className="col-3" ></div>
+                                    <div className="col-2" >Date</div>
+                                    <div className="col-2" >Status</div>
+                                </div>
+                                {tripList}
                             </div>
-                            <TripList trips={trips} setSelectedTrip={this.setSelectedTrip}/>
-                        </div>
                         </div>
                         <div className="col-4" style={{backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px'}}>
-                            <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/>
+                            {tripForm || tripInfo}
                         </div>
                     </div>
                 </div>

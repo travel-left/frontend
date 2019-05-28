@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Slideshow from '../Other/Slideshow'
 import './Auth.css'
 
-class AuthForm extends Component {
+class SignIn extends Component {
     state = {
         testing: '',
         email: '',
@@ -56,35 +56,14 @@ class AuthForm extends Component {
 
     render() {
         const { email, password, error } = this.state
-        let formFields = null
-
-        switch(this.props.buttonText) {
-            case 'Sign in':
-                formFields = (
-                    <>
-                    <label htmlFor="email">Email</label>
-                    <input type="text" id="email" name="email" className="form-control" placeholder="Email" value={email} onChange={this.handleChange} />
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleChange} />  
-                    </>
-                )
-            case 'Sign up':
-                formFields = (
-                    <>
-                    <label htmlFor="first">First Name</label>
-                    <input className="form-control"type="text" name="first" id="first" placeholder='John'/>
-                    <label htmlFor="last">Last Name</label>
-                    <input className="form-control"type="text" name="last" id="last" placeholder='Appleseed'/>
-                    <label htmlFor="email">Email (will also be your username)</label>
-                    <input type="text" id="email" name="email" className="form-control" placeholder="Email" value={email} onChange={this.handleChange} />
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleChange} />  
-                    </>
-                )
-
-            default:
-                break;
-        }
+        let formFields = (
+            <>
+            <label htmlFor="email">Email</label>
+            <input type="text" id="email" name="email" className="form-control" placeholder="Email" value={email} onChange={this.handleChange} />
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleChange} />  
+            </>
+        )
         return (
                 <div className="row">
                     <div className="col-6" style={{display: 'flex', justifyContent: 'center'}}>
@@ -93,7 +72,7 @@ class AuthForm extends Component {
                             <div className="card-body">
                                 <div className="card-title">
                                     <h1> {this.props.heading} </h1>
-                                    <p>Create your account by filling the form below</p>
+                                    <p>Sign in to your account by filling the form below</p>
                                 </div>
                                 <form className="signin" onSubmit={this.handleSubmit}>
                                     <div className="form-row">
@@ -107,8 +86,8 @@ class AuthForm extends Component {
                     <div className="col-6 sign-in-right" style={{display: 'flex', flexDirection: 'column',  alignItems: 'center'}}>
                         <div style={{marginTop: '30px', paddingLeft: '40px', paddingRight: '40px'}}>
                             <h1 style={{color: '#FBFBFB', fontWeight: 900, fontSize: '140px'}}>left.</h1>
-                            <h2 style={{color: '#717171', fontSize: '45px'}}>Do you already have an account?</h2>
-                            <p style={{color: '#FBFBFB', letterSpacing: '1px', fontSize: '25px'}}>That's awesome! You can login by clicking on the button below.</p>
+                            <h2 style={{color: '#717171', fontSize: '45px'}}>Don't already have an account?</h2>
+                            <p style={{color: '#FBFBFB', letterSpacing: '1px', fontSize: '25px'}}>No worries! You can signup by clicking on the button below.</p>
                             <button onClick={this.handleSwitch} name={this.props.switchButtonName} className='btn btn-lg btn-square clear' style={{marginTop: '40px'}}>{this.props.switchButtonText}</button>
                         </div>
                     </div>
@@ -117,4 +96,4 @@ class AuthForm extends Component {
     }
 }
 
-export default AuthForm
+export default SignIn
