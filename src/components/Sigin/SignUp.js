@@ -93,7 +93,7 @@ class SignUp extends Component {
                         <div style={{marginTop: '30px', paddingLeft: '40px', paddingRight: '40px'}}>
                             <h1 style={{color: '#FBFBFB', fontWeight: 900, fontSize: '140px'}}>left.</h1>
                             <h2 style={{color: '#717171', fontSize: '45px'}}>Do you already have an account?</h2>
-                            <p style={{color: '#FBFBFB', letterSpacing: '1px', fontSize: '25px'}}>That's awesome! You can login by clicking on the button below.</p>
+                            <p style={{color: '#FBFBFB', letterSpacing: '1px', fontSize: '25px'}}>That's awesome! You can signin by clicking on the button below.</p>
                             <button onClick={this.handleSwitch} name={this.props.switchButtonName} className='btn btn-lg btn-square clear' style={{marginTop: '40px'}}>{this.props.switchButtonText}</button>
                         </div>
                     </div>

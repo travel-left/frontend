@@ -86,8 +86,8 @@ class SignIn extends Component {
                     <div className="col-6 sign-in-right" style={{display: 'flex', flexDirection: 'column',  alignItems: 'center'}}>
                         <div style={{marginTop: '30px', paddingLeft: '40px', paddingRight: '40px'}}>
                             <h1 style={{color: '#FBFBFB', fontWeight: 900, fontSize: '140px'}}>left.</h1>
-                            <h2 style={{color: '#717171', fontSize: '45px'}}>Do you already have an account?</h2>
-                            <p style={{color: '#FBFBFB', letterSpacing: '1px', fontSize: '25px'}}>That's awesome! You can login by clicking on the button below.</p>
+                            <h2 style={{color: '#717171', fontSize: '45px'}}>Don't already have an account?</h2>
+                            <p style={{color: '#FBFBFB', letterSpacing: '1px', fontSize: '25px'}}>No worries! You can signup by clicking on the button below.</p>
                             <button onClick={this.handleSwitch} name={this.props.switchButtonName} className='btn btn-lg btn-square clear' style={{marginTop: '40px'}}>{this.props.switchButtonText}</button>
                         </div>
                     </div>
