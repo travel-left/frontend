@@ -45,3 +45,13 @@
 .signin>div>label {
     color: #717171;
 }
+
+.sign-in-right {
+    background-image: url('https://images.unsplash.com/photo-1473207730345-6cb17f27bd46?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
+    /* filter: blur(3px); */
+    height: 90vh;
+}
+
+.sign-in-right h2 {
+    filter: blur(0px);
+}

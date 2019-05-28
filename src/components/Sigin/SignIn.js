@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Slideshow from '../Other/Slideshow'
 import './Auth.css'
 
-class AuthForm extends Component {
+class SignIn extends Component {
     state = {
         testing: '',
         email: '',
@@ -56,35 +56,14 @@ class AuthForm extends Component {
 
     render() {
         const { email, password, error } = this.state
-        let formFields = null
-
-        switch(this.props.buttonText) {
-            case 'Sign in':
-                formFields = (
-                    <>
-                    <label htmlFor="email">Email</label>
-                    <input type="text" id="email" name="email" className="form-control" placeholder="Email" value={email} onChange={this.handleChange} />
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleChange} />  
-                    </>
-                )
-            case 'Sign up':
-                formFields = (
-                    <>
-                    <label htmlFor="first">First Name</label>
-                    <input className="form-control"type="text" name="first" id="first" placeholder='John'/>
-                    <label htmlFor="last">Last Name</label>
-                    <input className="form-control"type="text" name="last" id="last" placeholder='Appleseed'/>
-                    <label htmlFor="email">Email (will also be your username)</label>
-                    <input type="text" id="email" name="email" className="form-control" placeholder="Email" value={email} onChange={this.handleChange} />
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleChange} />  
-                    </>
-                )
-
-            default:
-                break;
-        }
+        let formFields = (
+            <>
+            <label htmlFor="email">Email</label>
+            <input type="text" id="email" name="email" className="form-control" placeholder="Email" value={email} onChange={this.handleChange} />
+            <label htmlFor="password">Password</label>
+            <input type="password" id="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleChange} />  
+            </>
+        )
         return (
                 <div className="row">
                     <div className="col-6" style={{display: 'flex', justifyContent: 'center'}}>
@@ -93,7 +72,7 @@ class AuthForm extends Component {
                             <div className="card-body">
                                 <div className="card-title">
                                     <h1> {this.props.heading} </h1>
-                                    <p>Create your account by filling the form below</p>
+                                    <p>Sign in to your account by filling the form below</p>
                                 </div>
                                 <form className="signin" onSubmit={this.handleSubmit}>
                                     <div className="form-row">
@@ -117,4 +96,4 @@ class AuthForm extends Component {
     }
 }
 
-export default AuthForm
+export default SignIn
