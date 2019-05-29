@@ -15,8 +15,8 @@ class Documents extends Component {
     }
 
     getDocuments() {
-        const id = this.props.currentTrip._id
-        apiCall('get', `/api/documents/${id}`).then(documents => {
+        const tripId = this.props.currentTrip._id
+        apiCall('get', `/api/trips/${tripId}/documents`).then(documents => {
             if (documents.length > 0) {
                 this.setState({
                     documents: documents,
@@ -27,8 +27,8 @@ class Documents extends Component {
     }
 
     handleSubmit = e => {
-        const id = this.props.currentTrip._id
-        apiCall('post', `/api/documents/${id}`, e)
+        const tripId = this.props.currentTrip._id
+        apiCall('post', `/api/trips/${tripId}/documents`, e)
             .then(() => {
                 console.log('Document Submitted')
                 this.getDocuments()
