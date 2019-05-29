@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import Alert from '../Other/Alert'
-import DashboardHeader from '../Other/DashboardHeader';
-import TripInformationForm from "./TripInformationForm";
-import { apiCall } from '../../services/api';
+import DashboardHeader from '../Other/DashboardHeader'
+import TripInformationForm from "./TripInformationForm"
+import { connect } from 'react-redux'
+import { setCurrentTrip } from "../../store/actions/trip"
+import { apiCall } from '../../services/api'
 
 class TripInformation extends Component {
 
@@ -13,7 +15,10 @@ class TripInformation extends Component {
     updateTrip = updatedTrip => {
         apiCall('put', `/api/trip/${this.props.currentTrip._id}`, updatedTrip)
         .then(data => {
-            console.log(data)
+            return apiCall('get', `/api/trip/${this.props.currentTrip._id}`)
+        })
+        .then(data => {
+            return this.props.setCurrentTrip(data.trip)
         })
         .catch(err => {
             console.log(err)
@@ -43,7 +48,11 @@ class TripInformation extends Component {
                         </div>
                     </div>
                     <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <TripInformationForm submit={this.updateTrip} trip={{name, description, status, image}} />
+                        <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
+                            <div class="card-body" style={{marginTop: '20px'}}>
+                                <TripInformationForm submit={this.updateTrip} trip={{name, description, status, image}} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,4 +60,10 @@ class TripInformation extends Component {
     }
 }
 
-export default TripInformation
+const mapStateToProps = state => {
+    return {
+        currentTrip: state.currentTrip
+    }
+}
+
+export default connect(mapStateToProps, { setCurrentTrip })(TripInformation)

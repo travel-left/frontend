@@ -29,19 +29,26 @@ class TripInformation extends Component {
         let { name, description, status, image} = this.state
         
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div class="form-row">
-                    <div class="form-group col-10">
-                        <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Trip name" />
-                        <input value={status} onChange={this.handleChange} type="text" class="form-control" name="status" placeholder="Trip status" />
-                        <input value={description} onChange={this.handleChange} type="text" class="form-control" name="description" placeholder="description" />
-                        <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+            <div>
+                <h3 class='text-center'>Edit Trip Information</h3>
+                <form onSubmit={this.handleSubmit}>
+                    <div class="form-row">
+                        <div class="form-group col-10">
+                            <label htmlFor="name">Name</label>
+                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Trip name" />
+                            <label htmlFor="status">Status</label>
+                            <input value={status} onChange={this.handleChange} type="text" class="form-control" name="status" placeholder="Trip status" />
+                            <label htmlFor="description">Description</label>
+                            <input value={description} onChange={this.handleChange} type="text" class="form-control" name="description" placeholder="description" />
+                            <label htmlFor="image">Image</label>
+                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                        </div>
                     </div>
-                </div>
-                <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
-                    UPDATE TRIP INFO
-                </button>
-            </form>
+                    <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
+                        UPDATE TRIP INFO
+                    </button>
+                </form>
+            </div>
         )
     }
 }
