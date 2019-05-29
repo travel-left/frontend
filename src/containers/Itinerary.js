@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import EventForm from '../components/Itinerary/Event/EventForm'
 import DayList from '../components/Itinerary/Day/DayList'
 import ItineraryList from '../components/Itinerary/ItineraryList'
@@ -59,6 +58,7 @@ class Itinerary extends Component {
             })
         })
     }
+    
     constructor(props) {
         super(props)
 
@@ -263,7 +263,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    null
-)(Itinerary)
+export default Itinerary
