@@ -21,7 +21,7 @@ class Communicate extends Component {
 
         apiCall('get', `/api/trips/${this.props.currentTrip.id}/notifications`).then(data => {
             return this.setState({
-                notifications: data.notifications,
+                notifications: data,
                 showNotificationsList: true
             })
         })
