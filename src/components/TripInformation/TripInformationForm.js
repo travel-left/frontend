@@ -26,7 +26,7 @@ class TripInformation extends Component {
     }
 
     render() {
-        let { name, description, status, image} = this.state
+        let { name, description, status, image, dateStart, dateEnd} = this.state
         
         return (
             <div>
@@ -42,6 +42,10 @@ class TripInformation extends Component {
                             <input value={description} onChange={this.handleChange} type="text" class="form-control" name="description" placeholder="description" />
                             <label htmlFor="image">Image</label>
                             <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                            <label htmlFor="dateStart">Start date</label>
+                            <input name="dateStart" className="form-control col-8" type="date" value={dateStart} onChange={this.handleChange} placeholder="www.linkToYourImage.com" />
+                            <label htmlFor="dateEnd">End date</label>
+                            <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleChange} placeholder="www.linkToYourImage.com" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
