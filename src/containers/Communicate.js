@@ -28,7 +28,7 @@ class Communicate extends Component {
 
         apiCall('get', `/api/trips/${this.props.currentTrip.id}/contacts`).then(data => {
             return this.setState({
-                contacts: data.contacts,
+                contacts: data,
                 showContactList: true
             })
         })
@@ -52,7 +52,7 @@ class Communicate extends Component {
     }
 
     createContact = contact => {
-        apiCall('post', `/api/contact`, { trip_id: this.props.currentTrip.id, ...contact }).then(() => {
+        apiCall('post', `/api/trips/${this.props.currentTrip.id}/contacts`, { trip_id: this.props.currentTrip.id, ...contact }).then(() => {
             return this.setState(prevState => {
                 return {
                     contacts: [...prevState.contacts, contact],
