@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class TripInformation extends Component {
+class TripInformationForm extends Component {
 
     state = {
         ...this.props.trip
@@ -43,9 +43,9 @@ class TripInformation extends Component {
                             <label htmlFor="image">Image</label>
                             <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
                             <label htmlFor="dateStart">Start date</label>
-                            <input name="dateStart" className="form-control col-8" type="date" value={dateStart} onChange={this.handleChange} placeholder="www.linkToYourImage.com" />
+                            <input name="dateStart" className="form-control col-8" type="date" value={dateStart} onChange={this.handleChange} />
                             <label htmlFor="dateEnd">End date</label>
-                            <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleChange} placeholder="www.linkToYourImage.com" />
+                            <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleChange} />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
@@ -57,4 +57,4 @@ class TripInformation extends Component {
     }
 }
 
-export default TripInformation
+export default TripInformationForm
