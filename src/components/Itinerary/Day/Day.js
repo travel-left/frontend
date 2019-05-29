@@ -17,7 +17,7 @@ class Day extends Component {
     render() {
         let { isCurrentDay, date } = this.props
         let day = isCurrentDay ? (
-            <div class="card day selected">
+            <div class="card day selected" style={{minWidth: '150px', maxWidth: '200px'}}>
                 <div class="card-body">
                     <h4 class="card-title mb-2 text-muted" style={{ display: 'inline-block', marginRight: '.2em' }}>
                         <Moment date={date} format="MMM" />
@@ -33,7 +33,7 @@ class Day extends Component {
                 </div>
             </div>
         ) : (
-            <div class="card day" onClick={this.onDayClick}>
+            <div class="card day" style={{minWidth: '150px', maxWidth: '200px'}} onClick={this.onDayClick}>
                 <div class="card-body">
                     <h4 class="card-title mb-2 text-muted" style={{ display: 'inline-block', marginRight: '.2em' }}>
                         <Moment date={date} format="MMM" />
