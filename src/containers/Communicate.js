@@ -19,14 +19,14 @@ class Communicate extends Component {
     constructor(props) {
         super(props)
 
-        apiCall('get', `/api/notification/${this.props.currentTrip.id}`).then(data => {
+        apiCall('get', `/api/trips/${this.props.currentTrip.id}/notifications`).then(data => {
             return this.setState({
                 notifications: data.notifications,
                 showNotificationsList: true
             })
         })
 
-        apiCall('get', `/api/trip/${this.props.currentTrip.id}/contacts`).then(data => {
+        apiCall('get', `/api/trips/${this.props.currentTrip.id}/contacts`).then(data => {
             return this.setState({
                 contacts: data.contacts,
                 showContactList: true
@@ -36,7 +36,7 @@ class Communicate extends Component {
 
     createNotification = text => {
         let { currentTrip } = this.props
-        apiCall('post', `/api/notification/${this.props.currentTrip.id}`, { text: text }).then(() => {
+        apiCall('post', `/api/trips/${this.props.currentTrip.id}/notifications`, { text: text }).then(() => {
             return this.setState(prevState => {
                 return {
                     notifications: [

@@ -24,7 +24,7 @@ class Itinerary extends Component {
     }
 
     getAndSetItineraries = () => {
-        return apiCall('get', `/api/trip/${this.props.currentTrip.id}/cohort/all`).then(data => {
+        return apiCall('get', `/api/trips/${this.props.currentTrip.id}/cohort/all`).then(data => {
             return this.setState({
                 itineraries: data.cohorts.map(c => {
                     return {

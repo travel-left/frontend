@@ -25,13 +25,13 @@ class Manage extends Component {
     }
 
     getAndSetUsers = () => {
-        apiCall('get', `/api/users/trip/${this.props.currentTrip._id}`).then(data => {
+        apiCall('get', `/api/users/trips/${this.props.currentTrip._id}`).then(data => {
             return this.setState({ users: data.users })
         })
     }
 
     getAndSetCohorts = () => {
-        apiCall('get', `/api/trip/${this.props.currentTrip._id}/cohorts`).then(data => {
+        apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts`).then(data => {
             return this.setState({ cohorts: data.cohorts })
         })
     }
@@ -59,7 +59,7 @@ class Manage extends Component {
         const newCohort = {
             title: title
         }
-        apiCall('post', `/api/trip/${currentTrip.id}/cohort`, newCohort).then(() => {
+        apiCall('post', `/api/trips/${currentTrip.id}/cohort`, newCohort).then(() => {
             return this.getAndSetCohorts()
         })
 
