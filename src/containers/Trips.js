@@ -19,7 +19,7 @@ class Trips extends Component {
 
     constructor(props) {
         super(props)
-        apiCall('get', `/api/users/${this.props.user._id}/trips`).then(data => {
+        apiCall('get', `/api/trips`).then(data => {
             return this.setState({
                 trips: data.trips,
                 showTrips: true,
@@ -43,7 +43,7 @@ class Trips extends Component {
     }
 
     addTrip = trip => {
-        apiCall('post', `/api/trips/${this.props.user._id}`, trip).then(data => {
+        apiCall('post', `/api/trips`, trip).then(data => {
             return this.setState(prevState => {
                 return {
                     trips: [...prevState.trips, data.trip],
