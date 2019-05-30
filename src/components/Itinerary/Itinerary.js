@@ -196,10 +196,9 @@ class Itinerary extends Component {
                             {eventList}
                         </div>
                     </div>
-                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
+                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '120vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
                         <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
                             <div class="card-body" style={{marginTop: '20px'}}>
-                                <h3 className='text-center'>Add Days and Events</h3>
                                 <DayForm submit={this.submitDay} />
                                 <EventForm submit={this.submitEvent} />
                             </div>
