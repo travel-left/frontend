@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import './Dashboard.css'
 import SideNavigation from './SideNavigation'
 import { Switch, Route, withRouter } from 'react-router-dom'
-import withAuth from '../hocs/withAuth'
 import { connect } from 'react-redux'
 import Itinerary from '../components/Itinerary/Itinerary'
-import Manage from './Manage'
 import Communicate from './Communicate'
 import Documents from '../components/Documents/Documents'
 import TripInformation from '../components/TripInformation/TripInformation'
+import Travelers from '../components/Travelers/Travelers'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -24,7 +23,7 @@ class Dashboard extends Component {
                     <Switch>
                         <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={this.props.currentTrip} currentUser={this.props.currentUser} />} />
                         <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={this.props.currentTrip} currentUser={this.props.currentUser} />} />
-                        <Route exact path="/trips/:tripId/manage" render={routeProps => <Manage {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
+                        <Route exact path="/trips/:tripId/manage" render={routeProps => <Travelers {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
                         <Route exact path="/trips/:tripId/communicate" render={routeProps => <Communicate {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
                         <Route exact path="/trips/:tripId/documents" render={routeProps => <Documents {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
                     </Switch>

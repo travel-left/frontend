@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import UserList from '../components/Manage/UserList'
-import { apiCall } from '../services/api'
-import CohortList from '../components/Manage/CohortList'
-import Alert from '../components/Other/Alert'
-import UserInfo from '../components/Manage/UserInfo'
+import UserList from './User/UserList'
+import { apiCall } from '../../services/api'
+// import CohortList from "./Cohorts/CohortList";
+import Alert from '../Other/Alert'
+import TravelerSideBar from './TravelerSideBar'
 
 class Manage extends Component {
     state = {
         users: [],
-        cohorts: [],
-        showNewUserButton: true,
-        showNewCohortButton: true
+        cohorts: []
     }
 
     constructor(props) {
@@ -43,11 +40,6 @@ class Manage extends Component {
         apiCall('post', '/api/auth/signup', newUser).then(() => {
             return this.getAndSetUsers()
         })
-
-        this.setState({
-            showNewUserButton: true,
-            showNewUserForm: false
-        })
     }
 
     addCohort = title => {
@@ -58,11 +50,6 @@ class Manage extends Component {
         apiCall('post', `/api/trip/${currentTrip._id}/cohort`, newCohort).then(() => {
             return this.getAndSetCohorts()
         })
-
-        this.setState({
-            showNewCohortButton: true,
-            showNewCohortForm: false
-        })
     }
 
     addCohortToUser = user => {
@@ -71,20 +58,6 @@ class Manage extends Component {
         }
         apiCall('put', `/api/users/${user.id}`, updatedUser).then(() => {
             return this.getAndSetUsers()
-        })
-    }
-
-    onNewUserClick = () => {
-        this.setState({
-            showNewUserForm: true,
-            showNewUserButton: false
-        })
-    }
-
-    onNewCohortClick = () => {
-        this.setState({
-            showNewCohortForm: true,
-            showNewCohortButton: false
         })
     }
 
@@ -117,7 +90,7 @@ class Manage extends Component {
                         </div>
                     </div>
                     <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <UserInfo showTravelerButton={showNewUserButton} showCohortButton={showNewCohortButton} showNewCohortForm={showNewCohortForm} showNewUserForm={showNewUserForm} addUser={this.addUser} addCohort={this.addCohort} />
+                        <TravelerSideBar addUser={this.addUser} addCohort={this.addCohort} />
                     </div>
                 </div>
             </div>
@@ -125,13 +98,4 @@ class Manage extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        currentTrip: state.currentTrip
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    null
-)(Manage)
+export default Manage
