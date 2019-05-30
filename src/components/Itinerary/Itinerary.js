@@ -18,10 +18,18 @@ class Itinerary extends Component {
         currentDayId: null,
         showCohortList: false,
         showEventList: false,
-        showDayList: false,
-        showEventForm: false,
-        showDayForm: false,
-        showNewDayButton: true
+        showDayList: false
+    }
+
+    constructor(props) {
+        super(props)
+
+        this.getAndSetItineraries()
+            .then(() => this.getAndSetDays())
+            .then(() => this.getAndSetEvents())
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     getAndSetItineraries = () => {
@@ -44,8 +52,7 @@ class Itinerary extends Component {
             return this.setState({
                 days: data.days,
                 currentDayId: data.days.length > 0 ? data.days[0]._id : null,
-                showDayList: true,
-                showNewDayButton: true
+                showDayList: true
             })
         })
     }
@@ -58,17 +65,6 @@ class Itinerary extends Component {
             })
         })
     }
-    
-    constructor(props) {
-        super(props)
-
-        this.getAndSetItineraries()
-            .then(() => this.getAndSetDays())
-            .then(() => this.getAndSetEvents())
-            .catch(err => {
-                console.log(err)
-            })
-    }
 
     setCurrentItinerary = itinerary => {
         apiCall('get', `/api/itinerary/${itinerary}/days`)
@@ -78,8 +74,7 @@ class Itinerary extends Component {
                     days: data.days,
                     currentDayId: null,
                     showDayList: true,
-                    showEventList: false,
-                    showNewDayButton: true
+                    showEventList: false
                 })
             })
             .then(() => {
@@ -99,30 +94,21 @@ class Itinerary extends Component {
             this.setState({
                 currentDayId: day,
                 showEventList: true,
-                events: data.events,
-                showEventForm: false,
-                showDayForm: false
+                events: data.events
             })
         })
     }
 
     onNewEventClick = () => {
         this.setState({
-            showEventForm: true,
             showEventList: false
-        })
-    }
-
-    onNewDayClick = () => {
-        this.setState({
-            showDayForm: true,
-            showNewDayButton: false
         })
     }
 
     submitEvent = event => {
         event.day_id = this.state.currentDayId
-        apiCall('post', `/api/itinerary/event`, event).then(() => this.setCurrentDay(this.state.currentDayId))
+        apiCall('post', `/api/itinerary/event`, event)
+        .then(() => this.setCurrentDay(this.state.currentDayId))
     }
 
     submitDay = date => {
@@ -141,9 +127,7 @@ class Itinerary extends Component {
                 return this.setState({
                     days: data.days,
                     currentDayId: dayId,
-                    showDayList: true,
-                    showNewDayButton: true,
-                    showDayForm: false
+                    showDayList: true
                 })
             })
             .then(() => {
@@ -195,18 +179,6 @@ class Itinerary extends Component {
             <EventList events={this.state.events} removeEvent={this.removeEvent} />
             : <h3>Select a day with events or add a new one!</h3>
 
-        let eventForm = this.state.showEventForm && this.state.currentDayId ?
-            <EventForm submit={this.submitEvent} />
-            : null
-
-        let dayForm = this.state.showDayForm ?
-            <DayForm submit={this.submitDay} />
-            : null
-
-        let newDayButton = this.state.showNewDayButton ?
-            <button className="btn btn-lg btn-square light" onClick={this.onNewDayClick}> New Day </button>
-            : null
-
         return (
             <div class="">
                 <div className="row">
@@ -226,16 +198,11 @@ class Itinerary extends Component {
                     </div>
                     <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
                         <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
-                            <div class="card-body" style={{ marginTop: '20px' }}>
-                            {newDayButton}
-                            <br/>
-                            <br/>
-                            {dayForm}
-                            <button class="btn btn-lg btn-square light" onClick={this.onNewEventClick}>
-                            New Event
-                            </button>
-                            {eventForm}
-                        </div>
+                            <div class="card-body" style={{marginTop: '20px'}}>
+                                <h3 className='text-center'>Add Days and Events</h3>
+                                <DayForm submit={this.submitDay} />
+                                <EventForm submit={this.submitEvent} />
+                            </div>
                         </div>
                     </div>
                 </div>
