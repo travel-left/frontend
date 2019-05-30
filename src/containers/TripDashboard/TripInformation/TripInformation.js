@@ -34,7 +34,7 @@ class TripInformation extends Component {
             <div>
                 <div className="row">
                     <div className="col-12">
-                        <Alert />
+                        <Alert text='This is where all the general information about your trip will live! See statistics and update the info on the right.'/>
                     </div>
                 </div>
                 <div className="row">
