@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NotificationForm from './NotificationForm'
 import NotificationList from './NotificationList'
-import { apiCall } from '../../../services/api'
+import { apiCall } from '../../../util/api'
 import ContactList from './ContactList'
 import ContactForm from './ContactForm'
 import Alert from "../../Other/Alert";

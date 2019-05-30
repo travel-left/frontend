@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DocumentForm from './DocumentForm'
 import DocumentList from './DocumentList'
-import { apiCall } from '../../../services/api'
+import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from "../../Other/DashboardHeader"
 import SideBar from '../SideBar'

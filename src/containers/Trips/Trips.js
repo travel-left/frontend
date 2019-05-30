@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { apiCall } from '../../services/api'
+import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../store/actions/trip'
 import TripForm from '../../components/Trips/TripForm'

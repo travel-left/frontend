@@ -4,7 +4,7 @@ import DashboardHeader from '../../../components/Other/DashboardHeader'
 import UpdateTripForm from "./UpdateTripForm"
 import { connect } from 'react-redux'
 import { setCurrentTrip } from "../../../store/actions/trip"
-import { apiCall } from '../../../services/api'
+import { apiCall } from '../../../util/api'
 import Moment from 'react-moment'
 import SideBar from '../../../components/TripDashboard/SideBar';
 

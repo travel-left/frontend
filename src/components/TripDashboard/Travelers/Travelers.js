@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UserList from './Users/UserList'
-import { apiCall } from '../../../services/api'
+import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'

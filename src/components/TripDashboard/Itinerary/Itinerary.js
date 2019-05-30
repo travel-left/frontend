@@ -3,7 +3,7 @@ import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
 import CohortList from './Cohort/CohortList'
 import EventList from './Event/EventList'
-import { apiCall } from '../../../services/api'
+import { apiCall } from '../../../util/api'
 import DayForm from './Day/DayForm'
 import './Itinerary.css'
 import Alert from '../../Other/Alert';
