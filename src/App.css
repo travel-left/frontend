@@ -92,3 +92,19 @@ button.btn-lg.btn-round.clear {
     min-width: 100px;
     border-radius: 2em / 2.5em;
 }
+
+button.btn-lg.btn-square.clear {
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    min-width: 100px;
+    font-weight: 400;
+    border: 2px solid white;
+    border-radius: 0%;
+}
+
+input:focus{
+    outline: none !important;
+}

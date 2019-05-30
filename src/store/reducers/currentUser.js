@@ -2,9 +2,7 @@ import { SET_CURRENT_USER, ADD_TRIP } from '../actionTypes'
 
 const DEFAULT_STATE = {
     isAuthenticated: false,
-    user: {
-
-    }
+    user: {}
 }
 
 export default (state = DEFAULT_STATE, action) => {
@@ -26,6 +24,6 @@ export default (state = DEFAULT_STATE, action) => {
                 }
             }
         default:
-            return state;
+            return state
     }
 }
