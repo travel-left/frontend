@@ -184,7 +184,7 @@ class Itinerary extends Component {
             <div class="">
                 <div className="row">
                     <div className="col-12">
-                        <Alert />
+                        <Alert text='Create an itinerary for each of your cohorts here. Travelers will see the days that have events on the mobile app.'/>
                     </div>
                 </div>
                 <div className="row">

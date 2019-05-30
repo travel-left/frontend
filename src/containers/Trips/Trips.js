@@ -112,7 +112,7 @@ class Trips extends Component {
                 <div className="col-10">
                     <div className="row">
                         <div className="col-12">
-                            <Alert />
+                            <Alert text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.'/>
                         </div>
                     </div>
                     <div className="row">

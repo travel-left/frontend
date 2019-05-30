@@ -48,7 +48,7 @@ class Documents extends Component {
             <div>
                 <div className="row">
                     <div className="col-12">
-                        <Alert />
+                        <Alert text='Insert links to the most important documents for your travelers here.'/>
                     </div>
                 </div>
                 <div className="row">
