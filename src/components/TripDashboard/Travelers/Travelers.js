@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import UserList from './User/UserList'
-import { apiCall } from '../../services/api'
-// import CohortList from "./Cohorts/CohortList";
-import Alert from '../Other/Alert'
-import TravelerSideBar from './TravelerSideBar'
-import DashboardHeader from '../Other/DashboardHeader';
+import UserList from './Users/UserList'
+import { apiCall } from '../../../services/api'
+import Alert from '../../Other/Alert'
+import DashboardHeader from '../../Other/DashboardHeader'
+import SideBar from '../SideBar'
+import CohortForm from './Cohorts/CohortForm'
+import UserForm from './Users/UserForm'
 
 class Manage extends Component {
     state = {
@@ -89,9 +90,7 @@ class Manage extends Component {
                             <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser} />
                         </div>
                     </div>
-                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <TravelerSideBar addUser={this.addUser} addCohort={this.addCohort} />
-                    </div>
+                    <SideBar ctr={[<UserForm submit={this.submitTravelerClick} />,<CohortForm submit={this.submitCohortClick} />]}/>
                 </div>
             </div>
         )

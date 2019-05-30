@@ -3,11 +3,12 @@ import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
 import CohortList from './Cohort/CohortList'
 import EventList from './Event/EventList'
-import { apiCall } from '../../services/api'
+import { apiCall } from '../../../services/api'
 import DayForm from './Day/DayForm'
 import './Itinerary.css'
-import Alert from '../Other/Alert';
-import DashboardHeader from '../Other/DashboardHeader';
+import Alert from '../../Other/Alert';
+import DashboardHeader from '../../Other/DashboardHeader';
+import SideBar from '../SideBar';
 
 class Itinerary extends Component {
     state = {
@@ -196,23 +197,10 @@ class Itinerary extends Component {
                             {eventList}
                         </div>
                     </div>
-                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '120vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
-                            <div class="card-body" style={{marginTop: '20px'}}>
-                                <DayForm submit={this.submitDay} />
-                                <EventForm submit={this.submitEvent} />
-                            </div>
-                        </div>
-                    </div>
+                    <SideBar ctr={[<DayForm submit={this.submitDay} />, <EventForm submit={this.submitEvent} />]}/>
                 </div>
             </div>
         )
-    }
-}
-
-const mapStateToProps = state => {
-    return {
-        currentTrip: state.currentTrip
     }
 }
 

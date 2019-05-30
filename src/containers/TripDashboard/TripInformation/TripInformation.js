@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import Alert from '../Other/Alert'
-import DashboardHeader from '../Other/DashboardHeader'
-import TripInformationForm from "./TripInformationForm"
+import Alert from '../../../components/Other/Alert'
+import DashboardHeader from '../../../components/Other/DashboardHeader'
+import UpdateTripForm from "./UpdateTripForm"
 import { connect } from 'react-redux'
-import { setCurrentTrip } from "../../store/actions/trip"
-import { apiCall } from '../../services/api'
+import { setCurrentTrip } from "../../../store/actions/trip"
+import { apiCall } from '../../../services/api'
 import Moment from 'react-moment'
+import SideBar from '../../../components/TripDashboard/SideBar';
 
 class TripInformation extends Component {
 
@@ -28,7 +29,7 @@ class TripInformation extends Component {
 
     render() {
         let { name, description, status, image, dateStart, dateEnd} = this.props.currentTrip
-
+        let updateTripForm = <UpdateTripForm submit={this.updateTrip} trip={{name, description, status, image, dateStart, dateEnd}} />
         return (
             <div>
                 <div className="row">
@@ -48,13 +49,7 @@ class TripInformation extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
-                            <div class="card-body" style={{marginTop: '20px'}}>
-                                <TripInformationForm submit={this.updateTrip} trip={{name, description, status, image, dateStart, dateEnd}} />
-                            </div>
-                        </div>
-                    </div>
+                    <SideBar ctr={[updateTripForm]}/>
                 </div>
             </div>
         )

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import NotificationForm from './NotificationForm'
 import NotificationList from './NotificationList'
-import { apiCall } from '../../services/api'
+import { apiCall } from '../../../services/api'
 import ContactList from './ContactList'
 import ContactForm from './ContactForm'
-import Alert from "../Other/Alert";
-import DashboardHeader from '../Other/DashboardHeader';
+import Alert from "../../Other/Alert";
+import DashboardHeader from '../../Other/DashboardHeader';
+import SideBar from '../SideBar';
 
 class Communicate extends Component {
     state = {
@@ -98,14 +99,7 @@ class Communicate extends Component {
                             {notificationsList}
                         </div>
                     </div>
-                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
-                            <div class="card-body" style={{ marginTop: '20px' }}>
-                                <ContactForm submit={this.createContact} />
-                                <NotificationForm submit={this.createNotification} />
-                            </div>
-                        </div>
-                    </div>
+                    <SideBar ctr={[<ContactForm submit={this.createContact} />, <NotificationForm submit={this.createNotification} />]}/>
                 </div>
             </div>
         )
