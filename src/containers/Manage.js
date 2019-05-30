@@ -32,7 +32,7 @@ class Manage extends Component {
 
     getAndSetCohorts = () => {
         apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts`).then(data => {
-            return this.setState({ cohorts: data.cohorts })
+            return this.setState({ cohorts: data })
         })
     }
 
@@ -59,7 +59,7 @@ class Manage extends Component {
         const newCohort = {
             title: title
         }
-        apiCall('post', `/api/trips/${currentTrip.id}/cohort`, newCohort).then(() => {
+        apiCall('post', `/api/trips/${currentTrip.id}/cohorts`, newCohort).then(() => {
             return this.getAndSetCohorts()
         })
 
