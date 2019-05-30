@@ -21,7 +21,7 @@ class User extends Component {
             cohortList = <span>Add a cohort</span>
         }
         return (
-            <div className="card" onClick={this.onTripClick} style={{ minHeight: '80px', boxShadow: 'rgb(136, 136, 136) 0px 0px 8px', marginBottom: '10px' }}>
+            <div className="card" style={{ minHeight: '80px', boxShadow: 'rgb(136, 136, 136) 0px 0px 8px', marginBottom: '10px' }}>
                 <div className="row no-gutters" style={{ justifyContent: 'space-around', height: '100px', flexDirection: 'row', alignItems: 'center' }}>
                     <div className="col-1">
                         <img src="https://pbs.twimg.com/profile_images/1114204041431605249/p_TkPVR-_400x400.png" className="card-img" alt="..." style={{ maxHeight: '60px', maxWidth: '60px', borderRadius: '50%', marginLeft: '15px' }} />

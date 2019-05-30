@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import NotificationForm from '../components/Communicate/NotificationForm'
-import NotificationList from '../components/Communicate/NotificationList'
-import { apiCall } from '../services/api'
-import ContactList from '../components/Communicate/ContactList'
-import ContactForm from '../components/Communicate/ContactForm'
-import Alert from "../components/Other/Alert";
-import DashboardHeader from '../components/Other/DashboardHeader';
+import NotificationForm from './NotificationForm'
+import NotificationList from './NotificationList'
+import { apiCall } from '../../services/api'
+import ContactList from './ContactList'
+import ContactForm from './ContactForm'
+import Alert from "../Other/Alert";
+import DashboardHeader from '../Other/DashboardHeader';
 
 class Communicate extends Component {
     state = {
         contacts: [],
         showContactList: false,
-        showContactForm: false,
         notifications: [],
         showNotificationsList: false,
-        showNotificationsForm: false
     }
 
     constructor(props) {
@@ -57,33 +54,16 @@ class Communicate extends Component {
         apiCall('post', `/api/contact`, { trip_id: this.props.currentTrip._id, ...contact }).then(() => {
             return this.setState(prevState => {
                 return {
-                    contacts: [...prevState.contacts, contact],
-                    showContactForm: false
+                    contacts: [...prevState.contacts, contact]
                 }
             })
         })
     }
 
-    onNewContactClick = () => {
-        this.setState({
-            showContactForm: true
-        })
-    }
-
     render() {
-        let { showNotificationsList, notifications, showContactForm, showContactList, contacts } = this.state
-        let { currentTrip } = this.props
-        let contactForm,
-            contactList = null
+        let { showNotificationsList, notifications, showContactList, contacts } = this.state
+        let contactList = showContactList ? <ContactList contacts={contacts} /> : null
         let notificationsList = showNotificationsList ? <NotificationList notifications={notifications} /> : null
-
-        if (showContactForm) {
-            contactForm = <ContactForm submit={this.createContact} />
-        }
-
-        if (showContactList) {
-            contactList = <ContactList contacts={contacts} />
-        }
 
         return (
             <div class="">
@@ -95,22 +75,33 @@ class Communicate extends Component {
                 <div className="row">
                     <div className="col-8">
                         <DashboardHeader title='Communicate' description='Add emergency contacts, create and send notifications, and make sure everyone is on the same page!'/>
-                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
-                            <strong>Emergency Contacts</strong>
-                        </h4>
-                        {contactList}
+                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}> <strong>Emergency Contacts</strong></h4>
+                        <div className="">
+                            <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
+                                <div className="col-1" />
+                                <div className="col-3" style={{ borderBottom: '2px solid #0F61D8' }}> Name</div>
+                                <div className="col-2"></div>
+                                <div className="col-3">Phone</div>
+                                <div className="col-3">Email</div>
+                            </div>
+                            {contactList}
+                        </div>
                         <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
                             <strong>Notifications</strong>
                         </h4>
-                        {notificationsList}
+                        <div className="">
+                            <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
+                                <div className="col-1" />
+                                <div className="col-7" style={{ borderBottom: '2px solid #0F61D8' }}> Message</div>
+                                <div className="col-4"></div>
+                            </div>
+                            {notificationsList}
+                        </div>
                     </div>
                     <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
                         <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
                             <div class="card-body" style={{ marginTop: '20px' }}>
-                                <button onClick={this.onNewContactClick} class="btn btn-lg btn-square light" style={{ marginTop: '50px', fontSize: '.9em' }}>
-                                    New Contact
-                                </button>
-                                {contactForm}
+                                <ContactForm submit={this.createContact} />
                                 <NotificationForm submit={this.createNotification} />
                             </div>
                         </div>
@@ -121,13 +112,4 @@ class Communicate extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        currentTrip: state.currentTrip
-    }
-}
-
-export default connect(
-    mapStateToProps,
-    null
-)(Communicate)
+export default Communicate

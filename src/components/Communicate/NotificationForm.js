@@ -18,23 +18,20 @@ class NotificationForm extends Component {
     handleSubmit = e => {
         e.preventDefault()
         this.props.submit(this.state.text)
+        this.setState({text: ''})
     }
 
     render() {
         let { text } = this.state
         return (
-            <div className="userForm">
-                <form onSubmit={this.handleSubmit}>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <input value={text} onChange={this.handleChange} type="text" class="form-control" name="text" placeholder="Your notification message" />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-lg btn-square dark pull-right">
-                        Create Notification
-                    </button>
-                </form>
-            </div>
+            <form onSubmit={this.handleSubmit} style={{marginTop: '65px'}}>
+                <h3>Add a notification</h3>
+                <div class="form-row">
+                    <label htmlFor="text">Message</label>
+                    <input value={text} onChange={this.handleChange} type="text" class="form-control" name="text" placeholder="Your notification message" />
+                </div>
+                <button type="submit" class="btn btn-lg btn-square dark pull-right"> Create Notification </button>
+            </form>
         )
     }
 }

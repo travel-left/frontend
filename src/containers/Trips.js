@@ -76,7 +76,7 @@ class Trips extends Component {
 
         let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip}/> : null
         let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip}/> : null
-        let newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}}onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
+        let newTripButton = <button style={{marginTop: '50px', marginBottom: '50px'}} onClick={this.showTripForm} class='btn-lg btn-square dark'>ADD NEW TRIP</button>
         let tripForm = showTripForm ? <TripForm submit={this.addTrip} hide={this.hideTripForm} /> : null
 
         return (

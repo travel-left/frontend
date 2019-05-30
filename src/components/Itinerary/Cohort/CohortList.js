@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class ItineraryList extends Component {
+class CohortList extends Component {
     constructor(props) {
         super(props)
     }
@@ -23,4 +23,4 @@ class ItineraryList extends Component {
     }
 }
 
-export default ItineraryList
+export default CohortList
