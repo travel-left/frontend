@@ -70,7 +70,7 @@ class Communicate extends Component {
             <div class="">
                 <div className="row">
                     <div className="col-12">
-                        <Alert />
+                        <Alert text='Use this area to improve communication among your travelers.'/>
                     </div>
                 </div>
                 <div className="row">
