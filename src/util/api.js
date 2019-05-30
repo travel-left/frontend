@@ -10,8 +10,8 @@ export const setTokenHeader = token => {
 
 export const apiCall = (method, path, data) => {
     return new Promise((resolve, reject) => {
-        //return axios[method.toLowerCase()](`https://left-backend.herokuapp.com${path}`, data)
-        return axios[method.toLowerCase()](path, data)
+        return axios[method.toLowerCase()](`https://left-backend.herokuapp.com${path}`, data)
+        // return axios[method.toLowerCase()](path, data)
             .then(res => {
                 return resolve(res.data)
             })
