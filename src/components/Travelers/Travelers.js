@@ -4,6 +4,7 @@ import { apiCall } from '../../services/api'
 // import CohortList from "./Cohorts/CohortList";
 import Alert from '../Other/Alert'
 import TravelerSideBar from './TravelerSideBar'
+import DashboardHeader from '../Other/DashboardHeader';
 
 class Manage extends Component {
     state = {
@@ -74,8 +75,7 @@ class Manage extends Component {
                 </div>
                 <div className="row">
                     <div className="col-8">
-                        <h2>People on this Trip</h2>
-                        <p>Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary</p>
+                        <DashboardHeader title='People on this Trip' description='Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary' />
                         <div className="">
                             <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
                                 <div className="col-1" />

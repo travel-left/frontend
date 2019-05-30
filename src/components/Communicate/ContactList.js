@@ -7,9 +7,9 @@ const ContactList = ({ contacts }) => {
     })
 
     return (
-        <div className="row" style={{ justifyContent: 'center', display: 'flex', flexDirection: 'row' }}>
+        <ul className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
             {list}
-        </div>
+        </ul>
     )
 }
 
