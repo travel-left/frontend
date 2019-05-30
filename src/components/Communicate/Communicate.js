@@ -89,7 +89,14 @@ class Communicate extends Component {
                         <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
                             <strong>Notifications</strong>
                         </h4>
-                        {notificationsList}
+                        <div className="">
+                            <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
+                                <div className="col-1" />
+                                <div className="col-7" style={{ borderBottom: '2px solid #0F61D8' }}> Message</div>
+                                <div className="col-4"></div>
+                            </div>
+                            {notificationsList}
+                        </div>
                     </div>
                     <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
                         <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
