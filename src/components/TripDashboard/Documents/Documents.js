@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import DocumentForm from './DocumentForm'
 import DocumentList from './DocumentList'
-import { apiCall } from '../../services/api'
-import Alert from '../Other/Alert';
-import DashboardHeader from "../Other/DashboardHeader";
+import { apiCall } from '../../../util/api'
+import Alert from '../../Other/Alert'
+import DashboardHeader from "../../Other/DashboardHeader"
+import SideBar from '../SideBar'
 
 class Documents extends Component {
     state = {
@@ -53,15 +54,10 @@ class Documents extends Component {
                 <div className="row">
                     <div className="col-8">
                         <DashboardHeader title='Documents' description='Add all of the important documents to share with your travelers here.'/>
-                        {documentsList}
+                        {documentsList}import SideBar from '../SideBar';
+
                     </div>
-                    <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                        <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
-                            <div class="card-body" style={{marginTop: '20px'}}>
-                                <DocumentForm submit={this.handleSubmit} />
-                            </div>
-                        </div>
-                    </div>
+                    <SideBar ctr={[<DocumentForm submit={this.handleSubmit} />]}/>
                 </div>
             </div>
         )
@@ -69,3 +65,4 @@ class Documents extends Component {
 }
 
 export default Documents
+ 

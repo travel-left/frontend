@@ -1,5 +1,5 @@
 import { SET_CURRENT_USER } from '../actionTypes'
-import { apiCall, setTokenHeader } from '../../services/api'
+import { apiCall, setTokenHeader } from '../../util/api'
 
 export const setCurrentUser = user => {
     return {

@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 
 class TripForm extends Component {
     state = {
-        trip: {
-            name: '',
-            image: '',
-            dateStart: '',
-            dateEnd: '',
-            description: ''
-        }
+        name: '',
+        image: '',
+        dateStart: '',
+        dateEnd: '',
+        description: ''
     }
 
     constructor(props) {
@@ -17,17 +15,17 @@ class TripForm extends Component {
 
     handleInputChange = e => {
         const updatedTrip = {
-            ...this.state.trip
+            ...this.state
         }
         updatedTrip[e.target.name] = e.target.value
         this.setState({
-            trip: updatedTrip
+            ...updatedTrip
         })
     }
 
     handleSubmitEvent = event => {
         event.preventDefault()
-        this.props.submit(this.state.trip)
+        this.props.submit(this.state)
     }
 
     closeForm = () => {
@@ -35,7 +33,7 @@ class TripForm extends Component {
     }
 
     render() {
-        let { name, image, dateStart, dateEnd, description } = this.state.trip
+        let { name, image, dateStart, dateEnd, description } = this.state
 
         return (
             <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>

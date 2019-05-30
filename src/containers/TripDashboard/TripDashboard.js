@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import './Dashboard.css'
-import SideNavigation from './SideNavigation'
+import './TripDashboard.css'
+import SideNavigation from '../Navbar/SideNavigation'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Itinerary from '../components/Itinerary/Itinerary'
-import Communicate from '../components/Communicate/Communicate'
-import Documents from '../components/Documents/Documents'
-import TripInformation from '../components/TripInformation/TripInformation'
-import Travelers from '../components/Travelers/Travelers'
+import Itinerary from '../../components/TripDashboard/Itinerary/Itinerary'
+import Documents from '../../components/TripDashboard/Documents/Documents'
+import TripInformation from './TripInformation/TripInformation'
+import Travelers from '../../components/TripDashboard/Travelers/Travelers'
+import Communicate from '../../components/TripDashboard/Communicate/Communicate'
 
 class Dashboard extends Component {
     constructor(props) {

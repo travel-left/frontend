@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Slideshow from '../Other/Slideshow'
 import './Auth.css'
 
 class SignUp extends Component {
