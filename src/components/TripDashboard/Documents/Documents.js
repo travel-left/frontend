@@ -3,7 +3,7 @@ import DocumentForm from './DocumentForm'
 import DocumentList from './DocumentList'
 import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
-import DashboardHeader from "../../Other/DashboardHeader"
+import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
 
 class Documents extends Component {
@@ -19,7 +19,7 @@ class Documents extends Component {
 
     getDocuments() {
         const id = this.props.currentTrip._id
-        apiCall('get', `/api/documents/${id}`).then(documents => {
+        apiCall('get', `/api/trips/${id}/documents`).then(documents => {
             if (documents.length > 0) {
                 this.setState({
                     documents: documents,
@@ -31,7 +31,7 @@ class Documents extends Component {
 
     handleSubmit = e => {
         const id = this.props.currentTrip._id
-        apiCall('post', `/api/documents/${id}`, e)
+        apiCall('post', `/api/trips/${id}/documents`, e)
             .then(() => {
                 console.log('Document Submitted')
                 this.getDocuments()
@@ -48,15 +48,15 @@ class Documents extends Component {
             <div>
                 <div className="row">
                     <div className="col-12">
-                        <Alert text='Insert links to the most important documents for your travelers here.'/>
+                        <Alert text="Insert links to the most important documents for your travelers here." />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-8">
-                        <DashboardHeader title='Documents' description='Add all of the important documents to share with your travelers here.'/>
+                        <DashboardHeader title="Documents" description="Add all of the important documents to share with your travelers here." />
                         {documentsList}
                     </div>
-                    <SideBar ctr={[<DocumentForm submit={this.handleSubmit} />]}/>
+                    <SideBar ctr={[<DocumentForm submit={this.handleSubmit} />]} />
                 </div>
             </div>
         )
@@ -64,4 +64,3 @@ class Documents extends Component {
 }
 
 export default Documents
- 

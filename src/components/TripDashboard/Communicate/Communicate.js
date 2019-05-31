@@ -4,31 +4,33 @@ import NotificationList from './NotificationList'
 import { apiCall } from '../../../util/api'
 import ContactList from './ContactList'
 import ContactForm from './ContactForm'
-import Alert from "../../Other/Alert";
-import DashboardHeader from '../../Other/DashboardHeader';
-import SideBar from '../SideBar';
+import Alert from '../../Other/Alert'
+import DashboardHeader from '../../Other/DashboardHeader'
+import SideBar from '../SideBar'
 
 class Communicate extends Component {
     state = {
         contacts: [],
         showContactList: false,
         notifications: [],
-        showNotificationsList: false,
+        showNotificationsList: false
     }
 
     constructor(props) {
         super(props)
 
-        apiCall('get', `/api/notification/${this.props.currentTrip._id}`).then(data => {
+        apiCall('get', `/api/trips/${this.props.currentTrip._id}/notifications`).then(data => {
+            // Get Notifications
             return this.setState({
-                notifications: data.notifications,
+                notifications: [...data],
                 showNotificationsList: true
             })
         })
 
-        apiCall('get', `/api/trip/${this.props.currentTrip._id}/contacts`).then(data => {
+        apiCall('get', `/api/trips/${this.props.currentTrip._id}/contacts`).then(data => {
+            // Get Contacts
             return this.setState({
-                contacts: data.contacts,
+                contacts: [...data],
                 showContactList: true
             })
         })
@@ -36,7 +38,8 @@ class Communicate extends Component {
 
     createNotification = text => {
         let { currentTrip } = this.props
-        apiCall('post', `/api/notification/${this.props.currentTrip._id}`, { text: text }).then(() => {
+        apiCall('post', `/api/trips/${this.props.currentTrip._id}/notifications`, { text: text }).then(() => {
+            // Crate Notification
             return this.setState(prevState => {
                 return {
                     notifications: [
@@ -52,7 +55,8 @@ class Communicate extends Component {
     }
 
     createContact = contact => {
-        apiCall('post', `/api/contact`, { trip_id: this.props.currentTrip._id, ...contact }).then(() => {
+        apiCall('post', `/api/trips/${this.props.currentTrip._id}/contacts`, { trip_id: this.props.currentTrip._id, ...contact }).then(() => {
+            // Create Contact
             return this.setState(prevState => {
                 return {
                     contacts: [...prevState.contacts, contact]
@@ -70,18 +74,24 @@ class Communicate extends Component {
             <div class="">
                 <div className="row">
                     <div className="col-12">
-                        <Alert text='Use this area to improve communication among your travelers.'/>
+                        <Alert text="Use this area to improve communication among your travelers." />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-8">
-                        <DashboardHeader title='Communicate' description='Add emergency contacts, create and send notifications, and make sure everyone is on the same page!'/>
-                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}> <strong>Emergency Contacts</strong></h4>
+                        <DashboardHeader title="Communicate" description="Add emergency contacts, create and send notifications, and make sure everyone is on the same page!" />
+                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
+                            {' '}
+                            <strong>Emergency Contacts</strong>
+                        </h4>
                         <div className="">
                             <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
                                 <div className="col-1" />
-                                <div className="col-3" style={{ borderBottom: '2px solid #0F61D8' }}> Name</div>
-                                <div className="col-2"></div>
+                                <div className="col-3" style={{ borderBottom: '2px solid #0F61D8' }}>
+                                    {' '}
+                                    Name
+                                </div>
+                                <div className="col-2" />
                                 <div className="col-3">Phone</div>
                                 <div className="col-3">Email</div>
                             </div>
@@ -93,13 +103,16 @@ class Communicate extends Component {
                         <div className="">
                             <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
                                 <div className="col-1" />
-                                <div className="col-7" style={{ borderBottom: '2px solid #0F61D8' }}> Message</div>
-                                <div className="col-4"></div>
+                                <div className="col-7" style={{ borderBottom: '2px solid #0F61D8' }}>
+                                    {' '}
+                                    Message
+                                </div>
+                                <div className="col-4" />
                             </div>
                             {notificationsList}
                         </div>
                     </div>
-                    <SideBar ctr={[<ContactForm submit={this.createContact} />, <NotificationForm submit={this.createNotification} />]}/>
+                    <SideBar ctr={[<ContactForm submit={this.createContact} />, <NotificationForm submit={this.createNotification} />]} />
                 </div>
             </div>
         )
