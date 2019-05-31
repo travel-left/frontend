@@ -20,10 +20,11 @@ class Trips extends Component {
     constructor(props) {
         super(props)
         apiCall('get', '/api/trips').then(data => {
+            console.log(data.trips)
             return this.setState({
-                trips: data,
-                showTrips: data.length > 0,
-                selectedTrip: data[0]
+                trips: data.trips,
+                showTrips: data.trips.length > 0,
+                selectedTrip: data.trips[0]
             })
         })
     }
@@ -50,9 +51,9 @@ class Trips extends Component {
             .then(data => {
                 return this.setState(prevState => {
                     return {
-                        trips: [...prevState.trips, data],
+                        trips: [...prevState.trips, data.trip],
                         showTripForm: false,
-                        selectedTrip: data
+                        selectedTrip: data.trip
                     }
                 })
             })
