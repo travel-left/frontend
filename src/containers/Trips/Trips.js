@@ -20,7 +20,6 @@ class Trips extends Component {
     constructor(props) {
         super(props)
         apiCall('get', '/api/trips').then(data => {
-            console.log(data.trips)
             return this.setState({
                 trips: data.trips,
                 showTrips: data.trips.length > 0,
