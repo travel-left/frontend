@@ -28,7 +28,7 @@ class User extends Component {
                     </div>
                     <div className="col-3 hover">
                         <p className="card-text" style={{ padding: '15px 5px 15px 5px', fontSize: '1em', color: '#3A3A3A', fontWeight: '600', marginLeft: '25px' }}>
-                            Jordan Boudreau
+                            {user.firstName} {user.lastName}
                         </p>
                     </div>
                     <div className="col-3 hover">
