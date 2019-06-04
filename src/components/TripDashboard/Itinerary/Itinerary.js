@@ -78,25 +78,27 @@ class Itinerary extends Component {
         let tripId = this.props.currentTrip._id
         let currentItin = this.state.itineraries.filter(i => i._id === itinerary)[0]
         let cohortId = currentItin.cohort_id
-        let dayId = this.state.currentDayId
         apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`)
             .then(data => {
                 return this.setState({
                     currentItinerary: this.state.itineraries.filter(i => i._id === itinerary)[0],
                     days: data,
-                    currentDayId: null,
+                    currentDayId: data[0]._id,
                     showDayList: true,
                     showEventList: false
                 })
             })
             .then(() => {
+                tripId = this.props.currentTrip._id
+                currentItin = this.state.itineraries.filter(i => i._id === itinerary)[0]
+                cohortId = currentItin.cohort_id
+                const dayId = this.state.currentDayId
                 return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`)
             })
             .then(data => {
                 return this.setState({
-                    showEventList: false,
-                    events: null,
-                    currentItinerary: itinerary
+                    showEventList: data ? true : false,
+                    events: data
                 })
             })
     }
@@ -104,8 +106,7 @@ class Itinerary extends Component {
     setCurrentDay = day => {
         let tripId = this.props.currentTrip._id
         let cohortId = this.state.currentItinerary.cohort_id
-        let dayId = this.state.currentDayId
-        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(data => {
+        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${day}/events`).then(data => {
             this.setState({
                 currentDayId: day,
                 showEventList: true,
