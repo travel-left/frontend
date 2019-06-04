@@ -103,12 +103,12 @@ class Itinerary extends Component {
             })
     }
 
-    setCurrentDay = day => {
+    setCurrentDay = dayId => {
         let tripId = this.props.currentTrip._id
         let cohortId = this.state.currentItinerary.cohort_id
-        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${day}/events`).then(data => {
+        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(data => {
             this.setState({
-                currentDayId: day,
+                currentDayId: dayId,
                 showEventList: true,
                 events: data
             })
