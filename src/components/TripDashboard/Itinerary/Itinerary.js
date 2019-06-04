@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uniqid from 'uniqid'
 import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
 import CohortList from './Cohort/CohortList'
@@ -77,36 +78,37 @@ class Itinerary extends Component {
         let tripId = this.props.currentTrip._id
         let currentItin = this.state.itineraries.filter(i => i._id === itinerary)[0]
         let cohortId = currentItin.cohort_id
-        let dayId = this.state.currentDayId
         apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`)
             .then(data => {
                 return this.setState({
                     currentItinerary: this.state.itineraries.filter(i => i._id === itinerary)[0],
                     days: data,
-                    currentDayId: null,
+                    currentDayId: data[0]._id,
                     showDayList: true,
                     showEventList: false
                 })
             })
             .then(() => {
+                tripId = this.props.currentTrip._id
+                currentItin = this.state.itineraries.filter(i => i._id === itinerary)[0]
+                cohortId = currentItin.cohort_id
+                const dayId = this.state.currentDayId
                 return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`)
             })
             .then(data => {
                 return this.setState({
-                    showEventList: false,
-                    events: null,
-                    currentItinerary: itinerary
+                    showEventList: data ? true : false,
+                    events: data
                 })
             })
     }
 
-    setCurrentDay = day => {
+    setCurrentDay = dayId => {
         let tripId = this.props.currentTrip._id
         let cohortId = this.state.currentItinerary.cohort_id
-        let dayId = this.state.currentDayId
         apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(data => {
             this.setState({
-                currentDayId: day,
+                currentDayId: dayId,
                 showEventList: true,
                 events: data
             })
@@ -159,13 +161,16 @@ class Itinerary extends Component {
         apiCall('delete', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}`)
             .then(() => {
                 return this.setState(prevState => {
+                    const newDays = prevState.days.filter(day => dayId !== day._id)
                     return {
                         ...prevState,
-                        days: prevState.days.filter(day => dayId !== day._id),
-                        showEventList: false
+                        days: newDays,
+                        currentDayId: newDays[0]._id,
+                        showEventList: newDays[0].events.length > 0 ? true : false
                     }
                 })
             })
+            .then(this.getAndSetEvents)
             .catch(err => {
                 console.log(err)
             })
@@ -197,7 +202,7 @@ class Itinerary extends Component {
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
-            <div class="">
+            <div className="">
                 <div className="row">
                     <div className="col-12">
                         <Alert text="Create an itinerary for each of your cohorts here. Travelers will see the days that have events on the mobile app." />
@@ -209,7 +214,7 @@ class Itinerary extends Component {
                         <div>{dayList}</div>
                         <div>{eventList}</div>
                     </div>
-                    <SideBar ctr={[<DayForm submit={this.submitDay} />, <EventForm submit={this.submitEvent} />]} />
+                    <SideBar ctr={[<DayForm submit={this.submitDay} key={uniqid()} />, <EventForm submit={this.submitEvent} key={uniqid()} />]} />
                 </div>
             </div>
         )
