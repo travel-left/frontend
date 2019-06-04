@@ -161,13 +161,16 @@ class Itinerary extends Component {
         apiCall('delete', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}`)
             .then(() => {
                 return this.setState(prevState => {
+                    const newDays = prevState.days.filter(day => dayId !== day._id)
                     return {
                         ...prevState,
-                        days: prevState.days.filter(day => dayId !== day._id),
-                        showEventList: false
+                        days: newDays,
+                        currentDayId: newDays[0]._id,
+                        showEventList: newDays[0].events.length > 0 ? true : false
                     }
                 })
             })
+            .then(this.getAndSetEvents)
             .catch(err => {
                 console.log(err)
             })
