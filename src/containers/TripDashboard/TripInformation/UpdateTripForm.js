@@ -15,7 +15,7 @@ class TripInformationForm extends Component {
             ...this.state
         }
         updatedTrip[e.target.name] = e.target.value
-        return this.setState({
+        this.setState({
             ...updatedTrip,
         })
     }
@@ -26,7 +26,7 @@ class TripInformationForm extends Component {
     }
 
     render() {
-        let { name, description, status, image, dateStart, dateEnd} = this.state
+        let { name, description, status, image, dateStart, dateEnd } = this.state
         
         return (
             <div>
@@ -36,8 +36,14 @@ class TripInformationForm extends Component {
                         <div class="form-group col-10">
                             <label htmlFor="name">Name</label>
                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Trip name" />
-                            <label htmlFor="status">Status</label>
-                            <input value={status} onChange={this.handleChange} type="text" class="form-control" name="status" placeholder="Trip status" />
+                            <label htmlFor="status">Status: </label>
+                            <select value={status.toLowerCase()} onChange={this.handleChange} name="status">
+                                <option value="planning">planning</option>
+                                <option value="planned">planned</option>
+                                <option value="active">active</option>
+                                <option value="past">past</option>
+                            </select>
+                            <br/>
                             <label htmlFor="description">Description</label>
                             <input value={description} onChange={this.handleChange} type="text" class="form-control" name="description" placeholder="description" />
                             <label htmlFor="image">Image</label>
