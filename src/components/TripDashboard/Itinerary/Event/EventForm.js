@@ -37,10 +37,10 @@ class EventForm extends Component {
         let { title, timeStart, timeEnd, summary, image, link, linkText } = this.state.event
 
         return (
-            <form onSubmit={this.handleSubmitEvent} style={{marginTop: '60px'}}>
-                                                <h3>Add an event</h3>
-                <div class="form-row">
-                    <div class="form-group">
+            <form onSubmit={this.handleSubmitEvent} style={{ marginTop: '60px' }}>
+                <h3>Add an event</h3>
+                <div className="form-row">
+                    <div className="form-group">
                         <div className="form-row">
                             <div className="col-6">
                                 <label htmlFor="title">Title</label>
@@ -48,8 +48,11 @@ class EventForm extends Component {
                             </div>
                             <div className="col-6">
                                 <label htmlFor="category">Category</label>
-                                <select id="inputState" className="form-control" name="category" value={this.state.category} onChange={this.handleInputChange}>
-                                    <option value="" disabled selected> Category </option>
+                                <select id="inputState" className="form-control" name="category" value={this.state.event.category} onChange={this.handleInputChange}>
+                                    <option value="" disabled hidden>
+                                        {' '}
+                                        Category{' '}
+                                    </option>
                                     <option value="event">Event</option>
                                     <option value="transportation">Transportation</option>
                                     <option value="lodging">Lodging</option>
@@ -67,11 +70,11 @@ class EventForm extends Component {
                             </div>
                         </div>
                         <label htmlFor="Summary">Summary</label>
-                        <textarea name="summary" placeholder="A summary of your event" class="form-control" cols="70" rows="2" value={summary} onChange={this.handleInputChange} />
+                        <textarea name="summary" placeholder="A summary of your event" className="form-control" cols="70" rows="2" value={summary} onChange={this.handleInputChange} />
                         <div className="form-row">
                             <div className="col-6">
                                 <label htmlFor="image">Image link</label>
-                                <input name="image" placeholder="www.urlToYourImage.com" class="form-control" type="text" value={image} onChange={this.handleInputChange} />
+                                <input name="image" placeholder="www.urlToYourImage.com" className="form-control" type="text" value={image} onChange={this.handleInputChange} />
                             </div>
                             <div className="col-6">
                                 <label htmlFor="Link">Link</label>
@@ -82,7 +85,10 @@ class EventForm extends Component {
                         <input name="linkText" placeholder="name of your link" className="form-control" type="text" placeholder="link title" value={linkText} onChange={this.handleInputChange} />
                     </div>
                 </div>
-                <button type="submit" className="btn btn-lg btn-square dark pull-right"> SUBMIT </button>
+                <button type="submit" className="btn btn-lg btn-square dark pull-right">
+                    {' '}
+                    SUBMIT{' '}
+                </button>
             </form>
         )
     }
