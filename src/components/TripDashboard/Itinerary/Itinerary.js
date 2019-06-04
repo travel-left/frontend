@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uniqid from 'uniqid'
 import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
 import CohortList from './Cohort/CohortList'
@@ -197,7 +198,7 @@ class Itinerary extends Component {
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
-            <div class="">
+            <div className="">
                 <div className="row">
                     <div className="col-12">
                         <Alert text="Create an itinerary for each of your cohorts here. Travelers will see the days that have events on the mobile app." />
@@ -209,7 +210,7 @@ class Itinerary extends Component {
                         <div>{dayList}</div>
                         <div>{eventList}</div>
                     </div>
-                    <SideBar ctr={[<DayForm submit={this.submitDay} />, <EventForm submit={this.submitEvent} />]} />
+                    <SideBar ctr={[<DayForm submit={this.submitDay} key={uniqid()} />, <EventForm submit={this.submitEvent} key={uniqid()} />]} />
                 </div>
             </div>
         )

@@ -15,7 +15,7 @@ class Navbar extends Component {
         let loggedInContent = null
         let greeting = currentUser.user.email ? (
             <span>
-                Hello, <a onClick=""> {currentUser.user.firstName}</a>!
+                Hello, <a onClick={this.signout}> {currentUser.user.firstName}</a>!
             </span>
         ) : null
 
