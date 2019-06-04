@@ -31,22 +31,22 @@ class Event extends Component {
         }
         return (
             <div className={'card event-tile'} style={{ width: '70%' }}>
-                <div class="card-body event">
-                    <h5 class="card-title">
+                <div className="card-body event">
+                    <h5 className="card-title">
                         <strong> {event.title}</strong>
-                        <i class={`fa ${iconString} pull-right`} aria-hidden="true" />
+                        <i className={`fa ${iconString} pull-right`} aria-hidden="true" />
                     </h5>
-                    <h6 class="card-title pull-right">
+                    <h6 className="card-title pull-right">
                         <strong />
                     </h6>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        <i class="fa fa-clock-o" aria-hidden="true" /> {event.timeStart} - {event.timeEnd}
+                    <h6 className="card-subtitle mb-2 text-muted">
+                        <i className="fa fa-clock-o" aria-hidden="true" /> {event.timeStart} - {event.timeEnd}
                     </h6>
-                    <p class="card-text">{event.summary}</p>
-                    <a href={event.link} class="card-link">
+                    <p className="card-text">{event.summary}</p>
+                    <a href={event.link} className="card-link">
                         {event.linkText}
                     </a>
-                    <i class="fa fa-trash float-right" aria-hidden="true" onClick={this.deleteEvent} />
+                    <i className="fa fa-trash float-right" aria-hidden="true" onClick={this.deleteEvent} />
                     {/* <i class="fa fa-pencil-square-o fa-2x float-right" aria-hidden="true"></i> */}
                 </div>
             </div>

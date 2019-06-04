@@ -3,11 +3,11 @@ import Event from './Event'
 
 const EventList = ({ events, removeEvent }) => {
     let eventList = events.map(event => {
-        return <Event event={event} removeEvent={removeEvent} />
+        return <Event event={event} removeEvent={removeEvent} key={event._id} />
     })
     return (
         <div className="event-list">
-            <div class="row" style={{ justifyContent: 'center' }}>
+            <div className="row" style={{ justifyContent: 'center' }}>
                 {eventList}
             </div>
         </div>

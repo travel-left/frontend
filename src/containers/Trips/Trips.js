@@ -46,13 +46,15 @@ class Trips extends Component {
     }
 
     addTrip = trip => {
+        trip.status = 'planning'
         apiCall('post', '/api/trips', trip) // Create Trip
             .then(data => {
+                trip._id = data._id
                 return this.setState(prevState => {
                     return {
-                        trips: [...prevState.trips, data.trip],
+                        trips: [...prevState.trips, trip],
                         showTripForm: false,
-                        selectedTrip: data.trip
+                        selectedTrip: trip
                     }
                 })
             })

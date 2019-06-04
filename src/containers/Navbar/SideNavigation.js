@@ -32,14 +32,14 @@ class SideNavigation extends Component {
         return (
             <div className="col-2" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 1px 0px 20px' }}>
                 <div className="row" style={{ justifyContent: 'center' }}>
-                    <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
+                    <div className="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
                         <img className="card-img-top" src={this.props.currentTrip.image} style={{ boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%' }} />
                         <span style={{ fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600', margin: '15px 15px' }}>Trip to {this.props.currentTrip.name}</span>
                     </div>
                 </div>
                 <hr />
                 <div className="dashboard-side-bar">
-                    <ul class="list-group list-group-flush" style={{ backgroundColor: '#FBFBFB' }}>
+                    <ul className="list-group list-group-flush" style={{ backgroundColor: '#FBFBFB' }}>
                         <a onClick={this.selectFeature} name="info" style={{ margin: '25px 10px', color: '#0B62D4', fontWeight: '600' }}>
                             Trip Information
                         </a>
