@@ -15,11 +15,11 @@ class Navbar extends Component {
         let loggedInContent = null
         let greeting = currentUser.user.email ? (
             <span>
-                Hello, <a onClick=""> {this.props.currentUser.user.email}</a>!
+                Hello, <a onClick=""> {currentUser.user.firstName}</a>!
             </span>
         ) : null
 
-        if(currentUser.isAuthenticated) {
+        if (currentUser.isAuthenticated) {
             loggedInContent = (
                 <>
                     <div className="nav-item">
