@@ -108,3 +108,7 @@ button.btn-lg.btn-square.clear {
 input:focus{
     outline: none !important;
 }
+
+.content {
+    min-height: 90vh;
+}

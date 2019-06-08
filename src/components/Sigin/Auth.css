@@ -1,57 +1,20 @@
-/* AUTHFORM */
-.authform {
-    margin-top: 15vh;
-    padding-bottom: 3vh;
-    background: rgba(248, 248, 248, 0.9);
-    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.2), 0px 18px 23px rgba(0, 0, 0, 0.1);
-  }
-  
-  .authform img {
-    padding: 20px 0px;
-    max-width: 150px;
-    max-height: 150px;
-  }
-  
-  .authform h1 {
-    font-size: 1.3em;
+.bg-image {
+    background: url('https://images.unsplash.com/photo-1558979158-65a1eaa08691?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
+    filter: blur(3px);
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.right {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 80%;
+    padding: 20px;
     text-align: center;
-  }
-  form.signin {
-    margin: auto auto;
-  }
-  
-  .signin input {
-    margin: 10px 10px 10px 10px;
-  }
-  
-  form.signin a {
-    margin-top: 10px;
-    float: left;
-    font-size: .5em;
-    font-weight: lighter;
-  }
-
-.signin>div>input {
-    border-bottom: 1px solid grey;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-}
-
-.signin>div>input:focus {
-    outline: 0 !important;
-}
-
-.signin>div>label {
-    color: #717171;
-}
-
-.sign-in-right {
-    background-image: url('https://images.unsplash.com/photo-1473207730345-6cb17f27bd46?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
-    /* filter: blur(3px); */
-    height: 90vh;
-}
-
-.sign-in-right h2 {
-    filter: blur(0px);
+    text-shadow: -1px 1px 20px black;
 }
