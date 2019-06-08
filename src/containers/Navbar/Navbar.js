@@ -49,7 +49,7 @@ class Navbar extends Component {
         }
 
         return (
-            <nav className="navbar navbar-expand container-fluid" style={{ paddingLeft: '50px', paddingRight: '50px', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
+            <nav className="navbar navbar-expand container-fluid" style={{ paddingLeft: '50px', paddingRight: '50px', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', zIndex: 2 }}>
                 <div className="navbar-header navbar-brand">
                     <Link to="/trips" className="">
                         <strong className="logo">left.</strong>

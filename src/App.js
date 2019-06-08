@@ -7,6 +7,7 @@ import Navbar from './containers/Navbar/Navbar'
 import Main from './containers/Main'
 import { setAuthorizationToken, setCurrentUser } from './store/actions/auth'
 import jwtDecode from 'jwt-decode'
+import Footer from './components/Other/Footer';
 
 const store = configureStore()
 
@@ -22,12 +23,13 @@ if (localStorage.token) {
 const App = () => (
     <Provider store={store}>
         <Router>
-            <div className="">
+            <>
                 <Navbar />
-                <div className="container-fluid" style={{ backgroundColor: '#ECEDED' }}>
+                <div className="container-fluid content bg-light p-0">
                     <Main />
                 </div>
-            </div>
+                <Footer />
+            </>
         </Router>
     </Provider>
 )
