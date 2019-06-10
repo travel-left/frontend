@@ -101,8 +101,8 @@ class Trips extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-8">
-                            <div className="card trip-list-header shadow d-flex flex-row justify-content-around py-3 mb-3 font-weight-bold">
+                        <div className="col-md-8 px-0 px-md-3">
+                            <div className="card trip-list-header shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold">
                                 <div className="col-md-2 offset-md-2 border-bottom border-primary"> Trip</div>
                                 <div className="col-md-3 offset-md-2">Date</div>
                                 <div className="col-md-3">Status</div>
