@@ -25,35 +25,9 @@ body {
   font-family: 'Roboto';
 }
 
-.hero {
-    background-color: #ECEDED;
-    height: 100vh;
-}
-
-.btn-primary {
-    border: none;
-}
-
-a {
-    /* color: #188FA7 !important; */
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-a.active {
-    /* color: white !important; */
-}
-
-/* HEADERS */
-h1, h2, h3, h4, h5 {
-    /* color: #4FCBD0 !important; */
-}
-
 /* BUTTONS */
 
-button.btn-lg.btn-round.light {
+/* button.btn-lg.btn-round.light {
     color: #FBFBFB;
     background-color: #8ECFF5;
     border: none;
@@ -107,8 +81,4 @@ button.btn-lg.btn-square.clear {
 
 input:focus{
     outline: none !important;
-}
-
-.content {
-    min-height: 90vh;
-}
+} */

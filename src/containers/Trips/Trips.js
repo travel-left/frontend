@@ -67,16 +67,10 @@ class Trips extends Component {
     }
 
     render() {
-        let { user } = this.props
         let { showTrips, showTripForm, trips, selectedTrip } = this.state
 
         let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip} /> : null
         let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip} /> : null
-        let newTripButton = (
-            <button onClick={this.showTripForm} class="btn-lg btn-square dark">
-                ADD NEW TRIP
-            </button>
-        )
         let tripForm = showTripForm ? <TripForm submit={this.addTrip} hide={this.hideTripForm} /> : null
 
         return (
@@ -84,12 +78,14 @@ class Trips extends Component {
                 <div className="col-md-2 shadow-lg">
                     <div className="row">
                         <div className="col px-0 py-5 d-flex justify-content-center">
-                            {newTripButton}
+                            <button onClick={this.showTripForm} class="btn btn-lg btn-primary">
+                                ADD NEW TRIP
+                            </button>
                         </div>
                     </div>
                     <div className="row trips-side-bar">
                         <div className="col px-0">
-                            <ul class="list-group pl-3">
+                            <ul class="list-group">
                                 <LeftBarItem text='All Trips' total='18' active={true}></LeftBarItem>
                                 <LeftBarItem text='Active Trips' total='14' active={false} ></LeftBarItem>
                                 <LeftBarItem text='Planned Trips' total='1' active={false}></LeftBarItem>
@@ -106,17 +102,14 @@ class Trips extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-8">
-                            <div className="card trip-list-header shadow d-flex flex-row justify-content-around py-3 mb-3">
-                                <div className="col-1" />
-                                <div className="col-2 border-bottom border-primary"> Trip
-                                </div>
-                                <div className="col-3" />
-                                <div className="col-2">Date</div>
-                                <div className="col-2">Status</div>
+                            <div className="card trip-list-header shadow d-flex flex-row justify-content-around py-3 mb-3 font-weight-bold">
+                                <div className="col-md-2 offset-md-2 border-bottom border-primary"> Trip</div>
+                                <div className="col-md-3 offset-md-2">Date</div>
+                                <div className="col-md-3">Status</div>
                             </div>
                             {tripList}
                         </div>
-                        <div className="col-md-4 shadow">
+                        <div className="col-md-4 shadow px-0">
                             {tripForm || tripInfo}
                         </div>
                     </div>
