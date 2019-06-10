@@ -73,7 +73,7 @@ class Trips extends Component {
         let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip} /> : null
         let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip} /> : null
         let newTripButton = (
-            <button style={{ marginTop: '50px', marginBottom: '50px' }} onClick={this.showTripForm} class="btn-lg btn-square dark">
+            <button onClick={this.showTripForm} class="btn-lg btn-square dark">
                 ADD NEW TRIP
             </button>
         )
@@ -83,7 +83,7 @@ class Trips extends Component {
             <div className="row">
                 <div className="col-md-2 shadow-lg">
                     <div className="row">
-                        <div className="col d-flex justify-content-center">
+                        <div className="col px-0 py-5 d-flex justify-content-center">
                             {newTripButton}
                         </div>
                     </div>
@@ -98,28 +98,25 @@ class Trips extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-10">
+                <div className="col-md-10">
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-md-12 d-none d-md-block">
                             <Alert text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.' />
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-8">
-                            <div className="">
-                                <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
-                                    <div className="col-1" />
-                                    <div className="col-2" style={{ borderBottom: '2px solid #0F61D8' }}>
-                                        Trip Name
-                                    </div>
-                                    <div className="col-3" />
-                                    <div className="col-2">Date</div>
-                                    <div className="col-2">Status</div>
+                        <div className="col-md-8">
+                            <div className="card trip-list-header shadow d-flex flex-row justify-content-around py-3 mb-3">
+                                <div className="col-1" />
+                                <div className="col-2 border-bottom border-primary"> Trip
                                 </div>
-                                {tripList}
+                                <div className="col-3" />
+                                <div className="col-2">Date</div>
+                                <div className="col-2">Status</div>
                             </div>
+                            {tripList}
                         </div>
-                        <div className="col-4" style={{ backgroundColor: '#FBFBFB', height: '100vh', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
+                        <div className="col-md-4 shadow">
                             {tripForm || tripInfo}
                         </div>
                     </div>
