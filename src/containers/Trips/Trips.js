@@ -81,32 +81,21 @@ class Trips extends Component {
 
         return (
             <div className="row">
-                <div className="col-2" style={{ padding: '0px 0px 30px 0px', backgroundColor: 'white', height: '100vh', boxShadow: 'rgb(136, 136, 136) 1px 0px 20px' }}>
-                    <div className="row" style={{ justifyContent: 'center' }}>
-                        {newTripButton}
+                <div className="col-md-2 shadow-lg">
+                    <div className="row">
+                        <div className="col d-flex justify-content-center">
+                            {newTripButton}
+                        </div>
                     </div>
-                    <div className="trips-side-bar">
-                        <ul class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action active justify-content-between align-items-center">
-                                All Trips
-                            </a>
-                            <a href="#" class="list-group-item d-flex justify-content-between align-items-center" style={{ borderRight: 'none', borderLeft: 'none' }}>
-                                Active Trips
-                                <span class="badge badge-primary badge-pill">14</span>
-                            </a>
-                            <a href="#" class="list-group-item d-flex justify-content-between align-items-center" style={{ borderRight: 'none', borderLeft: 'none' }}>
-                                Planned Trips
-                                <span class="badge badge-primary badge-pill">2</span>
-                            </a>
-                            <a href="#" class="list-group-item d-flex justify-content-between align-items-center" style={{ borderRight: 'none', borderLeft: 'none' }}>
-                                Planning Trips
-                                <span class="badge badge-primary badge-pill">1</span>
-                            </a>
-                            <a href="#" class="list-group-item d-flex justify-content-between align-items-center" style={{ borderRight: 'none', borderLeft: 'none' }}>
-                                Past Trips
-                                <span class="badge badge-primary badge-pill">1</span>
-                            </a>
-                        </ul>
+                    <div className="row trips-side-bar">
+                        <div className="col px-0">
+                            <ul class="list-group pl-3">
+                                <LeftBarItem text='All Trips' total='18' active={true}></LeftBarItem>
+                                <LeftBarItem text='Active Trips' total='14' active={false} ></LeftBarItem>
+                                <LeftBarItem text='Planned Trips' total='1' active={false}></LeftBarItem>
+                                <LeftBarItem text='Past Trips' total='3' active={false}></LeftBarItem>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div className="col-10">
@@ -144,3 +133,16 @@ export default connect(
     null,
     { setCurrentTrip }
 )(Trips)
+
+const LeftBarItem = ({text, total, active}) => {
+    let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0'
+    if(active){
+        classes += ' active'
+    }
+    return (
+        <a href="#" class={classes}>
+            {text}
+            <span class="badge badge-primary badge-pill">{total}</span>
+        </a>
+    )
+}
