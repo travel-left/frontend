@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../store/actions/auth'
-import './Navbar.css'
 
 class Navbar extends Component {
     signout = e => {
@@ -41,7 +40,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand container-fluid shadow px-4 bg-primary" style={{ zIndex: 2 }}>
                 <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <strong className="logo">left.</strong>
+                        <strong className="logo text-light font-weight-bold h1">left.</strong>
                     </Link>
                 </div>
                 {loggedInContent}
