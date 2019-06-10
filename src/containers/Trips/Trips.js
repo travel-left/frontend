@@ -83,9 +83,9 @@ class Trips extends Component {
                             </button>
                         </div>
                     </div>
-                    <div className="row trips-side-bar">
+                    <div className="row trips-side-bar bg-light">
                         <div className="col px-0">
-                            <ul class="list-group">
+                            <ul class="list-group ">
                                 <LeftBarItem text='All Trips' total='18' active={true}></LeftBarItem>
                                 <LeftBarItem text='Active Trips' total='14' active={false} ></LeftBarItem>
                                 <LeftBarItem text='Planned Trips' total='1' active={false}></LeftBarItem>
@@ -125,7 +125,7 @@ export default connect(
 )(Trips)
 
 const LeftBarItem = ({text, total, active}) => {
-    let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0'
+    let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 '
     if(active){
         classes += ' active'
     }
