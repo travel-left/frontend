@@ -78,7 +78,7 @@ class Auth extends Component {
                         <div className="card-body p-4">
                             <div className="heading text-center">
                                 <h1> {heading} </h1>
-                                <h5 className="text-secondary">{subHeading}</h5>
+                                <h5 className="text-dark">{subHeading}</h5>
                             </div>
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-group mt-4">
@@ -89,7 +89,7 @@ class Auth extends Component {
                                     <input type="password" id="password" name="password" className="form-control form-control-lg" placeholder="••••••••••••" value={password} onChange={this.handleChange} />
                                     <small className='text-muted'>Password must be at least 8 characters.</small>    
                                 </div>
-                                <button onClick={this.handleSubmit} className="btn btn-lg btn-square dark btn-block" style={{ marginTop: '35px' }} type="submit">
+                                <button onClick={this.handleSubmit} className="btn btn-lg btn-primary text-uppercase" style={{ marginTop: '35px' }} type="submit">
                                     {type}
                                 </button>
                             </form>
