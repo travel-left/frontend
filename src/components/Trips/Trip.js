@@ -29,7 +29,7 @@ class Trip extends Component {
                         </p>
                     </div>
                     <div className="col-4 col-md-3">
-                        <span class="badge badge-secondary badge-pill">
+                        <span class="badge badge-secondary badge-pill text-light">
                             {status}
                         </span>
                     </div>
