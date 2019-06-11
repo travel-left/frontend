@@ -41,9 +41,9 @@ class TripInformation extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
+                    <div className="col-md-8">
                         <DashboardHeader title="Trip Information" description="Edit your trip information here" />
-                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
+                        <div class="card shadow border-0 mb-3">
                             <div class="card-body">
                                 <h2 className="card-title" style={{ color: '#0B62D4' }}>
                                     {name}{' '}

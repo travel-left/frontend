@@ -16,7 +16,7 @@ class Alert extends Component {
     render() {
         let { type, icon, text } = this.props
         let alert = this.state.show ? (
-            <div className="row shadow m-4 bg-light text-primary align-items-center" style={{height: '65px'}}>
+            <div className="row shadow m-4 bg-light text-primary align-items-center d-none d-md-flex" style={{height: '65px'}}>
                 <div className="col-1 d-flex align-self-stretch justify-content-center align-items-center bg-primary">
                     <i className="fas fa-thumbs-up fa-lg text-light" />
                 </div>

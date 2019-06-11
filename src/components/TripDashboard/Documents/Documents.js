@@ -52,7 +52,7 @@ class Documents extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
+                    <div className="col-md-8">
                         <DashboardHeader title="Documents" description="Add all of the important documents to share with your travelers here." />
                         {documentsList}
                     </div>

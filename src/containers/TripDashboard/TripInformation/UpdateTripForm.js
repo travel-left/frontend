@@ -54,7 +54,7 @@ class TripInformationForm extends Component {
                             <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleChange} />
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-lg btn-square dark pull-right" style={{ fontSize: '.9em' }}>
+                    <button type="submit" class="btn btn-lg btn-primary">
                         UPDATE TRIP INFO
                     </button>
                 </form>

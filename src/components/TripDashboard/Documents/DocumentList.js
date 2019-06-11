@@ -7,7 +7,7 @@ const DocumentList = ({ documents }) => {
     })
 
     return (
-        <ul className="row" className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
+        <ul className="row d-flex flex-column" className="list-group">
             {list}
         </ul>
     )
