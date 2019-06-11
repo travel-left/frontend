@@ -27,7 +27,9 @@ class Trips extends Component {
     }
 
     selectTrip = tripId => {
-        this.props.setCurrentTrip(this.state.trips.filter(t => t._id == tripId)[0])
+        let selectedTrip = this.state.trips.filter(t => t._id == tripId)[0]
+
+        this.props.setCurrentTrip(selectedTrip)
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 

@@ -10,15 +10,15 @@ class CohortList extends Component {
     }
 
     render() {
-        let { currentItinerary, itineraries } = this.props
-        let list = itineraries.map(i => (
+        let { currentCohort, cohortList } = this.props
+        let list = cohortList.map(i => (
             <option value={i._id} key={i._id}>
                 {i.title}
             </option>
         ))
 
         return (
-            <select className='h4' value={currentItinerary._id} onChange={this.handleChange}>
+            <select className='h5 ml-2' value={currentCohort._id} onChange={this.handleChange}>
                 {list}
             </select>
         )
