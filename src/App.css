@@ -1,5 +1,3 @@
-
-
 /* COLORS */
 
 /* 
@@ -24,61 +22,3 @@ grey text: 717171
 body {
   font-family: 'Roboto';
 }
-
-/* BUTTONS */
-
-/* button.btn-lg.btn-round.light {
-    color: #FBFBFB;
-    background-color: #8ECFF5;
-    border: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    min-width: 100px;
-    border-radius: 2em / 2.5em;
-}
-
-button.btn-lg.btn-square.dark {
-    color: #FBFBFB;
-    background-color: #0F61D8;
-    font-size: .9em;
-    padding: 12px 28px;
-    border-radius: 0%;
-    border: none;
-    text-transform: uppercase;
-}
-
-button.btn-lg.btn-square.light {
-    color: #FBFBFB;
-    background-color: #8ECFF5;
-    font-size: .9em;
-    padding: 12px 28px;
-    border-radius: 0%;
-    border: none;
-    text-transform: uppercase;
-}
-
-button.btn-lg.btn-round.clear {
-    color: #FBFBFB;
-    background-color: transparent;
-    border: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    min-width: 100px;
-    border-radius: 2em / 2.5em;
-}
-
-button.btn-lg.btn-square.clear {
-    color: white;
-    background-color: transparent;
-    border: none;
-    font-weight: 600;
-    letter-spacing: 1px;
-    min-width: 100px;
-    font-weight: 400;
-    border: 2px solid white;
-    border-radius: 0%;
-}
-
-input:focus{
-    outline: none !important;
-} */

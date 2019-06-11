@@ -85,7 +85,7 @@ class EventForm extends Component {
                         <input name="linkText" placeholder="name of your link" className="form-control" type="text" placeholder="link title" value={linkText} onChange={this.handleInputChange} />
                     </div>
                 </div>
-                <button type="submit" className="btn btn-lg btn-square dark pull-right">
+                <button type="submit" className="btn btn-lg btn-primary">
                     {' '}
                     SUBMIT{' '}
                 </button>

@@ -18,11 +18,9 @@ class CohortList extends Component {
         ))
 
         return (
-            <div className="itinerary-list">
-                <select value={currentItinerary._id} className="custom-select" onChange={this.handleChange}>
-                    {list}
-                </select>
-            </div>
+            <select className='h4' value={currentItinerary._id} onChange={this.handleChange}>
+                {list}
+            </select>
         )
     }
 }

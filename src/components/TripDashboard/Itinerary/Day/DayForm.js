@@ -32,7 +32,7 @@ class DayForm extends Component {
                         <input name="date" className="form-control" type="date" value={date} style={{ width: '100%' }} onChange={this.handleInputChange} />
                     </div>
                 </div>
-                <button className="btn btn-lg btn-square dark pull-right" onClick={this.handleSubmit}>
+                <button className="btn btn-lg btn-primary" onClick={this.handleSubmit}>
                     SUBMIT
                 </button>
             </form>
