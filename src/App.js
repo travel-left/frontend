@@ -25,7 +25,7 @@ const App = () => (
         <Router>
             <>
                 <Navbar />
-                <div className="container-fluid content bg-light p-0">
+                <div className="container-fluid content" style={{minHeight: '90vh'}}>
                     <Main />
                 </div>
                 <Footer />

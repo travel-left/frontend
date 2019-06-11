@@ -78,36 +78,35 @@ class Communicate extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
+                    <div className="col-md-8">
                         <DashboardHeader title="Communicate" description="Add emergency contacts, create and send notifications, and make sure everyone is on the same page!" />
-                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
+                        <h4 >
                             {' '}
                             <strong>Emergency Contacts</strong>
                         </h4>
                         <div className="">
-                            <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
-                                <div className="col-1" />
-                                <div className="col-3" style={{ borderBottom: '2px solid #0F61D8' }}>
+                            <div className="card trip-list-header py-2 d-flex flex-row justify-content-between align-items-center shadow my-3 pl-2">
+                                <div className="col-3 border-bottom border-primary">
                                     {' '}
                                     Name
                                 </div>
-                                <div className="col-2" />
-                                <div className="col-3">Phone</div>
                                 <div className="col-3">Email</div>
+                                <div className="col-3">Phone</div>
                             </div>
                             {contactList}
                         </div>
-                        <h4 style={{ marginTop: '30px', marginLeft: '30px' }}>
+                        <h4>
                             <strong>Notifications</strong>
                         </h4>
                         <div className="">
-                            <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
-                                <div className="col-1" />
-                                <div className="col-7" style={{ borderBottom: '2px solid #0F61D8' }}>
+                            <div className="card trip-list-header py-2 d-flex flex-row justify-content-between align-items-center shadow my-3 pl-2">
+                                <div className="col-4 border-bottom border-primary">
+                                    Subject
+                                </div>
+                                <div className="col-8">
                                     {' '}
                                     Message
                                 </div>
-                                <div className="col-4" />
                             </div>
                             {notificationsList}
                         </div>

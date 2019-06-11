@@ -73,7 +73,7 @@ class Auth extends Component {
         return (
             <div className="row no-gutters">
                 <div className="col-md-12 col-lg-6 d-flex justify-content-center my-5">
-                    <div className="card col-10 shadow">
+                    <div className="card col-10 shadow align-self-start">
                         {error ? <p style={{ color: 'red' }}>{error.message}</p> : null}
                         <div className="card-body p-4">
                             <div className="heading text-center">

@@ -6,7 +6,7 @@ const UserList = ({ users, cohorts, addCohortToUser, currentCohort }) => {
         return <User user={user} cohorts={cohorts} addCohortToUser={addCohortToUser} />
     })
     return (
-        <ul className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
+        <ul className="list-group d-flex flex-column">
             {userList}
         </ul>
     )

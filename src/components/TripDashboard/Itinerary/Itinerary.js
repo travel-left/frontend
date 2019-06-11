@@ -6,7 +6,6 @@ import CohortList from './Cohort/CohortList'
 import EventList from './Event/EventList'
 import { apiCall } from '../../../util/api'
 import DayForm from './Day/DayForm'
-import './Itinerary.css'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
@@ -209,10 +208,11 @@ class Itinerary extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
-                        <DashboardHeader title="Itinerary for your " cTor={cohortList} secondTitle="cohort" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" />
-                        <div>{dayList}</div>
-                        <div>{eventList}</div>
+                    <div className="col-md-8">
+                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" />
+                        {cohortList}
+                        {dayList}
+                        {eventList}
                     </div>
                     <SideBar ctr={[<DayForm submit={this.submitDay} key={uniqid()} />, <EventForm submit={this.submitEvent} key={uniqid()} />]} />
                 </div>

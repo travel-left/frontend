@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './TripDashboard.css'
 import SideNavigation from '../Navbar/SideNavigation'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -17,9 +16,10 @@ class Dashboard extends Component {
     render() {
         return (
             <div className="row">
-                {/* col-2 */}
-                <SideNavigation />
-                <div className="col-10">
+                <div className="col-md-2 shadow-lg bg-light px-0">
+                    <SideNavigation currentTrip={this.props.currentTrip} currentUser={this.props.currentUser}/>
+                </div>
+                <div className="col-md-10">
                     <Switch>
                         <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={this.props.currentTrip} currentUser={this.props.currentUser} />} />
                         <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={this.props.currentTrip} currentUser={this.props.currentUser} />} />

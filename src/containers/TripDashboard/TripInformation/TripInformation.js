@@ -41,13 +41,13 @@ class TripInformation extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
+                    <div className="col-md-8">
                         <DashboardHeader title="Trip Information" description="Edit your trip information here" />
-                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
+                        <div class="card shadow border-0 mb-3">
                             <div class="card-body">
-                                <h2 className="card-title" style={{ color: '#0B62D4' }}>
+                                <h2 className="card-title text-primary">
                                     {name}{' '}
-                                    <span className="pull-right" style={{ color: '#717171', fontSize: '.6em' }}>
+                                    <span className="float-right h5 text-dark">
                                         <Moment date={dateStart} format="MMM Do" /> - <Moment date={dateEnd} format="MMM Do" />
                                     </span>
                                 </h2>
