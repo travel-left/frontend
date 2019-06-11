@@ -12,17 +12,16 @@ class Trips extends Component {
         trips: [],
         showTrips: false,
         showTripForm: false,
-        showNewTripButton: true,
         selectedTrip: {}
     }
 
     constructor(props) {
         super(props)
-        apiCall('get', '/api/trips').then(data => {
+        apiCall('get', '/api/trips/').then(trips => {
             return this.setState({
-                trips: data.trips,
-                showTrips: data.trips.length > 0,
-                selectedTrip: data.trips[0]
+                trips: trips,
+                showTrips: trips ? true : false,
+                selectedTrip: trips ? trips[0] : null
             })
         })
     }
