@@ -12,20 +12,15 @@ class Navbar extends Component {
     render() {
         let { currentUser } = this.props
         let loggedInContent = null
-        let greeting = currentUser.user.email ? (
+        let greeting = currentUser.email ? (
             <span className='text-light'>
-                Hello, <a onClick={this.signout}> {currentUser.user.firstName}</a>!
+                Hello, <a onClick={this.signout}> {currentUser.firstName}</a>!
             </span>
         ) : null
 
         if (currentUser.isAuthenticated) {
             loggedInContent = (
                 <div className='collapse navbar-collapse justify-content-between'>
-                    <div className="navbar-nav navbar-text">
-                        <ul className="navbar-nav mr-auto">
-
-                        </ul>
-                    </div>
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
                             <a href="#" className="nav-link pr-4">{greeting}</a>
@@ -40,7 +35,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand container-fluid shadow px-4 bg-primary" style={{ zIndex: 2 }}>
                 <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <strong className="logo text-light font-weight-bold h1">left.</strong>
+                        <h1 className="logo text-light font-weight-bold h1">left.</h1>
                     </Link>
                 </div>
                 {loggedInContent}
@@ -51,7 +46,7 @@ class Navbar extends Component {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser.user
     }
 }
 
