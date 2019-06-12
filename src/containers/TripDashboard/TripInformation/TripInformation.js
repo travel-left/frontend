@@ -9,12 +9,10 @@ import Moment from 'react-moment'
 import SideBar from '../../../components/TripDashboard/SideBar'
 
 class TripInformation extends Component {
-
-    state = {...this.props.currentTrip}
+    state = { ...this.props.currentTrip }
 
     constructor(props) {
         super(props)
-
     }
 
     updateTrip = updatedTrip => {
@@ -23,7 +21,7 @@ class TripInformation extends Component {
                 return apiCall('get', `/api/trips/${this.state._id}`) // Get Trip by Id
             })
             .then(data => {
-                this.setState({...data.trip})
+                this.setState({ ...data.trip })
             })
             .catch(err => {
                 console.log(err)

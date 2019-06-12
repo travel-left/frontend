@@ -1,7 +1,7 @@
 import { SET_CURRENT_COHORT } from '../actionTypes'
 
 const DEFAULT_STATE = {
-    _id: ''
+    cohort: {}
 }
 
 export default (state = DEFAULT_STATE, action) => {
