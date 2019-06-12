@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
-import { setCurrentTrip } from '../../store/actions/trip'
+import { handleSetCurrentTrip } from '../../store/actions/trip'
 import TripForm from '../../components/Trips/TripForm'
 import Alert from '../../components/Other/Alert'
 import TripList from '../../components/Trips/TripList'
@@ -29,7 +29,7 @@ class Trips extends Component {
     selectTrip = tripId => {
         let selectedTrip = this.state.trips.filter(t => t._id == tripId)[0]
 
-        this.props.setCurrentTrip(selectedTrip)
+        this.props.handleSetCurrentTrip(selectedTrip)
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
@@ -121,7 +121,7 @@ class Trips extends Component {
 
 export default connect(
     null,
-    { setCurrentTrip }
+    { handleSetCurrentTrip }
 )(Trips)
 
 const LeftBarItem = ({text, total, active}) => {
