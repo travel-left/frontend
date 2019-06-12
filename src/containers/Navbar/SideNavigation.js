@@ -32,20 +32,12 @@ class SideNavigation extends Component {
     }
 
     render() {
-        let { currentTrip, currentCohort } = this.props
-        let cohortList = currentTrip.cohorts.map(c => (
-            <option value={c._id} key={c._id}>
-                {c.title}
-            </option>
-        ))
+        let { currentTrip } = this.props
         return (
             <div className="">
                 <img className="" src={currentTrip.image} style={{maxWidth: '100%'}}/>
                 <h3 className='h3 px-4 pt-3'>Trip to {currentTrip.name}</h3>
                 <hr />
-                <select className='h5 ml-2' value={currentCohort._id} onChange={this.handleChange}>
-                    {cohortList}
-                </select>
                 <div className="pl-3">
                     <ul className="list-group list-group-flush bg-light">
                         <SideNavLink text='Trip Information' name='info' action={this.selectFeature}></SideNavLink>

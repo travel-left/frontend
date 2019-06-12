@@ -11,7 +11,6 @@ import SideBar from '../SideBar'
 
 class Itinerary extends Component {
     state = {
-        itineraries: [],
         days: [],
         events: [],
         currentItinerary: null,
@@ -23,26 +22,18 @@ class Itinerary extends Component {
     constructor(props) {
         super(props)
 
-        this.getAndSetItineraries()
-            .then(() => this.getAndSetDays())
-            .then(() => this.getAndSetEvents())
-            .catch(err => {
-                console.log(err)
-            })
+        this.getAndSetItinerary()
+            // .then(() => this.getAndSetDays())
+            // .then(() => this.getAndSetEvents())
+            // .catch(err => {
+            //     console.log(err)
+            // })
     }
 
-    getAndSetItineraries = () => {
-        let tripId = this.props.currentTrip._id
-        return apiCall('get', `/api/trips/${tripId}/cohorts?populate=itinerary`).then(data => {
-            return this.setState({
-                itineraries: data.map(c => {
-                    return {
-                        ...c.itinerary,
-                        title: c.title
-                    }
-                }),
-                currentItinerary: data[0].itinerary
-            })
+    getAndSetItinerary = () => {
+        let {currentTrip, currentCohort} = this.props
+        return apiCall('get', `/api/trips/${currentTrip._id}/cohorts/${currentCohort._id}`).then(data => {
+            console.log(data)
         })
     }
 
@@ -203,7 +194,7 @@ class Itinerary extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-8">
-                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" />
+                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" currentTrip={this.props.currentTrip} />
                         {dayList}
                         {eventList}
                     </div>

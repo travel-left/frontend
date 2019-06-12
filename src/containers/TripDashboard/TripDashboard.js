@@ -11,28 +11,25 @@ import Communicate from '../../components/TripDashboard/Communicate/Communicate'
 
 class Dashboard extends Component {
 
-    updateCohort = id => {
-        this.props.setCurrentCohort(this.props.currentTrip.cohorts.filter(c => c._id == id)[0])
-    }
-
     constructor(props) {
         super(props)
-        let tripId = this.props.currentTrip._id
+        console.log(this.props.currentTrip)
     }
 
     render() {
+        let {currentTrip, currentCohort, currentUser} = this.props
         return (
             <div className="row">
                 <div className="col-md-2 shadow-lg bg-light px-0">
-                    <SideNavigation currentTrip={this.props.currentTrip} currentCohort={this.props.currentCohort ? this.props.currentCohort : this.props.currentTrip.cohorts[0]} cohorts={this.props.currentTrip.cohorts} currentUser={this.props.currentUser} submit={this.updateCohort}/>
+                    <SideNavigation currentTrip={currentTrip} currentCohort={this.props.currentCohort ? this.props.currentCohort : this.props.currentTrip.cohorts[0]} cohorts={this.props.currentTrip.cohorts} currentUser={this.props.currentUser} submit={this.updateCohort}/>
                 </div>
                 <div className="col-md-10">
                     <Switch>
-                        <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={this.props.currentTrip} currentUser={this.props.currentUser} />} />
-                        <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={this.props.currentTrip} currentUser={this.props.currentUser} />} />
-                        <Route exact path="/trips/:tripId/manage" render={routeProps => <Travelers {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
-                        <Route exact path="/trips/:tripId/communicate" render={routeProps => <Communicate {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
-                        <Route exact path="/trips/:tripId/documents" render={routeProps => <Documents {...routeProps} currentTrip={this.props.currentTrip} />} currentUser={this.props.currentUser} />
+                        <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
+                        <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort}/>} />
+                        <Route exact path="/trips/:tripId/manage" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} />} currentUser={currentUser} currentCohort={currentCohort}/>
+                        <Route exact path="/trips/:tripId/communicate" render={routeProps => <Communicate {...routeProps} currentTrip={currentTrip} />} currentUser={currentUser} currentCohort={currentCohort}/>
+                        <Route exact path="/trips/:tripId/documents" render={routeProps => <Documents {...routeProps} currentTrip={currentTrip} />} currentUser={currentUser} currentCohort={currentCohort}/>
                     </Switch>
                 </div>
             </div>

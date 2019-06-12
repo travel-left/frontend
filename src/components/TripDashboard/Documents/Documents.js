@@ -53,7 +53,7 @@ class Documents extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-8">
-                        <DashboardHeader title="Documents" description="Add all of the important documents to share with your travelers here." />
+                        <DashboardHeader title="Documents" description="Add all of the important documents to share with your travelers here." currentTrip={this.props.currentTrip} />
                         {documentsList}
                     </div>
                     <SideBar ctr={[<DocumentForm submit={this.handleSubmit} />]} />
