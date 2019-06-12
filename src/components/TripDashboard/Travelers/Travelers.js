@@ -64,8 +64,7 @@ class Manage extends Component {
     }
 
     render() {
-        let { currentTrip } = this.props
-        let { cohorts, users, showNewCohortForm, showNewUserForm, showNewCohortButton, showNewUserButton } = this.state
+        let { cohorts, users } = this.state
 
         return (
             <div>
@@ -75,17 +74,16 @@ class Manage extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
+                    <div className="col-md-8">
                         <DashboardHeader title='People on this Trip' description='Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary' />
                         <div className="">
-                            <div className="card trip-list-header" style={{ height: '50px', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', marginBottom: '20px' }}>
-                                <div className="col-1" />
-                                <div className="col-3" style={{ borderBottom: '2px solid #0F61D8' }}>
+                            <div className="card trip-list-header d-flex flex-row justify-content-between shadow mb-3 py-3 px-md-2 px-1">
+                                <div className="col-3 border-bottom border-primary d-none d-md-flex">
                                     Name
                                 </div>
-                                <div className="col-3">Email</div>
-                                <div className="col-3">Cohort</div>
-                                <div className="col-2">Status</div>
+                                <div className="col-4 col-md-3">Email</div>
+                                <div className="col-4 col-md-3">Cohort</div>
+                                <div className="col-4 col-md-2">Status</div>
                             </div>
                             <UserList users={users} cohorts={cohorts} addCohortToUser={this.addCohortToUser} />
                         </div>

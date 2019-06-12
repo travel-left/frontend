@@ -9,17 +9,21 @@ import Moment from 'react-moment'
 import SideBar from '../../../components/TripDashboard/SideBar'
 
 class TripInformation extends Component {
+
+    state = {...this.props.currentTrip}
+
     constructor(props) {
         super(props)
+
     }
 
     updateTrip = updatedTrip => {
-        apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updatedTrip) // Update Trip
+        apiCall('put', `/api/trips/${this.state._id}`, updatedTrip) // Update Trip
             .then(data => {
-                return apiCall('get', `/api/trips/${this.props.currentTrip._id}`) // Get Trip by Id
+                return apiCall('get', `/api/trips/${this.state._id}`) // Get Trip by Id
             })
             .then(data => {
-                return this.props.setCurrentTrip(data)
+                this.setState({...data.trip})
             })
             .catch(err => {
                 console.log(err)
@@ -27,7 +31,7 @@ class TripInformation extends Component {
     }
 
     render() {
-        let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
+        let { name, description, status, image, dateStart, dateEnd } = this.state
         let updateTripForm = <UpdateTripForm submit={this.updateTrip} trip={{ name, description, status, image, dateStart, dateEnd }} />
         return (
             <div>
@@ -37,13 +41,13 @@ class TripInformation extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
+                    <div className="col-md-8">
                         <DashboardHeader title="Trip Information" description="Edit your trip information here" />
-                        <div class="card" style={{ border: 'none', backgroundColor: '#FBFBFB' }}>
+                        <div class="card shadow border-0 mb-3">
                             <div class="card-body">
-                                <h2 className="card-title" style={{ color: '#0B62D4' }}>
+                                <h2 className="card-title text-primary">
                                     {name}{' '}
-                                    <span className="pull-right" style={{ color: '#717171', fontSize: '.6em' }}>
+                                    <span className="float-right h5 text-dark">
                                         <Moment date={dateStart} format="MMM Do" /> - <Moment date={dateEnd} format="MMM Do" />
                                     </span>
                                 </h2>

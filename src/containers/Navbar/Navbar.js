@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../store/actions/auth'
-import './Navbar.css'
 
 class Navbar extends Component {
     signout = e => {
@@ -14,45 +13,34 @@ class Navbar extends Component {
         let { currentUser } = this.props
         let loggedInContent = null
         let greeting = currentUser.user.email ? (
-            <span>
+            <span className='text-light'>
                 Hello, <a onClick={this.signout}> {currentUser.user.firstName}</a>!
             </span>
         ) : null
 
         if (currentUser.isAuthenticated) {
             loggedInContent = (
-                <>
-                    <div className="nav-item">
-                        <button className="btn-lg btn-round light" style={{ marginLeft: '30px' }}>
-                            Trips
-                        </button>
-                    </div>
-                    <div className="nav-item">
-                        <button className="btn-lg btn-round clear" style={{ marginLeft: '30px' }}>
-                            Account
-                        </button>
-                    </div>
-                    <div className="nav navbar-nav ml-auto">
-                        <ul className="navbar-nav">
-                            <li className="greeting nav-item">{greeting}</li>
-                        </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            <li className="nav-app-link nav-item">
-                                <a onClick={this.signout}>
-                                    <i className="fa fa-mobile fa-2x" aria-hidden="true" /> <i className="fa fa-download fa-2x" aria-hidden="true" />
-                                </a>
-                            </li>
+                <div className='collapse navbar-collapse justify-content-between'>
+                    <div className="navbar-nav navbar-text">
+                        <ul className="navbar-nav mr-auto">
+
                         </ul>
                     </div>
-                </>
+                    <div className="navbar-nav">
+                        <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
+                            <a href="#" className="nav-link pr-4">{greeting}</a>
+                            <i className="fa fa-download fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
+                        </ul>
+                    </div>
+                </div>
             )
         }
 
         return (
-            <nav className="navbar navbar-expand container-fluid" style={{ paddingLeft: '50px', paddingRight: '50px', boxShadow: 'rgb(136, 136, 136) 0px 2px 4px' }}>
-                <div className="navbar-header navbar-brand">
+            <nav className="navbar navbar-expand container-fluid shadow px-4 bg-primary" style={{ zIndex: 2 }}>
+                <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <strong className="logo">left.</strong>
+                        <h1 className="logo text-light font-weight-bold">left.</h1>
                     </Link>
                 </div>
                 {loggedInContent}

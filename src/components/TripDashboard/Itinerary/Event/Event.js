@@ -30,24 +30,20 @@ class Event extends Component {
                 break
         }
         return (
-            <div className={'card event-tile'} style={{ width: '70%' }}>
-                <div className="card-body event">
+            <div className='card mb-3'>
+                <div className="card-body">
                     <h5 className="card-title">
                         <strong> {event.title}</strong>
-                        <i className={`fa ${iconString} pull-right`} aria-hidden="true" />
+                        <i className={`fa ${iconString} float-right`} aria-hidden="true" />
                     </h5>
-                    <h6 className="card-title pull-right">
-                        <strong />
-                    </h6>
                     <h6 className="card-subtitle mb-2 text-muted">
-                        <i className="fa fa-clock-o" aria-hidden="true" /> {event.timeStart} - {event.timeEnd}
+                        {event.timeStart} - {event.timeEnd}
                     </h6>
                     <p className="card-text">{event.summary}</p>
                     <a href={event.link} className="card-link">
                         {event.linkText}
                     </a>
                     <i className="fa fa-trash float-right" aria-hidden="true" onClick={this.deleteEvent} />
-                    {/* <i class="fa fa-pencil-square-o fa-2x float-right" aria-hidden="true"></i> */}
                 </div>
             </div>
         )

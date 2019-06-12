@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import currentUser from './currentUser'
 import errors from './errors'
 import currentTrip from './currentTrip'
+import currentCohort from "./currentCohort";
 
 //reducers specify how the application's state reduces in response to actions sent to the store.
 //Actions describe 'what happened', but don't describe how the application's state changes.
@@ -13,6 +14,7 @@ import currentTrip from './currentTrip'
 const rootReducer = combineReducers({
     currentUser,
     currentTrip,
+    currentCohort,
     errors
 })
 

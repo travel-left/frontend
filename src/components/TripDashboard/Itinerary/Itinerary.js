@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import uniqid from 'uniqid'
 import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
-import CohortList from './Cohort/CohortList'
 import EventList from './Event/EventList'
 import { apiCall } from '../../../util/api'
 import DayForm from './Day/DayForm'
-import './Itinerary.css'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
@@ -18,7 +16,6 @@ class Itinerary extends Component {
         events: [],
         currentItinerary: null,
         currentDayId: null,
-        showCohortList: false,
         showEventList: false,
         showDayList: false
     }
@@ -44,8 +41,7 @@ class Itinerary extends Component {
                         title: c.title
                     }
                 }),
-                currentItinerary: data[0].itinerary,
-                showCohortList: true
+                currentItinerary: data[0].itinerary
             })
         })
     }
@@ -195,10 +191,7 @@ class Itinerary extends Component {
     }
 
     render() {
-        let cohortList = this.state.showCohortList ? <CohortList submit={this.setCurrentItinerary} itineraries={this.state.itineraries} currentItinerary={this.state.currentItinerary} /> : null
-
         let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay} /> : null
-
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
@@ -209,10 +202,10 @@ class Itinerary extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-8">
-                        <DashboardHeader title="Itinerary for your " cTor={cohortList} secondTitle="cohort" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" />
-                        <div>{dayList}</div>
-                        <div>{eventList}</div>
+                    <div className="col-md-8">
+                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" />
+                        {dayList}
+                        {eventList}
                     </div>
                     <SideBar ctr={[<DayForm submit={this.submitDay} key={uniqid()} />, <EventForm submit={this.submitEvent} key={uniqid()} />]} />
                 </div>

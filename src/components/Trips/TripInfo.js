@@ -14,42 +14,40 @@ class TripInfo extends Component {
         let { name, date, image, description, status } = this.props
 
         return (
-            <div class="card" style={{border: 'none', backgroundColor: '#FBFBFB'}}>
-                <img src={image} class="card-img-top" style={{boxShadow: 'rgb(136, 136, 136) 0px 2px 4px', border: 'none', borderRadius: '0%', marginTop: '15px'}}alt="..."></img>
-                <div class="card-body" style={{marginTop: '20px'}}>
-                    <span style={{fontSize: '1.3em', color: '#3A3A3A', fontWeight: '600'}}>Trip to {name}</span>  
-                    <button onClick={this.onEditClick} className="btn btn-lg btn-square dark pull-right">Edit</button>
-                    <p class="card-text">{description}</p>
-                </div>
-                <ul class="list-group list-group-flush" style={{ backgroundColor: '#FBFBFB' }}>
-                    <li class="list-group-item" style={{ backgroundColor: '#FBFBFB' }}>
-                        Date{' '}
-                        <span className="pull-right" style={{ color: '#0B62D4' }}>
-                            {date}
-                        </span>
-                    </li>
-                    <li class="list-group-item" style={{ backgroundColor: '#FBFBFB' }}>
-                        Status{' '}
-                        <span className="pull-right badge badge-primary badge-pill" style={{ padding: '5px 10px', backgroundColor: '#8ECFF5' }}>
-                            {status}
-                        </span>
-                    </li>
-                    <li class="list-group-item" style={{ backgroundColor: '#FBFBFB' }}>
-                        Total Invited{' '}
-                        <span className="pull-right badge badge-primary badge-pill" style={{ padding: '5px 10px', backgroundColor: '#0F61D8' }}>
-                            215
-                        </span>
-                    </li>
-                    <li class="list-group-item" style={{ backgroundColor: '#FBFBFB' }}>
-                        Total Confirmed{' '}
-                        <span className="pull-right badge badge-primary badge-pill" style={{ padding: '5px 10px', backgroundColor: '#0F61D8' }}>
-                            85
-                        </span>
-                    </li>
-                </ul>
-                <div class="card-body">
-                    <button className="btn btn-lg btn-square light">DUPLICATE</button>
-                    <button className="btn btn-lg btn-square light pull-right">ARCHIVE</button>
+            <div className="pb-3">
+                <img src={image} className="card-img-top border-0 shadow mb-4" alt="..."></img>
+                <div className='container'>
+                    <span className='h4'>Trip to {name}</span>  
+                    <button onClick={this.onEditClick} className="btn btn-lg btn-primary float-right">Edit</button>
+                    <p className="py-3">{description}</p>
+                    <ul className="list-group list-group-flush px-0 mx-0 pb-4">
+                        <li className="list-group-item">
+                            Date{' '}
+                            <span className="float-right text-primary">
+                                {date}
+                            </span>
+                        </li>
+                        <li className="list-group-item">
+                            Status{' '}
+                            <span className="float-right badge badge-primary badge-pill">
+                                {status}
+                            </span>
+                        </li>
+                        <li className="list-group-item">
+                            Total Invited{' '}
+                            <span className="float-right badge badge-primary badge-pill">
+                                215
+                            </span>
+                        </li>
+                        <li className="list-group-item">
+                            Total Confirmed{' '}
+                            <span className="float-right badge badge-primary badge-pill">
+                                85
+                            </span>
+                        </li>
+                    </ul>
+                    <button className="btn btn-secondary">DUPLICATE</button>
+                    <button className="btn btn-dark float-right">ARCHIVE</button>
                 </div>
             </div>
         )

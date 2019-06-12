@@ -30,7 +30,7 @@ class NotificationForm extends Component {
                     <label htmlFor="text">Message</label>
                     <input value={text} onChange={this.handleChange} type="text" class="form-control" name="text" placeholder="Your notification message" />
                 </div>
-                <button type="submit" class="btn btn-lg btn-square dark pull-right"> Create Notification </button>
+                <button type="submit" class="btn btn-lg btn-primary"> Create Notification </button>
             </form>
         )
     }

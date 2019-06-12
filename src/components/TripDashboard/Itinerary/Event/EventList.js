@@ -6,9 +6,9 @@ const EventList = ({ events, removeEvent }) => {
         return <Event event={event} removeEvent={removeEvent} key={event._id} />
     })
     return (
-        <div className="event-list">
-            <div className="row" style={{ justifyContent: 'center' }}>
-                {eventList}
+        <div className="row justify-content-center">
+            <div className="col-10">
+                {eventList} 
             </div>
         </div>
     )
