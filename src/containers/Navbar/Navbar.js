@@ -13,23 +13,24 @@ class Navbar extends Component {
         let { currentUser } = this.props
         let loggedInContent = null
         let greeting = currentUser.user.email ? (
-            <span className='text-light'>
+            <span className="text-light">
                 Hello, <a onClick={this.signout}> {currentUser.user.firstName}</a>!
             </span>
         ) : null
 
         if (currentUser.isAuthenticated) {
             loggedInContent = (
-                <div className='collapse navbar-collapse justify-content-between'>
+                <div className="collapse navbar-collapse justify-content-between">
                     <div className="navbar-nav navbar-text">
-                        <ul className="navbar-nav mr-auto">
-
-                        </ul>
+                        <ul className="navbar-nav mr-auto" />
                     </div>
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <a href="#" className="nav-link pr-4">{greeting}</a>
-                            <i className="fa fa-download fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
+                            <a href="#" className="nav-link pr-4">
+                                {greeting}
+                            </a>
+                            <i className="fa fa-download fa-2x text-secondary pr-4" />
+                            <i className="fas fa-sign-out-alt fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
                         </ul>
                     </div>
                 </div>
@@ -40,7 +41,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand container-fluid shadow px-4 bg-primary" style={{ zIndex: 2 }}>
                 <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <h1 className="logo text-light font-weight-bold">left.</h1>
+                        <h1 className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0">left.</h1>
                     </Link>
                 </div>
                 {loggedInContent}

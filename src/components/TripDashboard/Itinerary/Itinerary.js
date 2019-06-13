@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import uniqid from 'uniqid'
-import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
 import EventList from './Event/EventList'
 import { apiCall } from '../../../util/api'
-import DayForm from './Day/DayForm'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
+import AddDay from './Day/AddDay'
+import AddEvent from './Event/AddEvent'
 
 class Itinerary extends Component {
     state = {
@@ -83,8 +83,7 @@ class Itinerary extends Component {
 
     submitDay = date => {
         let day = {
-            date,
-            itinerary_id: this.state.currentItinerary._id
+            date
         }
 
         let tripId = this.props.currentTrip._id
@@ -162,9 +161,13 @@ class Itinerary extends Component {
                     <div className="col-md-8">
                         <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" currentTrip={this.props.currentTrip} />
                         {dayList}
+                        <div className="d-flex justify-content-around my-3">
+                            <AddDay submit={this.submitDay} />
+                            <AddEvent submit={this.submitEvent} />
+                        </div>
                         {eventList}
                     </div>
-                    <SideBar ctr={[<DayForm submit={this.submitDay} key={uniqid()} />, <EventForm submit={this.submitEvent} key={uniqid()} />]} />
+                    <SideBar ctr={[]} />
                 </div>
             </div>
         )

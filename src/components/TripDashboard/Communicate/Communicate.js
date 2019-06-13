@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import NotificationForm from './NotificationForm'
+import AddNotification from './AddNotification'
 import NotificationList from './NotificationList'
 import { apiCall } from '../../../util/api'
 import ContactList from './ContactList'
-import ContactForm from './ContactForm'
+import AddContact from './AddContact'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
@@ -106,6 +106,10 @@ class Communicate extends Component {
                             <strong>Emergency Contacts</strong>
                         </h4>
                         <div className="">
+                            <div className="d-flex justify-content-around my-3">
+                                <AddContact submit={this.createContact} />
+                                <AddNotification submit={this.createNotification} />
+                            </div>
                             <div className="card trip-list-header py-2 d-flex flex-row justify-content-between align-items-center shadow my-3 pl-2">
                                 <div className="col-3 border-bottom border-primary"> Name</div>
                                 <div className="col-3">Email</div>
@@ -124,7 +128,7 @@ class Communicate extends Component {
                             {notificationsList}
                         </div>
                     </div>
-                    <SideBar ctr={[<ContactForm submit={this.createContact} />, <NotificationForm submit={this.createNotification} />]} />
+                    <SideBar ctr={[]} />
                 </div>
             </div>
         )
