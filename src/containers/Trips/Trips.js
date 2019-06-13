@@ -2,17 +2,16 @@ import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
 import { handleSetCurrentTrip } from '../../store/actions/trip'
-import TripForm from '../../components/Trips/TripForm'
 import Alert from '../../components/Other/Alert'
 import TripList from '../../components/Trips/TripList'
 import TripInfo from '../../components/Trips/TripInfo'
 import { handleSetCurrentCohort } from '../../store/actions/cohort'
+import AddTrip from '../../components/Trips/AddTrip'
 
 class Trips extends Component {
     state = {
         trips: [],
         showTrips: false,
-        showTripForm: false,
         selectedTrip: {}
     }
 
@@ -49,7 +48,7 @@ class Trips extends Component {
     }
 
     addTrip = trip => {
-        trip.status = 'planning'
+        trip.status = 'PLANNING'
         apiCall('post', '/api/trips', trip) // Create Trip
             .then(data => {
                 trip._id = data._id
@@ -70,20 +69,16 @@ class Trips extends Component {
     }
 
     render() {
-        let { showTrips, showTripForm, trips, selectedTrip } = this.state
-
+        let { showTrips, trips, selectedTrip } = this.state
         let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip} /> : null
         let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip} /> : null
-        let tripForm = showTripForm ? <TripForm submit={this.addTrip} hide={this.hideTripForm} /> : null
 
         return (
             <div className="row">
                 <div className="col-md-2 shadow-lg">
                     <div className="row">
                         <div className="col px-0 py-5 d-flex justify-content-center">
-                            <button onClick={this.showTripForm} class="btn btn-lg btn-primary">
-                                ADD NEW TRIP
-                            </button>
+                            <AddTrip submit={this.addTrip} />
                         </div>
                     </div>
                     <div className="row trips-side-bar bg-light">
@@ -112,7 +107,7 @@ class Trips extends Component {
                             </div>
                             {tripList}
                         </div>
-                        <div className="col-md-4 shadow px-0">{tripForm || tripInfo}</div>
+                        <div className="col-md-4 shadow px-0">{tripInfo}</div>
                     </div>
                 </div>
             </div>
