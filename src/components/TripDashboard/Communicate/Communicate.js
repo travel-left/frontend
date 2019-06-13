@@ -19,15 +19,33 @@ class Communicate extends Component {
     constructor(props) {
         super(props)
 
-        apiCall('get', `/api/trips/${this.props.currentTrip._id}/notifications`).then(data => {
+        this.getNotifications()
+        this.getContacts()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.currentCohort !== prevProps.currentCohort) {
+            this.getNotifications()
+            this.getContacts()
+        }
+    }
+
+    getNotifications = () => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/notifications`).then(data => {
             // Get Notifications
             return this.setState({
                 notifications: [...data],
                 showNotificationsList: true
             })
         })
+    }
 
-        apiCall('get', `/api/trips/${this.props.currentTrip._id}/contacts`).then(data => {
+    getContacts = () => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/contacts`).then(data => {
             // Get Contacts
             return this.setState({
                 contacts: [...data],
@@ -37,15 +55,16 @@ class Communicate extends Component {
     }
 
     createNotification = text => {
-        let { currentTrip } = this.props
-        apiCall('post', `/api/trips/${this.props.currentTrip._id}/notifications`, { text: text }).then(() => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/notifications`, { text: text }).then(() => {
             // Crate Notification
             return this.setState(prevState => {
                 return {
                     notifications: [
                         ...prevState.notifications,
                         {
-                            trip_id: currentTrip.id,
+                            trip_id: tripId,
                             text: text
                         }
                     ]
@@ -55,7 +74,9 @@ class Communicate extends Component {
     }
 
     createContact = contact => {
-        apiCall('post', `/api/trips/${this.props.currentTrip._id}/contacts`, { trip_id: this.props.currentTrip._id, ...contact }).then(() => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/contacts`, { trip_id: this.props.currentTrip._id, ...contact }).then(() => {
             // Create Contact
             return this.setState(prevState => {
                 return {
@@ -79,17 +100,14 @@ class Communicate extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-8">
-                        <DashboardHeader title="Communicate" description="Add emergency contacts, create and send notifications, and make sure everyone is on the same page!" />
-                        <h4 >
+                        <DashboardHeader title="Communicate" description="Add emergency contacts, create and send notifications, and make sure everyone is on the same page!" currentTrip={this.props.currentTrip} />
+                        <h4>
                             {' '}
                             <strong>Emergency Contacts</strong>
                         </h4>
                         <div className="">
                             <div className="card trip-list-header py-2 d-flex flex-row justify-content-between align-items-center shadow my-3 pl-2">
-                                <div className="col-3 border-bottom border-primary">
-                                    {' '}
-                                    Name
-                                </div>
+                                <div className="col-3 border-bottom border-primary"> Name</div>
                                 <div className="col-3">Email</div>
                                 <div className="col-3">Phone</div>
                             </div>
@@ -100,13 +118,8 @@ class Communicate extends Component {
                         </h4>
                         <div className="">
                             <div className="card trip-list-header py-2 d-flex flex-row justify-content-between align-items-center shadow my-3 pl-2">
-                                <div className="col-4 border-bottom border-primary">
-                                    Subject
-                                </div>
-                                <div className="col-8">
-                                    {' '}
-                                    Message
-                                </div>
+                                <div className="col-4 border-bottom border-primary">Subject</div>
+                                <div className="col-8"> Message</div>
                             </div>
                             {notificationsList}
                         </div>
