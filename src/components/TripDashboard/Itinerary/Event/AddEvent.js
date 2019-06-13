@@ -1,0 +1,116 @@
+import React, { Component } from 'react'
+
+class AddEvent extends Component {
+    state = {
+        title: '',
+        timeStart: '09:00',
+        timeEnd: '12:00',
+        category: '',
+        summary: '',
+        image: '',
+        link: '',
+        linkText: ''
+    }
+
+    constructor(props) {
+        super(props)
+    }
+
+    handleInputChange = e => {
+        let updatedEvent = {
+            ...this.state.event
+        }
+        updatedEvent[e.target.name] = e.target.value
+        return this.setState({
+            event: updatedEvent
+        })
+    }
+
+    handleSubmitEvent = event => {
+        event.preventDefault()
+        this.props.submit(this.state)
+    }
+
+    render() {
+        let { title, category, timeStart, timeEnd, summary, image, link, linkText } = this.state
+
+        return (
+            <>
+                <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newEvent">
+                    ADD NEW EVENT
+                </button>
+                <div class="modal fade" id="newEvent" tabindex="-1" role="dialog" aria-labelledby="addnewEventModal" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addnewEventModal">
+                                    Fill out an event
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div className="form-row">
+                                        <div className="form-group">
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <label htmlFor="title">Title</label>
+                                                    <input name="title" className="form-control" type="text" value={title} onChange={this.handleInputChange} placeholder="Title" />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label htmlFor="category">Category</label>
+                                                    <select id="inputState" className="form-control" name="category" value={category} onChange={this.handleInputChange}>
+                                                        <option value="" disabled hidden>
+                                                            {' '}
+                                                            Category{' '}
+                                                        </option>
+                                                        <option value="event">Event</option>
+                                                        <option value="transportation">Transportation</option>
+                                                        <option value="lodging">Lodging</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <label htmlFor="timeStart">Start</label>
+                                                    <input name="timeStart" className="form-control" type="time" value={timeStart.toString()} onChange={this.handleInputChange} />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label htmlFor="timeEnd">End</label>
+                                                    <input name="timeEnd" className="form-control" type="time" value={timeEnd.toString()} onChange={this.handleInputChange} />
+                                                </div>
+                                            </div>
+                                            <label htmlFor="Summary">Summary</label>
+                                            <textarea name="summary" placeholder="A summary of your event" className="form-control" cols="70" rows="2" value={summary} onChange={this.handleInputChange} />
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <label htmlFor="image">Image link</label>
+                                                    <input name="image" placeholder="www.urlToYourImage.com" className="form-control" type="text" value={image} onChange={this.handleInputChange} />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label htmlFor="Link">Link</label>
+                                                    <input name="link" placeholder="www.aLink.com" className="form-control" type="text" placeholder="link" value={link} onChange={this.handleInputChange} />
+                                                </div>
+                                            </div>
+                                            <label htmlFor="linkText">Link text</label>
+                                            <input name="linkText" placeholder="name of your link" className="form-control" type="text" placeholder="link title" value={linkText} onChange={this.handleInputChange} />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button onClick={this.handleSubmitEvent} type="button" class="btn btn-primary" data-dismiss="modal">
+                                    SUBMIT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+}
+
+export default AddEvent
