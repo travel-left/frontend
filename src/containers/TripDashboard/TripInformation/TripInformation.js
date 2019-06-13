@@ -9,21 +9,17 @@ import Moment from 'react-moment'
 import SideBar from '../../../components/TripDashboard/SideBar'
 
 class TripInformation extends Component {
-
-    state = {...this.props.currentTrip}
-
     constructor(props) {
         super(props)
-
     }
 
     updateTrip = updatedTrip => {
-        apiCall('put', `/api/trips/${this.state._id}`, updatedTrip) // Update Trip
+        apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updatedTrip) // Update Trip
             .then(data => {
-                return apiCall('get', `/api/trips/${this.state._id}`) // Get Trip by Id
+                return apiCall('get', `/api/trips/${this.props.currentTrip._id}`) // Get Trip by Id
             })
             .then(data => {
-                this.setState({...data.trip})
+                this.setState({ ...data.trip })
             })
             .catch(err => {
                 console.log(err)
@@ -31,7 +27,7 @@ class TripInformation extends Component {
     }
 
     render() {
-        let { name, description, status, image, dateStart, dateEnd } = this.state
+        let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
         let updateTripForm = <UpdateTripForm submit={this.updateTrip} trip={{ name, description, status, image, dateStart, dateEnd }} />
         return (
             <div>

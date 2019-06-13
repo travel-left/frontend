@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import uniqid from 'uniqid'
 import EventForm from './Event/EventForm'
 import DayList from './Day/DayList'
-import CohortList from './Cohort/CohortList'
 import EventList from './Event/EventList'
 import { apiCall } from '../../../util/api'
 import DayForm from './Day/DayForm'
@@ -12,100 +11,54 @@ import SideBar from '../SideBar'
 
 class Itinerary extends Component {
     state = {
-        itineraries: [],
         days: [],
         events: [],
-        currentItinerary: null,
         currentDayId: null,
-        showCohortList: false,
         showEventList: false,
         showDayList: false
     }
 
     constructor(props) {
         super(props)
-
-        this.getAndSetItineraries()
-            .then(() => this.getAndSetDays())
-            .then(() => this.getAndSetEvents())
-            .catch(err => {
-                console.log(err)
-            })
+        this.getAndSetDays().then(() => this.getAndSetEvents())
     }
 
-    getAndSetItineraries = () => {
-        let tripId = this.props.currentTrip._id
-        return apiCall('get', `/api/trips/${tripId}/cohorts?populate=itinerary`).then(data => {
-            return this.setState({
-                itineraries: data.map(c => {
-                    return {
-                        ...c.itinerary,
-                        title: c.title
-                    }
-                }),
-                currentItinerary: data[0].itinerary,
-                showCohortList: true
-            })
-        })
+    componentDidUpdate(prevProps) {
+        if (this.props.currentCohort !== prevProps.currentCohort) {
+            this.getAndSetDays().then(() => this.getAndSetEvents())
+        }
     }
 
     getAndSetDays = () => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.currentItinerary.cohort_id
-        return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`).then(data => {
+        let cohortId = this.props.currentCohort._id
+
+        return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`).then(days => {
             return this.setState({
-                days: data,
-                currentDayId: data.length > 0 ? data[0]._id : null,
-                showDayList: true
+                showDayList: true,
+                days: days,
+                currentDayId: days[0] ? days[0]._id : null
             })
         })
     }
 
     getAndSetEvents = () => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.currentItinerary.cohort_id
+        let cohortId = this.state.id
         let dayId = this.state.currentDayId
-        return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(data => {
+        return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(events => {
             return this.setState({
-                showEventList: data ? true : false,
-                events: data
+                showEventList: events.length > 0 ? true : false,
+                events: events.length > 0 ? events : null
             })
         })
     }
 
-    setCurrentItinerary = itinerary => {
-        let tripId = this.props.currentTrip._id
-        let currentItin = this.state.itineraries.filter(i => i._id === itinerary)[0]
-        let cohortId = currentItin.cohort_id
-        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`)
-            .then(data => {
-                return this.setState({
-                    currentItinerary: this.state.itineraries.filter(i => i._id === itinerary)[0],
-                    days: data,
-                    currentDayId: data[0]._id,
-                    showDayList: true,
-                    showEventList: false
-                })
-            })
-            .then(() => {
-                tripId = this.props.currentTrip._id
-                currentItin = this.state.itineraries.filter(i => i._id === itinerary)[0]
-                cohortId = currentItin.cohort_id
-                const dayId = this.state.currentDayId
-                return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`)
-            })
-            .then(data => {
-                return this.setState({
-                    showEventList: data ? true : false,
-                    events: data
-                })
-            })
-    }
-
     setCurrentDay = dayId => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.currentItinerary.cohort_id
-        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(data => {
+        let cohortId = this.state.id
+
+        return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`).then(data => {
             this.setState({
                 currentDayId: dayId,
                 showEventList: true,
@@ -122,9 +75,10 @@ class Itinerary extends Component {
 
     submitEvent = event => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.currentItinerary.cohort_id
-        event.day_id = this.state.currentDayId
-        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${event.day_id}/events`, event).then(() => this.setCurrentDay(this.state.currentDayId))
+        let cohortId = this.state.id
+        let dayId = this.state.currentDayId
+
+        return apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events`, event).then(() => this.setCurrentDay(this.state.currentDayId))
     }
 
     submitDay = date => {
@@ -134,7 +88,7 @@ class Itinerary extends Component {
         }
 
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.currentItinerary.cohort_id
+        let cohortId = this.props.currentCohort._id
 
         let dayId = null
         apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`, day)
@@ -177,7 +131,7 @@ class Itinerary extends Component {
 
     removeEvent = eventId => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.currentItinerary.cohort_id
+        let cohortId = this.state.id
         let dayId = this.state.currentDayId
         apiCall('delete', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days/${dayId}/events/${eventId}`) // Delete event
             .then(() => {
@@ -194,10 +148,7 @@ class Itinerary extends Component {
     }
 
     render() {
-        let cohortList = this.state.showCohortList ? <CohortList submit={this.setCurrentItinerary} itineraries={this.state.itineraries} currentItinerary={this.state.currentItinerary} /> : null
-
         let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay} /> : null
-
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
@@ -209,8 +160,7 @@ class Itinerary extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-8">
-                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" />
-                        {cohortList}
+                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" currentTrip={this.props.currentTrip} />
                         {dayList}
                         {eventList}
                     </div>

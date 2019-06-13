@@ -7,6 +7,7 @@ class Trip extends Component {
 
     onTripClick = () => {
         this.props.clicked(this.props.id)
+        console.log(this.props.id)
     }
 
     render() {

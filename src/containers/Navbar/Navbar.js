@@ -40,7 +40,7 @@ class Navbar extends Component {
             <nav className="navbar navbar-expand container-fluid shadow px-4 bg-primary" style={{ zIndex: 2 }}>
                 <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <strong className="logo text-light font-weight-bold h1">left.</strong>
+                        <h1 className="logo text-light font-weight-bold">left.</h1>
                     </Link>
                 </div>
                 {loggedInContent}

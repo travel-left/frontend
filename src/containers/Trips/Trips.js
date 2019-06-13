@@ -1,34 +1,38 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
-import { setCurrentTrip } from '../../store/actions/trip'
+import { handleSetCurrentTrip } from '../../store/actions/trip'
 import TripForm from '../../components/Trips/TripForm'
 import Alert from '../../components/Other/Alert'
 import TripList from '../../components/Trips/TripList'
 import TripInfo from '../../components/Trips/TripInfo'
+import { handleSetCurrentCohort } from '../../store/actions/cohort'
 
 class Trips extends Component {
     state = {
         trips: [],
         showTrips: false,
         showTripForm: false,
-        showNewTripButton: true,
         selectedTrip: {}
     }
 
     constructor(props) {
         super(props)
-        apiCall('get', '/api/trips').then(data => {
+        apiCall('get', '/api/trips/').then(trips => {
             return this.setState({
-                trips: data.trips,
-                showTrips: data.trips.length > 0,
-                selectedTrip: data.trips[0]
+                trips: trips,
+                showTrips: trips ? true : false,
+                selectedTrip: trips ? trips[0] : null
             })
         })
     }
 
     selectTrip = tripId => {
-        this.props.setCurrentTrip(this.state.trips.filter(t => t._id == tripId)[0])
+        let selectedTrip = this.state.trips.filter(t => t._id === tripId)[0]
+
+        this.props.handleSetCurrentTrip(selectedTrip)
+        this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
+
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
@@ -85,10 +89,10 @@ class Trips extends Component {
                     <div className="row trips-side-bar bg-light">
                         <div className="col px-0">
                             <ul class="list-group ">
-                                <LeftBarItem text='All Trips' total='18' active={true}></LeftBarItem>
-                                <LeftBarItem text='Active Trips' total='14' active={false} ></LeftBarItem>
-                                <LeftBarItem text='Planned Trips' total='1' active={false}></LeftBarItem>
-                                <LeftBarItem text='Past Trips' total='3' active={false}></LeftBarItem>
+                                <LeftBarItem text="All Trips" total="18" active={true} />
+                                <LeftBarItem text="Active Trips" total="14" active={false} />
+                                <LeftBarItem text="Planned Trips" total="1" active={false} />
+                                <LeftBarItem text="Past Trips" total="3" active={false} />
                             </ul>
                         </div>
                     </div>
@@ -108,9 +112,7 @@ class Trips extends Component {
                             </div>
                             {tripList}
                         </div>
-                        <div className="col-md-4 shadow px-0">
-                            {tripForm || tripInfo}
-                        </div>
+                        <div className="col-md-4 shadow px-0">{tripForm || tripInfo}</div>
                     </div>
                 </div>
             </div>
@@ -120,12 +122,12 @@ class Trips extends Component {
 
 export default connect(
     null,
-    { setCurrentTrip }
+    { handleSetCurrentTrip, handleSetCurrentCohort }
 )(Trips)
 
-const LeftBarItem = ({text, total, active}) => {
+const LeftBarItem = ({ text, total, active }) => {
     let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 '
-    if(active){
+    if (active) {
         classes += ' active'
     }
     return (

@@ -20,6 +20,11 @@ class DocumentForm extends Component {
     handleSubmit = e => {
         e.preventDefault()
         this.props.submit(this.state)
+        this.setState({
+            name: '',
+            link: '',
+            description: ''
+        })
     }
 
     render() {

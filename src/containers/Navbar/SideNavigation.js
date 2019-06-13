@@ -4,9 +4,15 @@ import { withRouter, Link } from 'react-router-dom'
 class SideNavigation extends Component {
     constructor(props) {
         super(props)
+        
+    }
+
+    handleChange = e => {
+        this.props.submit(e.target.value)
     }
 
     selectFeature = e => {
+        e.preventDefault()
         let { history, currentTrip } = this.props
 
         switch (e.target.name) {
