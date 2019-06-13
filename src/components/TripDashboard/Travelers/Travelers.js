@@ -4,7 +4,7 @@ import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
-import TravelerForm from './Travelers/TravelerForm'
+import AddTraveler from './Travelers/AddTraveler'
 
 class Travelers extends Component {
     state = {
@@ -62,6 +62,7 @@ class Travelers extends Component {
                 <div className="row">
                     <div className="col-md-8">
                         <DashboardHeader title="People on this Trip" description="Add travelers here who are coming on this trip. Add them to a cohort to asign them group specific docs and itinerary" currentTrip={this.props.currentTrip} />
+                        <AddTraveler submit={this.addTraveler} />
                         <div className="">
                             <div className="card trip-list-header d-flex flex-row justify-content-between shadow mb-3 py-3 px-md-2 px-1">
                                 <div className="col-md-3 offset-md-2 border-bottom border-primary d-none d-md-flex">Name</div>
@@ -71,7 +72,7 @@ class Travelers extends Component {
                             <TravelerList travelers={travelers} cohorts={cohorts} addTravelerToCohort={this.addTravelerToCohort} />
                         </div>
                     </div>
-                    <SideBar ctr={[<TravelerForm submit={this.addTraveler} />]} />
+                    <SideBar ctr={[]} />
                 </div>
             </div>
         )
