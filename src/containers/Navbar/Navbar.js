@@ -29,7 +29,8 @@ class Navbar extends Component {
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
                             <a href="#" className="nav-link pr-4">{greeting}</a>
-                            <i className="fa fa-download fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
+                            <i className="fa fa-download fa-2x text-secondary pr-4" />
+                            <i className="fas fa-sign-out-alt fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
                         </ul>
                     </div>
                 </div>
