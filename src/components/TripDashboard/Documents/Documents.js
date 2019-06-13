@@ -17,32 +17,37 @@ class Documents extends Component {
         this.getDocuments()
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.currentCohort !== prevProps.currentCohort) {
+            this.getDocuments()
+        }
+    }
+
     getDocuments() {
-        const id = this.props.currentTrip._id
-        apiCall('get', `/api/trips/${id}/documents`).then(documents => {
-            if (documents.length > 0) {
-                this.setState({
-                    documents: documents,
-                    showDocumentsList: true
-                })
-            }
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+
+        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/documents`).then(documents => {
+            this.setState({
+                documents: documents.length > 0 ? documents : null,
+                showDocumentsList: documents.length > 0 ? true : false
+            })
         })
     }
 
-    handleSubmit = e => {
-        const id = this.props.currentTrip._id
-        apiCall('post', `/api/trips/${id}/documents`, e)
-            .then(() => {
-                console.log('Document Submitted')
-                this.getDocuments()
-            })
+    handleSubmit = doc => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+
+        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/documents`, doc)
+            .then(() => this.getDocuments())
             .catch(err => {
                 console.log(err)
             })
     }
 
     render() {
-        let documents = this.state.documents
+        let { documents } = this.state
         let documentsList = this.state.showDocumentsList ? <DocumentList documents={documents} /> : null
         return (
             <div>
