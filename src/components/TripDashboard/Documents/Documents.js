@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import DocumentForm from './DocumentForm'
 import DocumentList from './DocumentList'
 import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
+import AddDocument from './AddDocument'
 
 class Documents extends Component {
     state = {
@@ -59,9 +59,10 @@ class Documents extends Component {
                 <div className="row">
                     <div className="col-md-8">
                         <DashboardHeader title="Documents" description="Add all of the important documents to share with your travelers here." currentTrip={this.props.currentTrip} />
+                        <AddDocument submit={this.handleSubmit} />
                         {documentsList}
                     </div>
-                    <SideBar ctr={[<DocumentForm submit={this.handleSubmit} />]} />
+                    <SideBar ctr={[]} />
                 </div>
             </div>
         )
