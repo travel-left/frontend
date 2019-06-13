@@ -11,7 +11,6 @@ import SideBar from '../SideBar'
 
 class Itinerary extends Component {
     state = {
-        id: this.props.currentCohort._id,
         days: [],
         events: [],
         currentDayId: null,
@@ -24,15 +23,15 @@ class Itinerary extends Component {
         this.getAndSetDays().then(() => this.getAndSetEvents())
     }
 
-    setCurrentCohort = id => {
-        this.setState({ id: id }, () => {
-            return this.getAndSetDays().then(() => this.getAndSetEvents())
-        })
+    componentDidUpdate(prevProps) {
+        if (this.props.currentCohort !== prevProps.currentCohort) {
+            this.getAndSetDays().then(() => this.getAndSetEvents())
+        }
     }
 
     getAndSetDays = () => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.state.id
+        let cohortId = this.props.currentCohort._id
 
         return apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/itinerary/days`).then(days => {
             return this.setState({
@@ -161,7 +160,7 @@ class Itinerary extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-8">
-                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" currentTrip={this.props.currentTrip} submit={this.setCurrentCohort} />
+                        <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" currentTrip={this.props.currentTrip} />
                         {dayList}
                         {eventList}
                     </div>

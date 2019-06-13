@@ -8,7 +8,6 @@ class DashboardHeader extends Component {
     }
 
     updateCohort = e => {
-        this.props.submit(e.target.value)
         this.props.setCurrentCohort(this.props.currentTrip.cohorts.filter(c => c._id == e.target.value)[0])
     }
 
