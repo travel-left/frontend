@@ -1,5 +1,7 @@
 import { SET_CURRENT_USER } from '../actionTypes'
 import { apiCall, setTokenHeader } from '../../util/api'
+import { setCurrentCohort } from './cohort'
+import { setCurrentTrip } from './trip'
 
 export const setCurrentUser = user => {
     return {
@@ -33,6 +35,5 @@ export const logout = () => {
     return dispatch => {
         localStorage.clear()
         setAuthorizationToken()
-        dispatch(setCurrentUser({}))
     }
 }
