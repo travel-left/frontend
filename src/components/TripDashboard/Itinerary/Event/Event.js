@@ -25,7 +25,6 @@ class Event extends Component {
             case 'flight':
                 iconString = 'fa-plane'
                 break
-
             default:
                 break
         }
@@ -37,7 +36,7 @@ class Event extends Component {
                         <i className={`fa ${iconString} float-right`} aria-hidden="true" />
                     </h5>
                     <h6 className="card-subtitle mb-2 text-muted">
-                        {event.timeStart} - {event.timeEnd}
+                        {event.dtStart} - {event.dtEnd}
                     </h6>
                     <p className="card-text">{event.summary}</p>
                     <a href={event.link} className="card-link">
