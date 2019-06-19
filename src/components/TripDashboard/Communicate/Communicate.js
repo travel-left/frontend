@@ -54,20 +54,36 @@ class Communicate extends Component {
         })
     }
 
-    createNotification = text => {
+    createNotification = notification => {
         let tripId = this.props.currentTrip._id
         let cohortId = this.props.currentCohort._id
-        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/notifications`, { text: text }).then(() => {
-            // Crate Notification
+        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/notifications`, notification).then(() => {
+            // Create Notification
             return this.setState(prevState => {
                 return {
                     notifications: [
                         ...prevState.notifications,
-                        {
-                            trip_id: tripId,
-                            text: text
-                        }
+                        notification
                     ]
+                }
+            })
+        })
+    }
+
+    sendNotification = notificationId => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentCohort._id
+        apiCall('put', `/api/trips/${tripId}/cohorts/${cohortId}/notifications/${notificationId}/send`).then(() => {
+            // Send Notification
+            return this.setState(prevState => {
+                return {
+                    notifications: prevState.notifications.map(n => {
+                        if (n._id === notificationId) {
+                            n.sent = true
+                            return n
+                        }
+                        return n
+                    })
                 }
             })
         })
@@ -89,7 +105,7 @@ class Communicate extends Component {
     render() {
         let { showNotificationsList, notifications, showContactList, contacts } = this.state
         let contactList = showContactList ? <ContactList contacts={contacts} /> : null
-        let notificationsList = showNotificationsList ? <NotificationList notifications={notifications} /> : null
+        let notificationsList = showNotificationsList ? <NotificationList notifications={notifications} handleSend={this.sendNotification} /> : null
 
         return (
             <div class="">
@@ -123,7 +139,8 @@ class Communicate extends Component {
                         <div className="">
                             <div className="card trip-list-header py-2 d-flex flex-row justify-content-between align-items-center shadow my-3 pl-2">
                                 <div className="col-4 border-bottom border-primary">Subject</div>
-                                <div className="col-8"> Message</div>
+                                <div className="col-6">Message</div>
+                                <div className="col-2">Send</div>
                             </div>
                             {notificationsList}
                         </div>
