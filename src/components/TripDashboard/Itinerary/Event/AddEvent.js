@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
+import moment from 'moment-timezone'
+import OptionList from '../../../Other/OptionList'
+import { Opt } from 'coa'
 
 class AddEvent extends Component {
     state = {
         title: '',
+        dateStart: String,
         timeStart: '09:00',
+        tzStart: moment.tz.guess(true),
+        dateEnd: String,
         timeEnd: '12:00',
+        tzEnd: moment.tz.guess(true),
         category: '',
         summary: '',
         image: '',
@@ -18,11 +25,11 @@ class AddEvent extends Component {
 
     handleInputChange = e => {
         let updatedEvent = {
-            ...this.state.event
+            ...this.state
         }
         updatedEvent[e.target.name] = e.target.value
         return this.setState({
-            event: updatedEvent
+            ...updatedEvent
         })
     }
 
@@ -32,7 +39,37 @@ class AddEvent extends Component {
     }
 
     render() {
-        let { title, category, timeStart, timeEnd, summary, image, link, linkText } = this.state
+        let { title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
+        const categories = [
+            {
+                name: 'Category',
+                value: '',
+                hidden: true,
+                default: true
+            },
+            {
+                name: 'Lodging',
+                value: 'lodging'
+            },
+            {
+                name: 'Event',
+                value: 'event'
+            },
+            {
+                name: 'Transportation',
+                value: 'transportation'
+            },
+            {
+                name: 'Flight',
+                value: 'flight'
+            }
+        ]
+        const names = moment.tz.names().map(name => {
+            return {
+                name: name,
+                value: name
+            }
+        })
 
         return (
             <>
@@ -62,24 +99,38 @@ class AddEvent extends Component {
                                                 <div className="col-6">
                                                     <label htmlFor="category">Category</label>
                                                     <select id="inputState" className="form-control" name="category" value={category} onChange={this.handleInputChange}>
-                                                        <option value="" disabled hidden>
-                                                            {' '}
-                                                            Category{' '}
-                                                        </option>
-                                                        <option value="event">Event</option>
-                                                        <option value="transportation">Transportation</option>
-                                                        <option value="lodging">Lodging</option>
+                                                        <OptionList options={categories} />
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="form-row">
                                                 <div className="col-6">
-                                                    <label htmlFor="timeStart">Start</label>
+                                                    <label htmlFor="dateStart">Time Start</label>
+                                                    <input name="dateStart" className="form-control" type="date" value={dateStart} style={{ width: '100%' }} onChange={this.handleInputChange} />
+                                                </div>
+                                                <div className="col-6">
+                                                    <label htmlFor="dateEnd">Time End</label>
+                                                    <input name="dateEnd" className="form-control" type="date" value={dateEnd} style={{ width: '100%' }} onChange={this.handleInputChange} />
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-6">
                                                     <input name="timeStart" className="form-control" type="time" value={timeStart.toString()} onChange={this.handleInputChange} />
                                                 </div>
                                                 <div className="col-6">
-                                                    <label htmlFor="timeEnd">End</label>
                                                     <input name="timeEnd" className="form-control" type="time" value={timeEnd.toString()} onChange={this.handleInputChange} />
+                                                </div>
+                                            </div>
+                                            <div className="form-row">
+                                                <div className="col-6">
+                                                    <select id="inputState" className="form-control" name="tzStart" value={tzStart} onChange={this.handleInputChange}>
+                                                        <OptionList options={names} />
+                                                    </select>
+                                                </div>
+                                                <div className="col-6">
+                                                    <select id="inputState" className="form-control" name="tzEnd" value={tzEnd} onChange={this.handleInputChange}>
+                                                        <OptionList options={names} />
+                                                    </select>
                                                 </div>
                                             </div>
                                             <label htmlFor="Summary">Summary</label>

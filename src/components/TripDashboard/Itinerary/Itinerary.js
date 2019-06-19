@@ -5,8 +5,8 @@ import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
 import SideBar from '../SideBar'
-import AddDay from './Day/AddDay'
 import AddEvent from './Event/AddEvent'
+import moment from 'moment-timezone'
 
 class Itinerary extends Component {
     tripId = this.props.currentTrip._id
@@ -14,9 +14,10 @@ class Itinerary extends Component {
     state = {
         days: [],
         events: [],
-        currentDayId: null,
+        currentDate: null,
         showEventList: false,
-        showDayList: false
+        showDayList: false,
+        tz: moment.tz.guess(true)
     }
 
     constructor(props) {
@@ -31,32 +32,34 @@ class Itinerary extends Component {
     }
 
     getAndSetDays = () => {
-        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days`).then(days => {
+        const { tz } = this.state
+        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days?tz=${tz}`).then(days => {
             return this.setState({
-                showDayList: true,
+                showDayList: days.length > 0 ? true : false,
                 days: days,
-                currentDayId: days[0] ? days[0]._id : null
+                currentDate: days.length > 0 ? days[0] : null
             })
         })
     }
 
     getAndSetEvents = () => {
-        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days/${this.state.currentDayId}/events`).then(events => {
+        const { tz, currentDate } = this.state
+        const cdMoment = moment(currentDate).format('YYYY-MM-DD')
+        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/events?tz=${tz}&date=${cdMoment}`).then(events => {
             return this.setState({
                 showEventList: events.length > 0 ? true : false,
-                events: events.length > 0 ? events : null
+                events: events
             })
         })
     }
 
-    setCurrentDay = newDayId => {
-        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days/${newDayId}/events`).then(events => {
-            this.setState({
-                currentDayId: newDayId,
-                showEventList: true,
-                events: events
-            })
-        })
+    setCurrentDay = newDate => {
+        this.setState(
+            {
+                currentDate: newDate
+            },
+            () => this.getAndSetEvents()
+        )
     }
 
     onNewEventClick = () => {
@@ -66,71 +69,34 @@ class Itinerary extends Component {
     }
 
     submitEvent = event => {
-        let dayId = this.state.currentDayId
-
-        return apiCall('post', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days/${dayId}/events`, event)
-            .then(() => this.setCurrentDay(dayId))
-    }
-
-    submitDay = date => {
-        let day = {
-            date
+        const eventToSend = {
+            category: event.category,
+            dtStart: `${event.dateStart}T${event.timeStart}:00`,
+            image: event.image,
+            link: event.link,
+            linkText: event.linkText,
+            summary: event.summary,
+            dtEnd: `${event.dateEnd}T${event.timeEnd}:00`,
+            tzStart: event.tzStart,
+            tzEnd: event.tzEnd,
+            title: event.title
         }
+        let date = this.state.currentDate
 
-        let dayId = null
-        apiCall('post', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days`, day)
-            .then(data => {
-                dayId = data._id
-                return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days`)
-            })
-            .then(data => {
-                return this.setState({
-                    days: data,
-                    currentDayId: dayId,
-                    showDayList: true
-                })
-            })
-            .then(() => {
-                return this.getAndSetEvents()
-            })
-    }
-
-    removeDay = dayId => {
-        apiCall('delete', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days/${dayId}`)
-            .then(() => {
-                return this.setState(prevState => {
-                    const newDays = prevState.days.filter(day => dayId !== day._id)
-                    return {
-                        ...prevState,
-                        days: newDays,
-                        currentDayId: newDays[0]._id,
-                        showEventList: newDays[0].events.length > 0 ? true : false
-                    }
-                })
-            })
-            .then(this.getAndSetEvents)
-            .catch(err => {
-                console.log(err)
-            })
+        return apiCall('post', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/events`, eventToSend).then(() => this.getAndSetDays().then(() => this.setCurrentDay(date)))
     }
 
     removeEvent = eventId => {
-        apiCall('delete', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/days/${this.state.currentDayId}/events/${eventId}`) // Delete event
-            .then(() => {
-                return this.setState(prevState => {
-                    return {
-                        ...prevState,
-                        events: prevState.events.filter(event => eventId !== event._id)
-                    }
-                })
-            })
+        let date = this.state.currentDate
+        apiCall('delete', `/api/trips/${this.tripId}/cohorts/${this.props.currentCohort._id}/itinerary/events/${eventId}`) // Delete event
+            .then(() => this.getAndSetDays().then(() => this.getAndSetEvents()))
             .catch(err => {
                 console.log(err)
             })
     }
 
     render() {
-        let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDayId={this.state.currentDayId} removeDay={this.removeDay} /> : null
+        let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDate={this.state.currentDate} /> : null
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
@@ -145,7 +111,6 @@ class Itinerary extends Component {
                         <DashboardHeader title="Itinerary" description="Set the trip activities, accommodations, flights, addresses, checklists, forms and more" currentTrip={this.props.currentTrip} />
                         {dayList}
                         <div className="d-flex justify-content-around my-3">
-                            <AddDay submit={this.submitDay} />
                             <AddEvent submit={this.submitEvent} />
                         </div>
                         {eventList}
