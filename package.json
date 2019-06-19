@@ -35,6 +35,5 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "prettier": "@travelleft/prettier-config",
-  "proxy": "http://172.17.138.122:8081"
+  "prettier": "@travelleft/prettier-config"
 }

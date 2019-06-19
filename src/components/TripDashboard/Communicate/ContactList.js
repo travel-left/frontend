@@ -3,7 +3,7 @@ import Contact from './Contact'
 
 const ContactList = ({ contacts }) => {
     let list = contacts.map(c => {
-        return <Contact name={c.firstName + ' ' + c.lastName} phone={c.phone} email={c.email} photo={c.photo} />
+        return <Contact name={c.firstName + ' ' + c.lastName} phone={c.phone} email={c.email} photo={c.photo} key={c._id} />
     })
 
     return (
