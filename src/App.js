@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import Navbar from './containers/Navbar/Navbar'
 import Main from './containers/Main'
 import { setAuthorizationToken } from './store/actions/auth'
-import Footer from './components/Other/Footer';
+import Footer from './components/Other/Footer'
 
 const store = configureStore()
 
