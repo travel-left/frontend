@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 
 class AddNotification extends Component {
     state = {
-        text: ''
+        text: '',
+        subject: ''
     }
 
     constructor(props) {
@@ -17,12 +18,12 @@ class AddNotification extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        this.props.submit(this.state.text)
-        this.setState({ text: '' })
+        this.props.submit(this.state)
+        this.setState({ text: '', subject: '' })
     }
 
     render() {
-        let { text } = this.state
+        let { text, subject } = this.state
         return (
             <>
                 <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newNotification">
@@ -41,6 +42,10 @@ class AddNotification extends Component {
                             </div>
                             <div class="modal-body">
                                 <form>
+                                <div class="form-row">
+                                        <label htmlFor="subject">Subject</label>
+                                        <input value={subject} onChange={this.handleChange} type="text" class="form-control" name="subject" placeholder="Your subject" />
+                                    </div>
                                     <div class="form-row">
                                         <label htmlFor="text">Message</label>
                                         <input value={text} onChange={this.handleChange} type="text" class="form-control" name="text" placeholder="Your notification message" />
