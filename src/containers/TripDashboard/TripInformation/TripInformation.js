@@ -28,7 +28,7 @@ class TripInformation extends Component {
 
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
-        let updateTripForm = <UpdateTripForm submit={this.updateTrip} trip={{ name, description, status, image, dateStart, dateEnd }} />
+
         return (
             <div>
                 <div className="row">
@@ -51,10 +51,10 @@ class TripInformation extends Component {
                                 <h5>Description</h5> <p class="card-text">{description}</p>
                                 <h5>Image link</h5>
                                 <p class="card-text">{image}</p>
+                                <UpdateTripForm submit={this.updateTrip} trip={{ name, description, status, image, dateStart, dateEnd }} />
                             </div>
                         </div>
                     </div>
-                    <SideBar ctr={[updateTripForm]} />
                 </div>
             </div>
         )
