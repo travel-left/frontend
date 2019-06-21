@@ -6,7 +6,6 @@ import ContactList from './ContactList'
 import AddContact from './AddContact'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
-import SideBar from '../SideBar'
 
 class Communicate extends Component {
     state = {
@@ -145,7 +144,6 @@ class Communicate extends Component {
                             {notificationsList}
                         </div>
                     </div>
-                    <SideBar ctr={[]} />
                 </div>
             </div>
         )

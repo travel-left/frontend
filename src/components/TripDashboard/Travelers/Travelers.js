@@ -3,7 +3,6 @@ import TravelerList from './Travelers/TravelerList'
 import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
-import SideBar from '../SideBar'
 import AddTraveler from './Travelers/AddTraveler'
 
 class Travelers extends Component {
@@ -72,7 +71,6 @@ class Travelers extends Component {
                             <TravelerList travelers={travelers} cohorts={cohorts} addTravelerToCohort={this.addTravelerToCohort} />
                         </div>
                     </div>
-                    <SideBar ctr={[]} />
                 </div>
             </div>
         )
