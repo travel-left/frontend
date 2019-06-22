@@ -57,14 +57,12 @@ class Communicate extends Component {
     createNotification = notification => {
         let tripId = this.props.currentTrip._id
         let cohortId = this.props.currentCohort._id
-        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/notifications`, notification).then(() => {
+        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/notifications`, notification).then(createReturn => {
             // Create Notification
+            notification._id = createReturn._id
             return this.setState(prevState => {
                 return {
-                    notifications: [
-                        ...prevState.notifications,
-                        notification
-                    ]
+                    notifications: [...prevState.notifications, notification]
                 }
             })
         })
