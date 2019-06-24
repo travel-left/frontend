@@ -6,8 +6,9 @@ import { logout } from '../../store/actions/auth'
 class Navbar extends Component {
     signout = e => {
         e.preventDefault()
-        this.props.logout()
-        return this.props.history.push(`/signin`)
+        this.props.logout().then(() => {
+            return this.props.history.push(`/signin`)
+        })
     }
 
     render() {
