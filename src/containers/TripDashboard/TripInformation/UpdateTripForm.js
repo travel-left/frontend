@@ -3,13 +3,14 @@ import React, { Component } from 'react'
 class UpdateTripForm extends Component {
 
     state = {
+        ...this.props.trip
     }
 
     constructor(props) {
         super(props)
     }
 
-    handleInputChange = e => {
+    handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -17,11 +18,11 @@ class UpdateTripForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        this.props.submit(this.state.date)
+        this.props.submit(this.state)
     }
 
     render() {
-        let { name, description, status, image, dateStart, dateEnd } = this.props.trip
+        let { name, description, status, image, dateStart, dateEnd } = this.state
 
         return (
             <>

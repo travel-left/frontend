@@ -18,7 +18,7 @@ class TripInformation extends Component {
                 return apiCall('get', `/api/trips/${this.props.currentTrip._id}`) // Get Trip by Id
             })
             .then(data => {
-                this.setState({ ...data.trip })
+                this.props.setCurrentTrip({ ...data })
             })
             .catch(err => {
                 console.log(err)
