@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 
 class CohortForm extends Component {
+
     state = {
-        title: ''
+        title: '',
+        itinerary: {},
+        travelers: [],
     }
 
     constructor(props) {
@@ -17,14 +20,14 @@ class CohortForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        this.props.submit(this.state.title)
-        this.setState({title: ''})
+        this.props.submit(this.state)
+        this.setState({ title: '' })
     }
 
     render() {
         let { title } = this.state
         return (
-            <form onSubmit={this.handleSubmit} style={{marginTop: '60px'}}>
+            <form onSubmit={this.handleSubmit} style={{ marginTop: '60px' }}>
                 <h3>Add a cohort</h3>
                 <div class="form-row">
                     <label htmlFor="title">Cohort name</label>

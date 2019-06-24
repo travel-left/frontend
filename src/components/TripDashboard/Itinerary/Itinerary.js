@@ -4,7 +4,6 @@ import EventList from './Event/EventList'
 import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
-import SideBar from '../SideBar'
 import AddEvent from './Event/AddEvent'
 import moment from 'moment-timezone'
 
@@ -115,7 +114,6 @@ class Itinerary extends Component {
                         </div>
                         {eventList}
                     </div>
-                    <SideBar ctr={[]} />
                 </div>
             </div>
         )

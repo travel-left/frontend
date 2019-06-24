@@ -6,7 +6,8 @@ import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../../store/actions/trip'
 import { apiCall } from '../../../util/api'
 import Moment from 'react-moment'
-import SideBar from '../../../components/TripDashboard/SideBar'
+import CohortList from '../../../components/TripDashboard/Travelers/Cohorts/CohortList';
+import CohortForm from '../../../components/TripDashboard/Travelers/Cohorts/CohortForm';
 
 class TripInformation extends Component {
     constructor(props) {
@@ -19,16 +20,29 @@ class TripInformation extends Component {
                 return apiCall('get', `/api/trips/${this.props.currentTrip._id}`) // Get Trip by Id
             })
             .then(data => {
-                this.setState({ ...data.trip })
+                this.props.setCurrentTrip({ ...data })
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
+    addCohort = cohort => {
+        apiCall('post', `/api/trips/${this.props.currentTrip._id}/cohorts`, cohort)
+            .then(data => {
+                console.log(data)
+            }).then(() => {
+                return apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts`)
+            })
+            .then(cohorts => {
+                this.props.setCurrentTrip({ ...this.props.currentTrip, cohorts: cohorts })
+            })
+
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
-        let updateTripForm = <UpdateTripForm submit={this.updateTrip} trip={{ name, description, status, image, dateStart, dateEnd }} />
+
         return (
             <div>
                 <div className="row">
@@ -51,10 +65,14 @@ class TripInformation extends Component {
                                 <h5>Description</h5> <p class="card-text">{description}</p>
                                 <h5>Image link</h5>
                                 <p class="card-text">{image}</p>
+                                <UpdateTripForm submit={this.updateTrip} trip={{ name, description, status, image, dateStart, dateEnd }} />
+                                <h5>Cohorts</h5>
+                                <CohortList cohorts={this.props.currentTrip.cohorts}></CohortList>
+                                <h5>Add a cohort</h5>
+                                <CohortForm submit={this.addCohort}></CohortForm>
                             </div>
                         </div>
                     </div>
-                    <SideBar ctr={[updateTripForm]} />
                 </div>
             </div>
         )

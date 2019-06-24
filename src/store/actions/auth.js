@@ -33,7 +33,13 @@ export const authUser = (type, userData) => {
 
 export const logout = () => {
     return dispatch => {
-        localStorage.clear()
-        setAuthorizationToken()
+        return new Promise((resolve, reject) => {
+            localStorage.clear()
+            dispatch(setCurrentTrip({}))
+            dispatch(setCurrentCohort({}))
+            setAuthorizationToken()
+            dispatch(setCurrentUser({}))
+            resolve()
+        })
     }
 }

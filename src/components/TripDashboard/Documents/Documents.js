@@ -3,7 +3,6 @@ import DocumentList from './DocumentList'
 import { apiCall } from '../../../util/api'
 import Alert from '../../Other/Alert'
 import DashboardHeader from '../../Other/DashboardHeader'
-import SideBar from '../SideBar'
 import AddDocument from './AddDocument'
 
 class Documents extends Component {
@@ -62,7 +61,6 @@ class Documents extends Component {
                         <AddDocument submit={this.handleSubmit} />
                         {documentsList}
                     </div>
-                    <SideBar ctr={[]} />
                 </div>
             </div>
         )
