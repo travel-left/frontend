@@ -56,7 +56,6 @@ class Trips extends Component {
                 return this.setState(prevState => {
                     return {
                         trips: [...prevState.trips, trip],
-                        showTripForm: false,
                         selectedTrip: trip
                     }
                 })
