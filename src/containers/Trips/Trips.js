@@ -29,10 +29,11 @@ class Trips extends Component {
     selectTrip = tripId => {
         let selectedTrip = this.state.trips.filter(t => t._id === tripId)[0]
 
-        this.props.handleSetCurrentTrip(selectedTrip)
-        this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
-
-        this.props.history.push(`/trips/${tripId}/edit`)
+        this.props.handleSetCurrentTrip(selectedTrip).then(() => {
+            return this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
+        }).then(() => {
+            return this.props.history.push(`/trips/${tripId}/edit`)
+        })
     }
 
     showTripForm = () => {

@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 class UpdateTripForm extends Component {
 
     state = {
-        ...this.props.trip
     }
 
     constructor(props) {
@@ -22,7 +21,7 @@ class UpdateTripForm extends Component {
     }
 
     render() {
-        let { name, description, status, image, dateStart, dateEnd } = this.state
+        let { name, description, status, image, dateStart, dateEnd } = this.props.trip
 
         return (
             <>
@@ -47,7 +46,7 @@ class UpdateTripForm extends Component {
                                             <label htmlFor="name">Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Trip name" />
                                             <label htmlFor="status">Status: </label>
-                                            <select value={status.toLowerCase()} onChange={this.handleChange} name="status">
+                                            <select value={status} onChange={this.handleChange} name="status">
                                                 <option value="planning">planning</option>
                                                 <option value="planned">planned</option>
                                                 <option value="active">active</option>
