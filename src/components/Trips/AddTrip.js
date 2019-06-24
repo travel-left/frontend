@@ -26,6 +26,13 @@ class AddTrip extends Component {
     handleSubmitEvent = event => {
         event.preventDefault()
         this.props.submit(this.state)
+        this.setState({
+            name: '',
+            image: '',
+            dateStart: '',
+            dateEnd: '',
+            description: ''
+        })
     }
 
     render() {
