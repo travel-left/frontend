@@ -16,7 +16,7 @@ class Navbar extends Component {
         let loggedInContent = null
         let greeting = currentUser.user.email ? (
             <span className="text-light">
-                Hello, <a onClick={this.signout}> {currentUser.user.firstName}</a>!
+                Hello, {currentUser.user.firstName}!
             </span>
         ) : null
 
@@ -28,11 +28,11 @@ class Navbar extends Component {
                     </div>
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <a href="#" className="nav-link pr-4">
+                            <a href="#" className="nav-link pr-4 disabled">
                                 {greeting}
                             </a>
-                            <i className="fa fa-download fa-2x text-secondary pr-4" />
-                            <i className="fas fa-sign-out-alt fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
+                            <a href=""><i className="fa fa-download fa-2x text-secondary pr-4" /></a>
+                            <a href=""><i className="fas fa-sign-out-alt fa-2x text-secondary" onClick={this.signout} aria-hidden="true" /></a>
                         </ul>
                     </div>
                 </div>
