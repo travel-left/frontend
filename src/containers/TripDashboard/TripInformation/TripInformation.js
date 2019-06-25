@@ -46,11 +46,6 @@ class TripInformation extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-12">
-                        <Alert text="This is where all the general information about your trip will live! See statistics and update the info on the right." />
-                    </div>
-                </div>
-                <div className="row">
                     <div className="col-md-8">
                         <DashboardHeader title="Trip Information" description="Edit your trip information here" />
                         <div class="card shadow border-0 mb-3">
