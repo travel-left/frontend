@@ -75,7 +75,7 @@ class Trips extends Component {
 
         return (
             <div className="row">
-                <div className="col-md-2 shadow-lg">
+                <div className="col-md-2 border-right shadow">
                     <div className="row">
                         <div className="col px-0 py-5 d-flex justify-content-center">
                             <AddTrip submit={this.addTrip} />
@@ -87,6 +87,7 @@ class Trips extends Component {
                                 <LeftBarItem text="All Trips" total="18" active={true} />
                                 <LeftBarItem text="Active Trips" total="14" active={false} />
                                 <LeftBarItem text="Planned Trips" total="1" active={false} />
+                                <LeftBarItem text="Planning" total="" active={false} />
                                 <LeftBarItem text="Past Trips" total="3" active={false} />
                             </ul>
                         </div>
@@ -100,14 +101,15 @@ class Trips extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
-                            <div className="card trip-list-header shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold">
-                                <div className="col-md-2 offset-md-2 border-bottom border-primary"> Trip</div>
-                                <div className="col-md-3 offset-md-2">Date</div>
-                                <div className="col-md-3">Status</div>
+                            <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
+                                <div className="col-md-3 border-bottom border-primary text-uppercase ml-5"> Trip</div>
+                                <div className="col-md-4"></div>
+                                <div className="col-md-2 offset-md-1 text-uppercase">Date</div>
+                                <div className="col-md-2 text-uppercase">Status</div>
                             </div>
                             {tripList}
                         </div>
-                        <div className="col-md-4 shadow px-0">{tripInfo}</div>
+                        <div className="col-md-4 shadow px-0 bg-light">{tripInfo}</div>
                     </div>
                 </div>
             </div>
@@ -128,7 +130,7 @@ const LeftBarItem = ({ text, total, active }) => {
     return (
         <a href="#" class={classes}>
             {text}
-            <span class="badge badge-primary badge-pill">{total}</span>
+            <span class="badge badge-primary badge-pill">{!active && total}</span>
         </a>
     )
 }
