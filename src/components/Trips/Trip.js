@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Moment from 'react-moment'
 
 class Trip extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class Trip extends Component {
     }
 
     render() {
-        let { name, image, date, status } = this.props
+        let { name, image, dateStart, dateEnd, status } = this.props
 
         return (
             <div className="card my-1 shadow py-md-2 mx-2 mx-md-0 px-2 px-md-0 py-2" onClick={this.onTripClick}>
@@ -26,7 +27,8 @@ class Trip extends Component {
                     </div>
                     <div className="col-4 col-md-3">
                         <p className="card-text text-dark">
-                            {date}
+                            <Moment date={dateStart} format="MMM DD" /> {' - '}
+                            <Moment date={dateEnd} format="MMM DD" />
                         </p>
                     </div>
                     <div className="col-4 col-md-3">

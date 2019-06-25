@@ -11,6 +11,7 @@ class Itinerary extends Component {
     tripId = this.props.currentTrip._id
 
     state = {
+        allDates: [],
         days: [],
         events: [],
         currentDate: null,
@@ -19,15 +20,38 @@ class Itinerary extends Component {
         tz: moment.tz.guess(true)
     }
 
+    //have all days of trip in array
+    //render a box for all days of trip
+    //if day has an event, make box be colored
+
     constructor(props) {
         super(props)
+
         this.getAndSetDays().then(() => this.getAndSetEvents())
+    }
+
+    componentDidMount() {
+        this.getAllDaysOfTrips(this.props.currentTrip.dateStart, this.props.currentTrip.dateEnd)
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.currentCohort !== prevProps.currentCohort) {
             this.getAndSetDays().then(() => this.getAndSetEvents())
         }
+    }
+
+    getAllDaysOfTrips = (startDate, endDate) => {
+        var dates = [moment(startDate).toDate()]
+
+        var currDate = moment(startDate).startOf('day')
+        var lastDate = moment(endDate).startOf('day')
+
+        while (currDate.add(1, 'days').isSameOrBefore(lastDate)) {
+            dates.push(currDate.clone().toDate())
+        }
+        console.log(dates)
+
+        return this.setState({ allDates: dates })
     }
 
     getAndSetDays = () => {
@@ -95,8 +119,14 @@ class Itinerary extends Component {
     }
 
     render() {
-        let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDate={this.state.currentDate} /> : null
+        let dayList = this.state.showDayList ? <DayList dates={this.state.allDates} days={this.state.days} setCurrentDay={this.setCurrentDay} currentDate={this.state.currentDate} /> : null
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
+
+        let calendar = this.state.allDates ? this.state.allDates.map(date => {
+            return (
+                <div style={{ minHeight: '10px', minWidth: '10px', backgroundColor: 'black', display: 'inline-block' }} className='my-3 mx-3'></div>
+            )
+        }) : null
 
         return (
             <div className="">
@@ -113,6 +143,7 @@ class Itinerary extends Component {
                             <AddEvent submit={this.submitEvent} />
                         </div>
                         {eventList}
+                        {calendar}
                     </div>
                 </div>
             </div>

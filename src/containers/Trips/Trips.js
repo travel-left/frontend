@@ -71,7 +71,7 @@ class Trips extends Component {
     render() {
         let { showTrips, trips, selectedTrip } = this.state
         let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip} /> : null
-        let tripInfo = showTrips ? <TripInfo id={selectedTrip._id} status={selectedTrip.status} image={selectedTrip.image} descrption={selectedTrip.description} name={selectedTrip.name} date={selectedTrip.dateStart} edit={this.selectTrip} /> : null
+        let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} /> : null
 
         return (
             <div className="row">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Moment from 'react-moment'
 
 class TripInfo extends Component {
     constructor(props) {
@@ -11,20 +12,21 @@ class TripInfo extends Component {
     }
 
     render() {
-        let { name, date, image, description, status } = this.props
+        let { name, dateStart, dateEnd, image, description, status } = this.props.trip
 
         return (
             <div className="pb-3">
                 <img src={image} className="card-img-top border-0 shadow mb-4" alt="..."></img>
                 <div className='container'>
-                    <span className='h4'>Trip to {name}</span>  
+                    <span className='h4'>Trip to {name}</span>
                     <button onClick={this.onEditClick} className="btn btn-lg btn-primary float-right">Edit</button>
                     <p className="py-3">{description}</p>
                     <ul className="list-group list-group-flush px-0 mx-0 pb-4">
                         <li className="list-group-item">
                             Date{' '}
                             <span className="float-right text-primary">
-                                {date}
+                                <Moment date={dateStart} format="MMM DD" /> {' - '}
+                                <Moment date={dateEnd} format="MMM DD" />
                             </span>
                         </li>
                         <li className="list-group-item">
