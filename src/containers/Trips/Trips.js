@@ -81,7 +81,7 @@ class Trips extends Component {
                             <AddTrip submit={this.addTrip} />
                         </div>
                     </div>
-                    <div className="row trips-side-bar bg-light">
+                    <div className="row trips-side-bar bg-light" style={{ minHeight: '80vh' }}>
                         <div className="col px-0">
                             <ul class="list-group ">
                                 <LeftBarItem text="All Trips" total="18" active={true} />
