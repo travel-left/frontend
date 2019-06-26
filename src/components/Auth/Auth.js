@@ -34,6 +34,20 @@ export default class Auth extends Component {
         }
     }
 
+    signUp = async formInfo => {
+        const { onAuth, history } = this.props
+        try {
+            if (formInfo.createOrg) {
+                // Do some stuff
+            } else {
+                const newCoordinator = 
+        }
+        } catch (err) {
+            console.log(err)
+            this.setState({ error: err })
+        }
+    }
+
     handleSwitch = e => {
         e.preventDefault()
         switch (e.target.name) {
