@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import SidePicture from './SidePicture'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 import './Auth.css'
 
 export default class Auth extends Component {
-    handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
+    state = {
+        error: ''
     }
 
-    handleSubmit = e => {
+    handleSubmit(e) {
         e.preventDefault()
         console.log(this.state)
         this.props
@@ -21,6 +21,17 @@ export default class Auth extends Component {
                 console.log(err)
                 this.setState({ error: err })
             })
+    }
+
+    login = async state => {
+        const { onAuth, history } = this.props
+        try {
+            await onAuth('signin', state)
+            history.push('/trips')
+        } catch (err) {
+            console.log(err)
+            this.setState({ error: err })
+        }
     }
 
     handleSwitch = e => {
@@ -37,9 +48,11 @@ export default class Auth extends Component {
 
     render() {
         const { type } = this.props
+        const { error } = this.state
+        const form = type === 'sign in' ? <SignIn error={error} submit={this.login} /> : <SignUp error={error} submit={this.handleSubmit} />
         return (
             <div className="row no-gutters">
-                <div className="col-md-12 col-lg-6"></div>
+                <div className="col-md-12 col-lg-6 d-flex justify-content-center my-5">{form}</div>
                 <div className="col-md-12 col-lg-6">
                     <SidePicture onClick={this.handleSwitch} type={type} />
                 </div>
