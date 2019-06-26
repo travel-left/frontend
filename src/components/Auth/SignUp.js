@@ -6,7 +6,9 @@ export default class SignUp extends Component {
         name: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        organizationId: '',
+        createOrg: false
     }
 
     handleChange = e => {
@@ -19,9 +21,7 @@ export default class SignUp extends Component {
         e.preventDefault()
         const { password, confirmPassword } = this.state
         if (password === confirmPassword) {
-            let signUpParams = this.state
-            delete signUpParams.error
-            this.props.submit(signUpParams).then(() => {
+            this.props.submit(this.state).then(() => {
                 this.setState({
                     error: null,
                     name: '',

@@ -19,7 +19,7 @@ export default function sidePicture({ type, onClick }) {
 }
 
 const signUpText = {
-    header: 'Do you already have an account?',
+    header: 'Already have an account?',
     body: "That's awesome!  You can login by clicking on the button below.",
     button: 'Log in'
 }
