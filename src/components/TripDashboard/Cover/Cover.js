@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
-import TripImageForm from '../../containers/TripDashboard/TripInformation/TripImageForm'
+import TripImageForm from './TripImageForm'
 import Moment from 'react-moment'
-import { apiCall } from '../../util/api'
+import { apiCall } from '../../../util/api'
 
-class CoverPhoto extends Component {
+class Cover extends Component {
 
     constructor(props) {
         super(props)
     }
 
-    updateCoverPhoto = newImage => {
-        apiCall('put', `/api/trips/${this.props.currentTrip._id}`, { image: newImage }) // Update Trip
+    updateTrip = updateObject => {
+        apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updateObject)
             .then(data => {
-                return apiCall('get', `/api/trips/${this.props.currentTrip._id}`) // Get Trip by Id
+                return apiCall('get', `/api/trips/${this.props.currentTrip._id}`)
             })
             .then(data => {
-                this.props.setCurrentTrip({ ...data })
+                return this.props.setCurrentTrip({ ...data })
             })
             .catch(err => {
                 console.log(err)
@@ -40,8 +40,8 @@ class CoverPhoto extends Component {
                             <h5 className='d-inline text-light'>32 Invited</h5>
                             <h5 className='d-inline text-light ml-3'>12 Booked</h5>
                         </div>
-                        <h5 className='text-light'><Moment date={currentTrip.dateStart} format="MMMM DD" /> {' - '} <Moment date={currentTrip.dateEnd} format="MMMM DD" /></h5>
-                        <TripImageForm image={currentTrip.image} submit={this.updateCoverPhoto}></TripImageForm>
+                        <TripDatesForm dateStart={currentTrip.dateStart} dateEnd={currentTrip.dateEnd} submit={this.updateTrip}></TripDatesForm>
+                        <TripImageForm image={currentTrip.image} submit={this.updateTrip}></TripImageForm>
                     </div>
                 </div>
                 <div className="col-3">
@@ -52,4 +52,4 @@ class CoverPhoto extends Component {
     }
 }
 
-export default CoverPhoto
+export default Cover

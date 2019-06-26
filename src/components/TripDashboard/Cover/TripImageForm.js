@@ -18,7 +18,7 @@ class TripImageForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        this.props.submit(this.state.image)
+        this.props.submit(this.state)
     }
 
     render() {
