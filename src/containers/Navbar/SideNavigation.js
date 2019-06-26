@@ -10,7 +10,7 @@ class SideNavigation extends Component {
     render() {
         let { currentTrip } = this.props
         return (
-            <div className="pl-3">
+            <div className="pl-4 pt-4">
                 <ul className="list-group list-group-flush bg-light">
                     <SideNavLink text='Trip Information' name='edit' tripId={currentTrip._id}></SideNavLink>
                     <SideNavLink text='Itinerary' name='itinerary' tripId={currentTrip._id}></SideNavLink>
@@ -27,5 +27,5 @@ class SideNavigation extends Component {
 export default withRouter(SideNavigation)
 
 const SideNavLink = ({ text, tripId, name }) => {
-    return (<NavLink className='text-primary font-weight-bold py-3' activeClassName="text-secondary" to={`/trips/${tripId}/${name}`} name={`/trips/${tripId}/${name}`}>{text} </NavLink>)
+    return (<NavLink className='text-primary font-weight-bold py-4' activeClassName="text-secondary" to={`/trips/${tripId}/${name}`} name={`/trips/${tripId}/${name}`}>{text} </NavLink>)
 }
