@@ -27,7 +27,7 @@ export default class SignIn extends Component {
         const { email, password } = this.state
 
         return (
-            <div className="card col-10 shadow align-self-start">
+            <div className="card col-10 shadow align-self-start my-5">
                 {error ? <p style={{ color: 'red' }}>{error.message}</p> : null}
                 <div className="card-body p-4">
                     <h1 className="heading">Sign In.</h1>
