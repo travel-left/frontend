@@ -49,15 +49,15 @@ export default class SignUp extends Component {
 
     render() {
         const { error } = this.state || this.props
-        const { name, email, password, confirmPassword, createOrg } = this.state
+        const { name, email, password, confirmPassword, createOrg, orgId } = this.state
 
         const orgIdForm = !createOrg ? (
-        <>
-            <label htmlFor="orgId" className="text-dark mt-3">
-                Organization ID (this is given by your organization's administrator)
-            </label>
-            <input type="text" id="orgId" name="orgId" className="form-control form-control-lg border-top-0 border-left-0 border-right-0" placeholder="••••••••••••" value={confirmPassword} onChange={this.handleChange} />
-        </>
+            <>
+                <label htmlFor="orgId" className="text-dark mt-3">
+                    Organization ID (this is given by your organization's administrator)
+                </label>
+                <input type="text" id="orgId" name="orgId" className="form-control form-control-lg border-top-0 border-left-0 border-right-0" placeholder="5d12b98a83b9787e8bb883ef" value={orgId} onChange={this.handleChange} />
+            </>
         ) : null
 
         return (
@@ -78,9 +78,11 @@ export default class SignUp extends Component {
                             </label>
                             <input type="text" id="email" name="email" className="form-control border-top-0 border-left-0 border-right-0 form-control-lg" placeholder="steve@apple.com" value={email} onChange={this.handleChange} />
                             {orgIdForm}
-                            <div class="custom-control custom-checkbox mt-3">
-                                <input type="checkbox" class="custom-control-input" id="createOrg" name="createOrg" onChange={this.handleChange} />
-                                <label class="custom-control-label text-dark" for="createOrg">Create a new organization</label>
+                            <div className="custom-control custom-checkbox mt-3">
+                                <input type="checkbox" className="custom-control-input" id="createOrg" name="createOrg" onChange={this.handleChange} />
+                                <label className="custom-control-label text-dark" htmlFor="createOrg">
+                                    Create a new organization
+                                </label>
                             </div>
                             <label htmlFor="password" className="text-dark mt-3">
                                 Password

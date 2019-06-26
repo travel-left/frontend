@@ -18,9 +18,10 @@ class Trips extends Component {
     constructor(props) {
         super(props)
         apiCall('get', '/api/trips/').then(trips => {
+            console.log(trips)
             return this.setState({
                 trips: trips,
-                showTrips: trips ? true : false,
+                showTrips: trips && trips.length > 0 ? true : false,
                 selectedTrip: trips ? trips[0] : null
             })
         })
@@ -29,11 +30,14 @@ class Trips extends Component {
     selectTrip = tripId => {
         let selectedTrip = this.state.trips.filter(t => t._id === tripId)[0]
 
-        this.props.handleSetCurrentTrip(selectedTrip).then(() => {
-            return this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
-        }).then(() => {
-            return this.props.history.push(`/trips/${tripId}/edit`)
-        })
+        this.props
+            .handleSetCurrentTrip(selectedTrip)
+            .then(() => {
+                return this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
+            })
+            .then(() => {
+                return this.props.history.push(`/trips/${tripId}/edit`)
+            })
     }
 
     showTripForm = () => {
@@ -53,10 +57,12 @@ class Trips extends Component {
         apiCall('post', '/api/trips', trip) // Create Trip
             .then(data => {
                 trip._id = data._id
+                console.log(trip)
                 return this.setState(prevState => {
                     return {
                         trips: [...prevState.trips, trip],
-                        selectedTrip: trip
+                        selectedTrip: trip,
+                        showTrips: true
                     }
                 })
             })

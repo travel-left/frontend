@@ -9,20 +9,6 @@ export default class Auth extends Component {
         error: ''
     }
 
-    handleSubmit(e) {
-        e.preventDefault()
-        console.log(this.state)
-        this.props
-            .onAuth(this.props.type.split(' ').join(''), this.state)
-            .then(() => {
-                return this.props.history.push('/trips')
-            })
-            .catch(err => {
-                console.log(err)
-                this.setState({ error: err })
-            })
-    }
-
     login = async state => {
         const { onAuth, history } = this.props
         try {
@@ -39,9 +25,14 @@ export default class Auth extends Component {
         try {
             if (formInfo.createOrg) {
                 // Do some stuff
+                throw new Error('Not implemented yet')
+                await onAuth('signin?newOrg=true', formInfo)
+                history.push('/trips')
             } else {
-                const newCoordinator = 
-        }
+                const newCoordinator = createNewCoordinator(formInfo)
+                await onAuth('signup', newCoordinator)
+                history.push('/trips')
+            }
         } catch (err) {
             console.log(err)
             this.setState({ error: err })
@@ -63,7 +54,7 @@ export default class Auth extends Component {
     render() {
         const { type } = this.props
         const { error } = this.state
-        const form = type === 'sign in' ? <SignIn error={error} submit={this.login} /> : <SignUp error={error} submit={this.handleSubmit} />
+        const form = type === 'sign in' ? <SignIn error={error} submit={this.login} /> : <SignUp error={error} submit={this.signUp} />
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-6 d-flex justify-content-center">{form}</div>
@@ -72,5 +63,22 @@ export default class Auth extends Component {
                 </div>
             </div>
         )
+    }
+}
+
+const createNewCoordinator = formInfo => {
+    const { name, email, password, orgId } = formInfo
+
+    const names = name.split(' ')
+
+    const [fName] = names
+    const lName = names.length > 1 ? names[names.length - 1] : ''
+
+    return {
+        firstName: fName,
+        lastName: lName,
+        email: email,
+        password: password,
+        organizationId: orgId
     }
 }
