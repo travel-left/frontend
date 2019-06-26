@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Alert from '../../../components/Other/Alert'
-import DashboardHeader from '../../../components/Other/DashboardHeader'
+import Alert from '../../Other/Alert'
+import DashboardHeader from '../../Other/DashboardHeader'
 import UpdateTripForm from './UpdateTripForm'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../../store/actions/trip'
 import { apiCall } from '../../../util/api'
 import Moment from 'react-moment'
-import CohortList from '../../../components/TripDashboard/Travelers/Cohorts/CohortList';
-import CohortForm from '../../../components/TripDashboard/Travelers/Cohorts/CohortForm';
+import CohortList from '../Travelers/Cohorts/CohortList';
+import CohortForm from '../Travelers/Cohorts/CohortForm';
 
 class TripInformation extends Component {
     constructor(props) {
@@ -46,17 +46,14 @@ class TripInformation extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-12">
-                        <Alert text="This is where all the general information about your trip will live! See statistics and update the info on the right." />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8">
-                        <DashboardHeader title="Trip Information" description="Edit your trip information here" />
+                    <div className="col-md-8 mt-4 ml-3">
+                        <h4 className='text-dark'>Trip Name</h4>
+                        <h3 className='text-primary'> {name} <i class="far fa-edit"></i></h3>
+                        <h4 className='text-dark'>Trip Coordinators</h4>
                         <div class="card shadow border-0 mb-3">
                             <div class="card-body">
-                                <h2 className="card-title text-primary">
-                                    {name}{' '}
+                                <h2 className="card-title ">
+                                    {' '}
                                     <span className="float-right h5 text-dark">
                                         <Moment date={dateStart} format="MMM Do" /> - <Moment date={dateEnd} format="MMM Do" />
                                     </span>
