@@ -12,6 +12,7 @@ import TripCoordinator from './TripCoordinator';
 import TripDatesForm from '../Cover/TripDatesForm';
 import TripDates from './TripDates'
 import TripNameForm from './TripNameForm';
+import Documents from './Documents/Documents';
 
 class TripInformation extends Component {
     constructor(props) {
@@ -67,6 +68,7 @@ class TripInformation extends Component {
                             <TripDates></TripDates>
                         </div>
                         <h4 className='text-dark my-3'>Trip Documents</h4>
+                        <Documents currentTrip={this.props.currentTrip} currentCohort={this.props.currentTrip.cohorts[1]}></Documents>
                     </div>
                 </div>
             </div>

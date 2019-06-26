@@ -3,7 +3,6 @@ import SideNavigation from '../../containers/Navbar/SideNavigation'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Itinerary from './Itinerary/Itinerary'
-import Documents from './Documents/Documents'
 import TripInformation from './TripInformation/TripInformation'
 import Travelers from './Travelers/Travelers'
 import Communicate from './Communicate/Communicate'
@@ -30,7 +29,6 @@ class Dashboard extends Component {
                             <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
                             <Route exact path="/trips/:tripId/travelers" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
                             <Route exact path="/trips/:tripId/communicate" render={routeProps => <Communicate {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
-                            <Route exact path="/trips/:tripId/documents" render={routeProps => <Documents {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
                         </Switch>
                     </div>
                 </div>

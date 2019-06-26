@@ -7,9 +7,9 @@ const DocumentList = ({ documents }) => {
     })
 
     return (
-        <ul className="row d-flex flex-column" className="list-group">
+        <div className="row justify-content-center">
             {list}
-        </ul>
+        </div>
     )
 }
 

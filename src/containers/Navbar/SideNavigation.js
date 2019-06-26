@@ -14,7 +14,6 @@ class SideNavigation extends Component {
                 <ul className="list-group list-group-flush bg-light">
                     <SideNavLink text='Trip Information' name='edit' tripId={currentTrip._id}></SideNavLink>
                     <SideNavLink text='Itinerary' name='itinerary' tripId={currentTrip._id}></SideNavLink>
-                    <SideNavLink text='Documents' name='documents' tripId={currentTrip._id}></SideNavLink>
                     <SideNavLink text='Travelers' name='travelers' tripId={currentTrip._id}></SideNavLink>
                     <SideNavLink text='Mobile App' name='mobile' tripId={currentTrip._id}></SideNavLink>
                     <SideNavLink text='Communicate' name='communicate' tripId={currentTrip._id}></SideNavLink>
