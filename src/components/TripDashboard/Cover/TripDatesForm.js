@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import Moment from 'react-moment'
 
-class TripImageForm extends Component {
+class TripDatesForm extends Component {
 
     state = {
-        image: this.props.image
+        dateStart: this.props.dateStart,
+        dateEnd: this.props.dateEnd
     }
 
     constructor(props) {
@@ -18,24 +20,21 @@ class TripImageForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        this.props.submit(this.state.image)
+        this.props.submit(this.state)
     }
 
     render() {
-        let { image } = this.state
+        let { dateStart, dateEnd } = this.state
 
         return (
             <>
-                <h5 className='text-light hover' data-toggle="modal" data-target="#newImage">
-                    Change cover photo {' '}
-                    <i class="far fa-images"></i>
-                </h5>
-                <div class="modal fade" id="newImage" tabindex="-1" role="dialog" aria-labelledby="addnewImageModal" aria-hidden="true">
+                <h5 className='text-light hover' data-toggle="modal" data-target="#newDates"><Moment date={dateStart} format="MMMM DD" /> {' - '} <Moment date={dateEnd} format="MMMM DD" />{' '}<i class="far fa-calendar-alt"></i></h5>
+                <div class="modal fade" id="newDates" tabindex="-1" role="dialog" aria-labelledby="addnewDatesModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addnewImageModal">
-                                    Cover photo
+                                <h5 class="modal-title" id="addnewDatesModal">
+                                    Trip dates
                             </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -45,8 +44,10 @@ class TripImageForm extends Component {
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-10">
-                                            <label htmlFor="image">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                            <label htmlFor="dateStart">Start date</label>
+                                            <input name="dateStart" className="form-control col-8" type="date" value={dateStart} onChange={this.handleChange} />
+                                            <label htmlFor="dateEnd">End date</label>
+                                            <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleChange} />
                                         </div>
                                     </div>
                                 </form>
@@ -64,4 +65,4 @@ class TripImageForm extends Component {
     }
 }
 
-export default TripImageForm
+export default TripDatesForm

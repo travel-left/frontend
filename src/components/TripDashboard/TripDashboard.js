@@ -4,11 +4,11 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Itinerary from './Itinerary/Itinerary'
 import Documents from './Documents/Documents'
-import TripInformation from '../../containers/TripDashboard/TripInformation/TripInformation'
+import TripInformation from './TripInformation/TripInformation'
 import Travelers from './Travelers/Travelers'
 import Communicate from './Communicate/Communicate'
 import { setCurrentTrip } from '../../store/actions/trip'
-import CoverPhoto from './CoverPhoto'
+import Cover from './Cover/Cover'
 
 class Dashboard extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class Dashboard extends Component {
         let { currentTrip, currentCohort, currentUser } = this.props
         return (
             <>
-                <CoverPhoto setCurrentTrip={this.props.setCurrentTrip} currentTrip={currentTrip} />
+                <Cover setCurrentTrip={this.props.setCurrentTrip} currentTrip={currentTrip} />
                 <div className="row">
                     <div className="col-md-2 shadow-lg bg-light px-0">
                         <SideNavigation currentTrip={currentTrip} currentUser={this.props.currentUser} />
