@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TripImageForm from './TripImageForm'
-import Moment from 'react-moment'
+import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../../util/api'
 
 class Cover extends Component {
@@ -10,6 +10,7 @@ class Cover extends Component {
     }
 
     updateTrip = updateObject => {
+        console.log(updateObject)
         apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updateObject)
             .then(data => {
                 return apiCall('get', `/api/trips/${this.props.currentTrip._id}`)
@@ -27,9 +28,9 @@ class Cover extends Component {
 
         return (
             <div className="row">
-                <div className="col-9 d-flex flex-column justify-content-between px-5 py-2" style={{ backgroundImage: `url(${currentTrip.image})`, height: '20vh', backgroundPosition: 'center' }}>
+                <div className="col-9 d-flex flex-column justify-content-between px-5 py-2" style={{ backgroundImage: `url(${currentTrip.image})`, minHeight: '200px', backgroundPosition: 'center' }}>
                     <div className="row">
-                        <h2 className='text-light'>Your {currentTrip.name} Trip</h2>
+                        <h2 className='text-light'>{currentTrip.name} Trip</h2>
                     </div>
                     <div className="row align-items-start">
                         <h5 className='text-light'>Status: </h5>
