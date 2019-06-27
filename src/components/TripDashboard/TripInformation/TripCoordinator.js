@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
+import UpdateCoordinatorForm from './UpdateCoordinatorForm';
 
 class TripCoordinator extends Component {
     constructor(props) {
         super(props)
+    }
+
+    handleUpdateCoordinator = updateObject => {
+        this.props.updateCoordinator(this.props.coordinator._id, updateObject)
     }
 
     render() {
@@ -16,13 +21,13 @@ class TripCoordinator extends Component {
                     </div>
                     <div className="col-md-6">
                         <div className="ml-3">
-                            <p className="text-bold my-1">{firstName} + {' '} + {lastName}</p>
+                            <p className="text-bold my-1">{firstName + ' ' + lastName}</p>
                             {/* title/permission level <p className="my-1">Super Admin</p> */}
                             <p className="my-1"><small class="text-muted">{email}</small></p>
                         </div>
                     </div>
                     <div className="col-md-2 d-flex d-row align-items-center">
-                        <button className="btn btn btn-secondary text-light">edit</button>
+                        <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} submit={this.handleUpdateCoordinator}></UpdateCoordinatorForm>
                     </div>
                 </div>
             </div>

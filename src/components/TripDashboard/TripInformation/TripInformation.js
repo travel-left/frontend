@@ -42,9 +42,17 @@ class TripInformation extends Component {
         this.setState({ coordinators })
     }
 
+    updateCoordinator = async (coordinatorId, updateObject) => {
+        updateObject.firstName = updateObject.name.split(' ')[0]
+        updateObject.lastName = updateObject.name.split(' ')[1]
+        delete updateObject.name
+        await apiCall('put', `/api/coordinators/${coordinatorId}`, updateObject)
+        this.getCoordinators()
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
-        let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c}></TripCoordinator>) : null
+        let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
         return (
             <div className='mt-3 mx-3'>
                 <div className="row">
