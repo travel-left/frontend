@@ -13,6 +13,7 @@ import TripDatesForm from '../Cover/TripDatesForm';
 import TripDates from './TripDates'
 import TripNameForm from './TripNameForm';
 import Documents from './Documents/Documents';
+import NewCoordinatorForm from './NewCoordinatorForm';
 
 class TripInformation extends Component {
 
@@ -50,6 +51,15 @@ class TripInformation extends Component {
         this.getCoordinators()
     }
 
+    createCoordinator = async coordinator => {
+        coordinator.firstName = coordinator.name.split(' ')[0]
+        coordinator.lastName = coordinator.name.split(' ')[1]
+        let organizationId = ''
+        delete coordinator.name
+        await apiCall('post', `/api/signup`, coordinator)
+        this.getCoordinators()
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
         let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
@@ -61,6 +71,7 @@ class TripInformation extends Component {
                         <h3 className='text-primary my-1 d-inline'> {name} </h3>
                         <TripNameForm name={name} submit={this.updateTrip}></TripNameForm>
                         <h4 className='text-dark my-3'>Trip Coordinators</h4>
+                        <NewCoordinatorForm></NewCoordinatorForm>
                         <div className="row">
                             {coordinatorList}
                         </div>
