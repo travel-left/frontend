@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import DocumentList from './DocumentList'
-import { apiCall } from '../../../util/api'
-import Alert from '../../Other/Alert'
-import DashboardHeader from '../../Other/DashboardHeader'
+import { apiCall } from '../../../../util/api'
 import AddDocument from './AddDocument'
 
 class Documents extends Component {
@@ -50,18 +48,8 @@ class Documents extends Component {
         let documentsList = this.state.showDocumentsList ? <DocumentList documents={documents} /> : null
         return (
             <div>
-                <div className="row">
-                    <div className="col-12">
-                        <Alert text="Insert links to the most important documents for your travelers here." />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8">
-                        <DashboardHeader title="Documents" description="Add all of the important documents to share with your travelers here." currentTrip={this.props.currentTrip} />
-                        <AddDocument submit={this.handleSubmit} />
-                        {documentsList}
-                    </div>
-                </div>
+                <AddDocument submit={this.handleSubmit} />
+                {documentsList}
             </div>
         )
     }
