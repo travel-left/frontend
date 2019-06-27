@@ -1,35 +1,29 @@
 import React, { Component } from 'react'
-import Alert from '../../Other/Alert'
-import DashboardHeader from '../../Other/DashboardHeader'
-import UpdateTripForm from './UpdateTripForm'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../../store/actions/trip'
 import { apiCall } from '../../../util/api'
-import Moment from 'react-moment'
-import CohortList from '../Travelers/Cohorts/CohortList';
-import CohortForm from '../Travelers/Cohorts/CohortForm';
-import TripCoordinator from './TripCoordinator';
-import TripDatesForm from '../Cover/TripDatesForm';
+import TripCoordinator from './TripCoordinator'
 import TripDates from './TripDates'
-import TripNameForm from './TripNameForm';
-import Documents from './Documents/Documents';
-import NewCoordinatorForm from './NewCoordinatorForm';
-import Communicate from '../Communicate/Communicate';
-import Contact from '../Communicate/Contact';
-import NewContactForm from './NewContactForm';
-import ContactList from '../Communicate/ContactList';
+import TripNameForm from './TripNameForm'
+import NewCoordinatorForm from './NewCoordinatorForm'
+import NewContactForm from './NewContactForm'
+import ContactList from '../Communicate/ContactList'
+import DocumentList from './DocumentList'
+import AddDocument from './AddDocument'
 
 class TripInformation extends Component {
 
     state = {
         coordinators: [],
-        contacts: []
+        contacts: [],
+        documents: []
     }
     constructor(props) {
         super(props)
 
         this.getCoordinators()
         this.getContacts()
+        this.getDocuments()
     }
 
     updateTrip = async updateObject => {
@@ -86,10 +80,33 @@ class TripInformation extends Component {
         this.getContacts()
     }
 
+    getDocuments = async () => {
+        let documents = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/documents`)
+        this.setState({ documents })
+    }
+
+    updateDocument = async (documentId, updateObject) => {
+        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/documents/${documentId}`, updateObject)
+        this.getDocuments()
+    }
+
+    createDocument = doc => {
+        let tripId = this.props.currentTrip._id
+        let cohortId = this.props.currentTrip.cohorts[1]._id
+
+        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/documents`, doc)
+            .then(() => this.getDocuments())
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
         let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
         let contactsList = this.state.contacts.length > 0 ? <ContactList contacts={this.state.contacts} updateContact={this.updateContact} /> : null
+        let documentsList = this.state.documents.length > 0 ? <DocumentList documents={this.state.documents} updateDocument={this.updateDocument} /> : null
+
         return (
             <div className='mt-3 mx-3'>
                 <div className="row">
@@ -107,7 +124,10 @@ class TripInformation extends Component {
                             <TripDates></TripDates>
                         </div>
                         <h4 className='text-dark my-3'>Trip Documents</h4>
-                        <Documents currentTrip={this.props.currentTrip}></Documents>
+                        <AddDocument submit={this.createDocument} />
+                        <div className="row">
+                            {documentsList}
+                        </div>
                         <h4 className='text-dark my-3'>Emergency Contacts</h4>
                         <NewContactForm submit={this.createContact}></NewContactForm>
                         <div className="row">
