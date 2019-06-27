@@ -14,7 +14,7 @@ const Main = ({ authUser }) => {
         <Switch>
             <Route exact path="/signin" render={props => <Auth onAuth={authUser} type="sign in" {...props} />} />
             <Route exact path="/signup" render={props => <Auth onAuth={authUser} type="sign up" {...props} />} />
-            <Route exact path="/createProfile" render={props => <CreateProfile onAuth={authUser} {...props} />} />
+            <Route exact path="/createprofile" render={props => <CreateProfile onAuth={authUser} {...props} />} />
             <Route exact path="/" component={withAuth(Trips)} />
             <Route exact path="/trips" component={withAuth(Trips)} />
             <Route path="/trips/:tripId" component={withAuth(TripDashboard)} />

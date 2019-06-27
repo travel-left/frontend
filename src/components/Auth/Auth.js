@@ -24,7 +24,7 @@ export default class Auth extends Component {
         const { onAuth, history } = this.props
         try {
             if (formInfo.createOrg) {
-                history.push('/createProfile', formInfo)
+                history.push('/createprofile', formInfo)
             } else {
                 const newCoordinator = createNewCoordinator(formInfo)
                 await onAuth('signup', newCoordinator)
