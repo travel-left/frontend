@@ -5,7 +5,8 @@ class UpdateCoordinatorForm extends Component {
     state = {
         name: this.props.name,
         image: this.props.image,
-        email: this.props.email
+        email: this.props.email,
+        id: this.props.id
     }
 
     constructor(props) {
@@ -24,19 +25,19 @@ class UpdateCoordinatorForm extends Component {
     }
 
     render() {
-        let { name, email, image } = this.state
+        let { name, email, image, id } = this.state
 
         return (
             <>
-                <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target="#editCoordinator">edit</button>
-                <div class="modal fade" id="editCoordinator" tabindex="-1" role="dialog" aria-labelledby="addeditCoordinatorModal" aria-hidden="true">
+                <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target={"#editCoordinator" + id}>edit</button>
+                <div class="modal fade" id={"editCoordinator" + id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addeditCoordinatorModal">
+                                <h5 class="modal-title" >
                                     Edit Coordinator
                             </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>

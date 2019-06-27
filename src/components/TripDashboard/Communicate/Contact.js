@@ -3,12 +3,26 @@ import UpdateContactForm from './UpdateContactForm'
 
 class Contact extends Component {
 
+    state = {
+        ...this.props
+    }
+    constructor(props) {
+        super(props)
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props !== prevProps) {
+            this.setState({ ...this.props })
+        }
+    }
+
     handleUpdateContact = updateObject => {
-        this.props.updateContact(this.props.id, updateObject)
+        this.props.updateContact(this.props._id, updateObject)
     }
 
     render() {
-        let { name, phone, email, photo } = this.props
+        let { name, phone, email, photo, _id } = this.state
+
         return (
             <div className="mb-3 col-md-5 border-0 shadow mx-4">
                 <div className="row no-gutters d-flex justify-content-between">
@@ -23,7 +37,7 @@ class Contact extends Component {
                         </div>
                     </div>
                     <div className="col-md-2 d-flex d-row align-items-center">
-                        <UpdateContactForm name={name} image={photo} phone={phone} email={email} submit={this.handleUpdateContact} />
+                        <UpdateContactForm name={name} image={photo} phone={phone} email={email} id={_id} submit={this.handleUpdateContact} />
                     </div>
                 </div>
             </div>

@@ -16,6 +16,8 @@ import Documents from './Documents/Documents';
 import NewCoordinatorForm from './NewCoordinatorForm';
 import Communicate from '../Communicate/Communicate';
 import Contact from '../Communicate/Contact';
+import NewContactForm from './NewContactForm';
+import ContactList from '../Communicate/ContactList';
 
 class TripInformation extends Component {
 
@@ -77,10 +79,17 @@ class TripInformation extends Component {
         this.getContacts()
     }
 
+    createContact = async newContact => {
+        newContact.firstName = newContact.name.split(' ')[0]
+        newContact.lastName = newContact.name.split(' ')[1]
+        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/contacts`, newContact)
+        this.getContacts()
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
         let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
-        let contactsList = this.state.contacts.length > 0 ? this.state.contacts.map(c => <Contact updateContact={this.updateContact} id={c._id} name={c.firstName + ' ' + c.lastName} phone={c.phone} email={c.email} photo={c.photo} key={c._id}></Contact>) : null
+        let contactsList = this.state.contacts.length > 0 ? <ContactList contacts={this.state.contacts} updateContact={this.updateContact} /> : null
         return (
             <div className='mt-3 mx-3'>
                 <div className="row">
@@ -100,6 +109,7 @@ class TripInformation extends Component {
                         <h4 className='text-dark my-3'>Trip Documents</h4>
                         <Documents currentTrip={this.props.currentTrip}></Documents>
                         <h4 className='text-dark my-3'>Emergency Contacts</h4>
+                        <NewContactForm submit={this.createContact}></NewContactForm>
                         <div className="row">
                             {contactsList}
                         </div>

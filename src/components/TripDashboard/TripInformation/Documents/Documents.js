@@ -22,7 +22,7 @@ class Documents extends Component {
 
     getDocuments() {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.props.currentTrip.cohorts[1]
+        let cohortId = this.props.currentTrip.cohorts[1]._id
 
         apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/documents`).then(documents => {
             this.setState({
@@ -34,7 +34,7 @@ class Documents extends Component {
 
     handleSubmit = doc => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.props.currentTrip.cohorts[1]
+        let cohortId = this.props.currentTrip.cohorts[1]._id
 
         apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/documents`, doc)
             .then(() => this.getDocuments())

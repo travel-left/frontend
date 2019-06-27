@@ -11,7 +11,7 @@ class TripCoordinator extends Component {
     }
 
     render() {
-        let { email, img, firstName, lastName } = this.props.coordinator
+        let { email, img, firstName, lastName, _id } = this.props.coordinator
 
         return (
             <div className="mb-3 col-md-5 border-0 shadow mx-4">
@@ -27,7 +27,7 @@ class TripCoordinator extends Component {
                         </div>
                     </div>
                     <div className="col-md-2 d-flex d-row align-items-center">
-                        <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} submit={this.handleUpdateCoordinator}></UpdateCoordinatorForm>
+                        <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} id={_id} submit={this.handleUpdateCoordinator}></UpdateCoordinatorForm>
                     </div>
                 </div>
             </div>
