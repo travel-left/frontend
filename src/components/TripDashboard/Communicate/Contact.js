@@ -1,24 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
+import UpdateContactForm from './UpdateContactForm'
 
-const Contact = ({ name, phone, email, photo }) => {
-    return (
-        <div className="card py-2 shadow my-3">
-            <div className="row no-gutters d-flex flex-row justify-content-around align-items-center">
-                <div className="col-1 d-none d-md-flex">
-                    <img src={photo} className="card-img pl-2" alt="..." style={{ maxHeight: '60px', maxWidth: '60px', borderRadius: '50%' }} />
-                </div>
-                <div className="col-3">
-                    {name}
-                </div>
-                <div className="col-3">
-                    {email}
-                </div>
-                <div className="col-3">
-                    {phone}
+class Contact extends Component {
+
+    handleUpdateContact = updateObject => {
+        this.props.updateContact(this.props.id, updateObject)
+    }
+
+    render() {
+        let { name, phone, email, photo } = this.props
+        return (
+            <div className="mb-3 col-md-5 border-0 shadow mx-4">
+                <div className="row no-gutters d-flex justify-content-between">
+                    <div className="col-md-3 d-flex flex-row align-items-center">
+                        <img src={photo} class="card-img rounded-circle px-2 py-2" alt="..."></img>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="ml-3">
+                            <p className="text-bold my-1">{name}</p>
+                            <p className="my-1">{phone}</p>
+                            <p className="my-1"><small class="text-muted">{email}</small></p>
+                        </div>
+                    </div>
+                    <div className="col-md-2 d-flex d-row align-items-center">
+                        <UpdateContactForm name={name} image={photo} phone={phone} email={email} submit={this.handleUpdateContact} />
+                    </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Contact

@@ -14,16 +14,20 @@ import TripDates from './TripDates'
 import TripNameForm from './TripNameForm';
 import Documents from './Documents/Documents';
 import NewCoordinatorForm from './NewCoordinatorForm';
+import Communicate from '../Communicate/Communicate';
+import Contact from '../Communicate/Contact';
 
 class TripInformation extends Component {
 
     state = {
-        coordinators: []
+        coordinators: [],
+        contacts: []
     }
     constructor(props) {
         super(props)
 
         this.getCoordinators()
+        this.getContacts()
     }
 
     updateTrip = async updateObject => {
@@ -60,9 +64,23 @@ class TripInformation extends Component {
         this.getCoordinators()
     }
 
+    getContacts = async () => {
+        let contacts = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/contacts`)
+        this.setState({ contacts })
+    }
+
+    updateContact = async (contactId, updateObject) => {
+        updateObject.firstName = updateObject.name.split(' ')[0]
+        updateObject.lastName = updateObject.name.split(' ')[1]
+        delete updateObject.name
+        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/contacts/${contactId}`, updateObject)
+        this.getContacts()
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
         let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
+        let contactsList = this.state.contacts.length > 0 ? this.state.contacts.map(c => <Contact updateContact={this.updateContact} id={c._id} name={c.firstName + ' ' + c.lastName} phone={c.phone} email={c.email} photo={c.photo} key={c._id}></Contact>) : null
         return (
             <div className='mt-3 mx-3'>
                 <div className="row">
@@ -81,6 +99,10 @@ class TripInformation extends Component {
                         </div>
                         <h4 className='text-dark my-3'>Trip Documents</h4>
                         <Documents currentTrip={this.props.currentTrip}></Documents>
+                        <h4 className='text-dark my-3'>Emergency Contacts</h4>
+                        <div className="row">
+                            {contactsList}
+                        </div>
                     </div>
                 </div>
             </div>
