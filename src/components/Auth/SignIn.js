@@ -14,12 +14,7 @@ export default class SignIn extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        this.props.submit(this.state).then(() => {
-            this.setState({
-                email: '',
-                password: ''
-            })
-        })
+        this.props.submit(this.state)
     }
 
     render() {

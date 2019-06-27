@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+const DEFAULT_IMAGE = 'https://cdn.shopify.com/s/files/1/0882/1686/products/lastolite-grey-vinyl-background-275x6m-018_a36fc2d2-5860-48f1-8ec7-4b0ed98e2cf4.jpg?v=1490271176'
+
 export default class AddImage extends Component {
     constructor(props) {
         super(props)
@@ -7,7 +9,7 @@ export default class AddImage extends Component {
         this.state = {
             text: img === '' ? 'ADD' : 'EDIT',
             showForm: false,
-            imgUrl: 'https://cdn.shopify.com/s/files/1/0882/1686/products/lastolite-grey-vinyl-background-275x6m-018_a36fc2d2-5860-48f1-8ec7-4b0ed98e2cf4.jpg?v=1490271176',
+            imgUrl: DEFAULT_IMAGE,
             imgText: ''
         }
     }
@@ -20,18 +22,21 @@ export default class AddImage extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
+        e.stopPropagation()
         this.props.submit({
             img: this.state.imgText
         })
         this.setState({
-            showForm: false
+            showForm: false,
+            text: 'EDIT'
         })
     }
 
     handleError = e => {
         e.preventDefault()
         this.props.submit({
-            img: ''
+            img: '',
+            error: { message: 'Invalid image link' }
         })
     }
 

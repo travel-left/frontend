@@ -28,17 +28,7 @@ export default class SignUp extends Component {
         e.preventDefault()
         const { password, confirmPassword } = this.state
         if (password === confirmPassword) {
-            this.props.submit(this.state).then(() => {
-                this.setState({
-                    error: null,
-                    name: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: '',
-                    orgId: '',
-                    createOrg: false
-                })
-            })
+            this.props.submit(this.state)
         } else {
             this.setState({
                 error: 'Passwords do not match.',
