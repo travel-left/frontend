@@ -5,14 +5,16 @@ import { authUser } from '../store/actions/auth'
 import Trips from './Trips/Trips'
 import withAuth from '../hocs/withAuth'
 import ErrorPage from '../components/Other/ErrorPage'
-import Auth from '../components/Sigin/Auth'
-import TripDashboard from '../components/TripDashboard/TripDashboard';
+import Auth from '../components/Auth/Auth'
+import CreateProfile from '../components/Auth/CreateProfile'
+import TripDashboard from '../components/TripDashboard/TripDashboard'
 
 const Main = ({ authUser }) => {
     return (
         <Switch>
-            <Route exact path="/signin" render={props => <Auth onAuth={authUser} type='sign in' {...props} />} />
-            <Route exact path="/signup" render={props => <Auth onAuth={authUser} type='sign up' {...props} />} />
+            <Route exact path="/signin" render={props => <Auth onAuth={authUser} type="sign in" {...props} />} />
+            <Route exact path="/signup" render={props => <Auth onAuth={authUser} type="sign up" {...props} />} />
+            <Route exact path="/createprofile" render={props => <CreateProfile onAuth={authUser} {...props} />} />
             <Route exact path="/" component={withAuth(Trips)} />
             <Route exact path="/trips" component={withAuth(Trips)} />
             <Route path="/trips/:tripId" component={withAuth(TripDashboard)} />

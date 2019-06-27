@@ -1,15 +1,13 @@
 import React from 'react'
 import Contact from './Contact'
 
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts, updateContact }) => {
     let list = contacts.map(c => {
-        return <Contact name={c.firstName + ' ' + c.lastName} phone={c.phone} email={c.email} photo={c.photo} key={c._id} />
+        return <Contact updateContact={updateContact} name={c.firstName + ' ' + c.lastName} _id={c._id} phone={c.phone} email={c.email} photo={c.photo} key={c._id} />
     })
 
     return (
-        <ul className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
-            {list}
-        </ul>
+        list
     )
 }
 

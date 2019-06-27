@@ -31,8 +31,8 @@ class AddDocument extends Component {
         let { name, link, description } = this.state
         return (
             <>
-                <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newDocument">
-                    NEW DOCUMENT
+                <button class="btn btn-primary" data-toggle="modal" data-target="#newDocument">
+                    add new
                 </button>
                 <div class="modal fade" id="newDocument" tabindex="-1" role="dialog" aria-labelledby="addnewDocumentModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">

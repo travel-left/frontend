@@ -3,7 +3,6 @@ import SideNavigation from '../../containers/Navbar/SideNavigation'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Itinerary from './Itinerary/Itinerary'
-import Documents from './Documents/Documents'
 import TripInformation from './TripInformation/TripInformation'
 import Travelers from './Travelers/Travelers'
 import Communicate from './Communicate/Communicate'
@@ -21,16 +20,15 @@ class Dashboard extends Component {
             <>
                 <Cover setCurrentTrip={this.props.setCurrentTrip} currentTrip={currentTrip} />
                 <div className="row">
-                    <div className="col-md-2 shadow-lg bg-light px-0">
+                    <div className="col-md-2 shadow-lg bg-light px-0" style={{ minHeight: '80vh' }}>
                         <SideNavigation currentTrip={currentTrip} currentUser={this.props.currentUser} />
                     </div>
                     <div className="col-md-10">
                         <Switch>
                             <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
                             <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
-                            <Route exact path="/trips/:tripId/manage" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
+                            <Route exact path="/trips/:tripId/travelers" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
                             <Route exact path="/trips/:tripId/communicate" render={routeProps => <Communicate {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
-                            <Route exact path="/trips/:tripId/documents" render={routeProps => <Documents {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
                         </Switch>
                     </div>
                 </div>
