@@ -13,7 +13,7 @@ export default class Auth extends Component {
         const { onAuth, history } = this.props
         try {
             await onAuth('signin', state)
-            history.push('/trips')
+            history.push('/')
         } catch (err) {
             console.log(err)
             this.setState({ error: err })
@@ -24,14 +24,11 @@ export default class Auth extends Component {
         const { onAuth, history } = this.props
         try {
             if (formInfo.createOrg) {
-                // Do some stuff
-                throw new Error('Not implemented yet')
-                await onAuth('signin?newOrg=true', formInfo)
-                history.push('/trips')
+                history.push('/createProfile', formInfo)
             } else {
                 const newCoordinator = createNewCoordinator(formInfo)
                 await onAuth('signup', newCoordinator)
-                history.push('/trips')
+                history.push('/')
             }
         } catch (err) {
             console.log(err)
