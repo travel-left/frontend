@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../../store/actions/trip'
 import { apiCall } from '../../../util/api'
-import TripCoordinator from './TripCoordinator'
+import TripCoordinator from './Coordinators/TripCoordinator'
 import TripDates from './TripDates'
 import TripNameForm from './TripNameForm'
-import NewCoordinatorForm from './NewCoordinatorForm'
-import NewContactForm from './NewContactForm'
-import ContactList from '../Communicate/ContactList'
-import DocumentList from './DocumentList'
-import AddDocument from './AddDocument'
+import NewCoordinatorForm from './Coordinators/NewCoordinatorForm'
+import NewContactForm from './Contacts/NewContactForm'
+import ContactList from './Contacts/ContactList'
+import DocumentList from './Documents/DocumentList'
+import AddDocument from './Documents/AddDocument'
 
 class TripInformation extends Component {
 
@@ -61,7 +61,7 @@ class TripInformation extends Component {
     }
 
     getContacts = async () => {
-        let contacts = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/contacts`)
+        let contacts = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/contacts`)
         this.setState({ contacts })
     }
 
@@ -69,30 +69,30 @@ class TripInformation extends Component {
         updateObject.firstName = updateObject.name.split(' ')[0]
         updateObject.lastName = updateObject.name.split(' ')[1]
         delete updateObject.name
-        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/contacts/${contactId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/contacts/${contactId}`, updateObject)
         this.getContacts()
     }
 
     createContact = async newContact => {
         newContact.firstName = newContact.name.split(' ')[0]
         newContact.lastName = newContact.name.split(' ')[1]
-        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/contacts`, newContact)
+        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/contacts`, newContact)
         this.getContacts()
     }
 
     getDocuments = async () => {
-        let documents = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/documents`)
+        let documents = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/documents`)
         this.setState({ documents })
     }
 
     updateDocument = async (documentId, updateObject) => {
-        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[1]._id}/documents/${documentId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/documents/${documentId}`, updateObject)
         this.getDocuments()
     }
 
     createDocument = doc => {
         let tripId = this.props.currentTrip._id
-        let cohortId = this.props.currentTrip.cohorts[1]._id
+        let cohortId = this.props.currentTrip.cohorts[0]._id
 
         apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/documents`, doc)
             .then(() => this.getDocuments())
