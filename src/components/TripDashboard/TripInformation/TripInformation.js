@@ -110,7 +110,7 @@ class TripInformation extends Component {
         return (
             <div className='mt-3 mx-3'>
                 <div className="row">
-                    <div className="col-md-8 mt-4 ml-3">
+                    <div className="col-md-12 mt-4 ml-3">
                         <h4 className='text-dark'>Trip Name</h4>
                         <h3 className='text-primary my-1 d-inline'> {name} </h3>
                         <TripNameForm name={name} submit={this.updateTrip}></TripNameForm>

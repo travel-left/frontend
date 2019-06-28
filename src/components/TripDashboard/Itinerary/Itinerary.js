@@ -106,7 +106,7 @@ class Itinerary extends Component {
             <div className="container mt-4">
                 <div>
                     <div className="row">
-                        <div className="col-md-8 d-flex d-row justify-content-between align-items-center">
+                        <div className="col-md-12 d-flex d-row justify-content-between align-items-center">
                             {dayList}
                             <AddEvent submit={this.submitEvent} />
                         </div>
@@ -114,7 +114,7 @@ class Itinerary extends Component {
                 </div>
                 <div className="mt-5">
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="col-md-12">
                             {eventList}
                         </div>
                     </div>
