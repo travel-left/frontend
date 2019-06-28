@@ -1,20 +1,30 @@
-import React from 'react'
-import Day from './Day'
+import React, { Component } from 'react'
+import moment from 'moment'
 
-const DayList = ({ dates, days, currentDate, setCurrentDay }) => {
-    let dayList = dates.map(date => {
-        return date === currentDate ? (
-            <Day key={date} date={date} setCurrentDay={setCurrentDay} isCurrentDay={true} />
-        ) : (
-                <Day key={date} date={date} setCurrentDay={setCurrentDay} isCurrentDay={false} />
-            )
-    })
+class DayList extends Component {
 
-    return (
-        <div className='d-flex my-4'>
-            {dayList}
-        </div>
-    )
+    constructor(props) {
+        super(props)
+    }
+    handleChange = e => {
+        this.props.submit(e.target.value)
+    }
+
+    render() {
+        let { days, currentDay } = this.props
+
+        let dayList = days.map(day => (
+            <option value={day} key={day}>
+                {moment(day).format('MMM DD')}
+            </option>
+        ))
+
+        return (
+            <select className='' value={currentDay} onChange={this.handleChange}>
+                {dayList}
+            </select>
+        )
+    }
 }
 
 export default DayList

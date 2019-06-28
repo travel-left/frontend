@@ -28,7 +28,7 @@ class Contact extends Component {
                         </div>
                     </div>
                     <div className="col-md-2 d-flex d-row align-items-center">
-                        <UpdateContactForm name={name} image={photo} phone={phone} email={email} id={_id} submit={this.handleUpdateContact} />
+                        <UpdateContactForm name={name} photo={photo} phone={phone} email={email} id={_id} submit={this.handleUpdateContact} />
                     </div>
                 </div>
             </div>

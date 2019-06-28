@@ -4,7 +4,7 @@ class NewContactForm extends Component {
 
     state = {
         name: this.props.name,
-        image: this.props.image,
+        photo: this.props.photo,
         email: this.props.email,
         phone: this.props.phone
     }
@@ -25,7 +25,7 @@ class NewContactForm extends Component {
     }
 
     render() {
-        let { name, email, image, phone } = this.state
+        let { name, email, photo, phone } = this.state
 
         return (
             <>
@@ -47,9 +47,9 @@ class NewContactForm extends Component {
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Full Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
-                                            <label htmlFor="name">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                            <label htmlFor="name">Email</label>
+                                            <label htmlFor="photo">Photo</label>
+                                            <input value={photo} onChange={this.handleChange} type="text" class="form-control" name="photo" placeholder="photo" />
+                                            <label htmlFor="email">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
                                             <label htmlFor="title">Phone</label>
                                             <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="867-5309" />

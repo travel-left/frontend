@@ -31,7 +31,7 @@ class Document extends Component {
                             </div>
                             <div class="col-md-8 d-flex justify-content-center">
                                 <div class="card-body d-flex flex-column justify-content-around">
-                                    <h5 class="card-title">{link}</h5>
+                                    {/* <h5 class="card-title">{link}</h5> */}
                                     <p class="card-text"><small class="text-muted">Download</small></p>
                                 </div>
                             </div>
