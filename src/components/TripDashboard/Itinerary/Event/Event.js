@@ -39,7 +39,7 @@ class Event extends Component {
                         {event.dtStart} - {event.dtEnd}
                     </h6>
                     <p className="card-text">{event.summary}</p>
-                    <a href={event.link} className="card-link">
+                    <a href={event.link} className="card-link" target="_blank">
                         {event.linkText}
                     </a>
                     <i className="fa fa-trash float-right" aria-hidden="true" onClick={this.deleteEvent} />
