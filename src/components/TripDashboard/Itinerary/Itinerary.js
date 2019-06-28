@@ -11,10 +11,9 @@ class Itinerary extends Component {
     cohortId = this.props.currentTrip.cohorts[0]._id
 
     state = {
-        allDates: [],
         days: [],
         events: [],
-        currentDate: null,
+        currentDay: null,
         showEventList: false,
         showDayList: false,
         tz: moment.tz.guess(true)
@@ -39,13 +38,13 @@ class Itinerary extends Component {
         return this.setState({
             showDayList: days.length > 0 ? true : false,
             days,
-            currentDate: days.length > 0 ? days[0] : null
+            currentDay: days.length > 0 ? days[0] : null
         })
     }
 
     getAndSetEvents = async () => {
-        const { tz, currentDate } = this.state
-        const cdMoment = moment(currentDate).format('YYYY-MM-DD')
+        const { tz, currentDay } = this.state
+        const cdMoment = moment(currentDay).format('YYYY-MM-DD')
         let events = await apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events?tz=${tz}&date=${cdMoment}`)
 
         return this.setState({
@@ -54,10 +53,10 @@ class Itinerary extends Component {
         })
     }
 
-    setCurrentDay = newDate => {
+    setCurrentDay = newDay => {
         this.setState(
             {
-                currentDate: newDate
+                currentDay: newDay
             },
             () => this.getAndSetEvents()
         )
@@ -100,7 +99,7 @@ class Itinerary extends Component {
     }
 
     render() {
-        let dayList = this.state.showDayList ? <DayList dates={this.state.allDates} days={this.state.days} setCurrentDay={this.setCurrentDay} currentDate={this.state.currentDate} /> : null
+        let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDay={this.state.currentDay} /> : null
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
