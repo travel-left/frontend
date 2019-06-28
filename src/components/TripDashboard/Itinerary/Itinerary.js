@@ -99,18 +99,24 @@ class Itinerary extends Component {
     }
 
     render() {
-        let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDay={this.state.currentDay} /> : null
+        let dayList = this.state.showDayList ? <DayList days={this.state.days} setCurrentDay={this.setCurrentDay} currentDay={this.state.currentDay} submit={this.setCurrentDay} /> : null
         let eventList = this.state.showEventList ? <EventList events={this.state.events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
 
         return (
-            <div className="">
-                <div className="row">
-                    <div className="col-md-8">
-                        {dayList}
-                        <div className="d-flex justify-content-around my-3">
+            <div className="container mt-4">
+                <div>
+                    <div className="row">
+                        <div className="col-md-8 d-flex d-row justify-content-between align-items-center">
+                            {dayList}
                             <AddEvent submit={this.submitEvent} />
                         </div>
-                        {eventList}
+                    </div>
+                </div>
+                <div className="mt-5">
+                    <div className="row">
+                        <div className="col-md-8">
+                            {eventList}
+                        </div>
                     </div>
                 </div>
             </div>
