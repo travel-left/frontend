@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 
-class NewContactForm extends Component {
+class UpdateContactForm extends Component {
 
     state = {
         name: this.props.name,
-        image: this.props.image,
+        photo: this.props.photo,
         email: this.props.email,
-        phone: this.props.phone
+        phone: this.props.phone,
+        id: this.props.id
     }
 
     constructor(props) {
@@ -25,17 +26,17 @@ class NewContactForm extends Component {
     }
 
     render() {
-        let { name, email, image, phone } = this.state
+        let { name, email, photo, phone, id } = this.state
 
         return (
             <>
-                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newContact">add new</button>
-                <div class="modal fade" id="newContact" tabindex="-1" role="dialog" aria-labelledby="addnewContactModal" aria-hidden="true">
+                <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target={"#editcontact" + id}>edit</button>
+                <div class="modal fade" id={"editcontact" + id} tabindex="-1" role="dialog" >
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addnewContactModal">
-                                    New Contact
+                                <h5 class="modal-title">
+                                    Edit contact
                             </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -45,14 +46,14 @@ class NewContactForm extends Component {
                                 <form>
                                     <div class="form-row">
                                         <div class="form-group col-10">
-                                            <label htmlFor="name">Full Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
-                                            <label htmlFor="name">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                            <label htmlFor="name">Email</label>
-                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
-                                            <label htmlFor="title">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="867-5309" />
+                                            <label htmlFor="name">Name</label>
+                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="name" />
+                                            <label htmlFor="photo">Photo</label>
+                                            <input value={photo} onChange={this.handleChange} type="text" class="form-control" name="photo" placeholder="photo" />
+                                            <label htmlFor="email">Email</label>
+                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
+                                            <label htmlFor="phone">Phone</label>
+                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="phone" />
                                         </div>
                                     </div>
                                 </form>
@@ -70,4 +71,4 @@ class NewContactForm extends Component {
     }
 }
 
-export default NewContactForm
+export default UpdateContactForm
