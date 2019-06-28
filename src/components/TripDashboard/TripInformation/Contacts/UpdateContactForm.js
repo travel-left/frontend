@@ -4,7 +4,7 @@ class UpdateContactForm extends Component {
 
     state = {
         name: this.props.name,
-        image: this.props.image,
+        photo: this.props.photo,
         email: this.props.email,
         phone: this.props.phone,
         id: this.props.id
@@ -26,7 +26,7 @@ class UpdateContactForm extends Component {
     }
 
     render() {
-        let { name, email, image, phone, id } = this.state
+        let { name, email, photo, phone, id } = this.state
 
         return (
             <>
@@ -48,8 +48,8 @@ class UpdateContactForm extends Component {
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="name" />
-                                            <label htmlFor="image">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                            <label htmlFor="photo">Photo</label>
+                                            <input value={photo} onChange={this.handleChange} type="text" class="form-control" name="photo" placeholder="photo" />
                                             <label htmlFor="email">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
                                             <label htmlFor="phone">Phone</label>
