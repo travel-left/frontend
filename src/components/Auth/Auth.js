@@ -55,7 +55,7 @@ export default class Auth extends Component {
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-6 d-flex justify-content-center">{form}</div>
-                <div className="col-sm-12 col-md-6">
+                <div className="col-sm-12 col-md-6 px-0">
                     <SidePicture onClick={this.handleSwitch} type={type} />
                 </div>
             </div>

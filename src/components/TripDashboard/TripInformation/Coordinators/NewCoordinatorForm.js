@@ -3,10 +3,11 @@ import FileUploader from '../../../Other/FileUploader'
 
 class NewCoordinatorForm extends Component {
     state = {
-        name: this.props.name,
-        image: this.props.image,
-        email: this.props.email,
-        title: ''
+        name: '',
+        img: '',
+        email: '',
+        title: '',
+        phone: ''
     }
 
     handleUpload = url => {
@@ -24,10 +25,17 @@ class NewCoordinatorForm extends Component {
     handleSubmit = event => {
         event.preventDefault()
         this.props.submit(this.state)
+        this.setState({
+            name: '',
+            img: '',
+            email: '',
+            title: '',
+            phone: ''
+        })
     }
 
     render() {
-        let { name, email, image, title } = this.state
+        let { name, email, img, title, phone } = this.state
 
         return (
             <>
@@ -58,6 +66,8 @@ class NewCoordinatorForm extends Component {
                                             </div>
                                             <label htmlFor="name">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
+                                            <label htmlFor="phone">Phone</label>
+                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
                                             <label htmlFor="title">Title</label>
                                             <input value={title} onChange={this.handleChange} type="text" class="form-control" name="title" placeholder="Travel Coordinator" />
                                         </div>
