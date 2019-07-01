@@ -87,6 +87,7 @@ export default class CreateProfile extends Component {
     render() {
         const { error, img, oImg, name, email, title, phone, oWebsite, oName } = this.state
         const errorElement = error ? <h3 className="text-danger">Error: {error.message}</h3> : null
+        const classes = ['form-control', 'border-top-0', 'border-left-0', 'border-right-0', 'form-control-lg']
         return (
             <>
                 <h1 className="display-4 text-dark font-weight-bold py-4 mx-5">Let's set up your profile and company!</h1>
@@ -96,10 +97,10 @@ export default class CreateProfile extends Component {
                         <div className="col-sm-12 col-md-6">
                             <AddImage img={img} name="Profile Picture" submit={this.handleNewProfileImage} />
                             <div className="form-group mt-4">
-                                <TextInput name="name" type="text" value={name} label="Full Name" placeholder="John Appleseed" change={this.handleChange} />
-                                <TextInput name="email" type="email" value={email} label="Email" placeholder="john@apple.com" change={this.handleChange} />
-                                <TextInput name="title" type="text" value={title} label="Title" placeholder="Trip Coordinator" change={this.handleChange} />
-                                <TextInput name="phone" type="tel" value={phone} label="Phone Number" placeholder="123-456-7890" change={this.handleChange} />
+                                <TextInput name="name" type="text" classes={classes} value={name} label="Full Name" placeholder="John Appleseed" change={this.handleChange} />
+                                <TextInput name="email" type="email" classes={classes} value={email} label="Email" placeholder="john@apple.com" change={this.handleChange} />
+                                <TextInput name="title" type="text" classes={classes} value={title} label="Title" placeholder="Trip Coordinator" change={this.handleChange} />
+                                <TextInput name="phone" type="tel" classes={classes} value={phone} label="Phone Number" placeholder="123-456-7890" change={this.handleChange} />
                             </div>
                         </div>
                         <div className="col-sm-12 col-md-6">

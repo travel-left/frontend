@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
+import FileUploader from '../../../Other/FileUploader'
 
 class UpdateDocumentForm extends Component {
-
     state = {
         ...this.props
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        console.log(url)
+        this.setState({
+            link: url
+        })
     }
 
     handleChange = e => {
@@ -26,14 +29,12 @@ class UpdateDocumentForm extends Component {
 
         return (
             <>
-                <i class="far fa-edit fa-2x float-right text-secondary hover" data-toggle="modal" data-target={"#editDocument" + id}></i>
-                <div class="modal fade" id={"editDocument" + id} tabindex="-1" role="dialog">
+                <i class="far fa-edit fa-2x float-right text-secondary hover" data-toggle="modal" data-target={'#editDocument' + id}></i>
+                <div class="modal fade" id={'editDocument' + id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" >
-                                    Edit Document
-                            </h5>
+                                <h5 class="modal-title">Edit Document</h5>
                                 <button type="button" class="close" data-dismiss="modal">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -46,8 +47,11 @@ class UpdateDocumentForm extends Component {
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Special Waiver" />
                                             <label htmlFor="description">Description</label>
                                             <input value={description} onChange={this.handleChange} type="text" class="form-control" name="description" placeholder="Lorem ipsum dolor sit." />
-                                            <label htmlFor="link">Link</label>
-                                            <input value={link} onChange={this.handleChange} type="text" class="form-control" name="link" placeholder="www.docs.google.com" />
+                                            <label for="link">Document</label>
+                                            <div className="input-group">
+                                                <input value={link} onChange={this.handleChange} type="text" class="form-control" name="link" placeholder="document" />
+                                                <FileUploader id="addDocument" isAuth={true} onUpload={this.handleUpload} />
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -55,7 +59,7 @@ class UpdateDocumentForm extends Component {
                             <div class="modal-footer">
                                 <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
-                            </button>
+                                </button>
                             </div>
                         </div>
                     </div>

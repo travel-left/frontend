@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
 import OptionList from '../../../Other/OptionList'
-import { Opt } from 'coa'
+import FileUploader from '../../../Other/FileUploader'
 
 class AddEvent extends Component {
     state = {
@@ -19,8 +19,14 @@ class AddEvent extends Component {
         linkText: ''
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        let updatedEvent = {
+            ...this.state
+        }
+        updatedEvent.image = url
+        return this.setState({
+            ...updatedEvent
+        })
     }
 
     handleInputChange = e => {
@@ -138,7 +144,10 @@ class AddEvent extends Component {
                                             <div className="form-row">
                                                 <div className="col-6">
                                                     <label htmlFor="image">Image link</label>
-                                                    <input name="image" placeholder="www.urlToYourImage.com" className="form-control" type="text" value={image} onChange={this.handleInputChange} />
+                                                    <div className="input-group">
+                                                        <input name="image" className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
+                                                        <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                                    </div>
                                                 </div>
                                                 <div className="col-6">
                                                     <label htmlFor="Link">Link</label>

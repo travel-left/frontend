@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
+import FileUploader from '../../../Other/FileUploader'
 
 class NewCoordinatorForm extends Component {
-
     state = {
         name: '',
-        img: '',
+        image: '',
         email: '',
         title: '',
         phone: ''
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        this.setState({
+            image: url
+        })
     }
 
     handleChange = e => {
@@ -33,18 +35,20 @@ class NewCoordinatorForm extends Component {
     }
 
     render() {
-        let { name, email, img, title, phone } = this.state
+        let { name, email, image, title, phone } = this.state
 
         return (
             <>
-                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newCoordinator">add new</button>
+                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newCoordinator">
+                    add new
+                </button>
                 <div class="modal fade" id="newCoordinator" tabindex="-1" role="dialog" aria-labelledby="addnewCoordinatorModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addnewCoordinatorModal">
                                     New Coordinator
-                            </h5>
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -55,8 +59,11 @@ class NewCoordinatorForm extends Component {
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Full Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
-                                            <label htmlFor="img">Image</label>
-                                            <input value={img} onChange={this.handleChange} type="text" class="form-control" name="img" placeholder="image" />
+                                            <label htmlFor="name">Image</label>
+                                            <div className="input-group">
+                                                <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                                <FileUploader id="newCoordinator" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                            </div>
                                             <label htmlFor="name">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
                                             <label htmlFor="phone">Phone</label>
@@ -70,7 +77,7 @@ class NewCoordinatorForm extends Component {
                             <div class="modal-footer">
                                 <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
-                            </button>
+                                </button>
                             </div>
                         </div>
                     </div>
