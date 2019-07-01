@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import FileUploader from '../Other/FileUploader'
+import TextInput from '../Other/TextInput'
 
 class AddTrip extends Component {
     state = {
@@ -9,10 +11,6 @@ class AddTrip extends Component {
         description: ''
     }
 
-    constructor(props) {
-        super(props)
-    }
-
     handleInputChange = e => {
         const updatedTrip = {
             ...this.state
@@ -20,6 +18,18 @@ class AddTrip extends Component {
         updatedTrip[e.target.name] = e.target.value
         this.setState({
             ...updatedTrip
+        })
+    }
+
+    handleChange = (name, value) => {
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleUpload = url => {
+        this.setState({
+            image: url
         })
     }
 
@@ -37,6 +47,8 @@ class AddTrip extends Component {
 
     render() {
         let { name, image, dateStart, dateEnd, description } = this.state
+
+        const classes = ['form-control', 'col-8']
 
         return (
             <>
@@ -58,15 +70,19 @@ class AddTrip extends Component {
                                 <form onSubmit={this.handleSubmitEvent}>
                                     <div className="form-row">
                                         <div className="form-group col-12">
-                                            <label htmlFor="name">Trip name</label>
-                                            <input name="name" className="form-control col-8" type="text" value={name} onChange={this.handleInputChange} placeholder="Trip Name" />
-                                            <label htmlFor="image">Image link</label>
-                                            <input name="image" className="form-control col-8" type="text" value={image} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
-                                            <label htmlFor="dateStart">Start date</label>
-                                            <input name="dateStart" className="form-control col-8" type="date" value={dateStart} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
-                                            <label htmlFor="dateEnd">End date</label>
-                                            <input name="dateEnd" className="form-control col-8" type="date" value={dateEnd} onChange={this.handleInputChange} placeholder="www.linkToYourImage.com" />
-                                            <label htmlFor="description">Description</label>
+                                            <TextInput name="name" type="text" classes={classes} value={name} label="Trip Name" placeholder="Trip Name" change={this.handleChange} />
+                                            <label htmlFor="image" className="text-dark mt-2">
+                                                Image link
+                                            </label>
+                                            <div className="input-group">
+                                                <input name="image" className="form-control col-6" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
+                                                <FileUploader isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                            </div>
+                                            <TextInput name="dateStart" type="date" classes={classes} value={dateStart} label="Start Date" placeholder="07/01/2019" change={this.handleChange} />
+                                            <TextInput name="dateEnd" type="date" classes={classes} value={dateEnd} label="End Date" placeholder="07/01/2019" change={this.handleChange} />
+                                            <label htmlFor="description" className="text-dark mt-2">
+                                                Description
+                                            </label>
                                             <textarea name="description" className="form-control col-8" type="text" value={description} onChange={this.handleInputChange} placeholder="A description for your trip" />
                                         </div>
                                     </div>
