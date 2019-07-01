@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import FileUploader from './FileUploader'
 
 const DEFAULT_IMAGE = 'https://cdn.shopify.com/s/files/1/0882/1686/products/lastolite-grey-vinyl-background-275x6m-018_a36fc2d2-5860-48f1-8ec7-4b0ed98e2cf4.jpg?v=1490271176'
 
@@ -10,7 +11,8 @@ export default class AddImage extends Component {
             text: img === '' ? 'ADD' : 'EDIT',
             showForm: false,
             imgUrl: DEFAULT_IMAGE,
-            imgText: ''
+            imgText: '',
+            file: null
         }
     }
 
@@ -23,9 +25,18 @@ export default class AddImage extends Component {
     handleSubmit = e => {
         e.preventDefault()
         e.stopPropagation()
-        this.props.submit({
-            img: this.state.imgText
-        })
+        const { file } = this.state
+        if (file) {
+            this.props.submit({
+                file: file,
+                upload: true
+            })
+        } else {
+            this.props.submit({
+                img: this.state.imgText,
+                upload: false
+            })
+        }
         this.setState({
             showForm: false,
             text: 'EDIT'
@@ -37,6 +48,12 @@ export default class AddImage extends Component {
         this.props.submit({
             img: '',
             error: { message: 'Invalid image link' }
+        })
+    }
+
+    handleUpload = url => {
+        this.setState({
+            imgText: url
         })
     }
 
@@ -62,8 +79,9 @@ export default class AddImage extends Component {
         const editForm = (
             <form onSubmit={this.handleSubmit}>
                 <div className="input-group mb-3">
+                    <FileUploader onUpload={this.handleUpload} accept="image/*" />
                     <input type="text" onChange={this.handleChange} value={imgText} className="form-control" id="imgText" name="imgText" placeholder="Image Link" aria-label="img" aria-describedby="img" />
-                    <div className="input-group-append">
+                    <div>
                         <button className="btn btn-primary" type="submit">
                             Submit
                         </button>
