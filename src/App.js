@@ -19,7 +19,7 @@ const App = () => (
         <Router>
             <>
                 <Navbar />
-                <div className="container-fluid content p-0" style={{ minHeight: '90vh' }}>
+                <div className="container-fluid content" style={{ minHeight: '90vh' }}>
                     <Main />
                 </div>
                 <Footer />

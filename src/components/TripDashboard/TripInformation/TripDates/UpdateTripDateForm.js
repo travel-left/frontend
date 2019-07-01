@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 
-class UpdateCoordinatorForm extends Component {
+class UpdateDocumentForm extends Component {
 
     state = {
-        name: this.props.name,
-        image: this.props.image,
-        email: this.props.email,
-        id: this.props.id,
-        phone: this.props.phone
+        ...this.props
     }
 
     constructor(props) {
@@ -26,17 +22,17 @@ class UpdateCoordinatorForm extends Component {
     }
 
     render() {
-        let { name, email, image, id, phone } = this.state
+        let { name, date, type, id } = this.state
 
         return (
             <>
-                <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target={"#editCoordinator" + id}>edit</button>
-                <div class="modal fade" id={"editCoordinator" + id} tabindex="-1" role="dialog">
+                <i class="fas fa-ellipsis-h h5 text-muted" data-toggle="modal" data-target={"#editTripDate" + id}></i>
+                <div class="modal fade" id={"editTripDate" + id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" >
-                                    Edit Coordinator
+                                    Edit Trip Date
                             </h5>
                                 <button type="button" class="close" data-dismiss="modal">
                                     <span aria-hidden="true">&times;</span>
@@ -47,13 +43,11 @@ class UpdateCoordinatorForm extends Component {
                                     <div class="form-row">
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="name" />
-                                            <label htmlFor="name">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                            <label htmlFor="name">Email</label>
-                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
-                                            <label htmlFor="phone">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
+                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Special Waiver" />
+                                            <label htmlFor="date">Date</label>
+                                            <input value={date} onChange={this.handleChange} type="date" class="form-control" name="date" placeholder="" />
+                                            <label htmlFor="type">Type</label>
+                                            <input value={type} onChange={this.handleChange} type="text" class="form-control" name="type" placeholder="travel" />
                                         </div>
                                     </div>
                                 </form>
@@ -71,4 +65,4 @@ class UpdateCoordinatorForm extends Component {
     }
 }
 
-export default UpdateCoordinatorForm
+export default UpdateDocumentForm
