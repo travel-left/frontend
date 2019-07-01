@@ -4,7 +4,7 @@ import FileUploader from '../../../Other/FileUploader'
 class NewCoordinatorForm extends Component {
     state = {
         name: '',
-        img: '',
+        image: '',
         email: '',
         title: '',
         phone: ''
@@ -35,7 +35,7 @@ class NewCoordinatorForm extends Component {
     }
 
     render() {
-        let { name, email, img, title, phone } = this.state
+        let { name, email, image, title, phone } = this.state
 
         return (
             <>
