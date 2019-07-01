@@ -58,10 +58,9 @@ class TripInformation extends Component {
         coordinator.firstName = coordinator.name.split(' ')[0]
         coordinator.lastName = coordinator.name.split(' ')[1]
         coordinator.organizationId = this.props.currentUser.user.organizationId
+        coordinator.trip = this.props.currentTrip._id
         coordinator.password = 'password'
         delete coordinator.name
-
-        console.log(coordinator)
 
         await apiCall('post', `/api/auth/coordinators/signup`, coordinator)
         this.getCoordinators()

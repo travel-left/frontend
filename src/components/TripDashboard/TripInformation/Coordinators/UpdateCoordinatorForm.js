@@ -6,7 +6,8 @@ class UpdateCoordinatorForm extends Component {
         name: this.props.name,
         image: this.props.image,
         email: this.props.email,
-        id: this.props.id
+        id: this.props.id,
+        phone: this.props.phone
     }
 
     constructor(props) {
@@ -25,7 +26,7 @@ class UpdateCoordinatorForm extends Component {
     }
 
     render() {
-        let { name, email, image, id } = this.state
+        let { name, email, image, id, phone } = this.state
 
         return (
             <>
@@ -51,6 +52,8 @@ class UpdateCoordinatorForm extends Component {
                                             <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
                                             <label htmlFor="name">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
+                                            <label htmlFor="phone">Phone</label>
+                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
                                         </div>
                                     </div>
                                 </form>
