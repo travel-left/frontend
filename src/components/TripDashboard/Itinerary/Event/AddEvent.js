@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
 import OptionList from '../../../Other/OptionList'
-import { Opt } from 'coa'
+import FileUploader from '../../../Other/FileUploader'
 
 class AddEvent extends Component {
     state = {
@@ -19,8 +19,19 @@ class AddEvent extends Component {
         linkText: ''
     }
 
-    constructor(props) {
-        super(props)
+    componentDidMount() {
+        this.handleUpload('hi')
+    }
+
+    handleUpload = url => {
+        console.log(url)
+        let updatedEvent = {
+            ...this.state
+        }
+        updatedEvent.image = url
+        return this.setState({
+            ...updatedEvent
+        })
     }
 
     handleInputChange = e => {
@@ -40,6 +51,7 @@ class AddEvent extends Component {
 
     render() {
         let { title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
+        console.log(image)
         const categories = [
             {
                 name: 'Category',
@@ -138,7 +150,17 @@ class AddEvent extends Component {
                                             <div className="form-row">
                                                 <div className="col-6">
                                                     <label htmlFor="image">Image link</label>
-                                                    <input name="image" placeholder="www.urlToYourImage.com" className="form-control" type="text" value={image} onChange={this.handleInputChange} />
+                                                    <div className="input-group">
+                                                        <input name="image" className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
+                                                        <FileUploader
+                                                            key="addEvent"
+                                                            isAuth={true}
+                                                            onUpload={url => {
+                                                                console.log(url)
+                                                            }}
+                                                            accept="image/*"
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <div className="col-6">
                                                     <label htmlFor="Link">Link</label>

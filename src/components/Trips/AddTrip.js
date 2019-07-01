@@ -72,7 +72,7 @@ class AddTrip extends Component {
                                         <div className="form-group col-12">
                                             <TextInput name="name" type="text" classes={classes} value={name} label="Trip Name" placeholder="Trip Name" change={this.handleChange} />
                                             <label htmlFor="image" className="text-dark mt-2">
-                                                Image link
+                                                Image
                                             </label>
                                             <div className="input-group">
                                                 <input name="image" className="form-control col-6" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />

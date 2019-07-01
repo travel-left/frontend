@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import FileUploader from '../../../Other/FileUploader'
 
 class AddDocument extends Component {
     state = {
@@ -7,8 +8,11 @@ class AddDocument extends Component {
         description: ''
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        console.log(url)
+        this.setState({
+            link: url
+        })
     }
 
     handleChange = e => {
@@ -53,8 +57,11 @@ class AddDocument extends Component {
                                             <input value={name} onChange={this.handleChange} id="name" type="text" class="form-control" name="name" placeholder="New Document" />
                                             <label for="description">Description</label>
                                             <textarea value={description} onChange={this.handleChange} id="description" name="description" placeholder="Description" class="form-control" rows="3" />
-                                            <label for="link">Link to Document</label>
-                                            <input value={link} onChange={this.handleChange} type="url" id="link" class="form-control" name="link" placeholder="https://www.google.com" />
+                                            <label for="link">Document</label>
+                                            <div className="input-group">
+                                                <input value={link} onChange={this.handleChange} type="text" class="form-control" name="link" placeholder="document" />
+                                                <FileUploader isAuth={true} onUpload={this.handleUpload} />
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

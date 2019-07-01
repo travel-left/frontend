@@ -13,7 +13,7 @@ export default class FileUploader extends Component {
         } else {
             ret = await apiCall('post', '/api/files/unAuth', formData)
         }
-
+        console.log(this.props.onUpload)
         this.props.onUpload(ret.url)
     }
 
@@ -22,7 +22,7 @@ export default class FileUploader extends Component {
 
         return (
             <label class="btn btn-primary" for="uploader">
-                <input id="uploader" type="file" class="d-none" onChange={this.handleUpload} accept={accept} />
+                <input type="file" class="d-none" onChange={this.handleUpload} accept={accept} id="uploader" />
                 Upload
             </label>
         )
