@@ -3,20 +3,21 @@ import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../../store/actions/trip'
 import { apiCall } from '../../../util/api'
 import TripCoordinator from './Coordinators/TripCoordinator'
-import TripDates from './TripDates'
 import TripNameForm from './TripNameForm'
 import NewCoordinatorForm from './Coordinators/NewCoordinatorForm'
 import NewContactForm from './Contacts/NewContactForm'
 import ContactList from './Contacts/ContactList'
 import DocumentList from './Documents/DocumentList'
 import AddDocument from './Documents/AddDocument'
+import TripDatesList from './TripDates/TripDateList'
 
 class TripInformation extends Component {
 
     state = {
         coordinators: [],
         contacts: [],
-        documents: []
+        documents: [],
+        tripDates: []
     }
     constructor(props) {
         super(props)
@@ -24,6 +25,7 @@ class TripInformation extends Component {
         this.getCoordinators()
         this.getContacts()
         this.getDocuments()
+        this.getTripDates()
     }
 
     updateTrip = async updateObject => {
@@ -101,11 +103,33 @@ class TripInformation extends Component {
             })
     }
 
+    getTripDates = async () => {
+        let tripDates = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/tripDates`)
+        this.setState({ tripDates })
+    }
+
+    updateTripDate = async (tripDateId, updateObject) => {
+        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/tripDates/${tripDateId}`, updateObject)
+        this.getTripDates()
+    }
+
+    createTripDate = tripDate => {
+        let tripId = this.props.currentTrip._id
+        tripDate.type.toUpperCase()
+
+        apiCall('post', `/api/trips/${tripId}/tripDates`, tripDate)
+            .then(() => this.getTripDates())
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     render() {
         let { name, description, status, image, dateStart, dateEnd } = this.props.currentTrip
         let coordinatorList = this.state.coordinators.length > 0 ? this.state.coordinators.map(c => <TripCoordinator coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
         let contactsList = this.state.contacts.length > 0 ? <ContactList contacts={this.state.contacts} updateContact={this.updateContact} /> : null
         let documentsList = this.state.documents.length > 0 ? <DocumentList documents={this.state.documents} updateDocument={this.updateDocument} /> : null
+        let tripDatesList = this.state.tripDates.length > 0 ? <TripDatesList tripDates={this.state.tripDates} updateTripDate={this.updateTripDate} /> : null
 
         return (
             <div className='mt-3 mx-3'>
@@ -121,7 +145,10 @@ class TripInformation extends Component {
                         </div>
                         <h4 className='text-dark my-3'>Trip Dates</h4>
                         <div className="row">
-                            <TripDates></TripDates>
+                            <div class="card shadow border-0 mb-3 col-md-5 mx-4">
+                                {tripDatesList}
+                                <button className="btn btn btn-secondary text-light mx-5 my-2">add new</button>
+                            </div>
                         </div>
                         <h4 className='text-dark my-3'>Trip Documents</h4>
                         <AddDocument submit={this.createDocument} />
