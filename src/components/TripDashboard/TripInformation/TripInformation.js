@@ -10,6 +10,7 @@ import ContactList from './Contacts/ContactList'
 import DocumentList from './Documents/DocumentList'
 import AddDocument from './Documents/AddDocument'
 import TripDatesList from './TripDates/TripDateList'
+import AddTripDate from './TripDates/AddTripDate'
 
 class TripInformation extends Component {
 
@@ -56,9 +57,13 @@ class TripInformation extends Component {
     createCoordinator = async coordinator => {
         coordinator.firstName = coordinator.name.split(' ')[0]
         coordinator.lastName = coordinator.name.split(' ')[1]
-        let organizationId = ''
+        coordinator.organizationId = this.props.currentUser.user.organizationId
+        coordinator.password = 'password'
         delete coordinator.name
-        await apiCall('post', `/api/signup`, coordinator)
+
+        console.log(coordinator)
+
+        await apiCall('post', `/api/auth/coordinators/signup`, coordinator)
         this.getCoordinators()
     }
 
@@ -139,15 +144,15 @@ class TripInformation extends Component {
                         <h3 className='text-primary my-1 d-inline'> {name} </h3>
                         <TripNameForm name={name} submit={this.updateTrip}></TripNameForm>
                         <h4 className='text-dark my-3'>Trip Coordinators</h4>
-                        <NewCoordinatorForm></NewCoordinatorForm>
+                        <NewCoordinatorForm submit={this.createCoordinator} />
                         <div className="row">
                             {coordinatorList}
                         </div>
                         <h4 className='text-dark my-3'>Trip Dates</h4>
                         <div className="row">
-                            <div class="card shadow border-0 mb-3 col-md-5 mx-4">
+                            <div class="card shadow border-0 mb-3 col-md-4 mx-4">
                                 {tripDatesList}
-                                <button className="btn btn btn-secondary text-light mx-5 my-2">add new</button>
+                                <AddTripDate submit={this.createTripDate} />
                             </div>
                         </div>
                         <h4 className='text-dark my-3'>Trip Documents</h4>
@@ -162,7 +167,7 @@ class TripInformation extends Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }

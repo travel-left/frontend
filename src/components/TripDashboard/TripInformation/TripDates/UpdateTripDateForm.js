@@ -26,7 +26,7 @@ class UpdateDocumentForm extends Component {
 
         return (
             <>
-                <i class="fas fa-ellipsis-h h5" data-toggle="modal" data-target={"#editTripDate" + id}></i>
+                <i class="fas fa-ellipsis-h h5 text-muted" data-toggle="modal" data-target={"#editTripDate" + id}></i>
                 <div class="modal fade" id={"editTripDate" + id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

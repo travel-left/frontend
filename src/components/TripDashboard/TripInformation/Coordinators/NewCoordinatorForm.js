@@ -3,10 +3,11 @@ import React, { Component } from 'react'
 class NewCoordinatorForm extends Component {
 
     state = {
-        name: this.props.name,
-        image: this.props.image,
-        email: this.props.email,
-        tite: ''
+        name: '',
+        img: '',
+        email: '',
+        title: '',
+        phone: ''
     }
 
     constructor(props) {
