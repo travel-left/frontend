@@ -6,7 +6,7 @@ class NewCoordinatorForm extends Component {
         name: this.props.name,
         image: this.props.image,
         email: this.props.email,
-        tite: ''
+        title: ''
     }
 
     handleUpload = url => {
@@ -54,7 +54,7 @@ class NewCoordinatorForm extends Component {
                                             <label htmlFor="name">Image</label>
                                             <div className="input-group">
                                                 <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                                <FileUploader isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                                <FileUploader id="newCoordinator" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                             <label htmlFor="name">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />

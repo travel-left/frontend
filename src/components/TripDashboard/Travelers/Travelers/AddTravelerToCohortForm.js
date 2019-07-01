@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
 class AddTravelerToCohortForm extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     handleChange = e => {
         e.preventDefault()
         this.props.submit({

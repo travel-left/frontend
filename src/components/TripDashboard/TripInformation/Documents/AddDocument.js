@@ -60,7 +60,7 @@ class AddDocument extends Component {
                                             <label for="link">Document</label>
                                             <div className="input-group">
                                                 <input value={link} onChange={this.handleChange} type="text" class="form-control" name="link" placeholder="document" />
-                                                <FileUploader isAuth={true} onUpload={this.handleUpload} />
+                                                <FileUploader id="addDocument" isAuth={true} onUpload={this.handleUpload} />
                                             </div>
                                         </div>
                                     </div>

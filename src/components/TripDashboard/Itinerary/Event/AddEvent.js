@@ -19,12 +19,7 @@ class AddEvent extends Component {
         linkText: ''
     }
 
-    componentDidMount() {
-        this.handleUpload('hi')
-    }
-
     handleUpload = url => {
-        console.log(url)
         let updatedEvent = {
             ...this.state
         }
@@ -51,7 +46,6 @@ class AddEvent extends Component {
 
     render() {
         let { title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
-        console.log(image)
         const categories = [
             {
                 name: 'Category',
@@ -152,14 +146,7 @@ class AddEvent extends Component {
                                                     <label htmlFor="image">Image link</label>
                                                     <div className="input-group">
                                                         <input name="image" className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
-                                                        <FileUploader
-                                                            key="addEvent"
-                                                            isAuth={true}
-                                                            onUpload={url => {
-                                                                console.log(url)
-                                                            }}
-                                                            accept="image/*"
-                                                        />
+                                                        <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                                     </div>
                                                 </div>
                                                 <div className="col-6">

@@ -76,7 +76,7 @@ class AddTrip extends Component {
                                             </label>
                                             <div className="input-group">
                                                 <input name="image" className="form-control col-6" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
-                                                <FileUploader isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                                <FileUploader key="addTrip" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                             <TextInput name="dateStart" type="date" classes={classes} value={dateStart} label="Start Date" placeholder="07/01/2019" change={this.handleChange} />
                                             <TextInput name="dateEnd" type="date" classes={classes} value={dateEnd} label="End Date" placeholder="07/01/2019" change={this.handleChange} />

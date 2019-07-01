@@ -79,7 +79,7 @@ export default class AddImage extends Component {
         const editForm = (
             <form onSubmit={this.handleSubmit}>
                 <div className="input-group mb-3">
-                    <FileUploader onUpload={this.handleUpload} accept="image/*" />
+                    <FileUploader id="addImage" onUpload={this.handleUpload} accept="image/*" />
                     <input type="text" onChange={this.handleChange} value={imgText} className="form-control" id="imgText" name="imgText" placeholder="Image Link" aria-label="img" aria-describedby="img" />
                     <div>
                         <button className="btn btn-primary" type="submit">

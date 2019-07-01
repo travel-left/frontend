@@ -6,10 +6,6 @@ class AddNotification extends Component {
         subject: ''
     }
 
-    constructor(props) {
-        super(props)
-    }
-
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -42,7 +38,7 @@ class AddNotification extends Component {
                             </div>
                             <div class="modal-body">
                                 <form>
-                                <div class="form-row">
+                                    <div class="form-row">
                                         <label htmlFor="subject">Subject</label>
                                         <input value={subject} onChange={this.handleChange} type="text" class="form-control" name="subject" placeholder="Your subject" />
                                     </div>

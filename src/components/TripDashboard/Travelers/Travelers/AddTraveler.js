@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
+import FileUploader from '../../../Other/FileUploader'
 
 class AddTraveler extends Component {
     state = {
         firstName: '',
         lastName: '',
         email: '',
-        img: ''
+        image: ''
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        this.setState({
+            image: url
+        })
     }
 
     handleChange = e => {
@@ -30,7 +33,7 @@ class AddTraveler extends Component {
     }
 
     render() {
-        let { firstName, lastName, email, img } = this.state
+        let { firstName, lastName, email, image } = this.state
         return (
             <>
                 <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newTraveler">
@@ -56,8 +59,11 @@ class AddTraveler extends Component {
                                         <input value={lastName} onChange={this.handleChange} type="text" class="form-control" name="lastName" placeholder="Jobs" />
                                         <label htmlFor="email">Email</label>
                                         <input value={email} onChange={this.handleChange} type="email" class="form-control" name="email" placeholder="steve@apple.com" />
-                                        <label htmlFor="img">Image Url</label>
-                                        <input value={img} onChange={this.handleChange} type="text" class="form-control" name="img" placeholder="www.img.com" />
+                                        <label htmlFor="image">Image link</label>
+                                        <div className="input-group">
+                                            <input name="image" className="form-control" type="text" value={image} onChange={this.handleChange} placeholder="https://www.link-to-your=image.com" />
+                                            <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                        </div>
                                     </div>
                                 </form>
                             </div>

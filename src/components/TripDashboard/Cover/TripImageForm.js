@@ -6,6 +6,11 @@ class TripImageForm extends Component {
         image: this.props.image
     }
 
+    constructor(props) {
+        super(props)
+        this.handleUpload.bind(this)
+    }
+
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -13,7 +18,6 @@ class TripImageForm extends Component {
     }
 
     handleUpload = url => {
-        console.log('This one')
         this.setState({
             image: url
         })
@@ -50,7 +54,7 @@ class TripImageForm extends Component {
                                             <label htmlFor="image">Image</label>
                                             <div className="input-group">
                                                 <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                                <FileUploader key="tripImage" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                                <FileUploader id="tripImage" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                         </div>
                                     </div>
