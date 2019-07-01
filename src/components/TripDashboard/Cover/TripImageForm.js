@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
+import FileUploader from '../../Other/FileUploader'
 
 class TripImageForm extends Component {
-
     state = {
         image: this.props.image
-    }
-
-    constructor(props) {
-        super(props)
     }
 
     handleChange = e => {
         this.setState({
             [e.target.name]: e.target.value
+        })
+    }
+
+    handleUpload = url => {
+        this.setState({
+            image: url
         })
     }
 
@@ -26,9 +28,8 @@ class TripImageForm extends Component {
 
         return (
             <>
-                <h5 className='text-light hover' data-toggle="modal" data-target="#newImage">
-                    Change cover photo {' '}
-                    <i class="far fa-images"></i>
+                <h5 className="text-light hover" data-toggle="modal" data-target="#newImage">
+                    Change cover photo <i class="far fa-images"></i>
                 </h5>
                 <div class="modal fade" id="newImage" tabindex="-1" role="dialog" aria-labelledby="addnewImageModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -36,7 +37,7 @@ class TripImageForm extends Component {
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addnewImageModal">
                                     Cover photo
-                            </h5>
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -46,7 +47,10 @@ class TripImageForm extends Component {
                                     <div class="form-row">
                                         <div class="form-group col-10">
                                             <label htmlFor="image">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                            <div className="input-group">
+                                                <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                                <FileUploader isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
@@ -54,7 +58,7 @@ class TripImageForm extends Component {
                             <div class="modal-footer">
                                 <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
-                            </button>
+                                </button>
                             </div>
                         </div>
                     </div>
