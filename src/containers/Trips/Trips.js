@@ -33,6 +33,7 @@ class Trips extends Component {
         const [selectedTrip] = this.state.trips.filter(t => t._id === tripId)
 
         await this.props.handleSetCurrentTrip(selectedTrip)
+        //setting the cohort to be the all travelers cohort
         await this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0]._id)
         this.props.history.push(`/trips/${tripId}/edit`)
     }
