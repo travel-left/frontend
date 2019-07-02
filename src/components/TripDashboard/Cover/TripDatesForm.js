@@ -21,8 +21,6 @@ class TripDatesForm extends Component {
     render() {
         let { dateStart, dateEnd } = this.state
 
-        console.log(dateStart, dateEnd)
-
         return (
             <>
                 <h5 className="text-light hover" data-toggle="modal" data-target="#newDates">

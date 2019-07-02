@@ -6,10 +6,10 @@ import FileUploader from '../../../Other/FileUploader'
 class AddEvent extends Component {
     state = {
         title: '',
-        dateStart: String,
+        dateStart: this.props.initDay.split('T')[0],
         timeStart: '09:00',
         tzStart: moment.tz.guess(true),
-        dateEnd: String,
+        dateEnd: this.props.initDay.split('T')[0],
         timeEnd: '12:00',
         tzEnd: moment.tz.guess(true),
         category: '',
@@ -19,22 +19,36 @@ class AddEvent extends Component {
         linkText: ''
     }
 
+    userChangedDates = false
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.initDay !== this.props.initDay && !this.userChangedDates) {
+            this.setState({
+                dateStart: this.props.initDay.split('T')[0],
+                dateEnd: this.props.initDay.split('T')[0]
+            })
+        }
+    }
+
     handleUpload = url => {
         let updatedEvent = {
             ...this.state
         }
         updatedEvent.image = url
-        return this.setState({
+        this.setState({
             ...updatedEvent
         })
     }
 
     handleInputChange = e => {
+        if (e.target.name === 'dateStart' || e.target.name === 'dateEnd') {
+            this.userChangedDates = true
+        }
         let updatedEvent = {
             ...this.state
         }
         updatedEvent[e.target.name] = e.target.value
-        return this.setState({
+        this.setState({
             ...updatedEvent
         })
     }
@@ -45,7 +59,7 @@ class AddEvent extends Component {
     }
 
     render() {
-        let { size, title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
+        let { title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
         const categories = [
             {
                 name: 'Category',

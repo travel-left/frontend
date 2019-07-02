@@ -105,8 +105,8 @@ export default class CreateProfile extends Component {
                         </div>
                         <div className="col-sm-12 col-md-6">
                             <AddImage img={oImg} name="Company Picture" submit={this.handleNewOrganizationImage} />
-                            <TextInput name="oName" type="text" value={oName} label="Organization Name" placeholder="Travel LEFT" change={this.handleChange} />
-                            <TextInput name="oWebsite" type="url" value={oWebsite} label="Website" placeholder="https://travel-left.com" change={this.handleChange} />
+                            <TextInput name="oName" classes={classes} type="text" value={oName} label="Organization Name" placeholder="Travel LEFT" change={this.handleChange} />
+                            <TextInput name="oWebsite" classes={classes} type="url" value={oWebsite} label="Website" placeholder="https://travel-left.com" change={this.handleChange} />
                             <button className="btn btn-lg btn-primary float-right m-4" type="submit">
                                 SAVE
                             </button>

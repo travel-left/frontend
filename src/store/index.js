@@ -25,7 +25,7 @@ const saveState = state => {
     }
 }
 
-export function configureStore() {
+export const configureStore = () => {
     const persistedState = loadState()
     const store = createStore(
         rootReducer,
