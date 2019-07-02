@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setCurrentTrip } from '../../../store/actions/trip'
 import { apiCall } from '../../../util/api'
 import TripCoordinator from './Coordinators/TripCoordinator'
 import TripNameForm from './TripNameForm'
@@ -13,12 +12,16 @@ import TripDatesList from './TripDates/TripDateList'
 import AddTripDate from './TripDates/AddTripDate'
 
 class TripInformation extends Component {
+    currentTripId = this.props.currentTrip._id
+    currentCohortId = this.props.currentCohort._id
+
     state = {
         coordinators: [],
         contacts: [],
         documents: [],
         tripDates: []
     }
+
     constructor(props) {
         super(props)
 
@@ -29,8 +32,8 @@ class TripInformation extends Component {
     }
 
     updateTrip = async updateObject => {
-        await apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updateObject)
-        let updatedTrip = await apiCall('get', `/api/trips/${this.props.currentTrip._id}`)
+        await apiCall('put', `/api/trips/${this.currentTripId}`, updateObject)
+        let updatedTrip = await apiCall('get', `/api/trips/${this.currentTripId}`)
         this.props.setCurrentTrip({ ...updatedTrip })
     }
 
@@ -41,7 +44,7 @@ class TripInformation extends Component {
     // }
 
     getCoordinators = async () => {
-        let coordinators = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/coordinators`)
+        let coordinators = await apiCall('get', `/api/trips/${this.currentTripId}/coordinators`)
         this.setState({ coordinators })
     }
 
@@ -66,7 +69,7 @@ class TripInformation extends Component {
     }
 
     getContacts = async () => {
-        let contacts = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/contacts`)
+        let contacts = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`)
         this.setState({ contacts })
     }
 
@@ -74,32 +77,29 @@ class TripInformation extends Component {
         updateObject.firstName = updateObject.name.split(' ')[0]
         updateObject.lastName = updateObject.name.split(' ')[1]
         delete updateObject.name
-        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/contacts/${contactId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts/${contactId}`, updateObject)
         this.getContacts()
     }
 
     createContact = async newContact => {
         newContact.firstName = newContact.name.split(' ')[0]
         newContact.lastName = newContact.name.split(' ')[1]
-        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/contacts`, newContact)
+        await apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`, newContact)
         this.getContacts()
     }
 
     getDocuments = async () => {
-        let documents = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/documents`)
+        let documents = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`)
         this.setState({ documents })
     }
 
     updateDocument = async (documentId, updateObject) => {
-        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/cohorts/${this.props.currentTrip.cohorts[0]._id}/documents/${documentId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents/${documentId}`, updateObject)
         this.getDocuments()
     }
 
     createDocument = doc => {
-        let tripId = this.props.currentTrip._id
-        let cohortId = this.props.currentTrip.cohorts[0]._id
-
-        apiCall('post', `/api/trips/${tripId}/cohorts/${cohortId}/documents`, doc)
+        apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`, doc)
             .then(() => this.getDocuments())
             .catch(err => {
                 console.log(err)
@@ -107,20 +107,19 @@ class TripInformation extends Component {
     }
 
     getTripDates = async () => {
-        let tripDates = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/tripDates`)
+        let tripDates = await apiCall('get', `/api/trips/${this.currentTripId}/tripDates`)
         this.setState({ tripDates })
     }
 
     updateTripDate = async (tripDateId, updateObject) => {
-        await apiCall('put', `/api/trips/${this.props.currentTrip._id}/tripDates/${tripDateId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`, updateObject)
         this.getTripDates()
     }
 
     createTripDate = tripDate => {
-        let tripId = this.props.currentTrip._id
         tripDate.type.toUpperCase()
 
-        apiCall('post', `/api/trips/${tripId}/tripDates`, tripDate)
+        apiCall('post', `/api/trips/${this.currentTripId}/tripDates`, tripDate)
             .then(() => this.getTripDates())
             .catch(err => {
                 console.log(err)
@@ -168,11 +167,12 @@ class TripInformation extends Component {
 
 const mapStateToProps = state => {
     return {
-        currentTrip: state.currentTrip
+        currentTrip: state.currentTrip,
+        currentCohort: state.currentCohort
     }
 }
 
 export default connect(
     mapStateToProps,
-    { setCurrentTrip }
+    null
 )(TripInformation)
