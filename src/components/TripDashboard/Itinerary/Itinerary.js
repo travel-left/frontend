@@ -6,8 +6,8 @@ import AddEvent from './Event/AddEvent'
 import moment from 'moment-timezone'
 
 class Itinerary extends Component {
-
     tripId = this.props.currentTrip._id
+
     cohortId = this.props.currentTrip.cohorts[0]._id
 
     state = {
@@ -114,9 +114,7 @@ class Itinerary extends Component {
                 </div>
                 <div className="mt-5">
                     <div className="row">
-                        <div className="col-md-12">
-                            {eventList}
-                        </div>
+                        <div className="col-md-12">{eventList}</div>
                     </div>
                 </div>
             </div>
