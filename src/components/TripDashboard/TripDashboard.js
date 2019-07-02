@@ -9,13 +9,13 @@ import Communicate from './Communicate/Communicate'
 import { setCurrentTrip } from '../../store/actions/trip'
 import Cover from './Cover/Cover'
 
-const Dashboard = ({ currentTrip, currentCohort, currentUser }) => {
+const Dashboard = ({ currentTrip, currentCohort, currentUser, setCurrentTrip }) => {
     return (
         <>
-            <Cover setCurrentTrip={this.props.setCurrentTrip} currentTrip={currentTrip} />
+            <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             <div className="row">
                 <div className="col-md-2 shadow-lg bg-light px-0" style={{ minHeight: '80vh' }}>
-                    <SideNavigation currentTrip={currentTrip} currentUser={this.props.currentUser} />
+                    <SideNavigation currentTrip={currentTrip} currentUser={currentUser} />
                 </div>
                 <div className="col-md-10">
                     <Switch>
