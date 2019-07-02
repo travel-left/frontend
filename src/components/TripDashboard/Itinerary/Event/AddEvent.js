@@ -45,7 +45,7 @@ class AddEvent extends Component {
     }
 
     render() {
-        let { title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
+        let { size, title, category, dateStart, timeStart, tzStart, dateEnd, timeEnd, tzEnd, summary, image, link, linkText } = this.state
         const categories = [
             {
                 name: 'Category',
@@ -70,11 +70,18 @@ class AddEvent extends Component {
                 value: 'flight'
             }
         ]
-        const names = moment.tz.names().map(name => {
+        let names = moment.tz.names().map(name => {
+            const offset = moment.tz(name).format('Z')
+            const abbrev = moment.tz(name).format('z')
             return {
-                name: name,
-                value: name
+                name: `(UTC${offset}) ${name} (${abbrev})`,
+                value: name,
+                offset: offset
             }
+        })
+
+        names = names.sort((f, s) => {
+            return parseInt(f.offset, 10) - parseInt(s.offset, 10)
         })
 
         return (
