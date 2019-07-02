@@ -7,11 +7,8 @@ import moment from 'moment-timezone'
 
 class Itinerary extends Component {
     tripId = this.props.currentTrip._id
-
     cohortId = this.props.currentCohort._id
-
     tdStart = this.props.currentTrip.dateStart
-
     tz = moment.tz.guess(true)
 
     state = {
