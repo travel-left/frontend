@@ -28,7 +28,9 @@ class AddTraveler extends Component {
         this.setState({
             name: '',
             email: '',
-            img: ''
+            img: '',
+            phone: '',
+            personalNotes: ''
         })
     }
 
