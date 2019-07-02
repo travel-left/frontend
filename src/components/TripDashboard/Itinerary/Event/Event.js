@@ -22,7 +22,7 @@ class Event extends Component {
                 color = '#BF9DD9'
                 break
             case 'event':
-                iconString = 'fa-bookmark'
+                iconString = 'fa-calendar-check'
                 color = '#83C9F4'
                 break
             case 'flight':
