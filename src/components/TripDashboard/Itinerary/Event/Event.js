@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import UpdateEventForm from './UpdateEventForm';
 
 class Event extends Component {
     constructor(props) {
@@ -7,6 +8,10 @@ class Event extends Component {
 
     deleteEvent = () => {
         this.props.removeEvent(this.props.event._id)
+    }
+
+    updateEvent = updateObject => {
+        this.props.updateEvent(this.props.event._id, updateObject)
     }
 
     render() {
@@ -47,7 +52,10 @@ class Event extends Component {
                     <a href={event.link} className="card-link" target="_blank">
                         {event.linkText}
                     </a>
-                    <i className="fa fa-trash float-right hover" onClick={this.deleteEvent} />
+                    <div>
+                        <UpdateEventForm event={this.props.event} submit={this.updateEvent} />
+                        <i className="fa fa-trash float-right hover" onClick={this.deleteEvent} />
+                    </div>
                 </div>
             </div>
         )
