@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
 import FileUploader from './FileUploader'
-
-const DEFAULT_IMAGE = 'https://cdn.shopify.com/s/files/1/0882/1686/products/lastolite-grey-vinyl-background-275x6m-018_a36fc2d2-5860-48f1-8ec7-4b0ed98e2cf4.jpg?v=1490271176'
+import Image from './Image'
 
 export default class AddImage extends Component {
-    constructor(props) {
-        super(props)
-        const { img } = this.props
-        this.state = {
-            text: img === '' ? 'ADD' : 'EDIT',
-            showForm: false,
-            imgUrl: DEFAULT_IMAGE,
-            imgText: '',
-            file: null
-        }
+    state = {
+        text: this.props.img === '' ? 'ADD' : 'EDIT',
+        showForm: false,
+        imgText: '',
+        file: null
     }
 
     handleChange = e => {
@@ -43,11 +37,10 @@ export default class AddImage extends Component {
         })
     }
 
-    handleError = e => {
-        e.preventDefault()
+    handleError = ({ message }) => {
         this.props.submit({
             img: '',
-            error: { message: 'Invalid image link' }
+            error: { message }
         })
     }
 
@@ -66,9 +59,7 @@ export default class AddImage extends Component {
 
     render() {
         const { img, name } = this.props
-        const { text, showForm, imgUrl, imgText } = this.state
-
-        const imageUrl = img === '' ? imgUrl : img
+        const { text, showForm, imgText } = this.state
 
         const formButton = (
             <button className="btn btn-primary" onClick={this.toggleShowForm}>
@@ -99,7 +90,7 @@ export default class AddImage extends Component {
                     <div className="float-right pr-3">{formBody}</div>
                 </div>
                 <div className="col-4">
-                    <img src={imageUrl} alt="" className="rounded-circle bg-dark" style={{ objectFit: 'cover', height: '100px', width: '100px' }} onError={this.handleError} />
+                    <Image src={img} diameter="100px" onError={this.handleError} />
                 </div>
             </div>
         )
