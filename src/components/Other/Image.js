@@ -28,9 +28,6 @@ export default class Image extends Component {
     render() {
         const { src, diameter } = this.props
         const { error } = this.state
-
-        console.log(diameter)
-
         const imageUrl = error ? this.DEFAULT_IMAGE : src
         return <img src={imageUrl} alt="" className="rounded-circle bg-dark" style={{ objectFit: 'cover', height: diameter, width: diameter }} onError={this.handleError} />
     }
