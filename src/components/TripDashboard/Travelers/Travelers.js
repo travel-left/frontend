@@ -36,7 +36,10 @@ class Travelers extends Component {
             accessType: 'user',
             password: 'password',
             currentTrip: this.props.currentTrip._id,
-            currentCohort: this.props.currentTrip.cohorts[0]._id
+            currentCohort: this.props.currentTrip.cohorts[0]._id,
+            firstName: traveler.name.split(' ')[0],
+            lastName: traveler.name.split(' ')[1]
+
         }
 
         apiCall('post', '/api/travelers', traveler)

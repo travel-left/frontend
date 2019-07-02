@@ -8,7 +8,9 @@ class UpdateTravelerForm extends Component {
         email: this.props.email,
         phone: this.props.phone,
         _id: this.props._id,
-        status: this.props.status
+        status: this.props.status,
+        phone: this.props.phone,
+        personalNotes: this.props.personalNotes
     }
 
     handleUpload = url => {
@@ -29,7 +31,7 @@ class UpdateTravelerForm extends Component {
     }
 
     render() {
-        let { name, email, img, phone, _id, status } = this.state
+        let { name, email, img, phone, _id, status, personalNotes } = this.state
 
         return (
             <>
@@ -58,9 +60,17 @@ class UpdateTravelerForm extends Component {
                                             <label htmlFor="email">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
                                             <label htmlFor="phone">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="phone" />
+                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
+                                            <label htmlFor="personalNotes">Personal notes</label>
+                                            <textarea value={personalNotes} onChange={this.handleChange} type="textarea" size={4} class="form-control" name="personalNotes" placeholder="List any personal notes about your traveler here" />
                                             <label htmlFor="status">Status</label>
-                                            <input value={status} onChange={this.handleChange} type="text" class="form-control" name="status" placeholder="status" />
+                                            <br />
+                                            <select className='' value={status} onChange={this.handleChange} name="status">
+                                                <option value={'INVITED'}>Invited</option>
+                                                <option value={'CONFIRMED'}>Confrimed</option>
+                                                <option value={'ON-TRIP'}>On Trip</option>
+                                                <option value={'POST-TRIP'}>Post Trip</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </form>

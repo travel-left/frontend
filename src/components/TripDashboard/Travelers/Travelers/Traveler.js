@@ -11,7 +11,7 @@ class Traveler extends Component {
     }
 
     render() {
-        let { firstName, lastName, email, status, img, _id } = this.props.traveler
+        let { firstName, lastName, email, status, img, _id, personalNotes, phone } = this.props.traveler
 
         return (
             <div className="card py-3 border bg-white my-2">
@@ -27,7 +27,7 @@ class Traveler extends Component {
                         <span class="badge badge-primary badge-pill">{status}</span>
                     </div>
                     <div className="col-4 col-md-1">
-                        <UpdateTravelerForm name={firstName + ' ' + lastName} email={email} status={status} img={img} _id={_id} submit={this.updateTraveler}></UpdateTravelerForm>
+                        <UpdateTravelerForm name={firstName + ' ' + lastName} email={email} phone={phone} personalNotes={personalNotes} status={status} img={img} _id={_id} submit={this.updateTraveler}></UpdateTravelerForm>
                     </div>
                 </div>
             </div >
