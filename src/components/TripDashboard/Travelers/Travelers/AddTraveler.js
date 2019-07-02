@@ -6,12 +6,12 @@ class AddTraveler extends Component {
         firstName: '',
         lastName: '',
         email: '',
-        image: ''
+        img: ''
     }
 
     handleUpload = url => {
         this.setState({
-            image: url
+            img: url
         })
     }
 
@@ -33,7 +33,7 @@ class AddTraveler extends Component {
     }
 
     render() {
-        let { firstName, lastName, email, image } = this.state
+        let { firstName, lastName, email, img } = this.state
         return (
             <>
                 <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newTraveler">
@@ -61,7 +61,7 @@ class AddTraveler extends Component {
                                         <input value={email} onChange={this.handleChange} type="email" class="form-control" name="email" placeholder="steve@apple.com" />
                                         <label htmlFor="image">Image link</label>
                                         <div className="input-group">
-                                            <input name="image" className="form-control" type="text" value={image} onChange={this.handleChange} placeholder="https://www.link-to-your=image.com" />
+                                            <input name="image" className="form-control" type="text" value={img} onChange={this.handleChange} placeholder="https://www.link-to-your=image.com" />
                                             <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                         </div>
                                     </div>
