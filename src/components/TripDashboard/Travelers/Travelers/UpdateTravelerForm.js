@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import FileUploader from '../../../Other/FileUploader'
 
-class UpdateContactForm extends Component {
+class UpdateTravelerForm extends Component {
     state = {
-        name: this.props.firstName + this.props.lastName,
-        image: this.props.photo,
+        name: this.props.name,
+        img: this.props.img,
         email: this.props.email,
         phone: this.props.phone,
-        id: this.props.id
+        _id: this.props._id,
+        status: this.props.status,
+        phone: this.props.phone,
+        personalNotes: this.props.personalNotes
     }
 
     handleUpload = url => {
@@ -28,18 +31,17 @@ class UpdateContactForm extends Component {
     }
 
     render() {
-        let { name, email, image, phone, id } = this.state
+        let { name, email, img, phone, _id, status, personalNotes } = this.state
 
         return (
             <>
-                <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target={'#editcontact' + id}>
-                    edit
-                </button>
-                <div class="modal fade" id={'editcontact' + id} tabindex="-1" role="dialog">
+                <i class="far fa-edit fa-2x text-secondary hover" data-toggle="modal" data-target={'#editTraveler' + _id}>
+                </i>
+                <div class="modal fade" id={'editTraveler' + _id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Edit contact</h5>
+                                <h5 class="modal-title">Edit traveler</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -50,14 +52,25 @@ class UpdateContactForm extends Component {
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="name" />
+                                            <label htmlFor="image">Image</label>
                                             <div className="input-group">
-                                                <input name="image" className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
+                                                <input name="image" className="form-control" type="text" value={img} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
                                                 <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                             <label htmlFor="email">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
                                             <label htmlFor="phone">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="phone" />
+                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
+                                            <label htmlFor="personalNotes">Personal notes</label>
+                                            <textarea value={personalNotes} onChange={this.handleChange} type="textarea" size={4} class="form-control" name="personalNotes" placeholder="List any personal notes about your traveler here" />
+                                            <label htmlFor="status">Status</label>
+                                            <br />
+                                            <select className='' value={status} onChange={this.handleChange} name="status">
+                                                <option value={'INVITED'}>Invited</option>
+                                                <option value={'CONFIRMED'}>Confrimed</option>
+                                                <option value={'ON-TRIP'}>On Trip</option>
+                                                <option value={'POST-TRIP'}>Post Trip</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </form>
@@ -75,4 +88,4 @@ class UpdateContactForm extends Component {
     }
 }
 
-export default UpdateContactForm
+export default UpdateTravelerForm

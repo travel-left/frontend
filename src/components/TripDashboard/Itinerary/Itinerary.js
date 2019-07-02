@@ -92,14 +92,18 @@ class Itinerary extends Component {
         this.getDEandSetState()
     }
 
+    updateEvent = async (eventId, updateObject) => {
+        console.log(updateObject)
+        updateObject.dtStart = `${this.state.currentDay.split('T')[0]}T${updateObject.timeStart}:00`
+        updateObject.dtEnd = `${this.state.currentDay.split('T')[0]}T${updateObject.timeEnd}:00`
+        await apiCall('put', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events/${eventId}`, updateObject) // Delete event
+        this.getAndSetEvents()
+    }
+
     render() {
         const { days, events, currentDay } = this.state
-
-        console.log(this.props)
-
         const dayList = days.length ? <DayList days={days} setCurrentDay={this.setCurrentDay} currentDay={currentDay} submit={this.setCurrentDay} /> : null
-        const eventList = events.length ? <EventList events={events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
-
+        const eventList = events.length ? <EventList events={this.state.events} updateEvent={this.updateEvent} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!<
         const addEventDay = days.length ? currentDay : this.tdStart
 
         return (
