@@ -32,7 +32,7 @@ class Itinerary extends Component {
     }
 
     getDaysandEvents = async () => {
-        const days = this.getDays()
+        const days = await this.getDays()
         const currentDay = days.length > 0 ? days[0] : null
         const events = currentDay ? await this.getEvents() : null
         return {
@@ -94,6 +94,8 @@ class Itinerary extends Component {
 
     render() {
         const { days, events, currentDay } = this.state
+
+        console.log(days, events, currentDay)
 
         const dayList = days.length ? <DayList days={days} setCurrentDay={this.setCurrentDay} currentDay={currentDay} submit={this.setCurrentDay} /> : null
         const eventList = events.length ? <EventList events={events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
