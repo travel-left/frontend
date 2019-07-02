@@ -87,7 +87,7 @@ class UpdateEventForm extends Component {
         return (
             <>
                 <h5 className="text-light hover d-inline" data-toggle="modal" data-target={`#editEvent${id}`}>
-                    <i class="far fa-edit text-secondary pl-2"></i>
+                    <i class="far fa-edit text-secondary"></i>
                 </h5>
                 <div class="modal fade" id={`editEvent${id}`} tabindex="-1" role="dialog" aria-labelledby="addnewEventModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
