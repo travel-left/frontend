@@ -6,19 +6,14 @@ import { logout } from '../../store/actions/auth'
 class Navbar extends Component {
     signout = e => {
         e.preventDefault()
-        this.props.logout().then(() => {
-            return this.props.history.push(`/signin`)
-        })
+        this.props.history.push(`/signin`)
+        this.props.logout()
     }
 
     render() {
         let { currentUser } = this.props
         let loggedInContent = null
-        let greeting = currentUser.user.email ? (
-            <span className="text-light">
-                Hello, {currentUser.user.firstName}!
-            </span>
-        ) : null
+        let greeting = currentUser.user.email ? <span className="text-light">Hello, {currentUser.user.firstName}!</span> : null
 
         if (currentUser.isAuthenticated) {
             loggedInContent = (
@@ -31,8 +26,12 @@ class Navbar extends Component {
                             <a href="#" className="nav-link pr-4 disabled">
                                 {greeting}
                             </a>
-                            <a href=""><i className="fa fa-download fa-2x text-secondary pr-4" /></a>
-                            <a href=""><i className="fas fa-sign-out-alt fa-2x text-secondary" onClick={this.signout} aria-hidden="true" /></a>
+                            <a href="">
+                                <i className="fa fa-download fa-2x text-secondary pr-4" />
+                            </a>
+                            <a href="">
+                                <i className="fas fa-sign-out-alt fa-2x text-secondary" onClick={this.signout} aria-hidden="true" />
+                            </a>
                         </ul>
                     </div>
                 </div>
@@ -52,7 +51,7 @@ class Navbar extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
         currentUser: state.currentUser
     }

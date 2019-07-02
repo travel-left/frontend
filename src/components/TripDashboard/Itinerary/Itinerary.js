@@ -8,7 +8,7 @@ import moment from 'moment-timezone'
 class Itinerary extends Component {
     tripId = this.props.currentTrip._id
 
-    cohortId = this.props.currentTrip.cohorts[0]._id
+    cohortId = this.props.currentCohort._id
 
     tdStart = this.props.currentTrip.dateStart
 
@@ -34,7 +34,7 @@ class Itinerary extends Component {
     getDaysandEvents = async () => {
         const days = await this.getDays()
         const currentDay = days.length > 0 ? days[0] : null
-        const events = currentDay ? await this.getEvents() : null
+        const events = currentDay ? await this.getEvents(currentDay) : []
         return {
             days,
             currentDay,
@@ -95,7 +95,7 @@ class Itinerary extends Component {
     render() {
         const { days, events, currentDay } = this.state
 
-        console.log(days, events, currentDay)
+        console.log(this.props)
 
         const dayList = days.length ? <DayList days={days} setCurrentDay={this.setCurrentDay} currentDay={currentDay} submit={this.setCurrentDay} /> : null
         const eventList = events.length ? <EventList events={events} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>

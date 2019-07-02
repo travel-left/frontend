@@ -6,6 +6,10 @@ import DashboardHeader from '../../Other/DashboardHeader'
 import AddTraveler from './Travelers/AddTraveler'
 
 class Travelers extends Component {
+    tripId = this.props.currentTrip._id
+
+    cohortId = this.props.currentCohort._id
+
     state = {
         travelers: [],
         cohorts: []
@@ -22,18 +26,13 @@ class Travelers extends Component {
         }
     }
 
-    getAndSetTravelers = () => {
-        let tripId = this.props.currentTrip._id
-        let cohortId = this.props.currentCohort._id
-        apiCall('get', `/api/trips/${tripId}/cohorts/${cohortId}/travelers`).then(travelers => {
-            return this.setState({ travelers })
-        })
+    getAndSetTravelers = async () => {
+        const travelers = await apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/travelers`)
+        this.setState({ travelers })
     }
 
-    addTraveler = traveler => {
-        let tripId = this.props.currentTrip._id
-        let cohortId = this.props.currentCohort._id
-        traveler = {
+    addTraveler = async traveler => {
+        const newTraveler = {
             ...traveler,
             accessType: 'user',
             password: 'password',
@@ -41,11 +40,9 @@ class Travelers extends Component {
             currentCohort: this.props.currentCohort._id
         }
 
-        apiCall('post', '/api/travelers', traveler)
-            .then(traveler => {
-                return apiCall('PUT', `/api/trips/${tripId}/cohorts/${cohortId}/travelers/${traveler._id}`)
-            })
-            .then(() => this.getAndSetTravelers())
+        const trav = await apiCall('post', '/api/travelers', newTraveler)
+        await apiCall('PUT', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/travelers/${trav._id}`)
+        this.getAndSetTravelers()
     }
 
     render() {
