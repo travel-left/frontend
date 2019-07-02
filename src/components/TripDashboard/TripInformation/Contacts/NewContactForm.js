@@ -4,14 +4,14 @@ import FileUploader from '../../../Other/FileUploader'
 class NewContactForm extends Component {
     state = {
         name: this.props.name,
-        image: this.props.photo,
+        photo: this.props.photo,
         email: this.props.email,
         phone: this.props.phone
     }
 
     handleUpload = url => {
         this.setState({
-            image: url
+            photo: url
         })
     }
 
@@ -27,7 +27,7 @@ class NewContactForm extends Component {
     }
 
     render() {
-        let { name, email, image, phone } = this.state
+        let { name, email, photo, phone } = this.state
 
         return (
             <>
@@ -51,9 +51,9 @@ class NewContactForm extends Component {
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Full Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
-                                            <label htmlFor="image">Image link</label>
+                                            <label htmlFor="photo">Photo link</label>
                                             <div className="input-group">
-                                                <input name="image" className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
+                                                <input name="photo" className="form-control" type="text" value={photo} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
                                                 <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                             <label htmlFor="email">Email</label>

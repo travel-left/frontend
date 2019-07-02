@@ -82,6 +82,7 @@ class TripInformation extends Component {
     }
 
     createContact = async newContact => {
+        console.log(newContact)
         newContact.firstName = newContact.name.split(' ')[0]
         newContact.lastName = newContact.name.split(' ')[1]
         await apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`, newContact)
