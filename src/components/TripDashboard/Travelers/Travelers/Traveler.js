@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import UpdateTravelerForm from './UpdateTravelerForm';
+import UpdateTravelerForm from './UpdateTravelerForm'
+import Image from '../../../Other/Image'
 
-class Traveler extends Component {
-    constructor(props) {
-        super(props)
-    }
-
+export default class Traveler extends Component {
     updateTraveler = updateObject => {
         this.props.submit(this.props.traveler._id, updateObject)
     }
@@ -17,7 +14,7 @@ class Traveler extends Component {
             <div className="card py-3 border bg-white my-2">
                 <div className="row no-gutters justify-content-around align-items-center px-3 px-md-0">
                     <div className="col-md-1 d-none d-md-block">
-                        <img src={img} className="card-img ml-2 " alt="..." style={{ maxHeight: '60px', maxWidth: '60px', borderRadius: '50%' }} />
+                        <Image diameter="75px" src={img} />
                     </div>
                     <div className="d-none d-md-flex col-md-2">
                         {firstName} {lastName}
@@ -30,9 +27,7 @@ class Traveler extends Component {
                         <UpdateTravelerForm name={firstName + ' ' + lastName} email={email} phone={phone} personalNotes={personalNotes} status={status} img={img} _id={_id} submit={this.updateTraveler}></UpdateTravelerForm>
                     </div>
                 </div>
-            </div >
+            </div>
         )
     }
 }
-
-export default Traveler

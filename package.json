@@ -9,6 +9,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
     "prettier": "^1.17.1",
+    "pretty-file-icons": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-moment": "^0.8.4",
