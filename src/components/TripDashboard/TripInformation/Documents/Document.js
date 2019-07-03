@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import UpdateDocumentForm from './UpdateDocumentForm'
 import { getIcon } from 'pretty-file-icons'
-import '../../../../constants/svg/pretty-file-icons.css'
 
 class Document extends Component {
     handleEditDocument = putObject => {
@@ -24,7 +23,9 @@ class Document extends Component {
                     <div className="card shadow mb-3 mx-4">
                         <div className="row no-gutters">
                             <div className={`col-md-4 ${linkImg}`}>
-                                <a className="hover" href={link} target="_blank"></a>
+                                <a className="hover" href={link} target="_blank">
+                                    <img src="https://s3.us-east-2.amazonaws.com/travel-left-images/pretty-file-icons.txt.svg" alt="..." />
+                                </a>
                             </div>
                             <div className="col-md-8 d-flex justify-content-center">
                                 <div className="card-body d-flex flex-column justify-content-around">
