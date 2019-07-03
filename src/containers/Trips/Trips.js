@@ -11,6 +11,7 @@ import AddTrip from '../../components/Trips/AddTrip'
 class Trips extends Component {
     state = {
         trips: [],
+        filteredTrips: [],
         showTrips: false,
         selectedTrip: {}
     }
@@ -21,6 +22,7 @@ class Trips extends Component {
             console.log(trips)
             return this.setState({
                 trips: trips,
+                filteredTrips: trips,
                 showTrips: trips && trips.length > 0 ? true : false,
                 selectedTrip: trips ? trips[0] : null
             })
@@ -74,9 +76,16 @@ class Trips extends Component {
         })
     }
 
+    onSideNavClick = e => {
+        e.preventDefault()
+        let { filteredTrips, trips } = this.state
+        filteredTrips = e.target.name === 'All Trips' ? trips : trips.filter(t => t.status === e.target.name.toUpperCase())
+        this.setState({ filteredTrips })
+    }
+
     render() {
-        let { showTrips, trips, selectedTrip } = this.state
-        let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
+        let { showTrips, filteredTrips, selectedTrip } = this.state
+        let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
         let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} /> : null
 
         return (
@@ -90,11 +99,11 @@ class Trips extends Component {
                     <div className="row trips-side-bar bg-light" style={{ minHeight: '80vh' }}>
                         <div className="col px-0">
                             <ul class="list-group ">
-                                <LeftBarItem text="All Trips" total="18" active={true} />
-                                <LeftBarItem text="Active Trips" total="14" active={false} />
-                                <LeftBarItem text="Planned Trips" total="1" active={false} />
-                                <LeftBarItem text="Planning" total="" active={false} />
-                                <LeftBarItem text="Past Trips" total="3" active={false} />
+                                <LeftBarItem text="All Trips" total="18" active={true} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Active" total="14" active={false} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planned" total="1" active={false} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planning" total="" active={false} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Past" total="3" active={false} handleClick={this.onSideNavClick} />
                             </ul>
                         </div>
                     </div>
@@ -128,13 +137,13 @@ export default connect(
     { handleSetCurrentTrip, handleSetCurrentCohort }
 )(Trips)
 
-const LeftBarItem = ({ text, total, active }) => {
+const LeftBarItem = ({ text, total, active, handleClick }) => {
     let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 '
     if (active) {
         classes += ' active'
     }
     return (
-        <a href="#" class={classes}>
+        <a href="" class={classes} onClick={handleClick} name={text}>
             {text}
             <span class="badge badge-primary badge-pill">{!active && total}</span>
         </a>
