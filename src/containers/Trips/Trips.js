@@ -64,19 +64,9 @@ class Trips extends Component {
         })
     }
 
-    addTrip = trip => {
-        trip.status = 'PLANNING'
-        apiCall('post', '/api/trips', trip).then(data => {
-            trip._id = data._id
-            console.log(trip)
-            return this.setState(prevState => {
-                return {
-                    trips: [...prevState.trips, trip],
-                    selectedTrip: trip,
-                    showTrips: true
-                }
-            })
-        })
+    addTrip = async trip => {
+        await apiCall('post', '/api/trips', trip)
+        this.getAllTripsAndSetState()
     }
 
     setSelectedTrip = tripId => {
