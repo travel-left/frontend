@@ -35,8 +35,8 @@ class TripInfo extends Component {
                             Total Confirmed <span className="float-right badge badge-primary badge-pill">85</span>
                         </li>
                     </ul>
-                    <button className="btn btn-lg btn-secondary text-light">DUPLICATE</button>
-                    <button className="btn btn-lg btn-secondary text-light float-right">ARCHIVE</button>
+                    {/* <button className="btn btn-lg btn-secondary text-light">DUPLICATE</button>
+                    <button className="btn btn-lg btn-secondary text-light float-right">ARCHIVE</button> */}
                 </div>
             </div>
         )
