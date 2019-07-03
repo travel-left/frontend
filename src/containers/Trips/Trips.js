@@ -12,19 +12,31 @@ class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
+        filter: 'All Trips',
         showTrips: false,
-        selectedTrip: {}
+        selectedTrip: {},
+        statusCounts: {
+            ACTIVE: 0,
+            PLANNED: 0,
+            PLANNING: 0,
+            PAST: 0
+        }
     }
 
     constructor(props) {
         super(props)
         apiCall('get', '/api/trips/').then(trips => {
-            console.log(trips)
+            let newStatusCount = { ...this.state.statusCounts }
+
+            trips.forEach(trip => {
+                newStatusCount[trip.status]++
+            })
             return this.setState({
                 trips: trips,
                 filteredTrips: trips,
                 showTrips: trips && trips.length > 0 ? true : false,
-                selectedTrip: trips ? trips[0] : null
+                selectedTrip: trips ? trips[0] : null,
+                statusCounts: newStatusCount
             })
         })
     }
@@ -80,11 +92,11 @@ class Trips extends Component {
         e.preventDefault()
         let { filteredTrips, trips } = this.state
         filteredTrips = e.target.name === 'All Trips' ? trips : trips.filter(t => t.status === e.target.name.toUpperCase())
-        this.setState({ filteredTrips })
+        this.setState({ filteredTrips, filter: e.target.name })
     }
 
     render() {
-        let { showTrips, filteredTrips, selectedTrip } = this.state
+        let { showTrips, filteredTrips, selectedTrip, trips, statusCounts, filter } = this.state
         let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
         let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} /> : null
 
@@ -99,11 +111,11 @@ class Trips extends Component {
                     <div className="row trips-side-bar bg-light" style={{ minHeight: '80vh' }}>
                         <div className="col px-0">
                             <ul class="list-group ">
-                                <LeftBarItem text="All Trips" total="18" active={true} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Active" total="14" active={false} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Planned" total="1" active={false} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Planning" total="" active={false} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Past" total="3" active={false} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="All Trips" total={trips.length} active={filter === 'All Trips'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Active" total={statusCounts.ACTIVE} active={filter === 'Active'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planned" total={statusCounts.PLANNED} active={filter === 'Planned'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planning" total={statusCounts.PLANNING} active={filter === 'Planning'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Past" total={statusCounts.PAST} active={filter === 'Past'} handleClick={this.onSideNavClick} />
                             </ul>
                         </div>
                     </div>
@@ -143,9 +155,9 @@ const LeftBarItem = ({ text, total, active, handleClick }) => {
         classes += ' active'
     }
     return (
-        <a href="" class={classes} onClick={handleClick} name={text}>
+        <a href="" className={classes} onClick={handleClick} name={text}>
             {text}
-            <span class="badge badge-primary badge-pill">{!active && total}</span>
+            <span className="badge badge-primary badge-pill">{total}</span>
         </a>
     )
 }
