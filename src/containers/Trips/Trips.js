@@ -11,8 +11,16 @@ import AddTrip from '../../components/Trips/AddTrip'
 class Trips extends Component {
     state = {
         trips: [],
+        filteredTrips: [],
+        filter: 'All Trips',
         showTrips: false,
-        selectedTrip: {}
+        selectedTrip: {},
+        statusCounts: {
+            ACTIVE: 0,
+            PLANNED: 0,
+            PLANNING: 0,
+            PAST: 0
+        }
     }
 
     constructor(props) {
@@ -22,10 +30,16 @@ class Trips extends Component {
 
     getAllTripsAndSetState = async () => {
         const trips = await apiCall('get', '/api/trips')
+        let newStatusCount = { ...this.state.statusCounts }
+        trips.forEach(trip => {
+            newStatusCount[trip.status]++
+        })
         this.setState({
             trips: trips,
+            filteredTrips: trips,
             showTrips: trips && trips.length > 0 ? true : false,
-            selectedTrip: trips ? trips[0] : null
+            selectedTrip: trips ? trips[0] : null,
+            statusCounts: newStatusCount
         })
     }
 
@@ -71,9 +85,16 @@ class Trips extends Component {
         })
     }
 
+    onSideNavClick = e => {
+        e.preventDefault()
+        let { filteredTrips, trips } = this.state
+        filteredTrips = e.target.name === 'All Trips' ? trips : trips.filter(t => t.status === e.target.name.toUpperCase())
+        this.setState({ filteredTrips, filter: e.target.name })
+    }
+
     render() {
-        let { showTrips, trips, selectedTrip } = this.state
-        let tripList = showTrips ? <TripList trips={trips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
+        let { showTrips, filteredTrips, selectedTrip, trips, statusCounts, filter } = this.state
+        let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
         let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} /> : null
 
         return (
@@ -87,11 +108,11 @@ class Trips extends Component {
                     <div className="row trips-side-bar bg-light" style={{ minHeight: '80vh' }}>
                         <div className="col px-0">
                             <ul class="list-group ">
-                                <LeftBarItem text="All Trips" total="18" active={true} />
-                                <LeftBarItem text="Active Trips" total="14" active={false} />
-                                <LeftBarItem text="Planned Trips" total="1" active={false} />
-                                <LeftBarItem text="Planning" total="" active={false} />
-                                <LeftBarItem text="Past Trips" total="3" active={false} />
+                                <LeftBarItem text="All Trips" total={trips.length} active={filter === 'All Trips'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Active" total={statusCounts.ACTIVE} active={filter === 'Active'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planned" total={statusCounts.PLANNED} active={filter === 'Planned'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planning" total={statusCounts.PLANNING} active={filter === 'Planning'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Past" total={statusCounts.PAST} active={filter === 'Past'} handleClick={this.onSideNavClick} />
                             </ul>
                         </div>
                     </div>
@@ -125,15 +146,15 @@ export default connect(
     { handleSetCurrentTrip, handleSetCurrentCohort }
 )(Trips)
 
-const LeftBarItem = ({ text, total, active }) => {
+const LeftBarItem = ({ text, total, active, handleClick }) => {
     let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 '
     if (active) {
         classes += ' active'
     }
     return (
-        <a href="#" class={classes}>
+        <a href="" className={classes} onClick={handleClick} name={text}>
             {text}
-            <span class="badge badge-primary badge-pill">{!active && total}</span>
+            <span className="badge badge-primary badge-pill">{total}</span>
         </a>
     )
 }
