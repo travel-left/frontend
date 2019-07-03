@@ -6,13 +6,16 @@ export default class TextInput extends Component {
     }
 
     render() {
-        const { name, value, label, type, placeholder } = this.props
+        const { name, value, label, type, placeholder, classes } = this.props
+
+        const stringClasses = classes.join(' ')
+
         return (
             <>
                 <label htmlFor={name} className="text-dark mt-2">
                     {label}
                 </label>
-                <input type={type} id={name} name={name} className="form-control border-top-0 border-left-0 border-right-0 form-control-lg" placeholder={placeholder} value={value} onChange={this.handleChange} />
+                <input type={type} id={name} name={name} className={stringClasses} placeholder={placeholder} value={value} onChange={this.handleChange} />
             </>
         )
     }

@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
+import FileUploader from '../../../Other/FileUploader'
 
 class NewCoordinatorForm extends Component {
-
     state = {
-        name: this.props.name,
-        image: this.props.image,
-        email: this.props.email,
-        tite: ''
+        name: '',
+        image: '',
+        email: '',
+        title: '',
+        phone: ''
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        this.setState({
+            image: url
+        })
     }
 
     handleChange = e => {
@@ -22,21 +25,30 @@ class NewCoordinatorForm extends Component {
     handleSubmit = event => {
         event.preventDefault()
         this.props.submit(this.state)
+        this.setState({
+            name: '',
+            img: '',
+            email: '',
+            title: '',
+            phone: ''
+        })
     }
 
     render() {
-        let { name, email, image, title } = this.state
+        let { name, email, image, title, phone } = this.state
 
         return (
             <>
-                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newCoordinator">add new</button>
+                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newCoordinator">
+                    add new
+                </button>
                 <div class="modal fade" id="newCoordinator" tabindex="-1" role="dialog" aria-labelledby="addnewCoordinatorModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addnewCoordinatorModal">
                                     New Coordinator
-                            </h5>
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -48,9 +60,14 @@ class NewCoordinatorForm extends Component {
                                             <label htmlFor="name">Full Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
                                             <label htmlFor="name">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                            <div className="input-group">
+                                                <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
+                                                <FileUploader id="newCoordinator" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                            </div>
                                             <label htmlFor="name">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
+                                            <label htmlFor="phone">Phone</label>
+                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
                                             <label htmlFor="title">Title</label>
                                             <input value={title} onChange={this.handleChange} type="text" class="form-control" name="title" placeholder="Travel Coordinator" />
                                         </div>
@@ -60,7 +77,7 @@ class NewCoordinatorForm extends Component {
                             <div class="modal-footer">
                                 <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
-                            </button>
+                                </button>
                             </div>
                         </div>
                     </div>

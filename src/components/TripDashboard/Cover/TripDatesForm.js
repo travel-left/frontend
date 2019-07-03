@@ -2,14 +2,9 @@ import React, { Component } from 'react'
 import Moment from 'react-moment'
 
 class TripDatesForm extends Component {
-
     state = {
-        dateStart: this.props.dateStart,
-        dateEnd: this.props.dateEnd
-    }
-
-    constructor(props) {
-        super(props)
+        dateStart: this.props.dateStart.split('T')[0],
+        dateEnd: this.props.dateEnd.split('T')[0]
     }
 
     handleChange = e => {
@@ -28,14 +23,16 @@ class TripDatesForm extends Component {
 
         return (
             <>
-                <h5 className='text-light hover' data-toggle="modal" data-target="#newDates"><Moment date={dateStart} format="MMMM DD" /> {' - '} <Moment date={dateEnd} format="MMMM DD" />{' '}<i class="far fa-calendar-alt"></i></h5>
+                <h5 className="text-light hover" data-toggle="modal" data-target="#newDates">
+                    <Moment date={dateStart} format="MMMM DD" /> {' - '} <Moment date={dateEnd} format="MMMM DD" /> <i class="far fa-calendar-alt"></i>
+                </h5>
                 <div class="modal fade" id="newDates" tabindex="-1" role="dialog" aria-labelledby="addnewDatesModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addnewDatesModal">
                                     Trip dates
-                            </h5>
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -55,7 +52,7 @@ class TripDatesForm extends Component {
                             <div class="modal-footer">
                                 <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
-                            </button>
+                                </button>
                             </div>
                         </div>
                     </div>

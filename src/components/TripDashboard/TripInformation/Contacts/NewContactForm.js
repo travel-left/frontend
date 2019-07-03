@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import FileUploader from '../../../Other/FileUploader'
 
 class NewContactForm extends Component {
-
     state = {
         name: this.props.name,
         photo: this.props.photo,
@@ -9,8 +9,10 @@ class NewContactForm extends Component {
         phone: this.props.phone
     }
 
-    constructor(props) {
-        super(props)
+    handleUpload = url => {
+        this.setState({
+            photo: url
+        })
     }
 
     handleChange = e => {
@@ -29,14 +31,16 @@ class NewContactForm extends Component {
 
         return (
             <>
-                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newContact">add new</button>
+                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newContact">
+                    add new
+                </button>
                 <div class="modal fade" id="newContact" tabindex="-1" role="dialog" aria-labelledby="addnewContactModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addnewContactModal">
                                     New Contact
-                            </h5>
+                                </h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -47,8 +51,11 @@ class NewContactForm extends Component {
                                         <div class="form-group col-10">
                                             <label htmlFor="name">Full Name</label>
                                             <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
-                                            <label htmlFor="photo">Photo</label>
-                                            <input value={photo} onChange={this.handleChange} type="text" class="form-control" name="photo" placeholder="photo" />
+                                            <label htmlFor="photo">Photo link</label>
+                                            <div className="input-group">
+                                                <input name="photo" className="form-control" type="text" value={photo} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
+                                                <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
+                                            </div>
                                             <label htmlFor="email">Email</label>
                                             <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
                                             <label htmlFor="title">Phone</label>
@@ -60,7 +67,7 @@ class NewContactForm extends Component {
                             <div class="modal-footer">
                                 <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
-                            </button>
+                                </button>
                             </div>
                         </div>
                     </div>

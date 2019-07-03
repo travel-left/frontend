@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 
 class CohortForm extends Component {
-
     state = {
         title: '',
         itinerary: {},
-        travelers: [],
-    }
-
-    constructor(props) {
-        super(props)
+        travelers: []
     }
 
     handleChange = e => {
