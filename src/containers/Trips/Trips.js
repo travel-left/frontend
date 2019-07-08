@@ -15,11 +15,16 @@ class Trips extends Component {
         filter: 'All Trips',
         showTrips: false,
         selectedTrip: {},
-        statusCounts: {
+        tripStatusCounts: {
             ACTIVE: 0,
             PLANNED: 0,
             PLANNING: 0,
             PAST: 0
+        },
+        travelers: [],
+        travelerStatusCounts: {
+            INVITED: 0,
+            CONFIRMED: 0
         }
     }
 
@@ -30,7 +35,7 @@ class Trips extends Component {
 
     getAllTripsAndSetState = async () => {
         const trips = await apiCall('get', '/api/trips')
-        let newStatusCount = { ...this.state.statusCounts }
+        let newStatusCount = { ...this.state.tripStatusCounts }
         trips.forEach(trip => {
             newStatusCount[trip.status]++
         })
@@ -39,8 +44,9 @@ class Trips extends Component {
             filteredTrips: trips,
             showTrips: trips && trips.length > 0 ? true : false,
             selectedTrip: trips ? trips[0] : null,
-            statusCounts: newStatusCount
+            tripStatusCounts: newStatusCount
         })
+        this.setSelectedTrip(trips[0]._id)
     }
 
     selectTrip = async tripId => {
@@ -69,10 +75,16 @@ class Trips extends Component {
         this.getAllTripsAndSetState()
     }
 
-    setSelectedTrip = tripId => {
+    setSelectedTrip = async tripId => {
+        const travelers = await apiCall('get', `/api/trips/${tripId}/travelers`)
         this.setState({
             selectedTrip: this.state.trips.filter(t => t._id === tripId)[0]
         })
+        let newStatusCountT = { ...this.state.travelerStatusCounts }
+        travelers.forEach(traveler => {
+            newStatusCountT[traveler.status]++
+        })
+        this.setState({ travelers, travelerStatusCounts: newStatusCountT })
     }
 
     onSideNavClick = e => {
@@ -83,9 +95,9 @@ class Trips extends Component {
     }
 
     render() {
-        let { showTrips, filteredTrips, selectedTrip, trips, statusCounts, filter } = this.state
+        let { showTrips, filteredTrips, selectedTrip, trips, tripStatusCounts, travelerStatusCounts, filter } = this.state
         let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
-        let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} /> : null
+        let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} statusCounts={travelerStatusCounts} /> : null
 
         return (
             <div className="row">
@@ -99,10 +111,10 @@ class Trips extends Component {
                         <div className="col px-0">
                             <ul class="list-group ">
                                 <LeftBarItem text="All Trips" total={trips.length} active={filter === 'All Trips'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Active" total={statusCounts.ACTIVE} active={filter === 'Active'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Planned" total={statusCounts.PLANNED} active={filter === 'Planned'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Planning" total={statusCounts.PLANNING} active={filter === 'Planning'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Past" total={statusCounts.PAST} active={filter === 'Past'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Active" total={tripStatusCounts.ACTIVE} active={filter === 'Active'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planned" total={tripStatusCounts.PLANNED} active={filter === 'Planned'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Planning" total={tripStatusCounts.PLANNING} active={filter === 'Planning'} handleClick={this.onSideNavClick} />
+                                <LeftBarItem text="Past" total={tripStatusCounts.PAST} active={filter === 'Past'} handleClick={this.onSideNavClick} />
                             </ul>
                         </div>
                     </div>

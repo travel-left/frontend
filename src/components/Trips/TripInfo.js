@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
+import { apiCall } from '../../util/api';
 
 class TripInfo extends Component {
+
+    constructor(props) {
+        super(props)
+    }
+
     handleEditClick = () => {
         this.props.edit(this.props.trip._id)
     }
 
     render() {
         let { name, dateStart, image, description, status } = this.props.trip
+        let { statusCounts } = this.props
 
         return (
             <div className="pb-3 bg-light">
@@ -29,10 +36,10 @@ class TripInfo extends Component {
                             Status <span className="float-right badge badge-primary badge-pill badge-secondary text-light">{status}</span>
                         </li>
                         <li className="list-group-item bg-light">
-                            Total Invited <span className="float-right badge badge-primary badge-pill">215</span>
+                            Total Invited <span className="float-right badge badge-primary badge-pill">{statusCounts ? statusCounts.INVITED : null}</span>
                         </li>
                         <li className="list-group-item bg-light">
-                            Total Confirmed <span className="float-right badge badge-primary badge-pill">85</span>
+                            Total Confirmed <span className="float-right badge badge-primary badge-pill">{statusCounts ? statusCounts.CONFIRMED : null}</span>
                         </li>
                     </ul>
                     {/* <button className="btn btn-lg btn-secondary text-light">DUPLICATE</button>
