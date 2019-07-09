@@ -10,6 +10,7 @@ import DocumentList from './Documents/DocumentList'
 import AddDocument from './Documents/AddDocument'
 import TripDatesList from './TripDates/TripDateList'
 import AddTripDate from './TripDates/AddTripDate'
+import { handleSetCurrentTrip } from '../../../store/actions/trip'
 
 class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
@@ -34,7 +35,7 @@ class TripInformation extends Component {
     updateTrip = async updateObject => {
         await apiCall('put', `/api/trips/${this.currentTripId}`, updateObject)
         let updatedTrip = await apiCall('get', `/api/trips/${this.currentTripId}`)
-        this.props.setCurrentTrip({ ...updatedTrip })
+        this.props.handleSetCurrentTrip(updatedTrip)
     }
 
     // addCohort = async cohort => {
@@ -175,5 +176,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    null
+    { handleSetCurrentTrip }
 )(TripInformation)
