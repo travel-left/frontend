@@ -19,7 +19,7 @@
     "uniqid": "^5.0.3"
   },
   "devDependencies": {
-    "@travelleft/prettier-config": "^1.2.0",
+    "@travelleft/prettier-config": "^1.2.0"
   },
   "scripts": {
     "start": "npx react-scripts start",
