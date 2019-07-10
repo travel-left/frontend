@@ -7,6 +7,7 @@ import TripList from '../../components/Trips/TripList'
 import TripInfo from '../../components/Trips/TripInfo'
 import { handleSetCurrentCohort } from '../../store/actions/cohort'
 import AddTrip from '../../components/Trips/AddTrip'
+import { userInfo } from 'os'
 
 class Trips extends Component {
     state = {
@@ -25,12 +26,24 @@ class Trips extends Component {
         travelerStatusCounts: {
             INVITED: 0,
             CONFIRMED: 0
-        }
+        },
+        showAlert: false
     }
 
     constructor(props) {
         super(props)
+        this.getShowAlertAndSetState()
         this.getAllTripsAndSetState()
+    }
+
+    getShowAlertAndSetState = async () => {
+        const { coordinatorId } = this.props
+        const coordinator = await apiCall('get', `/api/coordinators/${coordinatorId}`)
+        if (coordinator.showAlerts.trips === 'true') {
+            this.setState({
+                showAlert: true
+            })
+        }
     }
 
     getAllTripsAndSetState = async () => {
@@ -61,6 +74,14 @@ class Trips extends Component {
     showTripForm = () => {
         this.setState({
             showTripForm: true
+        })
+    }
+
+    closeAlert = async () => {
+        const { coordinatorId } = this.props
+        await apiCall('put', `/api/coordinators/${coordinatorId}`, { showAlerts: { trips: false } })
+        this.setState({
+            showAlert: false
         })
     }
 
@@ -95,9 +116,10 @@ class Trips extends Component {
     }
 
     render() {
-        let { showTrips, filteredTrips, selectedTrip, trips, tripStatusCounts, travelerStatusCounts, filter } = this.state
+        let { showTrips, filteredTrips, selectedTrip, trips, tripStatusCounts, travelerStatusCounts, filter, showAlert } = this.state
         let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
         let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} statusCounts={travelerStatusCounts} /> : null
+        let alert = showAlert ? <Alert text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.' closeAlert={this.closeAlert} /> : null
 
         return (
             <div className="row">
@@ -121,9 +143,7 @@ class Trips extends Component {
                 </div>
                 <div className="col-md-10">
                     <div className="row">
-                        <div className="col-md-12 d-none d-md-block">
-                            <Alert text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.' />
-                        </div>
+                        <div className="col-md-12 d-none d-md-block">{alert}</div>
                     </div>
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
@@ -143,8 +163,13 @@ class Trips extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    const { currentUser } = state
+    return { coordinatorId: currentUser.user._id }
+}
+
 export default connect(
-    null,
+    mapStateToProps,
     { handleSetCurrentTrip, handleSetCurrentCohort }
 )(Trips)
 
