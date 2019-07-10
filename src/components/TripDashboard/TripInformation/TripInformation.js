@@ -104,7 +104,6 @@ class TripInformation extends Component {
     }
 
     createContact = async newContact => {
-        console.log(newContact)
         newContact.firstName = newContact.name.split(' ')[0]
         newContact.lastName = newContact.name.split(' ')[1]
         await apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`, newContact)
@@ -125,7 +124,7 @@ class TripInformation extends Component {
         apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`, doc)
             .then(() => this.getDocuments())
             .catch(err => {
-                console.log(err)
+                console.error(err)
             })
     }
 
@@ -145,7 +144,7 @@ class TripInformation extends Component {
         apiCall('post', `/api/trips/${this.currentTripId}/tripDates`, tripDate)
             .then(() => this.getTripDates())
             .catch(err => {
-                console.log(err)
+                console.error(err)
             })
     }
 

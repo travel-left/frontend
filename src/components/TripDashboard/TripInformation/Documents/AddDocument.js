@@ -9,7 +9,6 @@ class AddDocument extends Component {
     }
 
     handleUpload = url => {
-        console.log(url)
         this.setState({
             link: url
         })

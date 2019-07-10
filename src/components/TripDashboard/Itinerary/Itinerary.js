@@ -114,7 +114,6 @@ class Itinerary extends Component {
     }
 
     updateEvent = async (eventId, updateObject) => {
-        console.log(updateObject)
         updateObject.dtStart = `${this.state.currentDay.split('T')[0]}T${updateObject.timeStart}:00`
         updateObject.dtEnd = `${this.state.currentDay.split('T')[0]}T${updateObject.timeEnd}:00`
         await apiCall('put', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events/${eventId}`, updateObject) // Delete event

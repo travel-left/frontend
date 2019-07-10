@@ -28,7 +28,7 @@ export default class CreateProfile extends Component {
                 history.push('/')
             })
         } catch (err) {
-            console.log(err)
+            console.error(err)
             this.setState({ error: err })
         }
     }
