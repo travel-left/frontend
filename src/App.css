@@ -13,12 +13,12 @@ body {
  
  @keyframes fadeIn {
     0% {top: -100px;}
-    100% {top: 0px;}
+    100% {top: 75px;}
  }
 
  @keyframes fadeOut {
     0% {top: 0px;}
-    100% {top: -300px;}
+    100% {top: -200px;}
  }
  
  .fadeIn {
@@ -27,4 +27,22 @@ body {
 
  .fadeOut {
      animation-name: fadeOut;
+ }
+
+ @keyframes darkFadeIn {
+     0% {opacity: 1;}
+     100% {opacity: .5;}
+ }
+
+ .darkFadeIn {
+    animation-name: darkFadeIn;
+ }
+
+ @keyframes darkFadeOut {
+     0% {opacity: .5;}
+     100% {opacity: 1;}
+ }
+
+ .darkFadeOut {
+    animation-name: darkFadeOut;
  }
