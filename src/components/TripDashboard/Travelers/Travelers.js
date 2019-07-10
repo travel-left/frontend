@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TravelerList from './Travelers/TravelerList'
 import { apiCall } from '../../../util/api'
 import AddTraveler from './Travelers/AddTraveler'
+import Alert from '../../Other/Alert'
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
@@ -10,12 +11,32 @@ class Travelers extends Component {
 
     state = {
         travelers: [],
-        cohorts: []
+        cohorts: [],
+        showAlert: false
     }
 
     constructor(props) {
         super(props)
+        this.getShowAlertAndSetState()
         this.getAndSetTravelers()
+    }
+
+    getShowAlertAndSetState = async () => {
+        const { _id } = this.props.currentUser.user
+        const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
+        if (coordinator.showAlerts.itinerary === 'true') {
+            this.setState({
+                showAlert: true
+            })
+        }
+    }
+
+    closeAlert = async () => {
+        const { _id } = this.props.currentUser.user
+        await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { itinerary: false } })
+        this.setState({
+            showAlert: false
+        })
     }
 
     componentDidUpdate(prevProps) {
@@ -38,7 +59,6 @@ class Travelers extends Component {
             currentCohort: this.props.currentTrip.cohorts[0]._id,
             firstName: traveler.name.split(' ')[0],
             lastName: traveler.name.split(' ')[1]
-
         }
 
         const trav = await apiCall('post', '/api/travelers', newTraveler)
@@ -52,10 +72,14 @@ class Travelers extends Component {
     }
 
     render() {
-        let { cohorts, travelers } = this.state
+        let { cohorts, travelers, showAlert } = this.state
+        let alert = showAlert ? <Alert text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.' closeAlert={this.closeAlert} /> : null
 
         return (
             <div className="mt-3 mx-3">
+                <div className="row">
+                    <div className="col-md-12 d-none d-md-block">{alert}</div>
+                </div>
                 <div className="row">
                     <div className="col-md-12 mt-4 mx-3 pr-5">
                         <div className="d-flex flex-row justify-content-between mb-4">
@@ -65,7 +89,7 @@ class Travelers extends Component {
                                 <AddTraveler submit={this.addTraveler} />
                             </div>
                         </div>
-                        <h4 className='d-block text-muted'>Add travelers here who are coming on the trip</h4>
+                        <h4 className="d-block text-muted">Add travelers here who are coming on the trip</h4>
                         <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
                             <div className="col-md-1 d-none d-md-block"> Image </div>
                             <div className="d-none d-md-flex col-md-2"> Name </div>

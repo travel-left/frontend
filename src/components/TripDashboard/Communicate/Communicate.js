@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AddNotification from './AddNotification'
 import NotificationList from './NotificationList'
 import { apiCall } from '../../../util/api'
-import DashboardHeader from '../../Other/DashboardHeader'
+import Alert from '../../Other/Alert'
 
 class Communicate extends Component {
     state = {
@@ -12,7 +12,7 @@ class Communicate extends Component {
 
     constructor(props) {
         super(props)
-
+        this.getShowAlertAndSetState()
         this.getNotifications()
     }
 
@@ -20,6 +20,24 @@ class Communicate extends Component {
         if (this.props.currentCohortId !== prevProps.currentCohortId) {
             this.getNotifications()
         }
+    }
+
+    getShowAlertAndSetState = async () => {
+        const { _id } = this.props.currentUser.user
+        const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
+        if (coordinator.showAlerts.communicate === 'true') {
+            this.setState({
+                showAlert: true
+            })
+        }
+    }
+
+    closeAlert = async () => {
+        const { _id } = this.props.currentUser.user
+        await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { communicate: false } })
+        this.setState({
+            showAlert: false
+        })
     }
 
     getNotifications = () => {
@@ -68,11 +86,15 @@ class Communicate extends Component {
     }
 
     render() {
-        let { showNotificationsList, notifications } = this.state
+        let { showNotificationsList, notifications, showAlert } = this.state
         let notificationsList = showNotificationsList ? <NotificationList notifications={notifications} handleSend={this.sendNotification} /> : null
+        let alert = showAlert ? <Alert text='This is where you can communicate with the travelers on your trip.  Click "NEW NOTIFICATION" to create and send a real-time notification to your travelers.' closeAlert={this.closeAlert} /> : null
 
         return (
             <div class="">
+                <div className="row">
+                    <div className="col-md-12 d-none d-md-block">{alert}</div>
+                </div>
                 <div className="row">
                     <div className="col-md-8">
                         <div className="">
