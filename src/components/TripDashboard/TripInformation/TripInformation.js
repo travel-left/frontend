@@ -10,6 +10,7 @@ import AddDocument from './Documents/AddDocument'
 import TripDatesList from './TripDates/TripDateList'
 import AddTripDate from './TripDates/AddTripDate'
 import Alert from '../../Other/Alert'
+import { connect } from 'react-redux'
 import { handleSetCurrentTrip } from '../../../store/actions/trip'
 
 class TripInformation extends Component {
@@ -151,7 +152,7 @@ class TripInformation extends Component {
     render() {
         let { name } = this.props.currentTrip
         let { showAlert, coordinators, contacts, documents, tripDates } = this.state
-        let coordinatorList = coordinators.length > 0 ? coordinators.map(c => <TripCoordinator key={c._id} coordinator={c} updateCoordinator={this.updateCoordinator}></TripCoordinator>) : null
+        let coordinatorList = coordinators.length > 0 ? coordinators.map(c => <TripCoordinator key={c._id} coordinator={c} updateCoordinator={this.updateCoordinator} />) : null
         let contactsList = contacts.length > 0 ? <ContactList contacts={contacts} updateContact={this.updateContact} /> : null
         let documentsList = documents.length > 0 ? <DocumentList documents={documents} updateDocument={this.updateDocument} /> : null
         let tripDatesList = tripDates.length > 0 ? <TripDatesList tripDates={tripDates} updateTripDate={this.updateTripDate} /> : null
@@ -166,7 +167,7 @@ class TripInformation extends Component {
                     <div className="col-md-12 mt-4 ml-3">
                         <h4 className="text-dark">Trip Name</h4>
                         <h3 className="text-primary my-1 d-inline"> {name} </h3>
-                        <TripNameForm name={name} submit={this.updateTrip}></TripNameForm>
+                        <TripNameForm name={name} submit={this.updateTrip} />
                         <h4 className="text-dark my-3">Trip Coordinators</h4>
                         <NewCoordinatorForm submit={this.createCoordinator} />
                         <div className="row">{coordinatorList}</div>
@@ -181,7 +182,7 @@ class TripInformation extends Component {
                         <AddDocument submit={this.createDocument} />
                         <div className="row">{documentsList}</div>
                         <h4 className="text-dark my-3">Emergency Contacts</h4>
-                        <NewContactForm submit={this.createContact}></NewContactForm>
+                        <NewContactForm submit={this.createContact} />
                         <div className="row">{contactsList}</div>
                     </div>
                 </div>
@@ -190,14 +191,7 @@ class TripInformation extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        currentTrip: state.currentTrip,
-        currentCohort: state.currentCohort
-    }
-}
-
 export default connect(
-    mapStateToProps,
+    null,
     { handleSetCurrentTrip }
 )(TripInformation)
