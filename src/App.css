@@ -5,3 +5,26 @@ body {
 .hover {
     cursor: pointer;
 }
+
+.animated {
+    animation-duration: .5s;
+    animation-fill-mode: both;
+ }
+ 
+ @keyframes fadeIn {
+    0% {top: -100px;}
+    100% {top: 0px;}
+ }
+
+ @keyframes fadeOut {
+    0% {top: 0px;}
+    100% {top: -300px;}
+ }
+ 
+ .fadeIn {
+    animation-name: fadeIn;
+ }
+
+ .fadeOut {
+     animation-name: fadeOut;
+ }

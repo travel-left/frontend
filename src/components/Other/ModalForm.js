@@ -4,27 +4,37 @@ import { Formik, Form } from 'formik'
 class ModalForm extends Component {
 
     state = {
-        open: false
+        open: false,
+        transition: false
     }
 
-    toggleModal = () => {
+    openModal = () => {
         this.setState(prevState => ({ open: !prevState.open }))
     }
 
+    closeModal = () => {
+        this.setState(prevState => ({ transition: !prevState.transition }))
+        setTimeout(() => {
+            this.setState(prevState => ({ open: !prevState.open, transition: !prevState.transition }))
+        }, 500);
+    }
+
     render() {
-        let modalClass = this.state.open ? 'modal fade show d-block' : 'modal fade'
-        let { title, validationSchema, initialValues, submit, fields } = this.props
+        let modalClass = this.state.open ? 'show d-block animated fadeIn' : ''
+        let fadeOut = this.state.transition ? 'show d-block animated fadeOut' : ''
+
+        let { title, validationSchema, initialValues, submit } = this.props
         return (
             <>
-                <i className='hover far fa-edit fa-2x text-primary' onClick={this.toggleModal}></i>
-                <div class={`${modalClass}`} id="newName" tabindex="-1" role="dialog" >
+                <i className='hover far fa-edit fa-2x text-primary' onClick={this.openModal} ></i>
+                <div class={`modal fade ${modalClass} ${fadeOut}`} style={{ filter: 'none' }}>
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addnewNameModal">
                                     {title}
                                 </h5>
-                                <button type="button" class="close" aria-label="Close" onClick={this.toggleModal}>
+                                <button type="button" class="close" aria-label="Close" onClick={this.closeModal}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -34,7 +44,7 @@ class ModalForm extends Component {
                                     validationSchema={validationSchema}
                                     onSubmit={(values) => {
                                         submit(values)
-                                        this.toggleModal()
+                                        this.closeModal()
                                     }}
                                 >
                                     {(values, isSubmitting) =>
