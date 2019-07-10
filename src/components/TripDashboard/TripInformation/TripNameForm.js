@@ -22,7 +22,7 @@ class TripNameForm extends Component {
 
     render() {
         return (
-            <ModalForm title='Trip name' validationSchema={this.TripNameSchema} initialValues={this.state} submit={this.props.submit} >
+            <ModalForm icon='far fa-edit fa-2x text-primary text-secondary' title='Trip name' validationSchema={this.TripNameSchema} initialValues={this.state} submit={this.props.submit} >
                 <span className='d-block text-danger'>
                     <ErrorMessage name="name" />
                 </span>
