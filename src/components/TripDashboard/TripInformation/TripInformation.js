@@ -11,6 +11,7 @@ import TripDatesList from './TripDates/TripDateList'
 import AddTripDate from './TripDates/AddTripDate'
 import Alert from '../../Other/Alert'
 import { handleSetCurrentTrip } from '../../../store/actions/trip'
+import { connect } from 'react-redux'
 
 class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
