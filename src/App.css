@@ -17,8 +17,8 @@ body {
  }
 
  @keyframes fadeOut {
-    0% {top: 0px;}
-    100% {top: -200px;}
+    0% {top: 75px;}
+    100% {top: -400px;}
  }
  
  .fadeIn {

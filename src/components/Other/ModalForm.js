@@ -24,10 +24,6 @@ class ModalForm extends Component {
         }, 500);
     }
 
-    toggleClasses = () => {
-
-    }
-
     render() {
         let modalClass = this.state.open ? 'show d-block animated fadeIn' : ''
         let fadeOut = this.state.transition ? 'show d-block animated fadeOut' : ''
@@ -47,25 +43,26 @@ class ModalForm extends Component {
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <Formik
-                                        initialValues={initialValues}
-                                        validationSchema={validationSchema}
-                                        onSubmit={(values) => {
-                                            submit(values)
-                                            this.closeModal()
-                                        }}
-                                    >
-                                        {(values, isSubmitting) =>
-                                            <Form>
+                                <Formik
+                                    initialValues={initialValues}
+                                    validationSchema={validationSchema}
+                                    onSubmit={(values) => {
+                                        submit(values)
+                                        this.closeModal()
+                                    }}
+                                >
+                                    {(values, isSubmitting) =>
+                                        <Form style={{ fontSize: '1.2em' }}>
+                                            <div class="modal-body">
                                                 {this.props.children}
-                                                <button type="submit" disabled={isSubmitting} className="btn btn-primary"> Submit</button>
-                                            </Form>
-                                        }
-                                    </Formik>
-                                </div>
-                                <div class="modal-footer">
-                                </div>
+                                            </div>
+                                            <hr className="mt-2" />
+                                            <button type="submit" disabled={isSubmitting} className="btn btn-lg btn-primary float-right mr-4 mb-4">SUBMIT</button>
+                                        </Form>
+                                    }
+                                </Formik>
+                            </div>
+                            <div class="modal-footer">
                             </div>
                         </div>
                     </div>
