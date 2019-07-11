@@ -36,21 +36,23 @@ class Event extends Component {
                 break
         }
 
-        const map = event.coordinates ? (
-            <div className="row">
-                <div className="col-12">
-                    <Map coordinates={event.coordinates} />
-                </div>
-            </div>
-        ) : null
+        console.log(event)
 
-        const addressAndMap =
-            event.address !== '' ? (
-                <>
-                    <p className="card-text">{'Address: ' + event.address}</p>
-                    {map}
-                </>
+        const map =
+            event.coordinates.long && event.coordinates.lat ? (
+                <div className="row">
+                    <div className="col-12">
+                        <Map coordinates={event.coordinates} />
+                    </div>
+                </div>
             ) : null
+
+        const addressAndMap = event.address ? (
+            <>
+                <p className="card-text">{'Address: ' + event.address}</p>
+                {map}
+            </>
+        ) : null
 
         return (
             <div className="card mb-3 border-0 shadow">
