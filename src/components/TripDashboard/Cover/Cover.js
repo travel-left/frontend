@@ -5,21 +5,15 @@ import { apiCall } from '../../../util/api'
 import TripStatusForm from './TripStatusForm'
 
 class Cover extends Component {
-    constructor(props) {
-        super(props)
-    }
-
-    updateTrip = updateObject => {
-        apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updateObject)
-            .then(data => {
-                return apiCall('get', `/api/trips/${this.props.currentTrip._id}`)
-            })
-            .then(data => {
-                return this.props.setCurrentTrip({ ...data })
-            })
-            .catch(err => {
-                console.error(err)
-            })
+    updateTrip = async updateObject => {
+        try {
+            console.log(updateObject)
+            await apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updateObject)
+            const data = await apiCall('get', `/api/trips/${this.props.currentTrip._id}`)
+            return this.props.setCurrentTrip(data)
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     render() {

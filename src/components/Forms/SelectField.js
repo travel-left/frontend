@@ -1,14 +1,12 @@
 import React from 'react'
 import { ErrorMessage, Field } from 'formik'
+import OptionList from './OptionList'
 
 /**
  * Component for managing Formik Field and ErrorMessage Component
- * @param {{name: string!, placeholder: string!, label: string!, type: string}} props Data passed in from the parent element
+ * @param {name: string!, placeholder: string!, label: string!, type: string} props Data passed in from the parent element
  */
-export default function FormField({ name, placeholder, label, type }) {
-    if (!type) {
-        type = 'text'
-    }
+export default function SelectField({ name, options, label }) {
     return (
         <>
             <span className="d-block text-danger">
@@ -17,7 +15,9 @@ export default function FormField({ name, placeholder, label, type }) {
             <label htmlFor={name} className="d-block">
                 {label}
             </label>
-            <Field name={name} type={type} placeholder={placeholder} className="d-block" />
+            <Field name={name} component="select" className="d-block">
+                <OptionList options={options} />
+            </Field>
         </>
     )
 }

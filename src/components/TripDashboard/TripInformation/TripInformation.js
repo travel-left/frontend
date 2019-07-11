@@ -11,7 +11,7 @@ import TripDatesList from './TripDates/TripDateList'
 import AddTripDate from './TripDates/AddTripDate'
 import Alert from '../../Other/Alert'
 import { connect } from 'react-redux'
-import { handleSetCurrentTrip } from '../../../store/actions/trip'
+import { setCurrentTrip } from '../../../store/actions/trip'
 
 class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
@@ -56,7 +56,7 @@ class TripInformation extends Component {
     updateTrip = async updateObject => {
         await apiCall('put', `/api/trips/${this.currentTripId}`, updateObject)
         let updatedTrip = await apiCall('get', `/api/trips/${this.currentTripId}`)
-        this.props.handleSetCurrentTrip(updatedTrip)
+        this.props.setCurrentTrip(updatedTrip)
     }
 
     // addCohort = async cohort => {
@@ -192,5 +192,5 @@ class TripInformation extends Component {
 
 export default connect(
     null,
-    { handleSetCurrentTrip }
+    { setCurrentTrip }
 )(TripInformation)

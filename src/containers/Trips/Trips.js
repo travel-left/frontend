@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
-import { handleSetCurrentTrip } from '../../store/actions/trip'
+import { setCurrentTrip } from '../../store/actions/trip'
 import Alert from '../../components/Other/Alert'
 import TripList from '../../components/Trips/TripList'
 import TripInfo from '../../components/Trips/TripInfo'
@@ -65,9 +65,9 @@ class Trips extends Component {
     selectTrip = async tripId => {
         const [selectedTrip] = this.state.trips.filter(t => t._id === tripId)
 
-        await this.props.handleSetCurrentTrip(selectedTrip)
+        await this.props.setCurrentTrip(selectedTrip)
         //setting the cohort to be the all travelers cohort
-        await this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0]._id)
+        await this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
@@ -149,7 +149,7 @@ class Trips extends Component {
                         <div className="col-md-8 px-0 px-md-3">
                             <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
                                 <div className="col-md-3 border-bottom border-primary text-uppercase ml-5"> Trip</div>
-                                <div className="col-md-4"></div>
+                                <div className="col-md-4" />
                                 <div className="col-md-2 offset-md-1 text-uppercase">Date</div>
                                 <div className="col-md-2 text-uppercase">Status</div>
                             </div>
@@ -170,7 +170,7 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { handleSetCurrentTrip, handleSetCurrentCohort }
+    { setCurrentTrip, handleSetCurrentCohort }
 )(Trips)
 
 const LeftBarItem = ({ text, total, active, handleClick }) => {
