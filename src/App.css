@@ -5,3 +5,44 @@ body {
 .hover {
     cursor: pointer;
 }
+
+.animated {
+    animation-duration: .5s;
+    animation-fill-mode: both;
+ }
+ 
+ @keyframes fadeIn {
+    0% {top: -100px;}
+    100% {top: 75px;}
+ }
+
+ @keyframes fadeOut {
+    0% {top: 75px;}
+    100% {top: -400px;}
+ }
+ 
+ .fadeIn {
+    animation-name: fadeIn;
+ }
+
+ .fadeOut {
+     animation-name: fadeOut;
+ }
+
+ @keyframes darkFadeIn {
+     0% {opacity: 1;}
+     100% {opacity: .5;}
+ }
+
+ .darkFadeIn {
+    animation-name: darkFadeIn;
+ }
+
+ @keyframes darkFadeOut {
+     0% {opacity: .5;}
+     100% {opacity: 1;}
+ }
+
+ .darkFadeOut {
+    animation-name: darkFadeOut;
+ }

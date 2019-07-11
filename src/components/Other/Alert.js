@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default function({ closeAlert, type, icon, text }) {
+export default function ({ closeAlert, type, icon, text }) {
     return (
         <div className="row shadow m-4 bg-light text-primary align-items-center d-none d-md-flex" style={{ height: '65px' }}>
             <div className="col-1 d-flex align-self-stretch justify-content-center align-items-center bg-primary">
@@ -10,7 +10,7 @@ export default function({ closeAlert, type, icon, text }) {
                 <span>{text}</span>
             </div>
             <div className="col-1 d-flex align-self-stretch justify-content-center align-items-center">
-                <i className="fas fa-times fa-md text-dark" onClick={closeAlert} />
+                <i className="fas fa-times fa-md text-dark hover" onClick={closeAlert} />
             </div>
         </div>
     )
