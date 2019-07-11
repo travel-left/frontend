@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import FileUploader from '../Other/FileUploader'
-import TextInput from '../Other/TextInput'
+import FileUploader from '../Forms/FileUploader'
+import TextInput from '../Forms/TextInput'
 
 class AddTrip extends Component {
     state = {
