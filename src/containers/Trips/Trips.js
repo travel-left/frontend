@@ -92,6 +92,7 @@ class Trips extends Component {
     }
 
     addTrip = async trip => {
+        console.log(trip)
         await apiCall('post', '/api/trips', trip)
         this.getAllTripsAndSetState()
     }
