@@ -78,8 +78,6 @@ class ModalForm extends Component {
                                     }
                                 </Formik>
                             </div>
-                            <div class="modal-footer">
-                            </div>
                         </div>
                     </div>
                 </Portal>
