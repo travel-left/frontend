@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import SideNavigation from '../../containers/Navbar/SideNavigation'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'

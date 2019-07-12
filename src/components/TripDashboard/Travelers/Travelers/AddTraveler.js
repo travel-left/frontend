@@ -38,31 +38,31 @@ class AddTraveler extends Component {
         let { name, email, img, phone, personalNotes } = this.state
         return (
             <>
-                <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newTraveler">
+                <button className="btn btn-lg btn-primary" data-toggle="modal" data-target="#newTraveler">
                     ADD TRAVELER
                 </button>
-                <div class="modal fade" id="newTraveler" tabindex="-1" role="dialog" aria-labelledby="addnewTravelerModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addnewTravelerModal">
+                <div className="modal fade" id="newTraveler" tabIndex="-1" role="dialog" aria-labelledby="addnewTravelerModal" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="addnewTravelerModal">
                                     Add Traveler
                                 </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form>
-                                    <div class="form-row">
+                                    <div className="form-row">
                                         <label htmlFor="first">Full Name</label>
-                                        <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Steve Jobs" />
+                                        <input value={name} onChange={this.handleChange} type="text" className="form-control" name="name" placeholder="Steve Jobs" />
                                         <label htmlFor="email">Email</label>
-                                        <input value={email} onChange={this.handleChange} type="email" class="form-control" name="email" placeholder="steve@apple.com" />
+                                        <input value={email} onChange={this.handleChange} type="email" className="form-control" name="email" placeholder="steve@apple.com" />
                                         <label htmlFor="phone">Phone</label>
-                                        <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
+                                        <input value={phone} onChange={this.handleChange} type="text" className="form-control" name="phone" placeholder="559-867-5309" />
                                         <label htmlFor="personalNotes">Personal notes</label>
-                                        <textarea value={personalNotes} onChange={this.handleChange} type="textarea" size={4} class="form-control" name="personalNotes" placeholder="List any personal notes about your traveler here" />
+                                        <textarea value={personalNotes} onChange={this.handleChange} type="textarea" size={4} className="form-control" name="personalNotes" placeholder="List any personal notes about your traveler here" />
                                         <label htmlFor="image">Image link</label>
                                         <div className="input-group">
                                             <input name="image" className="form-control" type="text" value={img} onChange={this.handleChange} placeholder="https://www.link-to-your=image.com" />
@@ -71,8 +71,8 @@ class AddTraveler extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
+                            <div className="modal-footer">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
                                 </button>
                             </div>

@@ -27,7 +27,7 @@ class Cover extends Component {
                     </div>
                     <div className="row align-items-start">
                         <h5 className="text-light">Status: </h5>
-                        <span class="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">{currentTrip.status} </span>
+                        <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">{currentTrip.status} </span>
                         <TripStatusForm submit={this.updateTrip} status={currentTrip.status} />
                     </div>
                     <div className="row justify-content-between">

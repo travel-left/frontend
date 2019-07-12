@@ -34,39 +34,39 @@ class AddDocument extends Component {
         let { name, link, description } = this.state
         return (
             <>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#newDocument">
+                <button className="btn btn-primary" data-toggle="modal" data-target="#newDocument">
                     add new
                 </button>
-                <div class="modal fade" id="newDocument" tabindex="-1" role="dialog" aria-labelledby="addnewDocumentModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addnewDocumentModal">
+                <div className="modal fade" id="newDocument" tabIndex="-1" role="dialog" aria-labelledby="addnewDocumentModal" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="addnewDocumentModal">
                                     Add a document
                                 </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-10">
-                                            <label for="name">Name</label>
-                                            <input value={name} onChange={this.handleChange} id="name" type="text" class="form-control" name="name" placeholder="New Document" />
-                                            <label for="description">Description</label>
-                                            <textarea value={description} onChange={this.handleChange} id="description" name="description" placeholder="Description" class="form-control" rows="3" />
-                                            <label for="link">Document</label>
+                                    <div className="form-row">
+                                        <div className="form-group col-10">
+                                            <label htmlFor="name">Name</label>
+                                            <input value={name} onChange={this.handleChange} id="name" type="text" className="form-control" name="name" placeholder="New Document" />
+                                            <label htmlFor="description">Description</label>
+                                            <textarea value={description} onChange={this.handleChange} id="description" name="description" placeholder="Description" className="form-control" rows="3" />
+                                            <label htmlFor="link">Document</label>
                                             <div className="input-group">
-                                                <input value={link} onChange={this.handleChange} type="text" class="form-control" name="link" placeholder="document" />
+                                                <input value={link} onChange={this.handleChange} type="text" className="form-control" name="link" placeholder="document" />
                                                 <FileUploader id="addDocument" isAuth={true} onUpload={this.handleUpload} />
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
+                            <div className="modal-footer">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
                                 </button>
                             </div>

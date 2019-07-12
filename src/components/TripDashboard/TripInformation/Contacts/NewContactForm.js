@@ -34,38 +34,38 @@ class NewContactForm extends Component {
                 <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newContact">
                     add new
                 </button>
-                <div class="modal fade" id="newContact" tabindex="-1" role="dialog" aria-labelledby="addnewContactModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addnewContactModal">
+                <div className="modal fade" id="newContact" tabIndex="-1" role="dialog" aria-labelledby="addnewContactModal" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="addnewContactModal">
                                     New Contact
                                 </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-10">
+                                    <div className="form-row">
+                                        <div className="form-group col-10">
                                             <label htmlFor="name">Full Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
+                                            <input value={name} onChange={this.handleChange} type="text" className="form-control" name="name" placeholder="Jordan Boudreau" />
                                             <label htmlFor="photo">Photo link</label>
                                             <div className="input-group">
                                                 <input name="photo" className="form-control" type="text" value={photo} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
                                                 <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                             <label htmlFor="email">Email</label>
-                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
+                                            <input value={email} onChange={this.handleChange} type="text" className="form-control" name="email" placeholder="jordan@travel-left.com" />
                                             <label htmlFor="title">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="867-5309" />
+                                            <input value={phone} onChange={this.handleChange} type="text" className="form-control" name="phone" placeholder="867-5309" />
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
+                            <div className="modal-footer">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
                                 </button>
                             </div>

@@ -172,7 +172,7 @@ class TripInformation extends Component {
                         <div className="row">{coordinatorList}</div>
                         <h4 className="text-dark my-3">Trip Dates</h4>
                         <div className="row">
-                            <div class="card shadow border-0 mb-3 col-md-4 mx-4">
+                            <div className="card shadow border-0 mb-3 col-md-4 mx-4">
                                 {tripDatesList}
                                 <EditTripDate formType="add" submit={this.createTripDate} />
                             </div>

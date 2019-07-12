@@ -24,11 +24,11 @@ class CohortForm extends Component {
         return (
             <form onSubmit={this.handleSubmit} style={{ marginTop: '60px' }}>
                 <h3>Add a cohort</h3>
-                <div class="form-row">
+                <div className="form-row">
                     <label htmlFor="title">Cohort name</label>
-                    <input value={title} onChange={this.handleChange} type="text" class="form-control" name="title" placeholder="Cohort Name" />
+                    <input value={title} onChange={this.handleChange} type="text" className="form-control" name="title" placeholder="Cohort Name" />
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary">
+                <button type="submit" className="btn btn-lg btn-primary">
                     Add Cohort
                 </button>
             </form>

@@ -20,7 +20,7 @@ export default function TripDatesForm({ dateStart, dateEnd, submit }) {
         classes: 'text-light',
         text: (
             <h5>
-                <Moment date={dateStart} format="MMMM DD" /> {' - '} <Moment date={dateEnd} format="MMMM DD" /> <i class="far fa-calendar-alt" />
+                <Moment date={dateStart} format="MMMM DD" /> {' - '} <Moment date={dateEnd} format="MMMM DD" /> <i className="far fa-calendar-alt" />
             </h5>
         )
     }

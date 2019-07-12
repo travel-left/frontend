@@ -29,9 +29,9 @@ class Document extends Component {
                             </div>
                             <div className="col-md-8 d-flex justify-content-center">
                                 <div className="card-body d-flex flex-column justify-content-around">
-                                    {/* <h5 class="card-title">{link}</h5> */}
+                                    {/* <h5 className="card-title">{link}</h5> */}
                                     <a className="hover" href={link} target="_blank" className="card-text">
-                                        <small class="text-muted">Download</small>
+                                        <small className="text-muted">Download</small>
                                     </a>
                                 </div>
                             </div>

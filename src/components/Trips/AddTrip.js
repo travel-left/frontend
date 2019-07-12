@@ -1,5 +1,4 @@
 import React from 'react'
-import { Field } from 'formik'
 import * as Yup from 'yup'
 import ModalForm from '../Forms/ModalForm'
 import Uploader from '../Forms/Uploader'
@@ -31,7 +30,7 @@ export default function AddTrip({ submit }) {
     return (
         <ModalForm button={button} title="Create your new trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Austrailia" />
-            <Field component={Uploader} name="image" label="Upload an Image" />
+            <FormField component={Uploader} name="image" label="Upload an Image" />
             <FormField name="dateStart" label="Trip Start Date" placeholder={initialValues.dateStart} type="date" />
             <FormField name="dateEnd" label="Trip End Date" placeholder={initialValues.dateEnd} type="date" />
             <FormField name="description" label="Trip Description" component="textarea" placeholder="A description for your trip" className="d-block" />

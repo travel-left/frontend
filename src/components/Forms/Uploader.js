@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
-import { ErrorMessage } from 'formik'
 
-class Uploader extends Component {
+export default class Uploader extends Component {
     handleUpload = async e => {
         const [file] = e.target.files
+        console.log(file)
         let formData = new FormData()
         formData.append('file', file)
         let ret = await apiCall('post', '/api/files', formData)
@@ -13,18 +13,12 @@ class Uploader extends Component {
 
     render() {
         let {
-            label,
             form: { setFieldValue },
             field: { name }
         } = this.props
-        console.log(this.props)
 
         return (
-            <div>
-                <span className="d-block text-danger">
-                    <ErrorMessage name={name} />
-                </span>
-                <label for={name}>{label}</label>
+            <>
                 <input
                     id={name}
                     name={name}
@@ -35,9 +29,7 @@ class Uploader extends Component {
                     }}
                     className="form-control"
                 />
-            </div>
+            </>
         )
     }
 }
-
-export default Uploader

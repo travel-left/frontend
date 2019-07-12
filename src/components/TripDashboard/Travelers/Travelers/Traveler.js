@@ -21,7 +21,7 @@ export default class Traveler extends Component {
                     </div>
                     <div className="col-4 col-md-3">{email}</div>
                     <div className="col-4 col-md-2">
-                        <span class="badge badge-primary badge-pill">{status}</span>
+                        <span className="badge badge-primary badge-pill">{status}</span>
                     </div>
                     <div className="col-4 col-md-1">
                         <UpdateTravelerForm name={firstName + ' ' + lastName} email={email} phone={phone} personalNotes={personalNotes} status={status} img={img} _id={_id} submit={this.updateTraveler}></UpdateTravelerForm>

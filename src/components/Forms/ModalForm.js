@@ -48,14 +48,14 @@ class ModalForm extends Component {
             <>
                 {opener}
                 <Portal>
-                    <div class={`modal fade ${modalClass} ${fadeOut}`} style={{ filter: 'none' }}>
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addnewNameModal">
+                    <div className={`modal fade ${modalClass} ${fadeOut}`} style={{ filter: 'none' }}>
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="addnewNameModal">
                                         {title}
                                     </h5>
-                                    <button type="button" class="close" aria-label="Close" onClick={this.closeModal}>
+                                    <button type="button" className="close" aria-label="Close" onClick={this.closeModal}>
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -69,7 +69,7 @@ class ModalForm extends Component {
                                 >
                                     {(values, isSubmitting) =>
                                         <Form style={{ fontSize: '1.2em' }}>
-                                            <div class="modal-body">
+                                            <div className="modal-body">
                                                 {this.props.children}
                                             </div>
                                             <hr className="mt-2" />

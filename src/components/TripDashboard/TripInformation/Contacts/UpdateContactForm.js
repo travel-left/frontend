@@ -35,35 +35,35 @@ class UpdateContactForm extends Component {
                 <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target={'#editcontact' + id}>
                     edit
                 </button>
-                <div class="modal fade" id={'editcontact' + id} tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Edit contact</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div className="modal fade" id={'editcontact' + id} tabIndex="-1" role="dialog">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Edit contact</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-10">
+                                    <div className="form-row">
+                                        <div className="form-group col-10">
                                             <label htmlFor="name">Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="name" />
+                                            <input value={name} onChange={this.handleChange} type="text" className="form-control" name="name" placeholder="name" />
                                             <div className="input-group">
                                                 <input name="image" className="form-control" type="text" value={image} onChange={this.handleInputChange} placeholder="https://www.link-to-your=image.com" />
                                                 <FileUploader id="addEvent" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
                                             </div>
                                             <label htmlFor="email">Email</label>
-                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
+                                            <input value={email} onChange={this.handleChange} type="text" className="form-control" name="email" placeholder="email" />
                                             <label htmlFor="phone">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="phone" />
+                                            <input value={phone} onChange={this.handleChange} type="text" className="form-control" name="phone" placeholder="phone" />
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
+                            <div className="modal-footer">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
                                 </button>
                             </div>

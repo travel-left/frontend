@@ -21,7 +21,7 @@ class Contact extends Component {
                             <p className="text-bold my-1">{name}</p>
                             <p className="my-1">{phone}</p>
                             <p className="my-1">
-                                <small class="text-muted">{email}</small>
+                                <small className="text-muted">{email}</small>
                             </p>
                         </div>
                     </div>

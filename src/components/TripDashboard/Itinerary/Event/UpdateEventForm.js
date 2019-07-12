@@ -87,20 +87,20 @@ class UpdateEventForm extends Component {
         return (
             <>
                 <h5 className="text-light hover d-inline" data-toggle="modal" data-target={`#editEvent${id}`}>
-                    <i class="far fa-edit text-secondary" />
+                    <i className="far fa-edit text-secondary" />
                 </h5>
-                <div class="modal fade" id={`editEvent${id}`} tabindex="-1" role="dialog" aria-labelledby="addnewEventModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="">
+                <div className="modal fade" id={`editEvent${id}`} tabIndex="-1" role="dialog" aria-labelledby="addnewEventModal" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="">
                                     Update an event
                                 </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form>
                                     <div className="form-row">
                                         <div className="form-group">
@@ -167,8 +167,8 @@ class UpdateEventForm extends Component {
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmitEvent} type="button" class="btn btn-primary" data-dismiss="modal">
+                            <div className="modal-footer">
+                                <button onClick={this.handleSubmitEvent} type="button" className="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
                                 </button>
                             </div>

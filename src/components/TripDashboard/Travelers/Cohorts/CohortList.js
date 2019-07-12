@@ -23,7 +23,7 @@ const CohortList = ({ cohorts }) => {
                 </div>
             </div>
             <hr />
-            <ul class="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
+            <ul className="list-group" style={{ display: 'flex', flexDirection: 'column' }}>
                 {cohortList}
             </ul>
         </div>

@@ -36,8 +36,6 @@ class Event extends Component {
                 break
         }
 
-        console.log(event)
-
         const map =
             event.coordinates.long && event.coordinates.lat ? (
                 <div className="row">
