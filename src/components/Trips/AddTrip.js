@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+import ModalForm from '../Forms/ModalForm'
+import Uploader from '../Other/Uploader'
 
 class AddTrip extends Component {
 
