@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
-import { Field, ErrorMessage } from 'formik'
+import React from 'react'
+import { Field } from 'formik'
 import * as Yup from 'yup'
 import ModalForm from '../Forms/ModalForm'
 import Uploader from '../Other/Uploader'
 import FormField from '../Forms/FormField'
+import { dateValidator } from '../../util/validators';
 
 export default function AddTrip({ submit }) {
     const initialValues = {
@@ -21,10 +22,8 @@ export default function AddTrip({ submit }) {
             .required('Please enter a trip name'),
         image: Yup.string()
             .required('Please upload an image'),
-        dateStart: Yup.string()
-            .required('Please enter a start date'),
-        dateEnd: Yup.string()
-            .required('Please enter an end date'),
+        dateStart: dateValidator,
+        dateEnd: dateValidator,
         description: Yup.string()
             .min(2, 'Please enter a longer description')
             .max(50, 'Please enter a short description')
