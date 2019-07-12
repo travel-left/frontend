@@ -15,7 +15,7 @@ export default function SelectField({ name, options, label }) {
             <label htmlFor={name} className="d-block">
                 {label}
             </label>
-            <Field name={name} component="select" className="d-block">
+            <Field name={name} component="select" className="d-block form-control">
                 <OptionList options={options} />
             </Field>
         </>

@@ -2,6 +2,7 @@ import React from 'react'
 import SelectField from '../../Forms/SelectField'
 import * as Yup from 'yup'
 import ModalForm from '../../Forms/ModalForm'
+import { tripStatusValidator } from '../../../util/validators'
 
 export default function TripDatesForm({ status, submit }) {
     const initialValues = {
@@ -28,10 +29,8 @@ export default function TripDatesForm({ status, submit }) {
         }
     ]
 
-    const statusValidator = Yup.string().required()
-
     const schema = Yup.object().shape({
-        status: statusValidator
+        status: tripStatusValidator
     })
     return (
         <ModalForm icon="far fa-edit pl-2 text-light hover" title="Trip name" validationSchema={schema} initialValues={initialValues} submit={submit}>

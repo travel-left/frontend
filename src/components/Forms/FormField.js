@@ -17,7 +17,7 @@ export default function FormField({ name, placeholder, label, type }) {
             <label htmlFor={name} className="d-block">
                 {label}
             </label>
-            <Field name={name} type={type} placeholder={placeholder} className="d-block" />
+            <Field name={name} type={type} placeholder={placeholder} className="d-block form-control" />
         </>
     )
 }
