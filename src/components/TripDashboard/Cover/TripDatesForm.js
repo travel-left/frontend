@@ -25,7 +25,7 @@ export default function TripDatesForm({ dateStart, dateEnd, submit }) {
         )
     }
     return (
-        <ModalForm button={button} title="Trip name" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm button={button} title="Trip dates" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="dateStart" label="Trip Start Date" placeholder={initialValues.dateStart} type="date" />
             <FormField name="dateEnd" label="Trip End Date" placeholder={initialValues.dateEnd} type="date" />
         </ModalForm>
