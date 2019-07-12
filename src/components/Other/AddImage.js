@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FileUploader from './FileUploader'
+import FileUploader from '../Forms/FileUploader'
 import Image from './Image'
 
 export default class AddImage extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AddImage from '../Other/AddImage'
-import TextInput from '../Other/TextInput'
+import TextInput from '../Forms/TextInput'
 import './Auth.css'
 
 export default class CreateProfile extends Component {
@@ -28,7 +28,7 @@ export default class CreateProfile extends Component {
                 history.push('/')
             })
         } catch (err) {
-            console.log(err)
+            console.error(err)
             this.setState({ error: err })
         }
     }

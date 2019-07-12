@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FileUploader from '../../../Other/FileUploader'
+import FileUploader from '../../../Forms/FileUploader'
 
 class AddTraveler extends Component {
     state = {

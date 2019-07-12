@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
-import OptionList from '../../../Other/OptionList'
-import FileUploader from '../../../Other/FileUploader'
+import OptionList from '../../../Forms/OptionList'
+import FileUploader from '../../../Forms/FileUploader'
 
 class AddEvent extends Component {
     state = {

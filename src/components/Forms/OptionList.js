@@ -1,5 +1,9 @@
 import React from 'react'
 
+/**
+ * Displays a list of options based on the options object given.
+ * @param {{options: {name: string!, value: string!, default: boolean, hidden: boolean}}} props
+ */
 const OptionList = ({ options }) => {
     let optionList = options.map((option, key) => {
         if (option.disabled && option.hidden) {

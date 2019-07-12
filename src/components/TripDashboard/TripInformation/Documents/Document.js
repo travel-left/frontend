@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UpdateDocumentForm from './UpdateDocumentForm'
-import { getIcon } from 'pretty-file-icons'
+import { getIcon } from '../../../../util/file-icons'
 
 class Document extends Component {
     handleEditDocument = putObject => {
@@ -22,8 +22,10 @@ class Document extends Component {
                     </div>
                     <div className="card shadow mb-3 mx-4">
                         <div className="row no-gutters">
-                            <div className='col-md-4'>
-                                <a className="hover" href={link} target="_blank"></a>
+                            <div className="col-md-4">
+                                <a className="hover" href={link} target="_blank">
+                                    <img src={linkImg} alt="" style={{ objectFit: 'cover' }} />
+                                </a>
                             </div>
                             <div className="col-md-8 d-flex justify-content-center">
                                 <div className="card-body d-flex flex-column justify-content-around">

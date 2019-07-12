@@ -15,16 +15,8 @@ export const addTrip = trip => {
     }
 }
 
-export const handleSetCurrentTrip = trip => {
-    return dispatch => {
-        return apiCall('GET', `/api/trips/${trip._id}/cohorts`)
-            .then(cohorts => {
-                console.log(cohorts)
-                trip.cohorts = cohorts
-                dispatch(setCurrentTrip(trip))
-            })
-            .catch(err => {
-                console.log('error setting trip')
-            })
-    }
-}
+// export const handleSetCurrentTrip = trip => {
+//     return dispatch => {
+//         return dispatch(setCurrentTrip(trip))
+//     }
+// }

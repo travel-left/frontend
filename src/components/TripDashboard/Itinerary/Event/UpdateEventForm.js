@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import OptionList from '../../../Other/OptionList'
-import FileUploader from '../../../Other/FileUploader'
+import OptionList from '../../../Forms/OptionList'
+import FileUploader from '../../../Forms/FileUploader'
 
 class UpdateEventForm extends Component {
     state = {
         title: this.props.event.title,
-        timeStart: moment(this.props.event.dtStart, ["h:mm A"]).format("HH:mm"),
-        timeEnd: moment(this.props.event.dtEnd, ["h:mm A"]).format("HH:mm"),
+        timeStart: moment(this.props.event.dtStart, ['h:mm A']).format('HH:mm'),
+        timeEnd: moment(this.props.event.dtEnd, ['h:mm A']).format('HH:mm'),
         tzStart: this.props.event.tzStart,
         tzEnd: this.props.event.tzEnd,
         category: this.props.event.category,
@@ -87,7 +87,7 @@ class UpdateEventForm extends Component {
         return (
             <>
                 <h5 className="text-light hover d-inline" data-toggle="modal" data-target={`#editEvent${id}`}>
-                    <i class="far fa-edit text-secondary"></i>
+                    <i class="far fa-edit text-secondary" />
                 </h5>
                 <div class="modal fade" id={`editEvent${id}`} tabindex="-1" role="dialog" aria-labelledby="addnewEventModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">

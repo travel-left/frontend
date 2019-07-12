@@ -29,7 +29,7 @@ class TripCoordinator extends Component {
                         </div>
                     </div>
                     <div className="col-md-2 d-flex d-row align-items-center">
-                        <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} id={_id} submit={this.handleUpdateCoordinator}></UpdateCoordinatorForm>
+                        <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} id={_id} phone={phone} submit={this.handleUpdateCoordinator}></UpdateCoordinatorForm>
                     </div>
                 </div>
             </div>

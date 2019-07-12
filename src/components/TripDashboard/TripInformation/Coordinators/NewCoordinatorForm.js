@@ -1,8 +1,12 @@
-import React, { Component } from 'react'
-import FileUploader from '../../../Other/FileUploader'
+import React from 'react'
+import { Field } from 'formik'
+import * as Yup from 'yup'
+import FormField from '../../../Forms/FormField'
+import ModalForm from '../../../Forms/ModalForm'
+import Uploader from '../../../Other/Uploader'
 
-class NewCoordinatorForm extends Component {
-    state = {
+export default function NewCoordinatorForm({ submit }) {
+    const initialValues = {
         name: '',
         image: '',
         email: '',
@@ -10,81 +14,30 @@ class NewCoordinatorForm extends Component {
         phone: ''
     }
 
-    handleUpload = url => {
-        this.setState({
-            image: url
-        })
+    const schema = Yup.object().shape({
+        name: Yup.string()
+            .min(2, 'Please enter a longer name')
+            .max(50, 'Please enter a shorter name')
+            .required('Please enter a name'),
+        image: Yup.string()
+            .required('Please upload an image'),
+        email: Yup.string()
+            .email('please enter a valid email'),
+    })
+
+    const button = {
+        classes: 'btn btn-primary mb-4',
+        text: 'add new'
     }
 
-    handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.submit(this.state)
-        this.setState({
-            name: '',
-            img: '',
-            email: '',
-            title: '',
-            phone: ''
-        })
-    }
-
-    render() {
-        let { name, email, image, title, phone } = this.state
-
-        return (
-            <>
-                <button className="btn btn-primary mb-4" data-toggle="modal" data-target="#newCoordinator">
-                    add new
-                </button>
-                <div class="modal fade" id="newCoordinator" tabindex="-1" role="dialog" aria-labelledby="addnewCoordinatorModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addnewCoordinatorModal">
-                                    New Coordinator
-                                </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-10">
-                                            <label htmlFor="name">Full Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="Jordan Boudreau" />
-                                            <label htmlFor="name">Image</label>
-                                            <div className="input-group">
-                                                <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                                <FileUploader id="newCoordinator" isAuth={true} onUpload={this.handleUpload} accept="image/*" />
-                                            </div>
-                                            <label htmlFor="name">Email</label>
-                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="jordan@travel-left.com" />
-                                            <label htmlFor="phone">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
-                                            <label htmlFor="title">Title</label>
-                                            <input value={title} onChange={this.handleChange} type="text" class="form-control" name="title" placeholder="Travel Coordinator" />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
-                                    SUBMIT
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
-    }
+    return (
+        <ModalForm button={button} title='Add a new coordinator to your trip' validationSchema={schema} initialValues={initialValues} submit={submit} >
+            <FormField name="name" label="Name" placeholder="Steve Jobs" />
+            <Field component={Uploader} />
+            <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
+            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="phone" />
+            <FormField name="title" label="Title" placeholder="CEO" />
+        </ModalForm>
+    )
 }
-
-export default NewCoordinatorForm

@@ -15,7 +15,7 @@ export const handleSetCurrentCohort = (tripId, cohortId) => {
                 dispatch(setCurrentCohort(cohort))
             })
             .catch(err => {
-                console.log('error setting trip')
+                console.error('error setting trip')
             })
     }
 }

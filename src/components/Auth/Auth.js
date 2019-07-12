@@ -15,7 +15,7 @@ export default class Auth extends Component {
             await onAuth('signin', state)
             history.push('/')
         } catch (err) {
-            console.log(err)
+            console.error(err)
             this.setState({ error: err })
         }
     }
@@ -31,7 +31,7 @@ export default class Auth extends Component {
                 history.push('/')
             }
         } catch (err) {
-            console.log(err)
+            console.error(err)
             this.setState({ error: err })
         }
     }
