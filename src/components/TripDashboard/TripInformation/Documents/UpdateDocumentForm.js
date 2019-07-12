@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FileUploader from '../../../Other/FileUploader'
+import FileUploader from '../../../Forms/FileUploader'
 
 class UpdateDocumentForm extends Component {
     state = {
@@ -7,7 +7,6 @@ class UpdateDocumentForm extends Component {
     }
 
     handleUpload = url => {
-        console.log(url)
         this.setState({
             link: url
         })
@@ -29,7 +28,7 @@ class UpdateDocumentForm extends Component {
 
         return (
             <>
-                <i class="far fa-edit fa-2x float-right text-secondary hover" data-toggle="modal" data-target={'#editDocument' + id}></i>
+                <i class="far fa-edit fa-2x float-right text-secondary hover" data-toggle="modal" data-target={'#editDocument' + id} />
                 <div class="modal fade" id={'editDocument' + id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

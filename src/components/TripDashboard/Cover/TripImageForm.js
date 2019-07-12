@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FileUploader from '../../Other/FileUploader'
+import FileUploader from '../../Forms/FileUploader'
 
 class TripImageForm extends Component {
     state = {
@@ -34,7 +34,7 @@ class TripImageForm extends Component {
         return (
             <>
                 <h5 className="text-light hover" data-toggle="modal" data-target="#newImage">
-                    Change cover photo <i class="far fa-images"></i>
+                    Change cover photo <i class="far fa-images" />
                 </h5>
                 <div class="modal fade" id="newImage" tabindex="-1" role="dialog" aria-labelledby="addnewImageModal" aria-hidden="true">
                     <div class="modal-dialog" role="document">

@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
-import UpdateEventForm from './UpdateEventForm';
+import UpdateEventForm from './UpdateEventForm'
+import Map from './Map'
 
 class Event extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     deleteEvent = () => {
         this.props.removeEvent(this.props.event._id)
     }
@@ -16,7 +13,8 @@ class Event extends Component {
 
     render() {
         let { event } = this.props
-        let iconString, color = ''
+        let iconString,
+            color = ''
         switch (event.category) {
             case 'lodging':
                 iconString = 'fa-bed'
@@ -38,23 +36,44 @@ class Event extends Component {
                 break
         }
 
+        console.log(event)
+
+        const map =
+            event.coordinates.long && event.coordinates.lat ? (
+                <div className="row">
+                    <div className="col-12">
+                        <Map coordinates={event.coordinates} />
+                    </div>
+                </div>
+            ) : null
+
+        const addressAndMap = event.address ? (
+            <>
+                <p className="card-text">{'Address: ' + event.address}</p>
+                {map}
+            </>
+        ) : null
+
         return (
-            <div className='card mb-3 border-0 shadow'>
-                <div className="card-body">
-                    <h5 className="card-title">
-                        <strong> {event.title}</strong>
-                        <i className={`fa ${iconString} float-right`} style={{ color: color }} />
-                    </h5>
-                    <h6 className="card-subtitle mb-2" style={{ color: color }}>
-                        {event.dtStart} - {event.dtEnd}
-                    </h6>
-                    <p className="card-text">{event.summary}</p>
-                    <a href={event.link} className="card-link" target="_blank">
-                        {event.linkText}
-                    </a>
-                    <div>
-                        <UpdateEventForm event={this.props.event} submit={this.updateEvent} />
-                        <i className="fa fa-trash float-right hover" onClick={this.deleteEvent} />
+            <div className="card mb-3 border-0 shadow">
+                <div className="row">
+                    <div className="card-body">
+                        <h5 className="card-title">
+                            <strong> {event.title}</strong>
+                            <i className={`fa ${iconString} float-right`} style={{ color: color }} />
+                        </h5>
+                        <h6 className="card-subtitle mb-2" style={{ color: color }}>
+                            {event.dtStart} - {event.dtEnd}
+                        </h6>
+                        <p className="card-text">{event.summary}</p>
+                        {addressAndMap}
+                        <a href={event.link} className="card-link" target="_blank">
+                            {event.linkText}
+                        </a>
+                        <div>
+                            <UpdateEventForm event={this.props.event} submit={this.updateEvent} />
+                            <i className="fa fa-trash float-right hover" onClick={this.deleteEvent} />
+                        </div>
                     </div>
                 </div>
             </div>

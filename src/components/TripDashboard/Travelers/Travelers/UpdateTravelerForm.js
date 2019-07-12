@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FileUploader from '../../../Other/FileUploader'
+import FileUploader from '../../../Forms/FileUploader'
 
 class UpdateTravelerForm extends Component {
     state = {
@@ -35,8 +35,7 @@ class UpdateTravelerForm extends Component {
 
         return (
             <>
-                <i class="far fa-edit fa-2x text-secondary hover" data-toggle="modal" data-target={'#editTraveler' + _id}>
-                </i>
+                <i class="far fa-edit fa-2x text-secondary hover" data-toggle="modal" data-target={'#editTraveler' + _id} />
                 <div class="modal fade" id={'editTraveler' + _id} tabindex="-1" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -65,7 +64,7 @@ class UpdateTravelerForm extends Component {
                                             <textarea value={personalNotes} onChange={this.handleChange} type="textarea" size={4} class="form-control" name="personalNotes" placeholder="List any personal notes about your traveler here" />
                                             <label htmlFor="status">Status</label>
                                             <br />
-                                            <select className='' value={status} onChange={this.handleChange} name="status">
+                                            <select className="" value={status} onChange={this.handleChange} name="status">
                                                 <option value={'INVITED'}>Invited</option>
                                                 <option value={'CONFIRMED'}>Confrimed</option>
                                                 <option value={'ON-TRIP'}>On Trip</option>

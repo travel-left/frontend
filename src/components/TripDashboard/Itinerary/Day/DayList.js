@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import moment from 'moment'
 
 class DayList extends Component {
-
-    constructor(props) {
-        super(props)
-    }
     handleChange = e => {
         this.props.submit(e.target.value)
     }
@@ -20,7 +16,7 @@ class DayList extends Component {
         ))
 
         return (
-            <select className='' value={currentDay} onChange={this.handleChange}>
+            <select className="form-control col-4" value={currentDay} onChange={this.handleChange}>
                 {dayList}
             </select>
         )

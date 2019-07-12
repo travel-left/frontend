@@ -1,36 +1,20 @@
-import React, { Component } from 'react'
-import { Field, ErrorMessage } from 'formik'
+import React from 'react'
 import * as Yup from 'yup'
-import ModalForm from '../../Other/ModalForm'
+import ModalForm from '../../Forms/ModalForm'
+import FormField from '../../Forms/FormField'
+import { nameValidator } from '../../../util/validators'
 
-class TripNameForm extends Component {
-
-    state = {
-        name: this.props.name
+export default function TripNameForm({ name, submit }) {
+    const initialValues = {
+        name: name
     }
 
-    constructor(props) {
-        super(props)
-
-        this.TripNameSchema = Yup.object().shape({
-            name: Yup.string()
-                .min(2, 'Please enter a longer name')
-                .max(50, 'Please enter a short name')
-                .required('Please enter a trip name')
-        })
-    }
-
-    render() {
-        return (
-            <ModalForm icon='far fa-edit fa-2x text-primary text-secondary' title='Trip name' validationSchema={this.TripNameSchema} initialValues={this.state} submit={this.props.submit} >
-                <span className='d-block text-danger'>
-                    <ErrorMessage name="name" />
-                </span>
-                <label htmlFor="name" className='d-block'>Trip name</label>
-                <Field name="name" placeholder="Austrailia" className='d-block'></Field>
-            </ModalForm>
-        )
-    }
+    const schema = Yup.object().shape({
+        name: nameValidator
+    })
+    return (
+        <ModalForm icon="far fa-edit fa-2x text-primary text-secondary" title="Trip name" validationSchema={schema} initialValues={initialValues} submit={submit}>
+            <FormField name="name" placeholder="Australia" label="Trip Name" />
+        </ModalForm>
+    )
 }
-
-export default TripNameForm

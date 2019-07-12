@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import FileUploader from '../../../Other/FileUploader'
+import FileUploader from '../../../Forms/FileUploader'
 
 class AddDocument extends Component {
     state = {
@@ -9,7 +9,6 @@ class AddDocument extends Component {
     }
 
     handleUpload = url => {
-        console.log(url)
         this.setState({
             link: url
         })
