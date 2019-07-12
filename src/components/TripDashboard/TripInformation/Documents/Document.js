@@ -10,7 +10,7 @@ class Document extends Component {
     render() {
         let { name, description, link, _id } = this.props
 
-        // const linkImg = getIcon(link)
+        const linkImg = getIcon(link)
 
         return (
             <div className="col-md-4 my-2">
