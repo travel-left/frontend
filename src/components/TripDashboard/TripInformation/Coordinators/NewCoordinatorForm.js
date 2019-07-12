@@ -26,7 +26,7 @@ export default function NewCoordinatorForm({ submit }) {
     })
 
     const button = {
-        classes: 'btn btn-lg btn-primary mb-4',
+        classes: 'btn btn-primary mb-4',
         text: 'add new'
     }
 

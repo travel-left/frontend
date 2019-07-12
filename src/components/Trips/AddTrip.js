@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import ModalForm from '../Forms/ModalForm'
 import Uploader from '../Other/Uploader'
 import FormField from '../Forms/FormField'
-import { dateValidator } from '../../util/validators';
+import { dateValidator } from '../../util/validators'
 
 export default function AddTrip({ submit }) {
     const initialValues = {

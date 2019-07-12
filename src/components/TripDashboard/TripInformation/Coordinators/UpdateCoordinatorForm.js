@@ -1,74 +1,43 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { Field } from 'formik'
+import * as Yup from 'yup'
+import FormField from '../../../Forms/FormField'
+import ModalForm from '../../../Forms/ModalForm'
+import Uploader from '../../../Other/Uploader'
 
-class UpdateCoordinatorForm extends Component {
-
-    state = {
-        name: this.props.name,
-        image: this.props.image,
-        email: this.props.email,
-        id: this.props.id,
-        phone: this.props.phone
+export default function UpdateCoordinatorForm({ submit, name, image, email, title, phone }) {
+    const initialValues = {
+        name,
+        image,
+        email,
+        title,
+        phone
     }
 
-    constructor(props) {
-        super(props)
+    const schema = Yup.object().shape({
+        name: Yup.string()
+            .min(2, 'Please enter a longer name')
+            .max(50, 'Please enter a shorter name')
+            .required('Please enter a name'),
+        image: Yup.string()
+            .required('Please upload an image'),
+        email: Yup.string()
+            .email('please enter a valid email'),
+    })
+
+    const button = {
+        classes: 'btn btn-secondary text-light mb-4',
+        text: 'edit'
     }
 
-    handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.submit(this.state)
-    }
-
-    render() {
-        let { name, email, image, id, phone } = this.state
-
-        return (
-            <>
-                <button className="btn btn btn-secondary text-light" data-toggle="modal" data-target={"#editCoordinator" + id}>edit</button>
-                <div class="modal fade" id={"editCoordinator" + id} tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" >
-                                    Edit Coordinator
-                            </h5>
-                                <button type="button" class="close" data-dismiss="modal">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="form-row">
-                                        <div class="form-group col-10">
-                                            <label htmlFor="name">Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" class="form-control" name="name" placeholder="name" />
-                                            <label htmlFor="name">Image</label>
-                                            <input value={image} onChange={this.handleChange} type="text" class="form-control" name="image" placeholder="image" />
-                                            <label htmlFor="name">Email</label>
-                                            <input value={email} onChange={this.handleChange} type="text" class="form-control" name="email" placeholder="email" />
-                                            <label htmlFor="phone">Phone</label>
-                                            <input value={phone} onChange={this.handleChange} type="text" class="form-control" name="phone" placeholder="559-867-5309" />
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
-                                    SUBMIT
-                            </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
-    }
+    return (
+        <ModalForm button={button} title='Update coordinator' validationSchema={schema} initialValues={initialValues} submit={submit} >
+            <FormField name="name" label="Name" placeholder="Steve Jobs" />
+            <Field component={Uploader} />
+            <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
+            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="text" />
+            <FormField name="title" label="Title" placeholder="CEO" />
+        </ModalForm>
+    )
 }
-
-export default UpdateCoordinatorForm
