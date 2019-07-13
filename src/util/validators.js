@@ -19,5 +19,6 @@ export const tripDateTypeValidator = Yup.string()
 
 export const descriptionValidator = Yup.string()
     .min(2, 'Please enter a longer description')
-    .max(50, 'Please enter a shorter description')
-    .required('Please enter a description')
+    .max(500, 'Please enter a shorter description')
+
+export const fileValidator = Yup.string().url('Please add a valid file')

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import DayList from './Day/DayList'
 import EventList from './Event/EventList'
 import { apiCall } from '../../../util/api'
-import AddEvent from './Event/AddEvent'
+import EventForm from './Event/EventForm'
 import moment from 'moment-timezone'
 import Alert from '../../Other/Alert'
 
@@ -135,8 +135,8 @@ class Itinerary extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12 d-flex d-row justify-content-between align-items-center">
+                            <EventForm formType="add" submit={this.submitEvent} initDay={addEventDay} />
                             {dayList}
-                            <AddEvent submit={this.submitEvent} initDay={addEventDay} />
                         </div>
                     </div>
                 </div>

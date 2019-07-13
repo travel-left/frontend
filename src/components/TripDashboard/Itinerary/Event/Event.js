@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import UpdateEventForm from './UpdateEventForm'
+import EventForm from './EventForm'
 import Map from './Map'
 
 class Event extends Component {
@@ -64,12 +64,12 @@ class Event extends Component {
                             {event.dtStart} - {event.dtEnd}
                         </h6>
                         <p className="card-text">{event.summary}</p>
-                        {addressAndMap}
-                        <a href={event.link} className="card-link" target="_blank">
+                        <a href={event.link} className="card-link" target="_blank" rel="noopener noreferrer">
                             {event.linkText}
                         </a>
+                        {addressAndMap}
                         <div>
-                            <UpdateEventForm event={this.props.event} submit={this.updateEvent} />
+                            <EventForm formType="edit" event={this.props.event} submit={this.updateEvent} />
                             <i className="fa fa-trash float-right hover" onClick={this.deleteEvent} />
                         </div>
                     </div>

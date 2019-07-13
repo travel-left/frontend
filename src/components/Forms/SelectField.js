@@ -6,7 +6,10 @@ import OptionList from './OptionList'
  * Component for managing Formik Field and ErrorMessage Component
  * @param {name: string!, placeholder: string!, label: string!, type: string} props Data passed in from the parent element
  */
-export default function SelectField({ name, options, label }) {
+export default function SelectField({ name, options, label, className }) {
+    if (!className) {
+        className = ''
+    }
     return (
         <>
             <span className="d-block text-danger">
@@ -15,7 +18,7 @@ export default function SelectField({ name, options, label }) {
             <label htmlFor={name} className="d-block">
                 {label}
             </label>
-            <Field name={name} component="select" className="d-block form-control">
+            <Field name={name} component="select" className={`d-block form-control ${className}`}>
                 <OptionList options={options} />
             </Field>
         </>
