@@ -1,5 +1,5 @@
 import React from 'react'
-import EditTripDate from './EditTripDate'
+import TripDateForm from './TripDateForm'
 import Moment from 'react-moment'
 
 export default function TripDate({ name, date, type, editTripDate }) {
@@ -46,7 +46,7 @@ export default function TripDate({ name, date, type, editTripDate }) {
                     </p>
                 </div>
                 <div className="col-md-2 d-flex d-row align-items-center justify-content-center hover">
-                    <EditTripDate formType="edit" name={name} date={date} type={type} submit={editTripDate} />
+                    <TripDateForm formType="edit" name={name} date={date} type={type} submit={editTripDate} />
                 </div>
             </div>
         </div>
