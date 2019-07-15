@@ -1,5 +1,5 @@
 import React from 'react'
-import EditTripDate from './EditTripDate'
+import TripDateForm from './TripDateForm'
 import Moment from 'react-moment'
 
 export default function TripDate({ name, date, type, editTripDate }) {
@@ -32,7 +32,7 @@ export default function TripDate({ name, date, type, editTripDate }) {
     }
 
     return (
-        <div class="card-body px-0">
+        <div className="card-body px-0">
             <div className="row no-gutters d-flex justify-space-around">
                 <div className="col-md-3 d-flex flex-row align-items-center justify-content-center">
                     <i className={icon.string} style={{ color: icon.color }} />
@@ -40,13 +40,13 @@ export default function TripDate({ name, date, type, editTripDate }) {
                 <div className="col-md-7">
                     <p className="text-bold my-1">{name}</p>
                     <p className="my-1">
-                        <small class="text-muted">
+                        <small className="text-muted">
                             <Moment date={date} format="MMMM DD" />
                         </small>
                     </p>
                 </div>
                 <div className="col-md-2 d-flex d-row align-items-center justify-content-center hover">
-                    <EditTripDate formType="edit" name={name} date={date} type={type} submit={editTripDate} />
+                    <TripDateForm formType="edit" name={name} date={date} type={type} submit={editTripDate} />
                 </div>
             </div>
         </div>

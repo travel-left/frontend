@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import { apiCall } from '../../util/api';
 
 class TripInfo extends Component {
-
-    constructor(props) {
-        super(props)
-    }
-
     handleEditClick = () => {
         this.props.edit(this.props.trip._id)
     }

@@ -3,7 +3,7 @@ import { Field } from 'formik'
 import * as Yup from 'yup'
 import FormField from '../../../Forms/FormField'
 import ModalForm from '../../../Forms/ModalForm'
-import Uploader from '../../../Other/Uploader'
+import Uploader from '../../../Forms/Uploader'
 
 export default function UpdateCoordinatorForm({ submit, name, image, email, title, phone }) {
     const initialValues = {
@@ -19,10 +19,8 @@ export default function UpdateCoordinatorForm({ submit, name, image, email, titl
             .min(2, 'Please enter a longer name')
             .max(50, 'Please enter a shorter name')
             .required('Please enter a name'),
-        image: Yup.string()
-            .required('Please upload an image'),
-        email: Yup.string()
-            .email('please enter a valid email'),
+        image: Yup.string().required('Please upload an image'),
+        email: Yup.string().email('please enter a valid email')
     })
 
     const button = {
@@ -30,9 +28,8 @@ export default function UpdateCoordinatorForm({ submit, name, image, email, titl
         text: 'edit'
     }
 
-
     return (
-        <ModalForm button={button} title='Update coordinator' validationSchema={schema} initialValues={initialValues} submit={submit} >
+        <ModalForm button={button} title="Update coordinator" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
             <Field component={Uploader} />
             <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />

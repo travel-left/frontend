@@ -91,7 +91,7 @@ class Communicate extends Component {
         let alert = showAlert ? <Alert text='This is where you can communicate with the travelers on your trip.  Click "NEW NOTIFICATION" to create and send a real-time notification to your travelers.' closeAlert={this.closeAlert} /> : null
 
         return (
-            <div class="">
+            <div className="">
                 <div className="row">
                     <div className="col-md-12 d-none d-md-block">{alert}</div>
                 </div>

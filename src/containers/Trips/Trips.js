@@ -7,7 +7,6 @@ import TripList from '../../components/Trips/TripList'
 import TripInfo from '../../components/Trips/TripInfo'
 import { handleSetCurrentCohort } from '../../store/actions/cohort'
 import AddTrip from '../../components/Trips/AddTrip'
-import { userInfo } from 'os'
 
 class Trips extends Component {
     state = {
@@ -132,7 +131,7 @@ class Trips extends Component {
                     </div>
                     <div className="row trips-side-bar bg-light" style={{ minHeight: '80vh' }}>
                         <div className="col px-0">
-                            <ul class="list-group ">
+                            <ul className="list-group ">
                                 <LeftBarItem text="All Trips" total={trips.length} active={filter === 'All Trips'} handleClick={this.onSideNavClick} />
                                 <LeftBarItem text="Active" total={tripStatusCounts.ACTIVE} active={filter === 'Active'} handleClick={this.onSideNavClick} />
                                 <LeftBarItem text="Planned" total={tripStatusCounts.PLANNED} active={filter === 'Planned'} handleClick={this.onSideNavClick} />
@@ -180,7 +179,7 @@ const LeftBarItem = ({ text, total, active, handleClick }) => {
         classes += ' active'
     }
     return (
-        <a href="" className={classes} onClick={handleClick} name={text}>
+        <a href="/" className={classes} onClick={handleClick} name={text}>
             {text}
             <span className="badge badge-primary badge-pill">{total}</span>
         </a>

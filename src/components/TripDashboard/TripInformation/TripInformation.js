@@ -8,7 +8,7 @@ import ContactList from './Contacts/ContactList'
 import DocumentList from './Documents/DocumentList'
 import AddDocument from './Documents/AddDocument'
 import TripDatesList from './TripDates/TripDateList'
-import EditTripDate from './TripDates/EditTripDate'
+import TripDateForm from './TripDates/TripDateForm'
 import Alert from '../../Other/Alert'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../../store/actions/trip'
@@ -172,9 +172,9 @@ class TripInformation extends Component {
                         <div className="row">{coordinatorList}</div>
                         <h4 className="text-dark my-3">Trip Dates</h4>
                         <div className="row">
-                            <div class="card shadow border-0 mb-3 col-md-4 mx-4">
+                            <div className="card shadow border-0 mb-3 col-md-4 mx-4">
                                 {tripDatesList}
-                                <EditTripDate formType="add" submit={this.createTripDate} />
+                                <TripDateForm formType="add" submit={this.createTripDate} />
                             </div>
                         </div>
                         <h4 className="text-dark my-3">Trip Documents</h4>

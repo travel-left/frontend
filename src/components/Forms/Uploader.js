@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
-import { ErrorMessage } from 'formik'
 
-class Uploader extends Component {
+export default class Uploader extends Component {
     state = {
         value: '',
         uploading: false
     }
+
     handleUpload = async e => {
         this.setState({ uploading: true })
         const [file] = e.target.files
+        console.log(file)
         let formData = new FormData()
         formData.append('file', file)
         let ret = await apiCall('post', '/api/files', formData)
@@ -19,7 +20,6 @@ class Uploader extends Component {
 
     render() {
         let {
-            label,
             form: { setFieldValue },
             field: { name }
         } = this.props

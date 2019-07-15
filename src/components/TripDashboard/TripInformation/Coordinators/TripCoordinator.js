@@ -21,10 +21,10 @@ class TripCoordinator extends Component {
                             <p className="text-bold my-1">{firstName + ' ' + lastName}</p>
                             <p className="my-1">{title}</p>
                             <p className="my-1">
-                                <small class="text-muted">{email}</small>
+                                <small className="text-muted">{email}</small>
                             </p>
                             <p className="my-1">
-                                <small class="text-muted">{phone}</small>
+                                <small className="text-muted">{phone}</small>
                             </p>
                         </div>
                     </div>

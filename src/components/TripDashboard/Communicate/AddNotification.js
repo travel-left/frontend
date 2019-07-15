@@ -22,34 +22,34 @@ class AddNotification extends Component {
         let { text, subject } = this.state
         return (
             <>
-                <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#newNotification">
+                <button className="btn btn-lg btn-primary" data-toggle="modal" data-target="#newNotification">
                     NEW NOTIFICATION
                 </button>
-                <div class="modal fade" id="newNotification" tabindex="-1" role="dialog" aria-labelledby="addnewNotificationModal" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addnewNotificationModal">
+                <div className="modal fade" id="newNotification" tabIndex="-1" role="dialog" aria-labelledby="addnewNotificationModal" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="addnewNotificationModal">
                                     Add a notification
                                 </h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form>
-                                    <div class="form-row">
+                                    <div className="form-row">
                                         <label htmlFor="subject">Subject</label>
-                                        <input value={subject} onChange={this.handleChange} type="text" class="form-control" name="subject" placeholder="Your subject" />
+                                        <input value={subject} onChange={this.handleChange} type="text" className="form-control" name="subject" placeholder="Your subject" />
                                     </div>
-                                    <div class="form-row">
+                                    <div className="form-row">
                                         <label htmlFor="text">Message</label>
-                                        <input value={text} onChange={this.handleChange} type="text" class="form-control" name="text" placeholder="Your notification message" />
+                                        <input value={text} onChange={this.handleChange} type="text" className="form-control" name="text" placeholder="Your notification message" />
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" class="btn btn-primary" data-dismiss="modal">
+                            <div className="modal-footer">
+                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary" data-dismiss="modal">
                                     SUBMIT
                                 </button>
                             </div>

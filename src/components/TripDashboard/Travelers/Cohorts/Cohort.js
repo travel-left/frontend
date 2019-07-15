@@ -3,25 +3,25 @@ import Image from '../../../Other/Image'
 
 const Cohort = ({ name }) => {
     return (
-        <div class="card">
-            <div class="row no-gutters" style={{ justifyContent: 'space-around' }}>
-                <div class="col-1">
+        <div className="card">
+            <div className="row no-gutters" style={{ justifyContent: 'space-around' }}>
+                <div className="col-1">
                     <Image src="..." diameter="75px" />
                 </div>
-                <div class="col-2">
-                    <p class="card-text" style={{ padding: '15px 5px 15px 5px' }}>
-                        <small class="text-muted">{name}</small>
+                <div className="col-2">
+                    <p className="card-text" style={{ padding: '15px 5px 15px 5px' }}>
+                        <small className="text-muted">{name}</small>
                     </p>
                 </div>
-                <div class="col-3" style={{ flexGrow: 2 }}>
-                    <p class="card-text" style={{ padding: '15px 5px 15px 5px' }}>
-                        <small class="text-muted" />
+                <div className="col-3" style={{ flexGrow: 2 }}>
+                    <p className="card-text" style={{ padding: '15px 5px 15px 5px' }}>
+                        <small className="text-muted" />
                     </p>
                 </div>
-                <div class="col-2" />
-                <div class="col-2">
-                    <p class="card-text pull-right" style={{ padding: '15px 5px 15px 5px' }}>
-                        <small class="text-muted" />
+                <div className="col-2" />
+                <div className="col-2">
+                    <p className="card-text pull-right" style={{ padding: '15px 5px 15px 5px' }}>
+                        <small className="text-muted" />
                     </p>
                 </div>
             </div>

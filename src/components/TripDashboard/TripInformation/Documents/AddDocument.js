@@ -26,11 +26,14 @@ export default function AddDocument({ submit }) {
         text: 'add new'
     }
 
-    return (
-        <ModalForm button={button} title='Add a document' validationSchema={schema} initialValues={initialValues} submit={submit} >
-            <FormField name="name" label="Name" placeholder="Name of your doc" />
-            <FormField name="link" label="Upload your document" component={Uploader} />
-            <FormField name="description" label="Document description" component="textarea" placeholder="A description for your document" className='d-block' />
-        </ModalForm>
-    )
+    render() {
+        let { name, link, description } = this.state
+        return (
+            <ModalForm button={button} title='Add a document' validationSchema={schema} initialValues={initialValues} submit={submit} >
+                <FormField name="name" label="Name" placeholder="Name of your doc" />
+                <FormField name="link" label="Upload your document" component={Uploader} />
+                <FormField name="description" label="Document description" component="textarea" placeholder="A description for your document" className='d-block' />
+            </ModalForm>
+        )
+    }
 }

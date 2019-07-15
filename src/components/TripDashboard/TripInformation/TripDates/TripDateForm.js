@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import ModalForm from '../../../Forms/ModalForm'
 import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../../util/validators'
 
-export default function EditTripDate({ name, date, type, submit, formType }) {
+export default function TripDateForm({ name, date, type, submit, formType }) {
     const initialValues = {
         name: name || '',
         date: date ? date.split('T')[0] : '',
