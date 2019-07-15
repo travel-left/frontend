@@ -1,0 +1,33 @@
+import React from 'react'
+import Moment from 'react-moment'
+import FormField from '../../forms/FormField'
+import * as Yup from 'yup'
+import ModalForm from '../../forms/ModalForm'
+import { dateValidator } from '../../util/validators'
+
+export default function TripDatesForm({ dateStart, dateEnd, submit }) {
+    const initialValues = {
+        dateStart: dateStart.split('T')[0],
+        dateEnd: dateEnd.split('T')[0]
+    }
+
+    const schema = Yup.object().shape({
+        dateStart: dateValidator,
+        dateEnd: dateValidator
+    })
+
+    const button = {
+        classes: 'text-light',
+        text: (
+            <h5>
+                <Moment date={dateStart} format="MMMM DD" /> {' - '} <Moment date={dateEnd} format="MMMM DD" /> <i className="far fa-calendar-alt" />
+            </h5>
+        )
+    }
+    return (
+        <ModalForm button={button} title="Trip dates" validationSchema={schema} initialValues={initialValues} submit={submit}>
+            <FormField name="dateStart" label="Trip Start Date" placeholder={initialValues.dateStart} type="date" />
+            <FormField name="dateEnd" label="Trip End Date" placeholder={initialValues.dateEnd} type="date" />
+        </ModalForm>
+    )
+}

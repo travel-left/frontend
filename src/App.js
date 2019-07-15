@@ -1,12 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { configureStore } from './store'
+import { configureStore } from './redux'
 import './App.css'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Navbar from './containers/Navbar/Navbar'
-import Main from './containers/Main'
-import { setAuthorizationToken } from './store/actions/auth'
-import Footer from './components/Other/Footer'
+import Navbar from './Navbar/Navbar'
+import Main from './Main'
+import { setAuthorizationToken } from './redux/actions/auth'
+import Footer from './OtherComponents/Footer'
 
 const store = configureStore()
 
