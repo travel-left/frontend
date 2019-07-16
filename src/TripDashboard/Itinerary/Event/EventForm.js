@@ -64,7 +64,12 @@ export default function EventForm(props) {
         }
     ]
 
-    const button = {
+    const editButton = {
+        classes: 'btn btn btn-secondary text-light',
+        text: 'edit'
+    }
+
+    const submitButton = {
         classes: 'btn-primary btn-lg text-light mx-5 my-2',
         text: 'Add Event'
     }
@@ -84,9 +89,7 @@ export default function EventForm(props) {
         timeEnd: Yup.string('Time is not valid')
     })
 
-    const icon = 'far fa-edit text-secondary'
-
-    const formTypeStyle = edit ? { icon: icon } : { button }
+    const formTypeStyle = edit ? { button: editButton } : { button: submitButton }
     return (
         <ModalForm {...formTypeStyle} title="Add an Event" validationSchema={schema} initialValues={initialValues} submit={props.submit}>
             <div className="form-row">
