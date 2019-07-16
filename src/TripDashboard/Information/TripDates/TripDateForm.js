@@ -36,13 +36,18 @@ export default function TripDateForm({ name, date, type, submit, formType }) {
         date: dateValidator,
         type: tripDateTypeValidator
     })
-    const button = {
-        classes: 'btn-primary text-light mx-5 my-2',
-        text: 'Add New'
+    const submitButton = {
+        classes: 'btn btn-primary mb-4',
+        text: 'add new'
     }
-    const icon = 'fas fa-ellipsis-h h5 text-muted'
 
-    const formTypeStyle = formType === 'add' ? { button } : { icon: icon }
+    const editButton = {
+        classes: 'btn btn-secondary text-light mb-4',
+        text: 'edit'
+    }
+
+    const formTypeStyle = formType === 'add' ? { button: submitButton } : { button: editButton }
+
     return (
         <ModalForm {...formTypeStyle} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Payment Due" />
