@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UpdateTravelerForm from './UpdateTravelerForm'
-import Image from '../../../OtherComponents/Image'
+import Image from '../../../util/otherComponents/Image'
 
 export default class Traveler extends Component {
     updateTraveler = updateObject => {

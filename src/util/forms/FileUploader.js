@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { apiCall } from '../util/api'
+import { apiCall } from '../api'
 
 export default class FileUploader extends Component {
     handleUpload = async e => {

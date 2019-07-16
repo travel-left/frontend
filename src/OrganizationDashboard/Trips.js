@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
 import { connect } from 'react-redux'
-import { setCurrentTrip } from '../redux/actions/trip'
-import Alert from '../OtherComponents/Alert'
+import Alert from '../util/otherComponents/Alert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
-import { handleSetCurrentCohort } from '../redux/actions/cohort'
+import { handleSetCurrentCohort } from '../util/redux/actions/cohort'
+import { setCurrentTrip } from '../util/redux/actions/trip'
 import AddTrip from './AddTrip'
 
 class Trips extends Component {

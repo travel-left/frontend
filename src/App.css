@@ -2,10 +2,12 @@ body {
   font-family: 'Roboto';
 }
 
+/* UTILITY CLASSES */
 .hover {
     cursor: pointer;
 }
 
+/* MODAL CSS */
 .animated {
     animation-duration: .5s;
     animation-fill-mode: both;

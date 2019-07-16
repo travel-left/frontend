@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Image from '../../../OtherComponents/Image'
+import Image from '../../../util/otherComponents/Image'
 import UpdateContactForm from './UpdateContactForm'
 
 class Contact extends Component {

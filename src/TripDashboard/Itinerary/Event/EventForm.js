@@ -1,10 +1,10 @@
 import React from 'react'
 import moment from 'moment-timezone'
-import FormField from '../../../forms/FormField'
-import SelectField from '../../../forms/SelectField'
-import Uploader from '../../../forms/Uploader'
+import FormField from '../../../util/forms/FormField'
+import SelectField from '../../../util/forms/SelectField'
+import Uploader from '../../../util/forms/Uploader'
 import * as Yup from 'yup'
-import ModalForm from '../../../forms/ModalForm'
+import ModalForm from '../../../util/forms/ModalForm'
 import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
 
 export default function EventForm(props) {

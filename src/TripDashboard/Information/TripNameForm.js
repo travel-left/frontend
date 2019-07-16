@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Yup from 'yup'
-import ModalForm from '../../forms/ModalForm'
-import FormField from '../../forms/FormField'
+import ModalForm from '../../util/forms/ModalForm'
+import FormField from '../../util/forms/FormField'
 import { nameValidator } from '../../util/validators'
 
 export default function TripNameForm({ name, submit }) {

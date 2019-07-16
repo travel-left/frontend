@@ -1,7 +1,7 @@
 import React from 'react'
-import SelectField from '../../forms/SelectField'
+import SelectField from '../../util/forms/SelectField'
 import * as Yup from 'yup'
-import ModalForm from '../../forms/ModalForm'
+import ModalForm from '../../util/forms/ModalForm'
 import { tripStatusValidator } from '../../util/validators'
 
 export default function TripDatesForm({ status, submit }) {

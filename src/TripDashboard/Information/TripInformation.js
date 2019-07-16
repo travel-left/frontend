@@ -9,9 +9,9 @@ import DocumentList from './Documents/DocumentList'
 import AddDocument from './Documents/AddDocument'
 import TripDatesList from './TripDates/TripDateList'
 import TripDateForm from './TripDates/TripDateForm'
-import Alert from '../../OtherComponents/Alert'
+import Alert from '../../util/otherComponents/Alert'
 import { connect } from 'react-redux'
-import { setCurrentTrip } from '../../redux/actions/trip'
+import { setCurrentTrip } from '../../util/redux/actions/trip'
 
 class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id

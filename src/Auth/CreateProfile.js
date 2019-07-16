@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import AddImage from '../OtherComponents/AddImage'
-import TextInput from '../forms/TextInput'
+import AddImage from '../util/otherComponents/AddImage'
+import TextInput from '../util/forms/TextInput'
 import './Auth.css'
 
 export default class CreateProfile extends Component {

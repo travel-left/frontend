@@ -5,9 +5,8 @@ import Itinerary from './Itinerary/Itinerary'
 import TripInformation from './Information/TripInformation'
 import { NavLink } from 'react-router-dom'
 import Travelers from './Travelers/Travelers'
-import Communicate from './Communicate/Communicate'
-import { setCurrentTrip } from '../redux/actions/trip'
-import Cover from './Cover/Cover'
+import { setCurrentTrip } from '../util/redux/actions/trip'
+import Cover from './CoverPhoto/Cover'
 
 const Dashboard = ({ currentTrip, currentCohort, currentUser, setCurrentTrip }) => {
     return (

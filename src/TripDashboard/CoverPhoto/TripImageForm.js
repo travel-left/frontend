@@ -1,8 +1,8 @@
 import React from 'react'
 import { Field } from 'formik'
 import * as Yup from 'yup'
-import ModalForm from '../../forms/ModalForm'
-import Uploader from '../../forms/Uploader'
+import ModalForm from '../../util/forms/ModalForm'
+import Uploader from '../../util/forms/Uploader'
 
 export default function TripImageForm({ image, submit }) {
     const initialValues = {

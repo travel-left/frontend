@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TravelerList from './Travelers/TravelerList'
 import { apiCall } from '../../util/api'
 import AddTraveler from './Travelers/AddTraveler'
-import Alert from '../../OtherComponents/Alert'
+import Alert from '../../util/otherComponents/Alert'
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id

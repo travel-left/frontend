@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AddNotification from './AddNotification'
 import NotificationList from './NotificationList'
 import { apiCall } from '../../util/api'
-import Alert from '../../OtherComponents/Alert'
+import Alert from '../../util/otherComponents/Alert'
 
 class Communicate extends Component {
     state = {

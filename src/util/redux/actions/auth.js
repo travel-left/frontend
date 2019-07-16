@@ -1,5 +1,5 @@
 import { SET_CURRENT_USER } from '../actionTypes'
-import { apiCall, setTokenHeader } from '../../util/api'
+import { apiCall, setTokenHeader } from '../../../util/api'
 import { setCurrentCohort } from './cohort'
 import { setCurrentTrip } from './trip'
 

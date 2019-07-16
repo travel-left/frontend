@@ -1,8 +1,8 @@
 import React from 'react'
 import Moment from 'react-moment'
-import FormField from '../../forms/FormField'
+import FormField from '../../util/forms/FormField'
 import * as Yup from 'yup'
-import ModalForm from '../../forms/ModalForm'
+import ModalForm from '../../util/forms/ModalForm'
 import { dateValidator } from '../../util/validators'
 
 export default function TripDatesForm({ dateStart, dateEnd, submit }) {

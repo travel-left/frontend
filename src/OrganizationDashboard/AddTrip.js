@@ -1,8 +1,8 @@
 import React from 'react'
 import * as Yup from 'yup'
-import ModalForm from '../forms/ModalForm'
-import Uploader from '../forms/Uploader'
-import FormField from '../forms/FormField'
+import ModalForm from '../util/forms/ModalForm'
+import Uploader from '../util/forms/Uploader'
+import FormField from '../util/forms/FormField'
 import { dateValidator, nameValidator, descriptionValidator } from '../util/validators'
 
 export default function AddTrip({ submit }) {

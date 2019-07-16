@@ -4,7 +4,7 @@ import EventList from './Event/EventList'
 import { apiCall } from '../../util/api'
 import EventForm from './Event/EventForm'
 import moment from 'moment-timezone'
-import Alert from '../../OtherComponents/Alert'
+import Alert from '../../util/otherComponents/Alert'
 
 class Itinerary extends Component {
     tripId = this.props.currentTrip._id
