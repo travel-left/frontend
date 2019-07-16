@@ -71,7 +71,7 @@ export default function EventForm(props) {
 
     const submitButton = {
         classes: 'btn-primary btn-lg text-light mx-5 my-2',
-        text: 'Add Event'
+        text: 'New Event'
     }
 
     const schema = Yup.object().shape({
