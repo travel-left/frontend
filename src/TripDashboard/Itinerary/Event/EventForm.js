@@ -124,16 +124,21 @@ export default function EventForm(props) {
                     <SelectField name="tzEnd" options={names} />
                 </div>
             </div>
-            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" />
+            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
             <div className="form-row">
-                <div className="col-6">
+                <div className="col-10">
                     <FormField name="image" component={Uploader} label="Image Link" />
                 </div>
+            </div>
+            <div className="form-row">
                 <div className="col-6">
-                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link about Event" />
+                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
+                </div>
+                <div className="col-6">
+                    <FormField name="linkText" placeholder="link title" label='Link Title' />
                 </div>
             </div>
-            <FormField name="linkText" placeholder="name of your link" />
+
         </ModalForm>
     )
 }
