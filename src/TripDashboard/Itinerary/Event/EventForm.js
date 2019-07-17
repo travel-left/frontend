@@ -5,7 +5,12 @@ import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'
 import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
-import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
+import {
+    nameValidator,
+    dateValidator,
+    fileValidator,
+    descriptionValidator
+} from '../../../util/validators'
 
 export default function EventForm(props) {
     const edit = props.formType === 'edit'
@@ -48,19 +53,23 @@ export default function EventForm(props) {
         },
         {
             name: 'Lodging',
-            value: 'lodging'
+            value: 'LODGING'
         },
         {
             name: 'Event',
-            value: 'event'
+            value: 'EVENT'
         },
         {
             name: 'Transportation',
-            value: 'transportation'
+            value: 'TRANSPORTATION'
         },
         {
             name: 'Flight',
-            value: 'flight'
+            value: 'FLIGHT'
+        },
+        {
+            name: 'Other',
+            value: 'OTHER'
         }
     ]
 
@@ -88,18 +97,32 @@ export default function EventForm(props) {
 
     const formTypeStyle = edit ? { icon: icon } : { button }
     return (
-        <ModalForm {...formTypeStyle} title="Add an Event" validationSchema={schema} initialValues={initialValues} submit={props.submit}>
+        <ModalForm
+            {...formTypeStyle}
+            title="Add an Event"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={props.submit}
+        >
             <div className="form-row">
                 <div className="col-6">
                     <FormField name="title" label="Title" placeholder="Title" />
                 </div>
                 <div className="col-6">
-                    <SelectField name="category" options={categories} label="Categories" />
+                    <SelectField
+                        name="category"
+                        options={categories}
+                        label="Categories"
+                    />
                 </div>
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="dateStart" label="Start Time" type="date" />
+                    <FormField
+                        name="dateStart"
+                        label="Start Time"
+                        type="date"
+                    />
                 </div>
                 <div className="col-6">
                     <FormField name="dateEnd" label="End Time" type="date" />
@@ -121,13 +144,28 @@ export default function EventForm(props) {
                     <SelectField name="tzEnd" options={names} />
                 </div>
             </div>
-            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" />
+            <FormField
+                component="textarea"
+                name="summary"
+                cols="70"
+                rows="2"
+                placeholder="A summary of your event"
+            />
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="image" component={Uploader} label="Image Link" />
+                    <FormField
+                        name="image"
+                        component={Uploader}
+                        label="Image Link"
+                    />
                 </div>
                 <div className="col-6">
-                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link about Event" />
+                    <FormField
+                        name="link"
+                        placeholder="https://travel-left.com"
+                        type="link"
+                        label="Link about Event"
+                    />
                 </div>
             </div>
             <FormField name="linkText" placeholder="name of your link" />
