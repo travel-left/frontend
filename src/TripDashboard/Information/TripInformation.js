@@ -134,6 +134,11 @@ class TripInformation extends Component {
             })
     }
 
+    deleteDocument = async docId => {
+        await apiCall('delete', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents/${docId}`)
+        this.getDocuments()
+    }
+
     getTripDates = async () => {
         let tripDates = await apiCall('get', `/api/trips/${this.currentTripId}/tripDates`)
         this.setState({ tripDates })
@@ -164,7 +169,7 @@ class TripInformation extends Component {
         let { showAlert, coordinators, contacts, documents, tripDates } = this.state
         let coordinatorList = coordinators.length > 0 ? coordinators.map(c => <TripCoordinator key={c._id} coordinator={c} updateCoordinator={this.updateCoordinator} remove={this.removeCoordinator} />) : null
         let contactsList = contacts.length > 0 ? <ContactList contacts={contacts} updateContact={this.updateContact} /> : null
-        let documentsList = documents.length > 0 ? <DocumentList documents={documents} updateDocument={this.updateDocument} /> : null
+        let documentsList = documents.length > 0 ? <DocumentList documents={documents} updateDocument={this.updateDocument} deleteDocument={this.deleteDocument} /> : null
         let tripDatesList = tripDates.length > 0 ? <TripDatesList tripDates={tripDates} updateTripDate={this.updateTripDate} deleteTripDate={this.deleteTripDate} /> : null
         let alert = showAlert ? <Alert text="This is your trip dashboard.  Here you can manage coordinators, documents, dates, and emergency contacts." closeAlert={this.closeAlert} /> : null
 
