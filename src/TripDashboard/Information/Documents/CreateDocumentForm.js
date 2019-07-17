@@ -4,7 +4,7 @@ import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 import Uploader from '../../../util/forms/Uploader'
 
-export default function AddDocument({ submit }) {
+export default function CreateDocumentForm({ submit }) {
     const initialValues = {
         name: '',
         link: '',
@@ -28,8 +28,8 @@ export default function AddDocument({ submit }) {
 
     return (
         <ModalForm button={button} title='Add a document' validationSchema={schema} initialValues={initialValues} submit={submit} >
-            <FormField name="name" label="Name" placeholder="Name of your doc" />
-            <FormField name="link" label="Upload your document" component={Uploader} />
+            <FormField name="link" label="Link a document" placeholder="www.linktoyourdoc.com"></FormField>
+            <FormField name="link" label="Upload a document" component={Uploader} />
             <FormField name="description" label="Document description" component="textarea" placeholder="A description for your document" className='d-block' />
         </ModalForm>
     )

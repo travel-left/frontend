@@ -1,5 +1,4 @@
 import React from 'react'
-import { Field } from 'formik'
 import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
@@ -31,7 +30,7 @@ export default function UpdateCoordinatorForm({ submit, name, image, email, titl
     return (
         <ModalForm button={button} title="Update coordinator" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <Field component={Uploader} />
+            <FormField name="image" label="Upload an image" component={Uploader} />
             <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
             <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="text" />
             <FormField name="title" label="Title" placeholder="CEO" />

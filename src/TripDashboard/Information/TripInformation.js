@@ -6,7 +6,7 @@ import NewCoordinatorForm from './Coordinators/NewCoordinatorForm'
 import NewContactForm from './Contacts/NewContactForm'
 import ContactList from './Contacts/ContactList'
 import DocumentList from './Documents/DocumentList'
-import AddDocument from './Documents/AddDocument'
+import CreateDocumentForm from './Documents/CreateDocumentForm'
 import TripDatesList from './TripDates/TripDateList'
 import TripDateForm from './TripDates/TripDateForm'
 import Alert from '../../util/otherComponents/Alert'
@@ -58,12 +58,6 @@ class TripInformation extends Component {
         let updatedTrip = await apiCall('get', `/api/trips/${this.currentTripId}`)
         this.props.setCurrentTrip(updatedTrip)
     }
-
-    // addCohort = async cohort => {
-    //     await apiCall('post', `/api/trips/${this.props.currentTrip._id}/cohorts`, cohort)
-    //     let cohorts = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/cohorts`)
-    //     this.props.setCurrentTrip({ ...this.props.currentTrip, cohorts })
-    // }
 
     getCoordinators = async () => {
         let coordinators = await apiCall('get', `/api/trips/${this.currentTripId}/coordinators`)
@@ -195,7 +189,7 @@ class TripInformation extends Component {
                         <TripDateForm formType="add" submit={this.createTripDate} />
                         <div className="row">{tripDatesList}</div>
                         <h4 className="text-dark my-3">Trip Documents</h4>
-                        <AddDocument submit={this.createDocument} />
+                        <CreateDocumentForm submit={this.createDocument} />
                         <div className="row">{documentsList}</div>
                         <h4 className="text-dark my-3">Emergency Contacts</h4>
                         <NewContactForm submit={this.createContact} />

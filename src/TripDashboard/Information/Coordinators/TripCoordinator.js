@@ -32,7 +32,7 @@ class TripCoordinator extends Component {
                     </div>
                     <div className="col-md-3 d-flex flex-column justify-content-around">
                         <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} id={_id} phone={phone} submit={this.handleUpdateCoordinator}></UpdateCoordinatorForm>
-                        <button class="btn btn-danger " onClick={this.handleRemoveCoordinator}>remove</button>
+                        <button className="btn btn-danger " onClick={this.handleRemoveCoordinator}>remove</button>
                     </div>
                 </div>
             </div>

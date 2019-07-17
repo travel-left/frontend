@@ -22,6 +22,11 @@ class ModalForm extends Component {
         transition: false
     }
 
+    handleRemove = () => {
+        this.props.remove()
+        this.closeModal()
+    }
+
     openModal = () => {
         this.setState(prevState => ({ open: !prevState.open }))
         document.getElementById('app-root').classList.remove('darkFadeOut')
@@ -40,7 +45,7 @@ class ModalForm extends Component {
     render() {
         let modalClass = this.state.open ? 'show d-block animated fadeIn' : ''
         let fadeOut = this.state.transition ? 'show d-block animated fadeOut' : ''
-        let { title, validationSchema, initialValues, submit, icon, button } = this.props
+        let { title, validationSchema, initialValues, submit, remove, icon, button } = this.props
 
         let opener = icon ? <i className={`hover ${icon}`} onClick={this.openModal} ></i> :
             <button className={`btn ${button.classes}`} onClick={this.openModal} >{button.text}</button>
@@ -73,7 +78,8 @@ class ModalForm extends Component {
                                                 {this.props.children}
                                             </div>
                                             <hr className="mt-2" />
-                                            <button type="submit" disabled={isSubmitting} className="btn btn-lg btn-primary float-right mr-4 mb-4">SUBMIT</button>
+                                            {remove && <a className="btn btn-lg btn-danger ml-4 mb-4 text-light hover" onClick={this.handleRemove}>DELETE</a>}
+                                            <button type="submit" className="btn btn-lg btn-primary float-right mr-4 mb-4">SUBMIT</button>
                                         </Form>
                                     }
                                 </Formik>

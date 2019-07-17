@@ -56,8 +56,7 @@ export default class TripDate extends Component {
                         </p>
                     </div>
                     <div className="col-md-2 d-flex d-row align-items-center flex-column justify-content-around">
-                        <TripDateForm formType="edit" name={name} date={date} type={type} submit={editTripDate} />
-                        <button class="btn btn-danger" onClick={this.handleDelete}>delete</button>
+                        <TripDateForm formType="edit" _id={_id} name={name} date={date} type={type} submit={editTripDate} remove={deleteTripDate} />
                     </div>
                 </div>
             </div>

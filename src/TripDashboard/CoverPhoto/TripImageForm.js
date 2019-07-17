@@ -1,8 +1,8 @@
 import React from 'react'
-import { Field } from 'formik'
 import * as Yup from 'yup'
 import ModalForm from '../../util/forms/ModalForm'
 import Uploader from '../../util/forms/Uploader'
+import FormField from '../../util/forms/FormField';
 
 export default function TripImageForm({ image, submit }) {
     const initialValues = {
@@ -25,7 +25,7 @@ export default function TripImageForm({ image, submit }) {
 
     return (
         <ModalForm button={button} title="Change your trip cover photo" alidationSchema={schema} initialValues={initialValues} submit={submit}>
-            <Field component={Uploader} />
+            <FormField name="image" label="Upload a cover photo" component={Uploader} />
         </ModalForm>
     )
 }

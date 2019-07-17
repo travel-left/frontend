@@ -5,8 +5,9 @@ import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
 import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../util/validators'
 
-export default function TripDateForm({ name, date, type, submit, formType }) {
+export default function TripDateForm({ name, date, type, _id, submit, formType, remove }) {
     const initialValues = {
+        _id: _id || '',
         name: name || '',
         date: date ? date.split('T')[0] : '',
         type: type || 'TRAVEL'
@@ -49,7 +50,7 @@ export default function TripDateForm({ name, date, type, submit, formType }) {
     const formTypeStyle = formType === 'add' ? { button: submitButton } : { button: editButton }
 
     return (
-        <ModalForm {...formTypeStyle} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm {...formTypeStyle} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} remove={remove}>
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

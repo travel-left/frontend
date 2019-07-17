@@ -3,7 +3,7 @@ import UpdateDocumentForm from './UpdateDocumentForm'
 import { getIcon } from '../../../util/file-icons'
 
 class Document extends Component {
-    handleEditDocument = putObject => {
+    handleEdit = putObject => {
         this.props.updateDocument(this.props._id, putObject)
     }
 
@@ -34,21 +34,19 @@ class Document extends Component {
                                     </div>
                                     <div className="col-md-8 d-flex justify-content-center">
                                         <div className="card-body d-flex flex-column justify-content-around">
-                                            {/* <h5 className="card-title">{link}</h5> */}
                                             <a className="hover card-text" href={link} target="_blank" rel="noopener noreferrer">
                                                 <small className="text-muted">Download</small>
                                             </a>
-
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                         <div className="col-md-4">
-                            <UpdateDocumentForm id={_id} name={name} description={description} link={link} submit={this.handleEditDocument} />
-                            <button class="btn btn-danger" onClick={this.handleDelete}>delete</button>
+                            <UpdateDocumentForm
+                                {...this.props}
+                                submit={this.handleEdit}
+                                remove={this.handleDelete} />
                         </div>
                     </div>
                 </div>
