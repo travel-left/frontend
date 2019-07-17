@@ -90,6 +90,12 @@ class TripInformation extends Component {
         this.getCoordinators()
     }
 
+    removeCoordinator = async coordinatorId => {
+        //await apiCall('put', '', coordinatorId)
+        console.log(coordinatorId)
+        // this.getCoordinators()
+    }
+
     getContacts = async () => {
         let contacts = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`)
         this.setState({ contacts })
@@ -110,6 +116,11 @@ class TripInformation extends Component {
         this.getContacts()
     }
 
+    deleteContact = async contactId => {
+        await apiCall('delete', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts/${contactId}`)
+        this.getContacts()
+    }
+
     getDocuments = async () => {
         let documents = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`)
         this.setState({ documents })
@@ -126,6 +137,11 @@ class TripInformation extends Component {
             .catch(err => {
                 console.error(err)
             })
+    }
+
+    deleteDocument = async docId => {
+        await apiCall('delete', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents/${docId}`)
+        this.getDocuments()
     }
 
     getTripDates = async () => {
@@ -148,13 +164,18 @@ class TripInformation extends Component {
             })
     }
 
+    deleteTripDate = async tripDateId => {
+        await apiCall('delete', `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`)
+        this.getTripDates()
+    }
+
     render() {
         let { name } = this.props.currentTrip
         let { showAlert, coordinators, contacts, documents, tripDates } = this.state
-        let coordinatorList = coordinators.length > 0 ? coordinators.map(c => <TripCoordinator key={c._id} coordinator={c} updateCoordinator={this.updateCoordinator} />) : null
-        let contactsList = contacts.length > 0 ? <ContactList contacts={contacts} updateContact={this.updateContact} /> : null
-        let documentsList = documents.length > 0 ? <DocumentList documents={documents} updateDocument={this.updateDocument} /> : null
-        let tripDatesList = tripDates.length > 0 ? <TripDatesList tripDates={tripDates} updateTripDate={this.updateTripDate} /> : null
+        let coordinatorList = coordinators.length > 0 ? coordinators.map(c => <TripCoordinator key={c._id} coordinator={c} updateCoordinator={this.updateCoordinator} remove={this.removeCoordinator} />) : null
+        let contactsList = contacts.length > 0 ? <ContactList contacts={contacts} updateContact={this.updateContact} deleteContact={this.deleteContact} /> : null
+        let documentsList = documents.length > 0 ? <DocumentList documents={documents} updateDocument={this.updateDocument} deleteDocument={this.deleteDocument} /> : null
+        let tripDatesList = tripDates.length > 0 ? <TripDatesList tripDates={tripDates} updateTripDate={this.updateTripDate} deleteTripDate={this.deleteTripDate} /> : null
         let alert = showAlert ? <Alert text="This is your trip dashboard.  Here you can manage coordinators, documents, dates, and emergency contacts." closeAlert={this.closeAlert} /> : null
 
         return (
@@ -171,12 +192,8 @@ class TripInformation extends Component {
                         <NewCoordinatorForm submit={this.createCoordinator} />
                         <div className="row">{coordinatorList}</div>
                         <h4 className="text-dark my-3">Trip Dates</h4>
-                        <div className="row">
-                            <div className="card shadow border-0 mb-3 col-md-4 mx-4">
-                                {tripDatesList}
-                                <TripDateForm formType="add" submit={this.createTripDate} />
-                            </div>
-                        </div>
+                        <TripDateForm formType="add" submit={this.createTripDate} />
+                        <div className="row">{tripDatesList}</div>
                         <h4 className="text-dark my-3">Trip Documents</h4>
                         <AddDocument submit={this.createDocument} />
                         <div className="row">{documentsList}</div>

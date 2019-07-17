@@ -16,9 +16,14 @@ class DayList extends Component {
         ))
 
         return (
-            <select className="form-control col-4" value={currentDay} onChange={this.handleChange}>
-                {dayList}
-            </select>
+            <div>
+                <h2>Trip Days</h2>
+                <hr />
+                <select className="form-control col-8" value={currentDay} onChange={this.handleChange}>
+                    {dayList}
+                </select>
+            </div>
+
         )
     }
 }

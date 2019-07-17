@@ -7,6 +7,10 @@ class Contact extends Component {
         this.props.updateContact(this.props._id, updateObject)
     }
 
+    handleDelete = () => {
+        this.props.deleteContact(this.props._id)
+    }
+
     render() {
         let { name, phone, email, photo, _id } = this.props
 
@@ -25,8 +29,9 @@ class Contact extends Component {
                             </p>
                         </div>
                     </div>
-                    <div className="col-md-2 d-flex d-row align-items-center">
+                    <div className="col-md-2 d-flex d-row align-items-center flex-column justify-content-around">
                         <UpdateContactForm name={name} photo={photo} phone={phone} email={email} id={_id} submit={this.handleUpdateContact} />
+                        <button class="btn btn-danger" onClick={this.handleDelete}>delete</button>
                     </div>
                 </div>
             </div>

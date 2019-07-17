@@ -135,8 +135,8 @@ class Itinerary extends Component {
                     </div>
                     <div className="row">
                         <div className="col-md-12 d-flex d-row justify-content-between align-items-center">
-                            <EventForm formType="add" submit={this.submitEvent} initDay={addEventDay} />
                             {dayList}
+                            <EventForm formType="add" submit={this.submitEvent} initDay={addEventDay} />
                         </div>
                     </div>
                 </div>

@@ -64,9 +64,14 @@ export default function EventForm(props) {
         }
     ]
 
-    const button = {
+    const editButton = {
+        classes: 'btn btn btn-secondary text-light',
+        text: 'edit'
+    }
+
+    const submitButton = {
         classes: 'btn-primary btn-lg text-light mx-5 my-2',
-        text: 'Add Event'
+        text: 'New Event'
     }
 
     const schema = Yup.object().shape({
@@ -84,9 +89,7 @@ export default function EventForm(props) {
         timeEnd: Yup.string('Time is not valid')
     })
 
-    const icon = 'far fa-edit text-secondary'
-
-    const formTypeStyle = edit ? { icon: icon } : { button }
+    const formTypeStyle = edit ? { button: editButton } : { button: submitButton }
     return (
         <ModalForm {...formTypeStyle} title="Add an Event" validationSchema={schema} initialValues={initialValues} submit={props.submit}>
             <div className="form-row">
@@ -121,16 +124,21 @@ export default function EventForm(props) {
                     <SelectField name="tzEnd" options={names} />
                 </div>
             </div>
-            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" />
+            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
             <div className="form-row">
-                <div className="col-6">
+                <div className="col-10">
                     <FormField name="image" component={Uploader} label="Image Link" />
                 </div>
+            </div>
+            <div className="form-row">
                 <div className="col-6">
-                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link about Event" />
+                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
+                </div>
+                <div className="col-6">
+                    <FormField name="linkText" placeholder="link title" label='Link Title' />
                 </div>
             </div>
-            <FormField name="linkText" placeholder="name of your link" />
+
         </ModalForm>
     )
 }
