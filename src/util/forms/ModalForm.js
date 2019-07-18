@@ -49,31 +49,37 @@ class ModalForm extends Component {
 
         let opener = icon ? <i className={`hover ${icon}`} onClick={this.openModal} ></i> :
             <button className={`btn ${button.classes}`} onClick={this.openModal} >{button.text}</button>
-        return (
-            <>
-                {opener}
+
+        let modal = !this.state.open ? null :
+            (
                 <Portal>
-                    <div className={`modal fade ${modalClass} ${fadeOut}`} style={{ filter: 'none' }}>
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="addnewNameModal">
-                                        {title}
-                                    </h5>
-                                    <button type="button" className="close" aria-label="Close" onClick={this.closeModal}>
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={validationSchema}
-                                    onSubmit={(values) => {
-                                        submit(values)
-                                        this.closeModal()
-                                    }}
-                                >
-                                    {(values, isSubmitting) =>
-                                        <Form style={{ fontSize: '1.2em' }}>
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={(values, actions) => {
+                            submit(values)
+                            actions.setSubmitting(false)
+                            actions.resetForm()
+                            this.closeModal()
+                        }}
+                        onReset={(values, actions) => {
+                            actions.resetForm()
+                            this.closeModal()
+                        }}
+                    >
+                        {(actions) => (
+                            <div className={`modal fade ${modalClass} ${fadeOut}`} style={{ filter: 'none' }}>
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <Form>
+                                            <div className="modal-header">
+                                                <h5 className="modal-title" id="addnewNameModal">
+                                                    {title}
+                                                </h5>
+                                                <button type="reset" className="close" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
                                             <div className="modal-body">
                                                 {this.props.children}
                                             </div>
@@ -81,12 +87,18 @@ class ModalForm extends Component {
                                             {remove && <a className="btn btn-lg btn-danger ml-4 mb-4 text-light hover" onClick={this.handleRemove}>DELETE</a>}
                                             <button type="submit" className="btn btn-lg btn-primary float-right mr-4 mb-4">SUBMIT</button>
                                         </Form>
-                                    }
-                                </Formik>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        )}
+                    </Formik>
+
                 </Portal>
+            )
+        return (
+            <>
+                {opener}
+                {modal}
             </>
         )
     }

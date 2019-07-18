@@ -2,7 +2,7 @@ import React from 'react'
 import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
-import Uploader from '../../../util/forms/Uploader'
+import DocumentUploader from '../../../util/forms/DocumentUploader'
 
 export default function UpdateDocumentForm(props) {
     const initialValues = {
@@ -25,7 +25,7 @@ export default function UpdateDocumentForm(props) {
         <ModalForm button={button} title='Edit document' validationSchema={schema} initialValues={initialValues} {...props}>
             <FormField name="name" label="Document name"></FormField>
             <FormField name="link" label="Link a document"></FormField>
-            <FormField name="link" label="Upload a new document" component={Uploader} />
+            <FormField name="link" label="Upload a new document" component={DocumentUploader} />
             <FormField name="description" label="Document description" component="textarea" placeholder="A description for your document" className='d-block' />
         </ModalForm>
     )
