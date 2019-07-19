@@ -13,7 +13,7 @@ export default function TripNameForm({ name, submit }) {
         name: nameValidator
     })
     return (
-        <ModalForm icon="far fa-edit fa-2x text-primary text-secondary" title="Trip name" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm icon="far fa-edit fa-2x text-primary text-secondary" header="Edit trip name" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" placeholder="Australia" label="Trip Name" />
         </ModalForm>
     )

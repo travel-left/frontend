@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import TripDateForm from './TripDateForm'
-import Moment from 'react-moment'
+import UpdateTripDateForm from './UpdateTripDateForm'
+import moment from 'moment'
 
 export default class TripDate extends Component {
-
-    constructor(props) {
-        super(props)
+    handleUpdate = putObject => {
+        this.props.update(this.props._id, putObject)
     }
 
     handleDelete = () => {
-        this.props.deleteTripDate(this.props._id)
+        this.props.remove(this.props._id)
     }
 
     render() {
-        let { name, date, type, editTripDate, _id, deleteTripDate } = this.props
+        let { name, date, type } = this.props
         let icon = {
             string: '',
             color: ''
@@ -42,25 +41,24 @@ export default class TripDate extends Component {
                 break
         }
         return (
-            <div className="card-body px-0">
-                <div className="row no-gutters d-flex justify-space-around">
-                    <div className="col-md-3 d-flex flex-row align-items-center justify-content-center">
-                        <i className={icon.string} style={{ color: icon.color }} />
-                    </div>
-                    <div className="col-md-7 d-flex flex-column justify-content-center">
-                        <p className="text-bold my-1">{name}</p>
-                        <p className="my-1">
-                            <small className="text-muted">
-                                <Moment date={date} format="MMMM DD" />
-                            </small>
-                        </p>
-                    </div>
-                    <div className="col-md-2 d-flex d-row align-items-center flex-column justify-content-around">
-                        <TripDateForm formType="edit" name={name} date={date} type={type} submit={editTripDate} />
-                        <button class="btn btn-danger" onClick={this.handleDelete}>delete</button>
-                    </div>
+            <div className="row">
+                <div className="col-md-3 d-flex align-items-center">
+                    <i className={icon.string} style={{ color: icon.color }} />
+                </div>
+                <div className="col-md-6 d-flex flex-column justify-content-center">
+                    <p className="m-0">{name}</p>
+                    <p className="m-0">
+                        <small className='text-muted'>
+                            {moment(date).format('MMM DD')}
+                        </small>
+                    </p>
+                </div>
+                <div className="col-md-3">
+                    <UpdateTripDateForm {...this.props} submit={this.handleUpdate} remove={this.handleDelete} />
                 </div>
             </div>
         )
     }
 }
+
+

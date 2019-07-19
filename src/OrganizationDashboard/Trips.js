@@ -91,9 +91,21 @@ class Trips extends Component {
     }
 
     addTrip = async trip => {
-        console.log(trip)
-        await apiCall('post', '/api/trips', trip)
-        this.getAllTripsAndSetState()
+        let createdTrip = await apiCall('post', '/api/trips', trip)
+        const trips = await apiCall('get', '/api/trips')
+        let newStatusCount = { ...this.state.tripStatusCounts }
+        trips.forEach(trip => {
+            newStatusCount[trip.status]++
+        })
+        this.setState({
+            trips: trips,
+            filteredTrips: trips,
+            showTrips: trips && trips.length > 0 ? true : false,
+            selectedTrip: trips ? trips[0] : null,
+            tripStatusCounts: newStatusCount
+        })
+        this.setSelectedTrip(createdTrip._id)
+
     }
 
     setSelectedTrip = async tripId => {
