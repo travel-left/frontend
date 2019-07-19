@@ -1,12 +1,12 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { configureStore } from './store'
+import { configureStore } from './util/redux'
 import './App.css'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Navbar from './containers/Navbar/Navbar'
-import Main from './containers/Main'
-import { setAuthorizationToken } from './store/actions/auth'
-import Footer from './components/Other/Footer'
+import Navbar from './Navbar/Navbar'
+import Main from './Main'
+import { setAuthorizationToken } from './util/redux/actions/auth'
+import Footer from './util/otherComponents/Footer'
 
 const store = configureStore()
 
@@ -19,7 +19,7 @@ const App = () => (
         <Router>
             <div>
                 <Navbar />
-                <div className="container-fluid content animated" id='app-root' style={{ minHeight: '90vh' }}>
+                <div className="container-fluid content" id='app-root' style={{ minHeight: '90vh' }}>
                     <Main />
                 </div>
                 <Footer />
