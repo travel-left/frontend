@@ -18,7 +18,7 @@ export default function TripImageForm({ image, submit }) {
         text: (
             <h5>
                 Change cover photo
-                <i className="far fa-images" />
+                <i className="far fa-images ml-2" />
             </h5>
         )
     }

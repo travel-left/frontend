@@ -32,8 +32,19 @@ export default function TripDatesForm({ status, submit }) {
     const schema = Yup.object().shape({
         status: tripStatusValidator
     })
+
+    const button = {
+        classes: 'text-light hover pl-0',
+        text: (
+            <h5 className="text-light ml-0">Status:
+            <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">{status} </span>
+                <i className="far fa-edit ml-2" />
+            </h5 >
+        )
+    }
+
     return (
-        <ModalForm icon="far fa-edit pl-2 text-light hover" header="Change trip status" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm button={button} header="Change trip status" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <SelectField options={options} name="status" label="Trip Status" />
         </ModalForm>
     )
