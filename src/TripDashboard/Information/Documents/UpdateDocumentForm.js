@@ -22,7 +22,7 @@ export default function UpdateDocumentForm(props) {
         <FormField name="link" label="Upload a new document" component={DocumentUploader} />
         : <FormField name="link" label="Link"></FormField>
     return (
-        <ModalForm icon={icon} title='Edit document' validationSchema={schema} initialValues={initialValues} {...props}>
+        <ModalForm icon={icon} header='Edit document' validationSchema={schema} initialValues={initialValues} {...props}>
             <FormField name="name" label="Name"></FormField>
             {fields}
             <FormField name="description" label="Document description" component="textarea" placeholder="A description for your document" className='d-block' />
