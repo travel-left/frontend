@@ -7,7 +7,8 @@ import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../ut
 
 export default function UpdateTripDateForm(props) {
     const initialValues = {
-        ...props
+        ...props,
+        date: props.date.split('T')[0]
     }
 
     const options = [
