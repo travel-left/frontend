@@ -21,7 +21,7 @@ export default function FormField({ name, placeholder, label, type, component, c
     ) : null
 
     return (
-        <div >
+        <div className='mt-2'>
             <span className="d-block text-danger">
                 <ErrorMessage name={name} />
             </span>
