@@ -177,20 +177,20 @@ class TripInformation extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-12 mt-4 ml-3">
-                        <h4 className="text-dark">Trip Name</h4>
+                        <h4 className="text-dark">Name</h4>
                         <h3 className="text-primary my-1 d-inline"> {name} </h3>
                         <TripNameForm name={name} submit={this.updateTrip} />
-                        <h4 className="text-dark my-3">Trip Coordinators</h4>
+                        <h4 className="text-dark my-3">Coordinators</h4>
                         <CreateCoordinatorForm submit={this.createCoordinator} />
                         <div className="row">{coordinatorList}</div>
-                        <h4 className="text-dark my-3">Trip Dates</h4>
+                        <h4 className="text-dark my-3">Dates</h4>
                         <CreateTripDateForm formType="add" submit={this.createTripDate} />
                         <div className="row">
                             <LeftCard>
                                 {tripDatesList}
                             </LeftCard>
                         </div>
-                        <h4 className="text-dark my-3">Trip Documents</h4>
+                        <h4 className="text-dark my-3">Documents</h4>
                         <CreateDocumentForm submit={this.createDocument} />
                         <div className="row">{documentsList}</div>
                         <h4 className="text-dark my-3">Emergency Contacts</h4>
