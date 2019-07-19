@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import UpdateCoordinatorForm from './UpdateCoordinatorForm'
-import LeftCard from '../../../util/LeftCard';
+import LeftCard from '../../../util/LeftCard'
 
 class Coordinator extends Component {
     handleEdit = updateObject => {

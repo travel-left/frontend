@@ -21,7 +21,7 @@ export default class Uploader extends Component {
 
     render() {
         let {
-            form: { setFieldValue, values },
+            form: { setFieldValue },
             field: { name }
         } = this.props
 

@@ -12,7 +12,7 @@ export default class TripDate extends Component {
     }
 
     render() {
-        let { name, date, type, editTripDate, _id, deleteTripDate } = this.props
+        let { name, date, type } = this.props
         let icon = {
             string: '',
             color: ''
@@ -54,7 +54,7 @@ export default class TripDate extends Component {
                     </p>
                 </div>
                 <div className="col-md-3">
-                    <UpdateTripDateForm _id={_id} name={name} date={date} type={type} submit={this.handleUpdate} remove={this.handleDelete} />
+                    <UpdateTripDateForm {...this.props} submit={this.handleUpdate} remove={this.handleDelete} />
                 </div>
             </div>
         )

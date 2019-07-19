@@ -1,40 +1,46 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import UpdateContactForm from './UpdateContactForm'
+import LeftCard from '../../../util/LeftCard'
 
 class Contact extends Component {
-    handleUpdateContact = updateObject => {
-        this.props.updateContact(this.props._id, updateObject)
+    handleEdit = updateObject => {
+        this.props.update(this.props._id, updateObject)
     }
 
     handleDelete = () => {
-        this.props.deleteContact(this.props._id)
+        this.props.remove(this.props._id)
     }
 
     render() {
-        let { name, phone, email, photo, _id } = this.props
+        let { firstName, lastName, phone, email, photo } = this.props
 
         return (
-            <div className="mb-3 col-md-5 border-0 shadow mx-4">
-                <div className="row no-gutters d-flex justify-content-between">
-                    <div className="col-md-3 d-flex flex-row align-items-center">
-                        <Image diameter="75px" src={photo} />
+
+            <LeftCard>
+                <div className="row">
+                    <div className="col-md-3 d-flex align-items-center">
+                        <Image src={photo} diameter="55px" />
                     </div>
-                    <div className="col-md-6">
-                        <div className="ml-3">
-                            <p className="text-bold my-1">{name}</p>
-                            <p className="my-1">{phone}</p>
-                            <p className="my-1">
-                                <small className="text-muted">{email}</small>
-                            </p>
-                        </div>
+                    <div className="col-md-6 d-flex flex-column justify-content-center">
+                        {firstName && lastName && <p className="m-0">{firstName + ' ' + lastName}</p>}
+                        {email && <p className="m-0">
+                            <small className="text-muted">{email}</small>
+                        </p>}
+                        {phone &&
+                            <p className="m-0">
+                                <small className="text-muted">{phone}</small>
+                            </p>}
                     </div>
-                    <div className="col-md-2 d-flex d-row align-items-center flex-column justify-content-around">
-                        <UpdateContactForm name={name} photo={photo} phone={phone} email={email} id={_id} submit={this.handleUpdateContact} />
-                        <button class="btn btn-danger" onClick={this.handleDelete}>delete</button>
+                    <div className="col-md-3">
+                        <UpdateContactForm
+                            {...this.props}
+                            name={firstName + ' ' + lastName}
+                            submit={this.handleEdit}
+                            remove={this.handleDelete} />
                     </div>
                 </div>
-            </div>
+            </LeftCard>
         )
     }
 }

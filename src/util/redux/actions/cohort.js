@@ -1,5 +1,5 @@
 import { SET_CURRENT_COHORT } from '../actionTypes'
-import { apiCall, setTokenHeader } from '../../../util/api'
+import { apiCall } from '../../../util/api'
 
 export const setCurrentCohort = cohort => {
     return {
