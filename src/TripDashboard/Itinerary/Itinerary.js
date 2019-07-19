@@ -54,11 +54,14 @@ class Itinerary extends Component {
 
     getDaysandEvents = async () => {
         const days = await this.getDays()
-        const currentDay = days.length > 0 ? days[0] : null
-        const events = currentDay ? await this.getEvents(currentDay) : []
+        let events = []
+        for (const day of days) {
+            let e = await this.getEvents(day)
+            events.push(...e)
+        }
+        console.log(events)
         return {
             days,
-            currentDay,
             events
         }
     }
@@ -136,7 +139,7 @@ class Itinerary extends Component {
                     <div className="row">
                         <div className="col-md-12 d-flex d-row justify-content-between align-items-center">
                             {dayList}
-                            <EventForm formType="add" submit={this.submitEvent} initDay={addEventDay} />
+                            {/* <EventForm formType="add" submit={this.submitEvent} initDay={addEventDay} /> */}
                         </div>
                     </div>
                 </div>
