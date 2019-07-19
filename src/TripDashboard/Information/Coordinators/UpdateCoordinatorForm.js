@@ -4,7 +4,7 @@ import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 import Uploader from '../../../util/forms/Uploader'
 
-export default function UpdateCoordinatorForm({ submit, name, image, email, title, phone }) {
+export default function UpdateCoordinatorForm({ submit, name, image, email, title, phone, remove }) {
     const initialValues = {
         name,
         image,
@@ -22,15 +22,12 @@ export default function UpdateCoordinatorForm({ submit, name, image, email, titl
         email: Yup.string().email('please enter a valid email')
     })
 
-    const button = {
-        classes: 'btn btn-secondary text-light mb-4',
-        text: 'edit'
-    }
+    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
 
     return (
-        <ModalForm button={button} title="Update coordinator" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm icon={icon} title="Update coordinator" validationSchema={schema} initialValues={initialValues} submit={submit} remove={remove}>
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField name="image" label="Upload an image" component={Uploader} />
+            <FormField name="image" label="Upload a new image" component={Uploader} />
             <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
             <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="text" />
             <FormField name="title" label="Title" placeholder="CEO" />
