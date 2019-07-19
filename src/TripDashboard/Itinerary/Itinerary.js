@@ -8,9 +8,7 @@ import Alert from '../../util/otherComponents/Alert'
 
 class Itinerary extends Component {
     tripId = this.props.currentTrip._id
-
     cohortId = this.props.currentCohort._id
-
     tz = moment.tz.guess(true)
 
     state = {
