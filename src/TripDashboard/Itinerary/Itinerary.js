@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import DayList from './Day/DayList'
+import DayList from './DayList'
 import EventList from './Event/EventList'
 import { apiCall } from '../../util/api'
 import EventForm from './Event/EventForm'

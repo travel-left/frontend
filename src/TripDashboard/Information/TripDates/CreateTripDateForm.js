@@ -5,12 +5,11 @@ import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
 import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../util/validators'
 
-export default function TripDateForm({ name, date, type, _id, submit, formType, remove }) {
+export default function TripDateForm({ submit }) {
     const initialValues = {
-        _id: _id || '',
-        name: name || '',
-        date: date ? date.split('T')[0] : '',
-        type: type || 'TRAVEL'
+        name: '',
+        date: '',
+        type: 'TRAVEL'
     }
 
     const options = [
@@ -37,20 +36,14 @@ export default function TripDateForm({ name, date, type, _id, submit, formType, 
         date: dateValidator,
         type: tripDateTypeValidator
     })
-    const submitButton = {
+
+    const button = {
         classes: 'btn btn-primary mb-4',
         text: 'add new'
     }
 
-    const editButton = {
-        classes: 'btn btn-secondary text-light mb-4',
-        text: 'edit'
-    }
-
-    const formTypeStyle = formType === 'add' ? { button: submitButton } : { button: editButton }
-
     return (
-        <ModalForm {...formTypeStyle} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} remove={remove}>
+        <ModalForm button={button} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} >
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

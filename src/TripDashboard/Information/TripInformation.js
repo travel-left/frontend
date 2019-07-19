@@ -4,16 +4,16 @@ import TripNameForm from './TripNameForm'
 import Coordinator from './Coordinators/Coordinator'
 import CreateCoordinatorForm from './Coordinators/CreateCoordinatorForm'
 import TripDate from './TripDates/TripDate'
-import TripDateForm from './TripDates/TripDateForm'
+import CreateTripDateForm from './TripDates/CreateTripDateForm'
 import Document from './Documents/Document'
 import CreateDocumentForm from './Documents/CreateDocumentForm'
 import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
+import LeftCard from '../../util/LeftCard'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../../util/redux/actions/trip'
 import { apiCall } from '../../util/api'
-
 
 
 class TripInformation extends Component {
@@ -151,14 +151,10 @@ class TripInformation extends Component {
         this.getTripDates()
     }
 
-    createTripDate = tripDate => {
+    createTripDate = async tripDate => {
         tripDate.type.toUpperCase()
-
-        apiCall('post', `/api/trips/${this.currentTripId}/tripDates`, tripDate)
-            .then(() => this.getTripDates())
-            .catch(err => {
-                console.error(err)
-            })
+        await apiCall('post', `/api/trips/${this.currentTripId}/tripDates`, tripDate)
+        this.getTripDates()
     }
 
     deleteTripDate = async tripDateId => {
@@ -189,8 +185,12 @@ class TripInformation extends Component {
                         <CreateCoordinatorForm submit={this.createCoordinator} />
                         <div className="row">{coordinatorList}</div>
                         <h4 className="text-dark my-3">Trip Dates</h4>
-                        <TripDateForm formType="add" submit={this.createTripDate} />
-                        <div className="row">{tripDatesList}</div>
+                        <CreateTripDateForm formType="add" submit={this.createTripDate} />
+                        <div className="row">
+                            <LeftCard>
+                                {tripDatesList}
+                            </LeftCard>
+                        </div>
                         <h4 className="text-dark my-3">Trip Documents</h4>
                         <CreateDocumentForm submit={this.createDocument} />
                         <div className="row">{documentsList}</div>

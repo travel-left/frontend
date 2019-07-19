@@ -5,11 +5,11 @@ import LeftCard from '../../../util/LeftCard';
 
 class Document extends Component {
     handleEdit = putObject => {
-        this.props.updateDocument(this.props._id, putObject)
+        this.props.update(this.props._id, putObject)
     }
 
     handleDelete = () => {
-        this.props.deleteDocument(this.props._id)
+        this.props.remove(this.props._id)
     }
 
     render() {
