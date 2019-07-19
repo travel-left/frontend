@@ -21,7 +21,7 @@ class Coordinator extends Component {
                     <div className="col-md-3 d-flex align-items-center">
                         <Image src={img} diameter="55px" />
                     </div>
-                    <div className="col-md-6 d-flex flex-column">
+                    <div className="col-md-6 d-flex flex-column justify-content-center">
                         {firstName && lastName && <p className="m-0">{firstName + ' ' + lastName}</p>}
                         {title && <p className="m-0">{title}</p>}
                         {email && <p className="m-0">
