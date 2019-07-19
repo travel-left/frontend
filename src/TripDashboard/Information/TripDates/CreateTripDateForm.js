@@ -43,7 +43,7 @@ export default function TripDateForm({ submit }) {
     }
 
     return (
-        <ModalForm button={button} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} >
+        <ModalForm button={button} header="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} >
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

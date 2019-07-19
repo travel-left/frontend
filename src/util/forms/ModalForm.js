@@ -30,7 +30,7 @@ class ModalForm extends Component {
     }
 
     render() {
-        let { title, validationSchema, initialValues, submit, remove, icon, button } = this.props
+        let { header, validationSchema, initialValues, submit, remove, icon, button } = this.props
 
         let opener = icon ? <i className={`hover ${icon}`} onClick={this.toggleModal} ></i> :
             <button className={`btn ${button.classes}`} onClick={this.toggleModal} >{button.text}</button>
@@ -80,7 +80,7 @@ class ModalForm extends Component {
                                     }}>
                                         <Form>
                                             <div className="modal-header">
-                                                <h5 className="modal-title" id="addnewNameModal">{title}</h5>
+                                                <h5 className="modal-title" id="addnewNameModal">{header}</h5>
                                                 <button type="reset" className="close" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>

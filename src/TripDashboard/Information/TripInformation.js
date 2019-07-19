@@ -87,10 +87,9 @@ class TripInformation extends Component {
         this.getCoordinators()
     }
 
-    removeCoordinator = async coordinatorId => {
-        //await apiCall('put', '', coordinatorId)
-        console.log(coordinatorId)
-        // this.getCoordinators()
+    deleteCoordinator = async coordinatorId => {
+        await apiCall('put', `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`)
+        this.getCoordinators()
     }
 
     getContacts = async () => {
@@ -165,7 +164,7 @@ class TripInformation extends Component {
     render() {
         let { name } = this.props.currentTrip
         let { showAlert, coordinators, contacts, documents, tripDates } = this.state
-        let coordinatorList = coordinators.length > 0 ? <ItemList C={Coordinator} items={coordinators} update={this.updateCoordinator} remove={this.removeCoordinator} /> : null
+        let coordinatorList = coordinators.length > 0 ? <ItemList C={Coordinator} items={coordinators} update={this.updateCoordinator} remove={this.deleteCoordinator} /> : null
         let contactsList = contacts.length > 0 ? <ItemList C={Contact} items={contacts} update={this.updateContact} remove={this.deleteContact} /> : null
         let documentsList = documents.length > 0 ? <ItemList C={Document} items={documents} update={this.updateDocument} remove={this.deleteDocument} /> : null
         let tripDatesList = tripDates.length > 0 ? <ItemList C={TripDate} items={tripDates} update={this.updateTripDate} remove={this.deleteTripDate} /> : null

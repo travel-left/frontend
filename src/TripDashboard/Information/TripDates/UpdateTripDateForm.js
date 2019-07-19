@@ -38,7 +38,7 @@ export default function UpdateTripDateForm(props) {
     const icon = 'hover far fa-2x fa-edit text-secondary float-right'
 
     return (
-        <ModalForm icon={icon} title="Add a Trip Date" validationSchema={schema} initialValues={initialValues} {...props}>
+        <ModalForm icon={icon} header="Add a Trip Date" validationSchema={schema} initialValues={initialValues} {...props}>
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

@@ -4,16 +4,16 @@ import UpdateCoordinatorForm from './UpdateCoordinatorForm'
 import LeftCard from '../../../util/LeftCard';
 
 class Coordinator extends Component {
-    handleUpdateCoordinator = updateObject => {
+    handleEdit = updateObject => {
         this.props.update(this.props._id, updateObject)
     }
 
-    handleRemoveCoordinator = () => {
+    handleDelete = () => {
         this.props.remove(this.props._id)
     }
 
     render() {
-        let { email, img, firstName, lastName, _id, phone, title } = this.props
+        let { email, img, firstName, lastName, phone, title } = this.props
 
         return (
             <LeftCard>
@@ -33,7 +33,11 @@ class Coordinator extends Component {
                             </p>}
                     </div>
                     <div className="col-md-3">
-                        <UpdateCoordinatorForm name={firstName + ' ' + lastName} image={img} email={email} id={_id} phone={phone} submit={this.handleUpdateCoordinator} remove={this.handleRemoveCoordinator} />
+                        <UpdateCoordinatorForm
+                            {...this.props}
+                            name={firstName + ' ' + lastName}
+                            submit={this.handleEdit}
+                            remove={this.handleDelete} />
                     </div>
                 </div>
             </LeftCard>

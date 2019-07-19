@@ -24,7 +24,7 @@ export default function TripImageForm({ image, submit }) {
     }
 
     return (
-        <ModalForm button={button} title="Change your trip cover photo" alidationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm button={button} header="Change your trip cover photo" alidationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="image" label="Upload a cover photo" component={Uploader} />
         </ModalForm>
     )

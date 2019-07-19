@@ -13,7 +13,7 @@ class Document extends Component {
     }
 
     render() {
-        let { name, description, link, _id } = this.props
+        let { name, description, link } = this.props
 
         const linkImg = getIcon(link)
 
