@@ -7,25 +7,23 @@ import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
 import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
 
-export default function EventForm(props) {
-    const edit = props.formType === 'edit'
-    const { event } = props
+export default function CreateEventForm({ submit, initDay }) {
     const initialValues = {
-        title: edit ? event.title : '',
-        tzStart: edit ? event.tzStart.replace(' ', '_') : moment.tz.guess(),
-        tzEnd: edit ? event.tzEnd.replace(' ', '_') : moment.tz.guess(),
-        category: edit ? event.category : 'Category',
-        summary: edit ? event.summary : '',
-        image: edit ? event.image : '',
-        link: edit ? event.link : '',
-        linkText: edit ? event.linkText : '',
-        dateStart: edit ? event.dateStart : props.initDay.split('T')[0],
-        timeStart: edit ? event.dtStart.split(' ')[0] : '09:00',
-        dateEnd: edit ? event.dateEnd : props.initDay.split('T')[0],
-        timeEnd: edit ? event.dtEnd.split(' ')[0] : '12:00'
+        title: '',
+        tzStart: moment.tz.guess(),
+        tzEnd: moment.tz.guess(),
+        category: 'Category',
+        summary: '',
+        image: '',
+        link: '',
+        linkText: '',
+        dateStart: initDay.split('T')[0],
+        timeStart: '09:00',
+        dateEnd: initDay.split('T')[0],
+        timeEnd: '12:00'
     }
 
-    let names = moment.tz.names().map(name => {
+    let timezones = moment.tz.names().map(name => {
         const offset = moment.tz(name).format('Z')
         const abbrev = moment.tz(name).format('z')
         return {
@@ -35,7 +33,7 @@ export default function EventForm(props) {
         }
     })
 
-    names = names.sort((f, s) => {
+    timezones = timezones.sort((f, s) => {
         return parseInt(f.offset, 10) - parseInt(s.offset, 10)
     })
 
@@ -64,13 +62,8 @@ export default function EventForm(props) {
         }
     ]
 
-    const editButton = {
-        classes: 'btn btn btn-secondary text-light',
-        text: 'edit'
-    }
-
-    const submitButton = {
-        classes: 'btn-primary btn-lg text-light mx-5 my-2',
+    const button = {
+        classes: 'btn-primary btn-lg',
         text: 'New Event'
     }
 
@@ -89,9 +82,8 @@ export default function EventForm(props) {
         timeEnd: Yup.string('Time is not valid')
     })
 
-    const formTypeStyle = edit ? { button: editButton } : { button: submitButton }
     return (
-        <ModalForm {...formTypeStyle} title="Add an Event" validationSchema={schema} initialValues={initialValues} submit={props.submit}>
+        <ModalForm button={button} header="Add an Event" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <div className="form-row">
                 <div className="col-6">
                     <FormField name="title" label="Title" placeholder="Title" />
@@ -118,10 +110,10 @@ export default function EventForm(props) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <SelectField name="tzStart" options={names} />
+                    <SelectField name="tzStart" options={timezones} />
                 </div>
                 <div className="col-6">
-                    <SelectField name="tzEnd" options={names} />
+                    <SelectField name="tzEnd" options={timezones} />
                 </div>
             </div>
             <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
