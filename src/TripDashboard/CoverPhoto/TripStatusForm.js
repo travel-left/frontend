@@ -33,7 +33,7 @@ export default function TripDatesForm({ status, submit }) {
         status: tripStatusValidator
     })
     return (
-        <ModalForm icon="far fa-edit pl-2 text-light hover" header="Trip name" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm icon="far fa-edit pl-2 text-light hover" header="Change trip status" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <SelectField options={options} name="status" label="Trip Status" />
         </ModalForm>
     )
