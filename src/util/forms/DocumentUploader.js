@@ -43,7 +43,7 @@ export default class Uploader extends Component {
                                 }}
                                 className='d-none'
                             />
-                            Upload
+                            upload
                         </label>
                     </div>
                 </div>
