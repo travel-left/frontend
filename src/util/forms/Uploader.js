@@ -51,7 +51,7 @@ export default class Uploader extends Component {
                     {!this.state.uploading &&
                         <img
                             src={this.state.fileUrl}
-                            alt={values.name}
+                            alt={''}
                             className="img-thumbnail border-0"
                             height={200}
                             width={200}
