@@ -50,7 +50,7 @@ export default class CreateDocumentForm extends Component {
         )
 
         return (
-            <ModalForm button={this.button} title='Add a document or link' validationSchema={this.schema} initialValues={this.initialValues} submit={submit} >
+            <ModalForm button={this.button} header='Add a document or link' validationSchema={this.schema} initialValues={this.initialValues} submit={submit} >
                 {this.state.linkFields ? linkFields : uploadFields}
                 <FormField name="description" label="Description" component="textarea" placeholder="A description for your document" className='d-block' />
                 <button className="btn btn-link mt-2 pl-0" onClick={this.toggleLinkFields}>{this.state.linkFields ? 'Upload' : 'Link'} a document</button>

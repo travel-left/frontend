@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import EventForm from './EventForm'
+import UpdateEventForm from './UpdateEventForm'
 import Map from './Map'
+import moment from 'moment'
 
 class Event extends Component {
-    deleteEvent = () => {
+    remove = () => {
         this.props.removeEvent(this.props.event._id)
     }
 
-    updateEvent = updateObject => {
+    update = updateObject => {
         this.props.updateEvent(this.props.event._id, updateObject)
     }
 
@@ -50,7 +51,7 @@ class Event extends Component {
         ) : null
 
         return (
-            <div className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
+            <div name={moment(event.dateStart).format('MMM DD')} className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
                 <div className="row">
                     <div className="card-body">
                         <h5 className="card-title">
@@ -67,8 +68,7 @@ class Event extends Component {
                                     {event.linkText}
                                 </a>
                                 <div className='mt-auto'>
-                                    <EventForm formType="edit" event={this.props.event} submit={this.updateEvent} />
-                                    <button className="btn btn-danger ml-3" onClick={this.deleteEvent}>delete</button>
+                                    <UpdateEventForm formType="edit" event={this.props.event} submit={this.update} remove={this.remove} />
                                 </div>
                             </div>
                             <div className="col-md-6">
