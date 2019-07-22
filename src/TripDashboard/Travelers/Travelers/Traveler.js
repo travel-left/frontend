@@ -7,13 +7,18 @@ export default class Traveler extends Component {
         this.props.submit(this.props.traveler._id, updateObject)
     }
 
+    handleToggle = () => {
+        this.props.toggle(this.props.traveler._id)
+    }
+
     render() {
-        let { firstName, lastName, email, status, img, _id, personalNotes, phone } = this.props.traveler
+        let { firstName, lastName, email, status, img, _id, personalNotes, phone, selected } = this.props.traveler
 
         return (
             <div className="card py-3 border bg-white my-2">
-                <div className="row no-gutters justify-content-around align-items-center px-3 px-md-0">
-                    <div className="col-md-1 d-none d-md-block">
+                <div className="row no-gutters justify-content-around align-items-center px-3 px-md-0" onClick={this.handleToggle}>
+                    <div className="col-md-1"><input onClick={this.handleToggle} type="checkbox" className='ml-3' checked={selected} onChange={this.handleToggle}></input></div>
+                    <div className="col-md-2 d-none d-md-block">
                         <Image diameter="75px" src={img} />
                     </div>
                     <div className="d-none d-md-flex col-md-2">
