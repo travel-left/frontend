@@ -4,15 +4,19 @@ import Image from '../../../util/otherComponents/Image'
 
 export default class Traveler extends Component {
     updateTraveler = updateObject => {
-        this.props.submit(this.props._id, updateObject)
+        this.props.update(this.props._id, updateObject)
     }
 
     handleToggle = () => {
         this.props.toggle(this.props._id)
     }
 
+    handleRemove = () => {
+        this.props.remove(this.props._id)
+    }
+
     render() {
-        let { firstName, lastName, email, status, img, _id, personalNotes, phone, selected } = this.props
+        let { firstName, lastName, email, status, img, _id, personalNotes, phone, selected, remove } = this.props
 
         return (
             <div className="card py-3 border bg-white my-2">
@@ -29,7 +33,7 @@ export default class Traveler extends Component {
                         <span className="badge badge-primary badge-pill">{status}</span>
                     </div>
                     <div className="col-4 col-md-1">
-                        <UpdateTravelerForm name={firstName + ' ' + lastName} email={email} phone={phone} personalNotes={personalNotes} status={status} img={img} _id={_id} submit={this.updateTraveler}></UpdateTravelerForm>
+                        <UpdateTravelerForm name={firstName + ' ' + lastName} email={email} phone={phone} personalNotes={personalNotes} status={status} img={img} _id={_id} submit={this.updateTraveler} remove={this.handleRemove}></UpdateTravelerForm>
                     </div>
                 </div>
             </div>

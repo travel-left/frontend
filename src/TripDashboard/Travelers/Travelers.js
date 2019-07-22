@@ -78,6 +78,13 @@ class Travelers extends Component {
         this.getAndSetTravelers()
     }
 
+    removeTraveler = async travelerId => {
+        setTimeout(() => {
+            console.log(travelerId)
+        }, 1000)
+        this.getAndSetTravelers()
+    }
+
     toggle = travelerId => {
         this.setState(prevState => {
             return {
@@ -101,7 +108,7 @@ class Travelers extends Component {
     }
 
     render() {
-        let { cohorts, travelers, showAlert } = this.state
+        let { travelers, showAlert } = this.state
         let alert = showAlert ? <Alert text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.' closeAlert={this.closeAlert} /> : null
 
         return (
@@ -128,7 +135,7 @@ class Travelers extends Component {
                             <div className="col-4 col-md-2"> Status</div>
                             <div className="col-4 col-md-1"></div>
                         </div>
-                        <TravelerList items={travelers} C={Traveler} update={this.updateTraveler} toggle={this.toggle} />
+                        <TravelerList items={travelers} C={Traveler} update={this.updateTraveler} toggle={this.toggle} submit={this.addTraveler} remove={this.removeTraveler} />
                     </div>
                 </div>
             </div>
