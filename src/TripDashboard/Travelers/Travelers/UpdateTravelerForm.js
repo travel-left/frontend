@@ -19,7 +19,7 @@ export default function UpdateTravelerForm(props) {
         email: Yup.string().email('please enter a valid email')
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const icon = 'hover far fa-2x fa-edit text-secondary float-right mr-3'
 
     return (
         <ModalForm icon={icon} header="Edit traveler" validationSchema={schema} initialValues={initialValues} {...props}>

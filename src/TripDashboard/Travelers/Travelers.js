@@ -4,6 +4,7 @@ import AddTravelerForm from './Travelers/AddTravelerForm'
 import Alert from '../../util/otherComponents/Alert'
 import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
+import CreateEmailForm from './Actions/CreateEmailForm';
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
@@ -99,12 +100,16 @@ class Travelers extends Component {
         })
     }
 
-    doSomethingWithSelectedTravelers = () => {
+    doSomethingWithSelectedTravelers = email => {
+        let travelersEmails = []
         this.state.travelers.forEach(traveler => {
             if (traveler.selected) {
-                console.log(traveler)
+                travelersEmails.push(traveler.email)
             }
         })
+
+        apiCall('post', '/api/email', { subject: email.subject, text: email.text, emails: travelersEmails })
+
     }
 
     render() {
@@ -121,7 +126,7 @@ class Travelers extends Component {
                         <div className="d-flex flex-row justify-content-between mb-4">
                             <h2 className="text-primary d-inline">People on this trip</h2>
                             <div>
-                                <button className="btn btn-warning text-light btn-lg" onClick={this.doSomethingWithSelectedTravelers}>Do something</button>
+                                <CreateEmailForm submit={this.doSomethingWithSelectedTravelers} travelers={travelers}></CreateEmailForm>
                                 <button className="btn btn-lg btn-secondary text-light mx-5">Import bulk</button>
                                 <AddTravelerForm submit={this.addTraveler} />
                             </div>
