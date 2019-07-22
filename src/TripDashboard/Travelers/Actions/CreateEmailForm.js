@@ -25,8 +25,8 @@ export default function CreateEmailForm({ submit, travelers }) {
         text: 'new email'
     }
 
-    const travelerList = travelers.map(t => (t.selected ? <p>{t.firstName} {t.lastName} -- {t.email}</p> : null))
-
+    let travelerList = travelers.map(t => (t.selected ? <p>{t.firstName} {t.lastName} -- {t.email}</p> : undefined))
+    console.log(travelerList)
     return (
         <ModalForm button={button} header="Send an email to selected travelers" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <div>
