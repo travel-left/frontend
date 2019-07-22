@@ -21,8 +21,8 @@ class ModalForm extends Component {
     }
 
     handleRemove = () => {
-        this.props.remove()
         this.toggleModal()
+        this.props.remove()
     }
 
     toggleModal = () => {
@@ -87,7 +87,7 @@ class ModalForm extends Component {
                                             </div>
                                             <div className="modal-body"> {this.props.children}</div>
                                             <hr className="mt-2" />
-                                            {remove && <button className="btn btn-lg btn-danger ml-4 mb-4 text-light hover" onClick={this.handleRemove}>DELETE</button>}
+                                            {remove && <button type="button" className="btn btn-lg btn-danger ml-4 mb-4 text-light hover" onClick={this.handleRemove}>DELETE</button>}
                                             <button type="submit" className="btn btn-lg btn-primary float-right mr-4 mb-4">SUBMIT</button>
                                         </Form>
                                     </div>
