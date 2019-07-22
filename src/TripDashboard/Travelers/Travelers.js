@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import TravelerList from './Travelers/TravelerList'
 import { apiCall } from '../../util/api'
-import AddTraveler from './Travelers/AddTraveler'
+import AddTravelerForm from './Travelers/AddTravelerForm'
 import Alert from '../../util/otherComponents/Alert'
+import Traveler from './Travelers/Traveler'
+import TravelerList from './Travelers/TravelerList'
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
@@ -115,7 +116,7 @@ class Travelers extends Component {
                             <div>
                                 <button className="btn btn-warning text-light btn-lg" onClick={this.doSomethingWithSelectedTravelers}>Do something</button>
                                 <button className="btn btn-lg btn-secondary text-light mx-5">Import bulk</button>
-                                <AddTraveler submit={this.addTraveler} />
+                                <AddTravelerForm submit={this.addTraveler} />
                             </div>
                         </div>
                         <h4 className="d-block text-muted">Add travelers here who are coming on the trip</h4>
@@ -127,7 +128,7 @@ class Travelers extends Component {
                             <div className="col-4 col-md-2"> Status</div>
                             <div className="col-4 col-md-1"></div>
                         </div>
-                        <TravelerList travelers={travelers} cohorts={cohorts} addTravelerToCohort={this.addTravelerToCohort} updateTraveler={this.updateTraveler} toggle={this.toggle} />
+                        <TravelerList items={travelers} C={Traveler} update={this.updateTraveler} toggle={this.toggle} />
                     </div>
                 </div>
             </div>

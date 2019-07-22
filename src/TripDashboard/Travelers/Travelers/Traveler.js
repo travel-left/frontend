@@ -4,15 +4,15 @@ import Image from '../../../util/otherComponents/Image'
 
 export default class Traveler extends Component {
     updateTraveler = updateObject => {
-        this.props.submit(this.props.traveler._id, updateObject)
+        this.props.submit(this.props._id, updateObject)
     }
 
     handleToggle = () => {
-        this.props.toggle(this.props.traveler._id)
+        this.props.toggle(this.props._id)
     }
 
     render() {
-        let { firstName, lastName, email, status, img, _id, personalNotes, phone, selected } = this.props.traveler
+        let { firstName, lastName, email, status, img, _id, personalNotes, phone, selected } = this.props
 
         return (
             <div className="card py-3 border bg-white my-2">
