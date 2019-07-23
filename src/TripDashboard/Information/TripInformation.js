@@ -29,22 +29,22 @@ class TripInformation extends Component {
 
     constructor(props) {
         super(props)
-        this.getShowAlertAndSetState()
+        // this.getShowAlertAndSetState()
         this.getCoordinators()
-        this.getContacts()
-        this.getDocuments()
-        this.getTripDates()
+        // this.getContacts()
+        // this.getDocuments()
+        // this.getTripDates()
     }
 
-    getShowAlertAndSetState = async () => {
-        const { _id } = this.props.currentUser
-        const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
-        if (coordinator.showAlerts.tripDashboard === 'true') {
-            this.setState({
-                showAlert: true
-            })
-        }
-    }
+    // getShowAlertAndSetState = async () => {
+    //     const { _id } = this.props.currentUser
+    //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
+    //     if (coordinator.showAlerts.tripDashboard === 'true') {
+    //         this.setState({
+    //             showAlert: true
+    //         })
+    //     }
+    // }
 
     closeAlert = async () => {
         const { _id } = this.props.currentUser
@@ -66,22 +66,16 @@ class TripInformation extends Component {
     }
 
     updateCoordinator = async (coordinatorId, updateObject) => {
-        updateObject.firstName = updateObject.name.split(' ')[0]
-        updateObject.lastName = updateObject.name.split(' ')[1]
-        delete updateObject.name
         await apiCall('put', `/api/coordinators/${coordinatorId}`, updateObject)
         this.getCoordinators()
     }
 
     createCoordinator = async coordinator => {
-        coordinator.firstName = coordinator.name.split(' ')[0]
-        coordinator.lastName = coordinator.name.split(' ')[1]
         coordinator.organizationId = this.props.currentUser.organizationId
         coordinator.trip = this.props.currentTrip._id
         coordinator.password = 'password'
-        delete coordinator.name
 
-        await apiCall('post', '/api/auth/coordinators/signup', coordinator)
+        await apiCall('post', '/api/auth/signup', coordinator)
         this.getCoordinators()
     }
 

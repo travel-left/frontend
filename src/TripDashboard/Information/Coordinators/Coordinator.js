@@ -13,7 +13,7 @@ class Coordinator extends Component {
     }
 
     render() {
-        let { email, image, firstName, lastName, phone, title } = this.props
+        let { email, image, name, phone, title } = this.props
 
         return (
             <LeftCard>
@@ -22,7 +22,7 @@ class Coordinator extends Component {
                         <Image src={image} diameter="55px" />
                     </div>
                     <div className="col-md-6 d-flex flex-column justify-content-center">
-                        {firstName && lastName && <p className="m-0">{firstName + ' ' + lastName}</p>}
+                        {name && <p className="m-0">{name}</p>}
                         {title && <p className="m-0">{title}</p>}
                         {email && <p className="m-0">
                             <small className="text-muted">{email}</small>
@@ -35,7 +35,7 @@ class Coordinator extends Component {
                     <div className="col-md-3">
                         <UpdateCoordinatorForm
                             {...this.props}
-                            name={firstName + ' ' + lastName}
+                            name={name}
                             submit={this.handleEdit}
                             remove={this.handleDelete} />
                     </div>
