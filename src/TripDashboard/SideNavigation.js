@@ -8,7 +8,7 @@ import Travelers from './Travelers/Travelers'
 import { setCurrentTrip } from '../util/redux/actions/trip'
 import Cover from './CoverPhoto/Cover'
 
-const Dashboard = ({ currentTrip, currentCohort, currentUser, setCurrentTrip }) => {
+const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
     return (
         <>
             <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
@@ -24,9 +24,9 @@ const Dashboard = ({ currentTrip, currentCohort, currentUser, setCurrentTrip }) 
                 </div>
                 <div className="col-md-10">
                     <Switch>
-                        <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
-                        <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
-                        <Route exact path="/trips/:tripId/travelers" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} currentUser={currentUser} currentCohort={currentCohort} />} />
+                        <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
+                        <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
+                        <Route exact path="/trips/:tripId/travelers" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
                     </Switch>
                 </div>
             </div>
@@ -37,8 +37,7 @@ const Dashboard = ({ currentTrip, currentCohort, currentUser, setCurrentTrip }) 
 const mapStateToProps = state => {
     return {
         currentTrip: state.currentTrip,
-        currentUser: state.currentUser,
-        currentCohort: state.currentCohort
+        currentUser: state.currentUser
     }
 }
 
