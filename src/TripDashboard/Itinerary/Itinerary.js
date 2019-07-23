@@ -8,7 +8,6 @@ import Alert from '../../util/otherComponents/Alert'
 
 class Itinerary extends Component {
     tripId = this.props.currentTrip._id
-    cohortId = this.props.currentCohort._id
     tz = moment.tz.guess(true)
 
     state = {
@@ -31,7 +30,7 @@ class Itinerary extends Component {
     }
 
     getShowAlertAndSetState = async () => {
-        const { _id } = this.props.currentUser.user
+        const { _id } = this.props.currentUser
         const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
         if (coordinator.showAlerts.itinerary === 'true') {
             this.setState({
@@ -55,7 +54,6 @@ class Itinerary extends Component {
             let e = await this.getEvents(day)
             events.push(...e)
         }
-        console.log(events)
         return {
             days,
             events
@@ -69,11 +67,11 @@ class Itinerary extends Component {
 
     getEvents = currentDay => {
         const cdMoment = moment(currentDay).format('YYYY-MM-DD')
-        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events?tz=${this.tz}&date=${cdMoment}`)
+        return apiCall('get', `/api/trips/${this.tripId}/itinerary/events?tz=${this.tz}&date=${cdMoment}`)
     }
 
     getDays = () => {
-        return apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/days?tz=${this.tz}`)
+        return apiCall('get', `/api/trips/${this.tripId}/itinerary/days?tz=${this.tz}`)
     }
 
     setCurrentDay = async newDay => {
@@ -99,7 +97,7 @@ class Itinerary extends Component {
         }
         let date = this.state.currentDate
 
-        await apiCall('post', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events`, eventToSend)
+        await apiCall('post', `/api/trips/${this.tripId}/itinerary/events`, eventToSend)
         const state = await this.getDaysandEvents()
         this.setState({
             ...state,
@@ -108,14 +106,14 @@ class Itinerary extends Component {
     }
 
     removeEvent = async eventId => {
-        await apiCall('delete', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events/${eventId}`)
+        await apiCall('delete', `/api/trips/${this.tripId}/itinerary/events/${eventId}`)
         this.getDEandSetState()
     }
 
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${this.state.currentDay.split('T')[0]}T${updateObject.timeStart}:00`
         updateObject.dtEnd = `${this.state.currentDay.split('T')[0]}T${updateObject.timeEnd}:00`
-        await apiCall('put', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/itinerary/events/${eventId}`, updateObject) // Delete event
+        await apiCall('put', `/api/trips/${this.tripId}/itinerary/events/${eventId}`, updateObject) // Delete event
         this.getDEandSetState()
     }
 

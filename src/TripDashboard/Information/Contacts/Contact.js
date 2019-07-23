@@ -13,17 +13,17 @@ class Contact extends Component {
     }
 
     render() {
-        let { firstName, lastName, phone, email, photo } = this.props
+        let { name, phone, email, image } = this.props
 
         return (
 
             <LeftCard>
                 <div className="row">
                     <div className="col-md-3 d-flex align-items-center">
-                        <Image src={photo} diameter="55px" />
+                        <Image src={image} diameter="55px" />
                     </div>
                     <div className="col-md-6 d-flex flex-column justify-content-center">
-                        {firstName && lastName && <p className="m-0">{firstName + ' ' + lastName}</p>}
+                        {name && <p className="m-0">{name}</p>}
                         {email && <p className="m-0">
                             <small className="text-muted">{email}</small>
                         </p>}
@@ -35,7 +35,6 @@ class Contact extends Component {
                     <div className="col-md-3">
                         <UpdateContactForm
                             {...this.props}
-                            name={firstName + ' ' + lastName}
                             submit={this.handleEdit}
                             remove={this.handleDelete} />
                     </div>

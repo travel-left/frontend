@@ -35,7 +35,6 @@ class Coordinator extends Component {
                     <div className="col-md-3">
                         <UpdateCoordinatorForm
                             {...this.props}
-                            name={name}
                             submit={this.handleEdit}
                             remove={this.handleDelete} />
                     </div>
