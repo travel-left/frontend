@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import EventForm from './EventForm'
+import UpdateEventForm from './UpdateEventForm'
 import Map from './Map'
+import moment from 'moment'
 
 class Event extends Component {
-    deleteEvent = () => {
+    remove = () => {
         this.props.removeEvent(this.props.event._id)
     }
 
-    updateEvent = updateObject => {
+    update = updateObject => {
         this.props.updateEvent(this.props.event._id, updateObject)
     }
 
@@ -45,32 +46,35 @@ class Event extends Component {
                 </div>
             ) : null
 
-        const addressAndMap = event.address ? (
-            <>
-                <p className="card-text">{'Address: ' + event.address}</p>
-                {map}
-            </>
+        const address = event.address ? (
+            <p className="card-text">{'Address: ' + event.address}</p>
         ) : null
 
         return (
-            <div className="card mb-3 border-0 shadow">
+            <div name={moment(event.dateStart).format('MMM DD')} className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
                 <div className="row">
                     <div className="card-body">
                         <h5 className="card-title">
                             <strong> {event.title}</strong>
                             <i className={`fa ${iconString} float-right`} style={{ color: color }} />
                         </h5>
-                        <h6 className="card-subtitle mb-2" style={{ color: color }}>
-                            {event.dtStart} - {event.dtEnd}
-                        </h6>
-                        <p className="card-text">{event.summary}</p>
-                        <a href={event.link} className="card-link" target="_blank" rel="noopener noreferrer">
-                            {event.linkText}
-                        </a>
-                        {addressAndMap}
-                        <div>
-                            <EventForm formType="edit" event={this.props.event} submit={this.updateEvent} />
-                            <i className="fa fa-trash float-right hover" onClick={this.deleteEvent} />
+                        <div className="row">
+                            <div className="col-md-6 d-flex flex-column">
+                                <h6 className="card-subtitle mb-2" style={{ color: color }}>
+                                    {event.dtStart} - {event.dtEnd}
+                                </h6>
+                                <p className="card-text">{event.summary}</p>
+                                <a href={event.link} className="card-link" target="_blank" rel="noopener noreferrer">
+                                    {event.linkText}
+                                </a>
+                                <div className='mt-auto'>
+                                    <UpdateEventForm formType="edit" event={this.props.event} submit={this.update} remove={this.remove} />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                {map}
+                                {address}
+                            </div>
                         </div>
                     </div>
                 </div>

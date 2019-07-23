@@ -4,9 +4,13 @@ import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 import Uploader from '../../../util/forms/Uploader'
 
-export default function UpdateCoordinatorForm(props) {
+export default function NewCoordinatorForm({ submit }) {
     const initialValues = {
-        ...props
+        name: '',
+        img: '',
+        email: '',
+        title: '',
+        phone: ''
     }
 
     const schema = Yup.object().shape({
@@ -18,14 +22,17 @@ export default function UpdateCoordinatorForm(props) {
         email: Yup.string().email('please enter a valid email')
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const button = {
+        classes: 'btn btn-primary mb-4',
+        text: 'add new'
+    }
 
     return (
-        <ModalForm icon={icon} header="Edit coordinator" validationSchema={schema} initialValues={initialValues} {...props}>
+        <ModalForm button={button} header="Add a new coordinator to your trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField name="img" label="Upload a new image" component={Uploader} />
+            <FormField component={Uploader} name="img" label="Upload an Image" />
             <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
-            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="text" />
+            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="phone" />
             <FormField name="title" label="Title" placeholder="CEO" />
         </ModalForm>
     )

@@ -28,7 +28,7 @@ export default function AddTrip({ submit }) {
     }
 
     return (
-        <ModalForm button={button} title="Create your new trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm button={button} header="Create your new trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Austrailia" />
             <FormField name="image" label="Upload an image" component={Uploader} />
             <FormField name="dateStart" label="Trip Start Date" placeholder={initialValues.dateStart} type="date" />

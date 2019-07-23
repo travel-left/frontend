@@ -21,12 +21,12 @@ export default function FormField({ name, placeholder, label, type, component, c
     ) : null
 
     return (
-        <>
+        <div className='mt-2'>
             <span className="d-block text-danger">
                 <ErrorMessage name={name} />
             </span>
             {displayLabel}
             <Field name={name} type={type} placeholder={placeholder} component={component} className={`d-block form-control ${className}`} />
-        </>
+        </div>
     )
 }

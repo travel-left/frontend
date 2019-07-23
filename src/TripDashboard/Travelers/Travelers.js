@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import TravelerList from './Travelers/TravelerList'
 import { apiCall } from '../../util/api'
-import AddTraveler from './Travelers/AddTraveler'
+import AddTravelerForm from './Travelers/AddTravelerForm'
 import Alert from '../../util/otherComponents/Alert'
+import Traveler from './Travelers/Traveler'
+import TravelerList from './Travelers/TravelerList'
+import CreateEmailForm from './Actions/CreateEmailForm';
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
@@ -11,7 +13,6 @@ class Travelers extends Component {
 
     state = {
         travelers: [],
-        cohorts: [],
         showAlert: false
     }
 
@@ -47,7 +48,14 @@ class Travelers extends Component {
 
     getAndSetTravelers = async () => {
         const travelers = await apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/travelers`)
-        this.setState({ travelers })
+        this.setState({
+            travelers: travelers.map(traveler => {
+                return {
+                    ...traveler,
+                    selected: false
+                }
+            })
+        })
     }
 
     addTraveler = async traveler => {
@@ -71,8 +79,41 @@ class Travelers extends Component {
         this.getAndSetTravelers()
     }
 
+    removeTraveler = async travelerId => {
+        setTimeout(() => {
+            console.log(travelerId)
+        }, 1000)
+        this.getAndSetTravelers()
+    }
+
+    toggle = travelerId => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                travelers: prevState.travelers.map(traveler => {
+                    return {
+                        ...traveler,
+                        selected: traveler._id === travelerId ? !traveler.selected : traveler.selected
+                    }
+                })
+            }
+        })
+    }
+
+    doSomethingWithSelectedTravelers = email => {
+        let travelersEmails = []
+        this.state.travelers.forEach(traveler => {
+            if (traveler.selected) {
+                travelersEmails.push(traveler.email)
+            }
+        })
+
+        apiCall('post', '/api/email', { subject: email.subject, text: email.text, emails: travelersEmails })
+
+    }
+
     render() {
-        let { cohorts, travelers, showAlert } = this.state
+        let { travelers, showAlert } = this.state
         let alert = showAlert ? <Alert text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.' closeAlert={this.closeAlert} /> : null
 
         return (
@@ -85,19 +126,21 @@ class Travelers extends Component {
                         <div className="d-flex flex-row justify-content-between mb-4">
                             <h2 className="text-primary d-inline">People on this trip</h2>
                             <div>
+                                <CreateEmailForm submit={this.doSomethingWithSelectedTravelers} travelers={travelers}></CreateEmailForm>
                                 <button className="btn btn-lg btn-secondary text-light mx-5">Import bulk</button>
-                                <AddTraveler submit={this.addTraveler} />
+                                <AddTravelerForm submit={this.addTraveler} />
                             </div>
                         </div>
                         <h4 className="d-block text-muted">Add travelers here who are coming on the trip</h4>
                         <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
-                            <div className="col-md-1 d-none d-md-block"> Image </div>
+                            <div className="col-md-1"></div>
+                            <div className="col-md-2 d-none d-md-block"> Image </div>
                             <div className="d-none d-md-flex col-md-2"> Name </div>
                             <div className="col-4 col-md-3">Email</div>
                             <div className="col-4 col-md-2"> Status</div>
                             <div className="col-4 col-md-1"></div>
                         </div>
-                        <TravelerList travelers={travelers} cohorts={cohorts} addTravelerToCohort={this.addTravelerToCohort} updateTraveler={this.updateTraveler} />
+                        <TravelerList items={travelers} C={Traveler} update={this.updateTraveler} toggle={this.toggle} submit={this.addTraveler} remove={this.removeTraveler} />
                     </div>
                 </div>
             </div>

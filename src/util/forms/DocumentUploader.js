@@ -4,7 +4,7 @@ import { apiCall } from '../api'
 export default class Uploader extends Component {
     state = {
         uploading: false,
-        fileUrl: this.props.form.values[this.props.field.name]
+        fileUrl: this.props.form.values.link
     }
 
     handleUpload = async file => {
@@ -21,7 +21,7 @@ export default class Uploader extends Component {
 
     render() {
         let {
-            form: { setFieldValue },
+            form: { setFieldValue, values },
             field: { name }
         } = this.props
 
@@ -37,6 +37,7 @@ export default class Uploader extends Component {
                                 value=''
                                 type="file"
                                 onChange={async event => {
+                                    setFieldValue('name', event.currentTarget.files[0].name)
                                     let docUrl = await this.handleUpload(event.currentTarget.files[0])
                                     setFieldValue(name, docUrl)
                                 }}
@@ -51,7 +52,7 @@ export default class Uploader extends Component {
                     {!this.state.uploading &&
                         <img
                             src={this.state.fileUrl}
-                            alt={''}
+                            alt={values.name}
                             className="img-thumbnail border-0"
                             height={200}
                             width={200}

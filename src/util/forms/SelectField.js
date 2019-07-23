@@ -11,7 +11,7 @@ export default function SelectField({ name, options, label, className }) {
         className = ''
     }
     return (
-        <>
+        <div className='mt-2'>
             <span className="d-block text-danger">
                 <ErrorMessage name={name} />
             </span>
@@ -21,6 +21,6 @@ export default function SelectField({ name, options, label, className }) {
             <Field name={name} component="select" className={`d-block form-control ${className}`}>
                 <OptionList options={options} />
             </Field>
-        </>
+        </div>
     )
 }

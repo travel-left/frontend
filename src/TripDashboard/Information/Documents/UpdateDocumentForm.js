@@ -1,71 +1,32 @@
-import React, { Component } from 'react'
-import FileUploader from '../../../util/forms/FileUploader'
+import React from 'react'
+import * as Yup from 'yup'
+import FormField from '../../../util/forms/FormField'
+import ModalForm from '../../../util/forms/ModalForm'
+import DocumentUploader from '../../../util/forms/DocumentUploader'
 
-class UpdateDocumentForm extends Component {
-    state = {
-        ...this.props
+export default function UpdateDocumentForm(props) {
+    const initialValues = {
+        ...props
     }
 
-    handleUpload = url => {
-        this.setState({
-            link: url
-        })
-    }
+    const schema = Yup.object().shape({
+        name: Yup.string()
+            .min(2, 'Please enter a longer name')
+            .max(50, 'Please enter a shorter name')
+            .required('Please enter a name'),
+    })
 
-    handleChange = e => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.submit(this.state)
-    }
+    let fields = props.link.includes('travel-left-images.s3.us-east-2.amazonaws.com') ?
+        <FormField name="link" label="Upload a new document" component={DocumentUploader} />
+        : <FormField name="link" label="Link"></FormField>
+    return (
+        <ModalForm icon={icon} header='Edit document' validationSchema={schema} initialValues={initialValues} {...props}>
+            <FormField name="name" label="Name"></FormField>
+            {fields}
+            <FormField name="description" label="Document description" component="textarea" placeholder="A description for your document" className='d-block' />
+        </ModalForm>
+    )
 
-    render() {
-        let { name, description, link, id } = this.state
-
-        return (
-            <>
-                <i className="far fa-edit fa-2x float-right text-secondary hover" data-toggle="modal" data-target={'#editDocument' + id} />
-                <div className="modal fade" id={'editDocument' + id} tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Edit Document</h5>
-                                <button type="button" className="close" data-dismiss="modal">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <form>
-                                    <div className="form-row">
-                                        <div className="form-group col-10">
-                                            <label htmlFor="name">Name</label>
-                                            <input value={name} onChange={this.handleChange} type="text" className="form-control" name="name" placeholder="Special Waiver" />
-                                            <label htmlFor="description">Description</label>
-                                            <input value={description} onChange={this.handleChange} type="text" className="form-control" name="description" placeholder="Lorem ipsum dolor sit." />
-                                            <label htmlFor="link">Document</label>
-                                            <div className="input-group">
-                                                <input value={link} onChange={this.handleChange} type="text" className="form-control" name="link" placeholder="document" />
-                                                <FileUploader id="addDocument" isAuth={true} onUpload={this.handleUpload} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div className="modal-footer">
-                                <button onClick={this.handleSubmit} type="button" className="btn btn-primary" data-dismiss="modal">
-                                    SUBMIT
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
-    }
 }
-
-export default UpdateDocumentForm

@@ -7,6 +7,7 @@ import Navbar from './Navbar/Navbar'
 import Main from './Main'
 import { setAuthorizationToken } from './util/redux/actions/auth'
 import Footer from './util/otherComponents/Footer'
+import HttpsRedirect from 'react-https-redirect'
 
 const store = configureStore()
 
@@ -15,17 +16,20 @@ if (localStorage.token) {
 }
 
 const App = () => (
-    <Provider store={store}>
-        <Router>
-            <div>
-                <Navbar />
-                <div className="container-fluid content animated" id='app-root' style={{ minHeight: '90vh' }}>
-                    <Main />
+    <HttpsRedirect>
+        <Provider store={store}>
+            <Router>
+                <div>
+                    <Navbar />
+                    <div className="container-fluid content" id='app-root' style={{ minHeight: '90vh' }}>
+                        <Main />
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        </Router>
-    </Provider>
+            </Router>
+        </Provider>
+    </HttpsRedirect>
+
 )
 
 export default App

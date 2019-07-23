@@ -5,32 +5,25 @@ import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'
 import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
-import {
-    nameValidator,
-    dateValidator,
-    fileValidator,
-    descriptionValidator
-} from '../../../util/validators'
+import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
 
-export default function EventForm(props) {
-    const edit = props.formType === 'edit'
-    const { event } = props
+export default function CreateEventForm({ submit, initDay }) {
     const initialValues = {
-        title: edit ? event.title : '',
-        tzStart: edit ? event.tzStart.replace(' ', '_') : moment.tz.guess(),
-        tzEnd: edit ? event.tzEnd.replace(' ', '_') : moment.tz.guess(),
-        category: edit ? event.category : 'Category',
-        summary: edit ? event.summary : '',
-        image: edit ? event.image : '',
-        link: edit ? event.link : '',
-        linkText: edit ? event.linkText : '',
-        dateStart: edit ? event.dateStart : props.initDay.split('T')[0],
-        timeStart: edit ? event.dtStart.split(' ')[0] : '09:00',
-        dateEnd: edit ? event.dateEnd : props.initDay.split('T')[0],
-        timeEnd: edit ? event.dtEnd.split(' ')[0] : '12:00'
+        title: '',
+        tzStart: moment.tz.guess(),
+        tzEnd: moment.tz.guess(),
+        category: 'Category',
+        summary: '',
+        image: '',
+        link: '',
+        linkText: '',
+        dateStart: initDay.split('T')[0],
+        timeStart: '09:00',
+        dateEnd: initDay.split('T')[0],
+        timeEnd: '12:00'
     }
 
-    let names = moment.tz.names().map(name => {
+    let timezones = moment.tz.names().map(name => {
         const offset = moment.tz(name).format('Z')
         const abbrev = moment.tz(name).format('z')
         return {
@@ -40,7 +33,7 @@ export default function EventForm(props) {
         }
     })
 
-    names = names.sort((f, s) => {
+    timezones = timezones.sort((f, s) => {
         return parseInt(f.offset, 10) - parseInt(s.offset, 10)
     })
 
@@ -53,29 +46,25 @@ export default function EventForm(props) {
         },
         {
             name: 'Lodging',
-            value: 'LODGING'
+            value: 'lodging'
         },
         {
             name: 'Event',
-            value: 'EVENT'
+            value: 'event'
         },
         {
             name: 'Transportation',
-            value: 'TRANSPORTATION'
+            value: 'transportation'
         },
         {
             name: 'Flight',
-            value: 'FLIGHT'
-        },
-        {
-            name: 'Other',
-            value: 'OTHER'
+            value: 'flight'
         }
     ]
 
     const button = {
-        classes: 'btn-primary btn-lg text-light mx-5 my-2',
-        text: 'Add Event'
+        classes: 'btn-primary btn-lg',
+        text: 'New Event'
     }
 
     const schema = Yup.object().shape({
@@ -93,36 +82,19 @@ export default function EventForm(props) {
         timeEnd: Yup.string('Time is not valid')
     })
 
-    const icon = 'far fa-edit text-secondary'
-
-    const formTypeStyle = edit ? { icon: icon } : { button }
     return (
-        <ModalForm
-            {...formTypeStyle}
-            title="Add an Event"
-            validationSchema={schema}
-            initialValues={initialValues}
-            submit={props.submit}
-        >
+        <ModalForm button={button} header="Add an Event" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <div className="form-row">
                 <div className="col-6">
                     <FormField name="title" label="Title" placeholder="Title" />
                 </div>
                 <div className="col-6">
-                    <SelectField
-                        name="category"
-                        options={categories}
-                        label="Categories"
-                    />
+                    <SelectField name="category" options={categories} label="Categories" />
                 </div>
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField
-                        name="dateStart"
-                        label="Start Time"
-                        type="date"
-                    />
+                    <FormField name="dateStart" label="Start Time" type="date" />
                 </div>
                 <div className="col-6">
                     <FormField name="dateEnd" label="End Time" type="date" />
@@ -138,37 +110,27 @@ export default function EventForm(props) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <SelectField name="tzStart" options={names} />
+                    <SelectField name="tzStart" options={timezones} />
                 </div>
                 <div className="col-6">
-                    <SelectField name="tzEnd" options={names} />
+                    <SelectField name="tzEnd" options={timezones} />
                 </div>
             </div>
-            <FormField
-                component="textarea"
-                name="summary"
-                cols="70"
-                rows="2"
-                placeholder="A summary of your event"
-            />
+            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
+            <div className="form-row">
+                <div className="col-10">
+                    <FormField name="image" component={Uploader} label="Image Link" />
+                </div>
+            </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField
-                        name="image"
-                        component={Uploader}
-                        label="Image Link"
-                    />
+                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
                 </div>
                 <div className="col-6">
-                    <FormField
-                        name="link"
-                        placeholder="https://travel-left.com"
-                        type="link"
-                        label="Link about Event"
-                    />
+                    <FormField name="linkText" placeholder="link title" label='Link Title' />
                 </div>
             </div>
-            <FormField name="linkText" placeholder="name of your link" />
+
         </ModalForm>
     )
 }

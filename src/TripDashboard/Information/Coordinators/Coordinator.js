@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import UpdateContactForm from './UpdateContactForm'
+import UpdateCoordinatorForm from './UpdateCoordinatorForm'
 import LeftCard from '../../../util/LeftCard'
 
-class Contact extends Component {
+class Coordinator extends Component {
     handleEdit = updateObject => {
         this.props.update(this.props._id, updateObject)
     }
@@ -13,17 +13,17 @@ class Contact extends Component {
     }
 
     render() {
-        let { firstName, lastName, phone, email, photo } = this.props
+        let { email, img, firstName, lastName, phone, title } = this.props
 
         return (
-
             <LeftCard>
                 <div className="row">
                     <div className="col-md-3 d-flex align-items-center">
-                        <Image src={photo} diameter="55px" />
+                        <Image src={img} diameter="55px" />
                     </div>
                     <div className="col-md-6 d-flex flex-column justify-content-center">
                         {firstName && lastName && <p className="m-0">{firstName + ' ' + lastName}</p>}
+                        {title && <p className="m-0">{title}</p>}
                         {email && <p className="m-0">
                             <small className="text-muted">{email}</small>
                         </p>}
@@ -33,7 +33,7 @@ class Contact extends Component {
                             </p>}
                     </div>
                     <div className="col-md-3">
-                        <UpdateContactForm
+                        <UpdateCoordinatorForm
                             {...this.props}
                             name={firstName + ' ' + lastName}
                             submit={this.handleEdit}
@@ -45,4 +45,4 @@ class Contact extends Component {
     }
 }
 
-export default Contact
+export default Coordinator
