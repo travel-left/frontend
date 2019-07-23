@@ -1,6 +1,5 @@
 import { SET_CURRENT_USER } from '../actionTypes'
 import { apiCall, setTokenHeader } from '../../../util/api'
-import { setCurrentCohort } from './cohort'
 import { setCurrentTrip } from './trip'
 
 export const setCurrentUser = user => {
@@ -17,7 +16,7 @@ export const setAuthorizationToken = token => {
 export const authUser = (type, userData) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
-            return apiCall('post', `/api/auth/coordinators/${type}`, userData)
+            return apiCall('post', `/api/auth/${type}`, userData)
                 .then(({ token, ...user }) => {
                     localStorage.setItem('token', token)
                     setAuthorizationToken(token)
@@ -36,7 +35,6 @@ export const logout = () => {
         return new Promise((resolve, reject) => {
             localStorage.clear()
             dispatch(setCurrentTrip({}))
-            dispatch(setCurrentCohort({}))
             setAuthorizationToken()
             dispatch(setCurrentUser({}))
             resolve()

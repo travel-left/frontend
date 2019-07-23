@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Alert from '../util/otherComponents/Alert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
-import { handleSetCurrentCohort } from '../util/redux/actions/cohort'
 import { setCurrentTrip } from '../util/redux/actions/trip'
 import AddTrip from './AddTrip'
 
@@ -58,22 +57,13 @@ class Trips extends Component {
             selectedTrip: trips ? trips[0] : null,
             tripStatusCounts: newStatusCount
         })
-        this.setSelectedTrip(trips[0]._id)
     }
 
-    selectTrip = async tripId => {
+    editTrip = async tripId => {
         const [selectedTrip] = this.state.trips.filter(t => t._id === tripId)
 
         await this.props.setCurrentTrip(selectedTrip)
-        //setting the cohort to be the all travelers cohort
-        await this.props.handleSetCurrentCohort(selectedTrip._id, selectedTrip.cohorts[0])
         this.props.history.push(`/trips/${tripId}/edit`)
-    }
-
-    showTripForm = () => {
-        this.setState({
-            showTripForm: true
-        })
     }
 
     closeAlert = async () => {
@@ -81,12 +71,6 @@ class Trips extends Component {
         await apiCall('put', `/api/coordinators/${coordinatorId}`, { showAlerts: { trips: false } })
         this.setState({
             showAlert: false
-        })
-    }
-
-    hideTripForm = () => {
-        this.setState({
-            showTripForm: false
         })
     }
 
@@ -109,15 +93,15 @@ class Trips extends Component {
     }
 
     setSelectedTrip = async tripId => {
-        const travelers = await apiCall('get', `/api/trips/${tripId}/travelers`)
-        this.setState({
-            selectedTrip: this.state.trips.filter(t => t._id === tripId)[0]
-        })
+        let newSelection = this.state.trips.filter(t => t._id === tripId)[0]
         let newStatusCountT = { ...this.state.travelerStatusCounts }
-        travelers.forEach(traveler => {
+        newSelection.travelers.forEach(traveler => {
             newStatusCountT[traveler.status]++
         })
-        this.setState({ travelers, travelerStatusCounts: newStatusCountT })
+        this.setState({
+            selectedTrip: newSelection,
+            travelerStatusCounts: newStatusCountT
+        })
     }
 
     onSideNavClick = e => {
@@ -129,8 +113,8 @@ class Trips extends Component {
 
     render() {
         let { showTrips, filteredTrips, selectedTrip, trips, tripStatusCounts, travelerStatusCounts, filter, showAlert } = this.state
-        let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.selectTrip} /> : null
-        let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.selectTrip} statusCounts={travelerStatusCounts} /> : null
+        let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.editTrip} /> : null
+        let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.editTrip} statusCounts={travelerStatusCounts} /> : null
         let alert = showAlert ? <Alert text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.' closeAlert={this.closeAlert} /> : null
 
         return (
@@ -177,12 +161,12 @@ class Trips extends Component {
 
 const mapStateToProps = state => {
     const { currentUser } = state
-    return { coordinatorId: currentUser.user._id }
+    return { coordinatorId: currentUser._id }
 }
 
 export default connect(
     mapStateToProps,
-    { setCurrentTrip, handleSetCurrentCohort }
+    { setCurrentTrip }
 )(Trips)
 
 const LeftBarItem = ({ text, total, active, handleClick }) => {

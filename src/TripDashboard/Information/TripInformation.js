@@ -19,8 +19,6 @@ import { apiCall } from '../../util/api'
 class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
 
-    currentCohortId = this.props.currentCohort._id
-
     state = {
         coordinators: [],
         contacts: [],
@@ -39,7 +37,7 @@ class TripInformation extends Component {
     }
 
     getShowAlertAndSetState = async () => {
-        const { _id } = this.props.currentUser.user
+        const { _id } = this.props.currentUser
         const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
         if (coordinator.showAlerts.tripDashboard === 'true') {
             this.setState({
@@ -49,7 +47,7 @@ class TripInformation extends Component {
     }
 
     closeAlert = async () => {
-        const { _id } = this.props.currentUser.user
+        const { _id } = this.props.currentUser
         await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { tripDashboard: false } })
         this.setState({
             showAlert: false
@@ -78,7 +76,7 @@ class TripInformation extends Component {
     createCoordinator = async coordinator => {
         coordinator.firstName = coordinator.name.split(' ')[0]
         coordinator.lastName = coordinator.name.split(' ')[1]
-        coordinator.organizationId = this.props.currentUser.user.organizationId
+        coordinator.organizationId = this.props.currentUser.organizationId
         coordinator.trip = this.props.currentTrip._id
         coordinator.password = 'password'
         delete coordinator.name

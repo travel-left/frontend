@@ -1,6 +1,2 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
-export const ADD_ERROR = 'ADD_ERROR'
-export const REMOVE_ERROR = 'REMOVE_ERROR'
 export const SET_CURRENT_TRIP = 'SET_CURRENT_TRIP'
-export const SET_CURRENT_COHORT = 'SET_CURRENT_COHORT'
-export const ADD_TRIP = 'ADD_TRIP'

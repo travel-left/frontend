@@ -1,4 +1,4 @@
-import { SET_CURRENT_TRIP, ADD_TRIP } from '../actionTypes'
+import { SET_CURRENT_TRIP } from '../actionTypes'
 
 export const setCurrentTrip = trip => {
     return {
@@ -6,16 +6,3 @@ export const setCurrentTrip = trip => {
         trip: trip
     }
 }
-
-export const addTrip = trip => {
-    return {
-        type: ADD_TRIP,
-        trip: trip
-    }
-}
-
-// export const handleSetCurrentTrip = trip => {
-//     return dispatch => {
-//         return dispatch(setCurrentTrip(trip))
-//     }
-// }
