@@ -71,7 +71,7 @@ class Itinerary extends Component {
     }
 
     getDays = () => {
-        return apiCall('get', `/api/trips/${this.tripId}/itinerary/days?tz=${this.tz}`)
+        return apiCall('get', `/api/trips/${this.tripId}/days?tz=${this.tz}`)
     }
 
     setCurrentDay = async newDay => {
@@ -97,7 +97,7 @@ class Itinerary extends Component {
         }
         let date = this.state.currentDate
 
-        await apiCall('post', `/api/trips/${this.tripId}/itinerary/events`, eventToSend)
+        await apiCall('post', `/api/trips/${this.tripId}/events`, eventToSend)
         const state = await this.getDaysandEvents()
         this.setState({
             ...state,
@@ -106,14 +106,14 @@ class Itinerary extends Component {
     }
 
     removeEvent = async eventId => {
-        await apiCall('delete', `/api/trips/${this.tripId}/itinerary/events/${eventId}`)
+        await apiCall('delete', `/api/trips/${this.tripId}/events/${eventId}`)
         this.getDEandSetState()
     }
 
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${this.state.currentDay.split('T')[0]}T${updateObject.timeStart}:00`
         updateObject.dtEnd = `${this.state.currentDay.split('T')[0]}T${updateObject.timeEnd}:00`
-        await apiCall('put', `/api/trips/${this.tripId}/itinerary/events/${eventId}`, updateObject) // Delete event
+        await apiCall('put', `/api/trips/${this.tripId}/events/${eventId}`, updateObject) // Delete event
         this.getDEandSetState()
     }
 
