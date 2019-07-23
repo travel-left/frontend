@@ -29,22 +29,22 @@ class TripInformation extends Component {
 
     constructor(props) {
         super(props)
-        // this.getShowAlertAndSetState()
+        this.getShowAlertAndSetState()
         this.getCoordinators()
-        // this.getContacts()
-        // this.getDocuments()
-        // this.getTripDates()
+        this.getContacts()
+        this.getDocuments()
+        this.getTripDates()
     }
 
-    // getShowAlertAndSetState = async () => {
-    //     const { _id } = this.props.currentUser
-    //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
-    //     if (coordinator.showAlerts.tripDashboard === 'true') {
-    //         this.setState({
-    //             showAlert: true
-    //         })
-    //     }
-    // }
+    getShowAlertAndSetState = async () => {
+        const { _id } = this.props.currentUser
+        const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
+        if (coordinator.showAlerts.tripDashboard === 'true') {
+            this.setState({
+                showAlert: true
+            })
+        }
+    }
 
     closeAlert = async () => {
         const { _id } = this.props.currentUser
@@ -110,7 +110,7 @@ class TripInformation extends Component {
     }
 
     getDocuments = async () => {
-        let documents = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`)
+        let documents = await apiCall('get', `/api/trips/${this.currentTripId}/documents`)
         this.setState({ documents })
     }
 
@@ -119,12 +119,9 @@ class TripInformation extends Component {
         this.getDocuments()
     }
 
-    createDocument = doc => {
-        apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`, doc)
-            .then(() => this.getDocuments())
-            .catch(err => {
-                console.error(err)
-            })
+    createDocument = async  doc => {
+        await apiCall('post', `/api/documents`, doc)
+        this.getDocuments()
     }
 
     deleteDocument = async docId => {
