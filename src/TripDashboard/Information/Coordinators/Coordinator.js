@@ -13,13 +13,13 @@ class Coordinator extends Component {
     }
 
     render() {
-        let { email, img, firstName, lastName, phone, title } = this.props
+        let { email, image, firstName, lastName, phone, title } = this.props
 
         return (
             <LeftCard>
                 <div className="row">
                     <div className="col-md-3 d-flex align-items-center">
-                        <Image src={img} diameter="55px" />
+                        <Image src={image} diameter="55px" />
                     </div>
                     <div className="col-md-6 d-flex flex-column justify-content-center">
                         {firstName && lastName && <p className="m-0">{firstName + ' ' + lastName}</p>}

@@ -4,7 +4,7 @@ import AddTravelerForm from './Travelers/AddTravelerForm'
 import Alert from '../../util/otherComponents/Alert'
 import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
-import CreateEmailForm from './Actions/CreateEmailForm';
+import CreateEmailForm from './Actions/CreateEmailForm'
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
