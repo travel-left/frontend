@@ -10,18 +10,18 @@ import { nameValidator, dateValidator, fileValidator, descriptionValidator } fro
 export default function EventForm(props) {
     const { event } = props
     const initialValues = {
-        title: event.title,
+        name: event.name,
         tzStart: event.tzStart.replace(' ', '_'),
         tzEnd: event.tzEnd.replace(' ', '_'),
-        category: event.category,
-        summary: event.summary,
+        type: event.type,
+        description: event.description,
         image: event.image,
         link: event.link,
-        linkText: event.linkText,
-        dateStart: event.dateStart,
-        timeStart: event.dtStart.split(' ')[0],
-        dateEnd: event.dateEnd,
-        timeEnd: event.dtEnd.split(' ')[0]
+        linkDescription: event.linkDescription,
+        dateStart: event.dtStart.split('T')[0],
+        timeStart: moment(event.dtStart).format('hh:hh'),
+        dateEnd: event.dtEnd.split('T')[0],
+        timeEnd: moment(event.dtEnd).format('hh:hh')
     }
 
     let timeZones = moment.tz.names().map(name => {
@@ -38,7 +38,7 @@ export default function EventForm(props) {
         return parseInt(f.offset, 10) - parseInt(s.offset, 10)
     })
 
-    const categories = [
+    const types = [
         {
             name: 'Category',
             value: '',
@@ -64,28 +64,28 @@ export default function EventForm(props) {
     ]
 
     const schema = Yup.object().shape({
-        title: nameValidator,
-        tzStart: Yup.string('Time zone must be a string'),
-        tzEnd: Yup.string('Time zone must be a string'),
-        category: Yup.string('Category must be a string'),
-        summary: descriptionValidator,
-        image: fileValidator,
-        link: Yup.string('Link must be a string'),
-        linkText: Yup.string('Link text must be a string'),
-        dateStart: dateValidator,
-        timeStart: Yup.string('Time is not valid'),
-        dateEnd: dateValidator,
-        timeEnd: Yup.string('Time is not valid')
+        // name: nameValidator,
+        // tzStart: Yup.string('Time zone must be a string'),
+        // tzEnd: Yup.string('Time zone must be a string'),
+        // category: Yup.string('Category must be a string'),
+        // description: descriptionValidator,
+        // image: fileValidator,
+        // link: Yup.string('Link must be a string'),
+        // linkDescription: Yup.string('Link text must be a string'),
+        // dateStart: dateValidator,
+        // timeStart: Yup.string('Time is not valid'),
+        // dtEnd: dateValidator,
+        // timeEnd: Yup.string('Time is not valid')
     })
 
     return (
         <ModalForm icon='hover far fa-edit fa-2x text-secondary' header="Edit your event" validationSchema={schema} initialValues={initialValues} submit={props.submit} remove={props.remove}>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="title" label="Title" placeholder="Title" />
+                    <FormField name="name" label="Name" placeholder="Name" />
                 </div>
                 <div className="col-6">
-                    <SelectField name="category" options={categories} label="Categories" />
+                    <SelectField name="type" options={types} label="Type" />
                 </div>
             </div>
             <div className="form-row">
@@ -112,10 +112,10 @@ export default function EventForm(props) {
                     <SelectField name="tzEnd" options={timeZones} />
                 </div>
             </div>
-            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
+            <FormField component="textarea" name="description" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
             <div className="form-row">
                 <div className="col-10">
-                    <FormField name="image" component={Uploader} label="Image Link" />
+                    <FormField name="image" component={Uploader} label="Image" />
                 </div>
             </div>
             <div className="form-row">
@@ -123,7 +123,7 @@ export default function EventForm(props) {
                     <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
                 </div>
                 <div className="col-6">
-                    <FormField name="linkText" placeholder="link title" label='Link Title' />
+                    <FormField name="linkDescription" placeholder="Link description" label='Link description' />
                 </div>
             </div>
 

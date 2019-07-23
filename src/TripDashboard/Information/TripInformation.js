@@ -11,11 +11,9 @@ import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import LeftCard from '../../util/LeftCard'
-import { connect } from 'react-redux'
-import { setCurrentTrip } from '../../util/redux/actions/trip'
 import { apiCall } from '../../util/api'
 
-class TripInformation extends Component {
+export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
 
     state = {
@@ -185,8 +183,3 @@ class TripInformation extends Component {
         )
     }
 }
-
-export default connect(
-    null,
-    { setCurrentTrip }
-)(TripInformation)

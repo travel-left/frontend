@@ -23,12 +23,6 @@ class Itinerary extends Component {
         this.getDEandSetState()
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.currentCohort !== prevProps.currentCohort) {
-            this.getDEandSetState()
-        }
-    }
-
     getShowAlertAndSetState = async () => {
         const { _id } = this.props.currentUser
         const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
@@ -48,12 +42,8 @@ class Itinerary extends Component {
     }
 
     getDaysandEvents = async () => {
-        const days = await this.getDays()
-        let events = []
-        for (const day of days) {
-            let e = await this.getEvents(day)
-            events.push(...e)
-        }
+        let events = await this.getEvents()
+        let days = await this.getDays()
         return {
             days,
             events
@@ -65,9 +55,8 @@ class Itinerary extends Component {
         this.setState(state)
     }
 
-    getEvents = currentDay => {
-        const cdMoment = moment(currentDay).format('YYYY-MM-DD')
-        return apiCall('get', `/api/trips/${this.tripId}/itinerary/events?tz=${this.tz}&date=${cdMoment}`)
+    getEvents = () => {
+        return apiCall('get', `/api/trips/${this.tripId}/events?tz=${this.tz}`)
     }
 
     getDays = () => {
@@ -84,16 +73,16 @@ class Itinerary extends Component {
 
     submitEvent = async event => {
         const eventToSend = {
-            category: event.category,
+            type: event.type.toUpperCase(),
             dtStart: `${event.dateStart}T${event.timeStart}:00`,
             image: event.image,
             link: event.link,
-            linkText: event.linkText,
-            summary: event.summary,
+            linkDescription: event.linkDescription,
+            description: event.description,
             dtEnd: `${event.dateEnd}T${event.timeEnd}:00`,
             tzStart: event.tzStart,
             tzEnd: event.tzEnd,
-            title: event.title
+            name: event.name
         }
         let date = this.state.currentDate
 
@@ -111,8 +100,8 @@ class Itinerary extends Component {
     }
 
     updateEvent = async (eventId, updateObject) => {
-        updateObject.dtStart = `${this.state.currentDay.split('T')[0]}T${updateObject.timeStart}:00`
-        updateObject.dtEnd = `${this.state.currentDay.split('T')[0]}T${updateObject.timeEnd}:00`
+        updateObject.dtStart = `${updateObject.dateStart}T${updateObject.timeStart}:00`
+        updateObject.dtEnd = `${updateObject.dateEnd}T${updateObject.timeEnd}:00`
         await apiCall('put', `/api/trips/${this.tripId}/events/${eventId}`, updateObject) // Delete event
         this.getDEandSetState()
     }
