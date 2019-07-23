@@ -88,17 +88,14 @@ export default function EventForm(props) {
     })
 
     return (
-<<<<<<< HEAD:src/TripDashboard/Itinerary/Event/EventForm.js
         <ModalForm
-            {...formTypeStyle}
-            title="Add an Event"
+            icon="hover far fa-edit fa-2x text-secondary"
+            header="Edit your event"
             validationSchema={schema}
             initialValues={initialValues}
             submit={props.submit}
+            remove={props.remove}
         >
-=======
-        <ModalForm icon='hover far fa-edit fa-2x text-secondary' header="Edit your event" validationSchema={schema} initialValues={initialValues} submit={props.submit} remove={props.remove}>
->>>>>>> develop:src/TripDashboard/Itinerary/Event/UpdateEventForm.js
             <div className="form-row">
                 <div className="col-6">
                     <FormField name="title" label="Title" placeholder="Title" />
@@ -139,47 +136,40 @@ export default function EventForm(props) {
                     <SelectField name="tzEnd" options={timeZones} />
                 </div>
             </div>
-<<<<<<< HEAD:src/TripDashboard/Itinerary/Event/EventForm.js
             <FormField
                 component="textarea"
                 name="summary"
                 cols="70"
                 rows="2"
                 placeholder="A summary of your event"
+                label="Event summary"
             />
             <div className="form-row">
-                <div className="col-6">
+                <div className="col-10">
                     <FormField
                         name="image"
                         component={Uploader}
                         label="Image Link"
                     />
-=======
-            <FormField component="textarea" name="summary" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
-            <div className="form-row">
-                <div className="col-10">
-                    <FormField name="image" component={Uploader} label="Image Link" />
->>>>>>> develop:src/TripDashboard/Itinerary/Event/UpdateEventForm.js
                 </div>
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
-                </div>
-                <div className="col-6">
-<<<<<<< HEAD:src/TripDashboard/Itinerary/Event/EventForm.js
                     <FormField
                         name="link"
                         placeholder="https://travel-left.com"
                         type="link"
-                        label="Link about Event"
+                        label="Link"
                     />
-=======
-                    <FormField name="linkText" placeholder="link title" label='Link Title' />
->>>>>>> develop:src/TripDashboard/Itinerary/Event/UpdateEventForm.js
+                </div>
+                <div className="col-6">
+                    <FormField
+                        name="linkText"
+                        placeholder="link title"
+                        label="Link Title"
+                    />
                 </div>
             </div>
-
         </ModalForm>
     )
 }

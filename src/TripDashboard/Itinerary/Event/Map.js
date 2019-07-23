@@ -15,7 +15,6 @@ export default class Map extends Component {
     render() {
         const { coordinates } = this.props
         return (
-<<<<<<< HEAD
             <ReactMapGL
                 {...this.state.viewport}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
@@ -28,10 +27,6 @@ export default class Map extends Component {
                     offsetLeft={-10}
                     offsetTop={-30}
                 >
-=======
-            <ReactMapGL {...this.state.viewport} mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN} onViewportChange={viewport => this.setState({ viewport })} mapStyle="mapbox://styles/mapbox/streets-v9">
-                <Marker latitude={coordinates.lat} longitude={coordinates.long} offsetLeft={-10} offsetTop={-30}>
->>>>>>> develop
                     <i className="fas fa-map-marker fa-2x" />
                 </Marker>
             </ReactMapGL>
