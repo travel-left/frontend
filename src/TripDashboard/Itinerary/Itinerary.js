@@ -90,11 +90,18 @@ class Itinerary extends Component {
                         <h2>Trip Days</h2>
                         <hr />
                         {dayList}
-                        <CreateEventForm submit={this.createEvent} initDay={this.props.currentTrip.dateStart} />
                     </div>
-                    <div className="col-md-10">
-                        {eventList}
+                    <div className="col-md-9">
+                        <div className="row float-right mb-5">
+                            <CreateEventForm submit={this.createEvent} initDay={this.props.currentTrip.dateStart} />
+                        </div>
+                        <div className="row mx-3 mt-5">
+                            <div className="col-md-11">
+                                {eventList}
+                            </div>
+                        </div>
                     </div>
+                    <div className="col-md-1"></div>
                 </div>
             </div>
         )
