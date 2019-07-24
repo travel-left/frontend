@@ -100,8 +100,8 @@ class Itinerary extends Component {
     }
 
     updateEvent = async (eventId, updateObject) => {
-        updateObject.dtStart = `${updateObject.dateStart}T${updateObject.dtStart}:00`
-        updateObject.dtEnd = `${updateObject.dateEnd}T${updateObject.dtEnd}:00`
+        updateObject.dtStart = `${updateObject.dateStart}T${updateObject.timeStart}:00`
+        updateObject.dtEnd = `${updateObject.dateEnd}T${updateObject.timeEnd}:00`
         await apiCall('put', `/api/trips/${this.tripId}/events/${eventId}`, updateObject) // Delete event
         this.getDEandSetState()
     }

@@ -9,6 +9,7 @@ import { nameValidator, dateValidator, fileValidator, descriptionValidator } fro
 
 export default function UpdateEventForm(props) {
     const { event } = props
+
     const initialValues = {
         name: event.name,
         tzStart: event.tzStart.replace(' ', '_'),
@@ -19,9 +20,9 @@ export default function UpdateEventForm(props) {
         link: event.link,
         linkDescription: event.linkDescription,
         dateStart: event.dateStart,
-        dtStart: event.dtStart.split(' ')[0],
+        timeStart: event.dtStart.split(' ')[0],
         dateEnd: event.dateEnd,
-        dtEnd: event.dtEnd.split(' ')[0]
+        timeEnd: event.dtEnd.split(' ')[0]
     }
 
     let timeZones = moment.tz.names().map(name => {
@@ -64,19 +65,21 @@ export default function UpdateEventForm(props) {
     ]
 
     const schema = Yup.object().shape({
-        name: nameValidator,
-        tzStart: Yup.string('Time zone must be a string'),
-        tzEnd: Yup.string('Time zone must be a string'),
-        category: Yup.string('Category must be a string'),
-        description: descriptionValidator,
-        image: fileValidator,
-        link: Yup.string('Link must be a string'),
-        linkDescription: Yup.string('Link text must be a string'),
-        dateStart: dateValidator,
-        timeStart: Yup.string('Time is not valid'),
-        dtEnd: dateValidator,
-        timeEnd: Yup.string('Time is not valid')
+        // name: nameValidator,
+        // tzStart: Yup.string('Time zone must be a string'),
+        // tzEnd: Yup.string('Time zone must be a string'),
+        // category: Yup.string('Category must be a string'),
+        // description: descriptionValidator,
+        // image: fileValidator,
+        // link: Yup.string('Link must be a string'),
+        // linkDescription: Yup.string('Link text must be a string'),
+        // dateStart: dateValidator,
+        // timeStart: Yup.string('Time is not valid'),
+        // dtEnd: dateValidator,
+        // timeEnd: Yup.string('Time is not valid')
     })
+
+
 
     return (
         <ModalForm icon='hover far fa-edit fa-2x text-secondary' header="Edit your event" validationSchema={schema} initialValues={initialValues} submit={props.submit} remove={props.remove}>
@@ -98,10 +101,10 @@ export default function UpdateEventForm(props) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="dtStart" type="time" />
+                    <FormField name="timeStart" type="time" />
                 </div>
                 <div className="col-6">
-                    <FormField name="dtEnd" type="time" />
+                    <FormField name="timeEnd" type="time" />
                 </div>
             </div>
             <div className="form-row">
