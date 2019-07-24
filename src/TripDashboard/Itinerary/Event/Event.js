@@ -23,7 +23,7 @@ class Event extends Component {
                 color = '#FEA600'
                 break
             case 'transportation':
-                iconString = 'fa-plane'
+                iconString = 'fa-car'
                 color = '#BF9DD9'
                 break
             case 'event':
@@ -52,7 +52,7 @@ class Event extends Component {
         ) : null
 
         return (
-            <div name={moment(event.dateStart).format('MMM DD')} className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
+            <div name={moment(event.dateStart).format('MMM DD YYYY')} className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
                 <div className="row">
                     <div className="card-body">
                         <h5 className="card-title">

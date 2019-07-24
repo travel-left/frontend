@@ -7,20 +7,12 @@ import moment from 'moment-timezone'
 import Alert from '../../util/otherComponents/Alert'
 
 class Itinerary extends Component {
-    tripId = this.props.currentTrip._id
-    tz = moment.tz.guess(true)
-
-    state = {
-        days: [],
-        events: [],
-        currentDay: null,
-        showAlert: false
-    }
-
-    constructor(props) {
-        super(props)
-        this.getShowAlertAndSetState()
-        this.getDEandSetState()
+    closeAlert = async () => {
+        const { _id } = this.props.currentUser.user
+        await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { itinerary: false } })
+        this.setState({
+            showAlert: false
+        })
     }
 
     getShowAlertAndSetState = async () => {
@@ -33,83 +25,59 @@ class Itinerary extends Component {
         }
     }
 
-    closeAlert = async () => {
-        const { _id } = this.props.currentUser.user
-        await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { itinerary: false } })
-        this.setState({
-            showAlert: false
+    tripId = this.props.currentTrip._id
+    tz = moment.tz.guess(true)
+
+    state = {
+        days: [],
+        events: [],
+        showAlert: false
+    }
+
+    constructor(props) {
+        super(props)
+        this.getShowAlertAndSetState()
+        this.getDaysAndEvents()
+    }
+
+    getDaysAndEvents = async () => {
+        let events = await apiCall('get', `/api/trips/${this.tripId}/events?tz=${this.tz}`)
+        let days = []
+        events.forEach(event => {
+            if (!days.includes(event.dateStart))
+                days.push(event.dateStart)
         })
+
+        this.setState({ events, days })
     }
 
-    getDaysandEvents = async () => {
-        let events = await this.getEvents()
-        let days = await this.getDays()
-        return {
-            days,
-            events
-        }
-    }
-
-    getDEandSetState = async () => {
-        const state = await this.getDaysandEvents()
-        this.setState(state)
-    }
-
-    getEvents = () => {
-        return apiCall('get', `/api/trips/${this.tripId}/events?tz=${this.tz}`)
-    }
-
-    getDays = () => {
-        return apiCall('get', `/api/trips/${this.tripId}/days?tz=${this.tz}`)
-    }
-
-    setCurrentDay = async newDay => {
-        const events = await this.getEvents(newDay)
-        this.setState({
-            currentDay: newDay,
-            events
-        })
-    }
-
-    submitEvent = async event => {
-        const eventToSend = {
-            type: event.type.toUpperCase(),
+    createEvent = async event => {
+        await apiCall('post', `/api/trips/${this.tripId}/events`, {
+            ...event,
             dtStart: `${event.dateStart}T${event.timeStart}:00`,
-            image: event.image,
-            link: event.link,
-            linkDescription: event.linkDescription,
-            description: event.description,
             dtEnd: `${event.dateEnd}T${event.timeEnd}:00`,
-            tzStart: event.tzStart,
-            tzEnd: event.tzEnd,
-            name: event.name
-        }
-        let date = this.state.currentDate
-
-        await apiCall('post', `/api/trips/${this.tripId}/events`, eventToSend)
-        const state = await this.getDaysandEvents()
-        this.setState({
-            ...state,
-            currentDay: date
         })
-    }
-
-    removeEvent = async eventId => {
-        await apiCall('delete', `/api/trips/${this.tripId}/events/${eventId}`)
-        this.getDEandSetState()
+        this.getDaysAndEvents()
     }
 
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${updateObject.dateStart}T${updateObject.timeStart}:00`
         updateObject.dtEnd = `${updateObject.dateEnd}T${updateObject.timeEnd}:00`
         await apiCall('put', `/api/trips/${this.tripId}/events/${eventId}`, updateObject) // Delete event
-        this.getDEandSetState()
+        this.getDaysAndEvents()
     }
 
+    removeEvent = async eventId => {
+        await apiCall('delete', `/api/trips/${this.tripId}/events/${eventId}`)
+        this.getDaysAndEvents()
+    }
+
+
+
     render() {
-        const { days, events, currentDay, showAlert } = this.state
-        const dayList = days.length ? <DayList days={days} setCurrentDay={this.setCurrentDay} currentDay={currentDay} submit={this.setCurrentDay} /> : null
-        const eventList = events.length ? <EventList events={events} updateEvent={this.updateEvent} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
+        const { days, events, showAlert } = this.state
+        const dayList = days.length ? <DayList days={days} /> : null
+        const eventList = events.length ? <EventList events={events} updateEvent={this.updateEvent} removeEvent={this.removeEvent} /> : <h4 className='text-info'>Nothing here? Use the 'NEW EVENT' button to create your first event!</h4>
         let alert = showAlert ? <Alert text='This is your trip itinerary.  Here you can manage events and days.  Click "ADD NEW EVENT" to get started.' closeAlert={this.closeAlert} /> : null
 
         return (
@@ -122,7 +90,7 @@ class Itinerary extends Component {
                         <h2>Trip Days</h2>
                         <hr />
                         {dayList}
-                        <CreateEventForm submit={this.submitEvent} initDay={this.props.currentTrip.dateStart} />
+                        <CreateEventForm submit={this.createEvent} initDay={this.props.currentTrip.dateStart} />
                     </div>
                     <div className="col-md-10">
                         {eventList}

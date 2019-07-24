@@ -20,24 +20,23 @@ export const types = [
     {
         name: 'Category',
         value: '',
-        hidden: true,
-        default: true
+        hidden: true
     },
     {
         name: 'Lodging',
-        value: 'lodging'
+        value: 'LODGING'
     },
     {
         name: 'Event',
-        value: 'event'
+        value: 'EVENT'
     },
     {
         name: 'Transportation',
-        value: 'transportation'
+        value: 'TRANSPORTATION'
     },
     {
         name: 'Flight',
-        value: 'flight'
+        value: 'FLIGHT'
     }
 ]
 
