@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
 import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
 
-export default function EventForm(props) {
+export default function UpdateEventForm(props) {
     const { event } = props
     const initialValues = {
         name: event.name,
@@ -18,10 +18,10 @@ export default function EventForm(props) {
         image: event.image,
         link: event.link,
         linkDescription: event.linkDescription,
-        dateStart: event.dtStart.split('T')[0],
-        timeStart: moment(event.dtStart).format('hh:hh'),
-        dateEnd: event.dtEnd.split('T')[0],
-        timeEnd: moment(event.dtEnd).format('hh:hh')
+        dateStart: event.dateStart,
+        dtStart: event.dtStart.split(' ')[0],
+        dateEnd: event.dateEnd,
+        dtEnd: event.dtEnd.split(' ')[0]
     }
 
     let timeZones = moment.tz.names().map(name => {
@@ -98,10 +98,10 @@ export default function EventForm(props) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="timeStart" type="time" />
+                    <FormField name="dtStart" type="time" />
                 </div>
                 <div className="col-6">
-                    <FormField name="timeEnd" type="time" />
+                    <FormField name="dtEnd" type="time" />
                 </div>
             </div>
             <div className="form-row">
