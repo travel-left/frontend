@@ -3,14 +3,17 @@ import moment from 'moment-timezone'
 import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'
-import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
+<<<<<<< HEAD
 import {
     nameValidator,
     dateValidator,
     fileValidator,
     descriptionValidator
 } from '../../../util/validators'
+=======
+import { schema, types, timezones } from "./EventHelpers"
+>>>>>>> develop
 
 export default function UpdateEventForm(props) {
     const { event } = props
@@ -30,6 +33,7 @@ export default function UpdateEventForm(props) {
         timeEnd: event.dtEnd.split(' ')[0]
     }
 
+<<<<<<< HEAD
     let timeZones = moment.tz.names().map(name => {
         const offset = moment.tz(name).format('Z')
         const abbrev = moment.tz(name).format('z')
@@ -90,6 +94,8 @@ export default function UpdateEventForm(props) {
 
 
 
+=======
+>>>>>>> develop
     return (
         <ModalForm
             icon="hover far fa-edit fa-2x text-secondary"
@@ -104,15 +110,7 @@ export default function UpdateEventForm(props) {
                     <FormField name="name" label="Name" placeholder="Name" />
                 </div>
                 <div className="col-6">
-<<<<<<< HEAD
-                    <SelectField
-                        name="category"
-                        options={categories}
-                        label="Categories"
-                    />
-=======
                     <SelectField name="type" options={types} label="Type" />
->>>>>>> develop
                 </div>
             </div>
             <div className="form-row">
@@ -137,10 +135,10 @@ export default function UpdateEventForm(props) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <SelectField name="tzStart" options={timeZones} />
+                    <SelectField name="tzStart" options={timezones} />
                 </div>
                 <div className="col-6">
-                    <SelectField name="tzEnd" options={timeZones} />
+                    <SelectField name="tzEnd" options={timezones} />
                 </div>
             </div>
             <FormField component="textarea" name="description" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
