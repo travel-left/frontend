@@ -64,18 +64,18 @@ export default function UpdateEventForm(props) {
     ]
 
     const schema = Yup.object().shape({
-        // name: nameValidator,
-        // tzStart: Yup.string('Time zone must be a string'),
-        // tzEnd: Yup.string('Time zone must be a string'),
-        // category: Yup.string('Category must be a string'),
-        // description: descriptionValidator,
-        // image: fileValidator,
-        // link: Yup.string('Link must be a string'),
-        // linkDescription: Yup.string('Link text must be a string'),
-        // dateStart: dateValidator,
-        // timeStart: Yup.string('Time is not valid'),
-        // dtEnd: dateValidator,
-        // timeEnd: Yup.string('Time is not valid')
+        name: nameValidator,
+        tzStart: Yup.string('Time zone must be a string'),
+        tzEnd: Yup.string('Time zone must be a string'),
+        category: Yup.string('Category must be a string'),
+        description: descriptionValidator,
+        image: fileValidator,
+        link: Yup.string('Link must be a string'),
+        linkDescription: Yup.string('Link text must be a string'),
+        dateStart: dateValidator,
+        timeStart: Yup.string('Time is not valid'),
+        dtEnd: dateValidator,
+        timeEnd: Yup.string('Time is not valid')
     })
 
     return (
