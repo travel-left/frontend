@@ -143,28 +143,10 @@ export default function UpdateEventForm(props) {
                     <SelectField name="tzEnd" options={timeZones} />
                 </div>
             </div>
-<<<<<<< HEAD
-            <FormField
-                component="textarea"
-                name="summary"
-                cols="70"
-                rows="2"
-                placeholder="A summary of your event"
-                label="Event summary"
-            />
-            <div className="form-row">
-                <div className="col-10">
-                    <FormField
-                        name="image"
-                        component={Uploader}
-                        label="Image Link"
-                    />
-=======
             <FormField component="textarea" name="description" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
             <div className="form-row">
                 <div className="col-10">
                     <FormField name="image" component={Uploader} label="Image" />
->>>>>>> develop
                 </div>
             </div>
             <div className="form-row">
@@ -177,15 +159,7 @@ export default function UpdateEventForm(props) {
                     />
                 </div>
                 <div className="col-6">
-<<<<<<< HEAD
-                    <FormField
-                        name="linkText"
-                        placeholder="link title"
-                        label="Link Title"
-                    />
-=======
                     <FormField name="linkDescription" placeholder="Link description" label='Link description' />
->>>>>>> develop
                 </div>
             </div>
         </ModalForm>
