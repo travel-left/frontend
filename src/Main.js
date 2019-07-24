@@ -7,7 +7,7 @@ import withAuth from './util/hocs/withAuth'
 import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth/Auth'
 import CreateProfile from './Auth/CreateProfile'
-import TripDashboard from './TripDashboard/SideNavigation'
+import TripDashboard from './TripDashboard/TripDashboard'
 
 const Main = ({ authUser }) => {
     return (

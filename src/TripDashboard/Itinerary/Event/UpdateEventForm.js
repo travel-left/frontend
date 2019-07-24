@@ -12,17 +12,18 @@ import {
     descriptionValidator
 } from '../../../util/validators'
 
-export default function EventForm(props) {
+export default function UpdateEventForm(props) {
     const { event } = props
+
     const initialValues = {
-        title: event.title,
+        name: event.name,
         tzStart: event.tzStart.replace(' ', '_'),
         tzEnd: event.tzEnd.replace(' ', '_'),
-        category: event.category,
-        summary: event.summary,
+        type: event.type,
+        description: event.description,
         image: event.image,
         link: event.link,
-        linkText: event.linkText,
+        linkDescription: event.linkDescription,
         dateStart: event.dateStart,
         timeStart: event.dtStart.split(' ')[0],
         dateEnd: event.dateEnd,
@@ -43,7 +44,7 @@ export default function EventForm(props) {
         return parseInt(f.offset, 10) - parseInt(s.offset, 10)
     })
 
-    const categories = [
+    const types = [
         {
             name: 'Category',
             value: '',
@@ -73,19 +74,21 @@ export default function EventForm(props) {
     ]
 
     const schema = Yup.object().shape({
-        title: nameValidator,
+        name: nameValidator,
         tzStart: Yup.string('Time zone must be a string'),
         tzEnd: Yup.string('Time zone must be a string'),
         category: Yup.string('Category must be a string'),
-        summary: descriptionValidator,
+        description: descriptionValidator,
         image: fileValidator,
         link: Yup.string('Link must be a string'),
-        linkText: Yup.string('Link text must be a string'),
+        linkDescription: Yup.string('Link text must be a string'),
         dateStart: dateValidator,
         timeStart: Yup.string('Time is not valid'),
         dateEnd: dateValidator,
         timeEnd: Yup.string('Time is not valid')
     })
+
+
 
     return (
         <ModalForm
@@ -98,14 +101,18 @@ export default function EventForm(props) {
         >
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="title" label="Title" placeholder="Title" />
+                    <FormField name="name" label="Name" placeholder="Name" />
                 </div>
                 <div className="col-6">
+<<<<<<< HEAD
                     <SelectField
                         name="category"
                         options={categories}
                         label="Categories"
                     />
+=======
+                    <SelectField name="type" options={types} label="Type" />
+>>>>>>> develop
                 </div>
             </div>
             <div className="form-row">
@@ -136,6 +143,7 @@ export default function EventForm(props) {
                     <SelectField name="tzEnd" options={timeZones} />
                 </div>
             </div>
+<<<<<<< HEAD
             <FormField
                 component="textarea"
                 name="summary"
@@ -151,6 +159,12 @@ export default function EventForm(props) {
                         component={Uploader}
                         label="Image Link"
                     />
+=======
+            <FormField component="textarea" name="description" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
+            <div className="form-row">
+                <div className="col-10">
+                    <FormField name="image" component={Uploader} label="Image" />
+>>>>>>> develop
                 </div>
             </div>
             <div className="form-row">
@@ -163,11 +177,15 @@ export default function EventForm(props) {
                     />
                 </div>
                 <div className="col-6">
+<<<<<<< HEAD
                     <FormField
                         name="linkText"
                         placeholder="link title"
                         label="Link Title"
                     />
+=======
+                    <FormField name="linkDescription" placeholder="Link description" label='Link description' />
+>>>>>>> develop
                 </div>
             </div>
         </ModalForm>

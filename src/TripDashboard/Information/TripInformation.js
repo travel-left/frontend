@@ -11,12 +11,9 @@ import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import LeftCard from '../../util/LeftCard'
-import { connect } from 'react-redux'
-import { setCurrentTrip } from '../../util/redux/actions/trip'
 import { apiCall } from '../../util/api'
 
-
-class TripInformation extends Component {
+export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
 
     state = {
@@ -66,22 +63,16 @@ class TripInformation extends Component {
     }
 
     updateCoordinator = async (coordinatorId, updateObject) => {
-        updateObject.firstName = updateObject.name.split(' ')[0]
-        updateObject.lastName = updateObject.name.split(' ')[1]
-        delete updateObject.name
         await apiCall('put', `/api/coordinators/${coordinatorId}`, updateObject)
         this.getCoordinators()
     }
 
     createCoordinator = async coordinator => {
-        coordinator.firstName = coordinator.name.split(' ')[0]
-        coordinator.lastName = coordinator.name.split(' ')[1]
         coordinator.organizationId = this.props.currentUser.organizationId
         coordinator.trip = this.props.currentTrip._id
         coordinator.password = 'password'
-        delete coordinator.name
 
-        await apiCall('post', '/api/auth/coordinators/signup', coordinator)
+        await apiCall('post', '/api/auth/signup', coordinator)
         this.getCoordinators()
     }
 
@@ -91,50 +82,42 @@ class TripInformation extends Component {
     }
 
     getContacts = async () => {
-        let contacts = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`)
+        let contacts = await apiCall('get', `/api/trips/${this.currentTripId}/contacts`)
         this.setState({ contacts })
     }
 
     updateContact = async (contactId, updateObject) => {
-        updateObject.firstName = updateObject.name.split(' ')[0]
-        updateObject.lastName = updateObject.name.split(' ')[1]
-        delete updateObject.name
-        await apiCall('put', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts/${contactId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.currentTripId}/contacts/${contactId}`, updateObject)
         this.getContacts()
     }
 
     createContact = async newContact => {
-        newContact.firstName = newContact.name.split(' ')[0]
-        newContact.lastName = newContact.name.split(' ')[1]
-        await apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts`, newContact)
+        await apiCall('post', `/api/trips/${this.currentTripId}/contacts`, newContact)
         this.getContacts()
     }
 
     deleteContact = async contactId => {
-        await apiCall('delete', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/contacts/${contactId}`)
+        await apiCall('delete', `/api/trips/${this.currentTripId}/contacts/${contactId}`)
         this.getContacts()
     }
 
     getDocuments = async () => {
-        let documents = await apiCall('get', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`)
+        let documents = await apiCall('get', `/api/trips/${this.currentTripId}/documents`)
         this.setState({ documents })
     }
 
     updateDocument = async (documentId, updateObject) => {
-        await apiCall('put', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents/${documentId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.currentTripId}/documents/${documentId}`, updateObject)
         this.getDocuments()
     }
 
-    createDocument = doc => {
-        apiCall('post', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents`, doc)
-            .then(() => this.getDocuments())
-            .catch(err => {
-                console.error(err)
-            })
+    createDocument = async  doc => {
+        await apiCall('post', `/api/documents`, doc)
+        this.getDocuments()
     }
 
     deleteDocument = async docId => {
-        await apiCall('delete', `/api/trips/${this.currentTripId}/cohorts/${this.currentCohortId}/documents/${docId}`)
+        await apiCall('delete', `/api/trips/${this.currentTripId}/documents/${docId}`)
         this.getDocuments()
     }
 
@@ -200,8 +183,3 @@ class TripInformation extends Component {
         )
     }
 }
-
-export default connect(
-    null,
-    { setCurrentTrip }
-)(TripInformation)

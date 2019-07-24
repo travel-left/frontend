@@ -18,7 +18,7 @@ export default function NewCoordinatorForm({ submit }) {
             .min(2, 'Please enter a longer name')
             .max(50, 'Please enter a shorter name')
             .required('Please enter a name'),
-        img: Yup.string().required('Please upload an image'),
+        image: Yup.string().required('Please upload an image'),
         email: Yup.string().email('please enter a valid email')
     })
 
@@ -30,7 +30,7 @@ export default function NewCoordinatorForm({ submit }) {
     return (
         <ModalForm button={button} header="Add a new coordinator to your trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField component={Uploader} name="img" label="Upload an Image" />
+            <FormField component={Uploader} name="image" label="Upload an Image" />
             <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
             <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="phone" />
             <FormField name="title" label="Title" placeholder="CEO" />

@@ -7,7 +7,7 @@ import Uploader from '../../../util/forms/Uploader'
 export default function CreateContactForm({ submit }) {
     const initialValues = {
         name: '',
-        photo: '',
+        image: '',
         email: '',
         phone: ''
     }
@@ -17,7 +17,7 @@ export default function CreateContactForm({ submit }) {
             .min(2, 'Please enter a longer name')
             .max(50, 'Please enter a shorter name')
             .required('Please enter a name'),
-        photo: Yup.string().required('Please upload an image'),
+        image: Yup.string().required('Please upload an image'),
         email: Yup.string().email('please enter a valid email')
     })
 
@@ -29,7 +29,7 @@ export default function CreateContactForm({ submit }) {
     return (
         <ModalForm button={button} header="Add a new emergency contact" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField component={Uploader} name="photo" label="Upload an Image" />
+            <FormField component={Uploader} name="image" label="Upload an Image" />
             <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
             <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="phone" />
         </ModalForm>

@@ -4,12 +4,10 @@ import AddTravelerForm from './Travelers/AddTravelerForm'
 import Alert from '../../util/otherComponents/Alert'
 import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
-import CreateEmailForm from './Actions/CreateEmailForm';
+import CreateEmailForm from './Actions/CreateEmailForm'
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
-
-    cohortId = this.props.currentCohort._id
 
     state = {
         travelers: [],
@@ -23,7 +21,7 @@ class Travelers extends Component {
     }
 
     getShowAlertAndSetState = async () => {
-        const { _id } = this.props.currentUser.user
+        const { _id } = this.props.currentUser
         const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
         if (coordinator.showAlerts.itinerary === 'true') {
             this.setState({
@@ -33,21 +31,15 @@ class Travelers extends Component {
     }
 
     closeAlert = async () => {
-        const { _id } = this.props.currentUser.user
+        const { _id } = this.props.currentUser
         await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { itinerary: false } })
         this.setState({
             showAlert: false
         })
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.currentCohort !== prevProps.currentCohort) {
-            this.getAndSetTravelers()
-        }
-    }
-
     getAndSetTravelers = async () => {
-        const travelers = await apiCall('get', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/travelers`)
+        const travelers = await apiCall('get', `/api/trips/${this.tripId}/travelers`)
         this.setState({
             travelers: travelers.map(traveler => {
                 return {
@@ -64,13 +56,9 @@ class Travelers extends Component {
             accessType: 'user',
             password: 'password',
             currentTrip: this.props.currentTrip._id,
-            currentCohort: this.props.currentTrip.cohorts[0]._id,
-            firstName: traveler.name.split(' ')[0],
-            lastName: traveler.name.split(' ')[1]
         }
 
-        const trav = await apiCall('post', '/api/travelers', newTraveler)
-        await apiCall('PUT', `/api/trips/${this.tripId}/cohorts/${this.cohortId}/travelers/${trav._id}`)
+        await apiCall('post', '/api/travelers', newTraveler)
         this.getAndSetTravelers()
     }
 
