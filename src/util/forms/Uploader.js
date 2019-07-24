@@ -14,7 +14,7 @@ export default class Uploader extends Component {
         })
         let formData = new FormData()
         formData.append('file', file)
-        let s3 = await apiCall('post', '/api/files', formData)
+        let s3 = await apiCall('post', '/api/fileUploads/unAuth', formData)
         this.setState({ uploading: false, fileUrl: s3.url })
         return s3.url
     }

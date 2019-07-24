@@ -13,7 +13,7 @@ class Navbar extends Component {
     render() {
         let { currentUser } = this.props
         let loggedInContent = null
-        let greeting = currentUser.user.email ? <span className="text-light">Hello, {currentUser.user.firstName}!</span> : null
+        let greeting = currentUser.email ? <span className="text-light">Hello, {currentUser.name}!</span> : null
 
         if (currentUser.isAuthenticated) {
             loggedInContent = (
