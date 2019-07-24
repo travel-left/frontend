@@ -33,7 +33,7 @@ export default class Traveler extends Component {
                         <span className="badge badge-primary badge-pill">{status}</span>
                     </div>
                     <div className="col-4 col-md-1">
-                        <UpdateTravelerForm {...this.props} remove={this.handleRemove} update={this.handleUpdate}></UpdateTravelerForm>
+                        <UpdateTravelerForm {...this.props} remove={this.handleRemove} submit={this.handleUpdate}></UpdateTravelerForm>
                     </div>
                 </div>
             </div>

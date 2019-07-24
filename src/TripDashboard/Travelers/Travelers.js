@@ -58,7 +58,8 @@ class Travelers extends Component {
             currentTrip: this.props.currentTrip._id,
         }
 
-        await apiCall('post', '/api/travelers', newTraveler)
+        await apiCall('post', `/api/trips/${this.tripId}/travelers`, newTraveler)
+
         this.getAndSetTravelers()
     }
 
