@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment-timezone'
 import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'

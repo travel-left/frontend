@@ -109,7 +109,7 @@ class Itinerary extends Component {
     render() {
         const { days, events, currentDay, showAlert } = this.state
         const dayList = days.length ? <DayList days={days} setCurrentDay={this.setCurrentDay} currentDay={currentDay} submit={this.setCurrentDay} /> : null
-        const eventList = events.length ? <EventList events={events} updateEvent={this.updateEvent} removeEvent={this.removeEvent} /> : <h3>Select a day with events or add a new one!</h3>
+        const eventList = events.length ? <EventList events={events} updateEvent={this.updateEvent} removeEvent={this.removeEvent} /> : <h4 className='text-info'>Nothing here? Use the 'NEW EVENT' button to create your first event!</h4>
         let alert = showAlert ? <Alert text='This is your trip itinerary.  Here you can manage events and days.  Click "ADD NEW EVENT" to get started.' closeAlert={this.closeAlert} /> : null
 
         return (
