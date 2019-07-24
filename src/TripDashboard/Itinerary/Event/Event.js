@@ -38,14 +38,14 @@ class Event extends Component {
                 break
         }
 
-        const map =
-            event.coordinates.long && event.coordinates.lat ? (
-                <div className="row">
-                    <div className="col-12">
-                        <Map coordinates={event.coordinates} />
-                    </div>
-                </div>
-            ) : null
+        // const map =
+        //     event.coordinates.long && event.coordinates.lat ? (
+        //         <div className="row">
+        //             <div className="col-12">
+        //                 <Map coordinates={event.coordinates} />
+        //             </div>
+        //         </div>
+        //     ) : null
 
         const address = event.address ? (
             <p className="card-text">{'Address: ' + event.address}</p>
@@ -74,7 +74,7 @@ class Event extends Component {
                                 </div>
                             </div>
                             <div className="col-md-6">
-                                {map}
+                                {/* {map} */}
                                 {address}
                             </div>
                         </div>
