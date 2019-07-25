@@ -3,32 +3,27 @@ import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 
-export default function CreateEmailForm({ submit, travelers }) {
+export default function CreateTextForm({ submit, travelers }) {
     const initialValues = {
-        subject: '',
         body: ''
     }
 
     const schema = Yup.object().shape({
-        subject: Yup.string()
-            .min(2, 'Please enter a longer subject')
-            .max(50, 'Please enter a shorter subject')
-            .required('Please enter a subject'),
         body: Yup.string()
             .min(2, 'Please enter a longer body')
-            .max(50, 'Please enter a shorter body')
+            .max(160, 'Please enter a shorter body')
             .required('Please enter a body')
     })
 
     const button = {
         classes: 'btn btn-info btn-lg',
-        text: 'new email'
+        text: 'new Text'
     }
 
     let travelerList = travelers.map(t =>
         t.selected ? (
             <p key={t._id}>
-                {t.name} -- {t.email}
+                {t.name} -- {t.phone}
             </p>
         ) : (
             undefined
@@ -49,15 +44,10 @@ export default function CreateEmailForm({ submit, travelers }) {
                 {travelerList}
             </div>
             <FormField
-                name="subject"
-                label="Subject"
-                placeholder="Your email subject"
-            />
-            <FormField
                 name="body"
                 label="Body"
                 component="textarea"
-                placeholder="Your email body"
+                placeholder="Your text body"
                 className="d-block"
             />
         </ModalForm>

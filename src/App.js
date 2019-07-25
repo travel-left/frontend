@@ -16,19 +16,19 @@ if (localStorage.token) {
 }
 
 const App = () => (
-    //<HttpsRedirect>
-    <Provider store={store}>
-        <Router>
-            <div>
-                <Navbar />
-                <div className="container-fluid content" id="app-root" style={{ minHeight: '90vh' }}>
-                    <Main />
+    <HttpsRedirect>
+        <Provider store={store}>
+            <Router>
+                <div>
+                    <Navbar />
+                    <div className="container-fluid content" id="app-root" style={{ minHeight: '90vh' }}>
+                        <Main />
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        </Router>
-    </Provider>
-    //</HttpsRedirect>
+            </Router>
+        </Provider>
+    </HttpsRedirect>
 )
 
 export default App

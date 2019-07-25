@@ -6,6 +6,7 @@ import Alert from '../../util/otherComponents/Alert'
 import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
 import CreateEmailForm from './Actions/CreateEmailForm'
+import CreateTextForm from './Actions/CreateTextForm'
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
@@ -102,16 +103,30 @@ class Travelers extends Component {
 
     emailSelectedTravelers = email => {
         let travelersEmails = []
-        this.state.travelers.forEach(traveler => {
+        for (const traveler of this.state.travelers) {
             if (traveler.selected) {
                 travelersEmails.push(traveler.email)
             }
-        })
+        }
 
-        apiCall('post', '/api/email', {
+        apiCall('post', '/api/communicate/email', {
             subject: email.subject,
             body: email.body,
             emails: travelersEmails
+        })
+    }
+
+    textSelectedTravelers = text => {
+        let travelersPhones = []
+        for (const traveler of this.state.travelers) {
+            if (traveler.selected) {
+                travelersPhones.push(traveler.phone)
+            }
+        }
+
+        apiCall('post', '/api/communicate/text', {
+            body: text.body,
+            phones: travelersPhones
         })
     }
 
@@ -136,12 +151,24 @@ class Travelers extends Component {
                                 People on this trip
                             </h2>
                             <div>
+                                <CreateTextForm
+                                    key={1}
+                                    submit={this.textSelectedTravelers}
+                                    travelers={travelers}
+                                />
                                 <CreateEmailForm
+                                    key={2}
                                     submit={this.emailSelectedTravelers}
                                     travelers={travelers}
                                 />
-                                <ImportBulkForm submit={this.addTravelersCSV} />
-                                <AddTravelerForm submit={this.addTraveler} />
+                                <ImportBulkForm
+                                    key={3}
+                                    submit={this.addTravelersCSV}
+                                />
+                                <AddTravelerForm
+                                    key={4}
+                                    submit={this.addTraveler}
+                                />
                             </div>
                         </div>
                         <h4 className="d-block text-muted">
