@@ -14,7 +14,7 @@ export default function CreateEmailForm({ submit, travelers }) {
             .min(2, 'Please enter a longer subject')
             .max(50, 'Please enter a shorter subject')
             .required('Please enter a subject'),
-        text: Yup.string()
+        body: Yup.string()
             .min(2, 'Please enter a longer body')
             .max(50, 'Please enter a shorter body')
             .required('Please enter a body')
@@ -35,7 +35,7 @@ export default function CreateEmailForm({ submit, travelers }) {
                 {travelerList}
             </div>
             <FormField name="subject" label="Subject" placeholder="Your email subject" />
-            <FormField name="text" label="Body" component="textarea" placeholder="Your email body" className="d-block" />
+            <FormField name="body" label="Body" component="textarea" placeholder="Your email body" className="d-block" />
         </ModalForm>
     )
 }
