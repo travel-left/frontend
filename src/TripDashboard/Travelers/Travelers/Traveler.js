@@ -47,7 +47,7 @@ export default class Traveler extends Component {
                         <UpdateTravelerForm
                             {...this.props}
                             remove={this.handleRemove}
-                            update={this.handleUpdate}
+                            submit={this.handleUpdate}
                         />
                     </div>
                 </div>
