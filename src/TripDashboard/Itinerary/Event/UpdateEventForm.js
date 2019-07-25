@@ -3,7 +3,7 @@ import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'
 import ModalForm from '../../../util/forms/ModalForm'
-import { schema, types, timezones } from "./EventHelpers"
+import { schema, types, timezones } from './EventHelpers'
 
 export default function UpdateEventForm(props) {
     const { event } = props
@@ -24,7 +24,14 @@ export default function UpdateEventForm(props) {
     }
 
     return (
-        <ModalForm icon='hover far fa-edit fa-2x text-secondary' header="Edit your event" validationSchema={schema} initialValues={initialValues} submit={props.submit} remove={props.remove}>
+        <ModalForm
+            icon="hover far fa-edit fa-2x text-secondary"
+            header="Edit your event"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={props.submit}
+            remove={props.remove}
+        >
             <div className="form-row">
                 <div className="col-6">
                     <FormField name="name" label="Name" placeholder="Name" />
@@ -35,7 +42,11 @@ export default function UpdateEventForm(props) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="dateStart" label="Start Time" type="date" />
+                    <FormField
+                        name="dateStart"
+                        label="Start Time"
+                        type="date"
+                    />
                 </div>
                 <div className="col-6">
                     <FormField name="dateEnd" label="End Time" type="date" />
@@ -57,21 +68,40 @@ export default function UpdateEventForm(props) {
                     <SelectField name="tzEnd" options={timezones} />
                 </div>
             </div>
-            <FormField component="textarea" name="description" cols="70" rows="2" placeholder="A summary of your event" label='Event summary' />
+            <FormField
+                component="textarea"
+                name="description"
+                cols="70"
+                rows="2"
+                placeholder="A summary of your event"
+                label="Event summary"
+            />
             <div className="form-row">
                 <div className="col-10">
-                    <FormField name="image" component={Uploader} label="Image" />
+                    <FormField
+                        name="image"
+                        component={Uploader}
+                        label="Image"
+                    />
                 </div>
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
+                    <FormField
+                        name="link"
+                        placeholder="https://travel-left.com"
+                        type="link"
+                        label="Link"
+                    />
                 </div>
                 <div className="col-6">
-                    <FormField name="linkDescription" placeholder="Link description" label='Link description' />
+                    <FormField
+                        name="linkDescription"
+                        placeholder="Link description"
+                        label="Link description"
+                    />
                 </div>
             </div>
-
         </ModalForm>
     )
 }

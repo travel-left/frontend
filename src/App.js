@@ -21,7 +21,7 @@ const App = () => (
             <Router>
                 <div>
                     <Navbar />
-                    <div className="container-fluid content" id='app-root' style={{ minHeight: '90vh' }}>
+                    <div className="container-fluid content" id="app-root" style={{ minHeight: '90vh' }}>
                         <Main />
                     </div>
                     <Footer />
@@ -29,7 +29,6 @@ const App = () => (
             </Router>
         </Provider>
     </HttpsRedirect>
-
 )
 
 export default App
