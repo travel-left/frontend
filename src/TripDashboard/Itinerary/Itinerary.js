@@ -43,7 +43,10 @@ class Itinerary extends Component {
     }
 
     getDaysAndEvents = async () => {
-        let events = await apiCall('get', `/api/trips/${this.tripId}/itinerary?tz=${this.tz}`)
+        let events = await apiCall(
+            'get',
+            `/api/trips/${this.tripId}/itinerary?tz=${this.tz}`
+        )
         events.sort(time_sort_asc)
         let days = []
         events.forEach(event => {
@@ -153,12 +156,17 @@ class Itinerary extends Component {
 }
 
 export default Itinerary
-<<<<<<< HEAD
-=======
 
-const time_sort_asc = function (event1, event2) {
-    if (moment(event1.dtStart, ["h:mm A"]).format("HH:mm") > moment(event2.dtStart, ["h:mm A"]).format("HH:mm")) return 1
-    if (moment(event1.dtStart, ["h:mm A"]).format("HH:mm") < moment(event2.dtStart, ["h:mm A"]).format("HH:mm")) return -1
+const time_sort_asc = function(event1, event2) {
+    if (
+        moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
+        moment(event2.dtStart, ['h:mm A']).format('HH:mm')
+    )
+        return 1
+    if (
+        moment(event1.dtStart, ['h:mm A']).format('HH:mm') <
+        moment(event2.dtStart, ['h:mm A']).format('HH:mm')
+    )
+        return -1
     return 0
 }
->>>>>>> develop
