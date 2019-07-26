@@ -121,7 +121,7 @@ class Trips extends Component {
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
         const filteredTrips =
-            filter === 'All Trips'
+            filter === 'ALL TRIPS'
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
         this.setState({ trips, filteredTrips, filter, ...state })
@@ -182,7 +182,9 @@ class Trips extends Component {
                             <ul className="list-group ">
                                 <LeftBarItem
                                     text="All Trips"
-                                    total={trips.length}
+                                    total={
+                                        trips.length - tripStatusCounts.ARCHIVED
+                                    }
                                     active={filter === 'All Trips'}
                                     handleClick={this.onSideNavClick}
                                 />
