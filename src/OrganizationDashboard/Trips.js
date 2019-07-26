@@ -147,6 +147,7 @@ class Trips extends Component {
                 doubleClick={this.editTrip}
             />
         ) : null
+        const selectedTripClass = selectedTrip ? 'col-md-8' : 'col-12'
         let tripInfo = selectedTrip ? (
             <div className="col-md-4 shadow px-0 bg-light">
                 <TripInfo
@@ -226,7 +227,7 @@ class Trips extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-8 px-0 px-md-3">
+                        <div className={`${selectedTripClass} px-0 px-md-3`}>
                             <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
                                 <div className="col-md-3 border-bottom border-primary text-uppercase ml-5">
                                     {' '}
