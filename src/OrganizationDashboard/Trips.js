@@ -43,7 +43,7 @@ class Trips extends Component {
         trips.forEach(trip => {
             newStatusCount[trip.status]++
         })
-        this.filterTripsAndSetState(trips, 'All Trips', {
+        this.filterTripsAndSetState(trips, 'ALL TRIPS', {
             tripStatusCounts: newStatusCount
         })
     }
