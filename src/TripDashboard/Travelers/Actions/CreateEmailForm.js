@@ -21,8 +21,8 @@ export default function CreateEmailForm({ submit, travelers }) {
     })
 
     const button = {
-        classes: 'btn btn-info btn-lg',
-        text: 'new email'
+        classes: 'btn btn-outline-primary btn-lg',
+        text: 'EMAIL'
     }
 
     let travelerList = travelers.map(t =>
@@ -31,8 +31,8 @@ export default function CreateEmailForm({ submit, travelers }) {
                 {t.name} -- {t.email}
             </p>
         ) : (
-            undefined
-        )
+                undefined
+            )
     )
 
     return (

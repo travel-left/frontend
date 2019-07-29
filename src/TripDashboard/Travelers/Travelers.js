@@ -7,14 +7,25 @@ import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
+import Select from 'react-select'
+import ChangeStatusForm from './Actions/ChangeStatusForm';
+
+const stati = [
+    { value: 'INVITED', label: 'Invited' },
+    { value: 'CONFIRMED', label: 'Confirmed' },
+    { value: 'ON-TRIP', label: 'On trip' },
+    { value: 'POST-TRIP', label: 'Post trip' }
+]
 
 class Travelers extends Component {
     tripId = this.props.currentTrip._id
 
     state = {
         travelers: [],
+        filteredTravelers: [],
         allSelected: false,
-        showAlert: false
+        showAlert: false,
+        filters: ['INVITED', 'CONFIRMED', 'ON-TRIP', 'POST-TRIP']
     }
 
     constructor(props) {
@@ -49,7 +60,8 @@ class Travelers extends Component {
             `/api/trips/${this.tripId}/travelers`
         )
         this.setState({
-            travelers: travelers.map(traveler => {
+            travelers,
+            filteredTravelers: travelers.map(traveler => {
                 return {
                     ...traveler,
                     selected: false
@@ -90,7 +102,7 @@ class Travelers extends Component {
             return {
                 ...prevState,
                 allSelected: false,
-                travelers: prevState.travelers.map(traveler => {
+                filteredTravelers: prevState.filteredTravelers.map(traveler => {
                     return {
                         ...traveler,
                         selected:
@@ -108,7 +120,7 @@ class Travelers extends Component {
             return {
                 ...prevState,
                 allSelected: !prevState.allSelected,
-                travelers: prevState.travelers.map(traveler => {
+                filteredTravelers: prevState.filteredTravelers.map(traveler => {
                     return {
                         ...traveler,
                         selected: !prevState.allSelected,
@@ -120,7 +132,7 @@ class Travelers extends Component {
 
     emailSelectedTravelers = email => {
         let travelersEmails = []
-        for (const traveler of this.state.travelers) {
+        for (const traveler of this.state.filteredTravelers) {
             if (traveler.selected) {
                 travelersEmails.push(traveler.email)
             }
@@ -135,7 +147,7 @@ class Travelers extends Component {
 
     textSelectedTravelers = text => {
         let travelersPhones = []
-        for (const traveler of this.state.travelers) {
+        for (const traveler of this.state.filteredTravelers) {
             if (traveler.selected) {
                 travelersPhones.push(traveler.phone)
             }
@@ -147,14 +159,35 @@ class Travelers extends Component {
         })
     }
 
+    filterTravelers = selectedFilters => {
+        let filters = selectedFilters ? selectedFilters.map(f => f.value) : this.state.filters
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                filteredTravelers: prevState.travelers.filter(traveler => filters.includes(traveler.status))
+            }
+        })
+    }
+
     render() {
-        let { travelers, showAlert } = this.state
+        let { filteredTravelers, showAlert } = this.state
         let alert = showAlert ? (
             <Alert
                 text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.'
                 closeAlert={this.closeAlert}
             />
         ) : null
+
+        const customStyles = {
+            container: (provided, state) => ({
+                ...provided,
+                width: '400px',
+            }),
+            select: (provided, state) => ({
+                ...provided,
+                background: 'white'
+            })
+        }
 
         return (
             <div className="mt-3 mx-3">
@@ -163,21 +196,11 @@ class Travelers extends Component {
                 </div>
                 <div className="row">
                     <div className="col-md-12 mt-4 mx-3 pr-5">
-                        <div className="d-flex flex-row justify-content-between mb-4">
-                            <h2 className="text-primary d-inline">
-                                People on this trip
+                        <div className="row justify-content-between mb-4">
+                            <h2 className="text-black d-inline">
+                                Travelers on This Trip
                             </h2>
                             <div>
-                                <CreateTextForm
-                                    key={1}
-                                    submit={this.textSelectedTravelers}
-                                    travelers={travelers}
-                                />
-                                <CreateEmailForm
-                                    key={2}
-                                    submit={this.emailSelectedTravelers}
-                                    travelers={travelers}
-                                />
                                 <ImportBulkForm
                                     key={3}
                                     submit={this.addTravelersCSV}
@@ -188,9 +211,40 @@ class Travelers extends Component {
                                 />
                             </div>
                         </div>
-                        <h4 className="d-block text-muted">
-                            Add travelers here who are coming on the trip
-                        </h4>
+                        <div className="row d-flex flex-row no-gutters mb-3 py-3 justify-content-between">
+                            <div className="col-md-6">
+                                <Select
+                                    defaultValue={stati}
+                                    isMulti
+                                    name="colors"
+                                    options={stati}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                    styles={customStyles}
+                                    placeholder='Filter by status'
+                                    onChange={this.filterTravelers}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <div className="d-flex d-row justify-content-end">
+                                    <CreateTextForm
+                                        key={1}
+                                        submit={this.textSelectedTravelers}
+                                        travelers={filteredTravelers}
+                                    />
+                                    <CreateEmailForm
+                                        key={2}
+                                        submit={this.emailSelectedTravelers}
+                                        travelers={filteredTravelers}
+                                    />
+                                    <ChangeStatusForm
+                                        submit={this.emailSelectedTravelers}
+                                        travelers={filteredTravelers}
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
                         <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
                             <div className="col-md-1">
                                 <input
@@ -201,19 +255,17 @@ class Travelers extends Component {
                                 />
                             </div>
                             <div className="col-md-2 d-none d-md-block">
-                                {' '}
-                                Image{' '}
                             </div>
                             <div className="d-none d-md-flex col-md-2">
                                 {' '}
-                                Name{' '}
+                                NAME{' '}
                             </div>
-                            <div className="col-4 col-md-3">Email</div>
-                            <div className="col-4 col-md-2"> Status</div>
+                            <div className="col-4 col-md-3">EMAIL</div>
+                            <div className="col-4 col-md-2"> STATUS</div>
                             <div className="col-4 col-md-1" />
                         </div>
                         <TravelerList
-                            items={travelers}
+                            items={filteredTravelers}
                             C={Traveler}
                             update={this.updateTraveler}
                             toggle={this.toggle}

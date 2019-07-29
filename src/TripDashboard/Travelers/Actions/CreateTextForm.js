@@ -16,8 +16,8 @@ export default function CreateTextForm({ submit, travelers }) {
     })
 
     const button = {
-        classes: 'btn btn-info btn-lg',
-        text: 'new Text'
+        classes: 'btn btn-outline-primary btn-lg',
+        text: 'TEXT'
     }
 
     let travelerList = travelers.map(t =>
@@ -26,14 +26,14 @@ export default function CreateTextForm({ submit, travelers }) {
                 {t.name} -- {t.phone}
             </p>
         ) : (
-            undefined
-        )
+                undefined
+            )
     )
 
     return (
         <ModalForm
             button={button}
-            header="Send an email to selected travelers"
+            header="Send a text to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
