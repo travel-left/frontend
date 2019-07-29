@@ -13,6 +13,7 @@ class Travelers extends Component {
 
     state = {
         travelers: [],
+        allSelected: false,
         showAlert: false
     }
 
@@ -88,6 +89,7 @@ class Travelers extends Component {
         this.setState(prevState => {
             return {
                 ...prevState,
+                allSelected: false,
                 travelers: prevState.travelers.map(traveler => {
                     return {
                         ...traveler,
@@ -95,6 +97,21 @@ class Travelers extends Component {
                             traveler._id === travelerId
                                 ? !traveler.selected
                                 : traveler.selected
+                    }
+                })
+            }
+        })
+    }
+
+    toggleAll = () => {
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                allSelected: !prevState.allSelected,
+                travelers: prevState.travelers.map(traveler => {
+                    return {
+                        ...traveler,
+                        selected: !prevState.allSelected,
                     }
                 })
             }
@@ -175,7 +192,14 @@ class Travelers extends Component {
                             Add travelers here who are coming on the trip
                         </h4>
                         <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
-                            <div className="col-md-1" />
+                            <div className="col-md-1">
+                                <input
+                                    onClick={this.toggleAll}
+                                    type="checkbox"
+                                    className="ml-3"
+                                    checked={this.state.allSelected}
+                                />
+                            </div>
                             <div className="col-md-2 d-none d-md-block">
                                 {' '}
                                 Image{' '}
