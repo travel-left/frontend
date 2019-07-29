@@ -1,4 +1,9 @@
-import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
+import {
+    nameValidator,
+    dateValidator,
+    fileValidator,
+    descriptionValidator
+} from '../../../util/validators'
 import * as Yup from 'yup'
 import moment from 'moment-timezone'
 
@@ -50,6 +55,7 @@ export const schema = Yup.object().shape({
     link: Yup.string('Link must be a string'),
     linkDescription: Yup.string('Link text must be a string'),
     dateStart: dateValidator,
+    address: Yup.string('Address must be a string'),
     timeStart: Yup.string('Time is not valid'),
     dateEnd: dateValidator,
     timeEnd: Yup.string('Time is not valid')

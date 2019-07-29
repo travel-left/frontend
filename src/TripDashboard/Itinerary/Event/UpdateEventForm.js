@@ -16,6 +16,7 @@ export default function UpdateEventForm(props) {
         description: event.description,
         image: event.image,
         link: event.link,
+        address: event.address,
         linkDescription: event.linkDescription,
         dateStart: event.dateStart,
         timeStart: event.dtStart.split(' ')[0],
@@ -75,6 +76,11 @@ export default function UpdateEventForm(props) {
                 rows="2"
                 placeholder="A summary of your event"
                 label="Event summary"
+            />
+            <FormField
+                name="address"
+                label="Address"
+                placeholder="1 World Way, Los Angeles, CA, US"
             />
             <div className="form-row">
                 <div className="col-10">
