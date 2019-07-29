@@ -4,7 +4,7 @@ import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'
 import ModalForm from '../../../util/forms/ModalForm'
-import { schema, types, timezones } from "./EventHelpers"
+import { schema, types, timezones } from './EventHelpers'
 
 export default function CreateEventForm({ submit, initDay }) {
     const initialValues = {
@@ -16,6 +16,7 @@ export default function CreateEventForm({ submit, initDay }) {
         image: '',
         link: '',
         linkDescription: '',
+        address: '',
         dateStart: initDay.split('T')[0],
         timeStart: '09:00',
         dateEnd: initDay.split('T')[0],
@@ -28,7 +29,13 @@ export default function CreateEventForm({ submit, initDay }) {
     }
 
     return (
-        <ModalForm button={button} header="Add an Event" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm
+            button={button}
+            header="Add an Event"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <div className="form-row">
                 <div className="col-6">
                     <FormField name="name" label="Name" placeholder="Name" />
@@ -39,7 +46,11 @@ export default function CreateEventForm({ submit, initDay }) {
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="dateStart" label="Start Time" type="date" />
+                    <FormField
+                        name="dateStart"
+                        label="Start Time"
+                        type="date"
+                    />
                 </div>
                 <div className="col-6">
                     <FormField name="dateEnd" label="End Time" type="date" />
@@ -61,21 +72,45 @@ export default function CreateEventForm({ submit, initDay }) {
                     <SelectField name="tzEnd" options={timezones} />
                 </div>
             </div>
-            <FormField component="textarea" name="description" cols="70" rows="2" placeholder="A description of your event" label='Description' />
+            <FormField
+                component="textarea"
+                name="description"
+                cols="70"
+                rows="2"
+                placeholder="A description of your event"
+                label="Description"
+            />
+            <FormField
+                name="address"
+                label="Address"
+                placeholder="1 World Way, Los Angeles, CA, US"
+            />
             <div className="form-row">
                 <div className="col-10">
-                    <FormField name="image" component={Uploader} label="Image" />
+                    <FormField
+                        name="image"
+                        component={Uploader}
+                        label="Image"
+                    />
                 </div>
             </div>
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="link" placeholder="https://travel-left.com" type="link" label="Link" />
+                    <FormField
+                        name="link"
+                        placeholder="https://travel-left.com"
+                        type="link"
+                        label="Link"
+                    />
                 </div>
                 <div className="col-6">
-                    <FormField name="linkDescription" placeholder="Link description" label='Link description' />
+                    <FormField
+                        name="linkDescription"
+                        placeholder="Link description"
+                        label="Link description"
+                    />
                 </div>
             </div>
-
         </ModalForm>
     )
 }
