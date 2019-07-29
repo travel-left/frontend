@@ -6,7 +6,7 @@ import ModalForm from '../../../util/forms/ModalForm'
 export default function CreateEmailForm({ submit, travelers }) {
     const initialValues = {
         subject: '',
-        body: ''
+        text: ''
     }
 
     const schema = Yup.object().shape({
@@ -14,7 +14,7 @@ export default function CreateEmailForm({ submit, travelers }) {
             .min(2, 'Please enter a longer subject')
             .max(50, 'Please enter a shorter subject')
             .required('Please enter a subject'),
-        body: Yup.string()
+        text: Yup.string()
             .min(2, 'Please enter a longer body')
             .max(50, 'Please enter a shorter body')
             .required('Please enter a body')
@@ -25,41 +25,17 @@ export default function CreateEmailForm({ submit, travelers }) {
         text: 'new email'
     }
 
-    let travelerList = travelers.map(t =>
-        t.selected ? (
-            <p key={t._id}>
-                {t.name} -- {t.email}
-            </p>
-        ) : (
-            undefined
-        )
-    )
+    let travelerList = travelers.map(t => (t.selected ? <p>{t.name} -- {t.email}</p> : undefined))
 
     return (
-        <ModalForm
-            button={button}
-            header="Send an email to selected travelers"
-            validationSchema={schema}
-            initialValues={initialValues}
-            submit={submit}
-        >
+        <ModalForm button={button} header="Send an email to selected travelers" validationSchema={schema} initialValues={initialValues} submit={submit}>
             <div>
                 <h5>Selected travelers</h5>
                 <hr />
                 {travelerList}
             </div>
-            <FormField
-                name="subject"
-                label="Subject"
-                placeholder="Your email subject"
-            />
-            <FormField
-                name="body"
-                label="Body"
-                component="textarea"
-                placeholder="Your email body"
-                className="d-block"
-            />
+            <FormField name="subject" label="Subject" placeholder="Your email subject" />
+            <FormField name="text" label="Body" component="textarea" placeholder="Your email body" className="d-block" />
         </ModalForm>
     )
 }

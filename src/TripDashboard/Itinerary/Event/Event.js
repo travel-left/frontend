@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import UpdateEventForm from './UpdateEventForm'
-import UpdateTripDateForm from '../../Information/TripDates/UpdateTripDateForm'
 import Map from './Map'
 import moment from 'moment'
-// import Image from '../../../util/otherComponents/Image'
+import Image from '../../../util/otherComponents/Image'
 
 class Event extends Component {
     remove = () => {
@@ -39,80 +38,40 @@ class Event extends Component {
                 break
         }
 
-        if (event.tripDate) {
-            iconString = 'fa-calendar'
-            color = '#FF0000'
-        }
-
-        const updater = event.tripDate ? (
-            <UpdateTripDateForm
-                {...event}
-                submit={this.update}
-                remove={this.remove}
-                onItinerary={true}
-            />
-        ) : (
-            <UpdateEventForm
-                event={event}
-                submit={this.update}
-                remove={this.remove}
-            />
-        )
-
-        const date =
-            event.dtStart && event.dtEnd
-                ? `${event.dtStart} - ${event.dtEnd}`
-                : null
-
-        const map = event.coordinates ? (
-            event.coordinates.lat && event.coordinates.long ? (
+        const map =
+            event.coordinates.long && event.coordinates.lat ? (
                 <div className="row">
                     <div className="col-12">
                         <Map coordinates={event.coordinates} />
                     </div>
                 </div>
             ) : null
-        ) : null
-
-        const name = event.tripDate ? `Trip Date: ${event.name}` : event.name
 
         const address = event.address ? (
             <p className="card-text">{'Address: ' + event.address}</p>
         ) : null
 
         return (
-            <div
-                name={moment(event.dateStart).format('MMM DD YYYY')}
-                className="card mb-3 border-0 shadow px-3 py-1 rounded-lg"
-            >
+            <div name={moment(event.dateStart).format('MMM DD YYYY')} className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
                 <div className="row">
                     <div className="card-body">
                         <h5 className="card-title">
-                            <strong> {name}</strong>
-                            <i
-                                className={`fa ${iconString} float-right`}
-                                style={{ color: color }}
-                            />
+                            <strong> {event.name}</strong>
+                            <i className={`fa ${iconString} float-right`} style={{ color: color }} />
                         </h5>
                         <div className="row">
                             <div className="col-md-6 d-flex flex-column">
-                                <h6
-                                    className="card-subtitle mb-2"
-                                    style={{ color: color }}
-                                >
-                                    {date}
+                                <h6 className="card-subtitle mb-2" style={{ color: color }}>
+                                    {event.dtStart} - {event.dtEnd}
                                 </h6>
                                 {/* <Image diameter="100px" src={event.image} /> */}
                                 <p className="card-text">{event.description}</p>
-                                <a
-                                    href={event.link}
-                                    className="card-link"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
+                                <a href={event.link} className="card-link" target="_blank" rel="noopener noreferrer">
                                     {event.linkDescription}
                                 </a>
-                                <div className="mt-auto">{updater}</div>
+                                <div className='mt-auto'>
+                                    <UpdateEventForm event={this.props.event} submit={this.update} remove={this.remove} />
+                                </div>
                             </div>
                             <div className="col-md-6">
                                 {map}

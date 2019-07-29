@@ -13,9 +13,7 @@ class Navbar extends Component {
     render() {
         let { currentUser } = this.props
         let loggedInContent = null
-        let greeting = currentUser.email ? (
-            <span className="text-light">Hello, {currentUser.name}!</span>
-        ) : null
+        let greeting = currentUser.email ? <span className="text-light">Hello, {currentUser.name}!</span> : null
 
         if (currentUser.isAuthenticated) {
             loggedInContent = (
@@ -25,15 +23,9 @@ class Navbar extends Component {
                     </div>
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <div className="a nav-link pr-4 disabled">
-                                {greeting}
-                            </div>
-                            {/*<i className="fa fa-download fa-2x text-secondary pr-4 hover" />*/}
-                            <i
-                                className="fas fa-sign-out-alt fa-2x text-secondary hover"
-                                onClick={this.signout}
-                                aria-hidden="true"
-                            />
+                            <div className="a nav-link pr-4 disabled">{greeting}</div>
+                            <i className="fa fa-download fa-2x text-secondary pr-4 hover" />
+                            <i className="fas fa-sign-out-alt fa-2x text-secondary hover" onClick={this.signout} aria-hidden="true" />
                         </ul>
                     </div>
                 </div>
@@ -41,15 +33,10 @@ class Navbar extends Component {
         }
 
         return (
-            <nav
-                className="navbar navbar-expand container-fluid shadow px-4 bg-primary"
-                style={{ zIndex: 2 }}
-            >
+            <nav className="navbar navbar-expand container-fluid shadow px-4 bg-primary" style={{ zIndex: 2 }}>
                 <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <h1 className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0">
-                            left.
-                        </h1>
+                        <h1 className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0">left.</h1>
                     </Link>
                 </div>
                 {loggedInContent}
