@@ -185,37 +185,37 @@ class Trips extends Component {
                                     total={
                                         trips.length - tripStatusCounts.ARCHIVED
                                     }
-                                    active={filter === 'All Trips'}
+                                    active={filter === 'ALL TRIPS'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <LeftBarItem
                                     text="Active"
                                     total={tripStatusCounts.ACTIVE}
-                                    active={filter === 'Active'}
+                                    active={filter === 'ACTIVE'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <LeftBarItem
                                     text="Planned"
                                     total={tripStatusCounts.PLANNED}
-                                    active={filter === 'Planned'}
+                                    active={filter === 'PLANNED'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <LeftBarItem
                                     text="Planning"
                                     total={tripStatusCounts.PLANNING}
-                                    active={filter === 'Planning'}
+                                    active={filter === 'PLANNING'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <LeftBarItem
                                     text="Past"
                                     total={tripStatusCounts.PAST}
-                                    active={filter === 'Past'}
+                                    active={filter === 'PAST'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <LeftBarItem
                                     text="Archived"
                                     total={tripStatusCounts.ARCHIVED}
-                                    active={filter === 'Archived'}
+                                    active={filter === 'ARCHIVED'}
                                     handleClick={this.onSideNavClick}
                                 />
                             </ul>
