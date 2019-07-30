@@ -23,7 +23,7 @@ export default function AddTravelerForm({ submit }) {
 
     const button = {
         classes: 'btn btn-lg btn-primary',
-        text: 'ADD A TRAVLER'
+        text: 'ADD A TRAVELER'
     }
 
     return (
