@@ -21,7 +21,7 @@ export default function CreateEmailForm({ submit, travelers }) {
     })
 
     const button = {
-        classes: 'btn btn-outline-primary btn-lg',
+        classes: 'btn btn-outline-primary btn-lg border-left-0 border-right-0',
         text: 'EMAIL'
     }
 

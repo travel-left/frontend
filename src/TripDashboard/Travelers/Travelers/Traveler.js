@@ -23,7 +23,7 @@ export default class Traveler extends Component {
         let { name, email, status, image, selected } = this.props
 
         return (
-            <div className="card py-3 border bg-white my-2" onDoubleClick={this.handleDoubleClick}>
+            <div className="card py-3 border my-2 shadow" onDoubleClick={this.handleDoubleClick}>
                 <div
                     className="row no-gutters justify-content-around align-items-center px-3 px-md-0"
                     onClick={this.handleToggle}

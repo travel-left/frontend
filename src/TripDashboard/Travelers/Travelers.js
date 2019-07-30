@@ -215,9 +215,9 @@ class Travelers extends Component {
                 </div>
                 <div className="row">
                     <div className={`${selectedTravelerClass} mt-4 pr-5`}>
-                        <div className="row justify-content-between mb-4">
+                        <div className="row justify-content-between mb-4 ml-2">
                             <h2 className="text-black d-inline">
-                                Travelers on This Trip
+                                Manage Your Travelers
                             </h2>
                             <div>
                                 <ImportBulkForm
@@ -237,7 +237,7 @@ class Travelers extends Component {
                                     isMulti
                                     name="colors"
                                     options={stati}
-                                    className="basic-multi-select"
+                                    className="basic-multi-select shadow"
                                     classNamePrefix="select"
                                     styles={customStyles}
                                     placeholder='Filter by status'
@@ -246,20 +246,22 @@ class Travelers extends Component {
                             </div>
                             <div className="col-md-6">
                                 <div className="d-flex d-row justify-content-end">
-                                    <CreateTextForm
-                                        key={1}
-                                        submit={this.textSelectedTravelers}
-                                        travelers={filteredTravelers}
-                                    />
-                                    <CreateEmailForm
-                                        key={2}
-                                        submit={this.emailSelectedTravelers}
-                                        travelers={filteredTravelers}
-                                    />
-                                    <ChangeStatusForm
-                                        submit={this.emailSelectedTravelers}
-                                        travelers={filteredTravelers}
-                                    />
+                                    <div className="shadow">
+                                        <CreateTextForm
+                                            key={1}
+                                            submit={this.textSelectedTravelers}
+                                            travelers={filteredTravelers}
+                                        />
+                                        <CreateEmailForm
+                                            key={2}
+                                            submit={this.emailSelectedTravelers}
+                                            travelers={filteredTravelers}
+                                        />
+                                        <ChangeStatusForm
+                                            submit={this.emailSelectedTravelers}
+                                            travelers={filteredTravelers}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
