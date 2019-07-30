@@ -21,7 +21,7 @@ class Cover extends Component {
 
         return (
             <div className="row">
-                <div className="col-12 d-flex flex-column justify-content-between px-5 py-2" style={{ backgroundImage: `url(${currentTrip.image})`, minHeight: '240px', backgroundPosition: 'center' }}>
+                <div className="col-12 d-flex flex-column justify-content-between px-5 py-2" style={{ backgroundImage: `url(${currentTrip.image})`, minHeight: '240px', backgroundPosition: 'center', backgroundSize: 'cover' }}>
                     <div className="row">
                         <h2 className="text-light">{currentTrip.name} Trip</h2>
                     </div>
