@@ -28,7 +28,7 @@ class TripInfo extends Component {
 
     handleDuplicate = async () => {
         const { trip, duplicateTrip } = this.props
-        const newTrip = { ...trip }
+        const newTrip = { ...trip, name: trip.name + ' Copy' }
         delete newTrip._id
         duplicateTrip(newTrip)
     }
@@ -42,7 +42,9 @@ class TripInfo extends Component {
         let { name, dateStart, image, description, status } = this.props.trip
         let { statusCounts } = this.props
         let invited = this.state.travelers.filter(t => t.status === 'INVITED')
-        let confirmed = this.state.travelers.filter(t => t.status === 'CONFIRMED')
+        let confirmed = this.state.travelers.filter(
+            t => t.status === 'CONFIRMED'
+        )
 
         return (
             <div className="pb-3 bg-light">
