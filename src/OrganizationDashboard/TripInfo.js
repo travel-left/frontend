@@ -36,7 +36,7 @@ class TripInfo extends Component {
                         onClick={this.handleEditClick}
                         className="btn btn-lg btn-primary float-right"
                     >
-                        Edit
+                        VIEW
                     </button>
                     <p className="py-3 text-black-50">{description}</p>
                     <ul className="list-group list-group-flush px-0 mx-0 pb-4">
