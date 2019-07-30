@@ -42,7 +42,7 @@ class Navbar extends Component {
 
         return (
             <nav
-                className="navbar navbar-expand container-fluid shadow px-4 bg-primary"
+                className="navbar navbar-expand container-fluid shadow px-4 py-2 bg-primary"
                 style={{ zIndex: 2 }}
             >
                 <div className="navbar-brand">

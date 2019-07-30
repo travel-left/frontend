@@ -278,12 +278,9 @@ class Travelers extends Component {
                                     </div>
                                     <div className="col-md-2 d-none d-md-block">
                                     </div>
-                                    <div className="d-none d-md-flex col-md-2">
-                                        {' '}
-                                        NAME{' '}
-                                    </div>
-                                    <div className="col-4 col-md-3">EMAIL</div>
-                                    <div className="col-4 col-md-2"> STATUS</div>
+                                    <div className="d-none d-md-flex col-md-2 h6">NAME</div>
+                                    <div className="col-4 col-md-3 h6">EMAIL</div>
+                                    <div className="col-4 col-md-2 h6"> STATUS</div>
                                     <div className="col-4 col-md-1" />
                                 </div>
                             </div>
