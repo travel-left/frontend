@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 import Travelers from './Travelers/Travelers'
 import { setCurrentTrip } from '../util/redux/actions/trip'
 import Cover from './CoverPhoto/Cover'
+import Share from './Share/Share'
 
 const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
     return (
@@ -19,6 +20,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
                             <SideNavLink text="Trip Information" name="edit" tripId={currentTrip._id} />
                             <SideNavLink text="Itinerary" name="itinerary" tripId={currentTrip._id} />
                             <SideNavLink text="Travelers" name="travelers" tripId={currentTrip._id} />
+                            <SideNavLink text="Share" name="share" tripId={currentTrip._id} />
                         </ul>
                     </div>
                 </div>
@@ -27,6 +29,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
                         <Route exact path="/trips/:tripId/edit" render={routeProps => <TripInformation {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
                         <Route exact path="/trips/:tripId/itinerary" render={routeProps => <Itinerary {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
                         <Route exact path="/trips/:tripId/travelers" render={routeProps => <Travelers {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
+                        <Route exact path="/trips/:tripId/share" render={routeProps => <Share {...routeProps} currentTrip={currentTrip} currentUser={currentUser} />} />
                     </Switch>
                 </div>
             </div>
