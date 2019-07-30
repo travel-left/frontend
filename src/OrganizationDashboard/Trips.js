@@ -21,11 +21,6 @@ class Trips extends Component {
             PAST: 0,
             ARCHIVED: 0
         },
-        travelers: [],
-        travelerStatusCounts: {
-            INVITED: 0,
-            CONFIRMED: 0
-        },
         showAlert: this.props.currentUser.showAlerts.trips
     }
 
@@ -104,13 +99,8 @@ class Trips extends Component {
 
     setSelectedTrip = tripId => {
         let newSelection = this.state.trips.filter(t => t._id === tripId)[0]
-        let newStatusCountT = { ...this.state.travelerStatusCounts }
-        newSelection.travelers.forEach(traveler => {
-            newStatusCountT[traveler.status]++
-        })
         this.setState({
             selectedTrip: newSelection,
-            travelerStatusCounts: newStatusCountT
         })
     }
 
@@ -134,7 +124,6 @@ class Trips extends Component {
             selectedTrip,
             trips,
             tripStatusCounts,
-            travelerStatusCounts,
             filter,
             showAlert
         } = this.state
@@ -154,7 +143,6 @@ class Trips extends Component {
                 <TripInfo
                     trip={selectedTrip}
                     edit={this.editTrip}
-                    statusCounts={travelerStatusCounts}
                     duplicateTrip={this.addTrip}
                     archiveTrip={this.archiveTrip}
                 />

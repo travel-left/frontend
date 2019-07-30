@@ -1,9 +1,29 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
+import { apiCall } from '../util/api'
 
 class TripInfo extends Component {
+    tripId = this.props.trip._id
+    state = {
+        travelers: []
+    }
+    constructor(props) {
+        super(props)
+        this.getAndSetTravelers()
+    }
+
+    getAndSetTravelers = async () => {
+        const travelers = await apiCall(
+            'get',
+            `/api/trips/${this.tripId}/travelers`
+        )
+        this.setState({
+            travelers
+        })
+    }
+
     handleEditClick = () => {
-        this.props.edit(this.props.trip._id)
+        this.props.edit(this.tripId)
     }
 
     handleDuplicate = async () => {
@@ -21,6 +41,8 @@ class TripInfo extends Component {
     render() {
         let { name, dateStart, image, description, status } = this.props.trip
         let { statusCounts } = this.props
+        let invited = this.state.travelers.filter(t => t.status === 'INVITED')
+        let confirmed = this.state.travelers.filter(t => t.status === 'CONFIRMED')
 
         return (
             <div className="pb-3 bg-light">
@@ -55,13 +77,13 @@ class TripInfo extends Component {
                         <li className="list-group-item bg-light">
                             Total Invited{' '}
                             <span className="float-right badge badge-primary badge-pill">
-                                {statusCounts ? statusCounts.INVITED : null}
+                                {invited.length}
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Total Confirmed{' '}
                             <span className="float-right badge badge-primary badge-pill">
-                                {statusCounts ? statusCounts.CONFIRMED : null}
+                                {confirmed.length}
                             </span>
                         </li>
                     </ul>
