@@ -64,7 +64,7 @@ class ModalForm extends Component {
                                 this.toggleModal()
                             }}
                         >
-                            <div className='modal d-block'>
+                            <div className='modal d-block' style={{ maxHeight: 'calc(100vh - 50px)', overflowY: 'auto' }}>
                                 <div
                                     className="Modal--overlay"
                                     style={{
