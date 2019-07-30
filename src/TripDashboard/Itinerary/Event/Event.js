@@ -52,12 +52,12 @@ class Event extends Component {
                 onItinerary={true}
             />
         ) : (
-            <UpdateEventForm
-                event={event}
-                submit={this.update}
-                remove={this.remove}
-            />
-        )
+                <UpdateEventForm
+                    event={event}
+                    submit={this.update}
+                    remove={this.remove}
+                />
+            )
 
         const date =
             event.dtStart && event.dtEnd
@@ -82,7 +82,6 @@ class Event extends Component {
 
         return (
             <div
-                name={moment(event.dateStart).format('MMM DD YYYY')}
                 className="card mb-3 border-0 shadow px-3 py-1 rounded-lg"
             >
                 <div className="row">
