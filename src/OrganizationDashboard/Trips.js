@@ -6,6 +6,7 @@ import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../util/redux/actions/trip'
 import AddTrip from './AddTrip'
+import SideNavItem from '../util/otherComponents/SideNavItem'
 
 class Trips extends Component {
     state = {
@@ -180,7 +181,7 @@ class Trips extends Component {
                     >
                         <div className="col px-0">
                             <ul className="list-group ">
-                                <LeftBarItem
+                                <SideNavItem
                                     text="All Trips"
                                     total={
                                         trips.length - tripStatusCounts.ARCHIVED
@@ -188,31 +189,31 @@ class Trips extends Component {
                                     active={filter === 'ALL TRIPS'}
                                     handleClick={this.onSideNavClick}
                                 />
-                                <LeftBarItem
+                                <SideNavItem
                                     text="Active"
                                     total={tripStatusCounts.ACTIVE}
                                     active={filter === 'ACTIVE'}
                                     handleClick={this.onSideNavClick}
                                 />
-                                <LeftBarItem
+                                <SideNavItem
                                     text="Planned"
                                     total={tripStatusCounts.PLANNED}
                                     active={filter === 'PLANNED'}
                                     handleClick={this.onSideNavClick}
                                 />
-                                <LeftBarItem
+                                <SideNavItem
                                     text="Planning"
                                     total={tripStatusCounts.PLANNING}
                                     active={filter === 'PLANNING'}
                                     handleClick={this.onSideNavClick}
                                 />
-                                <LeftBarItem
+                                <SideNavItem
                                     text="Past"
                                     total={tripStatusCounts.PAST}
                                     active={filter === 'PAST'}
                                     handleClick={this.onSideNavClick}
                                 />
-                                <LeftBarItem
+                                <SideNavItem
                                     text="Archived"
                                     total={tripStatusCounts.ARCHIVED}
                                     active={filter === 'ARCHIVED'}
@@ -263,19 +264,3 @@ export default connect(
     mapStatetoProps,
     { setCurrentTrip }
 )(Trips)
-
-const LeftBarItem = ({ text, total, active, handleClick }) => {
-    let classes =
-        'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0'
-    if (active) {
-        classes += ' active'
-    } else {
-        classes += ' text-dark'
-    }
-    return (
-        <a href="/" className={classes} onClick={handleClick} name={text}>
-            {text}
-            <span className="badge badge-primary badge-pill">{total}</span>
-        </a>
-    )
-}

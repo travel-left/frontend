@@ -15,7 +15,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
             <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             <div className="row">
                 <div className="col-md-2 shadow-lg bg-light px-0" style={{ minHeight: '93vh' }}>
-                    <div className="pl-4 pt-4">
+                    <div className="shadow">
                         <ul className="list-group list-group-flush bg-light">
                             <SideNavLink text="Trip Information" name="edit" tripId={currentTrip._id} />
                             <SideNavLink text="Itinerary" name="itinerary" tripId={currentTrip._id} />
@@ -53,7 +53,7 @@ export default withRouter(
 
 const SideNavLink = ({ text, tripId, name }) => {
     return (
-        <NavLink className="text-primary font-weight-bold py-4" activeClassName="text-secondary" to={`/trips/${tripId}/${name}`} name={`/trips/${tripId}/${name}`}>
+        <NavLink className="list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 h6 py-3 text-dark" activeClassName="active" to={`/trips/${tripId}/${name}`} name={`/trips/${tripId}/${name}`}>
             {text}{' '}
         </NavLink>
     )
