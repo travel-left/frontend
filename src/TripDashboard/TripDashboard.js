@@ -14,7 +14,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
         <>
             <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             <div className="row">
-                <div className="col-md-2 shadow-lg bg-light px-0" style={{ minHeight: '80vh' }}>
+                <div className="col-md-2 shadow-lg bg-light px-0" style={{ minHeight: '93vh' }}>
                     <div className="pl-4 pt-4">
                         <ul className="list-group list-group-flush bg-light">
                             <SideNavLink text="Trip Information" name="edit" tripId={currentTrip._id} />
