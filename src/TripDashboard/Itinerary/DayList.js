@@ -1,19 +1,12 @@
 import React from 'react'
 import Day from './Day'
-import { Trail } from 'react-spring/renderprops'
 
 export default ({ days, handleClick, selectedDay }) => {
     days.sort(date_sort_asc)
     return (
         <div className="shadow">
             <ul className="list-group list-group-flush bg-light">
-                <Trail
-                    items={days}
-                    from={{ opacity: 0 }}
-                    to={{ opacity: 1 }}
-                >
-                    {item => props => (<Day style={props} handleClick={handleClick} selectedDay={selectedDay === item} key={item} day={item} />)}
-                </Trail>
+                {days.map(day => (<Day handleClick={handleClick} selectedDay={selectedDay === day} key={day} day={day} />))}
             </ul>
         </div>
     )

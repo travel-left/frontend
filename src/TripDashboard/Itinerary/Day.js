@@ -8,7 +8,7 @@ export default class Day extends Component {
 
     render() {
         return (
-            <li style={this.props.style} className={`list-group-item d-flex hover justify-content-between align-items-center border-right-0 border-left-0 text-dark h6 ${this.props.selectedDay && 'active'}`} onClick={this.handleClick}>{moment(this.props.day).format('MMM DD')}</li>
+            <li className={`list-group-item d-flex hover justify-content-between align-items-center border-right-0 border-left-0 text-dark h6 ${this.props.selectedDay && 'active'}`} onClick={this.handleClick}>{moment(this.props.day).format('MMM DD')}</li>
         )
     }
 }

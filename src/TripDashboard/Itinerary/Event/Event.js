@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import UpdateEventForm from './UpdateEventForm'
 import UpdateTripDateForm from '../../Information/TripDates/UpdateTripDateForm'
 import Map from './Map'
-import moment from 'moment'
-// import Image from '../../../util/otherComponents/Image'
 
 class Event extends Component {
     remove = () => {
