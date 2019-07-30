@@ -40,6 +40,9 @@ export default class TripDate extends Component {
                 icon.color = '#FFABAA'
                 break
         }
+
+        const dateWithoutTimeorTZ = date.split('T')[0]
+
         return (
             <div className="row my-2">
                 <div className="col-md-3 d-flex align-items-center">
@@ -48,17 +51,19 @@ export default class TripDate extends Component {
                 <div className="col-md-6 d-flex flex-column justify-content-center">
                     <p className="m-0">{name}</p>
                     <p className="m-0">
-                        <small className='text-muted'>
-                            {moment(date).format('MMM DD')}
+                        <small className="text-muted">
+                            {moment(dateWithoutTimeorTZ).format('MMM DD')}
                         </small>
                     </p>
                 </div>
                 <div className="col-md-3 d-flex flex-column justify-content-center">
-                    <UpdateTripDateForm {...this.props} submit={this.handleUpdate} remove={this.handleDelete} />
+                    <UpdateTripDateForm
+                        {...this.props}
+                        submit={this.handleUpdate}
+                        remove={this.handleDelete}
+                    />
                 </div>
             </div>
         )
     }
 }
-
-

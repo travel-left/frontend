@@ -21,7 +21,18 @@ export default function ImportBulkForm({ submit }) {
             validationSchema={schema}
             submit={submit}
         >
-            <FormField component={Uploader} name="file" label="Upload a CSV File" />
+            <label className="d-block">Download a Template CSV File</label>
+            <a
+                href="https://travel-left-images.s3.us-east-2.amazonaws.com/1564525723400.Untitled%20spreadsheet%20-%20Sheet1.csv"
+                className="btn btn-primary"
+            >
+                Download
+            </a>
+            <FormField
+                component={Uploader}
+                name="file"
+                label="Upload a CSV File"
+            />
         </ModalForm>
     )
 }
