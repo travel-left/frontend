@@ -23,7 +23,10 @@ export default function CreateTextForm({ submit, travelers }) {
     let travelerList = travelers.map(t =>
         t.selected ? (
             <p key={t._id}>
-                {t.name} -- {t.phone}
+                <div className="row">
+                    <div className="col text-black-50">{t.name}</div>
+                    <div className="col text-black-50">{t.phone}</div>
+                </div>
             </p>
         ) : (
                 undefined
@@ -38,8 +41,12 @@ export default function CreateTextForm({ submit, travelers }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <div>
+            <div className='mb-4'>
                 <h5>Selected travelers</h5>
+                <div className="row">
+                    <div className="col ">Name</div>
+                    <div className="col ">Phone</div>
+                </div>
                 <hr />
                 {travelerList}
             </div>

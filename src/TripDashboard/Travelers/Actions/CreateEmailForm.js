@@ -28,7 +28,10 @@ export default function CreateEmailForm({ submit, travelers }) {
     let travelerList = travelers.map(t =>
         t.selected ? (
             <p key={t._id}>
-                {t.name} -- {t.email}
+                <div className="row">
+                    <div className="col text-black-50">{t.name}</div>
+                    <div className="col text-black-50">{t.email}</div>
+                </div>
             </p>
         ) : (
                 undefined
@@ -43,8 +46,12 @@ export default function CreateEmailForm({ submit, travelers }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <div>
+            <div className='mb-4'>
                 <h5>Selected travelers</h5>
+                <div className="row">
+                    <div className="col ">Name</div>
+                    <div className="col ">Email</div>
+                </div>
                 <hr />
                 {travelerList}
             </div>

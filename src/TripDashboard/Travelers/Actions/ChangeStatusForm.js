@@ -15,7 +15,10 @@ export default function ChangeStatusForm({ submit, travelers }) {
     let travelerList = travelers.map(t =>
         t.selected ? (
             <p key={t._id}>
-                {t.name} -- {t.phone}
+                <div className="row">
+                    <div className="col text-black-50">{t.name}</div>
+                    <div className="col text-black-50">{t.status}</div>
+                </div>
             </p>
         ) : (
                 undefined
@@ -24,12 +27,16 @@ export default function ChangeStatusForm({ submit, travelers }) {
 
     return (
         <ModalForm button={button} header="Bulk update travelers status" initialValues={initialValues} submit={submit}>
-            <div>
+            <div className='mb-4'>
                 <h5>Selected travelers</h5>
+                <div className="row">
+                    <div className="col ">Name</div>
+                    <div className="col ">Status</div>
+                </div>
                 <hr />
                 {travelerList}
             </div>
-            <SelectField name="status" options={[{ name: 'INVITED', value: 'INVITED' }, { name: 'CONFIRMED', value: 'CONFIRMED' }, { name: 'ON-TRIP', value: 'ON-TRIP' }, { name: 'POST-TRIP', value: 'POST-TRIP' }]} label='Status' />
+            <SelectField name="status" options={[{ name: 'INVITED', value: 'INVITED' }, { name: 'CONFIRMED', value: 'CONFIRMED' }, { name: 'ON-TRIP', value: 'ON-TRIP' }, { name: 'POST-TRIP', value: 'POST-TRIP' }]} label='New Status' />
         </ModalForm>
     )
 }
