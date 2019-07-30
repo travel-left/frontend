@@ -10,7 +10,6 @@ import {
 } from '../../../util/validators'
 
 export default function UpdateTripDateForm(props) {
-    console.log(props)
     const initialValues = {
         ...props,
         date: props.date.split('T')[0]
@@ -43,7 +42,7 @@ export default function UpdateTripDateForm(props) {
 
     const icon = `hover far fa-2x fa-edit text-secondary ${
         props.onItinerary ? null : 'float-right'
-    }`
+        }`
 
     return (
         <ModalForm

@@ -41,7 +41,7 @@ export default class TripDate extends Component {
                 break
         }
         return (
-            <div className="row">
+            <div className="row my-2">
                 <div className="col-md-3 d-flex align-items-center">
                     <i className={icon.string} style={{ color: icon.color }} />
                 </div>
@@ -53,7 +53,7 @@ export default class TripDate extends Component {
                         </small>
                     </p>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 d-flex flex-column justify-content-center">
                     <UpdateTripDateForm {...this.props} submit={this.handleUpdate} remove={this.handleDelete} />
                 </div>
             </div>
