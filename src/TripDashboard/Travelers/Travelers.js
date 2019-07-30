@@ -160,6 +160,9 @@ class Travelers extends Component {
     }
 
     filterTravelers = selectedFilters => {
+        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {//handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
+            selectedFilters = null
+        }
         let filters = selectedFilters ? selectedFilters.map(f => f.value) : this.state.filters
         this.setState(prevState => {
             return {
