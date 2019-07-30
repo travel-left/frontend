@@ -91,9 +91,7 @@ class Travelers extends Component {
     }
 
     removeTraveler = async travelerId => {
-        setTimeout(() => {
-            console.log(travelerId)
-        }, 1000)
+        await apiCall('delete', `/api/trips/${this.tripId}/travelers/${travelerId}`)
         this.getAndSetTravelers()
     }
 
