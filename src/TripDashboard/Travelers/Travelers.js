@@ -86,7 +86,7 @@ class Travelers extends Component {
     }
 
     updateTraveler = async (travelerId, updateObject) => {
-        await apiCall('put', `/api/travelers/${travelerId}`, updateObject)
+        await apiCall('put', `/api/trips/${this.tripId}/travelers/${travelerId}`, updateObject)
         this.getAndSetTravelers()
     }
 
