@@ -8,7 +8,8 @@ import TravelerList from './Travelers/TravelerList'
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
 import Select from 'react-select'
-import ChangeStatusForm from './Actions/ChangeStatusForm';
+import ChangeStatusForm from './Actions/ChangeStatusForm'
+import TravelerInfo from './TravelerInfo'
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },
@@ -25,7 +26,8 @@ class Travelers extends Component {
         filteredTravelers: [],
         allSelected: false,
         showAlert: false,
-        filters: ['INVITED', 'CONFIRMED', 'ON-TRIP', 'POST-TRIP']
+        filters: ['INVITED', 'CONFIRMED', 'ON-TRIP', 'POST-TRIP'],
+        selectedTraveler: null
     }
 
     constructor(props) {
@@ -170,6 +172,13 @@ class Travelers extends Component {
         })
     }
 
+    setSelectedTraveler = travelerId => {
+        let newSelection = this.state.travelers.filter(t => t._id === travelerId)[0]
+        this.setState({
+            selectedTraveler: newSelection
+        })
+    }
+
     render() {
         let { filteredTravelers, showAlert } = this.state
         let alert = showAlert ? (
@@ -190,13 +199,22 @@ class Travelers extends Component {
             })
         }
 
+        let travelerInfo = this.state.selectedTraveler ? (
+            <div className="col-md-4 shadow px-0 bg-light">
+                <TravelerInfo
+                    traveler={this.state.selectedTraveler}
+                    update={this.updateTraveler}
+                />
+            </div>
+        ) : null
+        const selectedTravelerClass = this.state.selectedTraveler ? 'col-md-8' : 'col-12'
         return (
             <div className="mt-3 mx-3">
                 <div className="row">
                     <div className="col-md-12 d-none d-md-block">{alert}</div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12 mt-4 mx-3 pr-5">
+                    <div className={`${selectedTravelerClass} mt-4 pr-5`}>
                         <div className="row justify-content-between mb-4">
                             <h2 className="text-black d-inline">
                                 Travelers on This Trip
@@ -244,37 +262,48 @@ class Travelers extends Component {
                                     />
                                 </div>
                             </div>
-
                         </div>
-                        <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
-                            <div className="col-md-1">
-                                <input
-                                    onClick={this.toggleAll}
-                                    type="checkbox"
-                                    className="ml-3"
-                                    checked={this.state.allSelected}
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
+                                    <div className="col-md-1">
+                                        <input
+                                            onClick={this.toggleAll}
+                                            type="checkbox"
+                                            className="ml-3"
+                                            checked={this.state.allSelected}
+                                        />
+                                    </div>
+                                    <div className="col-md-2 d-none d-md-block">
+                                    </div>
+                                    <div className="d-none d-md-flex col-md-2">
+                                        {' '}
+                                        NAME{' '}
+                                    </div>
+                                    <div className="col-4 col-md-3">EMAIL</div>
+                                    <div className="col-4 col-md-2"> STATUS</div>
+                                    <div className="col-4 col-md-1" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <TravelerList
+                                    items={filteredTravelers}
+                                    C={Traveler}
+                                    update={this.updateTraveler}
+                                    toggle={this.toggle}
+                                    submit={this.addTraveler}
+                                    remove={this.removeTraveler}
+                                    doubleClick={this.setSelectedTraveler}
                                 />
                             </div>
-                            <div className="col-md-2 d-none d-md-block">
-                            </div>
-                            <div className="d-none d-md-flex col-md-2">
-                                {' '}
-                                NAME{' '}
-                            </div>
-                            <div className="col-4 col-md-3">EMAIL</div>
-                            <div className="col-4 col-md-2"> STATUS</div>
-                            <div className="col-4 col-md-1" />
                         </div>
-                        <TravelerList
-                            items={filteredTravelers}
-                            C={Traveler}
-                            update={this.updateTraveler}
-                            toggle={this.toggle}
-                            submit={this.addTraveler}
-                            remove={this.removeTraveler}
-                        />
+
                     </div>
+                    {travelerInfo}
                 </div>
+
             </div>
         )
     }

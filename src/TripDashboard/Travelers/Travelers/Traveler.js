@@ -15,11 +15,15 @@ export default class Traveler extends Component {
         this.props.remove(this.props._id)
     }
 
+    handleDoubleClick = () => {
+        this.props.onDoubleClick(this.props._id)
+    }
+
     render() {
         let { name, email, status, image, selected } = this.props
 
         return (
-            <div className="card py-3 border bg-white my-2">
+            <div className="card py-3 border bg-white my-2" onDoubleClick={this.handleDoubleClick}>
                 <div
                     className="row no-gutters justify-content-around align-items-center px-3 px-md-0"
                     onClick={this.handleToggle}
