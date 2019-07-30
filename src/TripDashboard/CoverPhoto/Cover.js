@@ -5,20 +5,39 @@ import { apiCall } from '../../util/api'
 import TripStatusForm from './TripStatusForm'
 
 class Cover extends Component {
+    tripId = this.props.currentTrip._id
+    state = {
+        travelers: []
+    }
+
+    constructor(props) {
+        super(props)
+
+        this.getAndSetTravelers()
+    }
     updateTrip = async updateObject => {
         try {
-            console.log(updateObject)
-            await apiCall('put', `/api/trips/${this.props.currentTrip._id}`, updateObject)
-            const data = await apiCall('get', `/api/trips/${this.props.currentTrip._id}`)
+            await apiCall('put', `/api/trips/${this.tripId}`, updateObject)
+            const data = await apiCall('get', `/api/trips/${this.tripId}`)
             return this.props.setCurrentTrip(data)
         } catch (err) {
-            console.error(err)
         }
+    }
+
+    getAndSetTravelers = async () => {
+        const travelers = await apiCall(
+            'get',
+            `/api/trips/${this.tripId}/travelers`
+        )
+        this.setState({
+            travelers
+        })
     }
 
     render() {
         let currentTrip = this.props.currentTrip
-
+        let invited = this.state.travelers.filter(t => t.status === 'INVITED')
+        let confirmed = this.state.travelers.filter(t => t.status === 'CONFIRMED')
         return (
             <div className="row">
                 <div className="col-12 d-flex flex-column justify-content-between px-5 py-2" style={{ backgroundImage: `url(${currentTrip.image})`, minHeight: '240px', backgroundPosition: 'center', backgroundSize: 'cover' }}>
@@ -30,8 +49,8 @@ class Cover extends Component {
                     </div>
                     <div className="row justify-content-between">
                         <div>
-                            <h5 className="d-inline text-light">32 Invited</h5>
-                            <h5 className="d-inline text-light ml-3">12 Booked</h5>
+                            <h5 className="d-inline text-light">{invited.length} Invited</h5>
+                            <h5 className="d-inline text-light ml-3">{confirmed.length} Confirmed</h5>
                         </div>
                         <TripDatesForm dateStart={currentTrip.dateStart} dateEnd={currentTrip.dateEnd} submit={this.updateTrip} />
                         <TripImageForm image={currentTrip.image} submit={this.updateTrip} />
