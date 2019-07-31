@@ -3,30 +3,33 @@ import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
-import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../util/validators'
+import {
+    nameValidator,
+    dateValidator,
+    tripDateTypeValidator
+} from '../../../util/validators'
 
-export default function TripDateForm({ submit }) {
+export default function UpdateTripDateForm(props) {
     const initialValues = {
-        name: '',
-        date: '',
-        type: 'TRAVEL'
+        ...props,
+        date: props.date.split('T')[0]
     }
 
     const options = [
         {
-            name: 'Travel Date',
+            label: 'Travel Date',
             value: 'TRAVEL'
         },
         {
-            name: 'Money Date',
+            label: 'Money Date',
             value: 'MONEY'
         },
         {
-            name: 'Paperwork Date',
+            label: 'Paperwork Date',
             value: 'PAPERWORK'
         },
         {
-            name: 'Other Date',
+            label: 'Other Date',
             value: 'OTHER'
         }
     ]
@@ -37,13 +40,18 @@ export default function TripDateForm({ submit }) {
         type: tripDateTypeValidator
     })
 
-    const button = {
-        classes: 'btn btn-primary mb-4',
-        text: 'add new'
-    }
+    const icon = `hover far fa-2x fa-edit text-secondary ${
+        props.onItinerary ? null : 'float-right'
+    }`
 
     return (
-        <ModalForm button={button} header="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} >
+        <ModalForm
+            icon={icon}
+            header="Add a Trip Date"
+            validationSchema={schema}
+            initialValues={initialValues}
+            {...props}
+        >
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

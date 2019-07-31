@@ -15,7 +15,7 @@ class Trips extends Component {
         filter: 'All Trips',
         selectedTrip: null,
         tripStatusCounts: {
-            ACTIVE: 0,
+            LEFT: 0,
             PLANNED: 0,
             PLANNING: 0,
             PAST: 0,
@@ -100,7 +100,7 @@ class Trips extends Component {
     setSelectedTrip = tripId => {
         let newSelection = this.state.trips.filter(t => t._id === tripId)[0]
         this.setState({
-            selectedTrip: newSelection,
+            selectedTrip: newSelection
         })
     }
 
@@ -178,9 +178,9 @@ class Trips extends Component {
                                     handleClick={this.onSideNavClick}
                                 />
                                 <SideNavItem
-                                    text="Active"
-                                    total={tripStatusCounts.ACTIVE}
-                                    active={filter === 'ACTIVE'}
+                                    text="Planning"
+                                    total={tripStatusCounts.PLANNING}
+                                    active={filter === 'PLANNING'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <SideNavItem
@@ -190,9 +190,9 @@ class Trips extends Component {
                                     handleClick={this.onSideNavClick}
                                 />
                                 <SideNavItem
-                                    text="Planning"
-                                    total={tripStatusCounts.PLANNING}
-                                    active={filter === 'PLANNING'}
+                                    text="LEFT"
+                                    total={tripStatusCounts.LEFT}
+                                    active={filter === 'LEFT'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <SideNavItem

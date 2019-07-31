@@ -5,16 +5,32 @@ import { authUser } from './util/redux/actions/auth'
 import Trips from './OrganizationDashboard/Trips'
 import withAuth from './util/hocs/withAuth'
 import ErrorPage from './util/otherComponents/ErrorPage'
-import Auth from './Auth/Auth'
+import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
-import TripDashboard from './TripDashboard/TripDashboard'
+import TripDashboard from './TripDashboard'
 
 const Main = ({ authUser }) => {
     return (
         <Switch>
-            <Route exact path="/signin" render={props => <Auth onAuth={authUser} type="sign in" {...props} />} />
-            <Route exact path="/signup" render={props => <Auth onAuth={authUser} type="sign up" {...props} />} />
-            <Route exact path="/createprofile" render={props => <CreateProfile onAuth={authUser} {...props} />} />
+            <Route
+                exact
+                path="/signin"
+                render={props => (
+                    <Auth onAuth={authUser} type="sign in" {...props} />
+                )}
+            />
+            <Route
+                exact
+                path="/signup"
+                render={props => (
+                    <Auth onAuth={authUser} type="sign up" {...props} />
+                )}
+            />
+            <Route
+                exact
+                path="/createprofile"
+                render={props => <CreateProfile onAuth={authUser} {...props} />}
+            />
             <Route exact path="/" component={withAuth(Trips)} />
             <Route exact path="/trips" component={withAuth(Trips)} />
             <Route path="/trips/:tripId" component={withAuth(TripDashboard)} />
