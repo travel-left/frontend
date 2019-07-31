@@ -2,8 +2,9 @@ import React from 'react'
 
 export default ({ name = '', label = '', className, checked, onChange }) => (
     <div
-        className={`d-block custom-control custom-checkbox ${className}`}
-        onClick={onChange}
+        className={`custom-control custom-checkbox ${className}`}
+        // onClick={onChange}
+        onClick={label === 'SELECT ALL' ? onChange : null}
     >
         <input
             type="checkbox"
@@ -11,8 +12,9 @@ export default ({ name = '', label = '', className, checked, onChange }) => (
             checked={checked}
             name={name}
             onChange={onChange}
+            id={name}
         />
-        <label htmlFor={name} className="custom-control-label" id="label">
+        <label htmlFor={name} className="custom-control-label">
             {label}
         </label>
     </div>
