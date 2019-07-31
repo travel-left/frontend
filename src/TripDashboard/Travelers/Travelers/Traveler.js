@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UpdateTravelerForm from '../Actions/UpdateTravelerForm'
 import Image from '../../../util/otherComponents/Image'
+import Checkbox from '../../../util/forms/Checkbox'
 
 export default class Traveler extends Component {
     handleUpdate = updateObject => {
@@ -23,18 +24,19 @@ export default class Traveler extends Component {
         let { name, email, status, image, selected } = this.props
 
         return (
-            <div className="card py-3 border my-2 shadow" onDoubleClick={this.handleDoubleClick}>
+            <div
+                className="card py-3 border my-2 shadow animated fadeIn"
+                onDoubleClick={this.handleDoubleClick}
+            >
                 <div
                     className="row no-gutters justify-content-around align-items-center px-3 px-md-0"
                     onClick={this.handleToggle}
                 >
                     <div className="col-md-1">
-                        <input
-                            onClick={this.handleToggle}
-                            type="checkbox"
-                            className="ml-3"
-                            checked={selected}
+                        <Checkbox
                             onChange={this.handleToggle}
+                            className="mx-3"
+                            checked={selected}
                         />
                     </div>
                     <div className="col-md-2 d-none d-md-block">
