@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 
 export default class TravelerInfo extends Component {
-
     render() {
-        let { name, image, email, status, phone, personalNotes } = this.props.traveler
+        let {
+            name,
+            image,
+            email,
+            status,
+            phone,
+            personalNotes
+        } = this.props.traveler
 
         return (
             <div className="pb-3 bg-light">
@@ -19,15 +25,25 @@ export default class TravelerInfo extends Component {
                             <span className="h4">{name}</span>
                         </div>
                         <div className="col-6">
-                            <h5 className="text-light ml-0">Status:
-                        <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">{status} </span>
+                            <h5 className="text-light ml-0">
+                                Status:
+                                <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">
+                                    {status}{' '}
+                                </span>
                                 <i className="far fa-edit ml-2" />
-                            </h5 >
+                            </h5>
                         </div>
                     </div>
-                    <p className="py-3 ">Personal notes: <span className="text-black-50">{personalNotes}</span></p>
-                    <p>Email: <span className="text-black-50">{email}</span></p>
-                    <p>Phone: <span className="text-black-50">{phone}</span></p>
+                    <p className="py-3 ">
+                        Personal notes:{' '}
+                        <span className="text-black-50">{personalNotes}</span>
+                    </p>
+                    <p>
+                        Email: <span className="text-black-50">{email}</span>
+                    </p>
+                    <p>
+                        Phone: <span className="text-black-50">{phone}</span>
+                    </p>
                 </div>
             </div>
         )

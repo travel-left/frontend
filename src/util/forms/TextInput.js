@@ -15,7 +15,15 @@ export default class TextInput extends Component {
                 <label htmlFor={name} className="text-dark mt-2">
                     {label}
                 </label>
-                <input type={type} id={name} name={name} className={stringClasses} placeholder={placeholder} value={value} onChange={this.handleChange} />
+                <input
+                    type={type}
+                    id={name}
+                    name={name}
+                    className={stringClasses}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={this.handleChange}
+                />
             </>
         )
     }

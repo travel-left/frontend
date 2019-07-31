@@ -21,11 +21,31 @@ export default function UpdateCoordinatorForm(props) {
     const icon = 'hover far fa-2x fa-edit text-secondary float-right'
 
     return (
-        <ModalForm icon={icon} header="Edit coordinator" validationSchema={schema} initialValues={initialValues} {...props}>
+        <ModalForm
+            icon={icon}
+            header="Edit coordinator"
+            validationSchema={schema}
+            initialValues={initialValues}
+            {...props}
+        >
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField name="image" label="Upload a new image" component={Uploader} />
-            <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
-            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="text" />
+            <FormField
+                name="image"
+                label="Upload a new image"
+                component={Uploader}
+            />
+            <FormField
+                name="email"
+                label="Email"
+                placeholder="steve@apple.com"
+                type="email"
+            />
+            <FormField
+                name="phone"
+                label="Phone number"
+                placeholder="559-867-5309"
+                type="text"
+            />
             <FormField name="title" label="Title" placeholder="CEO" />
         </ModalForm>
     )

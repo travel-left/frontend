@@ -15,7 +15,6 @@ import Mortal from 'react-mortal'
 //         }
 
 class ModalForm extends Component {
-
     state = {
         open: false
     }
@@ -30,10 +29,26 @@ class ModalForm extends Component {
     }
 
     render() {
-        let { header, validationSchema, initialValues, submit, remove, icon, button } = this.props
+        let {
+            header,
+            validationSchema,
+            initialValues,
+            submit,
+            remove,
+            icon,
+            button
+        } = this.props
 
-        let opener = icon ? <i className={`hover ${icon}`} onClick={this.toggleModal} ></i> :
-            <button className={`btn ${button.classes}`} onClick={this.toggleModal} >{button.text}</button>
+        let opener = icon ? (
+            <i className={`hover ${icon}`} onClick={this.toggleModal} />
+        ) : (
+            <button
+                className={`btn ${button.classes}`}
+                onClick={this.toggleModal}
+            >
+                {button.text}
+            </button>
+        )
 
         return (
             <>
@@ -45,8 +60,8 @@ class ModalForm extends Component {
                         opacity: spring(isVisible ? 1 : 0),
                         modalOffset: spring(isVisible ? 0 : -90, {
                             stiffness: isVisible ? 300 : 200,
-                            damping: isVisible ? 15 : 30,
-                        }),
+                            damping: isVisible ? 15 : 30
+                        })
                     })}
                 >
                     {(motion, isVisible) => (
@@ -64,34 +79,73 @@ class ModalForm extends Component {
                                 this.toggleModal()
                             }}
                         >
-                            <div className='modal d-block' style={{ maxHeight: 'calc(100vh - 50px)', overflowY: 'auto' }}>
+                            <div
+                                className="modal d-block"
+                                style={{
+                                    maxHeight: 'calc(100vh - 50px)',
+                                    overflowY: 'auto'
+                                }}
+                            >
                                 <div
                                     className="Modal--overlay"
                                     style={{
                                         opacity: motion.opacity,
-                                        pointerEvents: isVisible ? 'auto' : 'none',
+                                        pointerEvents: isVisible
+                                            ? 'auto'
+                                            : 'none'
                                     }}
                                     onClick={this.toggleModal}
                                 />
                                 <div className="modal-dialog" role="document">
-                                    <div className="modal-content" style={{
-                                        opacity: motion.opacity,
-                                        transform: `translate3d(0, ${motion.modalOffset}px, 0)`,
-                                    }}>
+                                    <div
+                                        className="modal-content"
+                                        style={{
+                                            opacity: motion.opacity,
+                                            transform: `translate3d(0, ${
+                                                motion.modalOffset
+                                            }px, 0)`
+                                        }}
+                                    >
                                         <Form>
                                             <div className="modal-header">
-                                                <h5 className="modal-title" id="addnewNameModal">{header}</h5>
-                                                <button type="reset" className="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                                <h5
+                                                    className="modal-title"
+                                                    id="addnewNameModal"
+                                                >
+                                                    {header}
+                                                </h5>
+                                                <button
+                                                    type="reset"
+                                                    className="close"
+                                                    aria-label="Close"
+                                                >
+                                                    <span aria-hidden="true">
+                                                        &times;
+                                                    </span>
                                                 </button>
                                             </div>
-                                            <div className="modal-body"> {this.props.children}</div>
+                                            <div className="modal-body">
+                                                {' '}
+                                                {this.props.children}
+                                            </div>
                                             <hr className="mt-2" />
-                                            {remove && <button type="button" className="btn btn-lg btn-danger ml-4 mb-4 text-light hover" onClick={this.handleRemove}>DELETE</button>}
-                                            <button type="submit" className="btn btn-lg btn-primary float-right mr-4 mb-4">SUBMIT</button>
+                                            {remove && (
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-lg btn-danger ml-4 mb-4 text-light hover"
+                                                    onClick={this.handleRemove}
+                                                >
+                                                    DELETE
+                                                </button>
+                                            )}
+                                            <button
+                                                type="submit"
+                                                className="btn btn-lg btn-primary float-right mr-4 mb-4"
+                                            >
+                                                SUBMIT
+                                            </button>
                                         </Form>
                                     </div>
-
                                 </div>
                             </div>
                         </Formik>

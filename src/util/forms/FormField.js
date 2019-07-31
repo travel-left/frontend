@@ -5,7 +5,15 @@ import { ErrorMessage, Field } from 'formik'
  * Component for managing Formik Field and ErrorMessage Component
  * @param {{name: string!, placeholder: string!, label: string!, type: string}} props Data passed in from the parent element
  */
-export default function FormField({ name, placeholder, label, type, component, className, render }) {
+export default function FormField({
+    name,
+    placeholder,
+    label,
+    type,
+    component,
+    className,
+    render
+}) {
     if (!type) {
         type = 'text'
     }
@@ -21,12 +29,19 @@ export default function FormField({ name, placeholder, label, type, component, c
     ) : null
 
     return (
-        <div className='mt-2'>
+        <div className="mt-2">
             <span className="d-block text-danger">
                 <ErrorMessage name={name} />
             </span>
             {displayLabel}
-            <Field name={name} type={type} placeholder={placeholder} render={render} component={component} className={`d-block form-control ${className}`} />
+            <Field
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                render={render}
+                component={component}
+                className={`d-block form-control ${className}`}
+            />
         </div>
     )
 }

@@ -16,7 +16,11 @@ export default function withAuth(ComponentToBeRendered) {
         }
 
         render() {
-            return (this.props.isAuthenticated && <ComponentToBeRendered {...this.props} />)
+            return (
+                this.props.isAuthenticated && (
+                    <ComponentToBeRendered {...this.props} />
+                )
+            )
         }
     }
 

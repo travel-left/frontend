@@ -24,19 +24,23 @@ class Coordinator extends Component {
                     <div className="col-md-6 d-flex flex-column justify-content-center">
                         {name && <p className="m-0">{name}</p>}
                         {title && <p className="m-0">{title}</p>}
-                        {email && <p className="m-0">
-                            <small className="text-muted">{email}</small>
-                        </p>}
-                        {phone &&
+                        {email && (
+                            <p className="m-0">
+                                <small className="text-muted">{email}</small>
+                            </p>
+                        )}
+                        {phone && (
                             <p className="m-0">
                                 <small className="text-muted">{phone}</small>
-                            </p>}
+                            </p>
+                        )}
                     </div>
                     <div className="col-md-3">
                         <UpdateCoordinatorForm
                             {...this.props}
                             submit={this.handleEdit}
-                            remove={this.handleDelete} />
+                            remove={this.handleDelete}
+                        />
                     </div>
                 </div>
             </LeftCard>

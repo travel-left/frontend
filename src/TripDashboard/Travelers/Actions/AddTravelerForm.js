@@ -27,13 +27,38 @@ export default function AddTravelerForm({ submit }) {
     }
 
     return (
-        <ModalForm button={button} header="Add a traveler" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm
+            button={button}
+            header="Add a traveler"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField component={Uploader} name="image" label="Upload an Image" />
-            <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
-            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="phone" />
-            <FormField name="personalNotes" label="Personal notes" component="textarea" placeholder="Any extra notes about this traveler" className="d-block" />
+            <FormField
+                component={Uploader}
+                name="image"
+                label="Upload an Image"
+            />
+            <FormField
+                name="email"
+                label="Email"
+                placeholder="steve@apple.com"
+                type="email"
+            />
+            <FormField
+                name="phone"
+                label="Phone number"
+                placeholder="559-867-5309"
+                type="phone"
+            />
+            <FormField
+                name="personalNotes"
+                label="Personal notes"
+                component="textarea"
+                placeholder="Any extra notes about this traveler"
+                className="d-block"
+            />
         </ModalForm>
     )
 }
-
