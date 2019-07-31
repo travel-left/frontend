@@ -68,10 +68,10 @@ class Itinerary extends Component {
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${updateObject.dateStart}T${
             updateObject.timeStart
-        }:00`
+            }:00`
         updateObject.dtEnd = `${updateObject.dateEnd}T${
             updateObject.timeEnd
-        }:00`
+            }:00`
         await apiCall(
             'put',
             `/api/trips/${this.tripId}/events/${eventId}`,
@@ -134,8 +134,6 @@ class Itinerary extends Component {
             />
         ) : (
             <h4 className="text-info">
-                Nothing here? Use the 'NEW EVENT' button to create your first
-                event!
             </h4>
         )
         // let alert = showAlert ? (
@@ -175,7 +173,7 @@ class Itinerary extends Component {
 
 export default Itinerary
 
-const time_sort_asc = function(event1, event2) {
+const time_sort_asc = function (event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')
