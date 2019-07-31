@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import DayList from './DayList'
-import EventList from './Event/EventList'
+import DayList from './Days'
+import EventList from './Events'
 import { apiCall } from '../../util/api'
-import CreateEventForm from './Event/CreateEventForm'
+import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import Alert from '../../util/otherComponents/Alert'
 import { scroller } from 'react-scroll'
@@ -69,10 +69,10 @@ class Itinerary extends Component {
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${updateObject.dateStart}T${
             updateObject.timeStart
-            }:00`
+        }:00`
         updateObject.dtEnd = `${updateObject.dateEnd}T${
             updateObject.timeEnd
-            }:00`
+        }:00`
         await apiCall(
             'put',
             `/api/trips/${this.tripId}/events/${eventId}`,
@@ -108,7 +108,7 @@ class Itinerary extends Component {
             duration: 1500,
             delay: 100,
             smooth: true,
-            offset: -15, // Scrolls to element + 50 pixels down the page
+            offset: -15 // Scrolls to element + 50 pixels down the page
         })
 
         this.setState({
@@ -118,7 +118,13 @@ class Itinerary extends Component {
 
     render() {
         const { days, events, showAlert, selectedDay } = this.state
-        const dayList = days.length ? <DayList selectedDay={selectedDay} days={days} handleClick={this.onDayClick} /> : null
+        const dayList = days.length ? (
+            <DayList
+                selectedDay={selectedDay}
+                days={days}
+                handleClick={this.onDayClick}
+            />
+        ) : null
         const eventList = events.length ? (
             <EventList
                 events={events}
@@ -128,11 +134,11 @@ class Itinerary extends Component {
                 removeTripDate={this.removeTripDate}
             />
         ) : (
-                <h4 className="text-info">
-                    Nothing here? Use the 'NEW EVENT' button to create your first
-                    event!
+            <h4 className="text-info">
+                Nothing here? Use the 'NEW EVENT' button to create your first
+                event!
             </h4>
-            )
+        )
         let alert = showAlert ? (
             <Alert
                 text='This is your trip itinerary.  Here you can manage events and days.  Click "ADD NEW EVENT" to get started.'
@@ -170,7 +176,7 @@ class Itinerary extends Component {
 
 export default Itinerary
 
-const time_sort_asc = function (event1, event2) {
+const time_sort_asc = function(event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')

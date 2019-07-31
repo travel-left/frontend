@@ -88,12 +88,19 @@ class Travelers extends Component {
     }
 
     updateTraveler = async (travelerId, updateObject) => {
-        await apiCall('put', `/api/trips/${this.tripId}/travelers/${travelerId}`, updateObject)
+        await apiCall(
+            'put',
+            `/api/trips/${this.tripId}/travelers/${travelerId}`,
+            updateObject
+        )
         this.getAndSetTravelers()
     }
 
     removeTraveler = async travelerId => {
-        await apiCall('delete', `/api/trips/${this.tripId}/travelers/${travelerId}`)
+        await apiCall(
+            'delete',
+            `/api/trips/${this.tripId}/travelers/${travelerId}`
+        )
         this.getAndSetTravelers()
     }
 
@@ -123,7 +130,7 @@ class Travelers extends Component {
                 filteredTravelers: prevState.filteredTravelers.map(traveler => {
                     return {
                         ...traveler,
-                        selected: !prevState.allSelected,
+                        selected: !prevState.allSelected
                     }
                 })
             }
@@ -145,6 +152,26 @@ class Travelers extends Component {
         })
     }
 
+    changeStatusOfSelectedTravelers = async ({ status }) => {
+        let travelerStatuses = []
+        const newTravelers = []
+        for (const traveler of this.state.filteredTravelers) {
+            if (traveler.selected) {
+                travelerStatuses.push({ _id: traveler._id, update: { status } })
+            } else {
+                newTravelers.push(traveler)
+            }
+        }
+
+        const updatedTravelers = await apiCall(
+            'put',
+            `/api/trips/${this.tripId}/travelers`,
+            travelerStatuses
+        )
+        const allTravelers = [...newTravelers, ...updatedTravelers]
+        this.filterTravelers(null, allTravelers)
+    }
+
     textSelectedTravelers = text => {
         let travelersPhones = []
         for (const traveler of this.state.filteredTravelers) {
@@ -159,21 +186,32 @@ class Travelers extends Component {
         })
     }
 
-    filterTravelers = selectedFilters => {
-        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {//handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
+    filterTravelers = (selectedFilters, allTravelers) => {
+        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
+            //handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
             selectedFilters = null
         }
-        let filters = selectedFilters ? selectedFilters.map(f => f.value) : this.state.filters
+        let filters = selectedFilters
+            ? selectedFilters.map(f => f.value)
+            : this.state.filters
         this.setState(prevState => {
+            const travelers =
+                allTravelers !== [] ? allTravelers : prevState.travelers
+            const filteredTravelers = travelers.filter(traveler =>
+                filters.includes(traveler.status)
+            )
             return {
                 ...prevState,
-                filteredTravelers: prevState.travelers.filter(traveler => filters.includes(traveler.status))
+                travelers,
+                filteredTravelers
             }
         })
     }
 
     setSelectedTraveler = travelerId => {
-        let newSelection = this.state.travelers.filter(t => t._id === travelerId)[0]
+        let newSelection = this.state.travelers.filter(
+            t => t._id === travelerId
+        )[0]
         this.setState({
             selectedTraveler: newSelection
         })
@@ -191,7 +229,7 @@ class Travelers extends Component {
         const customStyles = {
             container: (provided, state) => ({
                 ...provided,
-                width: '400px',
+                width: '400px'
             }),
             select: (provided, state) => ({
                 ...provided,
@@ -207,7 +245,9 @@ class Travelers extends Component {
                 />
             </div>
         ) : null
-        const selectedTravelerClass = this.state.selectedTraveler ? 'col-md-8' : 'col-12'
+        const selectedTravelerClass = this.state.selectedTraveler
+            ? 'col-md-8'
+            : 'col-12'
         return (
             <div className="mt-3 mx-3">
                 <div className="row">
@@ -240,7 +280,7 @@ class Travelers extends Component {
                                     className="basic-multi-select shadow"
                                     classNamePrefix="select"
                                     styles={customStyles}
-                                    placeholder='Filter by status'
+                                    placeholder="Filter by status"
                                     onChange={this.filterTravelers}
                                 />
                             </div>
@@ -258,7 +298,10 @@ class Travelers extends Component {
                                             travelers={filteredTravelers}
                                         />
                                         <ChangeStatusForm
-                                            submit={this.emailSelectedTravelers}
+                                            submit={
+                                                this
+                                                    .changeStatusOfSelectedTravelers
+                                            }
                                             travelers={filteredTravelers}
                                         />
                                     </div>
@@ -268,19 +311,27 @@ class Travelers extends Component {
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
-                                    <div className="col-md-1">
+                                    <div className="col-md-3">
                                         <input
                                             onClick={this.toggleAll}
                                             type="checkbox"
                                             className="ml-3"
                                             checked={this.state.allSelected}
                                         />
+                                        <span className="h6 px-2">
+                                            SELECT ALL
+                                        </span>
                                     </div>
-                                    <div className="col-md-2 d-none d-md-block">
+                                    <div className="d-none d-md-flex col-md-2 h6">
+                                        NAME
                                     </div>
-                                    <div className="d-none d-md-flex col-md-2 h6">NAME</div>
-                                    <div className="col-4 col-md-3 h6">EMAIL</div>
-                                    <div className="col-4 col-md-2 h6"> STATUS</div>
+                                    <div className="col-4 col-md-3 h6">
+                                        EMAIL
+                                    </div>
+                                    <div className="col-4 col-md-2 h6">
+                                        {' '}
+                                        STATUS
+                                    </div>
                                     <div className="col-4 col-md-1" />
                                 </div>
                             </div>
@@ -298,11 +349,9 @@ class Travelers extends Component {
                                 />
                             </div>
                         </div>
-
                     </div>
                     {travelerInfo}
                 </div>
-
             </div>
         )
     }
