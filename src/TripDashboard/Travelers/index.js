@@ -169,7 +169,7 @@ class Travelers extends Component {
             travelerStatuses
         )
         const allTravelers = [...newTravelers, ...updatedTravelers]
-        this.filterTravelers(null, allTravelers)
+        this.filterTravelers(this.state.filters, allTravelers)
     }
 
     textSelectedTravelers = text => {
