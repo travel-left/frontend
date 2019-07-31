@@ -12,7 +12,7 @@ export default ({ name = '', label = '', className, checked, onChange }) => (
             name={name}
             onChange={onChange}
         />
-        <label htmlFor={name} className="custom-control-label">
+        <label htmlFor={name} className="custom-control-label" id="label">
             {label}
         </label>
     </div>
