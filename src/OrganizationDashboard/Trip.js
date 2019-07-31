@@ -14,7 +14,7 @@ class Trip extends Component {
         let { name, image, dateStart, status } = this.props
 
         return (
-            <div className="card my-1 shadow mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around d-none" onClick={this.handleClick} onDoubleClick={this.handleDoubleClick}>
+            <div className="card my-1 shadow mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around d-none animated fadeIn" onClick={this.handleClick} onDoubleClick={this.handleDoubleClick}>
                 <div className="col-md-3 px-0">
                     <img src={image} className="card-img" alt="..." />
                 </div>
