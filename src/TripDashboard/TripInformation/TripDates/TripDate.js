@@ -44,7 +44,7 @@ export default class TripDate extends Component {
         const dateWithoutTimeorTZ = date.split('T')[0]
 
         return (
-            <div className="row my-2">
+            <div className="row my-2 animated fadeIn">
                 <div className="col-md-3 d-flex align-items-center">
                     <i className={icon.string} style={{ color: icon.color }} />
                 </div>
