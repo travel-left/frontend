@@ -3,7 +3,11 @@ import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
-import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../util/validators'
+import {
+    nameValidator,
+    dateValidator,
+    tripDateTypeValidator
+} from '../../../util/validators'
 
 export default function TripDateForm({ submit }) {
     const initialValues = {
@@ -14,19 +18,19 @@ export default function TripDateForm({ submit }) {
 
     const options = [
         {
-            name: 'Travel Date',
+            label: 'Travel Date',
             value: 'TRAVEL'
         },
         {
-            name: 'Money Date',
+            label: 'Money Date',
             value: 'MONEY'
         },
         {
-            name: 'Paperwork Date',
+            label: 'Paperwork Date',
             value: 'PAPERWORK'
         },
         {
-            name: 'Other Date',
+            label: 'Other Date',
             value: 'OTHER'
         }
     ]
@@ -43,7 +47,13 @@ export default function TripDateForm({ submit }) {
     }
 
     return (
-        <ModalForm button={button} header="Add a Trip Date" validationSchema={schema} initialValues={initialValues} submit={submit} >
+        <ModalForm
+            button={button}
+            header="Add a Trip Date"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

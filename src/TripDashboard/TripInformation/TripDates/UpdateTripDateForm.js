@@ -17,19 +17,19 @@ export default function UpdateTripDateForm(props) {
 
     const options = [
         {
-            name: 'Travel Date',
+            label: 'Travel Date',
             value: 'TRAVEL'
         },
         {
-            name: 'Money Date',
+            label: 'Money Date',
             value: 'MONEY'
         },
         {
-            name: 'Paperwork Date',
+            label: 'Paperwork Date',
             value: 'PAPERWORK'
         },
         {
-            name: 'Other Date',
+            label: 'Other Date',
             value: 'OTHER'
         }
     ]
@@ -42,7 +42,7 @@ export default function UpdateTripDateForm(props) {
 
     const icon = `hover far fa-2x fa-edit text-secondary ${
         props.onItinerary ? null : 'float-right'
-        }`
+    }`
 
     return (
         <ModalForm

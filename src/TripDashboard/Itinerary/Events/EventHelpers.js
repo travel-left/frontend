@@ -7,12 +7,12 @@ import {
 import * as Yup from 'yup'
 import moment from 'moment-timezone'
 
-let tz = moment.tz.names().map(name => {
-    const offset = moment.tz(name).format('Z')
-    const abbrev = moment.tz(name).format('z')
+let tz = moment.tz.names().map(label => {
+    const offset = moment.tz(label).format('Z')
+    const abbrev = moment.tz(label).format('z')
     return {
-        name: `(UTC${offset}) ${name.replace('_', ' ')} (${abbrev})`,
-        value: name,
+        label: `(UTC${offset}) ${label.replace('_', ' ')} (${abbrev})`,
+        value: label,
         offset: offset
     }
 })
@@ -23,24 +23,24 @@ export const timezones = tz.sort((f, s) => {
 
 export const types = [
     {
-        name: 'Category',
+        label: 'Category',
         value: '',
         hidden: true
     },
     {
-        name: 'Lodging',
+        label: 'Lodging',
         value: 'LODGING'
     },
     {
-        name: 'Event',
+        label: 'Event',
         value: 'EVENT'
     },
     {
-        name: 'Transportation',
+        label: 'Transportation',
         value: 'TRANSPORTATION'
     },
     {
-        name: 'Flight',
+        label: 'Flight',
         value: 'FLIGHT'
     }
 ]
