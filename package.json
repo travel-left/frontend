@@ -25,6 +25,7 @@
     "react-transition-group": "^4.2.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "serve": "^11.1.0",
     "uniqid": "^5.0.3",
     "yup": "^0.27.0"
   },
@@ -32,10 +33,12 @@
     "@travelleft/prettier-config": "^1.2.0"
   },
   "scripts": {
-    "start": "npx react-scripts start",
+    "dev": "npx react-scripts start",
+    "start": "serve -s build",
     "build": "npx react-scripts build",
     "test": "npx react-scripts test",
-    "eject": "npx react-scripts eject"
+    "eject": "npx react-scripts eject",
+    "heroku-postbuild": "npx run build"
   },
   "eslintConfig": {
     "extends": "react-app"
