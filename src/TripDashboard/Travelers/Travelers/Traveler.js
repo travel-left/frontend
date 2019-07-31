@@ -25,7 +25,7 @@ export default class Traveler extends Component {
 
         return (
             <div
-                className="card py-3 border my-2 shadow"
+                className="card py-3 border my-2 shadow animated fadeIn"
                 onDoubleClick={this.handleDoubleClick}
             >
                 <div
