@@ -8,6 +8,7 @@
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",
+    "per-env": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -33,12 +34,11 @@
     "@travelleft/prettier-config": "^1.2.0"
   },
   "scripts": {
-    "dev": "npx react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "npx react-scripts test",
-    "eject": "npx react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "build": "npx react-scripts build",
+    "heroku-postbuild": "npm run build",
+    "start": "per-env",
+    "start:development": "npx react-scripts start",
+    "start:production": "serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"

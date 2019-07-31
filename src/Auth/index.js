@@ -51,10 +51,17 @@ export default class Auth extends Component {
     render() {
         const { type } = this.props
         const { error } = this.state
-        const form = type === 'sign in' ? <SignIn error={error} submit={this.login} /> : <SignUp error={error} submit={this.signUp} />
+        const form =
+            type === 'sign in' ? (
+                <SignIn error={error} submit={this.login} />
+            ) : (
+                <SignUp error={error} submit={this.signUp} />
+            )
         return (
             <div className="row">
-                <div className="col-sm-12 col-md-6 d-flex justify-content-center">{form}</div>
+                <div className="col-sm-12 col-md-6 d-flex justify-content-center">
+                    {form}
+                </div>
                 <div className="col-sm-12 col-md-6 px-0">
                     <SidePicture onClick={this.handleSwitch} type={type} />
                 </div>

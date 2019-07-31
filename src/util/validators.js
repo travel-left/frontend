@@ -9,6 +9,14 @@ export const nameValidator = Yup.string()
     .max(50, 'Please enter a shorter name')
     .required('Please enter a name')
 
+export const emailValidator = Yup.string()
+    .email('Must be a valid email')
+    .required('Please enter an email')
+
+export const passwordValidator = Yup.string()
+    .required('Please enter a password')
+    .min(8, 'Password must be longer than 8 characters')
+
 export const tripStatusValidator = Yup.string()
     .matches(/(PLANNING|PLANNED|LEFT|PAST)/)
     .required()
@@ -22,3 +30,5 @@ export const descriptionValidator = Yup.string()
     .max(500, 'Please enter a shorter description')
 
 export const fileValidator = Yup.string().url('Please add a valid file')
+
+export default validator => Yup.object().shape(validator)
