@@ -10,6 +10,7 @@ import CreateTextForm from './Actions/CreateTextForm'
 import Select from 'react-select'
 import ChangeStatusForm from './Actions/ChangeStatusForm'
 import TravelerInfo from './TravelerInfo'
+import Checkbox from '../../util/forms/Checkbox'
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },
@@ -105,6 +106,7 @@ class Travelers extends Component {
     }
 
     toggle = travelerId => {
+        console.log('Toggleing ' + travelerId)
         this.setState(prevState => {
             return {
                 ...prevState,
@@ -123,6 +125,7 @@ class Travelers extends Component {
     }
 
     toggleAll = () => {
+        console.log('Toggleing all')
         this.setState(prevState => {
             return {
                 ...prevState,
@@ -224,7 +227,7 @@ class Travelers extends Component {
     }
 
     render() {
-        let { filteredTravelers, showAlert } = this.state
+        let { filteredTravelers, showAlert, allSelected } = this.state
         let alert = showAlert ? (
             <Alert
                 text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.'
@@ -322,11 +325,17 @@ class Travelers extends Component {
                                             onChange={this.toggleAll}
                                             type="checkbox"
                                             className="ml-3"
-                                            checked={this.state.allSelected}
+                                            checked={allSelected}
                                         />
                                         <span className="h6 px-2">
                                             SELECT ALL
                                         </span>
+                                        <Checkbox
+                                            onChange={this.toggleAll}
+                                            // className="ml-3 h6"
+                                            checked={allSelected}
+                                            // label="SELECT ALL"
+                                        />
                                     </div>
                                     <div className="d-none d-md-flex col-md-2 h6">
                                         NAME
