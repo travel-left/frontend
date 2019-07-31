@@ -5,7 +5,6 @@ import ModalForm from '../../../util/forms/ModalForm'
 import DocumentUploader from '../../../util/forms/DocumentUploader'
 
 export default class CreateDocumentForm extends Component {
-
     state = {
         linkFields: false
     }
@@ -26,8 +25,7 @@ export default class CreateDocumentForm extends Component {
             .min(2, 'Please enter a longer name')
             .max(50, 'Please enter a shorter name')
             .required('Please enter a name'),
-        link: Yup.string()
-            .required('Please select a link or file')
+        link: Yup.string().required('Please select a link or file')
     })
 
     button = {
@@ -39,23 +37,52 @@ export default class CreateDocumentForm extends Component {
         let { submit } = this.props
 
         let uploadFields = (
-            <FormField name="link" label="Upload a document" type="file" component={DocumentUploader} />
+            <FormField
+                name="link"
+                label="Upload a document"
+                type="file"
+                component={DocumentUploader}
+            />
         )
 
         let linkFields = (
             <>
-                <FormField name="link" label="Documnet link" placeholder="Link"></FormField>
-                <FormField name="name" label="Name for link" placeholder="Linky Boi"></FormField>
+                <FormField
+                    name="link"
+                    label="Documnet link"
+                    placeholder="Link"
+                />
+                <FormField
+                    name="name"
+                    label="Name for link"
+                    placeholder="Linky Boi"
+                />
             </>
         )
 
         return (
-            <ModalForm button={this.button} header='Add a document or link' validationSchema={this.schema} initialValues={this.initialValues} submit={submit} >
+            <ModalForm
+                button={this.button}
+                header="Add a document or link"
+                validationSchema={this.schema}
+                initialValues={this.initialValues}
+                submit={submit}
+            >
                 {this.state.linkFields ? linkFields : uploadFields}
-                <FormField name="description" label="Description" component="textarea" placeholder="A description for your document" className='d-block' />
-                <button className="btn btn-link mt-2 pl-0" onClick={this.toggleLinkFields}>{this.state.linkFields ? 'Upload' : 'Link'} a document</button>
+                <FormField
+                    name="description"
+                    label="Description"
+                    component="textarea"
+                    placeholder="A description for your document"
+                    className="d-block"
+                />
+                <button
+                    className="btn btn-link mt-2 pl-0"
+                    onClick={this.toggleLinkFields}
+                >
+                    {this.state.linkFields ? 'Upload' : 'Link'} a document
+                </button>
             </ModalForm>
         )
     }
-
 }

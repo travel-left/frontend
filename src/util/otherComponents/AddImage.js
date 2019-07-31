@@ -70,8 +70,22 @@ export default class AddImage extends Component {
         const editForm = (
             <form onSubmit={this.handleSubmit}>
                 <div className="input-group mb-3">
-                    <FileUploader id="addImage" onUpload={this.handleUpload} accept="image/*" />
-                    <input type="text" onChange={this.handleChange} value={imgText} className="form-control" id="imgText" name="imgText" placeholder="Image Link" aria-label="img" aria-describedby="img" />
+                    <FileUploader
+                        id="addImage"
+                        onUpload={this.handleUpload}
+                        accept="image/*"
+                    />
+                    <input
+                        type="text"
+                        onChange={this.handleChange}
+                        value={imgText}
+                        className="form-control"
+                        id="imgText"
+                        name="imgText"
+                        placeholder="Image Link"
+                        aria-label="img"
+                        aria-describedby="img"
+                    />
                     <div>
                         <button className="btn btn-primary" type="submit">
                             Submit
@@ -90,7 +104,11 @@ export default class AddImage extends Component {
                     <div className="float-right pr-3">{formBody}</div>
                 </div>
                 <div className="col-4">
-                    <Image src={img} diameter="100px" onError={this.handleError} />
+                    <Image
+                        src={img}
+                        diameter="100px"
+                        onError={this.handleError}
+                    />
                 </div>
             </div>
         )

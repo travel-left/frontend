@@ -28,11 +28,31 @@ export default function NewCoordinatorForm({ submit }) {
     }
 
     return (
-        <ModalForm button={button} header="Add a new coordinator to your trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm
+            button={button}
+            header="Add a new coordinator to your trip"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
-            <FormField component={Uploader} name="image" label="Upload an Image" />
-            <FormField name="email" label="Email" placeholder="steve@apple.com" type="email" />
-            <FormField name="phone" label="Phone number" placeholder="559-867-5309" type="phone" />
+            <FormField
+                component={Uploader}
+                name="image"
+                label="Upload an Image"
+            />
+            <FormField
+                name="email"
+                label="Email"
+                placeholder="steve@apple.com"
+                type="email"
+            />
+            <FormField
+                name="phone"
+                label="Phone number"
+                placeholder="559-867-5309"
+                type="phone"
+            />
             <FormField name="title" label="Title" placeholder="CEO" />
         </ModalForm>
     )
