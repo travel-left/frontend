@@ -8,7 +8,7 @@ import Main from './Main'
 import { setAuthorizationToken } from './util/redux/actions/auth'
 import Footer from './util/otherComponents/Footer'
 import HttpsRedirect from 'react-https-redirect'
-
+import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 const store = configureStore()
 
 if (localStorage.token) {
@@ -16,19 +16,22 @@ if (localStorage.token) {
 }
 
 const App = () => (
-    <HttpsRedirect>
-        <Provider store={store}>
-            <Router>
-                <div>
-                    <Navbar />
-                    <div className="container-fluid content" id="app-root" style={{ minHeight: '90vh' }}>
-                        <Main />
+    <ErrorBoundary>
+        <HttpsRedirect>
+            <Provider store={store}>
+                <Router>
+                    <div>
+                        <Navbar />
+                        <div className="container-fluid content" id="app-root" style={{ minHeight: '90vh' }}>
+                            <Main />
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
-                </div>
-            </Router>
-        </Provider>
-    </HttpsRedirect>
+                </Router>
+            </Provider>
+        </HttpsRedirect>
+    </ErrorBoundary>
+ 
 )
 
 export default App
