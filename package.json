@@ -35,10 +35,10 @@
   "scripts": {
     "dev": "npx react-scripts start",
     "start": "serve -s build",
-    "build": "npx react-scripts build",
+    "build": "react-scripts build",
     "test": "npx react-scripts test",
     "eject": "npx react-scripts eject",
-    "heroku-postbuild": "npx run build"
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
