@@ -10,7 +10,7 @@ export const nameValidator = Yup.string()
     .required('Please enter a name')
 
 export const tripStatusValidator = Yup.string()
-    .matches(/(PLANNING|PUBLISHED|IN PROGRESS|COMPLETED)/)
+    .matches(/(PLANNING|PLANNED|LEFT|PAST)/)
     .required()
 
 export const tripDateTypeValidator = Yup.string()

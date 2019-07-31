@@ -32,7 +32,7 @@ class Travelers extends Component {
 
     constructor(props) {
         super(props)
-        this.getShowAlertAndSetState()
+        // this.getShowAlertAndSetState()
         this.getAndSetTravelers()
     }
 
@@ -186,7 +186,7 @@ class Travelers extends Component {
         })
     }
 
-    filterTravelers = (selectedFilters, allTravelers) => {
+    handleFilterChange = selectedFilters => {
         if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
             //handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
             selectedFilters = null
@@ -194,9 +194,15 @@ class Travelers extends Component {
         let filters = selectedFilters
             ? selectedFilters.map(f => f.value)
             : this.state.filters
+        this.filterTravelers(filters)
+    }
+
+    filterTravelers = (filters, allTravelers) => {
         this.setState(prevState => {
             const travelers =
-                allTravelers !== [] ? allTravelers : prevState.travelers
+                allTravelers && allTravelers !== []
+                    ? allTravelers
+                    : prevState.travelers
             const filteredTravelers = travelers.filter(traveler =>
                 filters.includes(traveler.status)
             )
@@ -281,7 +287,7 @@ class Travelers extends Component {
                                     classNamePrefix="select"
                                     styles={customStyles}
                                     placeholder="Filter by status"
-                                    onChange={this.filterTravelers}
+                                    onChange={this.handleFilterChange}
                                 />
                             </div>
                             <div className="col-md-6">
@@ -313,7 +319,7 @@ class Travelers extends Component {
                                 <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
                                     <div className="col-md-3">
                                         <input
-                                            onClick={this.toggleAll}
+                                            onChange={this.toggleAll}
                                             type="checkbox"
                                             className="ml-3"
                                             checked={this.state.allSelected}

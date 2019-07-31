@@ -40,7 +40,7 @@ class TripInfo extends Component {
 
     render() {
         let { name, dateStart, image, description, status } = this.props.trip
-        let { statusCounts } = this.props
+        // let { statusCounts } = this.props
         let invited = this.state.travelers.filter(t => t.status === 'INVITED')
         let confirmed = this.state.travelers.filter(
             t => t.status === 'CONFIRMED'

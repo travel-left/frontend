@@ -21,13 +21,18 @@ export default function ChangeStatusForm({ submit, travelers }) {
                 </div>
             </p>
         ) : (
-                undefined
-            )
+            undefined
+        )
     )
 
     return (
-        <ModalForm button={button} header="Bulk update travelers status" initialValues={initialValues} submit={submit}>
-            <div className='mb-4'>
+        <ModalForm
+            button={button}
+            header="Bulk update travelers status"
+            initialValues={initialValues}
+            submit={submit}
+        >
+            <div className="mb-4">
                 <h5>Selected travelers</h5>
                 <div className="row">
                     <div className="col ">Name</div>
@@ -36,7 +41,16 @@ export default function ChangeStatusForm({ submit, travelers }) {
                 <hr />
                 {travelerList}
             </div>
-            <SelectField name="status" options={[{ name: 'INVITED', value: 'INVITED' }, { name: 'CONFIRMED', value: 'CONFIRMED' }, { name: 'ON-TRIP', value: 'ON-TRIP' }, { name: 'POST-TRIP', value: 'POST-TRIP' }]} label='New Status' />
+            <SelectField
+                name="status"
+                options={[
+                    { label: 'INVITED', value: 'INVITED' },
+                    { label: 'CONFIRMED', value: 'CONFIRMED' },
+                    { label: 'ON-TRIP', value: 'ON-TRIP' },
+                    { label: 'POST-TRIP', value: 'POST-TRIP' }
+                ]}
+                label="New Status"
+            />
         </ModalForm>
     )
 }
