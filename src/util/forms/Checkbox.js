@@ -16,7 +16,7 @@ export default ({
             className="custom-control-input"
             checked={checked}
             name={name}
-            // onChange={handleChange}
+            onChange={handleChange}
         />
         <label htmlFor={name} className="custom-control-label">
             {label}

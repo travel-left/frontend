@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
 import { connect } from 'react-redux'
-import Alert from '../util/otherComponents/Alert'
+// import Alert from '../util/otherComponents/Alert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../util/redux/actions/trip'
@@ -20,8 +20,8 @@ class Trips extends Component {
             PLANNING: 0,
             PAST: 0,
             ARCHIVED: 0
-        },
-        showAlert: this.props.currentUser.showAlerts.trips
+        }
+        // showAlert: this.props.currentUser.showAlerts.trips
     }
 
     constructor(props) {
@@ -51,15 +51,15 @@ class Trips extends Component {
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
-    closeAlert = () => {
-        const { _id } = this.props.currentUser
-        this.setState({
-            showAlert: false
-        })
-        apiCall('put', `/api/coordinators/${_id}`, {
-            showAlerts: { trips: false }
-        })
-    }
+    // closeAlert = () => {
+    //     const { _id } = this.props.currentUser
+    //     this.setState({
+    //         showAlert: false
+    //     })
+    //     apiCall('put', `/api/coordinators/${_id}`, {
+    //         showAlerts: { trips: false }
+    //     })
+    // }
 
     addTrip = async trip => {
         let createdTrip = await apiCall('post', '/api/trips', trip)
@@ -124,8 +124,7 @@ class Trips extends Component {
             selectedTrip,
             trips,
             tripStatusCounts,
-            filter,
-            showAlert
+            filter
         } = this.state
 
         const showTrips = filteredTrips.length > 0
@@ -148,12 +147,12 @@ class Trips extends Component {
                 />
             </div>
         ) : null
-        let alert = showAlert ? (
-            <Alert
-                text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.'
-                closeAlert={this.closeAlert}
-            />
-        ) : null
+        // let alert = showAlert ? (
+        //     <Alert
+        //         text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.'
+        //         closeAlert={this.closeAlert}
+        //     />
+        // ) : null
 
         return (
             <div className="row">
@@ -212,11 +211,11 @@ class Trips extends Component {
                     </div>
                 </div>
                 <div className="col-md-10">
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-md-12 d-none d-md-block">
                             {alert}
                         </div>
-                    </div>
+                    </div> */}
                     <div className="row">
                         <div className={`${selectedTripClass} px-0 px-md-3`}>
                             <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">

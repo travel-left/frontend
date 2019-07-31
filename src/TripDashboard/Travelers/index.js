@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import AddTravelerForm from './Actions/AddTravelerForm'
 import ImportBulkForm from './Actions/ImportBulkForm'
-import Alert from '../../util/otherComponents/Alert'
+// import Alert from '../../util/otherComponents/Alert'
 import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
 import CreateEmailForm from './Actions/CreateEmailForm'
@@ -26,7 +26,7 @@ class Travelers extends Component {
         travelers: [],
         filteredTravelers: [],
         allSelected: false,
-        showAlert: false,
+        // showAlert: false,
         filters: ['INVITED', 'CONFIRMED', 'ON-TRIP', 'POST-TRIP'],
         selectedTraveler: null
     }
@@ -37,25 +37,25 @@ class Travelers extends Component {
         this.getAndSetTravelers()
     }
 
-    getShowAlertAndSetState = async () => {
-        const { _id } = this.props.currentUser
-        const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
-        if (coordinator.showAlerts.itinerary === 'true') {
-            this.setState({
-                showAlert: true
-            })
-        }
-    }
+    // getShowAlertAndSetState = async () => {
+    //     const { _id } = this.props.currentUser
+    //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
+    //     if (coordinator.showAlerts.itinerary === 'true') {
+    //         this.setState({
+    //             showAlert: true
+    //         })
+    //     }
+    // }
 
-    closeAlert = async () => {
-        const { _id } = this.props.currentUser
-        await apiCall('put', `/api/coordinators/${_id}`, {
-            showAlerts: { itinerary: false }
-        })
-        this.setState({
-            showAlert: false
-        })
-    }
+    // closeAlert = async () => {
+    //     const { _id } = this.props.currentUser
+    //     await apiCall('put', `/api/coordinators/${_id}`, {
+    //         showAlerts: { itinerary: false }
+    //     })
+    //     this.setState({
+    //         showAlert: false
+    //     })
+    // }
 
     getAndSetTravelers = async () => {
         const travelers = await apiCall(
@@ -227,13 +227,13 @@ class Travelers extends Component {
     }
 
     render() {
-        let { filteredTravelers, showAlert, allSelected } = this.state
-        let alert = showAlert ? (
-            <Alert
-                text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.'
-                closeAlert={this.closeAlert}
-            />
-        ) : null
+        let { filteredTravelers, allSelected } = this.state
+        // let alert = showAlert ? (
+        //     <Alert
+        //         text='This is where you manage the travelers on your trip.  Click "ADD TRAVELER" to add a single traveler or "IMPORT BULK" to upload a csv file with all of your travelers.'
+        //         closeAlert={this.closeAlert}
+        //     />
+        // ) : null
 
         const customStyles = {
             container: (provided, state) => ({
@@ -259,9 +259,9 @@ class Travelers extends Component {
             : 'col-12'
         return (
             <div className="mt-3 mx-3">
-                <div className="row">
+                {/* <div className="row">
                     <div className="col-md-12 d-none d-md-block">{alert}</div>
-                </div>
+                </div> */}
                 <div className="row">
                     <div className={`${selectedTravelerClass} mt-4 pr-5`}>
                         <div className="row justify-content-between mb-4 ml-2">
@@ -332,9 +332,9 @@ class Travelers extends Component {
                                         </span>
                                         <Checkbox
                                             onChange={this.toggleAll}
-                                            // className="ml-3 h6"
+                                            className="ml-3 h6"
                                             checked={allSelected}
-                                            // label="SELECT ALL"
+                                            label="SELECT ALL"
                                         />
                                     </div>
                                     <div className="d-none d-md-flex col-md-2 h6">
