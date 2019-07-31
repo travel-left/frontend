@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import UpdateEventForm from './UpdateEventForm'
 import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateForm'
 import Map from './Map'
-import moment from 'moment'
+// import moment from 'moment'
 // import Image from '../../../util/otherComponents/Image'
 
 class Event extends Component {
