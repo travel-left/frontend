@@ -6,55 +6,40 @@ import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../util/redux/actions/trip'
 import AddTrip from './AddTrip'
+import SideNavItem from '../util/otherComponents/SideNavItem'
 
 class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
         filter: 'All Trips',
-        showTrips: false,
-        selectedTrip: {},
+        selectedTrip: null,
         tripStatusCounts: {
-            ACTIVE: 0,
+            LEFT: 0,
             PLANNED: 0,
             PLANNING: 0,
-            PAST: 0
+            PAST: 0,
+            ARCHIVED: 0
         },
-        travelers: [],
-        travelerStatusCounts: {
-            INVITED: 0,
-            CONFIRMED: 0
-        },
-        showAlert: false
+        showAlert: this.props.currentUser.showAlerts.trips
     }
 
     constructor(props) {
         super(props)
-        this.getShowAlertAndSetState()
         this.getAllTripsAndSetState()
-    }
-
-    getShowAlertAndSetState = async () => {
-        const { coordinatorId } = this.props
-        const coordinator = await apiCall('get', `/api/coordinators/${coordinatorId}`)
-        if (coordinator.showAlerts.trips === 'true') {
-            this.setState({
-                showAlert: true
-            })
-        }
     }
 
     getAllTripsAndSetState = async () => {
         const trips = await apiCall('get', '/api/trips')
-        let newStatusCount = { ...this.state.tripStatusCounts }
+        this.setStatusesAndState(trips)
+    }
+
+    setStatusesAndState = trips => {
+        const newStatusCount = { ...this.state.tripStatusCounts }
         trips.forEach(trip => {
             newStatusCount[trip.status]++
         })
-        this.setState({
-            trips: trips,
-            filteredTrips: trips,
-            showTrips: trips && trips.length > 0 ? true : false,
-            selectedTrip: trips ? trips[0] : null,
+        this.filterTripsAndSetState(trips, 'ALL TRIPS', {
             tripStatusCounts: newStatusCount
         })
     }
@@ -66,56 +51,109 @@ class Trips extends Component {
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
-    closeAlert = async () => {
-        const { coordinatorId } = this.props
-        await apiCall('put', `/api/coordinators/${coordinatorId}`, { showAlerts: { trips: false } })
+    closeAlert = () => {
+        const { _id } = this.props.currentUser
         this.setState({
             showAlert: false
+        })
+        apiCall('put', `/api/coordinators/${_id}`, {
+            showAlerts: { trips: false }
         })
     }
 
     addTrip = async trip => {
         let createdTrip = await apiCall('post', '/api/trips', trip)
-        const trips = await apiCall('get', '/api/trips')
+        const { trips, filteredTrips, filter } = this.state
+        trips.push(createdTrip)
+
+        if (createdTrip.status === filter || filter === 'All Trips') {
+            filteredTrips.push(createdTrip)
+        }
         let newStatusCount = { ...this.state.tripStatusCounts }
-        trips.forEach(trip => {
-            newStatusCount[trip.status]++
-        })
+        newStatusCount[createdTrip.status]++
         this.setState({
             trips: trips,
-            filteredTrips: trips,
-            showTrips: trips && trips.length > 0 ? true : false,
-            selectedTrip: trips ? trips[0] : null,
+            filteredTrips: filteredTrips,
+            selectedTrip: createdTrip,
             tripStatusCounts: newStatusCount
         })
         this.setSelectedTrip(createdTrip._id)
-
     }
 
-    setSelectedTrip = async tripId => {
-        let newSelection = this.state.trips.filter(t => t._id === tripId)[0]
-        let newStatusCountT = { ...this.state.travelerStatusCounts }
-        newSelection.travelers.forEach(traveler => {
-            newStatusCountT[traveler.status]++
+    archiveTrip = async id => {
+        const { trips, filter } = this.state
+        const updatedTrip = await apiCall('put', `/api/trips/${id}`, {
+            status: 'ARCHIVED'
         })
+        const updatedIndex = trips.findIndex(e => e._id.toString() === id)
+        const { status } = trips[updatedIndex]
+        trips[updatedIndex] = updatedTrip
+        const newStatusCount = { ...this.state.tripStatusCounts }
+        newStatusCount.ARCHIVED++
+        newStatusCount[status]--
+        this.setState({ trips })
+        this.filterTripsAndSetState(trips, filter, {
+            tripStatusCounts: newStatusCount
+        })
+    }
+
+    setSelectedTrip = tripId => {
+        let newSelection = this.state.trips.filter(t => t._id === tripId)[0]
         this.setState({
-            selectedTrip: newSelection,
-            travelerStatusCounts: newStatusCountT
+            selectedTrip: newSelection
         })
     }
 
     onSideNavClick = e => {
         e.preventDefault()
-        let { filteredTrips, trips } = this.state
-        filteredTrips = e.target.name === 'All Trips' ? trips : trips.filter(t => t.status === e.target.name.toUpperCase())
-        this.setState({ filteredTrips, filter: e.target.name })
+        const filter = e.target.name.toUpperCase()
+        this.filterTripsAndSetState(this.state.trips, filter)
+    }
+
+    filterTripsAndSetState = (trips, filter, state = {}) => {
+        const filteredTrips =
+            filter === 'ALL TRIPS'
+                ? trips.filter(t => t.status !== 'ARCHIVED')
+                : trips.filter(t => t.status === filter)
+        this.setState({ trips, filteredTrips, filter, ...state })
     }
 
     render() {
-        let { showTrips, filteredTrips, selectedTrip, trips, tripStatusCounts, travelerStatusCounts, filter, showAlert } = this.state
-        let tripList = showTrips ? <TripList trips={filteredTrips} setSelectedTrip={this.setSelectedTrip} doubleClick={this.editTrip} /> : null
-        let tripInfo = showTrips ? <TripInfo trip={selectedTrip} edit={this.editTrip} statusCounts={travelerStatusCounts} /> : null
-        let alert = showAlert ? <Alert text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.' closeAlert={this.closeAlert} /> : null
+        let {
+            filteredTrips,
+            selectedTrip,
+            trips,
+            tripStatusCounts,
+            filter,
+            showAlert
+        } = this.state
+
+        const showTrips = filteredTrips.length > 0
+
+        let tripList = showTrips ? (
+            <TripList
+                trips={filteredTrips}
+                setSelectedTrip={this.setSelectedTrip}
+                doubleClick={this.editTrip}
+            />
+        ) : null
+        const selectedTripClass = selectedTrip ? 'col-md-8' : 'col-12'
+        let tripInfo = selectedTrip ? (
+            <div className="col-md-4 shadow px-0 bg-light">
+                <TripInfo
+                    trip={selectedTrip}
+                    edit={this.editTrip}
+                    duplicateTrip={this.addTrip}
+                    archiveTrip={this.archiveTrip}
+                />
+            </div>
+        ) : null
+        let alert = showAlert ? (
+            <Alert
+                text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.'
+                closeAlert={this.closeAlert}
+            />
+        ) : null
 
         return (
             <div className="row">
@@ -125,33 +163,78 @@ class Trips extends Component {
                             <AddTrip submit={this.addTrip} />
                         </div>
                     </div>
-                    <div className="row trips-side-bar bg-light" style={{ minHeight: '80vh' }}>
+                    <div
+                        className="row trips-side-bar bg-light"
+                        style={{ minHeight: '80vh' }}
+                    >
                         <div className="col px-0">
                             <ul className="list-group ">
-                                <LeftBarItem text="All Trips" total={trips.length} active={filter === 'All Trips'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Active" total={tripStatusCounts.ACTIVE} active={filter === 'Active'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Planned" total={tripStatusCounts.PLANNED} active={filter === 'Planned'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Planning" total={tripStatusCounts.PLANNING} active={filter === 'Planning'} handleClick={this.onSideNavClick} />
-                                <LeftBarItem text="Past" total={tripStatusCounts.PAST} active={filter === 'Past'} handleClick={this.onSideNavClick} />
+                                <SideNavItem
+                                    text="All Trips"
+                                    total={
+                                        trips.length - tripStatusCounts.ARCHIVED
+                                    }
+                                    active={filter === 'ALL TRIPS'}
+                                    handleClick={this.onSideNavClick}
+                                />
+                                <SideNavItem
+                                    text="Planning"
+                                    total={tripStatusCounts.PLANNING}
+                                    active={filter === 'PLANNING'}
+                                    handleClick={this.onSideNavClick}
+                                />
+                                <SideNavItem
+                                    text="Planned"
+                                    total={tripStatusCounts.PLANNED}
+                                    active={filter === 'PLANNED'}
+                                    handleClick={this.onSideNavClick}
+                                />
+                                <SideNavItem
+                                    text="LEFT"
+                                    total={tripStatusCounts.LEFT}
+                                    active={filter === 'LEFT'}
+                                    handleClick={this.onSideNavClick}
+                                />
+                                <SideNavItem
+                                    text="Past"
+                                    total={tripStatusCounts.PAST}
+                                    active={filter === 'PAST'}
+                                    handleClick={this.onSideNavClick}
+                                />
+                                <SideNavItem
+                                    text="Archived"
+                                    total={tripStatusCounts.ARCHIVED}
+                                    active={filter === 'ARCHIVED'}
+                                    handleClick={this.onSideNavClick}
+                                />
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div className="col-md-10">
                     <div className="row">
-                        <div className="col-md-12 d-none d-md-block">{alert}</div>
+                        <div className="col-md-12 d-none d-md-block">
+                            {alert}
+                        </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-8 px-0 px-md-3">
+                        <div className={`${selectedTripClass} px-0 px-md-3`}>
                             <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
-                                <div className="col-md-3 border-bottom border-primary text-uppercase ml-5"> Trip</div>
+                                <div className="col-md-3 border-bottom border-primary text-uppercase ml-5">
+                                    {' '}
+                                    Trip
+                                </div>
                                 <div className="col-md-4" />
-                                <div className="col-md-2 offset-md-1 text-uppercase">Date</div>
-                                <div className="col-md-2 text-uppercase">Status</div>
+                                <div className="col-md-2 offset-md-1 text-uppercase">
+                                    Date
+                                </div>
+                                <div className="col-md-2 text-uppercase">
+                                    Status
+                                </div>
                             </div>
                             {tripList}
                         </div>
-                        <div className="col-md-4 shadow px-0 bg-light">{tripInfo}</div>
+                        {tripInfo}
                     </div>
                 </div>
             </div>
@@ -159,25 +242,13 @@ class Trips extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    const { currentUser } = state
-    return { coordinatorId: currentUser._id }
+const mapStatetoProps = state => {
+    return {
+        currentUser: state.currentUser
+    }
 }
 
 export default connect(
-    mapStateToProps,
+    mapStatetoProps,
     { setCurrentTrip }
 )(Trips)
-
-const LeftBarItem = ({ text, total, active, handleClick }) => {
-    let classes = 'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 '
-    if (active) {
-        classes += ' active'
-    }
-    return (
-        <a href="/" className={classes} onClick={handleClick} name={text}>
-            {text}
-            <span className="badge badge-primary badge-pill">{total}</span>
-        </a>
-    )
-}

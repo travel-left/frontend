@@ -11,21 +11,20 @@ export default function TripDatesForm({ status, submit }) {
 
     const options = [
         {
-            name: 'Planning',
-            value: 'PLANNING',
-            default: true
+            label: 'Planning',
+            value: 'PLANNING'
         },
         {
-            name: 'Published',
-            value: 'PUBLISHED'
+            label: 'Planned',
+            value: 'PLANNED'
         },
         {
-            name: 'In Progress',
-            value: 'IN PROGRESS'
+            label: 'LEFT',
+            value: 'LEFT'
         },
         {
-            name: 'Completed',
-            value: 'COMPLETED'
+            label: 'Past',
+            value: 'PAST'
         }
     ]
 
@@ -36,15 +35,24 @@ export default function TripDatesForm({ status, submit }) {
     const button = {
         classes: 'text-light hover pl-0',
         text: (
-            <h5 className="text-light ml-0">Status:
-            <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">{status} </span>
+            <h5 className="text-light ml-0">
+                Status:
+                <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">
+                    {status}{' '}
+                </span>
                 <i className="far fa-edit ml-2" />
-            </h5 >
+            </h5>
         )
     }
 
     return (
-        <ModalForm button={button} header="Change trip status" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm
+            button={button}
+            header="Change trip status"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <SelectField options={options} name="status" label="Trip Status" />
         </ModalForm>
     )

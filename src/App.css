@@ -16,3 +16,20 @@ body {
     background: rgba(0, 0, 0, 0.3);
 }
   
+*:hover { 
+    text-decoration: none !important;  
+} 
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff !important;
+    background-color: #0F61D8;
+    border-color: #0F61D8;
+}
+
+.list-group-item.active:hover {
+    z-index: 2;
+    color: #fff !important;
+    background-color: #0F61D8;
+    border-color: #0F61D8;
+}

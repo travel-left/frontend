@@ -3,29 +3,34 @@ import FormField from '../../../util/forms/FormField'
 import SelectField from '../../../util/forms/SelectField'
 import * as Yup from 'yup'
 import ModalForm from '../../../util/forms/ModalForm'
-import { nameValidator, dateValidator, tripDateTypeValidator } from '../../../util/validators'
+import {
+    nameValidator,
+    dateValidator,
+    tripDateTypeValidator
+} from '../../../util/validators'
 
-export default function UpdateTripDateForm(props) {
+export default function TripDateForm({ submit }) {
     const initialValues = {
-        ...props,
-        date: props.date.split('T')[0]
+        name: '',
+        date: '',
+        type: 'TRAVEL'
     }
 
     const options = [
         {
-            name: 'Travel Date',
+            label: 'Travel Date',
             value: 'TRAVEL'
         },
         {
-            name: 'Money Date',
+            label: 'Money Date',
             value: 'MONEY'
         },
         {
-            name: 'Paperwork Date',
+            label: 'Paperwork Date',
             value: 'PAPERWORK'
         },
         {
-            name: 'Other Date',
+            label: 'Other Date',
             value: 'OTHER'
         }
     ]
@@ -36,10 +41,19 @@ export default function UpdateTripDateForm(props) {
         type: tripDateTypeValidator
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const button = {
+        classes: 'btn btn-primary mb-4',
+        text: 'add new'
+    }
 
     return (
-        <ModalForm icon={icon} header="Add a Trip Date" validationSchema={schema} initialValues={initialValues} {...props}>
+        <ModalForm
+            button={button}
+            header="Add a Trip Date"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <FormField name="name" label="Name" placeholder="Payment Due" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />

@@ -1,13 +1,18 @@
-import { nameValidator, dateValidator, fileValidator, descriptionValidator } from '../../../util/validators'
+import {
+    nameValidator,
+    dateValidator,
+    fileValidator,
+    descriptionValidator
+} from '../../../util/validators'
 import * as Yup from 'yup'
 import moment from 'moment-timezone'
 
-let tz = moment.tz.names().map(name => {
-    const offset = moment.tz(name).format('Z')
-    const abbrev = moment.tz(name).format('z')
+let tz = moment.tz.names().map(label => {
+    const offset = moment.tz(label).format('Z')
+    const abbrev = moment.tz(label).format('z')
     return {
-        name: `(UTC${offset}) ${name.replace('_', ' ')} (${abbrev})`,
-        value: name,
+        label: `(UTC${offset}) ${label.replace('_', ' ')} (${abbrev})`,
+        value: label,
         offset: offset
     }
 })
@@ -18,24 +23,24 @@ export const timezones = tz.sort((f, s) => {
 
 export const types = [
     {
-        name: 'Category',
+        label: 'Category',
         value: '',
         hidden: true
     },
     {
-        name: 'Lodging',
+        label: 'Lodging',
         value: 'LODGING'
     },
     {
-        name: 'Event',
+        label: 'Event',
         value: 'EVENT'
     },
     {
-        name: 'Transportation',
+        label: 'Transportation',
         value: 'TRANSPORTATION'
     },
     {
-        name: 'Flight',
+        label: 'Flight',
         value: 'FLIGHT'
     }
 ]
@@ -50,6 +55,7 @@ export const schema = Yup.object().shape({
     link: Yup.string('Link must be a string'),
     linkDescription: Yup.string('Link text must be a string'),
     dateStart: dateValidator,
+    address: Yup.string('Address must be a string'),
     timeStart: Yup.string('Time is not valid'),
     dateEnd: dateValidator,
     timeEnd: Yup.string('Time is not valid')
