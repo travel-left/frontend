@@ -1,22 +1,16 @@
 import React from 'react'
 
-export default ({
-    name = '',
-    label = '',
-    className,
-    checked,
-    handleChange
-}) => (
+export default ({ name = '', label = '', className, checked, onChange }) => (
     <div
         className={`d-block custom-control custom-checkbox ${className}`}
-        onClick={handleChange}
+        onClick={onChange}
     >
         <input
             type="checkbox"
             className="custom-control-input"
             checked={checked}
             name={name}
-            onChange={handleChange}
+            onChange={onChange}
         />
         <label htmlFor={name} className="custom-control-label">
             {label}

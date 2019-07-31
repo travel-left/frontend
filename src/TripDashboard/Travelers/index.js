@@ -125,7 +125,6 @@ class Travelers extends Component {
     }
 
     toggleAll = () => {
-        console.log('Toggleing all')
         this.setState(prevState => {
             return {
                 ...prevState,
@@ -321,15 +320,6 @@ class Travelers extends Component {
                             <div className="col-md-12">
                                 <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
                                     <div className="col-md-3">
-                                        <input
-                                            onChange={this.toggleAll}
-                                            type="checkbox"
-                                            className="ml-3"
-                                            checked={allSelected}
-                                        />
-                                        <span className="h6 px-2">
-                                            SELECT ALL
-                                        </span>
                                         <Checkbox
                                             onChange={this.toggleAll}
                                             className="ml-3 h6"
