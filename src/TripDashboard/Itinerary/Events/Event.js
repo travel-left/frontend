@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UpdateEventForm from './UpdateEventForm'
-import UpdateTripDateForm from '../../Information/TripDates/UpdateTripDateForm'
+import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateForm'
 import Map from './Map'
 import moment from 'moment'
 // import Image from '../../../util/otherComponents/Image'
@@ -52,12 +52,12 @@ class Event extends Component {
                 onItinerary={true}
             />
         ) : (
-                <UpdateEventForm
-                    event={event}
-                    submit={this.update}
-                    remove={this.remove}
-                />
-            )
+            <UpdateEventForm
+                event={event}
+                submit={this.update}
+                remove={this.remove}
+            />
+        )
 
         const date =
             event.dtStart && event.dtEnd
@@ -81,9 +81,7 @@ class Event extends Component {
         ) : null
 
         return (
-            <div
-                className="card mb-3 border-0 shadow px-3 py-1 rounded-lg"
-            >
+            <div className="card mb-3 border-0 shadow px-3 py-1 rounded-lg">
                 <div className="row">
                     <div className="card-body">
                         <h5 className="card-title">

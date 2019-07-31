@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { setCurrentTrip } from '../util/redux/actions/trip'
-import Cover from './CoverPhoto/Cover'
+import Cover from './Cover'
 import TripRouter from './TripRouter'
 import SideNav from './SideNav'
 

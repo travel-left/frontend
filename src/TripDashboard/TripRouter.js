@@ -1,9 +1,9 @@
 import React from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
-import Itinerary from './Itinerary/Itinerary'
-import TripInformation from './Information/TripInformation'
-import Travelers from './Travelers/Travelers'
-import Share from './Share/Share'
+import Itinerary from './Itinerary'
+import TripInformation from './TripInformation'
+import Travelers from './Travelers'
+import Share from './Share'
 
 const Dashboard = ({ currentTrip, currentUser }) => {
     return (
