@@ -106,7 +106,6 @@ class Travelers extends Component {
     }
 
     toggle = travelerId => {
-        console.log('Toggleing ' + travelerId)
         this.setState(prevState => {
             return {
                 ...prevState,

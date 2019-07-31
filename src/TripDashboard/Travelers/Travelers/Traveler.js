@@ -35,7 +35,7 @@ export default class Traveler extends Component {
                     <div className="col-md-1">
                         <Checkbox
                             onChange={this.handleToggle}
-                            className="ml-3"
+                            className="mx-3"
                             checked={selected}
                         />
                     </div>
