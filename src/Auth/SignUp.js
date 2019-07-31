@@ -27,7 +27,7 @@ export default ({ error, submit }) => {
 
     return (
         <div className="card col-10 shadow align-self-start my-4">
-            {error ? <p style={{ color: 'red' }}>{mError.message}</p> : null}
+            {mError ? <p style={{ color: 'red' }}>{mError.message}</p> : null}
             <div className="card-body p-4">
                 <h1 className="heading">Start your Free Trial.</h1>
                 <h5 className="text-dark">

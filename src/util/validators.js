@@ -32,3 +32,11 @@ export const descriptionValidator = Yup.string()
 export const fileValidator = Yup.string().url('Please add a valid file')
 
 export default validator => Yup.object().shape(validator)
+
+export const titleValidator = Yup.string()
+    .min(2, 'Please enter a longer title')
+    .max(50, 'Please enter a shorter title')
+
+export const phoneValidator = Yup.string()
+    .min(10, 'Please enter a longer phone number')
+    .max(15, 'Please enter a shorter phone number')
