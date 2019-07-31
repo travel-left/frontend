@@ -27,7 +27,7 @@ export default ({ error, submit }) => {
 
     return (
         <div className="card col-10 shadow align-self-start my-4">
-            {error ? <p style={{ color: 'red' }}>{mError.message}</p> : null}
+            {mError ? <p style={{ color: 'red' }}>{mError.message}</p> : null}
             <div className="card-body p-4">
                 <h1 className="heading">Start your Free Trial.</h1>
                 <h5 className="text-dark">
@@ -45,7 +45,7 @@ export default ({ error, submit }) => {
                         }
                         actions.setSubmitting(false)
                     }}
-                    render={({ isSubmitting, values, form }) => {
+                    render={({ isSubmitting, values, setFieldValue }) => {
                         const orgIdForm = !values.createOrg ? (
                             <FormField
                                 name="orgId"
@@ -72,17 +72,11 @@ export default ({ error, submit }) => {
                                     label="Create a new organization"
                                     className="pt-2"
                                     checked={values.createOrg}
-                                    handleChange={() => {
+                                    onChange={() => {
                                         if (values.createOrg) {
-                                            form.setFieldValue(
-                                                'createOrg',
-                                                false
-                                            )
+                                            setFieldValue('createOrg', false)
                                         } else {
-                                            form.setFieldValue(
-                                                'createOrg',
-                                                true
-                                            )
+                                            setFieldValue('createOrg', true)
                                         }
                                     }}
                                 />
