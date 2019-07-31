@@ -17,7 +17,7 @@ if (localStorage.token) {
 
 const App = () => (
     <ErrorBoundary>
-        {/*<HttpsRedirect>*/}
+        <HttpsRedirect>
         <Provider store={store}>
             <Router>
                 <div>
@@ -29,7 +29,7 @@ const App = () => (
                 </div>
             </Router>
         </Provider>
-        {/* </HttpsRedirect> */}
+        </HttpsRedirect>
     </ErrorBoundary>
 )
 
