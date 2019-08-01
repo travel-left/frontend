@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logout } from '../util/redux/actions/auth'
+import { logout } from '../redux/actions/auth'
 
 class Navbar extends Component {
     signout = e => {
