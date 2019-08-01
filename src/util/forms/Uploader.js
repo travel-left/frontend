@@ -34,13 +34,15 @@ export default class Uploader extends Component {
                             <input
                                 id={name}
                                 name={name}
-                                value=''
+                                value=""
                                 type="file"
                                 onChange={async event => {
-                                    let docUrl = await this.handleUpload(event.currentTarget.files[0])
+                                    let docUrl = await this.handleUpload(
+                                        event.currentTarget.files[0]
+                                    )
                                     setFieldValue(name, docUrl)
                                 }}
-                                className='d-none'
+                                className="d-none"
                             />
                             upload
                         </label>
@@ -48,7 +50,7 @@ export default class Uploader extends Component {
                 </div>
                 <div className="col-4">
                     {spinner}
-                    {!this.state.uploading &&
+                    {!this.state.uploading && (
                         <img
                             src={this.state.fileUrl}
                             alt={''}
@@ -56,20 +58,18 @@ export default class Uploader extends Component {
                             height={200}
                             width={200}
                         />
-                    }
+                    )}
                 </div>
             </div>
         )
     }
 }
 
-const LoadingSpinner = () => (
-    <i className="fa fa-spinner fa-spin" />
-)
+const LoadingSpinner = () => <i className="fa fa-spinner fa-spin" />
 
 const readFileAsync = file => {
     return new Promise((resolve, reject) => {
-        let reader = new FileReader();
+        let reader = new FileReader()
         reader.onloadend = () => {
             resolve(reader.result)
         }

@@ -31,7 +31,7 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "@travelleft/prettier-config": "^1.2.0"
+    "@travelleft/prettier-config": "^2.0.0"
   },
   "scripts": {
     "build": "npx react-scripts build",

@@ -21,7 +21,13 @@ export default class FileUploader extends Component {
 
         return (
             <label className="btn btn-primary hover" htmlFor={id}>
-                <input type="file" className="d-none" onChange={this.handleUpload} accept={accept} id={id} />
+                <input
+                    type="file"
+                    className="d-none"
+                    onChange={this.handleUpload}
+                    accept={accept}
+                    id={id}
+                />
                 Upload
             </label>
         )

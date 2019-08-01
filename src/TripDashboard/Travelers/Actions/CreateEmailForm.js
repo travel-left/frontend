@@ -34,8 +34,8 @@ export default function CreateEmailForm({ submit, travelers }) {
                 </div>
             </p>
         ) : (
-                undefined
-            )
+            undefined
+        )
     )
 
     return (
@@ -46,7 +46,7 @@ export default function CreateEmailForm({ submit, travelers }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <div className='mb-4'>
+            <div className="mb-4">
                 <h5>Selected travelers</h5>
                 <div className="row">
                     <div className="col ">Name</div>

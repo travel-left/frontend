@@ -3,7 +3,11 @@ import * as Yup from 'yup'
 import ModalForm from '../util/forms/ModalForm'
 import Uploader from '../util/forms/Uploader'
 import FormField from '../util/forms/FormField'
-import { dateValidator, nameValidator, descriptionValidator } from '../util/validators'
+import {
+    dateValidator,
+    nameValidator,
+    descriptionValidator
+} from '../util/validators'
 
 export default function AddTrip({ submit }) {
     const initialValues = {
@@ -28,12 +32,38 @@ export default function AddTrip({ submit }) {
     }
 
     return (
-        <ModalForm button={button} header="Create your new trip" validationSchema={schema} initialValues={initialValues} submit={submit}>
+        <ModalForm
+            button={button}
+            header="Create your new trip"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <FormField name="name" label="Name" placeholder="Austrailia" />
-            <FormField name="image" label="Upload an image" component={Uploader} />
-            <FormField name="dateStart" label="Trip Start Date" placeholder={initialValues.dateStart} type="date" />
-            <FormField name="dateEnd" label="Trip End Date" placeholder={initialValues.dateEnd} type="date" />
-            <FormField name="description" label="Trip Description" component="textarea" placeholder="A description for your trip" className="d-block" />
+            <FormField
+                name="image"
+                label="Upload an image"
+                component={Uploader}
+            />
+            <FormField
+                name="dateStart"
+                label="Trip Start Date"
+                placeholder={initialValues.dateStart}
+                type="date"
+            />
+            <FormField
+                name="dateEnd"
+                label="Trip End Date"
+                placeholder={initialValues.dateEnd}
+                type="date"
+            />
+            <FormField
+                name="description"
+                label="Trip Description"
+                component="textarea"
+                placeholder="A description for your trip"
+                className="d-block"
+            />
         </ModalForm>
     )
 }
