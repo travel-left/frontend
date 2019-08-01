@@ -5,6 +5,7 @@ import SelectField from '../../../util/forms/SelectField'
 import Uploader from '../../../util/forms/Uploader'
 import ModalForm from '../../../util/forms/ModalForm'
 import { schema, types, timezones } from './EventHelpers'
+import { FieldArray } from 'formik'
 
 export default function CreateEventForm({ submit, initDay }) {
     const initialValues = {
@@ -14,8 +15,12 @@ export default function CreateEventForm({ submit, initDay }) {
         type: 'Category',
         description: '',
         image: '',
-        link: '',
-        linkDescription: '',
+        links: [
+            {
+                link: '',
+                description: ''
+            }
+        ],
         address: '',
         dateStart: initDay.split('T')[0],
         timeStart: '09:00',
@@ -94,23 +99,51 @@ export default function CreateEventForm({ submit, initDay }) {
                     />
                 </div>
             </div>
-            <div className="form-row">
-                <div className="col-6">
-                    <FormField
-                        name="link"
-                        placeholder="https://travel-left.com"
-                        type="link"
-                        label="Link"
-                    />
-                </div>
-                <div className="col-6">
-                    <FormField
-                        name="linkDescription"
-                        placeholder="Link description"
-                        label="Link description"
-                    />
-                </div>
-            </div>
+            <FieldArray name="links">
+                {({ form, push, remove }) => (
+                    <>
+                        {form.values.links.map((_link, index) => (
+                            <div key={index} className="form-row">
+                                <div className="col-5">
+                                    <FormField
+                                        name={`links.${index}.link`}
+                                        type="url"
+                                        label="Link"
+                                    />
+                                </div>
+
+                                <div className="col-5">
+                                    <FormField
+                                        name={`links.${index}.description`}
+                                        label="Description"
+                                    />
+                                </div>
+
+                                <div className="col-2 mt-5">
+                                    <button
+                                        type="button"
+                                        className="d-block btn btn-primary"
+                                        onClick={() => remove(index)}
+                                    >
+                                        -
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                        <div className="form-row">
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-lg mt-3"
+                                onClick={() =>
+                                    push({ link: '', description: '' })
+                                }
+                            >
+                                +
+                            </button>
+                        </div>
+                    </>
+                )}
+            </FieldArray>
         </ModalForm>
     )
 }

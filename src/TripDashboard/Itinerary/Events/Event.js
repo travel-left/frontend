@@ -78,6 +78,20 @@ class Event extends Component {
             <p className="card-text">{'Address: ' + event.address}</p>
         ) : null
 
+        const links = event.links
+            ? event.links.map((e, i) => (
+                  <a
+                      key={i}
+                      href={e.link}
+                      className="card-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                      {e.description}
+                  </a>
+              ))
+            : null
+
         return (
             <div className="card mb-3 border-0 shadow px-3 py-1 rounded-lg animated fadeIn">
                 <div className="row">
@@ -99,14 +113,7 @@ class Event extends Component {
                                 </h6>
                                 {/* <Image diameter="100px" src={event.image} /> */}
                                 <p className="card-text">{event.description}</p>
-                                <a
-                                    href={event.link}
-                                    className="card-link"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {event.linkDescription}
-                                </a>
+                                {links}
                                 <div className="mt-auto">{updater}</div>
                             </div>
                             <div className="col-md-6">
