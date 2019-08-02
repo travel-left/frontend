@@ -41,17 +41,6 @@ const Dashboard = ({ currentTrip, currentUser }) => {
                     />
                 )}
             />
-            <Route
-                exact
-                path="/trips/:tripId/share"
-                render={routeProps => (
-                    <Share
-                        {...routeProps}
-                        currentTrip={currentTrip}
-                        currentUser={currentUser}
-                    />
-                )}
-            />
         </Switch>
     )
 }
