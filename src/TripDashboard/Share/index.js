@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
 import { apiCall } from '../../util/api'
-import DayList from '../Itinerary/Days'
-import Event from '../Itinerary/Events/Event'
+import Image from '../../util/otherComponents/Image'
 import Map from '../Itinerary/Events/Map'
 import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
 import { getIcon } from '../../util/file-icons'
@@ -147,7 +146,6 @@ class Share extends Component {
                             >
                                 <div className="row d-flex justify-content-around">
                                     {documentList}
-                                    {documentList}
                                 </div>
                             </div>
                         )}
@@ -161,10 +159,8 @@ class Share extends Component {
                                 id="content"
                                 style={{ marginTop: '5vh', height: '70vh' }}
                             >
-                                <div className="row">
-                                    <div className="col-12 d-flex flex-column align-items-center">
-                                        {contactsList}
-                                    </div>
+                                <div className="row d-flex justify-content-around">
+                                    {contactsList}
                                 </div>
                             </div>
                         )}
@@ -316,21 +312,17 @@ const ShareDocument = ({ doc }) => {
 
 const ShareContact = ({ contact }) => {
     return (
-        <div
-            className="card mb-3 border-0 shadow px-3 rounded-lg animated fadeIn"
-            style={{ width: '100%' }}
-        >
-            <div className="row">
-                <div className="card-body">
-                    <h5 className="card-title">
-                        <strong> {contact.name}</strong>
-                    </h5>
-                    <div className="row">
-                        <div className="col-md-6 d-flex flex-column">
-                            <p className="card-text">{contact.number}</p>
-                            <p className="card-text">{contact.email}</p>
-                        </div>
-                    </div>
+        <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
+            <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-between">
+                    <Image src={contact.image} diameter="65px" />
+                    <strong className="h6 mt-3"> {contact.name}</strong>
+                    <p className="card-text" style={{ fontSize: '.6em' }}>
+                        {contact.number}
+                    </p>
+                    <p className="card-text" style={{ fontSize: '.6em' }}>
+                        {contact.email}
+                    </p>
                 </div>
             </div>
         </div>
