@@ -5,6 +5,7 @@ import DayList from '../Itinerary/Days'
 import Event from '../Itinerary/Events/Event'
 import Map from '../Itinerary/Events/Map'
 import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
+import { getIcon } from '../../util/file-icons'
 
 class Share extends Component {
     tripId = this.props.match.params.tripId
@@ -144,10 +145,9 @@ class Share extends Component {
                                 id="content"
                                 style={{ marginTop: '5vh', height: '70vh' }}
                             >
-                                <div className="row">
-                                    <div className="col-12 d-flex flex-column align-items-center">
-                                        {documentList}
-                                    </div>
+                                <div className="row d-flex justify-content-around">
+                                    {documentList}
+                                    {documentList}
                                 </div>
                             </div>
                         )}
@@ -290,29 +290,24 @@ class ShareEvent extends Component {
 }
 
 const ShareDocument = ({ doc }) => {
+    const linkImg = getIcon(doc.link)
     return (
-        <div
-            className="card mb-3 border-0 shadow px-3 rounded-lg animated fadeIn"
-            style={{ width: '100%' }}
-        >
-            <div className="row">
-                <div className="card-body">
-                    <h5 className="card-title">
-                        <strong> {doc.name}</strong>
-                    </h5>
-                    <div className="row">
-                        <div className="col-md-6 d-flex flex-column">
-                            <p className="card-text">{doc.description}</p>
-                            <a
-                                href={doc.link}
-                                className="card-link"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Open me!
-                            </a>
-                        </div>
-                    </div>
+        <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
+            <div className="card-body">
+                <div className="d-flex flex-column align-items-center justify-content-between">
+                    <a
+                        className="hove d-flex alighn-self-center py-1"
+                        href={doc.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            src={linkImg}
+                            alt=""
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </a>
+                    <strong className="text-center"> {doc.name}</strong>
                 </div>
             </div>
         </div>
