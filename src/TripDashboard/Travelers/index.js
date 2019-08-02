@@ -69,7 +69,8 @@ class Travelers extends Component {
           ...traveler,
           selected: false
         };
-      })
+      }),
+      selectedTraveler: travelers[0]
     });
   };
 
