@@ -8,8 +8,9 @@ import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
 import TripDashboard from './TripDashboard'
+import Share from './TripDashboard/Share/index'
 
-const Main = ({ authUser }) => {
+const Main = ({ authUser, currentTrip, currentUser }) => {
     return (
         <Switch>
             <Route
@@ -41,7 +42,8 @@ const Main = ({ authUser }) => {
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        currentTrip: state.currentTrip
     }
 }
 
