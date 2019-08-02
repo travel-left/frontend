@@ -51,7 +51,7 @@ export const schema = Yup.object().shape({
     tzEnd: Yup.string('Time zone must be a string'),
     category: Yup.string('Category must be a string'),
     description: descriptionValidator,
-    image: fileValidator,
+    // image: fileValidator,
     //link: Yup.string('Link must be a string'),
     //linkDescription: Yup.string('Link text must be a string'),
     dateStart: dateValidator,

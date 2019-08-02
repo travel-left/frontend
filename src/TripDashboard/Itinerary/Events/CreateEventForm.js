@@ -14,7 +14,13 @@ export default function CreateEventForm({ submit, initDay }) {
         tzEnd: moment.tz.guess(),
         type: 'Category',
         description: '',
-        image: '',
+        documents: [
+            {
+                name: '',
+                link: '',
+                description: ''
+            }
+        ],
         links: [
             {
                 link: '',
@@ -90,19 +96,10 @@ export default function CreateEventForm({ submit, initDay }) {
                 label="Address"
                 placeholder="1 World Way, Los Angeles, CA, US"
             />
-            <div className="form-row">
-                <div className="col-10">
-                    <FormField
-                        name="image"
-                        component={Uploader}
-                        label="Image"
-                    />
-                </div>
-            </div>
             <FieldArray name="links">
                 {({ form, push, remove }) => (
                     <>
-                        {form.values.links.map((_link, index) => (
+                        {form.values.links.map((_document, index) => (
                             <div key={index} className="form-row">
                                 <div className="col-5">
                                     <FormField
@@ -136,6 +133,64 @@ export default function CreateEventForm({ submit, initDay }) {
                                 className="btn btn-primary btn-lg mt-3"
                                 onClick={() =>
                                     push({ link: '', description: '' })
+                                }
+                            >
+                                +
+                            </button>
+                        </div>
+                    </>
+                )}
+            </FieldArray>
+            <FieldArray name="documents">
+                {({ form, push, remove }) => (
+                    <>
+                        {form.values.documents.map((_doc, index) => (
+                            <>
+                                <div key={index * 2} className="form-row">
+                                    <div className="col-4">
+                                        <FormField
+                                            name={`documents.${index}.name`}
+                                            label="Document Name"
+                                        />
+                                    </div>
+
+                                    <div className="col-8">
+                                        <FormField
+                                            name={`documents.${index}.description`}
+                                            label="Document Description"
+                                        />
+                                    </div>
+                                </div>
+                                <div key={index * 2 + 1} className="form-row">
+                                    <div className="col-10">
+                                        <FormField
+                                            name="image"
+                                            component={Uploader}
+                                            label="Upload a Document"
+                                        />
+                                    </div>
+                                    <div className="col-2 mt-5">
+                                        <button
+                                            type="button"
+                                            className="d-block btn btn-primary"
+                                            onClick={() => remove(index)}
+                                        >
+                                            -
+                                        </button>
+                                    </div>
+                                </div>
+                            </>
+                        ))}
+                        <div key="b" className="form-row">
+                            <button
+                                type="button"
+                                className="btn btn-primary btn-lg mt-3"
+                                onClick={() =>
+                                    push({
+                                        link: '',
+                                        description: '',
+                                        name: ''
+                                    })
                                 }
                             >
                                 +
