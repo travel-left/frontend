@@ -17,7 +17,7 @@ class Share extends Component {
         coordinators: [],
         documents: [],
         contacts: [],
-        selectedDay: {},
+        selectedDay: '',
         route: 'itinerary'
     }
     constructor(props) {
@@ -49,7 +49,7 @@ class Share extends Component {
             if (!days.includes(event.dateStart)) days.push(event.dateStart)
         })
 
-        this.setState({ events, days })
+        this.setState({ events, days, selectedDay: days[0] })
     }
 
     getDocuments = async () => {
@@ -60,6 +60,12 @@ class Share extends Component {
         this.setState({ documents })
     }
 
+    setSelectedDay = day => {
+        this.setState({
+            selectedDay: day
+        })
+    }
+
     route = route => {
         this.setState({ route })
     }
@@ -67,8 +73,12 @@ class Share extends Component {
     render() {
         const { days, events, selectedDay, documents, trip } = this.state
         const dayList = days.map(day => {
+            let activeClass = day === selectedDay ? 'text-primary' : ''
             return (
-                <div className="mx-4 d-flex flex-column align-items-center">
+                <div
+                    className={`mx-4 d-flex flex-column align-items-center hover ${activeClass}`}
+                    onClick={() => this.setSelectedDay(day)}
+                >
                     <span>{moment(day).format('dd')}</span>
                     <span className="h6">{moment(day).format('DD')}</span>
                 </div>
@@ -76,7 +86,9 @@ class Share extends Component {
         })
 
         const eventList = events.map(event => {
-            return <ShareEvent event={event} />
+            if (event.dateStart === selectedDay) {
+                return <ShareEvent event={event} />
+            }
         })
 
         const documentList = documents.map(doc => {
@@ -111,12 +123,13 @@ class Share extends Component {
                                 <div
                                     className="row px-0 "
                                     style={{
-                                        marginTop: '5vh',
-                                        height: '10vh'
+                                        marginTop: '10vh',
+                                        height: '10vh',
+                                        marginBottom: '5vh'
                                     }}
                                 >
                                     <div className="col" />
-                                    <div className="col-10 d-flex justify-content-around">
+                                    <div className="col-10 d-flex flex-wrap justify-content-start">
                                         {dayList}
                                     </div>
                                     <div className="col" />
@@ -142,7 +155,7 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ marginTop: '5vh', height: '70vh' }}
+                                style={{ marginTop: '10vh', height: '70vh' }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {documentList}
@@ -157,7 +170,7 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ marginTop: '5vh', height: '70vh' }}
+                                style={{ marginTop: '10vh', height: '70vh' }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {contactsList}
