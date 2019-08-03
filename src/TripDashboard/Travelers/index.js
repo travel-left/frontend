@@ -79,7 +79,6 @@ class Travelers extends Component {
     }
 
     addTravelersCSV = async travelers => {
-        console.log(travelers)
         await apiCall(
             'post',
             `/api/trips/${this.tripId}/travelers/csv`,

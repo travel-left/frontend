@@ -130,7 +130,7 @@ export default function UpdateEventForm(props) {
             <FieldArray name="documents">
                 {({ form, push, remove }) => (
                     <>
-                        {form.values.documents.map((_doc, index) => (
+                        {form.values.documents.map((doc, index) => (
                             <>
                                 <div key={index * 2} className="form-row">
                                     <div className="col-4">
@@ -159,7 +159,9 @@ export default function UpdateEventForm(props) {
                                         <button
                                             type="button"
                                             className="d-block btn btn-primary"
-                                            onClick={() => remove(index)}
+                                            onClick={() => {
+                                                return remove(index)
+                                            }}
                                         >
                                             -
                                         </button>

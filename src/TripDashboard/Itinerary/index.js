@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DayList from './Days'
 import EventList from './Events'
-import { apiCall } from '../../util/api'
+import { apiCall, genericSubUpdater } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 // import Alert from '../../util/otherComponents/Alert'
@@ -72,6 +72,24 @@ class Itinerary extends Component {
         updateObject.dtEnd = `${updateObject.dateEnd}T${
             updateObject.timeEnd
         }:00`
+
+        const originalEvent = this.state.events.find(
+            e => e._id.toString() === eventId
+        )
+
+        updateObject = await genericSubUpdater(
+            `/api/trips/${this.tripId}/events/${eventId}`,
+            originalEvent,
+            updateObject,
+            'links'
+        )
+        updateObject = await genericSubUpdater(
+            `/api/trips/${this.tripId}/events/${eventId}`,
+            originalEvent,
+            updateObject,
+            'documents'
+        )
+
         await apiCall(
             'put',
             `/api/trips/${this.tripId}/events/${eventId}`,

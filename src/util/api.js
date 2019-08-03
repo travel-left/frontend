@@ -22,3 +22,37 @@ export const apiCall = (method, path, data) => {
             })
     })
 }
+
+export const genericSubUpdater = async (
+    baseUrl,
+    originalObject,
+    updateObject,
+    type
+) => {
+    const oldChildren = originalObject[type]
+    const newChildren = updateObject[type]
+    await Promise.all(
+        oldChildren.map(async oldChild => {
+            // In oldChildren but not newChildren, needs to be removed
+            if (!newChildren.includes(oldChild)) {
+                await apiCall('delete', `${baseUrl}/${type}/${oldChild._id}`)
+            }
+        })
+    )
+
+    const oldChildrenIds = oldChildren.map(o => o._id)
+
+    await Promise.all(
+        newChildren.map(async child => {
+            // Link does not have id or not in oldChilds, therefore must be added
+            if (!child._id || !oldChildrenIds.includes(child._id)) {
+                await apiCall('post', `${baseUrl}/${type}`, child)
+            } else if (!oldChildren.includes(child)) {
+                await apiCall('put', `${baseUrl}/${type}/${child._id}`, child)
+            }
+        })
+    )
+
+    updateObject[type] = []
+    return updateObject
+}

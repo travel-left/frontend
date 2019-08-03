@@ -6,13 +6,11 @@ import { ErrorMessage, FieldArray, Field, Form } from 'formik'
  * @param {{name: string!, properties: [{name: string!, placeholder: string! label: string!, type: string, component: Object, render: object}]!}} props Data passed in from the parent element
  */
 const ArrayField = ({ name, properties }) => {
-    console.log(name, properties)
     return (
         <div className="mt-2">
             <FieldArray
                 name={name}
                 conponent={({ push, remove, form }) => {
-                    console.log(name, properties)
                     const labels = properties.map(p =>
                         p.label ? (
                             <label

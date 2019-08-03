@@ -14,7 +14,6 @@ class Event extends Component {
 
     render() {
         let { event } = this.props
-        console.log(event)
         let iconString,
             color = ''
         switch (event.type.toLowerCase()) {
