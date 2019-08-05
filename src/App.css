@@ -33,3 +33,35 @@ body {
     background-color: #0F61D8;
     border-color: #0F61D8;
 }
+
+#content {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#footer {
+    width: 100%;
+    bottom: 0;
+    background-color: #0F61D8;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: block;
+    border-radius: 1px;
+    box-shadow: 0 0 0 3px #111
+}
+
+.iphone6 {
+    width: 375px;
+    height: 667px;
+    padding: 105px 24px;
+    background: #d9dbdc;
+    border-radius: 56px;
+    box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    box-sizing: content-box !important;
+}
+

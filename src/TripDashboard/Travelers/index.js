@@ -69,7 +69,8 @@ class Travelers extends Component {
                     ...traveler,
                     selected: false
                 }
-            })
+            }),
+            selectedTraveler: travelers[0]
         })
     }
 
@@ -79,7 +80,6 @@ class Travelers extends Component {
     }
 
     addTravelersCSV = async travelers => {
-        console.log(travelers)
         await apiCall(
             'post',
             `/api/trips/${this.tripId}/travelers/csv`,
@@ -245,24 +245,22 @@ class Travelers extends Component {
         }
 
         let travelerInfo = this.state.selectedTraveler ? (
-            <div className="col-md-4 shadow px-0 bg-light">
+            <div className="col-md- shadow px-0">
                 <TravelerInfo
                     traveler={this.state.selectedTraveler}
                     update={this.updateTraveler}
                 />
             </div>
         ) : null
-        const selectedTravelerClass = this.state.selectedTraveler
-            ? 'col-md-8'
-            : 'col-12'
+
         return (
             <div className="mt-3 mx-3">
                 {/* <div className="row">
                     <div className="col-md-12 d-none d-md-block">{alert}</div>
                 </div> */}
                 <div className="row">
-                    <div className={`${selectedTravelerClass} mt-4 pr-5`}>
-                        <div className="row justify-content-between mb-4 ml-2">
+                    <div className="col-md-12">
+                        <div className="row justify-content-between mb-4 ">
                             <h2 className="text-black d-inline">
                                 Manage Your Travelers
                             </h2>
@@ -316,9 +314,9 @@ class Travelers extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-8">
                                 <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
-                                    <div className="col-md-3">
+                                    <div className="col-md-3 d-flex">
                                         <Checkbox
                                             onChange={this.toggleAll}
                                             className="ml-3 h6"
@@ -329,19 +327,14 @@ class Travelers extends Component {
                                     <div className="d-none d-md-flex col-md-2 h6">
                                         NAME
                                     </div>
-                                    <div className="col-4 col-md-3 h6">
+                                    <div className="col-4 col-md-4 h6">
                                         EMAIL
                                     </div>
                                     <div className="col-4 col-md-2 h6">
                                         {' '}
                                         STATUS
                                     </div>
-                                    <div className="col-4 col-md-1" />
                                 </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-12">
                                 <TravelerList
                                     items={filteredTravelers}
                                     C={Traveler}
@@ -352,9 +345,9 @@ class Travelers extends Component {
                                     doubleClick={this.setSelectedTraveler}
                                 />
                             </div>
+                            <div className="col-md-4">{travelerInfo}</div>
                         </div>
                     </div>
-                    {travelerInfo}
                 </div>
             </div>
         )

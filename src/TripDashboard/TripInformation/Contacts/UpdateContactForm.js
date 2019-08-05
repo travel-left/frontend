@@ -14,7 +14,6 @@ export default function UpdateCoordinatorForm(props) {
             .min(2, 'Please enter a longer name')
             .max(50, 'Please enter a shorter name')
             .required('Please enter a name'),
-        image: Yup.string().required('Please upload an image'),
         email: Yup.string().email('please enter a valid email')
     })
 

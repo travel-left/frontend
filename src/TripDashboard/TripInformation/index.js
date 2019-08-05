@@ -52,10 +52,10 @@ export default class TripInformation extends Component {
     // }
 
     updateTrip = async updateObject => {
-        await apiCall('put', `/api/trips/${this.currentTripId}`, updateObject)
-        let updatedTrip = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}`
+        const updatedTrip = await apiCall(
+            'put',
+            `/api/trips/${this.currentTripId}`,
+            updateObject
         )
         this.props.setCurrentTrip(updatedTrip)
     }
@@ -74,11 +74,9 @@ export default class TripInformation extends Component {
     }
 
     createCoordinator = async coordinator => {
-        coordinator.organizationId = this.props.currentUser.organizationId
-        coordinator.trip = this.props.currentTrip._id
-        coordinator.password = 'password'
-
-        await apiCall('post', '/api/auth/signup', coordinator)
+        coordinator.organization = this.props.currentUser.organization
+        coordinator.password = 'goofyberry453'
+        await apiCall('post', '/api/auth/signup', { coordinator, tripId: this.currentTripId })
         this.getCoordinators()
     }
 

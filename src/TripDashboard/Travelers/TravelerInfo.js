@@ -1,51 +1,61 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import UpdateTravelerForm from "./Actions/UpdateTravelerForm";
+import Image from "../../util/otherComponents/Image";
 
 export default class TravelerInfo extends Component {
-    render() {
-        let {
-            name,
-            image,
-            email,
-            status,
-            phone,
-            personalNotes
-        } = this.props.traveler
+  handleRemove = () => {
+    this.props.remove(this.props._id);
+  };
+  handleUpdate = updateObject => {
+    this.props.update(this.props._id, updateObject);
+  };
+  render() {
+    let {
+      name,
+      image,
+      email,
+      status,
+      phone,
+      personalNotes
+    } = this.props.traveler;
 
-        return (
-            <div className="pb-3 bg-light">
-                <img
-                    src={image}
-                    className="card-img-top border-0 mb-4 px-2"
-                    alt="..."
-                    style={{ backgroundColor: '#FBFBFB' }}
-                />
-                <div className="container bg-light">
-                    <div className="row">
-                        <div className="col-6">
-                            <span className="h4">{name}</span>
-                        </div>
-                        <div className="col-6">
-                            <h5 className="text-light ml-0">
-                                Status:
-                                <span className="badge badge-primary badge-pill h5 align-self-center ml-2 bg-secondary">
-                                    {status}{' '}
-                                </span>
-                                <i className="far fa-edit ml-2" />
-                            </h5>
-                        </div>
-                    </div>
-                    <p className="py-3 ">
-                        Personal notes:{' '}
-                        <span className="text-black-50">{personalNotes}</span>
-                    </p>
-                    <p>
-                        Email: <span className="text-black-50">{email}</span>
-                    </p>
-                    <p>
-                        Phone: <span className="text-black-50">{phone}</span>
-                    </p>
-                </div>
+    return (
+      <div className="container pt-3 pb-3">
+        <div className="row d-flex flex-column justify-content-center align-items-center">
+          <Image src={image} diameter="150px" />
+          <span className="h4 mt-3">{name}</span>
+        </div>
+        <div className="row">
+          <div className="container">
+            <div className="col-md-12 mt-3">
+              <div className="row">Email</div>
+              <div className="row text-primary">{email}</div>
             </div>
-        )
-    }
+            <div className="col-md-12 mt-3">
+              <div className="row">Phone</div>
+              <div className="row text-primary">{phone}</div>
+            </div>
+            <div className="col-md-12 mt-3">
+              <div className="row">Status</div>
+              <div className="row text-primary">
+                {" "}
+                <span className="badge badge-primary badge-pill h5 align-self-center bg-secondary">
+                  {status}{" "}
+                </span>
+              </div>
+            </div>
+            <div className="col-md-12 mt-3">
+              <div className="row">Notes</div>
+              <div className="row text-black-50">{personalNotes}</div>
+            </div>
+            <UpdateTravelerForm
+              {...this.props}
+              remove={this.handleRemove}
+              submit={this.handleUpdate}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }

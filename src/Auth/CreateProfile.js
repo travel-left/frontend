@@ -17,11 +17,12 @@ export default ({ onAuth, history }) => {
     const initialValues = {
         name: state.name,
         email: state.email,
+        password: state.password,
         title: '',
         phone: '',
-        img: '',
+        image: '',
         organization: {
-            img: '',
+            image: '',
             name: '',
             website: ''
         }
@@ -32,16 +33,14 @@ export default ({ onAuth, history }) => {
         name: nameValidator,
         title: titleValidator,
         phone: phoneValidator,
-        img: fileValidator,
         organization: Validator({
-            img: fileValidator,
             name: nameValidator,
             website: fileValidator
         })
     })
 
     return (
-        <>
+        <div className='container'>
             <h1 className="display-4 text-dark font-weight-bold py-4 mx-5">
                 Let's set up your profile and company!
             </h1>
@@ -51,7 +50,16 @@ export default ({ onAuth, history }) => {
                 validationSchema={schema}
                 onSubmit={async (values, actions) => {
                     try {
-                        await onAuth('signup?newOrg=true', values)
+                        const coordinator = {
+                            email: values.email,
+                            image: values.image,
+                            name: values.name,
+                            phone: values.phone,
+                            title: values.title,
+                            password: values.password
+                        }
+                        const { organization } = values
+                        await onAuth('signup?newOrg=true', { coordinator, organization })
                         history.push('/')
                     } catch (err) {
                         console.error(err)
@@ -109,19 +117,20 @@ export default ({ onAuth, history }) => {
                                         placeholder="www.travel-left.com"
                                         type="url"
                                     />
-                                    <button
-                                        className="btn btn-lg btn-primary float-right m-4"
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                    >
-                                        SAVE
-                                    </button>
+
                                 </div>
                             </div>
+                            <button
+                                className="btn btn-lg btn-primary float-right m-4"
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
+                                SAVE
+                                    </button>
                         </Form>
                     )
                 }}
             />
-        </>
+        </div>
     )
 }
