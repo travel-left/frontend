@@ -52,10 +52,10 @@ export default class TripInformation extends Component {
     // }
 
     updateTrip = async updateObject => {
-        await apiCall('put', `/api/trips/${this.currentTripId}`, updateObject)
-        let updatedTrip = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}`
+        const updatedTrip = await apiCall(
+            'put',
+            `/api/trips/${this.currentTripId}`,
+            updateObject
         )
         this.props.setCurrentTrip(updatedTrip)
     }

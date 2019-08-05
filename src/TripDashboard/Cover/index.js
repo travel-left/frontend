@@ -17,8 +17,11 @@ class Cover extends Component {
     }
     updateTrip = async updateObject => {
         try {
-            await apiCall('put', `/api/trips/${this.tripId}`, updateObject)
-            const data = await apiCall('get', `/api/trips/${this.tripId}`)
+            const data = await apiCall(
+                'put',
+                `/api/trips/${this.tripId}`,
+                updateObject
+            )
             return this.props.setCurrentTrip(data)
         } catch (err) {}
     }
