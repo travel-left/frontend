@@ -27,7 +27,7 @@ export default class Auth extends Component {
                 history.push('/createprofile', formInfo)
             } else {
                 const newCoordinator = createNewCoordinator(formInfo)
-                await onAuth('signup', newCoordinator)
+                await onAuth('signup', { coordinator: newCoordinator })
                 history.push('/')
             }
         } catch (err) {
@@ -55,8 +55,8 @@ export default class Auth extends Component {
             type === 'sign in' ? (
                 <SignIn error={error} submit={this.login} />
             ) : (
-                <SignUp error={error} submit={this.signUp} />
-            )
+                    <SignUp error={error} submit={this.signUp} />
+                )
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-6 d-flex justify-content-center">
@@ -73,16 +73,10 @@ export default class Auth extends Component {
 const createNewCoordinator = formInfo => {
     const { name, email, password, orgId } = formInfo
 
-    const names = name.split(' ')
-
-    const [fName] = names
-    const lName = names.length > 1 ? names[names.length - 1] : ''
-
     return {
-        firstName: fName,
-        lastName: lName,
-        email: email,
-        password: password,
-        organizationId: orgId
+        name,
+        email,
+        password,
+        organization: orgId
     }
 }
