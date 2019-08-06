@@ -106,6 +106,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                         name={`links.${index}.link`}
                                         type="url"
                                         label="Link"
+                                        placeholder="https://yourlink.com"
                                     />
                                 </div>
 
@@ -113,31 +114,33 @@ export default function CreateEventForm({ submit, initDay }) {
                                     <FormField
                                         name={`links.${index}.description`}
                                         label="Description"
+                                        placeholder="Name for link"
                                     />
                                 </div>
 
                                 <div className="col-2 mt-5">
                                     <button
                                         type="button"
-                                        className="d-block btn btn-primary"
+                                        className="btn btn-sm btn-danger"
+                                        placeholder="linky boi"
                                         onClick={() => remove(index)}
                                     >
                                         -
                                     </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary btn-sm ml-1"
+                                        key="b"
+                                        placeholer="link for your boi"
+                                        onClick={() =>
+                                            push({ link: '', description: '' })
+                                        }
+                                    >
+                                        +
+                            </button>
                                 </div>
                             </div>
                         ))}
-                        <div className="form-row">
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-lg mt-3"
-                                onClick={() =>
-                                    push({ link: '', description: '' })
-                                }
-                            >
-                                +
-                            </button>
-                        </div>
                     </>
                 )}
             </FieldArray>
@@ -151,6 +154,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                         <FormField
                                             name={`documents.${index}.name`}
                                             label="Document Name"
+                                            placeholder="A form to fill out"
                                         />
                                     </div>
 
@@ -158,6 +162,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                         <FormField
                                             name={`documents.${index}.description`}
                                             label="Document Description"
+                                            placeholder="Please fill out"
                                         />
                                     </div>
                                 </div>
@@ -172,30 +177,31 @@ export default function CreateEventForm({ submit, initDay }) {
                                     <div className="col-2 mt-5">
                                         <button
                                             type="button"
-                                            className="d-block btn btn-primary"
+                                            className="btn btn-sm btn-danger"
                                             onClick={() => remove(index)}
                                         >
                                             -
                                         </button>
+                                        <button
+                                            key="b"
+                                            type="button"
+                                            className="btn btn-primary btn-sm ml-1"
+                                            onClick={() =>
+                                                push({
+                                                    link: '',
+                                                    description: '',
+                                                    name: ''
+                                                })
+                                            }
+                                        >
+                                            +
+                            </button>
+
                                     </div>
                                 </div>
                             </>
                         ))}
-                        <div key="b" className="form-row">
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-lg mt-3"
-                                onClick={() =>
-                                    push({
-                                        link: '',
-                                        description: '',
-                                        name: ''
-                                    })
-                                }
-                            >
-                                +
-                            </button>
-                        </div>
+
                     </>
                 )}
             </FieldArray>
