@@ -9,6 +9,7 @@ import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
 import TripDashboard from './TripDashboard'
 import Share from './TripDashboard/Share/index'
+import NewPassword from './Auth/NewPassword'
 
 const Main = ({ authUser, currentTrip, currentUser }) => {
     return (
@@ -31,6 +32,13 @@ const Main = ({ authUser, currentTrip, currentUser }) => {
                 exact
                 path="/createprofile"
                 render={props => <CreateProfile onAuth={authUser} {...props} />}
+            />
+            <Route
+                exact
+                path="/newpassword"
+                render={props => (
+                    <NewPassword coordinatorId={currentUser._id} {...props} />
+                )}
             />
             <Route exact path="/" component={withAuth(Trips)} />
             <Route exact path="/trips" component={withAuth(Trips)} />

@@ -13,7 +13,7 @@ export const setAuthorizationToken = token => {
     setTokenHeader(token)
 }
 
-export const authUser = (type, userData) => {
+export const authUser = (type, userData, history) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             return apiCall('post', `/api/auth/${type}`, userData)
@@ -21,6 +21,11 @@ export const authUser = (type, userData) => {
                     localStorage.setItem('token', token)
                     setAuthorizationToken(token)
                     dispatch(setCurrentUser(user))
+                    if (user.lastChangedPassword) {
+                        history.push('/')
+                    } else {
+                        history.push('/newpassword')
+                    }
                     resolve()
                 })
                 .catch(err => {
