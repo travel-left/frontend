@@ -35,12 +35,12 @@ class Trips extends Component {
     }
 
     setStatusesAndState = trips => {
-        const newStatusCount = { ...this.state.tripStatusCounts }
-        trips.forEach(trip => {
-            newStatusCount[trip.status]++
-        })
+        const { tripStatusCounts } = this.state
+        for (const trip of trips) {
+            tripStatusCounts[trip.status]++
+        }
         this.filterTripsAndSetState(trips, 'ALL TRIPS', {
-            tripStatusCounts: newStatusCount
+            tripStatusCounts
         })
     }
 
@@ -62,22 +62,15 @@ class Trips extends Component {
     // }
 
     addTrip = async trip => {
-        let createdTrip = await apiCall('post', '/api/trips', trip)
-        const { trips, filteredTrips, filter } = this.state
+        const createdTrip = await apiCall('post', '/api/trips', trip)
+        const { trips, filter, tripStatusCounts } = this.state
         trips.push(createdTrip)
-
-        if (createdTrip.status === filter || filter === 'All Trips') {
-            filteredTrips.push(createdTrip)
-        }
-        let newStatusCount = { ...this.state.tripStatusCounts }
-        newStatusCount[createdTrip.status]++
-        this.setState({
+        tripStatusCounts[createdTrip.status]++
+        this.filterTripsAndSetState(trips, filter, {
             trips: trips,
-            filteredTrips: filteredTrips,
             selectedTrip: createdTrip,
-            tripStatusCounts: newStatusCount
+            tripStatusCounts
         })
-        this.setSelectedTrip(createdTrip._id)
     }
 
     archiveTrip = async id => {
@@ -115,7 +108,13 @@ class Trips extends Component {
             filter === 'ALL TRIPS'
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
-        this.setState({ trips, filteredTrips, filter, ...state, selectedTrip: trips[0] })
+        this.setState({
+            trips,
+            filteredTrips,
+            filter,
+            ...state,
+            selectedTrip: trips[0]
+        })
     }
 
     render() {
