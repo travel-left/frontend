@@ -80,7 +80,7 @@ class Share extends Component {
             <div
                 style={{
                     position: "relative",
-                    height: this.source === "preview" ? "70vh" : "100vh",
+                    height: this.source === "preview" ? "70vh" : "93vh",
                     overflow: "hidden",
                     display: "flex",
                     flexDirection: "column"
