@@ -86,9 +86,11 @@ class Share extends Component {
                     flexDirection: "column"
                 }}
             >
-                <div id="header" style={{ height: "15vh" }}>
+                <div id="header" style={{ height: "30vh" }}>
                     <ShareCover trip={trip} />
+                    <Footer tripId={this.tripId} source={this.source} />
                 </div>
+
                 <Switch>
                     <Route
                         exact
@@ -97,7 +99,7 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ marginTop: "10vh", height: "65vh" }}
+                                style={{ height: "68vh", marginTop: '2vh' }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {documentList}
@@ -112,7 +114,10 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ marginTop: "10vh", height: "65vh" }}
+                                style={{
+                                    height: "68vh",
+                                    marginTop: '2vh'
+                                }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {contactsList}
@@ -127,8 +132,8 @@ class Share extends Component {
                                 <div
                                     className="row px-0 "
                                     style={{
-                                        marginTop: '10vh',
-                                        height: "15vh",
+                                        height: "13vh",
+                                        marginTop: '2vh'
                                     }}
                                 >
                                     <div className="col" />
@@ -140,7 +145,7 @@ class Share extends Component {
                                 <div
                                     className="container "
                                     id="content"
-                                    style={{ height: "60vh" }}
+                                    style={{ height: "65vh" }}
                                 >
                                     <div className="row">
                                         <div className="col-12 d-flex flex-column align-items-center">
@@ -152,9 +157,6 @@ class Share extends Component {
                         )}
                     />
                 </Switch>
-                <div id="footer" style={{ height: "10vh" }}>
-                    <Footer tripId={this.tripId} source={this.source} />
-                </div>
             </div>
         );
     }
@@ -309,10 +311,10 @@ const ShareContact = ({ contact }) => {
 const ShareCover = ({ trip }) => {
     return (
         <div
-            className="row mb-4 d-flex flex-column justify-content-between p-4"
+            className="row d-flex flex-column justify-content-between p-4"
             style={{
                 backgroundImage: `url(${trip.image})`,
-                minHeight: "150px",
+                height: "20vh",
                 backgroundPosition: "center",
                 backgroundSize: "cover"
             }}
@@ -328,8 +330,8 @@ const ShareCover = ({ trip }) => {
 
 const Footer = ({ tripId, source }) => (
     <footer
-        className="footer d-flex align-items-center"
-        style={{ height: '100%' }}
+        className="footer d-flex align-items-center bg-primary"
+        style={{ height: '10vh' }}
     >
         <div className="container" >
             <div className="row d-flex justify-content-around align-items-center">
