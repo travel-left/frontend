@@ -80,13 +80,13 @@ class Share extends Component {
             <div
                 style={{
                     position: "relative",
-                    height: this.source === "preview" ? "70vh" : "93vh",
+                    height: this.source === "preview" ? "70vh" : "90vh",
                     overflow: "hidden",
                     display: "flex",
                     flexDirection: "column"
                 }}
             >
-                <div id="header" style={{ height: "15vh" }}>
+                <div id="header" style={{ height: "13vh" }}>
                     <ShareCover trip={trip} />
                 </div>
                 <Switch>
@@ -97,7 +97,7 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ marginTop: "10vh", height: "70vh" }}
+                                style={{ marginTop: "10vh", height: "65vh" }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {documentList}
@@ -112,7 +112,7 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ marginTop: "10vh", height: "70vh" }}
+                                style={{ marginTop: "10vh", height: "65vh" }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {contactsList}
@@ -141,7 +141,7 @@ class Share extends Component {
                                 <div
                                     className="container "
                                     id="content"
-                                    style={{ height: "60vh" }}
+                                    style={{ height: "55vh" }}
                                 >
                                     <div className="row">
                                         <div className="col-12 d-flex flex-column align-items-center">
@@ -153,7 +153,7 @@ class Share extends Component {
                         )}
                     />
                 </Switch>
-                <div id="footer" style={{ height: "10vh" }}>
+                <div id="footer" style={{ height: "7vh" }}>
                     <Footer tripId={this.tripId} source={this.source} />
                 </div>
             </div>
