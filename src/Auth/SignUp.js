@@ -57,7 +57,7 @@ export default ({ error, submit }) => {
                             <Form>
                                 <FormField
                                     name="name"
-                                    label="name"
+                                    label="Full name"
                                     placeholder="John Appleseed"
                                 />
                                 <FormField
