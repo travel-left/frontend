@@ -80,13 +80,13 @@ class Share extends Component {
             <div
                 style={{
                     position: "relative",
-                    height: this.source === "preview" ? "70vh" : "90vh",
+                    height: this.source === "preview" ? "70vh" : "100vh",
                     overflow: "hidden",
                     display: "flex",
                     flexDirection: "column"
                 }}
             >
-                <div id="header" style={{ height: "13vh" }}>
+                <div id="header" style={{ height: "15vh" }}>
                     <ShareCover trip={trip} />
                 </div>
                 <Switch>
@@ -127,9 +127,8 @@ class Share extends Component {
                                 <div
                                     className="row px-0 "
                                     style={{
-                                        marginTop: "10vh",
-                                        height: "10vh",
-                                        marginBottom: "5vh"
+                                        marginTop: '10vh',
+                                        height: "15vh",
                                     }}
                                 >
                                     <div className="col" />
@@ -141,7 +140,7 @@ class Share extends Component {
                                 <div
                                     className="container "
                                     id="content"
-                                    style={{ height: "55vh" }}
+                                    style={{ height: "60vh" }}
                                 >
                                     <div className="row">
                                         <div className="col-12 d-flex flex-column align-items-center">
@@ -153,7 +152,7 @@ class Share extends Component {
                         )}
                     />
                 </Switch>
-                <div id="footer" style={{ height: "7vh" }}>
+                <div id="footer" style={{ height: "10vh" }}>
                     <Footer tripId={this.tripId} source={this.source} />
                 </div>
             </div>
@@ -320,46 +319,42 @@ const ShareCover = ({ trip }) => {
         >
             <h2 className="text-primary">{trip.name} Trip</h2>
             <h4 className="text-light">
-                {moment(trip.dateEnd).format("MMMM DD")} to{" "}
-                {moment(trip.dateStart).format("MMMM DD")}
+                {moment(trip.dateStart).format("MMMM DD")} to{" "}
+                {moment(trip.dateEnd).format("MMMM DD")}
             </h4>
         </div>
     );
 };
 
 const Footer = ({ tripId, source }) => (
-    <div className="row">
-        <div className="col-12">
-            <footer
-                className="footer d-flex align-items-center"
-                style={{ height: "10vh" }}
-            >
-                <div className="container">
-                    <div className="row d-flex justify-content-around align-items-center">
-                        <NavLink
-                            activeClassName="active"
-                            to={`/trips/${tripId}/${source}/itinerary`}
-                            name={`/trips/${tripId}/${source}/itinerary`}
-                        >
-                            <i class="far fa-calendar fa-2x text-secondary" />
-                        </NavLink>
-                        <NavLink
-                            activeClassName="active"
-                            to={`/trips/${tripId}/${source}/documents`}
-                            name={`/trips/${tripId}/${source}/documents`}
-                        >
-                            <i class="far fa-folder fa-2x text-secondary" />
-                        </NavLink>
-                        <NavLink
-                            activeClassName="active"
-                            to={`/trips/${tripId}/${source}/contacts`}
-                            name={`/trips/${tripId}/${source}/contacts`}
-                        >
-                            <i class="far fa-user fa-2x text-secondary" />
-                        </NavLink>
-                    </div>
-                </div>
-            </footer>
+    <footer
+        className="footer d-flex align-items-center"
+        style={{ height: '100%' }}
+    >
+        <div className="container" >
+            <div className="row d-flex justify-content-around align-items-center">
+                <NavLink
+                    activeClassName="active"
+                    to={`/trips/${tripId}/${source}/itinerary`}
+                    name={`/trips/${tripId}/${source}/itinerary`}
+                >
+                    <i class="far fa-calendar fa-2x text-secondary" />
+                </NavLink>
+                <NavLink
+                    activeClassName="active"
+                    to={`/trips/${tripId}/${source}/documents`}
+                    name={`/trips/${tripId}/${source}/documents`}
+                >
+                    <i class="far fa-folder fa-2x text-secondary" />
+                </NavLink>
+                <NavLink
+                    activeClassName="active"
+                    to={`/trips/${tripId}/${source}/contacts`}
+                    name={`/trips/${tripId}/${source}/contacts`}
+                >
+                    <i class="far fa-user fa-2x text-secondary" />
+                </NavLink>
+            </div>
         </div>
-    </div>
-);
+    </footer>
+)
