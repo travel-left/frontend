@@ -105,25 +105,26 @@ export default function UpdateEventForm(props) {
                                 <div className="col-2 mt-5">
                                     <button
                                         type="button"
-                                        className="d-block btn btn-primary"
+                                        className="btn btn-sm btn-danger"
+                                        placeholder="linky boi"
                                         onClick={() => remove(index)}
                                     >
                                         -
                                     </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary btn-sm ml-1"
+                                        key="b"
+                                        placeholer="link for your boi"
+                                        onClick={() =>
+                                            push({ link: '', description: '' })
+                                        }
+                                    >
+                                        +
+                            </button>
                                 </div>
                             </div>
                         ))}
-                        <div key="b" className="form-row">
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-lg mt-3"
-                                onClick={() =>
-                                    push({ link: '', description: '' })
-                                }
-                            >
-                                +
-                            </button>
-                        </div>
                     </>
                 )}
             </FieldArray>
@@ -137,6 +138,7 @@ export default function UpdateEventForm(props) {
                                         <FormField
                                             name={`documents.${index}.name`}
                                             label="Document Name"
+                                            placeholder="A form to fill out"
                                         />
                                     </div>
 
@@ -144,6 +146,7 @@ export default function UpdateEventForm(props) {
                                         <FormField
                                             name={`documents.${index}.description`}
                                             label="Document Description"
+                                            placeholder="Please fill out"
                                         />
                                     </div>
                                 </div>
@@ -158,32 +161,30 @@ export default function UpdateEventForm(props) {
                                     <div className="col-2 mt-5">
                                         <button
                                             type="button"
-                                            className="d-block btn btn-primary"
+                                            className="btn btn-sm btn-danger"
                                             onClick={() => {
                                                 return remove(index)
                                             }}
                                         >
                                             -
                                         </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary btn-sm ml-1"
+                                            onClick={() =>
+                                                push({
+                                                    link: '',
+                                                    description: '',
+                                                    name: ''
+                                                })
+                                            }
+                                        >
+                                            +
+                            </button>
                                     </div>
                                 </div>
                             </>
                         ))}
-                        <div className="form-row">
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-lg mt-3"
-                                onClick={() =>
-                                    push({
-                                        link: '',
-                                        description: '',
-                                        name: ''
-                                    })
-                                }
-                            >
-                                +
-                            </button>
-                        </div>
                     </>
                 )}
             </FieldArray>
