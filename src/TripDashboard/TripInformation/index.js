@@ -76,7 +76,10 @@ export default class TripInformation extends Component {
     createCoordinator = async coordinator => {
         coordinator.organization = this.props.currentUser.organization
         coordinator.password = 'goofyberry453'
-        await apiCall('post', '/api/auth/signup', { coordinator, tripId: this.currentTripId })
+        await apiCall('post', '/api/auth/signup', {
+            coordinator,
+            tripId: this.currentTripId
+        })
         this.getCoordinators()
     }
 
@@ -131,17 +134,25 @@ export default class TripInformation extends Component {
     }
 
     updateDocument = async (documentId, updateObject) => {
-        await apiCall(
+        const updatedDocument = await apiCall(
             'put',
             `/api/trips/${this.currentTripId}/documents/${documentId}`,
             updateObject
         )
-        this.getDocuments()
+        const { documents } = this.state
+        const index = documents.findIndex(d => d._id === documentId)
+        documents[index] = updatedDocument
+        this.setState({ documents })
     }
 
     createDocument = async doc => {
-        await apiCall('post', `/api/documents`, doc)
-        this.getDocuments()
+        const createdDocument = await apiCall(
+            'post',
+            `/api/trips/${this.currentTripId}/documents`,
+            doc
+        )
+        const { documents } = this.state
+        this.setState({ documents: [...documents, createdDocument] })
     }
 
     deleteDocument = async docId => {
@@ -149,7 +160,9 @@ export default class TripInformation extends Component {
             'delete',
             `/api/trips/${this.currentTripId}/documents/${docId}`
         )
-        this.getDocuments()
+        const { documents } = this.state
+        const newDocuments = documents.filter(d => d._id !== docId)
+        this.setState({ documents: newDocuments })
     }
 
     getTripDates = async () => {
