@@ -121,25 +121,26 @@ export default function CreateEventForm({ submit, initDay }) {
                                 <div className="col-2 mt-5">
                                     <button
                                         type="button"
-                                        className="d-block btn btn-primary"
+                                        className="btn btn-sm btn-danger"
+                                        placeholder="linky boi"
                                         onClick={() => remove(index)}
                                     >
                                         -
                                     </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary btn-sm ml-1"
+                                        key="b"
+                                        placeholer="link for your boi"
+                                        onClick={() =>
+                                            push({ link: '', description: '' })
+                                        }
+                                    >
+                                        +
+                            </button>
                                 </div>
                             </div>
                         ))}
-                        <div className="form-row">
-                            <button
-                                type="button"
-                                className="btn btn-primary btn-lg mt-3"
-                                onClick={() =>
-                                    push({ link: '', description: '' })
-                                }
-                            >
-                                +
-                            </button>
-                        </div>
                     </>
                 )}
             </FieldArray>
