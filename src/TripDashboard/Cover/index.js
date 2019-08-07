@@ -45,7 +45,7 @@ class Cover extends Component {
         return (
             <div className="row">
                 <div
-                    className="col-12 d-flex flex-column justify-content-between px-5 py-2"
+                    className="col-12 d-flex flex-column justify-content-between px-4 py-2"
                     style={{
                         backgroundImage: `url(${currentTrip.image})`,
                         minHeight: '240px',
@@ -61,7 +61,7 @@ class Cover extends Component {
                             submit={this.updateTrip}
                             status={currentTrip.status}
                         />
-                        <div>
+                        <div className='pr-2'>
                             <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow bg-primary flex-grow-0">
                                 <i class="far fa-paper-plane fa-lg text-white"></i>
                             </span>
