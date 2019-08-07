@@ -20,11 +20,6 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             .required('Please enter a body')
     })
 
-    const button = {
-        classes: 'btn btn-outline-primary btn-lg border-left-0 border-right-0',
-        text: 'EMAIL'
-    }
-
     let travelerList = travelers.map(t =>
         selected[t._id] ? (
             <p key={t._id}>
@@ -35,7 +30,6 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             </p>
         ) : null
     )
-
     travelerList = travelerList.filter(t => t !== null)
 
     travelerList = travelerList.length ? (
@@ -49,11 +43,11 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             {travelerList}
         </>
     ) : (
-        <p className="text-danger text-center">No Travelers Selected!</p>)
+            <p className="text-danger text-center">No Travelers Selected!</p>)
 
     return (
         <ModalForm
-            button={button}
+            icon='far fa-envelope fa-2x text-primary'
             header="Send an email to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}

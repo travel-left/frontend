@@ -23,7 +23,7 @@ class Cover extends Component {
                 updateObject
             )
             return this.props.setCurrentTrip(data)
-        } catch (err) {}
+        } catch (err) { }
     }
 
     getAndSetTravelers = async () => {
@@ -44,7 +44,7 @@ class Cover extends Component {
         return (
             <div className="row">
                 <div
-                    className="col-12 d-flex flex-column justify-content-between px-5 py-2"
+                    className="col-12 d-flex flex-column justify-content-between px-4 py-2"
                     style={{
                         backgroundImage: `url(${currentTrip.image})`,
                         minHeight: '240px',
@@ -53,33 +53,38 @@ class Cover extends Component {
                     }}
                 >
                     <div className="row">
-                        <h2 className="text-light">{currentTrip.name} Trip</h2>
+                        <h2 className="text-light left-shadow" style={{ paddingLeft: '.75rem' }}>{currentTrip.name} Trip</h2>
                     </div>
-                    <div className="row">
+                    <div className="row justify-content-between">
                         <TripStatusForm
                             submit={this.updateTrip}
                             status={currentTrip.status}
                         />
+                        <div className='pr-2'>
+                            <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow bg-primary flex-grow-0">
+                                <i class="far fa-paper-plane fa-lg text-white"></i>
+                            </span>
+                        </div>
                     </div>
                     <div className="row justify-content-between">
-                        <div>
-                            <h5 className="d-inline text-light">
-                                {invited} Invited
+                    <div>
+                        <h5 className="d-inline text-light left-shadow">
+                            {invited} Invited
                             </h5>
-                            <h5 className="d-inline text-light ml-3">
-                                {confirmed} Confirmed
+                        <h5 className="d-inline text-light ml-3 left-shadow">
+                            {confirmed} Confirmed
                             </h5>
                         </div>
-                        <TripDatesForm
+                            <TripDatesForm
                             dateStart={currentTrip.dateStart}
-                            dateEnd={currentTrip.dateEnd}
-                            submit={this.updateTrip}
-                        />
-                        <TripImageForm
-                            image={currentTrip.image}
-                            submit={this.updateTrip}
-                        />
-                    </div>
+                                dateEnd={currentTrip.dateEnd}
+                                submit={this.updateTrip}
+                            />
+                                <TripImageForm
+                                    image={currentTrip.image}
+                                    submit={this.updateTrip}
+                                />
+                            </div>
                 </div>
                 <div className="col-3" />
             </div>

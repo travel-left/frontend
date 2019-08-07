@@ -50,12 +50,12 @@ class Event extends Component {
                 onItinerary={true}
             />
         ) : (
-            <UpdateEventForm
-                event={event}
-                submit={this.update}
-                remove={this.remove}
-            />
-        )
+                <UpdateEventForm
+                    event={event}
+                    submit={this.update}
+                    remove={this.remove}
+                />
+            )
 
         const date =
             event.dtStart && event.dtEnd
@@ -72,36 +72,37 @@ class Event extends Component {
             ) : null
         ) : null
 
-        const name = event.tripDate ? `Trip Date: ${event.name}` : event.name
+        const name = event.tripDate ? (<><span >{event.name}</span><span className='text-muted h5'>{' '} (Trip Date)</span> </>) : event.name
 
         const address = event.address ? (
-            <p className="card-text">{'Address: ' + event.address}</p>
+            <p className="card-text text-muted">{'Address: ' + event.address}</p>
         ) : null
 
         const documents = event.documents
             ? event.documents.map((e, i) => (
-                  <a
-                      key={i}
-                      href={e.link}
-                      className="card-link"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                  >
-                      {e.name} - {e.description}
-                  </a>
-              ))
+                <a
+                    key={i}
+                    href={e.link}
+                    className="card-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {e.name} - {e.description}
+                </a>
+            ))
             : null
 
         return (
             <div className="card mb-3 border-0 shadow px-3 py-1 rounded-lg animated fadeIn">
                 <div className="row">
                     <div className="card-body">
-                        <h5 className="card-title">
-                            <strong> {name}</strong>
-                            <i
-                                className={`fa ${iconString} float-right`}
-                                style={{ color: color }}
-                            />
+                        <h5 className="card-title mb-3">
+                            <strong>
+                                <i
+                                    className={`fa ${iconString} pr-2`}
+                                    style={{ color: color }}
+                                /> {name}</strong>
+                            {updater}
                         </h5>
                         <div className="row">
                             <div className="col-md-6 d-flex flex-column">
@@ -114,11 +115,12 @@ class Event extends Component {
                                 {/* <Image diameter="100px" src={event.image} /> */}
                                 <p className="card-text">{event.description}</p>
                                 {documents}
-                                <div className="mt-auto">{updater}</div>
                             </div>
                             <div className="col-md-6">
                                 {map}
-                                {address}
+                                <div className="d-flex justify-content-center align-items-center mt-3">
+                                    {address}
+                                </div>
                             </div>
                         </div>
                     </div>

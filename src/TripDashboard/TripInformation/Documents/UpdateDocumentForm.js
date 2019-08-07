@@ -15,18 +15,21 @@ const UpdateDocumentForm = props => {
         link: Yup.string().required('Please select a link or file')
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const button = {
+        classes: 'btn btn-dark rounded-pill',
+        text: 'EDIT'
+    }
 
     return (
         <ModalForm
-            icon={icon}
+            button={button}
             header="Add a document or link"
             validationSchema={schema}
             initialValues={initialValues}
             submit={props.submit}
             remove={props.remove}
         >
-            <FormField
+                <FormField
                 name="link"
                 label="Upload a document"
                 type="file"

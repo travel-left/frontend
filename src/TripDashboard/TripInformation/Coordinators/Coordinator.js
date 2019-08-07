@@ -38,7 +38,7 @@ class Coordinator extends Component {
                     <div className="col-md-3 d-flex align-items-center">
                         <Image src={image} diameter="55px" />
                     </div>
-                    <div className="col-md-6 d-flex flex-column justify-content-center">
+                    <div className="col-md-9 d-flex flex-column justify-content-center">
                         {name && <p className="m-0">{name}</p>}
                         {title && <p className="m-0">{title}</p>}
                         {email && (
@@ -51,13 +51,6 @@ class Coordinator extends Component {
                                 <small className="text-muted">{phone}</small>
                             </p>
                         )}
-                    </div>
-                    <div className="col-md-3">
-                        {/* <UpdateCoordinatorForm
-                            {...this.props}
-                            submit={this.handleEdit}
-                            remove={this.handleDelete}
-                        /> */}
                         {removeButton}
                     </div>
                 </div>

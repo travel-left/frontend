@@ -20,11 +20,14 @@ export default function UpdateTravelerForm(props) {
         phone: phoneValidator
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const button = {
+        classes: "btn btn-lg btn-secondary text-light float-right px-4",
+        text: 'EDIT'
+    }
 
     return (
         <ModalForm
-            icon={icon}
+            button={button}
             header="Edit traveler"
             validationSchema={schema}
             initialValues={initialValues}
@@ -35,18 +38,14 @@ export default function UpdateTravelerForm(props) {
             <SelectField
                 name="status"
                 options={[
-                    { label: 'INVITED', value: 'INVITED' },
-                    { label: 'CONFIRMED', value: 'CONFIRMED' },
-                    { label: 'ON-TRIP', value: 'ON-TRIP' },
-                    { label: 'POST-TRIP', value: 'POST-TRIP' }
+                    { label: "INVITED", value: "INVITED" },
+                    { label: "CONFIRMED", value: "CONFIRMED" },
+                    { label: "ON-TRIP", value: "ON-TRIP" },
+                    { label: "POST-TRIP", value: "POST-TRIP" }
                 ]}
                 label="Status"
             />
-            <FormField
-                name="image"
-                label="Upload a new image"
-                component={Uploader}
-            />
+            <FormField name="image" label="Upload a new image" component={Uploader} />
             <FormField
                 name="email"
                 label="Email"

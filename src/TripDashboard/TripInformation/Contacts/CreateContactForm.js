@@ -23,8 +23,8 @@ export default function CreateContactForm({ submit }) {
     })
 
     const button = {
-        classes: 'btn btn-primary mb-4',
-        text: 'add new'
+        classes: 'btn btn-primary mb-4 rounded-pill',
+        text: 'ADD NEW'
     }
 
     return (

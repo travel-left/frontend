@@ -19,7 +19,7 @@ export default function UpdateCoordinatorForm(props) {
         phone: phoneValidator
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const icon = 'hover fas fa-ellipsis-h text-muted float-right'
 
     return (
         <ModalForm

@@ -18,7 +18,7 @@ class Document extends Component {
         const linkImg = getIcon(link)
 
         return (
-            <LeftCard>
+            <div className='col-10 p-4 card shadow my-3'>
                 <div className="row">
                     <div className="col-md-10">
                         <h4 className="d-inline card-title">{name}</h4>
@@ -31,7 +31,7 @@ class Document extends Component {
                         />
                     </div>
                 </div>
-                <p className="py-2">{description}</p>
+                <p className="py-2 text-muted">{description}</p>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="card shadow mb-3 mx-4">
@@ -64,7 +64,7 @@ class Document extends Component {
                         </div>
                     </div>
                 </div>
-            </LeftCard>
+            </div>
         )
     }
 }

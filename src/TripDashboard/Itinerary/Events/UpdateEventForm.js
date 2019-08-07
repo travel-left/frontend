@@ -25,7 +25,7 @@ export default function UpdateEventForm(props) {
 
     return (
         <ModalForm
-            icon="hover far fa-edit fa-2x text-secondary"
+            icon="hover fas fa-ellipsis-h text-muted float-right"
             header="Edit your event"
             validationSchema={schema}
             initialValues={initialValues}

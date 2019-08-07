@@ -14,7 +14,7 @@ export default function TripNameForm({ name, submit }) {
     })
     return (
         <ModalForm
-            icon="far fa-edit fa-2x text-primary text-secondary"
+            icon="far fa-edit fa-2x text-white"
             header="Edit trip name"
             validationSchema={schema}
             initialValues={initialValues}
