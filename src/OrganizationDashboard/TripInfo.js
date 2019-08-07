@@ -39,7 +39,14 @@ class TripInfo extends Component {
     }
 
     render() {
-        let { name, dateStart, dateEnd, image, description, status } = this.props.trip
+        let {
+            name,
+            dateStart,
+            dateEnd,
+            image,
+            description,
+            status
+        } = this.props.trip
         // let { statusCounts } = this.props
         let invited = this.state.travelers.filter(t => t.status === 'INVITED')
         let confirmed = this.state.travelers.filter(
@@ -55,13 +62,18 @@ class TripInfo extends Component {
                         alt="..."
                         style={{ backgroundColor: '#FBFBFB' }}
                     />
-                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover" style={{
-                        position: 'absolute',
-                        top: '68%',
-                        right: '10%',
-                        color: 'white',
-                        backgroundColor: '#0F61D8'
-                    }}><i class="far fa-paper-plane fa-lg"></i></span>
+                    <span
+                        class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover"
+                        style={{
+                            position: 'absolute',
+                            top: '68%',
+                            right: '10%',
+                            color: 'white',
+                            backgroundColor: '#0F61D8'
+                        }}
+                    >
+                        <i class="far fa-paper-plane fa-lg" />
+                    </span>
                 </div>
 
                 <div className="container bg-light">
@@ -77,7 +89,8 @@ class TripInfo extends Component {
                         <li className="list-group-item bg-light">
                             Date{' '}
                             <span className="float-right text-primary">
-                                <Moment date={dateStart} format="MMM DD" />{' - '}
+                                <Moment date={dateStart} format="MMM DD" />
+                                {' - '}
                                 <Moment date={dateEnd} format="MMM DD" />
                             </span>
                         </li>

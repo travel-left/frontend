@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import UpdateCoordinatorForm from './UpdateCoordinatorForm'
 import LeftCard from '../../../util/LeftCard'
 
 class Coordinator extends Component {
@@ -13,7 +12,27 @@ class Coordinator extends Component {
     }
 
     render() {
-        let { email, image, name, phone, title } = this.props
+        let {
+            email,
+            image,
+            name,
+            phone,
+            title,
+            currentUserId,
+            _id
+        } = this.props
+
+        console.log(currentUserId, _id, currentUserId === _id)
+
+        const removeButton =
+            currentUserId !== _id ? (
+                <button
+                    className="btn btn-danger mt-3"
+                    onClick={this.handleDelete}
+                >
+                    -
+                </button>
+            ) : null
 
         return (
             <LeftCard>
@@ -36,11 +55,12 @@ class Coordinator extends Component {
                         )}
                     </div>
                     <div className="col-md-3">
-                        <UpdateCoordinatorForm
+                        {/* <UpdateCoordinatorForm
                             {...this.props}
                             submit={this.handleEdit}
                             remove={this.handleDelete}
-                        />
+                        /> */}
+                        {removeButton}
                     </div>
                 </div>
             </LeftCard>
