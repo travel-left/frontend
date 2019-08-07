@@ -30,19 +30,38 @@ class Travelers extends Component {
     constructor(props) {
         super(props)
         const { travelers } = props.currentTrip
-        if (travelers.length && !travelers[0]._id) {
-            this.getTravelers()
-        }
+        this.getTravelers()
     }
 
     getTravelers = async () => {
         const { currentTrip, setCurrentTrip } = this.props
-        const travelers = await apiCall(
+        const newTravelers = await apiCall(
             'get',
             `/api/trips/${currentTrip._id}/travelers`
         )
-        currentTrip.travelers = travelers
-        setCurrentTrip(currentTrip)
+        const newTravelerIds = newTravelers.map(nt => nt._id)
+        const travelerIds = currentTrip.travelers.map(t => t._id)
+
+        let notEqual = false
+
+        for (const id of newTravelerIds) {
+            if (!travelerIds.includes(id)) {
+                notEqual = true
+                break
+            }
+        }
+
+        for (const id of travelerIds) {
+            if (!newTravelerIds.includes(id)) {
+                notEqual = true
+                break
+            }
+        }
+
+        if (notEqual) {
+            currentTrip.travelers = newTravelers
+            setCurrentTrip(currentTrip)
+        }
     }
 
     addTraveler = async traveler => {
