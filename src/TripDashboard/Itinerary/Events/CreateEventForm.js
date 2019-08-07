@@ -12,7 +12,7 @@ export default function CreateEventForm({ submit, initDay }) {
         name: '',
         tzStart: moment.tz.guess(),
         tzEnd: moment.tz.guess(),
-        type: 'Category',
+        type: 'EVENT',
         description: '',
         documents: [
             {

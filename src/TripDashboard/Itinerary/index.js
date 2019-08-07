@@ -4,31 +4,9 @@ import EventList from './Events'
 import { apiCall, genericSubUpdater } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
-// import Alert from '../../util/otherComponents/Alert'
 import { scroller } from 'react-scroll'
 
 class Itinerary extends Component {
-    // closeAlert = async () => {
-    //     const { _id } = this.props.currentUser.user
-    //     await apiCall('put', `/api/coordinators/${_id}`, {
-    //         showAlerts: { itinerary: false }
-    //     })
-    //     this.setState({
-    //         showAlert: false
-    //     })
-    // }
-
-    // getShowAlertAndSetState = async () => {
-    //     const { _id } = this.props.currentUser
-    //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
-    //     if (coordinator.showAlerts.itinerary === 'true') {
-    //         this.setState({
-    //             showAlert: true
-    //         })
-    //     }
-    // }
-
-    tripId = this.props.currentTrip._id
     tz = moment.tz.guess(true)
 
     state = {
@@ -45,7 +23,7 @@ class Itinerary extends Component {
     getDaysAndEvents = async () => {
         let events = await apiCall(
             'get',
-            `/api/trips/${this.tripId}/itinerary?tz=${this.tz}`
+            `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
         )
         events.sort(time_sort_asc)
         let days = []
@@ -57,11 +35,29 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        await apiCall('post', `/api/trips/${this.tripId}/events`, {
-            ...event,
-            dtStart: `${event.dateStart}T${event.timeStart}:00`,
-            dtEnd: `${event.dateEnd}T${event.timeEnd}:00`
-        })
+        console.log(event)
+        const docs = event.documents
+        event.documents = []
+        const createdEvent = await apiCall(
+            'post',
+            `/api/trips/${this.props.currentTrip._id}/events`,
+            {
+                ...event,
+                dtStart: `${event.dateStart}T${event.timeStart}:00`,
+                dtEnd: `${event.dateEnd}T${event.timeEnd}:00`
+            }
+        )
+        const createdDocuments = await Promise.all(
+            docs.map(d =>
+                apiCall(
+                    'post',
+                    `/api/trips/${this.props.currentTrip._id}/events/${
+                        createdEvent._id
+                    }/documents`,
+                    d
+                )
+            )
+        )
         this.getDaysAndEvents()
     }
 
@@ -77,7 +73,7 @@ class Itinerary extends Component {
             e => e._id.toString() === eventId
         )
         updateObject = await genericSubUpdater(
-            `/api/trips/${this.tripId}/events/${eventId}`,
+            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
             originalEvent,
             updateObject,
             'documents'
@@ -85,7 +81,7 @@ class Itinerary extends Component {
 
         await apiCall(
             'put',
-            `/api/trips/${this.tripId}/events/${eventId}`,
+            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
             updateObject
         )
         this.getDaysAndEvents()
@@ -94,21 +90,24 @@ class Itinerary extends Component {
     updateTripDate = async (tdId, updateObject) => {
         await apiCall(
             'put',
-            `/api/trips/${this.tripId}/tripDates/${tdId}`,
+            `/api/trips/${this.props.currentTrip._id}/tripDates/${tdId}`,
             updateObject
         )
         this.getDaysAndEvents()
     }
 
     removeEvent = async eventId => {
-        await apiCall('delete', `/api/trips/${this.tripId}/events/${eventId}`)
+        await apiCall(
+            'delete',
+            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`
+        )
         this.getDaysAndEvents()
     }
 
     removeTripDate = async tripDateId => {
         await apiCall(
             'delete',
-            `/api/trips/${this.tripId}/tripDates/${tripDateId}`
+            `/api/trips/${this.props.currentTrip._id}/tripDates/${tripDateId}`
         )
         this.getDaysAndEvents()
     }
