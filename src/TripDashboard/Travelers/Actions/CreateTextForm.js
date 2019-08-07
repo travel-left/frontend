@@ -28,9 +28,23 @@ export default function CreateTextForm({ submit, travelers, selected }) {
                     <div className="col text-black-50">{t.phone}</div>
                 </div>
             </p>
-        ) : (
-            undefined
-        )
+        ) : null
+    )
+
+    travelerList = travelerList.filter(t => t !== null)
+
+    travelerList = travelerList.length ? (
+        <>
+            <h5>Selected travelers</h5>
+            <div className="row">
+                <div className="col ">Name</div>
+                <div className="col ">Phone</div>
+            </div>
+            <hr />
+            {travelerList}
+        </>
+    ) : (
+        <p className="text-danger text-center">No Travelers Selected!</p>
     )
 
     return (
@@ -42,12 +56,6 @@ export default function CreateTextForm({ submit, travelers, selected }) {
             submit={submit}
         >
             <div className="mb-4">
-                <h5>Selected travelers</h5>
-                <div className="row">
-                    <div className="col ">Name</div>
-                    <div className="col ">Phone</div>
-                </div>
-                <hr />
                 {travelerList}
             </div>
             <FormField
