@@ -1,8 +1,12 @@
 import React from 'react'
-import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 import Uploader from '../../../util/forms/Uploader'
+import Validator, {
+    nameValidator,
+    emailValidator,
+    phoneValidator
+} from '../../../util/validators'
 
 export default function CreateContactForm({ submit }) {
     const initialValues = {
@@ -12,12 +16,10 @@ export default function CreateContactForm({ submit }) {
         phone: ''
     }
 
-    const schema = Yup.object().shape({
-        name: Yup.string()
-            .min(2, 'Please enter a longer name')
-            .max(50, 'Please enter a shorter name')
-            .required('Please enter a name'),
-        email: Yup.string().email('please enter a valid email')
+    const schema = Validator({
+        name: nameValidator,
+        email: emailValidator,
+        phone: phoneValidator
     })
 
     const button = {
