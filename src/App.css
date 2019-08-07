@@ -80,3 +80,10 @@ body {
 .left-shadow {
     text-shadow: -1px 4px 12px rgba(0, 0, 0, 0.3), 3px 0px 20px rgba(0, 0, 0, 0.3), -2px -3px 2px rgba(0, 0, 0, 0.3);
 }
+
+.rounded-pill {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: .8rem;
+
+}

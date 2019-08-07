@@ -29,8 +29,8 @@ export default class CreateDocumentForm extends Component {
     })
 
     button = {
-        classes: 'btn btn-primary mb-4',
-        text: 'add new'
+        classes: 'btn btn-primary rounded-pill',
+        text: 'ADD NEW'
     }
 
     render() {

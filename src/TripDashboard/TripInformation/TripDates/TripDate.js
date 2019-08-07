@@ -45,14 +45,14 @@ export default class TripDate extends Component {
 
         return (
             <div className="row my-2 animated fadeIn">
-                <div className="col-md-3 d-flex align-items-center">
+                <div className="col-md-3 d-flex align-items-center justify-content-center">
                     <i className={icon.string} style={{ color: icon.color }} />
                 </div>
                 <div className="col-md-6 d-flex flex-column justify-content-center">
                     <p className="m-0">{name}</p>
                     <p className="m-0">
                         <small className="text-muted">
-                            {moment(dateWithoutTimeorTZ).format('MMM DD')}
+                            {moment(dateWithoutTimeorTZ).format('MMMM DD')}
                         </small>
                     </p>
                 </div>

@@ -276,56 +276,53 @@ export default class TripInformation extends Component {
                 </div> */}
                 <div className="row">
                     <div className="col-md-12 mt-4 ml-3">
-                        <h4 className="text-dark">Name</h4>
-                        <h3 className="text-primary my-1 d-inline"> {name} </h3>
-                        <TripNameForm name={name} submit={this.updateTrip} />
-                        {/* <h4 className="text-dark my-3">Coordinators</h4>
-                        <CreateCoordinatorForm
-                            submit={this.createCoordinator}
-                        />
-                        <div className="row">{coordinatorList}</div> */}
-                        <ItemList
-                            type="coordinators"
-                            Component={Coordinator}
-                            Create={CreateCoordinatorForm}
-                            tripId={_id}
-                            name="Coordinators"
-                        />
-                        {/* <h4 className="text-dark my-3">Dates</h4> */}
-                        {/* <CreateTripDateForm
-                            formType="add"
-                            submit={this.createTripDate}
-                        />
+                        <h4 className="mb-3">Trip Name</h4>
+                        <div className='pb-2' style={{ borderBottom: '1.5px solid black', width: '20vw' }}>
+                            <h3 className="text-primary my-1 d-inline"> {name} </h3>
+                            <TripNameForm name={name} submit={this.updateTrip} />
+                        </div>
+                        <h4 className="mt-5 mb-4">Trip Coordinators</h4>
                         <div className="row">
-                            <LeftCard>{tripDatesList}</LeftCard>
-                        </div> */}
-                        <ItemList
-                            type="tripDates"
-                            Component={TripDate}
-                            Create={CreateTripDateForm}
-                            tripId={_id}
-                            name="Dates"
-                        />
-                        {/* <h4 className="text-dark my-3">Documents</h4>
-                        <CreateDocumentForm submit={this.createDocument} />
-                        <div className="row">{documentsList}</div> */}
-                        <ItemList
-                            type="documents"
-                            Component={Document}
-                            Create={CreateDocumentForm}
-                            tripId={_id}
-                            name="Documents"
-                        />
-                        {/* <h4 className="text-dark my-3">Emergency Contacts</h4>
-                        <CreateContactForm submit={this.createContact} />
-                        <div className="row">{contactsList}</div> */}
-                        <ItemList
-                            type="contacts"
-                            Component={Contact}
-                            Create={CreateContactForm}
-                            tripId={_id}
-                            name="Emergency Contacts"
-                        />
+                            {coordinatorList}
+                            <div className="col-md-4 my-2 animated fadeIn d-flex justify-content-center align-items-center">
+                                <CreateCoordinatorForm
+                                    submit={this.createCoordinator}
+                                />
+                            </div>
+                        </div>
+                        <h4 className="mt-5 mb-4">Trip Dates</h4>
+
+                        <div className="row">
+                            <LeftCard>
+                                {tripDatesList}
+                                <div className="mt-4 animated fadeIn d-flex flex-row justify-content-start align-items-center">
+                                    <CreateTripDateForm
+                                        formType="add"
+                                        submit={this.createTripDate}
+                                    />
+                                </div>
+                            </LeftCard>
+                        </div>
+                        <div className="row mt-5 mb-4">
+                            <div className="col-md-3">
+                                <h4 className="">Trip Documents</h4>
+                            </div>
+                            <div className="col-md-6">
+
+                            </div>
+
+                            <div className='col-md-3'>
+                                <CreateDocumentForm submit={this.createDocument} />
+                            </div>
+                        </div>
+                        <div className="row mx-5">{documentsList}</div>
+                        <h4 className="mt-5 mb-4">Trip Contacts</h4>
+                        <div className="row mb-5">
+                            {contactsList}
+                            <div className="col-md-4 my-2 animated fadeIn d-flex justify-content-center align-items-center">
+                                <CreateContactForm submit={this.createContact} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

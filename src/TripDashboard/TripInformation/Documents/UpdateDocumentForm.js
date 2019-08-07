@@ -16,22 +16,25 @@ export default function UpdateDocumentForm(props) {
             .required('Please enter a name')
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const button = {
+        classes: 'btn btn-dark rounded-pill',
+        text: 'EDIT'
+    }
 
     let fields = props.link.includes(
         'travel-left-images.s3.us-east-2.amazonaws.com'
     ) ? (
-        <FormField
-            name="link"
-            label="Upload a new document"
-            component={DocumentUploader}
-        />
-    ) : (
-        <FormField name="link" label="Link" />
-    )
+            <FormField
+                name="link"
+                label="Upload a new document"
+                component={DocumentUploader}
+            />
+        ) : (
+            <FormField name="link" label="Link" />
+        )
     return (
         <ModalForm
-            icon={icon}
+            button={button}
             header="Edit document"
             validationSchema={schema}
             initialValues={initialValues}
