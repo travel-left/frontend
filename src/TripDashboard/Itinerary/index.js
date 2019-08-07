@@ -11,7 +11,7 @@ class Itinerary extends Component {
 
     state = {
         days: [],
-        selectedDay: ''
+        selectedDay: '',
         itinerary: []
     }
 
@@ -67,10 +67,10 @@ class Itinerary extends Component {
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${updateObject.dateStart}T${
             updateObject.timeStart
-            }:00`
+        }:00`
         updateObject.dtEnd = `${updateObject.dateEnd}T${
             updateObject.timeEnd
-            }:00`
+        }:00`
 
         const originalEvent = this.state.itinerary.find(
             e => e._id.toString() === eventId
@@ -146,8 +146,8 @@ class Itinerary extends Component {
                 removeTripDate={this.removeTripDate}
             />
         ) : (
-                <h4 className="text-info" />
-            )
+            <h4 className="text-info" />
+        )
         // let alert = showAlert ? (
         //     <Alert
         //         text='This is your trip itinerary.  Here you can manage events and days.  Click "ADD NEW EVENT" to get started.'
@@ -161,9 +161,7 @@ class Itinerary extends Component {
                     <div className="col-md-12 d-none d-md-block">{alert}</div>
                 </div> */}
                 <div className="row">
-                    <div className="col-md-2">
-                        {dayList}
-                    </div>
+                    <div className="col-md-2">{dayList}</div>
                     <div className="col-md-10">
                         <div className="row float-right mb-5 mr-2">
                             <CreateEventForm
@@ -183,7 +181,7 @@ class Itinerary extends Component {
 
 export default Itinerary
 
-const time_sort_asc = function (event1, event2) {
+const time_sort_asc = function(event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')
