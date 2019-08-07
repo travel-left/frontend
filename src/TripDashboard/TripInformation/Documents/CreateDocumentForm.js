@@ -49,13 +49,13 @@ export default class CreateDocumentForm extends Component {
             <>
                 <FormField
                     name="link"
-                    label="Documnet link"
+                    label="Document link"
                     placeholder="Link"
                 />
                 <FormField
                     name="name"
                     label="Name for link"
-                    placeholder="Linky Boi"
+                    placeholder="https://travel-left.com"
                 />
             </>
         )

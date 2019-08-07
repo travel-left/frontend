@@ -18,7 +18,7 @@ export const passwordValidator = Yup.string()
     .min(8, 'Password must be longer than 8 characters')
 
 export const tripStatusValidator = Yup.string()
-    .matches(/(PLANNING|PLANNED|LEFT|PAST)/)
+    .matches(/(PLANNING|COMPLETED|LEFT|PAST)/)
     .required()
 
 export const tripDateTypeValidator = Yup.string()

@@ -16,7 +16,7 @@ class Trips extends Component {
         selectedTrip: null,
         tripStatusCounts: {
             LEFT: 0,
-            PLANNED: 0,
+            COMPLETED: 0,
             PLANNING: 0,
             PAST: 0,
             ARCHIVED: 0
@@ -146,12 +146,6 @@ class Trips extends Component {
                 />
             </div>
         ) : null
-        // let alert = showAlert ? (
-        //     <Alert
-        //         text='Welcome to left. Choose "add new trip" to get started. Feel free to contact us at support@travel-left.com if you have questions.'
-        //         closeAlert={this.closeAlert}
-        //     />
-        // ) : null
 
         return (
             <div className="row">
@@ -182,9 +176,9 @@ class Trips extends Component {
                                     handleClick={this.onSideNavClick}
                                 />
                                 <SideNavItem
-                                    text="Planned"
-                                    total={tripStatusCounts.PLANNED}
-                                    active={filter === 'PLANNED'}
+                                    text="Completed"
+                                    total={tripStatusCounts.COMPLETED}
+                                    active={filter === 'COMPLETED'}
                                     handleClick={this.onSideNavClick}
                                 />
                                 <SideNavItem
