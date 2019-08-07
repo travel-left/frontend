@@ -28,7 +28,8 @@ export default function UpdateTravelerForm(props) {
             header="Edit traveler"
             validationSchema={schema}
             initialValues={initialValues}
-            {...props}
+            submit={props.submit}
+            remove={props.remove}
         >
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
             <SelectField

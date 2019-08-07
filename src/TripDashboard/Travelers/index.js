@@ -2,14 +2,12 @@ import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import AddTravelerForm from './Actions/AddTravelerForm'
 import ImportBulkForm from './Actions/ImportBulkForm'
-// import Alert from '../../util/otherComponents/Alert'
-import Traveler from './Travelers/Traveler'
 import TravelerList from './Travelers/TravelerList'
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
 import Select from 'react-select'
 import ChangeStatusForm from './Actions/ChangeStatusForm'
-import TravelerInfo from './TravelerInfo'
+import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '../../util/forms/Checkbox'
 
 const stati = [
@@ -29,7 +27,6 @@ class Travelers extends Component {
 
     constructor(props) {
         super(props)
-        const { travelers } = props.currentTrip
         this.getTravelers()
     }
 
@@ -217,7 +214,7 @@ class Travelers extends Component {
     }
 
     render() {
-        let { selected, allSelected, filters } = this.state
+        let { selected, allSelected, filters, selectedTraveler } = this.state
         let { travelers } = this.props.currentTrip
 
         const filteredTravelers = travelers.filter(traveler =>
@@ -235,11 +232,12 @@ class Travelers extends Component {
             })
         }
 
-        let travelerInfo = this.state.selectedTraveler ? (
+        let travelerInfo = selectedTraveler ? (
             <div className="col-md- shadow px-0">
                 <TravelerInfo
-                    traveler={this.state.selectedTraveler}
+                    traveler={selectedTraveler}
                     update={this.updateTraveler}
+                    remove={this.removeTraveler}
                 />
             </div>
         ) : null
