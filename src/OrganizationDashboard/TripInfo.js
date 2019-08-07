@@ -55,7 +55,7 @@ class TripInfo extends Component {
                         alt="..."
                         style={{ backgroundColor: '#FBFBFB' }}
                     />
-                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover" style={{
+                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow" style={{
                         position: 'absolute',
                         top: '68%',
                         right: '10%',
