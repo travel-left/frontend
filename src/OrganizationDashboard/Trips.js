@@ -210,7 +210,7 @@ class Trips extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-10">
+                <div className="col-md-10 mt-3">
                     {/* <div className="row">
                         <div className="col-md-12 d-none d-md-block">
                             {alert}
@@ -219,15 +219,14 @@ class Trips extends Component {
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
                             <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
-                                <div className="col-md-3 border-bottom border-primary text-uppercase ml-5">
-                                    {' '}
-                                    Trip
+                                <div className="col-md-3 border-bottom-5 border-primary text-uppercase ml-5">
+                                    TRIP NAME
                                 </div>
                                 <div className="col-md-4" />
-                                <div className="col-md-2 offset-md-1 text-uppercase">
+                                <div className="col-md-2 offset-md-1 text-uppercase text-dark">
                                     Date
                                 </div>
-                                <div className="col-md-2 text-uppercase">
+                                <div className="col-md-2 text-uppercase text-dark">
                                     Status
                                 </div>
                             </div>

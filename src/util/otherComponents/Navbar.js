@@ -14,7 +14,7 @@ class Navbar extends Component {
         let { currentUser } = this.props
         let loggedInContent = null
         let greeting = currentUser.email ? (
-            <span className="text-light">Hello, {currentUser.name}!</span>
+            <span className="text-light">{currentUser.name}</span>
         ) : null
 
         if (currentUser.isAuthenticated) {
@@ -47,7 +47,7 @@ class Navbar extends Component {
             >
                 <div className="navbar-brand">
                     <Link to="/trips" className="">
-                        <h1 className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0">
+                        <h1 className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0" style={{ fontSize: '3.2rem' }}>
                             left.
                         </h1>
                     </Link>
