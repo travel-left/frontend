@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
+import TripStatus from '../util/otherComponents/TripStatus';
 
 class Trip extends Component {
     handleClick = () => {
@@ -12,17 +13,7 @@ class Trip extends Component {
 
     render() {
         let { name, image, dateStart, status } = this.props
-        let statusColor = 'primary'
-        switch (status) {
-            case 'LEFT':
-                statusColor = 'left'
-                break
-            case 'PLANNING':
-                statusColor = 'secondary'
-                break
-            default:
-                break
-        }
+
         return (
             <div
                 className="card my-1 shadow mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around d-none animated fadeIn"
@@ -42,9 +33,7 @@ class Trip extends Component {
                     </p>
                 </div>
                 <div className="col-4 col-md-2 d-flex align-items-center justify-content-center">
-                    <span className={`badge badge-${statusColor} badge-pill text-light text-uppercase px-3 py-1`}>
-                        {status}
-                    </span>
+                    <TripStatus status={status} />
                 </div>
             </div>
         )
