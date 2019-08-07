@@ -35,12 +35,12 @@ class Trips extends Component {
     }
 
     setStatusesAndState = trips => {
-        const newStatusCount = { ...this.state.tripStatusCounts }
-        trips.forEach(trip => {
-            newStatusCount[trip.status]++
-        })
+        const { tripStatusCounts } = this.state
+        for (const trip of trips) {
+            tripStatusCounts[trip.status]++
+        }
         this.filterTripsAndSetState(trips, 'ALL TRIPS', {
-            tripStatusCounts: newStatusCount
+            tripStatusCounts
         })
     }
 
@@ -62,22 +62,15 @@ class Trips extends Component {
     // }
 
     addTrip = async trip => {
-        let createdTrip = await apiCall('post', '/api/trips', trip)
-        const { trips, filteredTrips, filter } = this.state
+        const createdTrip = await apiCall('post', '/api/trips', trip)
+        const { trips, filter, tripStatusCounts } = this.state
         trips.push(createdTrip)
-
-        if (createdTrip.status === filter || filter === 'All Trips') {
-            filteredTrips.push(createdTrip)
-        }
-        let newStatusCount = { ...this.state.tripStatusCounts }
-        newStatusCount[createdTrip.status]++
-        this.setState({
+        tripStatusCounts[createdTrip.status]++
+        this.filterTripsAndSetState(trips, filter, {
             trips: trips,
-            filteredTrips: filteredTrips,
             selectedTrip: createdTrip,
-            tripStatusCounts: newStatusCount
+            tripStatusCounts
         })
-        this.setSelectedTrip(createdTrip._id)
     }
 
     archiveTrip = async id => {
@@ -115,7 +108,13 @@ class Trips extends Component {
             filter === 'ALL TRIPS'
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
-        this.setState({ trips, filteredTrips, filter, ...state, selectedTrip: trips[0] })
+        this.setState({
+            trips,
+            filteredTrips,
+            filter,
+            ...state,
+            selectedTrip: trips[0]
+        })
     }
 
     render() {
@@ -210,7 +209,7 @@ class Trips extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-10">
+                <div className="col-md-10 mt-3">
                     {/* <div className="row">
                         <div className="col-md-12 d-none d-md-block">
                             {alert}
@@ -219,15 +218,14 @@ class Trips extends Component {
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
                             <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
-                                <div className="col-md-3 border-bottom border-primary text-uppercase ml-5">
-                                    {' '}
-                                    Trip
+                                <div className="col-md-3 border-bottom-5 border-primary text-uppercase ml-5">
+                                    TRIP NAME
                                 </div>
                                 <div className="col-md-4" />
-                                <div className="col-md-2 offset-md-1 text-uppercase">
+                                <div className="col-md-2 offset-md-1 text-uppercase text-dark">
                                     Date
                                 </div>
-                                <div className="col-md-2 text-uppercase">
+                                <div className="col-md-2 text-uppercase text-dark">
                                     Status
                                 </div>
                             </div>

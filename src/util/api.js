@@ -8,19 +8,16 @@ export const setTokenHeader = token => {
     }
 }
 
-export const apiCall = (method, path, data) => {
-    return new Promise((resolve, reject) => {
-        return axios[method.toLowerCase()](
+export const apiCall = async (method, path, data) => {
+    try {
+        const res = await axios[method.toLowerCase()](
             `${process.env.REACT_APP_BACKEND_ENDPOINT}${path}`,
             data
         )
-            .then(res => {
-                return resolve(res.data)
-            })
-            .catch(err => {
-                return reject(err.response.data.error)
-            })
-    })
+        return res.data
+    } catch (err) {
+        return err.response.data.error
+    }
 }
 
 export const genericSubUpdater = async (
