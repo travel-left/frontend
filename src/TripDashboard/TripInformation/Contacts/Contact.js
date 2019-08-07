@@ -34,7 +34,7 @@ class Contact extends Component {
                             </p>
                         )}
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 d-flex align-items-center justify-content-center">
                         <UpdateContactForm
                             {...this.props}
                             submit={this.handleEdit}
