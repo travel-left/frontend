@@ -51,16 +51,6 @@ class Trips extends Component {
         this.props.history.push(`/trips/${tripId}/edit`)
     }
 
-    // closeAlert = () => {
-    //     const { _id } = this.props.currentUser
-    //     this.setState({
-    //         showAlert: false
-    //     })
-    //     apiCall('put', `/api/coordinators/${_id}`, {
-    //         showAlerts: { trips: false }
-    //     })
-    // }
-
     addTrip = async trip => {
         const createdTrip = await apiCall('post', '/api/trips', trip)
         const { trips, filter, tripStatusCounts } = this.state
@@ -217,7 +207,7 @@ class Trips extends Component {
                                 </div>
                                 <div className="col-md-4" />
                                 <div className="col-md-2 offset-md-1 text-uppercase text-dark">
-                                    Date
+                                    Dates
                                 </div>
                                 <div className="col-md-2 text-uppercase text-dark">
                                     Status

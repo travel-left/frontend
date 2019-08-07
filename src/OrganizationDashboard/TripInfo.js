@@ -3,7 +3,6 @@ import Moment from 'react-moment'
 import { apiCall } from '../util/api'
 
 class TripInfo extends Component {
-    tripId = this.props.trip._id
     state = {
         travelers: []
     }
@@ -15,7 +14,7 @@ class TripInfo extends Component {
     getAndSetTravelers = async () => {
         const travelers = await apiCall(
             'get',
-            `/api/trips/${this.tripId}/travelers`
+            `/api/trips/${this.props.trip._id}/travelers`
         )
         this.setState({
             travelers
@@ -23,7 +22,7 @@ class TripInfo extends Component {
     }
 
     handleEditClick = () => {
-        this.props.edit(this.tripId)
+        this.props.edit(this.props.trip._id)
     }
 
     handleDuplicate = async () => {
@@ -47,6 +46,7 @@ class TripInfo extends Component {
             description,
             status
         } = this.props.trip
+
         // let { statusCounts } = this.props
         let invited = this.state.travelers.filter(t => t.status === 'INVITED')
         let confirmed = this.state.travelers.filter(
@@ -87,7 +87,7 @@ class TripInfo extends Component {
                     <p className="py-3 text-black-50">{description}</p>
                     <ul className="list-group list-group-flush px-0 mx-0 pb-4">
                         <li className="list-group-item bg-light">
-                            Date{' '}
+                            Dates{' '}
                             <span className="float-right text-primary">
                                 <Moment date={dateStart} format="MMM DD" />
                                 {' - '}
