@@ -11,8 +11,8 @@ class Itinerary extends Component {
 
     state = {
         days: [],
-        events: [],
         selectedDay: ''
+        itinerary: []
     }
 
     constructor(props) {
@@ -22,17 +22,19 @@ class Itinerary extends Component {
     }
 
     getDaysAndEvents = async () => {
-        let events = await apiCall(
+        let itinerary = await apiCall(
             'get',
             `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
         )
-        events.sort(time_sort_asc)
+        itinerary.sort(time_sort_asc)
         let days = []
-        events.forEach(event => {
-            if (!days.includes(event.dateStart)) days.push(event.dateStart)
-        })
+        for (const event of itinerary) {
+            if (!days.includes(event.dateStart)) {
+                days.push(event.dateStart)
+            }
+        }
 
-        this.setState({ events, days, selectedDay: days[0] })
+        this.setState({ itinerary, days, selectedDay: days[0] })
     }
 
     createEvent = async event => {
@@ -70,7 +72,7 @@ class Itinerary extends Component {
             updateObject.timeEnd
             }:00`
 
-        const originalEvent = this.state.events.find(
+        const originalEvent = this.state.itinerary.find(
             e => e._id.toString() === eventId
         )
         updateObject = await genericSubUpdater(
@@ -127,7 +129,7 @@ class Itinerary extends Component {
     }
 
     render() {
-        const { days, events, selectedDay } = this.state
+        const { days, itinerary, selectedDay } = this.state
         const dayList = days.length ? (
             <DayList
                 selectedDay={selectedDay}
@@ -135,9 +137,9 @@ class Itinerary extends Component {
                 handleClick={this.onDayClick}
             />
         ) : null
-        const eventList = events.length ? (
+        const eventList = itinerary.length ? (
             <EventList
-                events={events}
+                events={itinerary}
                 updateEvent={this.updateEvent}
                 removeEvent={this.removeEvent}
                 updateTripDate={this.updateTripDate}
