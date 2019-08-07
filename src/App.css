@@ -65,3 +65,10 @@ body {
     box-sizing: content-box !important;
 }
 
+.badge-left {
+    background-color: #4CE2A7 !important;
+}
+
+.border-bottom-5 {
+    border-bottom: 2px solid #0F61D8 !important;
+}

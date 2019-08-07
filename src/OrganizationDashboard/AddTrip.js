@@ -28,7 +28,7 @@ export default function AddTrip({ submit }) {
 
     const button = {
         classes: 'btn btn-lg btn-primary',
-        text: 'NEW TRIP'
+        text: 'ADD NEW TRIP'
     }
 
     return (

@@ -39,7 +39,7 @@ class TripInfo extends Component {
     }
 
     render() {
-        let { name, dateStart, image, description, status } = this.props.trip
+        let { name, dateStart, dateEnd, image, description, status } = this.props.trip
         // let { statusCounts } = this.props
         let invited = this.state.travelers.filter(t => t.status === 'INVITED')
         let confirmed = this.state.travelers.filter(
@@ -48,12 +48,22 @@ class TripInfo extends Component {
 
         return (
             <div className="pb-3 bg-light">
-                <img
-                    src={image}
-                    className="card-img-top border-0 mb-4 px-2"
-                    alt="..."
-                    style={{ backgroundColor: '#FBFBFB' }}
-                />
+                <div className="" style={{ position: 'relative' }}>
+                    <img
+                        src={image}
+                        className="card-img-top border-0 mb-4 px-2 mt-3 px-3"
+                        alt="..."
+                        style={{ backgroundColor: '#FBFBFB' }}
+                    />
+                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover" style={{
+                        position: 'absolute',
+                        top: '68%',
+                        right: '10%',
+                        color: 'white',
+                        backgroundColor: '#0F61D8'
+                    }}><i class="far fa-paper-plane fa-lg"></i></span>
+                </div>
+
                 <div className="container bg-light">
                     <span className="h4">Trip to {name}</span>
                     <button
@@ -67,24 +77,25 @@ class TripInfo extends Component {
                         <li className="list-group-item bg-light">
                             Date{' '}
                             <span className="float-right text-primary">
-                                <Moment date={dateStart} format="MMM DD" />
+                                <Moment date={dateStart} format="MMM DD" />{' - '}
+                                <Moment date={dateEnd} format="MMM DD" />
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Status{' '}
-                            <span className="float-right badge badge-primary badge-pill badge-secondary text-light">
+                            <span className="float-right badge badge-primary badge-pill badge-secondary text-light px-3">
                                 {status}
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Total Invited{' '}
-                            <span className="float-right badge badge-primary badge-pill">
+                            <span className="float-right badge badge-primary badge-pill px-2">
                                 {invited.length}
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Total Confirmed{' '}
-                            <span className="float-right badge badge-primary badge-pill">
+                            <span className="float-right badge badge-primary badge-pill px-2">
                                 {confirmed.length}
                             </span>
                         </li>

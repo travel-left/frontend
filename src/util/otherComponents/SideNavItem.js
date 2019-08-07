@@ -11,7 +11,7 @@ export default ({ text, total, active, handleClick }) => {
     return (
         <a href="/" className={classes} onClick={handleClick} name={text}>
             {text}
-            <span className="badge badge-primary badge-pill">{total}</span>
+            <span className="badge badge-primary badge-pill px-2">{total}</span>
         </a>
     )
 }
