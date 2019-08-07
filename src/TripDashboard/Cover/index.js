@@ -38,10 +38,9 @@ class Cover extends Component {
 
     render() {
         let currentTrip = this.props.currentTrip
-        let invited = this.state.travelers.filter(t => t.status === 'INVITED')
-        let confirmed = this.state.travelers.filter(
-            t => t.status === 'CONFIRMED'
-        )
+        let invited = this.state.travelers.length
+        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
+            .length
         return (
             <div className="row">
                 <div
@@ -65,10 +64,10 @@ class Cover extends Component {
                     <div className="row justify-content-between">
                         <div>
                             <h5 className="d-inline text-light">
-                                {invited.length} Invited
+                                {invited} Invited
                             </h5>
                             <h5 className="d-inline text-light ml-3">
-                                {confirmed.length} Confirmed
+                                {confirmed} Confirmed
                             </h5>
                         </div>
                         <TripDatesForm

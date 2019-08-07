@@ -47,11 +47,8 @@ class TripInfo extends Component {
             status
         } = this.props.trip
 
-        // let { statusCounts } = this.props
-        let invited = this.state.travelers.filter(t => t.status === 'INVITED')
-        let confirmed = this.state.travelers.filter(
-            t => t.status === 'CONFIRMED'
-        )
+        let invited = this.state.travelers.length
+        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
 
         return (
             <div className="pb-3 bg-light">
@@ -103,13 +100,13 @@ class TripInfo extends Component {
                         <li className="list-group-item bg-light">
                             Total Invited{' '}
                             <span className="float-right badge badge-primary badge-pill px-2">
-                                {invited.length}
+                                {invited}
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Total Confirmed{' '}
                             <span className="float-right badge badge-primary badge-pill px-2">
-                                {confirmed.length}
+                                {confirmed}
                             </span>
                         </li>
                     </ul>

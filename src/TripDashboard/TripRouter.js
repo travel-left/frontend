@@ -39,6 +39,7 @@ const Router = ({ currentTrip, currentUser, setCurrentTrip }) => {
                         {...routeProps}
                         currentTrip={currentTrip}
                         currentUser={currentUser}
+                        setCurrentTrip={setCurrentTrip}
                     />
                 )}
             />

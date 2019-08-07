@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 
-export default function CreateEmailForm({ submit, travelers }) {
+export default function CreateEmailForm({ submit, travelers, selected }) {
     const initialValues = {
         subject: '',
         body: ''
@@ -26,7 +26,7 @@ export default function CreateEmailForm({ submit, travelers }) {
     }
 
     let travelerList = travelers.map(t =>
-        t.selected ? (
+        selected[t._id] ? (
             <p key={t._id}>
                 <div className="row">
                     <div className="col text-black-50">{t.name}</div>

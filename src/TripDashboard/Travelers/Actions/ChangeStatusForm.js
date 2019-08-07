@@ -2,7 +2,7 @@ import React from 'react'
 import ModalForm from '../../../util/forms/ModalForm'
 import SelectField from '../../../util/forms/SelectField'
 
-export default function ChangeStatusForm({ submit, travelers }) {
+export default function ChangeStatusForm({ submit, travelers, selected }) {
     const initialValues = {
         status: ''
     }
@@ -13,7 +13,7 @@ export default function ChangeStatusForm({ submit, travelers }) {
     }
 
     let travelerList = travelers.map(t =>
-        t.selected ? (
+        selected[t._id] ? (
             <p key={t._id}>
                 <div className="row">
                     <div className="col text-black-50">{t.name}</div>

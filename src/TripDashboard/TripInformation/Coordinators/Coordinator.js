@@ -22,8 +22,6 @@ class Coordinator extends Component {
             _id
         } = this.props
 
-        console.log(currentUserId, _id, currentUserId === _id)
-
         const removeButton =
             currentUserId !== _id ? (
                 <button
