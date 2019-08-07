@@ -76,13 +76,6 @@ class Itinerary extends Component {
         const originalEvent = this.state.events.find(
             e => e._id.toString() === eventId
         )
-
-        updateObject = await genericSubUpdater(
-            `/api/trips/${this.tripId}/events/${eventId}`,
-            originalEvent,
-            updateObject,
-            'links'
-        )
         updateObject = await genericSubUpdater(
             `/api/trips/${this.tripId}/events/${eventId}`,
             originalEvent,
