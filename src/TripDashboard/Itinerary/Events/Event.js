@@ -78,8 +78,8 @@ class Event extends Component {
             <p className="card-text">{'Address: ' + event.address}</p>
         ) : null
 
-        const links = event.links
-            ? event.links.map((e, i) => (
+        const documents = event.documents
+            ? event.documents.map((e, i) => (
                   <a
                       key={i}
                       href={e.link}
@@ -87,7 +87,7 @@ class Event extends Component {
                       target="_blank"
                       rel="noopener noreferrer"
                   >
-                      {e.description}
+                      {e.name} - {e.description}
                   </a>
               ))
             : null
@@ -113,7 +113,7 @@ class Event extends Component {
                                 </h6>
                                 {/* <Image diameter="100px" src={event.image} /> */}
                                 <p className="card-text">{event.description}</p>
-                                {links}
+                                {documents}
                                 <div className="mt-auto">{updater}</div>
                             </div>
                             <div className="col-md-6">

@@ -116,7 +116,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                 <div key={index * 2 + 1} className="form-row">
                                     <div className="col-10">
                                         <FormField
-                                            name="image"
+                                            name={`documents.${index}.links`}
                                             component={Uploader}
                                             label="Upload a Document"
                                         />
