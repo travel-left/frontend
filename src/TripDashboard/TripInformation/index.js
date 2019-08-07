@@ -10,235 +10,263 @@ import CreateDocumentForm from './Documents/CreateDocumentForm'
 import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
-import LeftCard from '../../util/LeftCard'
+// import LeftCard from '../../util/LeftCard'
 import { apiCall } from '../../util/api'
 
 export default class TripInformation extends Component {
-    currentTripId = this.props.currentTrip._id
+    // currentTripId = this.props.currentTrip._id
 
-    state = {
-        coordinators: [],
-        contacts: [],
-        documents: [],
-        tripDates: []
-        // showAlert: false
-    }
-
-    constructor(props) {
-        super(props)
-        // this.getShowAlertAndSetState()
-        this.getCoordinators()
-        this.getContacts()
-        this.getDocuments()
-        this.getTripDates()
-    }
-
-    // getShowAlertAndSetState = async () => {
-    //     const { _id } = this.props.currentUser
-    //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
-    //     if (coordinator.showAlerts.tripDashboard === 'true') {
-    //         this.setState({
-    //             showAlert: true
-    //         })
-    //     }
+    // state = {
+    //     coordinators: [],
+    //     contacts: [],
+    //     documents: [],
+    //     tripDates: []
+    //     // showAlert: false
     // }
 
-    // closeAlert = async () => {
-    //     const { _id } = this.props.currentUser
-    //     await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { tripDashboard: false } })
-    //     this.setState({
-    //         showAlert: false
+    // constructor(props) {
+    //     super(props)
+    //     // this.getShowAlertAndSetState()
+    //     this.getCoordinators()
+    //     this.getContacts()
+    //     this.getDocuments()
+    //     this.getTripDates()
+    // }
+
+    // // getShowAlertAndSetState = async () => {
+    // //     const { _id } = this.props.currentUser
+    // //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
+    // //     if (coordinator.showAlerts.tripDashboard === 'true') {
+    // //         this.setState({
+    // //             showAlert: true
+    // //         })
+    // //     }
+    // // }
+
+    // // closeAlert = async () => {
+    // //     const { _id } = this.props.currentUser
+    // //     await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { tripDashboard: false } })
+    // //     this.setState({
+    // //         showAlert: false
+    // //     })
+    // // }
+
+    // updateTrip = async updateObject => {
+    //     const updatedTrip = await apiCall(
+    //         'put',
+    //         `/api/trips/${this.currentTripId}`,
+    //         updateObject
+    //     )
+    //     this.props.setCurrentTrip(updatedTrip)
+    // }
+
+    // getCoordinators = async () => {
+    //     let coordinators = await apiCall(
+    //         'get',
+    //         `/api/trips/${this.currentTripId}/coordinators`
+    //     )
+    //     this.setState({ coordinators })
+    // }
+
+    // updateCoordinator = async (coordinatorId, updateObject) => {
+    //     const updatedCoordinator = await apiCall(
+    //         'put',
+    //         `/api/coordinators/${coordinatorId}`,
+    //         updateObject
+    //     )
+    //     const { coordinators } = this.state
+    //     const index = coordinators.findIndex(d => d._id === coordinatorId)
+    //     coordinators[index] = updatedCoordinator
+    //     this.setState({ coordinators })
+    // }
+
+    // createCoordinator = async coordinator => {
+    //     coordinator.organization = this.props.currentUser.organization
+    //     coordinator.password = 'goofyberry453'
+    //     const createdCoordinator = await apiCall('post', '/api/auth/signup', {
+    //         coordinator,
+    //         tripId: this.currentTripId
     //     })
+    //     const { coordinators } = this.state
+    //     coordinators.push(createdCoordinator)
+    //     this.setState({ coordinators })
     // }
 
-    updateTrip = async updateObject => {
-        const updatedTrip = await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}`,
-            updateObject
-        )
-        this.props.setCurrentTrip(updatedTrip)
-    }
+    // deleteCoordinator = async coordinatorId => {
+    //     await apiCall(
+    //         'delete',
+    //         `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`
+    //     )
+    //     const { coordinators } = this.state
+    //     const newCoordinators = coordinators.filter(
+    //         d => d._id !== coordinatorId
+    //     )
+    //     this.setState({ coordinators: newCoordinators })
+    // }
 
-    getCoordinators = async () => {
-        let coordinators = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/coordinators`
-        )
-        this.setState({ coordinators })
-    }
+    // getContacts = async () => {
+    //     let contacts = await apiCall(
+    //         'get',
+    //         `/api/trips/${this.currentTripId}/contacts`
+    //     )
+    //     this.setState({ contacts })
+    // }
 
-    updateCoordinator = async (coordinatorId, updateObject) => {
-        await apiCall('put', `/api/coordinators/${coordinatorId}`, updateObject)
-        this.getCoordinators()
-    }
+    // updateContact = async (contactId, updateObject) => {
+    //     const updatedContact = await apiCall(
+    //         'put',
+    //         `/api/trips/${this.currentTripId}/contacts/${contactId}`,
+    //         updateObject
+    //     )
+    //     const { contacts } = this.state
+    //     const index = contacts.findIndex(d => d._id === contactId)
+    //     contacts[index] = updatedContact
+    //     this.setState({ contacts })
+    // }
 
-    createCoordinator = async coordinator => {
-        coordinator.organization = this.props.currentUser.organization
-        coordinator.password = 'goofyberry453'
-        await apiCall('post', '/api/auth/signup', {
-            coordinator,
-            tripId: this.currentTripId
-        })
-        this.getCoordinators()
-    }
+    // createContact = async newContact => {
+    //     const createdContact = await apiCall(
+    //         'post',
+    //         `/api/trips/${this.currentTripId}/contacts`,
+    //         newContact
+    //     )
+    //     const { contacts } = this.state
+    //     contacts.push(createdContact)
+    //     this.setState({ contacts })
+    // }
 
-    deleteCoordinator = async coordinatorId => {
-        await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`
-        )
-        this.getCoordinators()
-    }
+    // deleteContact = async contactId => {
+    //     await apiCall(
+    //         'delete',
+    //         `/api/trips/${this.currentTripId}/contacts/${contactId}`
+    //     )
+    //     const { contacts } = this.state
+    //     const newContacts = contacts.filter(d => d._id !== contactId)
+    //     this.setState({ contacts: newContacts })
+    // }
 
-    getContacts = async () => {
-        let contacts = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/contacts`
-        )
-        this.setState({ contacts })
-    }
+    // getDocuments = async () => {
+    //     let documents = await apiCall(
+    //         'get',
+    //         `/api/trips/${this.currentTripId}/documents`
+    //     )
+    //     this.setState({ documents })
+    // }
 
-    updateContact = async (contactId, updateObject) => {
-        await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/contacts/${contactId}`,
-            updateObject
-        )
-        this.getContacts()
-    }
+    // updateDocument = async (documentId, updateObject) => {
+    //     const updatedDocument = await apiCall(
+    //         'put',
+    //         `/api/trips/${this.currentTripId}/documents/${documentId}`,
+    //         updateObject
+    //     )
+    //     const { documents } = this.state
+    //     const index = documents.findIndex(d => d._id === documentId)
+    //     documents[index] = updatedDocument
+    //     this.setState({ documents })
+    // }
 
-    createContact = async newContact => {
-        await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/contacts`,
-            newContact
-        )
-        this.getContacts()
-    }
+    // createDocument = async doc => {
+    //     const createdDocument = await apiCall(
+    //         'post',
+    //         `/api/trips/${this.currentTripId}/documents`,
+    //         doc
+    //     )
+    //     const { documents } = this.state
+    //     this.setState({ documents: [...documents, createdDocument] })
+    // }
 
-    deleteContact = async contactId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/contacts/${contactId}`
-        )
-        this.getContacts()
-    }
+    // deleteDocument = async docId => {
+    //     await apiCall(
+    //         'delete',
+    //         `/api/trips/${this.currentTripId}/documents/${docId}`
+    //     )
+    //     const { documents } = this.state
+    //     const newDocuments = documents.filter(d => d._id !== docId)
+    //     this.setState({ documents: newDocuments })
+    // }
 
-    getDocuments = async () => {
-        let documents = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/documents`
-        )
-        this.setState({ documents })
-    }
+    // getTripDates = async () => {
+    //     let tripDates = await apiCall(
+    //         'get',
+    //         `/api/trips/${this.currentTripId}/tripDates`
+    //     )
+    //     this.setState({ tripDates })
+    // }
 
-    updateDocument = async (documentId, updateObject) => {
-        const updatedDocument = await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/documents/${documentId}`,
-            updateObject
-        )
-        const { documents } = this.state
-        const index = documents.findIndex(d => d._id === documentId)
-        documents[index] = updatedDocument
-        this.setState({ documents })
-    }
+    // updateTripDate = async (tripDateId, updateObject) => {
+    //     const updatedTripDate = await apiCall(
+    //         'put',
+    //         `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`,
+    //         updateObject
+    //     )
+    //     const { tripDates } = this.state
+    //     const index = tripDates.findIndex(d => d._id === tripDateId)
+    //     tripDates[index] = updatedTripDate
+    //     this.setState({ tripDates })
+    // }
 
-    createDocument = async doc => {
-        const createdDocument = await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/documents`,
-            doc
-        )
-        const { documents } = this.state
-        this.setState({ documents: [...documents, createdDocument] })
-    }
+    // createTripDate = async tripDate => {
+    //     tripDate.type.toUpperCase()
+    //     const createdTD = await apiCall(
+    //         'post',
+    //         `/api/trips/${this.currentTripId}/tripDates`,
+    //         tripDate
+    //     )
+    //     const { tripDates } = this.state
+    //     tripDates.push(createdTD)
+    //     this.setState({ tripDates })
+    // }
 
-    deleteDocument = async docId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/documents/${docId}`
-        )
-        const { documents } = this.state
-        const newDocuments = documents.filter(d => d._id !== docId)
-        this.setState({ documents: newDocuments })
-    }
-
-    getTripDates = async () => {
-        let tripDates = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/tripDates`
-        )
-        this.setState({ tripDates })
-    }
-
-    updateTripDate = async (tripDateId, updateObject) => {
-        await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`,
-            updateObject
-        )
-        this.getTripDates()
-    }
-
-    createTripDate = async tripDate => {
-        tripDate.type.toUpperCase()
-        await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/tripDates`,
-            tripDate
-        )
-        this.getTripDates()
-    }
-
-    deleteTripDate = async tripDateId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`
-        )
-        this.getTripDates()
-    }
+    // deleteTripDate = async tripDateId => {
+    //     await apiCall(
+    //         'delete',
+    //         `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`
+    //     )
+    //     const { tripDates } = this.state
+    //     const newTripDates = tripDates.filter(d => d._id !== tripDateId)
+    //     this.setState({ tripDates: newTripDates })
+    // }
 
     render() {
-        let { name } = this.props.currentTrip
-        let { coordinators, contacts, documents, tripDates } = this.state
-        let coordinatorList =
-            coordinators.length > 0 ? (
-                <ItemList
-                    C={Coordinator}
-                    items={coordinators}
-                    update={this.updateCoordinator}
-                    remove={this.deleteCoordinator}
-                />
-            ) : null
-        let contactsList =
-            contacts.length > 0 ? (
-                <ItemList
-                    C={Contact}
-                    items={contacts}
-                    update={this.updateContact}
-                    remove={this.deleteContact}
-                />
-            ) : null
-        let documentsList =
-            documents.length > 0 ? (
-                <ItemList
-                    C={Document}
-                    items={documents}
-                    update={this.updateDocument}
-                    remove={this.deleteDocument}
-                />
-            ) : null
-        let tripDatesList =
-            tripDates.length > 0 ? (
-                <ItemList
-                    C={TripDate}
-                    items={tripDates}
-                    update={this.updateTripDate}
-                    remove={this.deleteTripDate}
-                />
-            ) : null
+        let { name, _id } = this.props.currentTrip
+        // let { coordinators, contacts, documents, tripDates } = this.state
+        // tripDates = tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
+        // let coordinatorList =
+        //     coordinators.length > 0 ? (
+        //         <ItemList
+        //             C={Coordinator}
+        //             items={coordinators}
+        //             update={this.updateCoordinator}
+        //             remove={this.deleteCoordinator}
+        //         />
+        //     ) : null
+        // let contactsList =
+        //     contacts.length > 0 ? (
+        //         <ItemList
+        //             C={Contact}
+        //             items={contacts}
+        //             update={this.updateContact}
+        //             remove={this.deleteContact}
+        //         />
+        //     ) : null
+        // let documentsList =
+        //     documents.length > 0 ? (
+        //         <ItemList
+        //             C={Document}
+        //             items={documents}
+        //             update={this.updateDocument}
+        //             remove={this.deleteDocument}
+        //         />
+        //     ) : null
+        // let tripDatesList =
+        //     tripDates.length > 0 ? (
+        //         <ItemList
+        //             C={TripDate}
+        //             items={tripDates}
+        //             update={this.updateTripDate}
+        //             remove={this.deleteTripDate}
+        //         />
+        //     ) : null
         // let alert = showAlert ? <Alert text="This is your trip dashboard.  Here you can manage coordinators, documents, dates, and emergency contacts." closeAlert={this.closeAlert} /> : null
 
         return (
@@ -251,25 +279,53 @@ export default class TripInformation extends Component {
                         <h4 className="text-dark">Name</h4>
                         <h3 className="text-primary my-1 d-inline"> {name} </h3>
                         <TripNameForm name={name} submit={this.updateTrip} />
-                        <h4 className="text-dark my-3">Coordinators</h4>
+                        {/* <h4 className="text-dark my-3">Coordinators</h4>
                         <CreateCoordinatorForm
                             submit={this.createCoordinator}
                         />
-                        <div className="row">{coordinatorList}</div>
-                        <h4 className="text-dark my-3">Dates</h4>
-                        <CreateTripDateForm
+                        <div className="row">{coordinatorList}</div> */}
+                        <ItemList
+                            type="coordinators"
+                            Component={Coordinator}
+                            Create={CreateCoordinatorForm}
+                            tripId={_id}
+                            name="Coordinators"
+                        />
+                        {/* <h4 className="text-dark my-3">Dates</h4> */}
+                        {/* <CreateTripDateForm
                             formType="add"
                             submit={this.createTripDate}
                         />
                         <div className="row">
                             <LeftCard>{tripDatesList}</LeftCard>
-                        </div>
-                        <h4 className="text-dark my-3">Documents</h4>
+                        </div> */}
+                        <ItemList
+                            type="tripDates"
+                            Component={TripDate}
+                            Create={CreateTripDateForm}
+                            tripId={_id}
+                            name="Dates"
+                        />
+                        {/* <h4 className="text-dark my-3">Documents</h4>
                         <CreateDocumentForm submit={this.createDocument} />
-                        <div className="row">{documentsList}</div>
-                        <h4 className="text-dark my-3">Emergency Contacts</h4>
+                        <div className="row">{documentsList}</div> */}
+                        <ItemList
+                            type="documents"
+                            Component={Document}
+                            Create={CreateDocumentForm}
+                            tripId={_id}
+                            name="Documents"
+                        />
+                        {/* <h4 className="text-dark my-3">Emergency Contacts</h4>
                         <CreateContactForm submit={this.createContact} />
-                        <div className="row">{contactsList}</div>
+                        <div className="row">{contactsList}</div> */}
+                        <ItemList
+                            type="contacts"
+                            Component={Contact}
+                            Create={CreateContactForm}
+                            tripId={_id}
+                            name="Emergency Contacts"
+                        />
                     </div>
                 </div>
             </div>
