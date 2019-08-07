@@ -23,11 +23,6 @@ export const timezones = tz.sort((f, s) => {
 
 export const types = [
     {
-        label: 'Category',
-        value: '',
-        hidden: true
-    },
-    {
         label: 'Lodging',
         value: 'LODGING'
     },
