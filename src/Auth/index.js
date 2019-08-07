@@ -12,8 +12,7 @@ export default class Auth extends Component {
     login = async state => {
         const { onAuth, history } = this.props
         try {
-            await onAuth('signin', state)
-            history.push('/')
+            await onAuth('signin', state, history)
         } catch (err) {
             console.error(err)
             this.setState({ error: err })
@@ -27,8 +26,7 @@ export default class Auth extends Component {
                 history.push('/createprofile', formInfo)
             } else {
                 const newCoordinator = createNewCoordinator(formInfo)
-                await onAuth('signup', { coordinator: newCoordinator })
-                history.push('/')
+                await onAuth('signup', { coordinator: newCoordinator }, history)
             }
         } catch (err) {
             console.error(err)
@@ -55,8 +53,8 @@ export default class Auth extends Component {
             type === 'sign in' ? (
                 <SignIn error={error} submit={this.login} />
             ) : (
-                    <SignUp error={error} submit={this.signUp} />
-                )
+                <SignUp error={error} submit={this.signUp} />
+            )
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-6 d-flex justify-content-center">
