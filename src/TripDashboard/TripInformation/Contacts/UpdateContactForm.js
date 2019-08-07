@@ -17,7 +17,7 @@ export default function UpdateCoordinatorForm(props) {
         email: Yup.string().email('please enter a valid email')
     })
 
-    const icon = 'hover far fa-2x fa-edit text-secondary float-right'
+    const icon = 'hover fas fa-ellipsis-h text-muted float-right'
 
     return (
         <ModalForm
