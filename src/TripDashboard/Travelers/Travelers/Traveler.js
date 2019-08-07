@@ -17,7 +17,7 @@ export default class Traveler extends Component {
 
     return (
       <div
-        className="card py-3 border my-2 shadow animated fadeIn"
+        className="card py-3 border my-2 shadow animated fadeIn hover"
         onDoubleClick={this.handleDoubleClick}
       >
         <div className="row no-gutters justify-content-around align-items-center">
