@@ -2,46 +2,40 @@ import React from 'react'
 import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
-import DocumentUploader from '../../../util/forms/DocumentUploader'
+import Uploader from '../../../util/forms/Uploader'
+import Validator, { nameValidator } from '../../../util/validators'
 
-export default function UpdateDocumentForm(props) {
+const UpdateDocumentForm = props => {
     const initialValues = {
         ...props
     }
 
-    const schema = Yup.object().shape({
-        name: Yup.string()
-            .min(2, 'Please enter a longer name')
-            .max(50, 'Please enter a shorter name')
-            .required('Please enter a name')
+    const schema = Validator({
+        name: nameValidator,
+        link: Yup.string().required('Please select a link or file')
     })
 
     const icon = 'hover far fa-2x fa-edit text-secondary float-right'
 
-    let fields = props.link.includes(
-        'travel-left-images.s3.us-east-2.amazonaws.com'
-    ) ? (
-        <FormField
-            name="link"
-            label="Upload a new document"
-            component={DocumentUploader}
-        />
-    ) : (
-        <FormField name="link" label="Link" />
-    )
     return (
         <ModalForm
             icon={icon}
-            header="Edit document"
+            header="Add a document or link"
             validationSchema={schema}
             initialValues={initialValues}
-            {...props}
+            submit={props.submit}
+            remove={props.remove}
         >
-            <FormField name="name" label="Name" />
-            {fields}
+            <FormField
+                name="link"
+                label="Upload a document"
+                type="file"
+                component={Uploader}
+            />
+            <FormField name="name" label="Name" placeholder="Document Name" />
             <FormField
                 name="description"
-                label="Document description"
+                label="Description"
                 component="textarea"
                 placeholder="A description for your document"
                 className="d-block"
@@ -49,3 +43,5 @@ export default function UpdateDocumentForm(props) {
         </ModalForm>
     )
 }
+
+export default UpdateDocumentForm
