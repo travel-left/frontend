@@ -236,7 +236,7 @@ class Travelers extends Component {
         const customStyles = {
             container: (provided, state) => ({
                 ...provided,
-                width: '400px'
+                width: 'auto'
             }),
             select: (provided, state) => ({
                 ...provided,
@@ -262,7 +262,7 @@ class Travelers extends Component {
                     <div className="col-md-12">
                         <div className="row justify-content-between mb-4 ">
                             <h2 className="text-black d-inline">
-                                Manage Your Travelers
+                                Travelers on This Trip
                             </h2>
                             <div>
                                 <ImportBulkForm
@@ -278,7 +278,7 @@ class Travelers extends Component {
                         <div className="row d-flex flex-row no-gutters mb-3 py-3 justify-content-between">
                             <div className="col-md-6">
                                 <Select
-                                    defaultValue={stati}
+
                                     isMulti
                                     name="colors"
                                     options={stati}
@@ -321,14 +321,14 @@ class Travelers extends Component {
                                             onChange={this.toggleAll}
                                             className="ml-3 h6"
                                             checked={allSelected}
-                                            label="SELECT ALL"
+                                            label="noshow"
                                         />
                                     </div>
                                     <div className="d-none d-md-flex col-md-2 h6">
                                         NAME
                                     </div>
                                     <div className="col-4 col-md-4 h6">
-                                        EMAIL
+                                        CONTACT
                                     </div>
                                     <div className="col-4 col-md-2 h6">
                                         {' '}

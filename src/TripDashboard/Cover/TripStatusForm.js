@@ -3,6 +3,7 @@ import SelectField from '../../util/forms/SelectField'
 import * as Yup from 'yup'
 import ModalForm from '../../util/forms/ModalForm'
 import { tripStatusValidator } from '../../util/validators'
+import TripStatus from '../../util/otherComponents/TripStatus';
 
 export default function TripDatesForm({ status, submit }) {
     const initialValues = {
@@ -38,9 +39,7 @@ export default function TripDatesForm({ status, submit }) {
             <h5 className="text-light ml-0 d-flex align-items-start flex-column">
                 <h5 className="left-shadow">STATUS</h5>
                 <div>
-                    <span className="badge badge-primary badge-pill h5 align-self-start bg-secondary">
-                        {status}{' '}
-                    </span>
+                    <TripStatus status={status} />
                     <i className="far fa-edit ml-2" />
                 </div>
 
