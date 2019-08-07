@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
 import { apiCall } from '../util/api'
-import TripStatus from '../util/otherComponents/TripStatus';
 
 class TripInfo extends Component {
-    tripId = this.props.trip._id
     state = {
         travelers: []
     }
@@ -16,7 +14,7 @@ class TripInfo extends Component {
     getAndSetTravelers = async () => {
         const travelers = await apiCall(
             'get',
-            `/api/trips/${this.tripId}/travelers`
+            `/api/trips/${this.props.trip._id}/travelers`
         )
         this.setState({
             travelers
@@ -24,7 +22,7 @@ class TripInfo extends Component {
     }
 
     handleEditClick = () => {
-        this.props.edit(this.tripId)
+        this.props.edit(this.props.trip._id)
     }
 
     handleDuplicate = async () => {
@@ -40,12 +38,20 @@ class TripInfo extends Component {
     }
 
     render() {
-        let { name, dateStart, dateEnd, image, description, status } = this.props.trip
-        // let { statusCounts } = this.props
-        let invited = this.state.travelers.filter(t => t.status === 'INVITED')
-        let confirmed = this.state.travelers.filter(
-            t => t.status === 'CONFIRMED'
-        )
+        let {
+            name,
+            dateStart,
+            dateEnd,
+            image,
+            description,
+            status
+        } = this.props.trip
+
+        console.log(this.state.travelers)
+
+        let invited = this.state.travelers.length
+        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
+            .length
 
         return (
             <div className="pb-3 bg-light">
@@ -56,13 +62,18 @@ class TripInfo extends Component {
                         alt="..."
                         style={{ backgroundColor: '#FBFBFB' }}
                     />
-                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow" style={{
-                        position: 'absolute',
-                        top: '68%',
-                        right: '10%',
-                        color: 'white',
-                        backgroundColor: '#0F61D8'
-                    }}><i class="far fa-paper-plane fa-lg"></i></span>
+                    <span
+                        class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover"
+                        style={{
+                            position: 'absolute',
+                            top: '68%',
+                            right: '10%',
+                            color: 'white',
+                            backgroundColor: '#0F61D8'
+                        }}
+                    >
+                        <i class="far fa-paper-plane fa-lg" />
+                    </span>
                 </div>
 
                 <div className="container bg-light">
@@ -76,29 +87,29 @@ class TripInfo extends Component {
                     <p className="py-3 text-black-50">{description}</p>
                     <ul className="list-group list-group-flush px-0 mx-0 pb-4">
                         <li className="list-group-item bg-light">
-                            Date{' '}
+                            Dates{' '}
                             <span className="float-right text-primary">
-                                <Moment date={dateStart} format="MMM DD" />{' - '}
+                                <Moment date={dateStart} format="MMM DD" />
+                                {' - '}
                                 <Moment date={dateEnd} format="MMM DD" />
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Status{' '}
-                            <div className="float-right">
-                                <TripStatus status={status} />
-                            </div>
-
+                            <span className="float-right badge badge-primary badge-pill badge-secondary text-light px-3">
+                                {status}
+                            </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Total Invited{' '}
                             <span className="float-right badge badge-primary badge-pill px-2">
-                                {invited.length}
+                                {invited}
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
                             Total Confirmed{' '}
                             <span className="float-right badge badge-primary badge-pill px-2">
-                                {confirmed.length}
+                                {confirmed}
                             </span>
                         </li>
                     </ul>

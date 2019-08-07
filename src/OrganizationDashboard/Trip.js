@@ -12,7 +12,7 @@ class Trip extends Component {
     }
 
     render() {
-        let { name, image, dateStart, status } = this.props
+        let { name, image, dateStart, dateEnd, status } = this.props
 
         return (
             <div
@@ -22,14 +22,21 @@ class Trip extends Component {
                 style={{ maxHeight: '13vh' }}
             >
                 <div className="col-md-3 px-0">
-                    <img src={image} className="card-img" alt="..." style={{ maxHeight: '13vh' }} />
+                    <img
+                        src={image}
+                        className="card-img"
+                        alt="..."
+                        style={{ maxHeight: '13vh' }}
+                    />
                 </div>
-                <div className="col-4 col-md-4 d-flex align-items-center">
+                <div className="col-4 col-md-3 d-flex align-items-center">
                     <p className="card-text h4">{name}</p>
                 </div>
-                <div className="col-4 col-md-2 offset-md-1 d-flex align-items-center">
+                <div className="col-4 col-md-3 offset-md-1 d-flex align-items-center">
                     <p className="card-text text-dark pl-3">
                         <Moment date={dateStart} format="MMM DD" />
+                        {' - '}
+                        <Moment date={dateEnd} format="MMM DD" />
                     </p>
                 </div>
                 <div className="col-4 col-md-2 d-flex align-items-center justify-content-center">

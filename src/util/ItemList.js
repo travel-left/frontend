@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { apiCall } from './api'
 import LeftCard from './LeftCard'
 
-export default ({ items, update, remove, C }) =>
+export default ({ items, update, remove, C, otherProps }) =>
     items.map(item => (
-        <C {...item} update={update} remove={remove} key={item._id} />
+        <C {...item} update={update} {...otherProps} remove={remove} key={item._id} />
     ))
 
 // export default class ItemList extends Component {
@@ -60,7 +60,7 @@ export default ({ items, update, remove, C }) =>
 //     }
 
 //     render() {
-//         const { Component, Create, name } = this.props
+//         const { Component, Create, name, otherProps } = this.props
 //         const { items } = this.state
 //         let itemList =
 //             items && items.length
@@ -70,6 +70,7 @@ export default ({ items, update, remove, C }) =>
 //                           update={this.updateItem}
 //                           remove={this.removeItem}
 //                           key={item._id}
+//                           {...otherProps}
 //                       />
 //                   ))
 //                 : null
@@ -81,9 +82,7 @@ export default ({ items, update, remove, C }) =>
 //             <>
 //                 <h4 className="text-dark my-3">{name}</h4>
 //                 <Create formType="add" submit={this.createItem} />
-//                 <div className="row">
-//                     {itemList}
-//                 </div>
+//                 <div className="row">{itemList}</div>
 //             </>
 //         )
 //     }

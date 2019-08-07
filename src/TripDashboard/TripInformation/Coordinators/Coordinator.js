@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import UpdateCoordinatorForm from './UpdateCoordinatorForm'
 import LeftCard from '../../../util/LeftCard'
 
 class Coordinator extends Component {
@@ -13,7 +12,25 @@ class Coordinator extends Component {
     }
 
     render() {
-        let { email, image, name, phone, title } = this.props
+        let {
+            email,
+            image,
+            name,
+            phone,
+            title,
+            currentUserId,
+            _id
+        } = this.props
+
+        const removeButton =
+            currentUserId !== _id ? (
+                <button
+                    className="btn btn-danger mt-3"
+                    onClick={this.handleDelete}
+                >
+                    -
+                </button>
+            ) : null
 
         return (
             <LeftCard>
@@ -34,6 +51,7 @@ class Coordinator extends Component {
                                 <small className="text-muted">{phone}</small>
                             </p>
                         )}
+                        {removeButton}
                     </div>
                 </div>
             </LeftCard>
