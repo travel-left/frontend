@@ -40,9 +40,7 @@ export default function UpdateTripDateForm(props) {
         type: tripDateTypeValidator
     })
 
-    const icon = `hover fas fa-ellipsis-h text-muted ${
-        props.onItinerary ? null : 'float-right'
-        }`
+    const icon = 'hover fas fa-ellipsis-h text-muted float-right'
 
     return (
         <ModalForm

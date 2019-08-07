@@ -14,7 +14,7 @@ export default ({
     return events.map(event => {
         let dayHeader = daysList.includes(event.dateStart) ? null : (
             <h3
-                className="mt-4 mb-3 text-dark"
+                className="mt-4 mb-3"
                 name={moment(event.dateStart).format('MMM DD YYYY')}
             >
                 {moment(event.dateStart).format('MMM DD')}
@@ -36,7 +36,7 @@ export default ({
     })
 }
 
-var date_sort_asc = function(date1, date2) {
+var date_sort_asc = function (date1, date2) {
     if (date1.dateStart > date2.dateStart) return 1
     if (date1.dateStart < date2.dateStart) return -1
     return 0
