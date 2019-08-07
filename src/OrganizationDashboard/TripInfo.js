@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
 import { apiCall } from '../util/api'
+import TripStatus from '../util/otherComponents/TripStatus';
 
 class TripInfo extends Component {
     tripId = this.props.trip._id
@@ -55,7 +56,7 @@ class TripInfo extends Component {
                         alt="..."
                         style={{ backgroundColor: '#FBFBFB' }}
                     />
-                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover" style={{
+                    <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow" style={{
                         position: 'absolute',
                         top: '68%',
                         right: '10%',
@@ -83,9 +84,10 @@ class TripInfo extends Component {
                         </li>
                         <li className="list-group-item bg-light">
                             Status{' '}
-                            <span className="float-right badge badge-primary badge-pill badge-secondary text-light px-3">
-                                {status}
-                            </span>
+                            <div className="float-right">
+                                <TripStatus status={status} />
+                            </div>
+
                         </li>
                         <li className="list-group-item bg-light">
                             Total Invited{' '}

@@ -15,11 +15,6 @@ export default function CreateTextForm({ submit, travelers }) {
             .required('Please enter a body')
     })
 
-    const button = {
-        classes: 'btn btn-outline-primary btn-lg',
-        text: 'TEXT'
-    }
-
     let travelerList = travelers.map(t =>
         t.selected ? (
             <p key={t._id}>
@@ -29,13 +24,13 @@ export default function CreateTextForm({ submit, travelers }) {
                 </div>
             </p>
         ) : (
-            undefined
-        )
+                undefined
+            )
     )
 
     return (
         <ModalForm
-            button={button}
+            icon='far fa-comment fa-2x text-primary'
             header="Send a text to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}

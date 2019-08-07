@@ -4,7 +4,7 @@ export default ({ name = '', label = '', className, checked, onChange }) => (
     <div
         className={`custom-control custom-checkbox ${className}`}
         // onClick={onChange}
-        onClick={label === 'SELECT ALL' ? onChange : null}
+        onClick={label === 'noshow' ? onChange : null}
     >
         <input
             type="checkbox"
@@ -15,7 +15,7 @@ export default ({ name = '', label = '', className, checked, onChange }) => (
             id={name}
         />
         <label htmlFor={name} className="custom-control-label">
-            {label}
+            {label && (label !== 'noshow')}
         </label>
     </div>
 )

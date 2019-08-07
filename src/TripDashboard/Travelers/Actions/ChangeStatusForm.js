@@ -7,11 +7,6 @@ export default function ChangeStatusForm({ submit, travelers }) {
         status: ''
     }
 
-    const button = {
-        classes: 'btn btn-outline-primary btn-lg',
-        text: 'STATUS'
-    }
-
     let travelerList = travelers.map(t =>
         t.selected ? (
             <p key={t._id}>
@@ -21,13 +16,13 @@ export default function ChangeStatusForm({ submit, travelers }) {
                 </div>
             </p>
         ) : (
-            undefined
-        )
+                undefined
+            )
     )
 
     return (
         <ModalForm
-            button={button}
+            icon='far fa-edit fa-lg text-primary fa-2x'
             header="Bulk update travelers status"
             initialValues={initialValues}
             submit={submit}
