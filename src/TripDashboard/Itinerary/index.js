@@ -11,8 +11,8 @@ class Itinerary extends Component {
 
     state = {
         days: [],
-        events: [],
-        selectedDay: ''
+        selectedDay: '',
+        itinerary: []
     }
 
     constructor(props) {
@@ -22,17 +22,19 @@ class Itinerary extends Component {
     }
 
     getDaysAndEvents = async () => {
-        let events = await apiCall(
+        let itinerary = await apiCall(
             'get',
             `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
         )
-        events.sort(time_sort_asc)
+        itinerary.sort(time_sort_asc)
         let days = []
-        events.forEach(event => {
-            if (!days.includes(event.dateStart)) days.push(event.dateStart)
-        })
+        for (const event of itinerary) {
+            if (!days.includes(event.dateStart)) {
+                days.push(event.dateStart)
+            }
+        }
 
-        this.setState({ events, days, selectedDay: days[0] })
+        this.setState({ itinerary, days, selectedDay: days[0] })
     }
 
     createEvent = async event => {
@@ -65,12 +67,12 @@ class Itinerary extends Component {
     updateEvent = async (eventId, updateObject) => {
         updateObject.dtStart = `${updateObject.dateStart}T${
             updateObject.timeStart
-            }:00`
+        }:00`
         updateObject.dtEnd = `${updateObject.dateEnd}T${
             updateObject.timeEnd
-            }:00`
+        }:00`
 
-        const originalEvent = this.state.events.find(
+        const originalEvent = this.state.itinerary.find(
             e => e._id.toString() === eventId
         )
         updateObject = await genericSubUpdater(
@@ -127,7 +129,7 @@ class Itinerary extends Component {
     }
 
     render() {
-        const { days, events, selectedDay } = this.state
+        const { days, itinerary, selectedDay } = this.state
         const dayList = days.length ? (
             <DayList
                 selectedDay={selectedDay}
@@ -135,17 +137,17 @@ class Itinerary extends Component {
                 handleClick={this.onDayClick}
             />
         ) : null
-        const eventList = events.length ? (
+        const eventList = itinerary.length ? (
             <EventList
-                events={events}
+                events={itinerary}
                 updateEvent={this.updateEvent}
                 removeEvent={this.removeEvent}
                 updateTripDate={this.updateTripDate}
                 removeTripDate={this.removeTripDate}
             />
         ) : (
-                <h4 className="text-info" />
-            )
+            <h4 className="text-info" />
+        )
         // let alert = showAlert ? (
         //     <Alert
         //         text='This is your trip itinerary.  Here you can manage events and days.  Click "ADD NEW EVENT" to get started.'
@@ -159,9 +161,7 @@ class Itinerary extends Component {
                     <div className="col-md-12 d-none d-md-block">{alert}</div>
                 </div> */}
                 <div className="row">
-                    <div className="col-md-2">
-                        {dayList}
-                    </div>
+                    <div className="col-md-2">{dayList}</div>
                     <div className="col-md-10">
                         <div className="row float-right mb-5 mr-2">
                             <CreateEventForm
@@ -181,7 +181,7 @@ class Itinerary extends Component {
 
 export default Itinerary
 
-const time_sort_asc = function (event1, event2) {
+const time_sort_asc = function(event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')
