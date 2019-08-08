@@ -67,7 +67,7 @@ class Cover extends Component {
                         </div>
                     </div>
                     <div className="row justify-content-between">
-                    <div>
+                    <div className="btn">
                         <h5 className="d-inline text-light left-shadow">
                             {invited} Invited
                             </h5>

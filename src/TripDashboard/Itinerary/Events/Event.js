@@ -78,8 +78,8 @@ class Event extends Component {
             <p className="card-text text-muted">{'Address: ' + event.address}</p>
         ) : null
 
-        const documents = event.documents
-            ? event.documents.map((e, i) => (
+        const documents = event.documents ? event.documents.map((e, i) => (
+            <div className='card shadow p-2 my-2'>
                 <a
                     key={i}
                     href={e.link}
@@ -87,9 +87,11 @@ class Event extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {e.name} - {e.description}
-                </a>
-            ))
+                    {e.name}
+                </a> <span className="text-muted">{e.description}</span>
+            </div>
+
+        ))
             : null
 
         return (

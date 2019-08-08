@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import LeftCard from '../../../util/LeftCard'
+import RemoveCoordinator from './RemoveCoordinator';
 
 class Coordinator extends Component {
     handleEdit = updateObject => {
@@ -24,12 +25,7 @@ class Coordinator extends Component {
 
         const removeButton =
             currentUserId !== _id ? (
-                <button
-                    className="btn btn-danger mt-3"
-                    onClick={this.handleDelete}
-                >
-                    -
-                </button>
+                <RemoveCoordinator submit={this.handleDelete} />
             ) : null
 
         return (
@@ -38,7 +34,7 @@ class Coordinator extends Component {
                     <div className="col-md-3 d-flex align-items-center">
                         <Image src={image} diameter="55px" />
                     </div>
-                    <div className="col-md-9 d-flex flex-column justify-content-center">
+                    <div className="col-md-7 d-flex flex-column justify-content-center">
                         {name && <p className="m-0">{name}</p>}
                         {title && <p className="m-0">{title}</p>}
                         {email && (
@@ -51,6 +47,8 @@ class Coordinator extends Component {
                                 <small className="text-muted">{phone}</small>
                             </p>
                         )}
+                    </div>
+                    <div className="col-2 d-flex justify-content-center align-items-center">
                         {removeButton}
                     </div>
                 </div>

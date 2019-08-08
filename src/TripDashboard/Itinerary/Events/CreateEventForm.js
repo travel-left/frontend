@@ -136,7 +136,7 @@ export default function CreateEventForm({ submit, initDay }) {
                         <button
                             key="b"
                             type="button"
-                            className="btn btn-primary btn-sm ml-1"
+                            className="btn btn-secondary text-light"
                             onClick={() =>
                                 push({
                                     link: '',
