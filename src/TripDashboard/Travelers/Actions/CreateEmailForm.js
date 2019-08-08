@@ -12,11 +12,11 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
     const schema = Yup.object().shape({
         subject: Yup.string()
             .min(2, 'Please enter a longer subject')
-            .max(50, 'Please enter a shorter subject')
+            .max(200, 'Please enter a shorter subject')
             .required('Please enter a subject'),
         body: Yup.string()
             .min(2, 'Please enter a longer body')
-            .max(50, 'Please enter a shorter body')
+            .max(5000, 'Please enter a shorter body')
             .required('Please enter a body')
     })
 
@@ -25,7 +25,7 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             <p key={t._id}>
                 <div className="row">
                     <div className="col text-black-50">{t.name}</div>
-                    <div className="col text-black-50">{t.phone}</div>
+                    <div className="col text-black-50">{t.email}</div>
                 </div>
             </p>
         ) : null
@@ -37,25 +37,24 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             <h5>Selected travelers</h5>
             <div className="row">
                 <div className="col ">Name</div>
-                <div className="col ">Phone</div>
+                <div className="col ">Email</div>
             </div>
             <hr />
             {travelerList}
         </>
     ) : (
-            <p className="text-danger text-center">No Travelers Selected!</p>)
+        <p className="text-danger text-center">No Travelers Selected!</p>
+    )
 
     return (
         <ModalForm
-            icon='far fa-envelope fa-2x text-primary'
+            icon="far fa-envelope fa-2x text-primary"
             header="Send an email to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
         >
-            <div className="mb-4">
-                {travelerList}
-            </div>
+            <div className="mb-4">{travelerList}</div>
             <FormField
                 name="subject"
                 label="Subject"
