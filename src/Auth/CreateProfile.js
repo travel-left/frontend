@@ -40,7 +40,7 @@ export default ({ onAuth, history }) => {
     })
 
     return (
-        <div className='container'>
+        <div className="container">
             <h1 className="display-4 text-dark font-weight-bold py-4 mx-5">
                 Let's set up your profile and company!
             </h1>
@@ -59,8 +59,11 @@ export default ({ onAuth, history }) => {
                             password: values.password
                         }
                         const { organization } = values
-                        await onAuth('signup?newOrg=true', { coordinator, organization })
-                        history.push('/')
+                        await onAuth(
+                            'signup?newOrg=true',
+                            { coordinator, organization },
+                            history
+                        )
                     } catch (err) {
                         console.error(err)
                         mError = err
@@ -117,7 +120,6 @@ export default ({ onAuth, history }) => {
                                         placeholder="www.travel-left.com"
                                         type="url"
                                     />
-
                                 </div>
                             </div>
                             <button
@@ -126,7 +128,7 @@ export default ({ onAuth, history }) => {
                                 disabled={isSubmitting}
                             >
                                 SAVE
-                                    </button>
+                            </button>
                         </Form>
                     )
                 }}
