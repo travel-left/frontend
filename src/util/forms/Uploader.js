@@ -92,7 +92,7 @@ export default class Uploader extends Component {
             <div className="row">
                 {component}
                 <button
-                    className="btn btn-link mt-2 pl-0"
+                    className="btn btn-link mt-2"
                     onClick={this.switchType}
                     type="button"
                 >

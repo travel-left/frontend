@@ -14,6 +14,7 @@ import { apiCall } from '../../util/api'
 
 export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
+    currentUserId = this.props.currentUser._id
 
     state = {
         coordinators: [],
@@ -234,10 +235,10 @@ export default class TripInformation extends Component {
             coordinators.length > 0 ? (
                 <ItemList
                     C={Coordinator}
+                    currentUserId={this.currentUserId}
                     items={coordinators}
                     update={this.updateCoordinator}
                     remove={this.deleteCoordinator}
-                    otherProps={{ currentUserId: this.props.currentUser._id }}
                 />
             ) : null
         let contactsList =
@@ -274,21 +275,9 @@ export default class TripInformation extends Component {
                 <div className="row">
                     <div className="col-md-12 mt-4 ml-3">
                         <h4 className="mb-3">Trip Name</h4>
-                        <div
-                            className="pb-2"
-                            style={{
-                                borderBottom: '1.5px solid black',
-                                width: '20vw'
-                            }}
-                        >
-                            <h3 className="text-primary my-1 d-inline">
-                                {' '}
-                                {name}{' '}
-                            </h3>
-                            <TripNameForm
-                                name={name}
-                                submit={this.updateTrip}
-                            />
+                        <div className='pb-2' style={{ borderBottom: '1.5px solid black', width: '20vw' }}>
+                            <h3 className="text-primary my-1 d-inline"> {name} </h3>
+                            <TripNameForm name={name} submit={this.updateTrip} />
                         </div>
                         <h4 className="mt-5 mb-4">Trip Coordinators</h4>
                         <div className="row">
@@ -316,12 +305,12 @@ export default class TripInformation extends Component {
                             <div className="col-md-3">
                                 <h4 className="">Trip Documents</h4>
                             </div>
-                            <div className="col-md-6" />
+                            <div className="col-md-6">
 
-                            <div className="col-md-3">
-                                <CreateDocumentForm
-                                    submit={this.createDocument}
-                                />
+                            </div>
+
+                            <div className='col-md-3'>
+                                <CreateDocumentForm submit={this.createDocument} />
                             </div>
                         </div>
                         <div className="row mx-5">{documentsList}</div>
@@ -329,9 +318,7 @@ export default class TripInformation extends Component {
                         <div className="row mb-5">
                             {contactsList}
                             <div className="col-md-4 my-2 animated fadeIn d-flex justify-content-center align-items-center">
-                                <CreateContactForm
-                                    submit={this.createContact}
-                                />
+                                <CreateContactForm submit={this.createContact} />
                             </div>
                         </div>
                     </div>
