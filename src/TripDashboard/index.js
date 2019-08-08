@@ -22,6 +22,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
                     <TripRouter
                         currentTrip={currentTrip}
                         currentUser={currentUser}
+                        setCurrentTrip={setCurrentTrip}
                     />
                 </div>
             </div>

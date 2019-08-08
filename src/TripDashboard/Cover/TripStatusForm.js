@@ -16,8 +16,8 @@ export default function TripDatesForm({ status, submit }) {
             value: 'PLANNING'
         },
         {
-            label: 'Planned',
-            value: 'PLANNED'
+            label: 'Completed',
+            value: 'COMPLETED'
         },
         {
             label: 'LEFT',

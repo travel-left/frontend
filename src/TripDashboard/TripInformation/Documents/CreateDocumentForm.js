@@ -1,88 +1,51 @@
-import React, { Component } from 'react'
+import React from 'react'
 import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
-import DocumentUploader from '../../../util/forms/DocumentUploader'
+import Uploader from '../../../util/forms/Uploader'
+import Validator, { nameValidator } from '../../../util/validators'
 
-export default class CreateDocumentForm extends Component {
-    state = {
-        linkFields: false
-    }
-
-    toggleLinkFields = () => {
-        this.setState(prevState => {
-            return { linkFields: !prevState.linkFields }
-        })
-    }
-    initialValues = {
+const CreateDocumentForm = ({ submit }) => {
+    const initialValues = {
         name: '',
         link: '',
         description: ''
     }
 
-    schema = Yup.object().shape({
-        name: Yup.string()
-            .min(2, 'Please enter a longer name')
-            .max(50, 'Please enter a shorter name')
-            .required('Please enter a name'),
+    const schema = Validator({
+        name: nameValidator,
         link: Yup.string().required('Please select a link or file')
     })
 
-    button = {
+    const button = {
         classes: 'btn btn-primary rounded-pill',
         text: 'ADD NEW'
     }
 
-    render() {
-        let { submit } = this.props
-
-        let uploadFields = (
+    return (
+        <ModalForm
+            button={button}
+            header="Add a document or link"
+            validationSchema={schema}
+            initialValues={initialValues}
+            submit={submit}
+        >
             <FormField
                 name="link"
                 label="Upload a document"
                 type="file"
-                component={DocumentUploader}
+                component={Uploader}
             />
-        )
-
-        let linkFields = (
-            <>
-                <FormField
-                    name="link"
-                    label="Documnet link"
-                    placeholder="Link"
-                />
-                <FormField
-                    name="name"
-                    label="Name for link"
-                    placeholder="Linky Boi"
-                />
-            </>
-        )
-
-        return (
-            <ModalForm
-                button={this.button}
-                header="Add a document or link"
-                validationSchema={this.schema}
-                initialValues={this.initialValues}
-                submit={submit}
-            >
-                {this.state.linkFields ? linkFields : uploadFields}
-                <FormField
-                    name="description"
-                    label="Description"
-                    component="textarea"
-                    placeholder="A description for your document"
-                    className="d-block"
-                />
-                <button
-                    className="btn btn-link mt-2 pl-0"
-                    onClick={this.toggleLinkFields}
-                >
-                    {this.state.linkFields ? 'Upload' : 'Link'} a document
-                </button>
-            </ModalForm>
-        )
-    }
+            <FormField name="name" label="Name" placeholder="Document Name" />
+            <FormField
+                name="description"
+                label="Description"
+                component="textarea"
+                placeholder="A description for your document"
+                className="d-block"
+            />
+        </ModalForm>
+    )
 }
+
+export default CreateDocumentForm

@@ -1,22 +1,24 @@
-import React from "react";
-import * as Yup from "yup";
-import FormField from "../../../util/forms/FormField";
-import ModalForm from "../../../util/forms/ModalForm";
-import Uploader from "../../../util/forms/Uploader";
-import SelectField from "../../../util/forms/SelectField";
+import React from 'react'
+import FormField from '../../../util/forms/FormField'
+import ModalForm from '../../../util/forms/ModalForm'
+import Uploader from '../../../util/forms/Uploader'
+import SelectField from '../../../util/forms/SelectField'
+import Validator, {
+    nameValidator,
+    emailValidator,
+    phoneValidator
+} from '../../../util/validators'
 
 export default function UpdateTravelerForm(props) {
     const initialValues = {
         ...props
-    };
+    }
 
-    const schema = Yup.object().shape({
-        name: Yup.string()
-            .min(2, "Please enter a longer name")
-            .max(50, "Please enter a shorter name")
-            .required("Please enter a name"),
-        email: Yup.string().email("please enter a valid email")
-    });
+    const schema = Validator({
+        name: nameValidator,
+        email: emailValidator,
+        phone: phoneValidator
+    })
 
     const button = {
         classes: "btn btn-lg btn-secondary text-light float-right px-4",
@@ -29,7 +31,8 @@ export default function UpdateTravelerForm(props) {
             header="Edit traveler"
             validationSchema={schema}
             initialValues={initialValues}
-            {...props}
+            submit={props.submit}
+            remove={props.remove}
         >
             <FormField name="name" label="Name" placeholder="Steve Jobs" />
             <SelectField
@@ -63,5 +66,5 @@ export default function UpdateTravelerForm(props) {
                 className="d-block"
             />
         </ModalForm>
-    );
+    )
 }

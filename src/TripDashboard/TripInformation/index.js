@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import Alert from '../../util/otherComponents/Alert'
 import TripNameForm from './TripNameForm'
 import Coordinator from './Coordinators/Coordinator'
 import CreateCoordinatorForm from './Coordinators/CreateCoordinatorForm'
@@ -15,6 +14,7 @@ import { apiCall } from '../../util/api'
 
 export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
+    currentUserId = this.props.currentUser._id
 
     state = {
         coordinators: [],
@@ -235,6 +235,7 @@ export default class TripInformation extends Component {
             coordinators.length > 0 ? (
                 <ItemList
                     C={Coordinator}
+                    currentUserId={this.currentUserId}
                     items={coordinators}
                     update={this.updateCoordinator}
                     remove={this.deleteCoordinator}
@@ -271,9 +272,6 @@ export default class TripInformation extends Component {
 
         return (
             <div className="mt-3 mx-3">
-                {/* <div className="row">
-                    <div className="col-md-12 d-none d-md-block">{alert}</div>
-                </div> */}
                 <div className="row">
                     <div className="col-md-12 mt-4 ml-3">
                         <h4 className="mb-3">Trip Name</h4>

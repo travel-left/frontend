@@ -38,10 +38,9 @@ class Cover extends Component {
 
     render() {
         let currentTrip = this.props.currentTrip
-        let invited = this.state.travelers.filter(t => t.status === 'INVITED')
-        let confirmed = this.state.travelers.filter(
-            t => t.status === 'CONFIRMED'
-        )
+        let invited = this.state.travelers.length
+        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
+            .length
         return (
             <div className="row">
                 <div
@@ -68,24 +67,24 @@ class Cover extends Component {
                         </div>
                     </div>
                     <div className="row justify-content-between">
-                        <div className="btn">
-                            <h5 className="d-inline text-light left-shadow">
-                                {invited.length} Invited
+                    <div className="btn">
+                        <h5 className="d-inline text-light left-shadow">
+                            {invited} Invited
                             </h5>
-                            <h5 className="d-inline text-light ml-3 left-shadow">
-                                {confirmed.length} Confirmed
+                        <h5 className="d-inline text-light ml-3 left-shadow">
+                            {confirmed} Confirmed
                             </h5>
                         </div>
-                        <TripDatesForm
+                            <TripDatesForm
                             dateStart={currentTrip.dateStart}
-                            dateEnd={currentTrip.dateEnd}
-                            submit={this.updateTrip}
-                        />
-                        <TripImageForm
-                            image={currentTrip.image}
-                            submit={this.updateTrip}
-                        />
-                    </div>
+                                dateEnd={currentTrip.dateEnd}
+                                submit={this.updateTrip}
+                            />
+                                <TripImageForm
+                                    image={currentTrip.image}
+                                    submit={this.updateTrip}
+                                />
+                            </div>
                 </div>
                 <div className="col-3" />
             </div>

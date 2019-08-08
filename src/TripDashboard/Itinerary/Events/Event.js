@@ -78,8 +78,8 @@ class Event extends Component {
             <p className="card-text text-muted">{'Address: ' + event.address}</p>
         ) : null
 
-        const links = event.links
-            ? event.links.map((e, i) => (
+        const documents = event.documents ? event.documents.map((e, i) => (
+            <div className='card shadow p-2 my-2'>
                 <a
                     key={i}
                     href={e.link}
@@ -87,9 +87,11 @@ class Event extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    {e.description}
-                </a>
-            ))
+                    {e.name}
+                </a> <span className="text-muted">{e.description}</span>
+            </div>
+
+        ))
             : null
 
         return (
@@ -97,10 +99,11 @@ class Event extends Component {
                 <div className="row">
                     <div className="card-body">
                         <h5 className="card-title mb-3">
-                            <strong>                            <i
-                                className={`fa ${iconString} pr-2`}
-                                style={{ color: color }}
-                            /> {name}</strong>
+                            <strong>
+                                <i
+                                    className={`fa ${iconString} pr-2`}
+                                    style={{ color: color }}
+                                /> {name}</strong>
                             {updater}
                         </h5>
                         <div className="row">
@@ -112,8 +115,8 @@ class Event extends Component {
                                     {date}
                                 </h6>
                                 {/* <Image diameter="100px" src={event.image} /> */}
-                                <p className="card-text my-3">{event.description}</p>
-                                {links}
+                                <p className="card-text">{event.description}</p>
+                                {documents}
                             </div>
                             <div className="col-md-6">
                                 {map}

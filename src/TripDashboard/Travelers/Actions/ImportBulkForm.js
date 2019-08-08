@@ -23,7 +23,7 @@ export default function ImportBulkForm({ submit }) {
         >
             <label className="d-block">Download a Template CSV File</label>
             <a
-                href="https://travel-left-images.s3.us-east-2.amazonaws.com/1564525723400.Untitled%20spreadsheet%20-%20Sheet1.csv"
+                href="https://travel-left-images.s3.us-east-2.amazonaws.com/UploadTravelers.csv"
                 className="btn btn-primary"
             >
                 Download

@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import UpdateTravelerForm from "./Actions/UpdateTravelerForm";
-import Image from "../../util/otherComponents/Image";
-import TravelerStatus from '../../util/otherComponents/TravelerStatus';
+import React, { Component } from 'react'
+import UpdateTravelerForm from '../Actions/UpdateTravelerForm'
+import Image from '../../../util/otherComponents/Image'
+import TravelerStatus from '../../../util/otherComponents/TravelerStatus';
 
 export default class TravelerInfo extends Component {
     handleRemove = () => {
-        this.props.remove(this.props._id);
-    };
+        this.props.remove(this.props.traveler._id)
+    }
     handleUpdate = updateObject => {
-        this.props.update(this.props._id, updateObject);
-    };
+        this.props.update(this.props.traveler._id, updateObject)
+    }
     render() {
         let {
             name,
@@ -18,7 +18,7 @@ export default class TravelerInfo extends Component {
             status,
             phone,
             personalNotes
-        } = this.props.traveler;
+        } = this.props.traveler
 
         return (
             <div className="container pt-3 pb-3 shadow" style={{ height: '100vh' }}>
@@ -55,11 +55,10 @@ export default class TravelerInfo extends Component {
                                 submit={this.handleUpdate}
                             />
                             <button className="btn btn-lg btn-danger float-right mr-4">REMOVE</button>
-
                         </div>
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

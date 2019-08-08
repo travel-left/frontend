@@ -12,17 +12,11 @@ export default function CreateEventForm({ submit, initDay }) {
         name: '',
         tzStart: moment.tz.guess(),
         tzEnd: moment.tz.guess(),
-        type: 'Category',
+        type: 'EVENT',
         description: '',
         documents: [
             {
                 name: '',
-                link: '',
-                description: ''
-            }
-        ],
-        links: [
-            {
                 link: '',
                 description: ''
             }
@@ -96,54 +90,7 @@ export default function CreateEventForm({ submit, initDay }) {
                 label="Address"
                 placeholder="1 World Way, Los Angeles, CA, US"
             />
-            <FieldArray name="links">
-                {({ form, push, remove }) => (
-                    <>
-                        {form.values.links.map((_document, index) => (
-                            <div key={index} className="form-row">
-                                <div className="col-5">
-                                    <FormField
-                                        name={`links.${index}.link`}
-                                        type="url"
-                                        label="Link"
-                                        placeholder="https://yourlink.com"
-                                    />
-                                </div>
-
-                                <div className="col-5">
-                                    <FormField
-                                        name={`links.${index}.description`}
-                                        label="Description"
-                                        placeholder="Name for link"
-                                    />
-                                </div>
-
-                                <div className="col-2 mt-5">
-                                    <button
-                                        type="button"
-                                        className="btn btn-sm btn-danger"
-                                        placeholder="linky boi"
-                                        onClick={() => remove(index)}
-                                    >
-                                        -
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary btn-sm ml-1"
-                                        key="b"
-                                        placeholer="link for your boi"
-                                        onClick={() =>
-                                            push({ link: '', description: '' })
-                                        }
-                                    >
-                                        +
-                            </button>
-                                </div>
-                            </div>
-                        ))}
-                    </>
-                )}
-            </FieldArray>
+            <p>Documents</p>
             <FieldArray name="documents">
                 {({ form, push, remove }) => (
                     <>
@@ -169,7 +116,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                 <div key={index * 2 + 1} className="form-row">
                                     <div className="col-10">
                                         <FormField
-                                            name="image"
+                                            name={`documents.${index}.links`}
                                             component={Uploader}
                                             label="Upload a Document"
                                         />
@@ -177,31 +124,29 @@ export default function CreateEventForm({ submit, initDay }) {
                                     <div className="col-2 mt-5">
                                         <button
                                             type="button"
-                                            className="btn btn-sm btn-danger"
+                                            className="btn btn-sm btn-danger float-right"
                                             onClick={() => remove(index)}
                                         >
                                             -
                                         </button>
-                                        <button
-                                            key="b"
-                                            type="button"
-                                            className="btn btn-primary btn-sm ml-1"
-                                            onClick={() =>
-                                                push({
-                                                    link: '',
-                                                    description: '',
-                                                    name: ''
-                                                })
-                                            }
-                                        >
-                                            +
-                            </button>
-
                                     </div>
                                 </div>
                             </>
                         ))}
-
+                        <button
+                            key="b"
+                            type="button"
+                            className="btn btn-secondary text-light"
+                            onClick={() =>
+                                push({
+                                    link: '',
+                                    description: '',
+                                    name: ''
+                                })
+                            }
+                        >
+                            Add Another Document
+                        </button>
                     </>
                 )}
             </FieldArray>
