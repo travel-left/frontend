@@ -11,7 +11,7 @@ import Validator, {
 
 export default function UpdateTravelerForm(props) {
     const initialValues = {
-        ...props
+        ...props.traveler
     }
 
     const schema = Validator({
@@ -21,7 +21,7 @@ export default function UpdateTravelerForm(props) {
     })
 
     const button = {
-        classes: "btn btn-lg btn-secondary text-light float-right px-4",
+        classes: 'btn btn-lg btn-secondary text-light float-right px-4',
         text: 'EDIT'
     }
 
@@ -38,14 +38,18 @@ export default function UpdateTravelerForm(props) {
             <SelectField
                 name="status"
                 options={[
-                    { label: "INVITED", value: "INVITED" },
-                    { label: "CONFIRMED", value: "CONFIRMED" },
-                    { label: "ON-TRIP", value: "ON-TRIP" },
-                    { label: "POST-TRIP", value: "POST-TRIP" }
+                    { label: 'INVITED', value: 'INVITED' },
+                    { label: 'CONFIRMED', value: 'CONFIRMED' },
+                    { label: 'ON-TRIP', value: 'ON-TRIP' },
+                    { label: 'POST-TRIP', value: 'POST-TRIP' }
                 ]}
                 label="Status"
             />
-            <FormField name="image" label="Upload a new image" component={Uploader} />
+            <FormField
+                name="image"
+                label="Upload a new image"
+                component={Uploader}
+            />
             <FormField
                 name="email"
                 label="Email"
