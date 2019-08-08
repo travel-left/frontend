@@ -55,7 +55,6 @@ export default class TravelerInfo extends Component {
                                 submit={this.handleUpdate}
                             />
                             <button className="btn btn-lg btn-danger float-right mr-4">REMOVE</button>
-
                         </div>
                     </div>
                 </div>

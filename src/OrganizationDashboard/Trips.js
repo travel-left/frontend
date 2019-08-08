@@ -205,10 +205,10 @@ class Trips extends Component {
                                 <div className="col-md-3 border-bottom-5 border-primary text-uppercase ml-5">
                                     TRIP NAME
                                 </div>
-                                <div className="col-md-4" />
+                                <div className="col-md-4"></div>
                                 <div className="col-md-2 offset-md-1 text-uppercase text-dark">
-                                    Dates
-                                </div>
+                                    Date
+                                 </div>
                                 <div className="col-md-2 text-uppercase text-dark">
                                     Status
                                 </div>
