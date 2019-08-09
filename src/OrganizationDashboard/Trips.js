@@ -36,9 +36,14 @@ class Trips extends Component {
 
     setStatusesAndState = trips => {
         const { tripStatusCounts } = this.state
-        for (const trip of trips) {
-            tripStatusCounts[trip.status]++
+        if (trips && trips.length) {
+            for (const trip of trips) {
+                if (trip.status) {
+                    tripStatusCounts[trip.status]++
+                }
+            }
         }
+
         this.filterTripsAndSetState(trips, 'ALL TRIPS', {
             tripStatusCounts
         })
@@ -205,10 +210,10 @@ class Trips extends Component {
                                 <div className="col-md-3 border-bottom-5 border-primary text-uppercase ml-5">
                                     TRIP NAME
                                 </div>
-                                <div className="col-md-4"></div>
+                                <div className="col-md-4" />
                                 <div className="col-md-2 offset-md-1 text-uppercase text-dark">
                                     Date
-                                 </div>
+                                </div>
                                 <div className="col-md-2 text-uppercase text-dark">
                                     Status
                                 </div>
