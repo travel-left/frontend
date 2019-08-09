@@ -31,6 +31,8 @@ export const descriptionValidator = Yup.string()
 
 export const fileValidator = Yup.string().url('Please add a valid file')
 
+export const urlValidator = Yup.string().url('Please add a valid url')
+
 export default validator => Yup.object().shape(validator)
 
 export const titleValidator = Yup.string()

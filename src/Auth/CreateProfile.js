@@ -6,7 +6,8 @@ import Validator, {
     nameValidator,
     fileValidator,
     phoneValidator,
-    titleValidator
+    titleValidator,
+    urlValidator
 } from '../util/validators'
 import Uploader from '../util/forms/Uploader'
 import './Auth.css'
@@ -45,7 +46,7 @@ export default class CreateProfile extends Component {
             phone: phoneValidator,
             organization: Validator({
                 name: nameValidator,
-                website: fileValidator
+                website: urlValidator
             })
         })
 
