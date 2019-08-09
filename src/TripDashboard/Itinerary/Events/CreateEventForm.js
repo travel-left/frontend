@@ -90,45 +90,48 @@ export default function CreateEventForm({ submit, initDay }) {
                 label="Address"
                 placeholder="1 World Way, Los Angeles, CA, US"
             />
-            <p>Documents</p>
+            <div className="mt-2">Documents</div>
             <FieldArray name="documents">
                 {({ form, push, remove }) => (
                     <>
                         {form.values.documents.map((_doc, index) => (
                             <>
-                                <div key={index * 2} className="form-row">
-                                    <div className="col-4">
-                                        <FormField
-                                            name={`documents.${index}.name`}
-                                            label="Document Name"
-                                            placeholder="A form to fill out"
-                                        />
-                                    </div>
+                                <div className="card shadow p-4 mt-3">
+                                    <div key={index * 2} className="form-row">
+                                        <div className="col-4">
+                                            <FormField
+                                                name={`documents.${index}.name`}
+                                                label="Document Name"
+                                                placeholder="A form to fill out"
+                                            />
+                                        </div>
 
-                                    <div className="col-8">
-                                        <FormField
-                                            name={`documents.${index}.description`}
-                                            label="Document Description"
-                                            placeholder="Please fill out"
-                                        />
+                                        <div className="col-8">
+                                            <FormField
+                                                name={`documents.${index}.description`}
+                                                label="Document Description"
+                                                placeholder="Please fill out"
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div key={index * 2 + 1} className="form-row">
-                                    <div className="col-10">
-                                        <FormField
-                                            name={`documents.${index}.link`}
-                                            component={Uploader}
-                                            label="Upload a Document"
-                                        />
-                                    </div>
-                                    <div className="col-2 mt-5">
-                                        <button
-                                            type="button"
-                                            className="btn btn-sm btn-danger float-right"
-                                            onClick={() => remove(index)}
-                                        >
-                                            -
-                                        </button>
+                                    <div
+                                        key={index * 2 + 1}
+                                        className="form-row"
+                                    >
+                                        <div className="col-12">
+                                            <FormField
+                                                name={`documents.${index}.link`}
+                                                component={Uploader}
+                                                label="Upload a Document"
+                                            />
+                                            <button
+                                                type="button"
+                                                className="btn btn-md btn-danger float-right mt-2"
+                                                onClick={() => remove(index)}
+                                            >
+                                                remove
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </>
@@ -136,7 +139,7 @@ export default function CreateEventForm({ submit, initDay }) {
                         <button
                             key="b"
                             type="button"
-                            className="btn btn-secondary text-light"
+                            className="btn btn-secondary text-light mt-3"
                             onClick={() =>
                                 push({
                                     link: 'https://',
