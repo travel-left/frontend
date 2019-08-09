@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
 import { apiCall } from '../util/api'
+import TripStatus from '../util/otherComponents/TripStatus'
 
 class TripInfo extends Component {
     state = {
@@ -95,9 +96,9 @@ class TripInfo extends Component {
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
-                            Status{' '}
-                            <span className="float-right badge badge-primary badge-pill badge-secondary text-light px-3">
-                                {status}
+                            Status
+                            <span className="float-right">
+                                <TripStatus status={status} />
                             </span>
                         </li>
                         <li className="list-group-item bg-light">
