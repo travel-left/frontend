@@ -12,7 +12,8 @@ const UpdateDocumentForm = props => {
 
     const schema = Validator({
         name: nameValidator,
-        link: Yup.string().required('Please select a link or file')
+        link: Yup.string().required('Please select a link or file'),
+        description: Yup.string().max(200, 'Please enter a shorter description')
     })
 
     const button = {
@@ -29,7 +30,7 @@ const UpdateDocumentForm = props => {
             submit={props.submit}
             remove={props.remove}
         >
-                <FormField
+            <FormField
                 name="link"
                 label="Upload a document"
                 type="file"

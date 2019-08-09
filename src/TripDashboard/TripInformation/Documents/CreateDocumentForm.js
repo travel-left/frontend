@@ -14,6 +14,10 @@ const CreateDocumentForm = ({ submit }) => {
 
     const schema = Validator({
         name: nameValidator,
+        description: Yup.string().max(
+            200,
+            'Please enter a shorter description'
+        ),
         link: Yup.string().required('Please select a link or file')
     })
 
