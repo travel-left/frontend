@@ -249,7 +249,7 @@ class Travelers extends Component {
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row justify-content-between mb-4 align-items-center pr-3">
-                            <h2 className="text-black d-inline">
+                            <h2 className="text-black d-inline pl-3">
                                 Travelers on This Trip
                             </h2>
                             <ImportBulkForm
