@@ -278,7 +278,7 @@ const TripNameSection = ({ name, update }) => {
         <div className="mb-4 col-12">
             <h4 className="mb-3">Trip Name</h4>
             <div
-                className="pb-2"
+                className="pb-2  ml-4"
                 style={{
                     borderBottom: '1.5px solid black',
                     width: '20vw'
