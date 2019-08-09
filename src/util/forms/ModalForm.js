@@ -36,7 +36,8 @@ class ModalForm extends Component {
             submit,
             remove,
             icon,
-            button
+            button,
+            submitButtonText
         } = this.props
 
         let opener = icon ? (
@@ -142,7 +143,7 @@ class ModalForm extends Component {
                                                 type="submit"
                                                 className="btn btn-lg btn-primary float-right mr-4 mb-4"
                                             >
-                                                SUBMIT
+                                                {submitButtonText || 'SUBMIT'}
                                             </button>
                                         </Form>
                                     </div>

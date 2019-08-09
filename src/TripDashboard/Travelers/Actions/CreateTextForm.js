@@ -49,6 +49,7 @@ export default function CreateTextForm({ submit, travelers, selected }) {
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
+            submitButtonText="SEND"
         >
             <div className="mb-4">{travelerList}</div>
             <FormField
