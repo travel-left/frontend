@@ -11,7 +11,7 @@ export default function CreateTextForm({ submit, travelers, selected }) {
     const schema = Yup.object().shape({
         body: Yup.string()
             .min(2, 'Please enter a longer body')
-            .max(160, 'Please enter a shorter body')
+            .max(400, 'Please enter a shorter body')
             .required('Please enter a body')
     })
 
@@ -44,15 +44,13 @@ export default function CreateTextForm({ submit, travelers, selected }) {
 
     return (
         <ModalForm
-            icon='far fa-comment fa-2x text-primary'
+            icon="far fa-comment fa-2x text-primary"
             header="Send a text to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
         >
-            <div className="mb-4">
-                {travelerList}
-            </div>
+            <div className="mb-4">{travelerList}</div>
             <FormField
                 name="body"
                 label="Body"

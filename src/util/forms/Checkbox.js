@@ -15,7 +15,7 @@ export default ({ name = '', label = '', className, checked, onChange }) => (
             id={name}
         />
         <label htmlFor={name} className="custom-control-label">
-            {label && (label !== 'noshow')}
+            {label && label !== 'noshow' ? label : null}
         </label>
     </div>
 )

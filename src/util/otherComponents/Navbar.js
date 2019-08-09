@@ -17,6 +17,8 @@ class Navbar extends Component {
             <span className="text-light">{currentUser.name}</span>
         ) : null
 
+        let linkTo = '#'
+
         if (currentUser.isAuthenticated) {
             loggedInContent = (
                 <div className="collapse navbar-collapse justify-content-between">
@@ -38,6 +40,7 @@ class Navbar extends Component {
                     </div>
                 </div>
             )
+            linkTo = '/trips'
         }
 
         return (
@@ -46,8 +49,11 @@ class Navbar extends Component {
                 style={{ zIndex: 2 }}
             >
                 <div className="navbar-brand">
-                    <Link to="/trips" className="">
-                        <h1 className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0" style={{ fontSize: '3.2rem' }}>
+                    <Link to={linkTo}>
+                        <h1
+                            className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0"
+                            style={{ fontSize: '3.2rem' }}
+                        >
                             left.
                         </h1>
                     </Link>

@@ -1,7 +1,10 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import FormField from '../util/forms/FormField'
-import Validator, { emailValidator } from '../util/validators'
+import Validator, {
+    emailValidator,
+    passwordValidator
+} from '../util/validators'
 
 export default ({ error, submit }) => {
     const initialValues = {
@@ -9,8 +12,8 @@ export default ({ error, submit }) => {
         password: ''
     }
     const schema = Validator({
-        email: emailValidator
-        //passowrd: stringRequired('password')
+        email: emailValidator,
+        password: passwordValidator
     })
 
     return (

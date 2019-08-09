@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UpdateTravelerForm from '../Actions/UpdateTravelerForm'
 import Image from '../../../util/otherComponents/Image'
-import TravelerStatus from '../../../util/otherComponents/TravelerStatus';
+import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 
 export default class TravelerInfo extends Component {
     handleRemove = () => {
@@ -21,7 +21,10 @@ export default class TravelerInfo extends Component {
         } = this.props.traveler
 
         return (
-            <div className="container pt-3 pb-3 shadow" style={{ height: '100vh' }}>
+            <div
+                className="container pt-3 pb-3 shadow"
+                style={{ height: '100vh' }}
+            >
                 <div className="row d-flex flex-column justify-content-center align-items-center">
                     <Image src={image} diameter="150px" />
                 </div>
@@ -41,12 +44,14 @@ export default class TravelerInfo extends Component {
                         <div className="col-md-12 mt-3">
                             <div className="row h6 text-dark">Status</div>
                             <div className="row text-primary">
-                                <TravelerStatus status={status}></TravelerStatus>
+                                <TravelerStatus status={status} />
                             </div>
                         </div>
                         <div className="col-md-12 mt-3">
                             <div className="row h6 text-dark">Notes</div>
-                            <div className="row text-black-50">{personalNotes}</div>
+                            <div className="row text-black-50">
+                                {personalNotes}
+                            </div>
                         </div>
                         <div className="col-md-12 mt-3">
                             <UpdateTravelerForm
@@ -54,7 +59,6 @@ export default class TravelerInfo extends Component {
                                 remove={this.handleRemove}
                                 submit={this.handleUpdate}
                             />
-                            <button className="btn btn-lg btn-danger float-right mr-4">REMOVE</button>
                         </div>
                     </div>
                 </div>

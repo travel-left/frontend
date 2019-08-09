@@ -1,11 +1,13 @@
 import React from 'react'
+import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
 import FormField from '../util/forms/FormField'
 import CheckBox from '../util/forms/Checkbox'
 import Validator, {
     emailValidator,
     nameValidator,
-    passwordValidator
+    passwordValidator,
+    match
 } from '../util/validators'
 
 export default ({ error, submit }) => {
@@ -22,7 +24,14 @@ export default ({ error, submit }) => {
         email: emailValidator,
         name: nameValidator,
         password: passwordValidator,
-        confirmPassword: passwordValidator
+        confirmPassword: match('password', 'Passwords do not match'),
+        createOrg: Yup.boolean(),
+        orgId: Yup.string().when('createOrg', {
+            is: false,
+            then: Yup.string().required(
+                'Please specify the organization you wish to join.  This will be given to you by your organization administrator.'
+            )
+        })
     })
 
     return (
