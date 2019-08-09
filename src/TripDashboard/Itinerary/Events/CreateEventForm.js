@@ -17,7 +17,7 @@ export default function CreateEventForm({ submit, initDay }) {
         documents: [
             {
                 name: '',
-                link: '',
+                link: 'https://',
                 description: ''
             }
         ],
@@ -116,7 +116,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                 <div key={index * 2 + 1} className="form-row">
                                     <div className="col-10">
                                         <FormField
-                                            name={`documents.${index}.links`}
+                                            name={`documents.${index}.link`}
                                             component={Uploader}
                                             label="Upload a Document"
                                         />
@@ -139,7 +139,7 @@ export default function CreateEventForm({ submit, initDay }) {
                             className="btn btn-secondary text-light"
                             onClick={() =>
                                 push({
-                                    link: '',
+                                    link: 'https://',
                                     description: '',
                                     name: ''
                                 })

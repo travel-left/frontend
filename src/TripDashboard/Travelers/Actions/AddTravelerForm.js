@@ -11,7 +11,7 @@ import Validator, {
 export default function AddTravelerForm({ submit }) {
     const initialValues = {
         name: '',
-        image: '',
+        image: 'https://',
         email: '',
         phone: '',
         personalNotes: ''

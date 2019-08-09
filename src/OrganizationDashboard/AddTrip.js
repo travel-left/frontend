@@ -12,7 +12,7 @@ import {
 export default function AddTrip({ submit }) {
     const initialValues = {
         name: '',
-        image: '',
+        image: 'https://',
         dateStart: '',
         dateEnd: '',
         description: ''

@@ -8,7 +8,7 @@ import Validator, { nameValidator } from '../../../util/validators'
 const CreateDocumentForm = ({ submit }) => {
     const initialValues = {
         name: '',
-        link: '',
+        link: 'https://',
         description: ''
     }
 
