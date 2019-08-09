@@ -31,11 +31,11 @@ export default class CreateProfile extends Component {
             password,
             title: '',
             phone: '',
-            image: '',
+            image: 'https://',
             organization: {
-                image: '',
+                image: 'https://',
                 name: '',
-                website: ''
+                website: 'https://'
             }
         }
 

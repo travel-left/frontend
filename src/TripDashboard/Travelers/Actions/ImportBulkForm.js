@@ -10,12 +10,17 @@ export default function ImportBulkForm({ submit }) {
         text: 'import bulk'
     }
 
+    const initialValues = {
+        file: 'https://'
+    }
+
     const schema = Yup.object().shape({
         file: Yup.string().required()
     })
 
     return (
         <ModalForm
+            initialValues={initialValues}
             button={button}
             header="Add Travelers via CSV"
             validationSchema={schema}

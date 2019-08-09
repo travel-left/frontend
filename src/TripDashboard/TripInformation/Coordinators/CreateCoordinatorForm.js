@@ -12,7 +12,7 @@ import Validator, {
 export default function NewCoordinatorForm({ submit }) {
     const initialValues = {
         name: '',
-        img: '',
+        image: 'https://',
         email: '',
         title: '',
         phone: ''

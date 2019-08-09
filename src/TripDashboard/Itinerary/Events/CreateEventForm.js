@@ -17,7 +17,7 @@ export default function CreateEventForm({ submit, initDay }) {
         documents: [
             {
                 name: '',
-                link: '',
+                link: 'https://',
                 description: ''
             }
         ],
@@ -139,7 +139,7 @@ export default function CreateEventForm({ submit, initDay }) {
                             className="btn btn-secondary text-light"
                             onClick={() =>
                                 push({
-                                    link: '',
+                                    link: 'https://',
                                     description: '',
                                     name: ''
                                 })

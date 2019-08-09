@@ -130,7 +130,7 @@ export default function UpdateEventForm(props) {
                             onClick={() =>
                                 push({
                                     link: '',
-                                    description: '',
+                                    description: 'https://',
                                     name: ''
                                 })
                             }
