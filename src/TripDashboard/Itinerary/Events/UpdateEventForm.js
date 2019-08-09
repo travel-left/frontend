@@ -135,8 +135,8 @@ export default function UpdateEventForm(props) {
                             className="btn btn-secondary text-light mt-3"
                             onClick={() =>
                                 push({
-                                    link: '',
-                                    description: 'https://',
+                                    link: 'https://',
+                                    description: '',
                                     name: ''
                                 })
                             }

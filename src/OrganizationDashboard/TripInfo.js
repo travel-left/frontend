@@ -48,8 +48,6 @@ class TripInfo extends Component {
             status
         } = this.props.trip
 
-        console.log(this.state.travelers)
-
         let invited = this.state.travelers.length
         let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
             .length
