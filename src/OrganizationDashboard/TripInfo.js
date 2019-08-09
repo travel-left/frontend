@@ -78,7 +78,7 @@ class TripInfo extends Component {
                 </div>
 
                 <div className="container bg-light">
-                    <span className="h4">Trip to {name}</span>
+                    <span className="h4">{name}</span>
                     <button
                         onClick={this.handleEditClick}
                         className="btn btn-lg btn-primary float-right"
