@@ -282,14 +282,18 @@ export default class TripInformation extends Component {
                                 width: '20vw'
                             }}
                         >
-                            <h3 className="text-primary my-1 d-inline">
-                                {' '}
-                                {name}{' '}
-                            </h3>
-                            <TripNameForm
-                                name={name}
-                                submit={this.updateTrip}
-                            />
+                            {' '}
+                            <div className="d-flex align-items-center">
+                                <h3 className="text-primary my-1 d-inline">
+                                    {' '}
+                                    {name}{' '}
+                                </h3>
+
+                                <TripNameForm
+                                    name={name}
+                                    submit={this.updateTrip}
+                                />
+                            </div>
                         </div>
                         <h4 className="mt-5 mb-4">Trip Coordinators</h4>
                         <div className="row">
