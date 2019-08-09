@@ -53,6 +53,7 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
+            submitButtonText="SEND"
         >
             <div className="mb-4">{travelerList}</div>
             <FormField

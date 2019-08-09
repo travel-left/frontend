@@ -96,9 +96,7 @@ export default class Uploader extends Component {
                     onClick={this.switchType}
                     type="button"
                 >
-                    {typeLink
-                        ? 'Upload a document instead'
-                        : 'Link a document instead'}
+                    {typeLink ? 'Upload a file instead' : 'Link a file instead'}
                 </button>
             </div>
         )

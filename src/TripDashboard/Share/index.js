@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import moment from "moment-timezone";
-import { apiCall } from "../../util/api";
-import Image from "../../util/otherComponents/Image";
-import Map from "../Itinerary/Events/Map";
-import { Switch, Route, withRouter, NavLink } from "react-router-dom";
-import { getIcon } from "../../util/file-icons";
+import React, { Component } from 'react'
+import moment from 'moment-timezone'
+import { apiCall } from '../../util/api'
+import Image from '../../util/otherComponents/Image'
+import Map from '../Itinerary/Events/Map'
+import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
+import { getIcon } from '../../util/file-icons'
 
 class Share extends Component {
-    tripId = this.props.match.params.tripId;
-    source = this.props.match.path.includes("preview") ? "preview" : "share";
-    tz = moment.tz.guess(true);
+    tripId = this.props.match.params.tripId
+    source = this.props.match.path.includes('preview') ? 'preview' : 'share'
+    tz = moment.tz.guess(true)
 
     state = {
         trip: {},
@@ -17,76 +17,81 @@ class Share extends Component {
         events: [],
         coordinators: [],
         selectedDay: {}
-    };
+    }
     constructor(props) {
-        super(props);
+        super(props)
         //get trip info
-        this.getTripInfo();
+        this.getTripInfo()
     }
 
     getTripInfo = async () => {
-        let data = await apiCall("get", `/api/trips/${this.tripId}/share?tz=${this.tz}`)
+        let data = await apiCall(
+            'get',
+            `/api/trips/${this.tripId}/share?tz=${this.tz}`
+        )
         let events = data.itinerary
-        events.sort(time_sort_asc);
+        events.sort(time_sort_asc)
         let days = []
         events.forEach(event => {
-            if (!days.includes(event.dateStart)) days.push(event.dateStart);
-        });
-        this.setState({ trip: data.trip, events, days, selectedDay: days[0] });
-    };
+            if (!days.includes(event.dateStart)) days.push(event.dateStart)
+        })
+        this.setState({ trip: data.trip, events, days, selectedDay: days[0] })
+    }
 
     setSelectedDay = day => {
         this.setState({
             selectedDay: day
-        });
-    };
+        })
+    }
 
     route = route => {
-        this.setState({ route });
-    };
+        this.setState({ route })
+    }
 
     render() {
-        const { days, events, selectedDay, documents, trip } = this.state;
+        const { days, events, selectedDay, trip } = this.state
         const dayList = days.map(day => {
-            let activeClass = day === selectedDay ? "text-primary" : "";
+            let activeClass = day === selectedDay ? 'text-primary' : ''
             return (
                 <div
                     className={`mx-4 d-flex flex-column align-items-center hover ${activeClass}`}
                     onClick={() => this.setSelectedDay(day)}
                 >
-                    <span>{moment(day).format("dd")}</span>
-                    <span className="h6">{moment(day).format("DD")}</span>
+                    <span>{moment(day).format('dd')}</span>
+                    <span className="h6">{moment(day).format('DD')}</span>
                 </div>
-            );
-        });
+            )
+        })
 
         const eventList = events.map(event => {
             if (event.dateStart === selectedDay) {
-                return <ShareEvent event={event} />;
+                return <ShareEvent event={event} />
             }
         })
 
-        const documentList = this.state.trip.documents ? this.state.trip.documents.map(doc => {
-            return <ShareDocument doc={doc} />;
-        }) : null
+        const documentList = this.state.trip.documents
+            ? this.state.trip.documents.map(doc => {
+                  return <ShareDocument doc={doc} />
+              })
+            : null
 
         const contactsList = trip.contacts
             ? trip.contacts.map(contact => {
-                return <ShareContact contact={contact} />;
-            })
-            : null;
+                  return <ShareContact contact={contact} />
+              })
+            : null
 
         return (
             <div
                 style={{
-                    position: "relative",
-                    height: this.source === "preview" ? "70vh" : "100vh",
-                    overflow: "hidden",
-                    display: "flex",
-                    flexDirection: "column"
+                    position: 'relative',
+                    height: this.source === 'preview' ? '70vh' : '100vh',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column'
                 }}
             >
-                <div id="header" style={{ height: "30vh" }}>
+                <div id="header" style={{ height: '30vh' }}>
                     <ShareCover trip={trip} />
                     <Footer tripId={this.tripId} source={this.source} />
                 </div>
@@ -99,7 +104,7 @@ class Share extends Component {
                             <div
                                 className="container"
                                 id="content"
-                                style={{ height: "68vh", marginTop: '2vh' }}
+                                style={{ height: '68vh', marginTop: '2vh' }}
                             >
                                 <div className="row d-flex justify-content-around">
                                     {documentList}
@@ -115,7 +120,7 @@ class Share extends Component {
                                 className="container"
                                 id="content"
                                 style={{
-                                    height: "68vh",
+                                    height: '68vh',
                                     marginTop: '2vh'
                                 }}
                             >
@@ -132,7 +137,7 @@ class Share extends Component {
                                 <div
                                     className="row px-0 "
                                     style={{
-                                        height: "13vh",
+                                        height: '13vh',
                                         marginTop: '2vh'
                                     }}
                                 >
@@ -145,7 +150,7 @@ class Share extends Component {
                                 <div
                                     className="container "
                                     id="content"
-                                    style={{ height: "65vh" }}
+                                    style={{ height: '65vh' }}
                                 >
                                     <div className="row">
                                         <div className="col-12 d-flex flex-column align-items-center">
@@ -158,58 +163,60 @@ class Share extends Component {
                     />
                 </Switch>
             </div>
-        );
+        )
     }
 }
 
-export default withRouter(Share);
+export default withRouter(Share)
 
-const time_sort_asc = function (event1, event2) {
+const time_sort_asc = function(event1, event2) {
     if (
-        moment(event1.dtStart, ["h:mm A"]).format("HH:mm") >
-        moment(event2.dtStart, ["h:mm A"]).format("HH:mm")
+        moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
+        moment(event2.dtStart, ['h:mm A']).format('HH:mm')
     )
-        return 1;
+        return 1
     if (
-        moment(event1.dtStart, ["h:mm A"]).format("HH:mm") <
-        moment(event2.dtStart, ["h:mm A"]).format("HH:mm")
+        moment(event1.dtStart, ['h:mm A']).format('HH:mm') <
+        moment(event2.dtStart, ['h:mm A']).format('HH:mm')
     )
-        return -1;
-    return 0;
-};
+        return -1
+    return 0
+}
 
 class ShareEvent extends Component {
     render() {
-        let { event } = this.props;
+        let { event } = this.props
         let iconString,
-            color = "";
+            color = ''
         switch (event.type.toLowerCase()) {
-            case "lodging":
-                iconString = "fa-bed";
-                color = "#FEA600";
-                break;
-            case "transportation":
-                iconString = "fa-car";
-                color = "#BF9DD9";
-                break;
-            case "event":
-                iconString = "fa-calendar-check";
-                color = "#83C9F4";
-                break;
-            case "flight":
-                iconString = "fa-plane";
-                color = "#CCAA55";
-                break;
+            case 'lodging':
+                iconString = 'fa-bed'
+                color = '#FEA600'
+                break
+            case 'transportation':
+                iconString = 'fa-car'
+                color = '#BF9DD9'
+                break
+            case 'event':
+                iconString = 'fa-calendar-check'
+                color = '#83C9F4'
+                break
+            case 'flight':
+                iconString = 'fa-plane'
+                color = '#CCAA55'
+                break
             default:
-                break;
+                break
         }
 
         if (event.tripDate) {
-            iconString = "fa-calendar";
-            color = "#FF0000";
+            iconString = 'fa-calendar'
+            color = '#FF0000'
         }
         const date =
-            event.dtStart && event.dtEnd ? `${event.dtStart} - ${event.dtEnd}` : null;
+            event.dtStart && event.dtEnd
+                ? `${event.dtStart} - ${event.dtEnd}`
+                : null
 
         const map = event.coordinates ? (
             event.coordinates.lat && event.coordinates.long ? (
@@ -219,18 +226,18 @@ class ShareEvent extends Component {
                     </div>
                 </div>
             ) : null
-        ) : null;
+        ) : null
 
-        const name = event.tripDate ? `Trip Date: ${event.name}` : event.name;
+        const name = event.tripDate ? `Trip Date: ${event.name}` : event.name
 
         const address = event.address ? (
-            <p className="card-text">{"Address: " + event.address}</p>
-        ) : null;
+            <p className="card-text">{'Address: ' + event.address}</p>
+        ) : null
 
         return (
             <div
                 className="card mb-3 border-0 shadow px-3 rounded-lg animated fadeIn"
-                style={{ width: "100%" }}
+                style={{ width: '100%' }}
             >
                 <div className="row">
                     <div className="card-body">
@@ -243,7 +250,10 @@ class ShareEvent extends Component {
                         </h5>
                         <div className="row">
                             <div className="col-md-6 d-flex flex-column">
-                                <h6 className="card-subtitle mb-2" style={{ color: color }}>
+                                <h6
+                                    className="card-subtitle mb-2"
+                                    style={{ color: color }}
+                                >
                                     {date}
                                 </h6>
                                 <p className="card-text">{event.description}</p>
@@ -264,12 +274,12 @@ class ShareEvent extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
 const ShareDocument = ({ doc }) => {
-    const linkImg = getIcon(doc.link);
+    const linkImg = getIcon(doc.link)
     return (
         <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
             <div className="card-body">
@@ -280,14 +290,18 @@ const ShareDocument = ({ doc }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <img src={linkImg} alt="" style={{ objectFit: "cover" }} />
+                        <img
+                            src={linkImg}
+                            alt=""
+                            style={{ objectFit: 'cover' }}
+                        />
                     </a>
                     <strong className="text-center"> {doc.name}</strong>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 const ShareContact = ({ contact }) => {
     return (
@@ -296,17 +310,17 @@ const ShareContact = ({ contact }) => {
                 <div className="d-flex flex-column align-items-center justify-content-between">
                     <Image src={contact.image} diameter="65px" />
                     <strong className="h6 mt-3"> {contact.name}</strong>
-                    <p className="card-text" style={{ fontSize: ".6em" }}>
+                    <p className="card-text" style={{ fontSize: '.6em' }}>
                         {contact.number}
                     </p>
-                    <p className="card-text" style={{ fontSize: ".6em" }}>
+                    <p className="card-text" style={{ fontSize: '.6em' }}>
                         {contact.email}
                     </p>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 const ShareCover = ({ trip }) => {
     return (
@@ -314,26 +328,26 @@ const ShareCover = ({ trip }) => {
             className="row d-flex flex-column justify-content-between p-4"
             style={{
                 backgroundImage: `url(${trip.image})`,
-                height: "20vh",
-                backgroundPosition: "center",
-                backgroundSize: "cover"
+                height: '20vh',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover'
             }}
         >
             <h2 className="text-primary">{trip.name} Trip</h2>
             <h4 className="text-light">
-                {moment(trip.dateStart).format("MMMM DD")} to{" "}
-                {moment(trip.dateEnd).format("MMMM DD")}
+                {moment(trip.dateStart).format('MMMM DD')} to{' '}
+                {moment(trip.dateEnd).format('MMMM DD')}
             </h4>
         </div>
-    );
-};
+    )
+}
 
 const Footer = ({ tripId, source }) => (
     <footer
         className="footer d-flex align-items-center bg-primary"
         style={{ height: '10vh' }}
     >
-        <div className="container" >
+        <div className="container">
             <div className="row d-flex justify-content-around align-items-center">
                 <NavLink
                     activeClassName="active"

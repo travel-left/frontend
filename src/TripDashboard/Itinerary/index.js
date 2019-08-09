@@ -50,7 +50,8 @@ class Itinerary extends Component {
                 dtEnd: `${event.dateEnd}T${event.timeEnd}:00`
             }
         )
-        const createdDocuments = await Promise.all(
+
+        await Promise.all(
             docs.map(d =>
                 apiCall(
                     'post',

@@ -16,30 +16,41 @@ class Event extends Component {
         let { event } = this.props
         let iconString,
             color = ''
-        switch (event.type.toLowerCase()) {
-            case 'lodging':
+        switch (event.type) {
+            case 'LODGING':
                 iconString = 'fa-bed'
                 color = '#FEA600'
                 break
-            case 'transportation':
+            case 'TRANSPORTATION':
                 iconString = 'fa-car'
                 color = '#BF9DD9'
                 break
-            case 'event':
+            case 'EVENT':
                 iconString = 'fa-calendar-check'
                 color = '#83C9F4'
                 break
-            case 'flight':
+            case 'FLIGHT':
                 iconString = 'fa-plane'
                 color = '#CCAA55'
                 break
+            case 'TRAVEL':
+                iconString = 'fas fa-suitcase'
+                color = '#29CB97'
+                break
+            case 'PAPERWORK':
+                iconString = 'fas fa-sticky-note'
+                color = '#FEC400'
+                break
+            case 'MONEY':
+                iconString = 'fas fa-money-bill-alt'
+                color = '#B558F6'
+                break
+            case 'OTHER':
+                iconString = 'fas fa-calendar-minus'
+                color = '#FFABAA'
+                break
             default:
                 break
-        }
-
-        if (event.tripDate) {
-            iconString = 'fa-calendar'
-            color = '#FF0000'
         }
 
         const updater = event.tripDate ? (
@@ -50,12 +61,12 @@ class Event extends Component {
                 onItinerary={true}
             />
         ) : (
-                <UpdateEventForm
-                    event={event}
-                    submit={this.update}
-                    remove={this.remove}
-                />
-            )
+            <UpdateEventForm
+                event={event}
+                submit={this.update}
+                remove={this.remove}
+            />
+        )
 
         const date =
             event.dtStart && event.dtEnd
@@ -72,26 +83,36 @@ class Event extends Component {
             ) : null
         ) : null
 
-        const name = event.tripDate ? (<><span >{event.name}</span><span className='text-muted h5'>{' '} (Trip Date)</span> </>) : event.name
+        const name = event.tripDate ? (
+            <>
+                <span>{event.name}</span>
+                <span className="text-muted h5"> (Trip Date)</span>{' '}
+            </>
+        ) : (
+            event.name
+        )
 
         const address = event.address ? (
-            <p className="card-text text-muted">{'Address: ' + event.address}</p>
+            <p className="card-text text-muted">
+                {'Address: ' + event.address}
+            </p>
         ) : null
 
-        const documents = event.documents ? event.documents.map((e, i) => (
-            <div className='card shadow p-2 my-2'>
-                <a
-                    key={i}
-                    href={e.link}
-                    className="card-link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    {e.name}
-                </a> <span className="text-muted">{e.description}</span>
-            </div>
-
-        ))
+        const documents = event.documents
+            ? event.documents.map((e, i) => (
+                  <div className="card shadow p-2 my-2">
+                      <a
+                          key={i}
+                          href={e.link}
+                          className="card-link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                      >
+                          {e.name}
+                      </a>{' '}
+                      <span className="text-muted">{e.description}</span>
+                  </div>
+              ))
             : null
 
         return (
@@ -103,7 +124,9 @@ class Event extends Component {
                                 <i
                                     className={`fa ${iconString} pr-2`}
                                     style={{ color: color }}
-                                /> {name}</strong>
+                                />{' '}
+                                {name}
+                            </strong>
                             {updater}
                         </h5>
                         <div className="row">

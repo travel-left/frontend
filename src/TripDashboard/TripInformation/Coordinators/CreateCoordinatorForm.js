@@ -1,5 +1,4 @@
 import React from 'react'
-import * as Yup from 'yup'
 import FormField from '../../../util/forms/FormField'
 import ModalForm from '../../../util/forms/ModalForm'
 import Uploader from '../../../util/forms/Uploader'
@@ -12,7 +11,7 @@ import Validator, {
 export default function NewCoordinatorForm({ submit }) {
     const initialValues = {
         name: '',
-        img: '',
+        image: 'https://',
         email: '',
         title: '',
         phone: ''

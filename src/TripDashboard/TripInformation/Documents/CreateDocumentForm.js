@@ -8,12 +8,16 @@ import Validator, { nameValidator } from '../../../util/validators'
 const CreateDocumentForm = ({ submit }) => {
     const initialValues = {
         name: '',
-        link: '',
+        link: 'https://',
         description: ''
     }
 
     const schema = Validator({
         name: nameValidator,
+        description: Yup.string().max(
+            200,
+            'Please enter a shorter description'
+        ),
         link: Yup.string().required('Please select a link or file')
     })
 

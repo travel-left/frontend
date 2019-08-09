@@ -4,7 +4,6 @@ import FormField from '../util/forms/FormField'
 import Validator, {
     emailValidator,
     nameValidator,
-    fileValidator,
     phoneValidator,
     titleValidator,
     urlValidator
@@ -31,11 +30,11 @@ export default class CreateProfile extends Component {
             password,
             title: '',
             phone: '',
-            image: '',
+            image: 'https://',
             organization: {
-                image: '',
+                image: 'https://',
                 name: '',
-                website: ''
+                website: 'https://'
             }
         }
 

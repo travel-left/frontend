@@ -245,11 +245,11 @@ class Travelers extends Component {
         ) : null
 
         return (
-            <div className="col-12 mt-3 ml-2 pr-0">
+            <div className="col-12 mt-3 pl-2 pr-0">
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row justify-content-between mb-4 align-items-center pr-3">
-                            <h2 className="text-black d-inline">
+                            <h2 className="text-black d-inline pl-3">
                                 Travelers on This Trip
                             </h2>
                             <ImportBulkForm
@@ -274,25 +274,34 @@ class Travelers extends Component {
                                                 classNamePrefix="select"
                                                 styles={customStyles}
                                                 placeholder="Filter by status"
-                                                onChange={this.handleFilterChange}
+                                                onChange={
+                                                    this.handleFilterChange
+                                                }
                                             />
                                         </div>
-                                        <div className="col-md-1"></div>
+                                        <div className="col-md-1" />
                                         <div className="d-flex col-md-4 justify-content-around align-items-center">
                                             <ChangeStatusForm
-                                                submit={this.changeStatusOfSelectedTravelers}
+                                                submit={
+                                                    this
+                                                        .changeStatusOfSelectedTravelers
+                                                }
                                                 travelers={filteredTravelers}
                                                 selected={selected}
                                             />
                                             <CreateTextForm
                                                 key={1}
-                                                submit={this.textSelectedTravelers}
+                                                submit={
+                                                    this.textSelectedTravelers
+                                                }
                                                 travelers={filteredTravelers}
                                                 selected={selected}
                                             />
                                             <CreateEmailForm
                                                 key={2}
-                                                submit={this.emailSelectedTravelers}
+                                                submit={
+                                                    this.emailSelectedTravelers
+                                                }
                                                 travelers={filteredTravelers}
                                                 selected={selected}
                                             />
@@ -332,7 +341,7 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">{travelerInfo}</div>
+                    <div className="col-md-4 pr-0">{travelerInfo}</div>
                 </div>
             </div>
         )

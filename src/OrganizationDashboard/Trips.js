@@ -61,8 +61,7 @@ class Trips extends Component {
         const { trips, filter, tripStatusCounts } = this.state
         trips.push(createdTrip)
         tripStatusCounts[createdTrip.status]++
-        this.filterTripsAndSetState(trips, filter, {
-            trips: trips,
+        this.filterTripsAndSetState(trips, 'ALL TRIPS', {
             selectedTrip: createdTrip,
             tripStatusCounts
         })
@@ -108,7 +107,9 @@ class Trips extends Component {
             filteredTrips,
             filter,
             ...state,
-            selectedTrip: trips[0]
+            selectedTrip: state.selectedTrip
+                ? state.selectedTrip
+                : filteredTrips[0]
         })
     }
 
