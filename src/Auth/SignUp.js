@@ -1,5 +1,6 @@
 import React from 'react'
-import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
+import { Formik, Form, yupToFormErrors } from 'formik'
 import FormField from '../util/forms/FormField'
 import CheckBox from '../util/forms/Checkbox'
 import Validator, {
@@ -22,7 +23,14 @@ export default ({ error, submit }) => {
         email: emailValidator,
         name: nameValidator,
         password: passwordValidator,
-        confirmPassword: passwordValidator
+        confirmPassword: passwordValidator,
+        createOrg: Yup.boolean(),
+        orgId: Yup.string().when('createOrg', {
+            is: false,
+            then: Yup.string().required(
+                'Please specify the organization you wish to join.  This will be given to you by your organization administrator.'
+            )
+        })
     })
 
     return (
