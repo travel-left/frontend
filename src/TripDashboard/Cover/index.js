@@ -66,8 +66,8 @@ class Cover extends Component {
                             status={currentTrip.status}
                         />
                         <div className="pr-2">
-                            <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow bg-primary flex-grow-0">
-                                <i class="far fa-paper-plane fa-lg text-white" />
+                            <span className="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow bg-primary flex-grow-0">
+                                <i className="far fa-paper-plane fa-lg text-white" />
                             </span>
                         </div>
                     </div>

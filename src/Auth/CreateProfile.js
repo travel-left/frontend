@@ -4,7 +4,6 @@ import FormField from '../util/forms/FormField'
 import Validator, {
     emailValidator,
     nameValidator,
-    fileValidator,
     phoneValidator,
     titleValidator,
     urlValidator

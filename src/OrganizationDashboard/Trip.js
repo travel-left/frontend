@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import TripStatus from '../util/otherComponents/TripStatus';
+import TripStatus from '../util/otherComponents/TripStatus'
 
 class Trip extends Component {
     handleClick = () => {
@@ -12,7 +12,7 @@ class Trip extends Component {
     }
 
     render() {
-        let { name, image, dateStart, dateEnd, status } = this.props
+        let { name, image, dateStart, status } = this.props
 
         return (
             <div

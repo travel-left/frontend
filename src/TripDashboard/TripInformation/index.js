@@ -228,7 +228,7 @@ export default class TripInformation extends Component {
     }
 
     render() {
-        let { name, _id } = this.props.currentTrip
+        let { name } = this.props.currentTrip
         let { coordinators, contacts, documents, tripDates } = this.state
         tripDates = tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
         let coordinatorList =
@@ -288,7 +288,6 @@ export default class TripInformation extends Component {
                                     {' '}
                                     {name}{' '}
                                 </h3>
-
                                 <TripNameForm
                                     name={name}
                                     submit={this.updateTrip}

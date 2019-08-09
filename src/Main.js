@@ -8,7 +8,6 @@ import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
 import TripDashboard from './TripDashboard'
-import Share from './TripDashboard/Share/index'
 import NewPassword from './Auth/NewPassword'
 
 const Main = ({ authUser, currentTrip, currentUser }) => {

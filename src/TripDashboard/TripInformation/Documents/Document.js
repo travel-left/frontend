@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import UpdateDocumentForm from './UpdateDocumentForm'
 import { getIcon } from '../../../util/file-icons'
-import LeftCard from '../../../util/LeftCard'
 
 class Document extends Component {
     handleEdit = putObject => {
@@ -18,7 +17,7 @@ class Document extends Component {
         const linkImg = getIcon(link)
 
         return (
-            <div className='col-10 p-4 card shadow my-3'>
+            <div className="col-10 p-4 card shadow my-3">
                 <div className="row">
                     <div className="col-md-10">
                         <h4 className="d-inline card-title">{name}</h4>

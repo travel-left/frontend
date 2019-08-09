@@ -1,7 +1,6 @@
 import {
     nameValidator,
     dateValidator,
-    fileValidator,
     descriptionValidator
 } from '../../../util/validators'
 import * as Yup from 'yup'
