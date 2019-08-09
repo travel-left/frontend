@@ -31,6 +31,8 @@ export const descriptionValidator = Yup.string()
 
 export const fileValidator = Yup.string().url('Please add a valid file')
 
+export const urlValidator = Yup.string().url('Please add a valid url')
+
 export default validator => Yup.object().shape(validator)
 
 export const titleValidator = Yup.string()
@@ -41,3 +43,16 @@ export const phoneValidator = Yup.number()
     .positive('Please enter a valid phone number')
     .min(1000000, 'Please enter a valid phone number')
     .max(999999999999999, 'Please enter a valid phone number')
+
+export const match = function(key, message, func) {
+    const notNullMessage = message || 'Values do not match'
+    const notNullFunc =
+        func ||
+        function(value) {
+            return value === this.parent[key]
+        }
+
+    return Yup.mixed()
+        .test('match', notNullMessage, notNullFunc)
+        .required(notNullMessage)
+}

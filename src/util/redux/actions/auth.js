@@ -17,16 +17,24 @@ export const authUser = (type, userData, history) => {
     return dispatch => {
         return new Promise((resolve, reject) => {
             return apiCall('post', `/api/auth/${type}`, userData)
-                .then(({ token, ...user }) => {
-                    localStorage.setItem('token', token)
-                    setAuthorizationToken(token)
-                    dispatch(setCurrentUser(user))
-                    if (user.lastChangedPassword) {
-                        history.push('/')
+                .then(res => {
+                    console.log(res)
+                    if (!res.token) {
+                        reject(
+                            new Error('Authentication Failed: ' + res.message)
+                        )
                     } else {
-                        history.push('/newpassword')
+                        const user = res
+                        localStorage.setItem('token', res.token)
+                        setAuthorizationToken(res.token)
+                        dispatch(setCurrentUser(user))
+                        if (user.lastChangedPassword) {
+                            history.push('/')
+                        } else {
+                            history.push('/newpassword')
+                        }
+                        resolve()
                     }
-                    resolve()
                 })
                 .catch(err => {
                     reject(err)
