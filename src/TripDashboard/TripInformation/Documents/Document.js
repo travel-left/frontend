@@ -17,49 +17,52 @@ class Document extends Component {
         const linkImg = getIcon(link)
 
         return (
-            <div className="col-10 p-4 card shadow my-3">
-                <div className="row d-flex justify-content-between px-3">
-                    <h4 className="d-inline card-title">{name}</h4>
-                    <UpdateDocumentForm
-                        {...this.props}
-                        submit={this.handleEdit}
-                        remove={this.handleDelete}
-                    />
-                </div>
-                <p className="py-2 text-muted">{description}</p>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="card shadow mb-3 mx-4">
-                            <div className="row no-gutters">
-                                <a
-                                    className="hove d-flex alighn-self-center py-1"
-                                    href={link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <img
-                                        src={linkImg}
-                                        alt=""
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </a>
-                                <div className="card-body d-flex flex-column justify-content-around">
+            <>
+                <div className="col-md-8 card shadow p-3 my-3 ml-4">
+                    <div className="row d-flex justify-content-between px-3">
+                        <h4 className="d-inline card-title">{name}</h4>
+                        <UpdateDocumentForm
+                            {...this.props}
+                            submit={this.handleEdit}
+                            remove={this.handleDelete}
+                        />
+                    </div>
+                    <p className="py-2 text-muted">{description}</p>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="card shadow mb-3 mx-4">
+                                <div className="row no-gutters">
                                     <a
-                                        className="hover card-text"
+                                        className="hove d-flex alighn-self-center py-1"
                                         href={link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        <small className="text-muted">
-                                            Open
-                                        </small>
+                                        <img
+                                            src={linkImg}
+                                            alt=""
+                                            style={{ objectFit: 'cover' }}
+                                        />
                                     </a>
+                                    <div className="card-body d-flex flex-column justify-content-around">
+                                        <a
+                                            className="hover card-text"
+                                            href={link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <small className="text-muted">
+                                                Open
+                                            </small>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div className="col-md-2" />
+            </>
         )
     }
 }

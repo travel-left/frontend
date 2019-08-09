@@ -10,20 +10,19 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
         <>
             <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             <div className="row">
-                <div
-                    className="col-md-2 shadow-lg bg-light px-0"
-                    style={{ minHeight: '93vh' }}
-                >
-                    <div className="shadow">
-                        <SideNav ctId={currentTrip._id} />
-                    </div>
+                <div className="col-md-2 px-0">
+                    <SideNav ctId={currentTrip._id} />
                 </div>
-                <div className="col-md-10">
-                    <TripRouter
-                        currentTrip={currentTrip}
-                        currentUser={currentUser}
-                        setCurrentTrip={setCurrentTrip}
-                    />
+                <div className="col-md-10 px-0">
+                    <div className="m-4 pl-3">
+                        <div className="row">
+                            <TripRouter
+                                currentTrip={currentTrip}
+                                currentUser={currentUser}
+                                setCurrentTrip={setCurrentTrip}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

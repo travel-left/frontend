@@ -21,35 +21,15 @@ export default class TripInformation extends Component {
         contacts: [],
         documents: [],
         tripDates: []
-        // showAlert: false
     }
 
     constructor(props) {
         super(props)
-        // this.getShowAlertAndSetState()
         this.getCoordinators()
         this.getContacts()
         this.getDocuments()
         this.getTripDates()
     }
-
-    // getShowAlertAndSetState = async () => {
-    //     const { _id } = this.props.currentUser
-    //     const coordinator = await apiCall('get', `/api/coordinators/${_id}`)
-    //     if (coordinator.showAlerts.tripDashboard === 'true') {
-    //         this.setState({
-    //             showAlert: true
-    //         })
-    //     }
-    // }
-
-    // closeAlert = async () => {
-    //     const { _id } = this.props.currentUser
-    //     await apiCall('put', `/api/coordinators/${_id}`, { showAlerts: { tripDashboard: false } })
-    //     this.setState({
-    //         showAlert: false
-    //     })
-    // }
 
     updateTrip = async updateObject => {
         const updatedTrip = await apiCall(
@@ -268,79 +248,113 @@ export default class TripInformation extends Component {
                     remove={this.deleteTripDate}
                 />
             ) : null
-        // let alert = showAlert ? <Alert text="This is your trip dashboard.  Here you can manage coordinators, documents, dates, and emergency contacts." closeAlert={this.closeAlert} /> : null
 
         return (
-            <div className="mt-3 mx-3">
-                <div className="row">
-                    <div className="col-md-12 mt-4 ml-3">
-                        <h4 className="mb-3">Trip Name</h4>
-                        <div
-                            className="pb-2"
-                            style={{
-                                borderBottom: '1.5px solid black',
-                                width: '20vw'
-                            }}
-                        >
-                            {' '}
-                            <div className="d-flex align-items-center">
-                                <h3 className="text-primary my-1 d-inline">
-                                    {' '}
-                                    {name}{' '}
-                                </h3>
-                                <TripNameForm
-                                    name={name}
-                                    submit={this.updateTrip}
-                                />
-                            </div>
-                        </div>
-                        <h4 className="mt-5 mb-4">Trip Coordinators</h4>
-                        <div className="row">
-                            {coordinatorList}
-                            <div className="col-md-4 my-2 animated fadeIn d-flex justify-content-center align-items-center">
-                                <CreateCoordinatorForm
-                                    submit={this.createCoordinator}
-                                />
-                            </div>
-                        </div>
-                        <h4 className="mt-5 mb-4">Trip Dates</h4>
-
-                        <div className="row">
-                            <LeftCard>
-                                {tripDatesList}
-                                <div className="mt-4 animated fadeIn d-flex flex-row justify-content-start align-items-center">
-                                    <CreateTripDateForm
-                                        formType="add"
-                                        submit={this.createTripDate}
-                                    />
-                                </div>
-                            </LeftCard>
-                        </div>
-                        <div className="row mt-5 mb-4">
-                            <div className="col-md-3">
-                                <h4 className="">Trip Documents</h4>
-                            </div>
-                            <div className="col-md-6" />
-
-                            <div className="col-md-3">
-                                <CreateDocumentForm
-                                    submit={this.createDocument}
-                                />
-                            </div>
-                        </div>
-                        <div className="row mx-5">{documentsList}</div>
-                        <h4 className="mt-5 mb-4">Trip Contacts</h4>
-                        <div className="row mb-5">
-                            {contactsList}
-                            <div className="col-md-4 my-2 animated fadeIn d-flex justify-content-center align-items-center">
-                                <CreateContactForm
-                                    submit={this.createContact}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="col-md-12">
+                <TripNameSection name={name} update={this.updateTrip} />
+                <TripCoordinatorSection
+                    list={coordinatorList}
+                    create={this.createCoordinator}
+                />
+                <TripDateSection
+                    list={tripDatesList}
+                    create={this.createTripDate}
+                />
+                <TripDocumentSection
+                    list={documentsList}
+                    create={this.createDocument}
+                />
+                <TripContactsSection
+                    list={contactsList}
+                    create={this.createContact}
+                />
             </div>
         )
     }
 }
+
+const TripNameSection = ({ name, update }) => {
+    return (
+        <div className="mb-4 col-12">
+            <h4 className="mb-3">Trip Name</h4>
+            <div
+                className="pb-2"
+                style={{
+                    borderBottom: '1.5px solid black',
+                    width: '20vw'
+                }}
+            >
+                {' '}
+                <div className="d-flex align-items-center">
+                    <h3 className="text-primary my-1 d-inline"> {name} </h3>
+                    <TripNameForm name={name} submit={update} />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const TripCoordinatorSection = ({ list, create }) => {
+    return (
+        <TripSection name={'Trip Coordinators'}>
+            <div className="row">
+                {list}
+                <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
+                    <CreateCoordinatorForm submit={create} />
+                </div>
+            </div>
+        </TripSection>
+    )
+}
+
+const TripDateSection = ({ list, create }) => {
+    return (
+        <TripSection name="Trip Dates">
+            <div className="row">
+                <LeftCard>
+                    {list}
+                    <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
+                        <CreateTripDateForm formType="add" submit={create} />
+                    </div>
+                </LeftCard>
+            </div>
+        </TripSection>
+    )
+}
+
+const TripDocumentSection = ({ list, create }) => {
+    let header = (
+        <div>
+            Trip Documents{' '}
+            <span className="pl-4">
+                {' '}
+                <CreateDocumentForm submit={create} />
+            </span>
+        </div>
+    )
+    return (
+        <TripSection name={header}>
+            <div className="row">{list}</div>
+        </TripSection>
+    )
+}
+
+const TripContactsSection = ({ list, create }) => {
+    return (
+        <TripSection name="Trip Contacts">
+            <div className="row">
+                {list}
+                <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
+                    <CreateContactForm submit={create} />
+                </div>
+            </div>
+        </TripSection>
+    )
+}
+
+const TripSection = props => (
+    <div className="my-4 col-12">
+        <h4 className="mb-3">{props.name}</h4>
+        <div className="ml-3">{props.children}</div>
+    </div>
+)
