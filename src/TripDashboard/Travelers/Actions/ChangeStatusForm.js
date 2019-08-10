@@ -18,7 +18,7 @@ export default function ChangeStatusForm({ submit, travelers, selected }) {
         ) : null
     )
 
-    travelerList = travelerList.filter(t => (t !== null))
+    travelerList = travelerList.filter(t => t !== null)
 
     travelerList = travelerList.length ? (
         <>
@@ -31,26 +31,27 @@ export default function ChangeStatusForm({ submit, travelers, selected }) {
             {travelerList}
         </>
     ) : (
-            <p className="text-danger text-center">No Travelers Selected!</p>
-        )
+        <p className="text-danger text-center">No Travelers Selected!</p>
+    )
 
     return (
         <ModalForm
-            icon='far fa-edit fa-lg text-primary fa-2x'
+            icon="far fa-edit fa-lg text-primary fa-2x"
             header="Bulk update travelers status"
             initialValues={initialValues}
             submit={submit}
         >
-            <div className="mb-4">
-                {travelerList}
-            </div>
+            <div className="mb-4">{travelerList}</div>
             <SelectField
                 name="status"
                 options={[
-                    { label: 'INVITED', value: 'INVITED' },
-                    { label: 'CONFIRMED', value: 'CONFIRMED' },
-                    { label: 'ON-TRIP', value: 'ON-TRIP' },
-                    { label: 'POST-TRIP', value: 'POST-TRIP' }
+                    { value: 'INVITED', label: 'Invited' },
+                    { value: 'CONFIRMED', label: 'Confirmed' },
+                    { value: 'ON-TRIP', label: 'On trip' },
+                    { value: 'POST-TRIP', label: 'Post trip' },
+                    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
+                    { value: 'PAPERWORK NEEDED', label: 'Payment needed' },
+                    { value: 'OTHER', label: 'Other' }
                 ]}
                 label="New Status"
             />
