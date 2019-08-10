@@ -37,7 +37,7 @@ class Share extends Component {
         days.sort(date_sort_asc)
         let orgName = await apiCall(
             'get',
-            `/api/organization/${data.trip.coordinators[0].organization}`
+            `/api/organization/${data.trip.coordinators[0].organization}/name`
         )
         this.setState({
             trip: data.trip,
