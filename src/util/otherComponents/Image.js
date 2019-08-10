@@ -34,7 +34,7 @@ export default class Image extends Component {
             <img
                 src={imageUrl}
                 alt=""
-                className="rounded-circle bg-dark"
+                className="rounded-circle bg-secondary"
                 style={{
                     objectFit: 'cover',
                     height: diameter,

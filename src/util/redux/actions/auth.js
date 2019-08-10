@@ -18,7 +18,6 @@ export const authUser = (type, userData, history) => {
         return new Promise((resolve, reject) => {
             return apiCall('post', `/api/auth/${type}`, userData)
                 .then(res => {
-                    console.log(res)
                     if (!res.token) {
                         reject(
                             new Error('Authentication Failed: ' + res.message)

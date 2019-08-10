@@ -17,7 +17,6 @@ class Itinerary extends Component {
 
     constructor(props) {
         super(props)
-        // this.getShowAlertAndSetState()
         this.getDaysAndEvents()
     }
 
@@ -38,10 +37,9 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        console.log(event)
         const docs = event.documents
         event.documents = []
-        const createdEvent = await apiCall(
+        let createdEvent = await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
@@ -51,17 +49,17 @@ class Itinerary extends Component {
             }
         )
 
-        await Promise.all(
-            docs.map(d =>
-                apiCall(
-                    'post',
-                    `/api/trips/${this.props.currentTrip._id}/events/${
-                        createdEvent._id
-                    }/documents`,
-                    d
-                )
-            )
+        createdEvent.documents = docs
+
+        createdEvent = await genericSubUpdater(
+            `/api/trips/${this.props.currentTrip._id}/events/${
+                createdEvent._id
+            }`,
+            event,
+            createdEvent,
+            'documents'
         )
+
         this.getDaysAndEvents()
     }
 
@@ -137,7 +135,9 @@ class Itinerary extends Component {
                 days={days}
                 handleClick={this.onDayClick}
             />
-        ) : null
+        ) : (
+            <p className="p-2">Click NEW EVENT to get started</p>
+        )
         const eventList = itinerary.length ? (
             <EventList
                 events={itinerary}
@@ -149,33 +149,30 @@ class Itinerary extends Component {
         ) : (
             <h4 className="text-info" />
         )
-        // let alert = showAlert ? (
-        //     <Alert
-        //         text='This is your trip itinerary.  Here you can manage events and days.  Click "ADD NEW EVENT" to get started.'
-        //         closeAlert={this.closeAlert}
-        //     />
-        // ) : null
 
         return (
-            <div className="container mt-4">
-                {/* <div className="row">
-                    <div className="col-md-12 d-none d-md-block">{alert}</div>
-                </div> */}
-                <div className="row">
-                    <div className="col-md-2">{dayList}</div>
-                    <div className="col-md-10">
-                        <div className="row float-right mb-5 mr-2">
-                            <CreateEventForm
-                                submit={this.createEvent}
-                                initDay={this.props.currentTrip.dateStart}
-                            />
+            <>
+                <div className="col-md-2">
+                    <div className="card shadow">
+                        <div className="p-3">
+                            <h3>Trip Days</h3>
+                            <hr />
                         </div>
-                        <div className="row mx-3 mt-5">
-                            <div className="col-md-12">{eventList}</div>
-                        </div>
+                        {dayList}
                     </div>
                 </div>
-            </div>
+                <div className="col-md-10">
+                    <div className="row float-right mb-5 mr-2">
+                        <CreateEventForm
+                            submit={this.createEvent}
+                            initDay={this.props.currentTrip.dateStart}
+                        />
+                    </div>
+                    <div className="row mx-3 mt-5">
+                        <div className="col-md-12">{eventList}</div>
+                    </div>
+                </div>
+            </>
         )
     }
 }

@@ -17,7 +17,6 @@ export default class CreateProfile extends Component {
     }
 
     render() {
-        console.log(this.props)
         const {
             history,
             location: { name, email, password }

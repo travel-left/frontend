@@ -28,27 +28,39 @@ export const genericSubUpdater = async (
 ) => {
     const oldChildren = originalObject[type]
     const newChildren = updateObject[type]
-    await Promise.all(
-        oldChildren.map(async oldChild => {
-            // In oldChildren but not newChildren, needs to be removed
-            if (!newChildren.includes(oldChild)) {
-                await apiCall('delete', `${baseUrl}/${type}/${oldChild._id}`)
-            }
-        })
-    )
-
     const oldChildrenIds = oldChildren.map(o => o._id)
+    const newChildrenIds = newChildren.map(nc => nc._id)
+    const toCreate = []
+    const toUpdate = []
+    const toDelete = []
 
-    await Promise.all(
-        newChildren.map(async child => {
-            // Link does not have id or not in oldChilds, therefore must be added
-            if (!child._id || !oldChildrenIds.includes(child._id)) {
-                await apiCall('post', `${baseUrl}/${type}`, child)
-            } else if (!oldChildren.includes(child)) {
-                await apiCall('put', `${baseUrl}/${type}/${child._id}`, child)
-            }
-        })
-    )
+    for (const oldChild of oldChildren) {
+        // In oldChildren but not newChildren, needs to be removed
+        if (!newChildrenIds.includes(oldChild._id)) {
+            toDelete.push(oldChild._id)
+        }
+    }
+
+    for (const child of newChildren) {
+        // Link does not have id or not in oldChilds, therefore must be added
+        if (!child._id || !oldChildrenIds.includes(child._id)) {
+            toCreate.push(child)
+        } else if (!oldChildren.includes(child)) {
+            toUpdate.push({ _id: child._id, update: child })
+        }
+    }
+
+    if (toDelete.length) {
+        await apiCall('delete', `${baseUrl}/${type}`, { data: toDelete })
+    }
+
+    if (toCreate.length) {
+        await apiCall('post', `${baseUrl}/${type}/array`, toCreate)
+    }
+
+    if (toUpdate.length) {
+        await apiCall('put', `${baseUrl}/${type}`, toUpdate)
+    }
 
     updateObject[type] = []
     return updateObject
