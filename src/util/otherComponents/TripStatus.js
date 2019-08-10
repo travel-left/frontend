@@ -20,7 +20,9 @@ const TripStatus = ({ status }) => {
     }
 
     return (
-        <span className={`badge badge-${statusColor} badge-pill text-light text-uppercase px-3 py-1`}>
+        <span
+            className={`badge badge-${statusColor} badge-pill text-light text-uppercase px-3 py-1`}
+        >
             {status}
         </span>
     )

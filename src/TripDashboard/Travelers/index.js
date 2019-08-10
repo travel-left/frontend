@@ -245,7 +245,7 @@ class Travelers extends Component {
         ) : null
 
         return (
-            <div className="col-12 mt-3 pl-2 pr-0">
+            <div className="col-12">
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row justify-content-between mb-4 align-items-center pr-3">
@@ -341,7 +341,7 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4 pr-0">{travelerInfo}</div>
+                    <div className="col-md-4">{travelerInfo}</div>
                 </div>
             </div>
         )

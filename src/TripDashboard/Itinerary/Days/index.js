@@ -4,7 +4,7 @@ import Day from './Day'
 export default ({ days, handleClick, selectedDay }) => {
     days.sort(date_sort_asc)
     return (
-        <div className="shadow">
+        <div className="">
             <ul className="list-group list-group-flush bg-light">
                 {days.map(day => (
                     <Day
