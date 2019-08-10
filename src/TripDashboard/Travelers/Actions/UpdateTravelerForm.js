@@ -34,7 +34,7 @@ export default function UpdateTravelerForm(props) {
             submit={props.submit}
             remove={props.remove}
         >
-            <FormField name="name" label="Name" placeholder="Steve Jobs" />
+            <FormField name="name" label="Name" placeholder="John Appleseed" />
             <SelectField
                 name="status"
                 options={[
@@ -53,13 +53,13 @@ export default function UpdateTravelerForm(props) {
             <FormField
                 name="email"
                 label="Email"
-                placeholder="steve@apple.com"
+                placeholder="john@travel-left.com"
                 type="email"
             />
             <FormField
                 name="phone"
                 label="Phone number"
-                placeholder="559-867-5309"
+                placeholder="5598675309"
                 type="text"
             />
             <FormField

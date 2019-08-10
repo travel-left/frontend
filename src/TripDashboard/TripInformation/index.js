@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TripNameForm from './TripNameForm'
 import Coordinator from './Coordinators/Coordinator'
 import CreateCoordinatorForm from './Coordinators/CreateCoordinatorForm'
+import AddFromOrgForm from './Coordinators/AddFromOrgForm'
 import TripDate from './TripDates/TripDate'
 import CreateTripDateForm from './TripDates/CreateTripDateForm'
 import Document from './Documents/Document'
@@ -71,6 +72,17 @@ export default class TripInformation extends Component {
         )
         const { coordinators } = this.state
         coordinators.push(createdCoordinator)
+        this.setState({ coordinators })
+    }
+
+    addFromOrg = async coordinatorIds => {
+        const newCoordinators = await apiCall(
+            'post',
+            `/api/trips/${this.currentTripId}/coordinators/arrayofids`,
+            coordinatorIds
+        )
+        let { coordinators } = this.state
+        coordinators = [...coordinators, ...newCoordinators]
         this.setState({ coordinators })
     }
 
@@ -257,6 +269,8 @@ export default class TripInformation extends Component {
                 <TripCoordinatorSection
                     list={coordinatorList}
                     create={this.createCoordinator}
+                    addFromOrg={this.addFromOrg}
+                    onTrip={coordinators}
                 />
                 <TripDateSection
                     list={tripDatesList}
@@ -296,13 +310,14 @@ const TripNameSection = ({ name, update }) => {
     )
 }
 
-const TripCoordinatorSection = ({ list, create }) => {
+const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
     return (
         <TripSection name={'Trip Coordinators'}>
             <div className="row">
                 {list}
-                <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
+                <div className="col-md-4 my-2 d-flex flex-column justify-content-around align-items-center">
                     <CreateCoordinatorForm submit={create} />
+                    <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} />
                 </div>
             </div>
         </TripSection>

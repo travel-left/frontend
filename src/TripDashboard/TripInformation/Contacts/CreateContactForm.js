@@ -35,7 +35,7 @@ export default function CreateContactForm({ submit }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" label="Name" placeholder="Steve Jobs" />
+            <FormField name="name" label="Name" placeholder="John Appleseed" />
             <FormField
                 component={Uploader}
                 name="image"
@@ -44,13 +44,13 @@ export default function CreateContactForm({ submit }) {
             <FormField
                 name="email"
                 label="Email"
-                placeholder="steve@apple.com"
+                placeholder="john@travel-left.com"
                 type="email"
             />
             <FormField
                 name="phone"
                 label="Phone number"
-                placeholder="559-867-5309"
+                placeholder="5598675309"
                 type="phone"
             />
         </ModalForm>

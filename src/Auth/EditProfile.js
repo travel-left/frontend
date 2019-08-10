@@ -114,7 +114,7 @@ export default class CreateProfile extends Component {
                                             name="phone"
                                             label="Phone Number"
                                             type="tel"
-                                            placeholder="1234567890"
+                                            placeholder="5598675309"
                                         />
                                         <button
                                             className="btn btn-lg btn-primary float-right m-4"
