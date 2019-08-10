@@ -37,10 +37,9 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        console.log(event)
         const docs = event.documents
         event.documents = []
-        const createdEvent = await apiCall(
+        let createdEvent = await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
@@ -50,17 +49,17 @@ class Itinerary extends Component {
             }
         )
 
-        await Promise.all(
-            docs.map(d =>
-                apiCall(
-                    'post',
-                    `/api/trips/${this.props.currentTrip._id}/events/${
-                        createdEvent._id
-                    }/documents`,
-                    d
-                )
-            )
+        createdEvent.documents = docs
+
+        createdEvent = await genericSubUpdater(
+            `/api/trips/${this.props.currentTrip._id}/events/${
+                createdEvent._id
+            }`,
+            event,
+            createdEvent,
+            'documents'
         )
+
         this.getDaysAndEvents()
     }
 
