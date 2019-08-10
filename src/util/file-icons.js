@@ -82,5 +82,5 @@ export const getIcon = filename => {
 
     const type = extensions[ext] || extensions['']
 
-    return `https://travel-left-images.s3.us-east-2.amazonaws.com/prettier-file-icons-${type}.jpg`
+    return `https://travel-left-public.s3.amazonaws.com/pretty-file-icons-${type}.png`
 }

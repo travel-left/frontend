@@ -1,23 +1,38 @@
 import React, { Component } from 'react'
 import { Field } from 'formik'
 import { apiCall } from '../api'
+import { getIcon } from '../file-icons'
 
 export default class Uploader extends Component {
     state = {
         uploading: false,
         fileUrl: this.props.form.values[this.props.field.name],
-        typeLink: false
+        typeLink: false,
+        error: false
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props.fileUrl !== prevProps.fileUrl && prevState.error) {
+            this.setState({ error: false })
+        }
+    }
+
+    handleError = e => {
+        e.preventDefault()
+        this.setState({
+            error: true
+        })
     }
 
     handleUpload = async file => {
         this.setState({ uploading: true })
-        readFileAsync(file).then(data => {
-            this.setState({ filePreview: data })
-        })
+        // readFileAsync(file).then(data => {
+        //     this.setState({ filePreview: data })
+        // })
         let formData = new FormData()
         formData.append('file', file)
         let s3 = await apiCall('post', '/api/fileUploads/unAuth', formData)
-        this.setState({ uploading: false, fileUrl: s3.url })
+        this.setState({ uploading: false, fileUrl: s3.url, error: false })
         return s3.url
     }
 
@@ -30,7 +45,12 @@ export default class Uploader extends Component {
             form: { setFieldValue },
             field: { name }
         } = this.props
-        const { typeLink, uploading } = this.state
+        const { typeLink, uploading, fileUrl, error } = this.state
+
+        const nulledUrl = fileUrl === 'https://' ? '' : fileUrl
+
+        const displayUrl =
+            error && nulledUrl !== '' ? getIcon(fileUrl) : nulledUrl
 
         let spinner = uploading ? <LoadingSpinner /> : null
         let component = null
@@ -76,11 +96,11 @@ export default class Uploader extends Component {
                         {spinner}
                         {!this.state.uploading && (
                             <img
-                                src={this.state.fileUrl}
-                                alt={''}
+                                src={displayUrl}
                                 className="img-thumbnail border-0"
-                                height={200}
-                                width={200}
+                                height={56}
+                                width={56}
+                                onError={this.handleError}
                             />
                         )}
                     </div>
@@ -105,13 +125,13 @@ export default class Uploader extends Component {
 
 const LoadingSpinner = () => <i className="fa fa-spinner fa-spin" />
 
-const readFileAsync = file => {
-    return new Promise((resolve, reject) => {
-        let reader = new FileReader()
-        reader.onloadend = () => {
-            resolve(reader.result)
-        }
-        reader.onerror = reject
-        reader.readAsDataURL(file)
-    })
-}
+// const readFileAsync = file => {
+//     return new Promise((resolve, reject) => {
+//         let reader = new FileReader()
+//         reader.onloadend = () => {
+//             resolve(reader.result)
+//         }
+//         reader.onerror = reject
+//         reader.readAsDataURL(file)
+//     })
+// }
