@@ -22,6 +22,13 @@ class TripInfo extends Component {
         })
     }
 
+    // This is used because the component isn't reconstructed each time the trip is changed
+    componentDidUpdate(prevProps) {
+        if (this.props.trip._id !== prevProps.trip._id) {
+            this.getAndSetTravelers()
+        }
+    }
+
     handleEditClick = () => {
         this.props.edit(this.props.trip._id)
     }
