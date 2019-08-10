@@ -17,12 +17,9 @@ export default class CreateProfile extends Component {
     }
 
     render() {
-        const {
-            history,
-            location: { name, email, password }
-        } = this.props
         const { error } = this.state
-        const { onAuth } = this.props
+        const { onAuth, history } = this.props
+        const { name, email, password } = this.props.location.state
         const initialValues = {
             name,
             email,
