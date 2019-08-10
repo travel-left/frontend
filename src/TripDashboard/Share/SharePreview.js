@@ -41,31 +41,24 @@ export default class SharePreview extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row mb-4 ml-2 mt-4 pr-5">
-                    <div className="col-6">
-                        <h2 className="text-black d-inline ">
-                            Here's a preview of your trip for your travelers
+            <div className="col-md-12">
+                <div className="row">
+                    <div className="col-md-6">
+                        <h2 className="text-black ">
+                            Here's a preview of your{' '}
+                            {this.props.currentTrip.name} trip for your
+                            travelers.
                         </h2>
-                        <br />
-                        <button
-                            className="btn btn-lg btn-primary"
-                            onClick={this.sendTripToTravelers}
-                        >
-                            Send to travelers
-                        </button>
+                        <p>
+                            You can send the trip preview to your travelers at
+                            any time using the airplane button in the top right
+                            of the page.
+                        </p>
                     </div>
-                    <div className="col-4">
-                        <div style={{ marginTop: '5vh', marginBottom: '5vh' }}>
-                            <div
-                                className="iphone6"
-                                style={{ height: '70vh', zIndex: '-1' }}
-                            >
-                                <div className="screen">
-                                    <Share />
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-4 shadow">
+                        <Share />
                     </div>
                 </div>
             </div>

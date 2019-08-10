@@ -90,7 +90,7 @@ class Share extends Component {
 
         return (
             <div className="container-fluid">
-                <div className="sticky-top">
+                <div className="">
                     <div className="row d-flex justify-content-between">
                         <h2 className="text p-2">{trip.name}</h2>
                         <h2 className="text p-2">{orgName}</h2>
