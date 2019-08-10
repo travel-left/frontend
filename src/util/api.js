@@ -16,7 +16,7 @@ export const apiCall = async (method, path, data) => {
         )
         return res.data
     } catch (err) {
-        return err.response.data.error
+        throw err.response.data.error
     }
 }
 

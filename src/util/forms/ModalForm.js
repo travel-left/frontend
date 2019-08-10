@@ -16,7 +16,8 @@ import Mortal from 'react-mortal'
 
 class ModalForm extends Component {
     state = {
-        open: false
+        open: false,
+        err: ''
     }
 
     handleRemove = () => {
@@ -39,6 +40,7 @@ class ModalForm extends Component {
             button,
             submitButtonText
         } = this.props
+        const { err } = this.state
 
         let opener = icon ? (
             <i className={`hover ${icon}`} onClick={this.toggleModal} />
@@ -69,11 +71,15 @@ class ModalForm extends Component {
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
-                            onSubmit={(values, actions) => {
-                                submit(values)
-                                actions.setSubmitting(false)
-                                actions.resetForm()
-                                this.toggleModal()
+                            onSubmit={async (values, actions) => {
+                                try {
+                                    await submit(values)
+                                    actions.setSubmitting(false)
+                                    actions.resetForm()
+                                    this.toggleModal()
+                                } catch (err) {
+                                    this.setState({ err: err.message })
+                                }
                             }}
                             onReset={(values, actions) => {
                                 actions.resetForm()
@@ -126,7 +132,9 @@ class ModalForm extends Component {
                                                 </button>
                                             </div>
                                             <div className="modal-body">
-                                                {' '}
+                                                <p className="text-danger">
+                                                    {err ? err : null}
+                                                </p>{' '}
                                                 {this.props.children}
                                             </div>
                                             <hr className="mt-2" />
