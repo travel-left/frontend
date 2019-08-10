@@ -11,6 +11,8 @@ import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import LeftCard from '../../util/LeftCard'
 import { apiCall } from '../../util/api'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/tripinformation')
 
 export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id

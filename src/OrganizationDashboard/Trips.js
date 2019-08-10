@@ -7,6 +7,8 @@ import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../util/redux/actions/trip'
 import AddTrip from './AddTrip'
 import SideNavItem from '../util/otherComponents/SideNavItem'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/organizationdashboard')
 
 class Trips extends Component {
     state = {

@@ -5,6 +5,8 @@ import Image from '../../util/otherComponents/Image'
 import Map from '../Itinerary/Events/Map'
 import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
 import { getIcon } from '../../util/file-icons'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/share')
 
 class Share extends Component {
     tripId = this.props.match.params.tripId

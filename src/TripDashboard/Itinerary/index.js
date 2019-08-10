@@ -5,6 +5,8 @@ import { apiCall, genericSubUpdater } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/itinerary')
 
 class Itinerary extends Component {
     tz = moment.tz.guess(true)
