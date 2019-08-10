@@ -4,19 +4,22 @@ import { connect } from 'react-redux'
 import { logout } from '../redux/actions/auth'
 
 class Navbar extends Component {
-    signout = e => {
-        e.preventDefault()
+    signout = () => {
         this.props.history.push(`/signin`)
         this.props.logout()
+    }
+
+    account = () => {
+        this.props.history.push(`/editprofile`)
+    }
+
+    support = () => {
+        this.props.history.push(`/support`)
     }
 
     render() {
         let { currentUser } = this.props
         let loggedInContent = null
-        let greeting = currentUser.email ? (
-            <span className="text-light">{currentUser.name}</span>
-        ) : null
-
         let linkTo = '#'
 
         if (currentUser.isAuthenticated) {
@@ -27,15 +30,47 @@ class Navbar extends Component {
                     </div>
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <div className="a nav-link pr-4 disabled">
-                                {greeting}
+                            <li class="nav-item dropdown">
+                                <a
+                                    class="nav-link dropdown-toggle text-light"
+                                    href="#"
+                                    id="navbarDropdown"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                >
+                                    {currentUser.name}
+                                </a>
+                                <div class="dropdown-menu">
+                                    <button
+                                        class="dropdown-item btn-link"
+                                        onClick={this.account}
+                                    >
+                                        Account
+                                    </button>
+                                    <button
+                                        class="dropdown-item btn-link"
+                                        onClick={this.support}
+                                    >
+                                        Support
+                                    </button>
+
+                                    <div class="dropdown-divider" />
+                                    <button
+                                        class="dropdown-item btn-link"
+                                        onClick={this.signout}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            </li>
+                            <div className="a nav-link pr-4 hover">
+                                <span
+                                    className="text-light"
+                                    onClick={() =>
+                                        this.props.history.push('/editprofile')
+                                    }
+                                />
                             </div>
-                            {/*<i className="fa fa-download fa-2x text-secondary pr-4 hover" />*/}
-                            <i
-                                className="fas fa-sign-out-alt fa-2x text-secondary hover"
-                                onClick={this.signout}
-                                aria-hidden="true"
-                            />
                         </ul>
                     </div>
                 </div>

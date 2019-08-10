@@ -1,16 +1,18 @@
 import React from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { authUser } from './util/redux/actions/auth'
+import { authUser, setCurrentUser } from './util/redux/actions/auth'
 import Trips from './OrganizationDashboard/Trips'
 import withAuth from './util/hocs/withAuth'
 import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
+import EditProfile from './Auth/EditProfile'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
+import Support from './Support'
 
-const Main = ({ authUser, currentTrip, currentUser }) => {
+const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
         <Switch>
             <Route
@@ -31,6 +33,24 @@ const Main = ({ authUser, currentTrip, currentUser }) => {
                 exact
                 path="/createprofile"
                 render={props => <CreateProfile onAuth={authUser} {...props} />}
+            />
+            <Route
+                exact
+                path="/editprofile"
+                render={props => (
+                    <EditProfile
+                        {...props}
+                        currentUser={currentUser}
+                        setCurrentUser={setCurrentUser}
+                    />
+                )}
+            />
+            <Route
+                exact
+                path="/support"
+                render={props => (
+                    <Support {...props} currentUser={currentUser} />
+                )}
             />
             <Route
                 exact
@@ -57,6 +77,6 @@ const mapStateToProps = state => {
 export default withRouter(
     connect(
         mapStateToProps,
-        { authUser }
+        { authUser, setCurrentUser }
     )(Main)
 )
