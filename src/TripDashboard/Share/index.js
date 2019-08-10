@@ -15,12 +15,11 @@ class Share extends Component {
         trip: {},
         days: [],
         events: [],
-        coordinators: [],
+        orgName: '',
         selectedDay: {}
     }
     constructor(props) {
         super(props)
-        //get trip info
         this.getTripInfo()
     }
 
@@ -36,7 +35,17 @@ class Share extends Component {
             if (!days.includes(event.dateStart)) days.push(event.dateStart)
         })
         days.sort(date_sort_asc)
-        this.setState({ trip: data.trip, events, days, selectedDay: days[0] })
+        let orgName = await apiCall(
+            'get',
+            `/api/organization/${data.trip.coordinators[0].organization}/name`
+        )
+        this.setState({
+            trip: data.trip,
+            events,
+            days,
+            selectedDay: days[0],
+            orgName
+        })
     }
 
     setSelectedDay = day => {
@@ -45,12 +54,8 @@ class Share extends Component {
         })
     }
 
-    route = route => {
-        this.setState({ route })
-    }
-
     render() {
-        const { days, events, selectedDay, trip } = this.state
+        const { days, events, selectedDay, trip, orgName } = this.state
         const dayList = days.map(day => {
             let activeClass = day === selectedDay ? 'text-primary' : ''
             return (
@@ -76,93 +81,90 @@ class Share extends Component {
               })
             : null
 
-        const contactsList = trip.contacts
-            ? trip.contacts.map(contact => {
-                  return <ShareContact contact={contact} />
-              })
-            : null
+        const contactsList =
+            trip.contacts || trip.coordinators
+                ? [...trip.coordinators, ...trip.contacts].map(contact => {
+                      return <ShareContact contact={contact} />
+                  })
+                : null
 
         return (
-            <div
-                style={{
-                    position: 'relative',
-                    height: this.source === 'preview' ? '70vh' : '100vh',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}
-            >
-                <div id="header" style={{ height: '30vh' }}>
+            <div className="container-fluid">
+                <div className="sticky-top">
+                    <div className="row d-flex justify-content-between">
+                        <h2 className="text p-2">{trip.name}</h2>
+                        <h2 className="text p-2">{orgName}</h2>
+                    </div>
                     <ShareCover trip={trip} />
-                    <Footer tripId={this.tripId} source={this.source} />
+                    <div className="position-relative">
+                        <div
+                            className="d-flex justify-content-center position-absolute"
+                            style={{
+                                top: '-5vh',
+                                left: '50%',
+                                right: '50%'
+                            }}
+                        >
+                            <Navigation
+                                tripId={this.tripId}
+                                source={this.source}
+                            />
+                        </div>
+                    </div>
                 </div>
-
-                <Switch>
-                    <Route
-                        exact
-                        path={`/trips/:tripId/${this.source}/documents`}
-                        render={props => (
-                            <div
-                                className="container"
-                                id="content"
-                                style={{ height: '68vh', marginTop: '2vh' }}
-                            >
-                                <div className="row d-flex justify-content-around">
-                                    {documentList}
-                                </div>
-                            </div>
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={`/trips/:tripId/${this.source}/contacts`}
-                        render={props => (
-                            <div
-                                className="container"
-                                id="content"
-                                style={{
-                                    height: '68vh',
-                                    marginTop: '2vh'
-                                }}
-                            >
-                                <div className="row d-flex justify-content-around">
-                                    {contactsList}
-                                </div>
-                            </div>
-                        )}
-                    />
-                    <Route
-                        path={`/trips/:tripId/${this.source}/`}
-                        render={props => (
-                            <>
-                                <div
-                                    className="row px-0 "
-                                    style={{
-                                        height: '13vh',
-                                        marginTop: '2vh'
-                                    }}
-                                >
-                                    <div className="col" />
-                                    <div className="col-10 d-flex flex-wrap justify-content-start">
-                                        {dayList}
+                <div className="mt-5">
+                    <Switch>
+                        <Route
+                            exact
+                            path={`/trips/:tripId/${this.source}/documents`}
+                            render={props => (
+                                <div className="container">
+                                    <div className="row d-flex justify-content-around">
+                                        {documentList}
                                     </div>
-                                    <div className="col" />
                                 </div>
-                                <div
-                                    className="container "
-                                    id="content"
-                                    style={{ height: '65vh' }}
-                                >
-                                    <div className="row">
-                                        <div className="col-12 d-flex flex-column align-items-center">
-                                            {eventList}
+                            )}
+                        />
+                        <Route
+                            exact
+                            path={`/trips/:tripId/${this.source}/contacts`}
+                            render={props => (
+                                <div className="container">
+                                    <div className="row d-flex justify-content-around">
+                                        {contactsList}
+                                    </div>
+                                </div>
+                            )}
+                        />
+                        <Route
+                            path={`/trips/:tripId/${this.source}/`}
+                            render={props => (
+                                <div>
+                                    <h4 className="mb-3">
+                                        Itinerary:{' '}
+                                        {moment(trip.dateStart).format(
+                                            'MMM DD'
+                                        )}{' '}
+                                        to{' '}
+                                        {moment(trip.dateEnd).format('MMM DD')}
+                                    </h4>
+                                    <div className="row px-0 d-flex justify-content-center">
+                                        <div className="d-flex flex-wrap justify-content-start mb-3">
+                                            {dayList}
+                                        </div>
+                                    </div>
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-12 d-flex flex-column align-items-center">
+                                                {eventList}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </>
-                        )}
-                    />
-                </Switch>
+                            )}
+                        />
+                    </Switch>
+                </div>
             </div>
         )
     }
@@ -314,13 +316,21 @@ const ShareContact = ({ contact }) => {
     return (
         <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
             <div className="card-body">
-                <div className="d-flex flex-column align-items-center justify-content-between">
+                <div className="d-flex flex-column align-items-center justify-content-center">
                     <Image src={contact.image} diameter="65px" />
-                    <strong className="h6 mt-3"> {contact.name}</strong>
-                    <p className="card-text" style={{ fontSize: '.6em' }}>
+                    <strong className="h6 mt-3 text-center">
+                        {contact.name}
+                    </strong>
+                    <p
+                        className="card-text text-center"
+                        style={{ fontSize: '.6em' }}
+                    >
                         {contact.number}
                     </p>
-                    <p className="card-text" style={{ fontSize: '.6em' }}>
+                    <p
+                        className="card-text text-center"
+                        style={{ fontSize: '.6em' }}
+                    >
                         {contact.email}
                     </p>
                 </div>
@@ -335,49 +345,65 @@ const ShareCover = ({ trip }) => {
             className="row d-flex flex-column justify-content-between p-4"
             style={{
                 backgroundImage: `url(${trip.image})`,
-                height: '20vh',
                 backgroundPosition: 'center',
-                backgroundSize: 'cover'
+                backgroundSize: 'cover',
+                height: '20vh'
             }}
-        >
-            <h2 className="text-primary">{trip.name} Trip</h2>
-            <h4 className="text-light">
-                {moment(trip.dateStart).format('MMMM DD')} to{' '}
-                {moment(trip.dateEnd).format('MMMM DD')}
-            </h4>
-        </div>
+        />
     )
 }
 
-const Footer = ({ tripId, source }) => (
-    <footer
-        className="footer d-flex align-items-center bg-primary"
-        style={{ height: '10vh' }}
+const Navigation = ({ tripId, source }) => (
+    <span
+        className="badge badge-light badge-pill rounded-pill px-4 py-2 shadow d-flex justify-content-around align-items-center"
+        style={{ width: '60vw', backgroundColor: 'black' }}
     >
-        <div className="container">
-            <div className="row d-flex justify-content-around align-items-center">
-                <NavLink
-                    activeClassName="active"
-                    to={`/trips/${tripId}/${source}/itinerary`}
-                    name={`/trips/${tripId}/${source}/itinerary`}
-                >
-                    <i class="far fa-calendar fa-2x text-secondary" />
-                </NavLink>
-                <NavLink
-                    activeClassName="active"
-                    to={`/trips/${tripId}/${source}/documents`}
-                    name={`/trips/${tripId}/${source}/documents`}
-                >
-                    <i class="far fa-folder fa-2x text-secondary" />
-                </NavLink>
-                <NavLink
-                    activeClassName="active"
-                    to={`/trips/${tripId}/${source}/contacts`}
-                    name={`/trips/${tripId}/${source}/contacts`}
-                >
-                    <i class="far fa-user fa-2x text-secondary" />
-                </NavLink>
-            </div>
-        </div>
-    </footer>
+        <NavLink
+            activeClassName="bg-primary rounded-circle"
+            to={`/trips/${tripId}/${source}/itinerary`}
+            name={`/trips/${tripId}/${source}/itinerary`}
+        >
+            <span
+                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                style={{
+                    width: '7vh',
+                    height: '7vh',
+                    zIndex: '999'
+                }}
+            >
+                <i class="far fa-calendar fa-2x text-light" />
+            </span>
+        </NavLink>
+
+        <NavLink
+            activeClassName="bg-primary rounded-circle"
+            to={`/trips/${tripId}/${source}/documents`}
+            name={`/trips/${tripId}/${source}/documents`}
+        >
+            <span
+                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                style={{
+                    width: '8vh',
+                    height: '8vh'
+                }}
+            >
+                <i class="far fa-folder fa-2x text-light" />
+            </span>
+        </NavLink>
+        <NavLink
+            activeClassName="bg-primary rounded-circle"
+            to={`/trips/${tripId}/${source}/contacts`}
+            name={`/trips/${tripId}/${source}/contacts`}
+        >
+            <span
+                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                style={{
+                    width: '8vh',
+                    height: '8vh'
+                }}
+            >
+                <i class="far fa-user fa-2x text-light" />
+            </span>
+        </NavLink>
+    </span>
 )
