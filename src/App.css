@@ -1,5 +1,5 @@
 body {
-  font-family: 'Roboto';
+    font-family: 'Roboto';
 }
 
 /* UTILITY CLASSES */
@@ -15,34 +15,23 @@ body {
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
 }
-  
-*:hover { 
-    text-decoration: none !important;  
-} 
+
+*:hover {
+    text-decoration: none !important;
+}
 
 .list-group-item.active {
     z-index: 2;
     color: #fff !important;
-    background-color: #0F61D8;
-    border-color: #0F61D8;
+    background-color: #0f61d8;
+    border-color: #0f61d8;
 }
 
 .list-group-item.active:hover {
     z-index: 2;
     color: #fff !important;
-    background-color: #0F61D8;
-    border-color: #0F61D8;
-}
-
-#content {
-    width: 100%;
-    overflow-y: scroll;
-}
-
-#footer {
-    width: 100%;
-    bottom: 0;
-    background-color: #0F61D8;
+    background-color: #0f61d8;
+    border-color: #0f61d8;
 }
 
 .screen {
@@ -51,7 +40,7 @@ body {
     background-color: white;
     display: block;
     border-radius: 1px;
-    box-shadow: 0 0 0 3px #111
+    box-shadow: 0 0 0 3px #111;
 }
 
 .iphone6 {
@@ -66,24 +55,24 @@ body {
 }
 
 .badge-left {
-    background-color: #4CE2A7 !important;
+    background-color: #4ce2a7 !important;
 }
 
 .badge-archived {
-    background-color: #FE5555 !important;
+    background-color: #fe5555 !important;
 }
 
 .border-bottom-5 {
-    border-bottom: 2px solid #0F61D8 !important;
+    border-bottom: 2px solid #0f61d8 !important;
 }
 
 .left-shadow {
-    text-shadow: -1px 4px 12px rgba(0, 0, 0, 0.3), 3px 0px 20px rgba(0, 0, 0, 0.3), -2px -3px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: -1px 4px 12px rgba(0, 0, 0, 0.3),
+        3px 0px 20px rgba(0, 0, 0, 0.3), -2px -3px 2px rgba(0, 0, 0, 0.3);
 }
 
 .rounded-pill {
     padding-left: 2rem;
     padding-right: 2rem;
-    font-size: .8rem;
-
+    font-size: 0.8rem;
 }
