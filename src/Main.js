@@ -10,6 +10,7 @@ import CreateProfile from './Auth/CreateProfile'
 import EditProfile from './Auth/EditProfile'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
+import Support from './Support'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -42,6 +43,13 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                         currentUser={currentUser}
                         setCurrentUser={setCurrentUser}
                     />
+                )}
+            />
+            <Route
+                exact
+                path="/support"
+                render={props => (
+                    <Support {...props} currentUser={currentUser} />
                 )}
             />
             <Route
