@@ -29,7 +29,7 @@ export default function UpdateCoordinatorForm(props) {
             initialValues={initialValues}
             {...props}
         >
-            <FormField name="name" label="Name" placeholder="Steve Jobs" />
+            <FormField name="name" label="Name" placeholder="John Appleseed" />
             <FormField
                 name="image"
                 label="Upload a new image"
@@ -38,13 +38,13 @@ export default function UpdateCoordinatorForm(props) {
             <FormField
                 name="email"
                 label="Email"
-                placeholder="steve@apple.com"
+                placeholder="john@travel-left.com"
                 type="email"
             />
             <FormField
                 name="phone"
                 label="Phone number"
-                placeholder="559-867-5309"
+                placeholder="5598675309"
                 type="text"
             />
         </ModalForm>

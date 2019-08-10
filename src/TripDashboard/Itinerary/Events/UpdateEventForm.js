@@ -94,7 +94,7 @@ export default function UpdateEventForm(props) {
                                             <FormField
                                                 name={`documents.${index}.name`}
                                                 label="Name"
-                                                placeholder="A form to fill out"
+                                                placeholder="Document Name"
                                             />
                                         </div>
 
@@ -102,7 +102,7 @@ export default function UpdateEventForm(props) {
                                             <FormField
                                                 name={`documents.${index}.description`}
                                                 label="Description"
-                                                placeholder="Please fill out"
+                                                placeholder="A description for your document"
                                             />
                                         </div>
                                     </div>

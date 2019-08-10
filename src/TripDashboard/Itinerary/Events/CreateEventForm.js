@@ -102,7 +102,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                             <FormField
                                                 name={`documents.${index}.name`}
                                                 label="Document Name"
-                                                placeholder="A form to fill out"
+                                                placeholder="Document Name"
                                             />
                                         </div>
 
@@ -110,7 +110,7 @@ export default function CreateEventForm({ submit, initDay }) {
                                             <FormField
                                                 name={`documents.${index}.description`}
                                                 label="Document Description"
-                                                placeholder="Please fill out"
+                                                placeholder="A description for your document"
                                             />
                                         </div>
                                     </div>

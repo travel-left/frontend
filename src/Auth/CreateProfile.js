@@ -106,7 +106,7 @@ export default class CreateProfile extends Component {
                                             name="phone"
                                             label="Phone Number"
                                             type="tel"
-                                            placeholder="1234567890"
+                                            placeholder="5598675309"
                                         />
                                     </div>
                                     <div className="col-sm-12 col-md-6">
@@ -123,7 +123,7 @@ export default class CreateProfile extends Component {
                                         <FormField
                                             name="organization.website"
                                             label="Website"
-                                            placeholder="www.travel-left.com"
+                                            placeholder="https://travel-left.com"
                                             type="url"
                                         />
                                     </div>

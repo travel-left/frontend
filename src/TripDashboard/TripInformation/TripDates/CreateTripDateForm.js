@@ -54,7 +54,7 @@ export default function TripDateForm({ submit }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" label="Name" placeholder="Payment Due" />
+            <FormField name="name" label="Name" placeholder="Trip Date Name" />
             <FormField name="date" label="Date" type="date" />
             <SelectField name="type" options={options} label="Type" />
         </ModalForm>
