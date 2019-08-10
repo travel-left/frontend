@@ -54,7 +54,7 @@ export default class AddFromOrgForm extends Component {
 
     render() {
         const button = {
-            classes: 'btn btn-primary rounded-pill',
+            classes: 'btn btn-secondary text-light rounded-pill',
             text: 'ADD FROM ORG'
         }
         const customStyles = {

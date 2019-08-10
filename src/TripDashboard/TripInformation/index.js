@@ -313,7 +313,7 @@ const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
         <TripSection name={'Trip Coordinators'}>
             <div className="row">
                 {list}
-                <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
+                <div className="col-md-4 my-2 d-flex flex-column justify-content-around align-items-center">
                     <CreateCoordinatorForm submit={create} />
                     <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} />
                 </div>
