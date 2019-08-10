@@ -17,6 +17,8 @@ function initializeReactGA() {
     ReactGA.pageview('/homepage')
 }
 
+initializeReactGA()
+
 const store = configureStore()
 
 if (localStorage.token) {
