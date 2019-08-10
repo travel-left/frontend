@@ -61,18 +61,6 @@ class TripInfo extends Component {
                         alt="..."
                         style={{ backgroundColor: '#FBFBFB' }}
                     />
-                    <span
-                        class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover"
-                        style={{
-                            position: 'absolute',
-                            top: '68%',
-                            right: '10%',
-                            color: 'white',
-                            backgroundColor: '#0F61D8'
-                        }}
-                    >
-                        <i class="far fa-paper-plane fa-lg" />
-                    </span>
                 </div>
 
                 <div className="container bg-light">

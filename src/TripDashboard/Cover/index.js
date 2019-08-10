@@ -3,6 +3,7 @@ import TripImageForm from './TripImageForm'
 import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../util/api'
 import TripStatusForm from './TripStatusForm'
+import ShareTrip from '../../util/otherComponents/ShareTrip'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -66,8 +67,11 @@ class Cover extends Component {
                             status={currentTrip.status}
                         />
                         <div className="pr-2">
-                            <span className="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover shadow bg-primary flex-grow-0">
-                                <i className="far fa-paper-plane fa-lg text-white" />
+                            <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover bg-primary">
+                                <ShareTrip
+                                    travelers={this.state.travelers}
+                                    tripId={this.tripId}
+                                />
                             </span>
                         </div>
                     </div>
