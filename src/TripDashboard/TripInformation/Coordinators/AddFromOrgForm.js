@@ -3,7 +3,7 @@ import ModalForm from '../../../util/forms/ModalForm'
 import Select from 'react-select'
 import { apiCall } from '../../../util/api'
 
-export default class ShareTrip extends Component {
+export default class AddFromOrgForm extends Component {
     state = {
         selectedCoordinators: [],
         coordinators: [],
