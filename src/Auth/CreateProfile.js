@@ -50,7 +50,7 @@ export default class CreateProfile extends Component {
 
         return (
             <div className="container">
-                <h1 className="display-4 text-dark font-weight-bold py-4 mx-5">
+                <h1 className="text-dark py-4 mx-5">
                     Let's set up your profile and company!
                 </h1>
                 {error ? <p style={{ color: 'red' }}>{error.message}</p> : null}

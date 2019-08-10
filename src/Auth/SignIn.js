@@ -12,8 +12,8 @@ export default ({ error, submit }) => {
         password: ''
     }
     const schema = Validator({
-        email: emailValidator,
-        password: passwordValidator
+        email: emailValidator
+        // password: passwordValidator
     })
 
     return (
