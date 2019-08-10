@@ -17,7 +17,7 @@ export default function SideNav({ ctId }) {
         },
         {
             name: 'preview',
-            text: 'Mobile Preview'
+            text: 'Trip Preview'
         }
     ]
     const sideNavList = sideNavComponents.map(({ name, text }) => (
