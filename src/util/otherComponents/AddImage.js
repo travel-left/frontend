@@ -82,7 +82,7 @@ export default class AddImage extends Component {
                         className="form-control"
                         id="imgText"
                         name="imgText"
-                        placeholder="Image Link"
+                        placeholder="https://travel-left.com"
                         aria-label="img"
                         aria-describedby="img"
                     />
