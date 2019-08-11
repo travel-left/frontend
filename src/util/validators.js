@@ -39,10 +39,11 @@ export const titleValidator = Yup.string()
     .min(2, 'Please enter a longer title')
     .max(50, 'Please enter a shorter title')
 
-export const phoneValidator = Yup.number()
-    .positive('Please enter a valid phone number')
-    .min(1000000, 'Please enter a valid phone number')
-    .max(999999999999999, 'Please enter a valid phone number')
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+export const phoneValidator = Yup.string().matches(
+    phoneRegExp,
+    'Phone number is not valid'
+)
 
 export const match = function(key, message, func) {
     const notNullMessage = message || 'Values do not match'
