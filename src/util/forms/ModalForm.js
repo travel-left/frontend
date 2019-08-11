@@ -53,6 +53,13 @@ class ModalForm extends Component {
             </button>
         )
 
+        const submitButton = submit ? (<button
+            type="submit"
+            className="btn btn-lg btn-primary float-right mr-4 mb-4"
+        >
+            {submitButtonText || 'SUBMIT'}
+        </button>) : null
+
         return (
             <>
                 {opener}
@@ -73,7 +80,9 @@ class ModalForm extends Component {
                             validationSchema={validationSchema}
                             onSubmit={async (values, actions) => {
                                 try {
-                                    await submit(values)
+                                    if (submit) {
+                                        await submit(values)
+                                    }
                                     actions.setSubmitting(false)
                                     actions.resetForm()
                                     this.toggleModal()
@@ -147,12 +156,7 @@ class ModalForm extends Component {
                                                     DELETE
                                                 </button>
                                             )}
-                                            <button
-                                                type="submit"
-                                                className="btn btn-lg btn-primary float-right mr-4 mb-4"
-                                            >
-                                                {submitButtonText || 'SUBMIT'}
-                                            </button>
+                                            {submitButton}
                                         </Form>
                                     </div>
                                 </div>

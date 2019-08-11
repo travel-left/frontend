@@ -55,6 +55,9 @@ class TripInfo extends Component {
             status
         } = this.props.trip
 
+        dateStart = dateStart.split('T')[0]
+        dateEnd = dateEnd.split('T')[0]
+
         let invited = this.state.travelers.length
         let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
             .length

@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
 import FormField from '../util/forms/FormField'
 import Validator, {
-    emailValidator,
     nameValidator,
     phoneValidator,
-    titleValidator,
-    urlValidator
+    titleValidator
 } from '../util/validators'
+import ExplainOrganizationId from './ExplainOrganizationId'
 import Uploader from '../util/forms/Uploader'
 import './Auth.css'
 import { apiCall } from '../util/api'
@@ -98,7 +97,7 @@ export default class CreateProfile extends Component {
                                             {currentUser.email}
                                         </div>
                                         <div className="p mt-2">
-                                            Organization Id
+                                            <div className="">Organization Id <ExplainOrganizationId /></div>
                                         </div>
                                         <div className="p mt-2">
                                             {currentUser.organization}
