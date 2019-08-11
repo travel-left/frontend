@@ -18,7 +18,7 @@ const stati = [
     { value: 'ON-TRIP', label: 'On trip' },
     { value: 'POST-TRIP', label: 'Post trip' },
     { value: 'PAYMENT NEEDED', label: 'Payment needed' },
-    { value: 'PAPERWORK NEEDED', label: 'Payment needed' },
+    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
     { value: 'OTHER', label: 'Other' }
 ]
 

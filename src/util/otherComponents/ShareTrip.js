@@ -8,7 +8,9 @@ import * as Yup from 'yup'
 
 export default class ShareTrip extends Component {
     tripId = this.props.tripId
-    tripLink = `Here's a link to your trip! https://app.travel-left.com/trips/${
+    tripLink = `
+    
+Here's a link to your trip! https://app.travel-left.com/trips/${
         this.tripId
     }/share`
 

@@ -38,10 +38,13 @@ export default function UpdateTravelerForm(props) {
             <SelectField
                 name="status"
                 options={[
-                    { label: 'INVITED', value: 'INVITED' },
-                    { label: 'CONFIRMED', value: 'CONFIRMED' },
-                    { label: 'ON-TRIP', value: 'ON-TRIP' },
-                    { label: 'POST-TRIP', value: 'POST-TRIP' }
+                    { value: 'INVITED', label: 'Invited' },
+                    { value: 'CONFIRMED', label: 'Confirmed' },
+                    { value: 'ON-TRIP', label: 'On trip' },
+                    { value: 'POST-TRIP', label: 'Post trip' },
+                    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
+                    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
+                    { value: 'OTHER', label: 'Other' }
                 ]}
                 label="Status"
             />
