@@ -10,6 +10,8 @@ import ExplainOrganizationId from './ExplainOrganizationId'
 import Uploader from '../util/forms/Uploader'
 import './Auth.css'
 import { apiCall } from '../util/api'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/profile')
 
 export default class CreateProfile extends Component {
     state = {

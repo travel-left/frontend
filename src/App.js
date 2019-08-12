@@ -10,6 +10,14 @@ import Footer from './util/otherComponents/Footer'
 import HttpsRedirect from 'react-https-redirect'
 import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import Share from './TripDashboard/Share/index'
+import ReactGA from 'react-ga'
+
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/homepage')
+}
+
+initializeReactGA()
 
 const store = configureStore()
 
@@ -23,13 +31,20 @@ const App = () => (
             <Provider store={store}>
                 <Router>
                     <Switch>
-                        <Route path="/trips/:tripId/share" render={routeProps => <Share {...routeProps} />} />
+                        <Route
+                            path="/trips/:tripId/share"
+                            render={routeProps => <Share {...routeProps} />}
+                        />
                         <Route
                             path=""
                             render={routeProps => (
                                 <div>
                                     <Navbar />
-                                    <div className="container-fluid content" id="app-root" style={{ minHeight: '90vh' }}>
+                                    <div
+                                        className="container-fluid content"
+                                        id="app-root"
+                                        style={{ minHeight: '90vh' }}
+                                    >
                                         <Main />
                                     </div>
                                     <Footer />

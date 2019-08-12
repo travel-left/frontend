@@ -5,6 +5,8 @@ import { apiCall, genericSubUpdater } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/itinerary')
 
 class Itinerary extends Component {
     tz = moment.tz.guess(true)
@@ -40,13 +42,23 @@ class Itinerary extends Component {
     createEvent = async event => {
         const docs = event.documents
         event.documents = []
+        let localStart = moment.tz(
+            `${event.dateStart}T${event.timeStart}:00`,
+            event.tzStart
+        )
+        let localEnd = moment.tz(
+            `${event.dateEnd}T${event.timeEnd}:00`,
+            event.tzEnd
+        )
+        let gmtStart = moment.tz(localStart, 'GMT').toString()
+        let gmtEnd = moment.tz(localEnd, 'GMT').toString()
         let createdEvent = await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
                 ...event,
-                dtStart: `${event.dateStart}T${event.timeStart}:00`,
-                dtEnd: `${event.dateEnd}T${event.timeEnd}:00`
+                dtStart: gmtStart,
+                dtEnd: gmtEnd
             }
         )
 
@@ -153,7 +165,6 @@ class Itinerary extends Component {
 
         return (
             <>
-                <h2>{this.tz}</h2>
                 <div className="col-md-2">
                     <div className="card shadow">
                         <div className="p-3">
@@ -164,7 +175,7 @@ class Itinerary extends Component {
                     </div>
                 </div>
                 <div className="col-md-10">
-                    <div className="row float-right mb-5 mr-2">
+                    <div className="row mb-5 mr-2 justify-content-end">
                         <CreateEventForm
                             submit={this.createEvent}
                             initDay={this.props.currentTrip.dateStart}

@@ -3,6 +3,8 @@ import { apiCall } from './util/api'
 import { Formik, Form } from 'formik'
 import FormField from './util/forms/FormField'
 import * as Yup from 'yup'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/support')
 
 export default class Support extends Component {
     state = {

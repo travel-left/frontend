@@ -9,6 +9,8 @@ import Select from 'react-select'
 import ChangeStatusForm from './Actions/ChangeStatusForm'
 import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '../../util/forms/Checkbox'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/managetravelers')
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },

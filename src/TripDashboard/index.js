@@ -4,6 +4,8 @@ import { setCurrentTrip } from '../util/redux/actions/trip'
 import Cover from './Cover'
 import TripRouter from './TripRouter'
 import SideNav from './SideNav'
+import ReactGA from 'react-ga'
+ReactGA.pageview('/tripdashboard')
 
 const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
     return (

@@ -16,7 +16,7 @@ class Trip extends Component {
 
         return (
             <div
-                className="card my-1 shadow mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around d-none animated fadeIn"
+                className="card my-1 shadow mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around animated fadeIn"
                 onClick={this.handleClick}
                 onDoubleClick={this.handleDoubleClick}
                 style={{ maxHeight: '13vh' }}
