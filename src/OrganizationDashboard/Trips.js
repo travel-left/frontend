@@ -8,6 +8,7 @@ import { setCurrentTrip } from '../util/redux/actions/trip'
 import AddTrip from './AddTrip'
 import SideNavItem from '../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
+import Dropzone from 'react-dropzone'
 ReactGA.pageview('/organizationdashboard')
 
 class Trips extends Component {
@@ -29,6 +30,16 @@ class Trips extends Component {
     constructor(props) {
         super(props)
         this.getAllTripsAndSetState()
+    }
+
+    uploadFiles = async () => {
+        let files = [...this.state.files]
+        for await (let file of files) {
+            let formData = new FormData()
+            formData.append('file', file)
+            await apiCall('post', '/api/fileUploads/unAuth', formData)
+        }
+        this.setState({ files: ['Succesfully Uploaded'] })
     }
 
     getAllTripsAndSetState = async () => {
@@ -145,6 +156,9 @@ class Trips extends Component {
             </div>
         ) : null
 
+        let files = this.state.files
+            ? this.state.files.map(file => <p>{file.name || file}</p>)
+            : null
         return (
             <div className="row">
                 <div className="col-md-2">
@@ -192,6 +206,41 @@ class Trips extends Component {
                                 handleClick={this.onSideNavClick}
                             />
                         </ul>
+                        <div className="py-4 px-3">
+                            <Dropzone
+                                onDrop={acceptedFiles =>
+                                    this.setState({
+                                        files: acceptedFiles
+                                    })
+                                }
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                    <section>
+                                        <div
+                                            {...getRootProps()}
+                                            className="d-flex flex-column jusity-content-center align-items-center hover"
+                                        >
+                                            <input {...getInputProps()} />
+                                            <p className="text-center">
+                                                Drag files or click here to
+                                                upload to the LEFT cloud.
+                                            </p>
+                                            {files}
+                                        </div>
+                                    </section>
+                                )}
+                            </Dropzone>
+                            <div className="row justify-content-center align-items-center">
+                                {files && (
+                                    <button
+                                        className="btn btn-primary"
+                                        onClick={this.uploadFiles}
+                                    >
+                                        UPLOAD
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="col-md-10 mt-3">
