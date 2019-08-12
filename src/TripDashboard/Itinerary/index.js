@@ -42,16 +42,23 @@ class Itinerary extends Component {
     createEvent = async event => {
         const docs = event.documents
         event.documents = []
+        let localStart = moment.tz(
+            `${event.dateStart}T${event.timeStart}:00`,
+            this.tz
+        )
+        let localEnd = moment.tz(
+            `${event.dateEnd}T${event.timeEnd}:00`,
+            this.tz
+        )
+        let gmtStart = moment.tz(localStart, 'GMT').toString()
+        let gmtEnd = moment.tz(localEnd, 'GMT').toString()
         let createdEvent = await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
                 ...event,
-                dtStart: moment.tz(
-                    `${event.dateStart}T${event.timeStart}:00`,
-                    'GMT'
-                ),
-                dtEnd: moment.tz(`${event.dateEnd}T${event.timeEnd}:00`, 'GMT')
+                dtStart: gmtStart,
+                dtEnd: gmtEnd
             }
         )
 
@@ -158,7 +165,6 @@ class Itinerary extends Component {
 
         return (
             <>
-                <h2>{this.tz}</h2>
                 <div className="col-md-2">
                     <div className="card shadow">
                         <div className="p-3">
