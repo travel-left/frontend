@@ -47,8 +47,11 @@ class Itinerary extends Component {
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
                 ...event,
-                dtStart: `${event.dateStart}T${event.timeStart}:00`,
-                dtEnd: `${event.dateEnd}T${event.timeEnd}:00`
+                dtStart: moment.tz(
+                    `${event.dateStart}T${event.timeStart}:00`,
+                    'GMT'
+                ),
+                dtEnd: moment.tz(`${event.dateEnd}T${event.timeEnd}:00`, 'GMT')
             }
         )
 
