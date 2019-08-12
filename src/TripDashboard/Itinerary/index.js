@@ -153,6 +153,7 @@ class Itinerary extends Component {
 
         return (
             <>
+                <h2>{this.tz}</h2>
                 <div className="col-md-2">
                     <div className="card shadow">
                         <div className="p-3">
