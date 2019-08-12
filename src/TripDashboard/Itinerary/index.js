@@ -44,11 +44,11 @@ class Itinerary extends Component {
         event.documents = []
         let localStart = moment.tz(
             `${event.dateStart}T${event.timeStart}:00`,
-            this.tz
+            event.tzStart
         )
         let localEnd = moment.tz(
             `${event.dateEnd}T${event.timeEnd}:00`,
-            this.tz
+            event.tzEnd
         )
         let gmtStart = moment.tz(localStart, 'GMT').toString()
         let gmtEnd = moment.tz(localEnd, 'GMT').toString()
