@@ -147,58 +147,51 @@ class Trips extends Component {
 
         return (
             <div className="row">
-                <div className="col-md-2 border-right shadow">
+                <div className="col-md-2">
                     <div className="row">
-                        <div className="col px-0 py-5 d-flex justify-content-center">
+                        <div className="col px-0 py-5 d-flex justify-content-center shadow">
                             <AddTrip submit={this.addTrip} />
                         </div>
                     </div>
-                    <div
-                        className="row trips-side-bar bg-light"
-                        style={{ minHeight: '80vh' }}
-                    >
-                        <div className="col px-0">
-                            <ul className="list-group ">
-                                <SideNavItem
-                                    text="All Trips"
-                                    total={
-                                        trips.length - tripStatusCounts.ARCHIVED
-                                    }
-                                    active={filter === 'ALL TRIPS'}
-                                    handleClick={this.onSideNavClick}
-                                />
-                                <SideNavItem
-                                    text="Planning"
-                                    total={tripStatusCounts.PLANNING}
-                                    active={filter === 'PLANNING'}
-                                    handleClick={this.onSideNavClick}
-                                />
-                                <SideNavItem
-                                    text="Completed"
-                                    total={tripStatusCounts.COMPLETED}
-                                    active={filter === 'COMPLETED'}
-                                    handleClick={this.onSideNavClick}
-                                />
-                                <SideNavItem
-                                    text="LEFT"
-                                    total={tripStatusCounts.LEFT}
-                                    active={filter === 'LEFT'}
-                                    handleClick={this.onSideNavClick}
-                                />
-                                <SideNavItem
-                                    text="Past"
-                                    total={tripStatusCounts.PAST}
-                                    active={filter === 'PAST'}
-                                    handleClick={this.onSideNavClick}
-                                />
-                                <SideNavItem
-                                    text="Archived"
-                                    total={tripStatusCounts.ARCHIVED}
-                                    active={filter === 'ARCHIVED'}
-                                    handleClick={this.onSideNavClick}
-                                />
-                            </ul>
-                        </div>
+                    <div className="row d-none d-sm-flex flex-column shadow">
+                        <ul className="list-group col px-0 ">
+                            <SideNavItem
+                                text="All Trips"
+                                total={trips.length - tripStatusCounts.ARCHIVED}
+                                active={filter === 'ALL TRIPS'}
+                                handleClick={this.onSideNavClick}
+                            />
+                            <SideNavItem
+                                text="Planning"
+                                total={tripStatusCounts.PLANNING}
+                                active={filter === 'PLANNING'}
+                                handleClick={this.onSideNavClick}
+                            />
+                            <SideNavItem
+                                text="Completed"
+                                total={tripStatusCounts.COMPLETED}
+                                active={filter === 'COMPLETED'}
+                                handleClick={this.onSideNavClick}
+                            />
+                            <SideNavItem
+                                text="LEFT"
+                                total={tripStatusCounts.LEFT}
+                                active={filter === 'LEFT'}
+                                handleClick={this.onSideNavClick}
+                            />
+                            <SideNavItem
+                                text="Past"
+                                total={tripStatusCounts.PAST}
+                                active={filter === 'PAST'}
+                                handleClick={this.onSideNavClick}
+                            />
+                            <SideNavItem
+                                text="Archived"
+                                total={tripStatusCounts.ARCHIVED}
+                                active={filter === 'ARCHIVED'}
+                                handleClick={this.onSideNavClick}
+                            />
+                        </ul>
                     </div>
                 </div>
                 <div className="col-md-10 mt-3">

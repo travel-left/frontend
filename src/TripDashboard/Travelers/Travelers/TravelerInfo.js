@@ -21,7 +21,7 @@ export default class TravelerInfo extends Component {
         } = this.props.traveler
 
         return (
-            <div className="shadow px-3" style={{ height: '100vh' }}>
+            <div className="shadow px-3 pb-5">
                 <div className="row d-flex flex-column justify-content-center align-items-center pt-4">
                     <Image src={image} diameter="150px" />
                 </div>

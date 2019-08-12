@@ -175,7 +175,7 @@ class Itinerary extends Component {
                     </div>
                 </div>
                 <div className="col-md-10">
-                    <div className="row float-right mb-5 mr-2">
+                    <div className="row mb-5 mr-2 justify-content-end">
                         <CreateEventForm
                             submit={this.createEvent}
                             initDay={this.props.currentTrip.dateStart}
