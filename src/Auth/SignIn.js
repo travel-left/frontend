@@ -35,7 +35,7 @@ export default ({ error, submit }) => {
                                 name="email"
                                 label="Email"
                                 type="email"
-                                placeholder="john@travel-left.com"
+                                placeholder="your email"
                             />
                             <FormField
                                 name="password"
