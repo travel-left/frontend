@@ -13,6 +13,10 @@ class Navbar extends Component {
         this.props.history.push(`/editprofile`)
     }
 
+    trips = () => {
+        this.props.history.push(`/`)
+    }
+
     support = () => {
         this.props.history.push(`/support`)
     }
@@ -41,6 +45,12 @@ class Navbar extends Component {
                                     {currentUser.name}
                                 </a>
                                 <div class="dropdown-menu">
+                                    <button
+                                        class="dropdown-item btn-link"
+                                        onClick={this.trips}
+                                    >
+                                        Trips
+                                    </button>
                                     <button
                                         class="dropdown-item btn-link"
                                         onClick={this.account}
