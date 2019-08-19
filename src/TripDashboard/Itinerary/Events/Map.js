@@ -12,13 +12,17 @@ export default class Map extends Component {
         }
     }
 
+    handleViewportChange = viewport => {
+        this.setState({ viewport })
+    }
+
     render() {
         const { coordinates } = this.props
         return (
             <ReactMapGL
                 {...this.state.viewport}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-                onViewportChange={viewport => this.setState({ viewport })}
+                onViewportChange={this.handleViewportChange}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
             >
                 <Marker

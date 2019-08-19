@@ -77,11 +77,7 @@ class Event extends Component {
 
         const map = event.coordinates ? (
             event.coordinates.lat && event.coordinates.long ? (
-                <div className="row">
-                    <div className="col-12">
-                        <Map coordinates={event.coordinates} />
-                    </div>
-                </div>
+                <Map coordinates={event.coordinates} />
             ) : null
         ) : null
 
