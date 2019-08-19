@@ -5,13 +5,13 @@ class WithAuth extends Component {
     constructor(props) {
         super(props)
         if (!props.isAuthenticated) {
-            props.history.push('/')
+            props.history.push('/signin')
         }
     }
 
     componentWillUpdate() {
         if (!this.props.isAuthenticated) {
-            this.props.history.push('/')
+            this.props.history.push('/signin')
         }
     }
 
