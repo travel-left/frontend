@@ -53,20 +53,22 @@ class Event extends Component {
                 break
         }
 
-        const updater = event.tripDate ? (
-            <UpdateTripDateForm
-                {...event}
-                submit={this.update}
-                remove={this.remove}
-                onItinerary={true}
-            />
-        ) : (
-            <UpdateEventForm
-                event={event}
-                submit={this.update}
-                remove={this.remove}
-            />
-        )
+        const updater = !event.share ? (
+            event.tripDate ? (
+                <UpdateTripDateForm
+                    {...event}
+                    submit={this.update}
+                    remove={this.remove}
+                    onItinerary={true}
+                />
+            ) : (
+                <UpdateEventForm
+                    event={event}
+                    submit={this.update}
+                    remove={this.remove}
+                />
+            )
+        ) : null
 
         const date =
             event.dtStart && event.dtEnd
