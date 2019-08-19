@@ -50,9 +50,9 @@ export default function UpdateTripDateForm(props) {
             initialValues={initialValues}
             {...props}
         >
-            <FormField name="name" label="Name" placeholder="Trip Date Name" />
-            <FormField name="date" label="Date" type="date" />
-            <SelectField name="type" options={options} label="Type" />
+            <FormField name="name" label="Name*" placeholder="Trip Date Name" />
+            <FormField name="date" label="Date*" type="date" />
+            <SelectField name="type" options={options} label="Type*" />
         </ModalForm>
     )
 }

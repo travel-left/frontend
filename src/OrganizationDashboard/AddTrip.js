@@ -39,21 +39,21 @@ export default function AddTrip({ submit }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" label="Name" placeholder="Austrailia" />
+            <FormField name="name" label="Name*" placeholder="Austrailia" />
             <FormField
                 name="image"
-                label="Upload an image"
+                label="Upload an image*"
                 component={Uploader}
             />
             <FormField
                 name="dateStart"
-                label="Trip Start Date"
+                label="Trip Start Date*"
                 placeholder={initialValues.dateStart}
                 type="date"
             />
             <FormField
                 name="dateEnd"
-                label="Trip End Date"
+                label="Trip End Date*"
                 placeholder={initialValues.dateEnd}
                 type="date"
             />

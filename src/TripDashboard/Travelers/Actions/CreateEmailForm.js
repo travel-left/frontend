@@ -58,12 +58,12 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             <div className="mb-4">{travelerList}</div>
             <FormField
                 name="subject"
-                label="Subject"
+                label="Subject*"
                 placeholder="Your email subject"
             />
             <FormField
                 name="body"
-                label="Body"
+                label="Body*"
                 component="textarea"
                 placeholder="Your email body"
                 className="d-block"

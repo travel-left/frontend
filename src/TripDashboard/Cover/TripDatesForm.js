@@ -22,7 +22,7 @@ export default function TripDatesForm({ dateStart, dateEnd, submit }) {
     const button = {
         classes: 'text-light hover',
         text: (
-            <h5 className='left-shadow'>
+            <h5 className="left-shadow">
                 <Moment date={dateStartMoment} format="MMMM DD" /> {' - '}{' '}
                 <Moment date={dateEndMoment} format="MMMM DD" />{' '}
                 <i className="far fa-calendar-alt ml-1" />
@@ -39,13 +39,13 @@ export default function TripDatesForm({ dateStart, dateEnd, submit }) {
         >
             <FormField
                 name="dateStart"
-                label="Trip Start Date"
+                label="Trip Start Date*"
                 placeholder={initialValues.dateStart}
                 type="date"
             />
             <FormField
                 name="dateEnd"
-                label="Trip End Date"
+                label="Trip End Date*"
                 placeholder={initialValues.dateEnd}
                 type="date"
             />

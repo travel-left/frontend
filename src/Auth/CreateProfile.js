@@ -88,12 +88,12 @@ export default class CreateProfile extends Component {
                                         />
                                         <FormField
                                             name="name"
-                                            label="Name"
+                                            label="Name*"
                                             placeholder="John Appleseed"
                                         />
                                         <FormField
                                             name="email"
-                                            label="Email"
+                                            label="Email*"
                                             type="email"
                                             placeholder="your email"
                                         />
@@ -117,7 +117,7 @@ export default class CreateProfile extends Component {
                                         />
                                         <FormField
                                             name="organization.name"
-                                            label="Name"
+                                            label="Name*"
                                             placeholder="Travel LEFT"
                                         />
                                         <FormField

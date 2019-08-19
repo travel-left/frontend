@@ -20,7 +20,7 @@ export default function TripNameForm({ name, submit }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" placeholder="Australia" label="Trip Name" />
+            <FormField name="name" placeholder="Australia" label="Trip Name*" />
         </ModalForm>
     )
 }

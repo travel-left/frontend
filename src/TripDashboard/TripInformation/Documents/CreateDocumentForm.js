@@ -36,11 +36,11 @@ const CreateDocumentForm = ({ submit }) => {
         >
             <FormField
                 name="link"
-                label="Upload a document"
+                label="Upload a document*"
                 type="file"
                 component={Uploader}
             />
-            <FormField name="name" label="Name" placeholder="Document Name" />
+            <FormField name="name" label="Name*" placeholder="Document Name" />
             <FormField
                 name="description"
                 label="Description"

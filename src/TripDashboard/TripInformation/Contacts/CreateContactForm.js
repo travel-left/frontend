@@ -35,7 +35,7 @@ export default function CreateContactForm({ submit }) {
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" label="Name" placeholder="John Appleseed" />
+            <FormField name="name" label="Name*" placeholder="John Appleseed" />
             <FormField
                 component={Uploader}
                 name="image"
@@ -43,7 +43,7 @@ export default function CreateContactForm({ submit }) {
             />
             <FormField
                 name="email"
-                label="Email"
+                label="Email*"
                 placeholder="john@travel-left.com"
                 type="email"
             />

@@ -58,13 +58,13 @@ export default class NewPassword extends Component {
                                     <Form>
                                         <FormField
                                             name="password"
-                                            label="Password"
+                                            label="Password*"
                                             type="password"
                                             placeholder="••••••••••••"
                                         />
                                         <FormField
                                             name="confirmPassword"
-                                            label="Confirm Password"
+                                            label="Confirm Password*"
                                             type="password"
                                             placeholder="••••••••••••"
                                         />

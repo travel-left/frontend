@@ -67,12 +67,12 @@ export default class Support extends Component {
                             <Form>
                                 <FormField
                                     name="subject"
-                                    label="Subject"
+                                    label="Subject*"
                                     placeholder="Your email subject"
                                 />
                                 <FormField
                                     name="body"
-                                    label="Body"
+                                    label="Body*"
                                     component="textarea"
                                     placeholder="Your email body"
                                     className="d-block"

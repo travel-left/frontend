@@ -91,7 +91,7 @@ export default class CreateProfile extends Component {
                                         />
                                         <FormField
                                             name="name"
-                                            label="Name"
+                                            label="Name*"
                                             placeholder="John Appleseed"
                                         />
                                         <div className="p mt-2">Email</div>

@@ -54,7 +54,7 @@ export default function CreateTextForm({ submit, travelers, selected }) {
             <div className="mb-4">{travelerList}</div>
             <FormField
                 name="body"
-                label="Body"
+                label="Body*"
                 component="textarea"
                 placeholder="Your text body"
                 className="d-block"

@@ -53,7 +53,7 @@ export default function ChangeStatusForm({ submit, travelers, selected }) {
                     { value: 'PAPERWORK NEEDED', label: 'Payment needed' },
                     { value: 'OTHER', label: 'Other' }
                 ]}
-                label="New Status"
+                label="New Status*"
             />
         </ModalForm>
     )
