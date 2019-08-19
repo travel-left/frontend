@@ -27,9 +27,10 @@ export default class Image extends Component {
     }
 
     render() {
-        const { src, diameter } = this.props
+        const { src, diameter, name } = this.props
         const { error } = this.state
         const imageUrl = error ? '' : src
+        console.log(name)
         return (
             <img
                 src={imageUrl}

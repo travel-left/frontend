@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import Image from "../../../util/otherComponents/Image";
-import Checkbox from "../../../util/forms/Checkbox";
-import TravelerStatus from '../../../util/otherComponents/TravelerStatus';
+import Image from '../../../util/otherComponents/Image'
+import Checkbox from '../../../util/forms/Checkbox'
+import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 
 export default class Traveler extends Component {
     handleToggle = () => {
-        this.props.toggle(this.props._id);
-    };
+        this.props.toggle(this.props._id)
+    }
 
     handleDoubleClick = () => {
-        this.props.onDoubleClick(this.props._id);
-    };
+        this.props.onDoubleClick(this.props._id)
+    }
 
     render() {
-        let { name, email, status, image, selected } = this.props;
+        let { name, email, status, image, selected } = this.props
 
         return (
             <div
@@ -30,15 +30,19 @@ export default class Traveler extends Component {
                         />
                     </div>
                     <div className="col-md-2 d-none d-md-block d-flex justify-content-center">
-                        <Image diameter="75px" src={image} />
+                        <Image diameter="75px" src={image} name={name} />
                     </div>
-                    <div className="d-none d-md-flex col-md-2 d-flex justify-content-center">{name}</div>
-                    <div className="col-4 col-md-4 d-flex justify-content-center">{email}</div>
+                    <div className="d-none d-md-flex col-md-2 d-flex justify-content-center">
+                        {name}
+                    </div>
+                    <div className="col-4 col-md-4 d-flex justify-content-center">
+                        {email}
+                    </div>
                     <div className="col-4 col-md-2 d-flex justify-content-center">
                         <TravelerStatus status={status} />
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

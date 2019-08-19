@@ -273,14 +273,14 @@ const Navigation = ({ tripId, source }) => (
             name={`/trips/${tripId}/${source}/itinerary`}
         >
             <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                className="rounded-circle hover d-flex align-items-center justify-content-center"
                 style={{
                     width: '7vh',
                     height: '7vh',
                     zIndex: '999'
                 }}
             >
-                <i class="far fa-calendar fa-2x text-light" />
+                <i className="far fa-calendar fa-2x text-light" />
             </span>
         </NavLink>
 
@@ -290,13 +290,13 @@ const Navigation = ({ tripId, source }) => (
             name={`/trips/${tripId}/${source}/documents`}
         >
             <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                className="rounded-circle hover d-flex align-items-center justify-content-center"
                 style={{
                     width: '8vh',
                     height: '8vh'
                 }}
             >
-                <i class="far fa-folder fa-2x text-light" />
+                <i className="far fa-folder fa-2x text-light" />
             </span>
         </NavLink>
         <NavLink
@@ -305,13 +305,13 @@ const Navigation = ({ tripId, source }) => (
             name={`/trips/${tripId}/${source}/contacts`}
         >
             <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                className="rounded-circle hover d-flex align-items-center justify-content-center"
                 style={{
                     width: '8vh',
                     height: '8vh'
                 }}
             >
-                <i class="far fa-user fa-2x text-light" />
+                <i className="far fa-user fa-2x text-light" />
             </span>
         </NavLink>
     </span>
