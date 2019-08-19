@@ -10,7 +10,7 @@ export default class ShareTrip extends Component {
     tripId = this.props.tripId
     tripLink = `
     
-Here's a link to your trip! https://app.travel-left.com/trips/${
+Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
         this.tripId
     }/share`
 
