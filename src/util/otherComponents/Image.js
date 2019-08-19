@@ -30,8 +30,10 @@ export default class Image extends Component {
         const { src, diameter, name } = this.props
         const { error } = this.state
         const imageUrl = error ? '' : src
-        console.log(name)
+        const initials = name ? getInitials(name) : ''
+
         return (
+
             <img
                 src={imageUrl}
                 alt=""
@@ -45,4 +47,12 @@ export default class Image extends Component {
             />
         )
     }
+}
+
+const getInitials = name => {
+    const nameArray = name.split(' ')
+    if (nameArray.length > 2) {
+        return name.charAt(0)
+    }
+    return nameArray[0].charAt(0) + nameArray[nameArray.length - 1].charAt(0)
 }
