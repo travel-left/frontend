@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Image extends Component {
     state = {
-        error: false
+        error: this.props.src === 'https://' || !this.props.src
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -26,11 +26,10 @@ export default class Image extends Component {
     render() {
         const { src, diameter, name } = this.props
         const { error } = this.state
-        const imageUrl = error ? '' : src
+        const imageUrl = error ? null : src
         const initials = name ? getInitials(name) : ''
-
         const renderInitials =
-            !imageUrl || error || imageUrl === 'https://' ? (
+            !imageUrl || error || src === 'https://' ? (
                 <h1
                     className="text-light text-center"
                     style={{
@@ -44,14 +43,16 @@ export default class Image extends Component {
                 </h1>
             ) : null
 
+        console.log(name, error, src, imageUrl)
+
         return (
-            <div className="thumbnail text-center">
+            <div className="text-center">
                 <img
                     src={imageUrl}
                     alt=""
                     className="rounded-circle bg-secondary"
                     style={{
-                        objectFit: 'cover',
+                        // objectFit: 'cover',
                         height: diameter,
                         width: diameter
                     }}

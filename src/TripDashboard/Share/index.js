@@ -226,7 +226,11 @@ const ShareContact = ({ contact }) => {
         <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
             <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
-                    <Image src={contact.image} diameter="65px" />
+                    <Image
+                        src={contact.image}
+                        diameter="65px"
+                        name={contact.name}
+                    />
                     <strong className="h6 mt-3 text-center">
                         {contact.name}
                     </strong>
