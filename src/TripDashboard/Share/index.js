@@ -226,7 +226,11 @@ const ShareContact = ({ contact }) => {
         <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
             <div className="card-body">
                 <div className="d-flex flex-column align-items-center justify-content-center">
-                    <Image src={contact.image} diameter="65px" />
+                    <Image
+                        src={contact.image}
+                        diameter="65px"
+                        name={contact.name}
+                    />
                     <strong className="h6 mt-3 text-center">
                         {contact.name}
                     </strong>
@@ -273,14 +277,14 @@ const Navigation = ({ tripId, source }) => (
             name={`/trips/${tripId}/${source}/itinerary`}
         >
             <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                className="rounded-circle hover d-flex align-items-center justify-content-center"
                 style={{
                     width: '7vh',
                     height: '7vh',
                     zIndex: '999'
                 }}
             >
-                <i class="far fa-calendar fa-2x text-light" />
+                <i className="far fa-calendar fa-2x text-light" />
             </span>
         </NavLink>
 
@@ -290,13 +294,13 @@ const Navigation = ({ tripId, source }) => (
             name={`/trips/${tripId}/${source}/documents`}
         >
             <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                className="rounded-circle hover d-flex align-items-center justify-content-center"
                 style={{
                     width: '8vh',
                     height: '8vh'
                 }}
             >
-                <i class="far fa-folder fa-2x text-light" />
+                <i className="far fa-folder fa-2x text-light" />
             </span>
         </NavLink>
         <NavLink
@@ -305,13 +309,13 @@ const Navigation = ({ tripId, source }) => (
             name={`/trips/${tripId}/${source}/contacts`}
         >
             <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
+                className="rounded-circle hover d-flex align-items-center justify-content-center"
                 style={{
                     width: '8vh',
                     height: '8vh'
                 }}
             >
-                <i class="far fa-user fa-2x text-light" />
+                <i className="far fa-user fa-2x text-light" />
             </span>
         </NavLink>
     </span>

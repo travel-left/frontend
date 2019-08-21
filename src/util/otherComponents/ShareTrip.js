@@ -10,7 +10,7 @@ export default class ShareTrip extends Component {
     tripId = this.props.tripId
     tripLink = `
     
-Here's a link to your trip! https://app.travel-left.com/trips/${
+Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
         this.tripId
     }/share`
 
@@ -124,7 +124,7 @@ Here's a link to your trip! https://app.travel-left.com/trips/${
             this.state.commType === 'text' ? (
                 <FormField
                     name="body"
-                    label="Body"
+                    label="Body*"
                     component="textarea"
                     placeholder="Your text body"
                     className="d-block"
@@ -133,12 +133,12 @@ Here's a link to your trip! https://app.travel-left.com/trips/${
                 <>
                     <FormField
                         name="subject"
-                        label="Subject"
+                        label="Subject*"
                         placeholder="Your email subject"
                     />
                     <FormField
                         name="body"
-                        label="Body"
+                        label="Body*"
                         component="textarea"
                         placeholder="Your email body"
                         className="d-block"

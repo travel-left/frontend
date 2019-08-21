@@ -43,7 +43,7 @@ export default function CreateEventForm({ submit, initDay }) {
         >
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="name" label="Name" placeholder="Name" />
+                    <FormField name="name" label="Name*" placeholder="Name" />
                 </div>
                 <div className="col-6">
                     <SelectField name="type" options={types} label="Type" />
@@ -53,12 +53,12 @@ export default function CreateEventForm({ submit, initDay }) {
                 <div className="col-6">
                     <FormField
                         name="dateStart"
-                        label="Start Time"
+                        label="Start Time*"
                         type="date"
                     />
                 </div>
                 <div className="col-6">
-                    <FormField name="dateEnd" label="End Time" type="date" />
+                    <FormField name="dateEnd" label="End Time*" type="date" />
                 </div>
             </div>
             <div className="form-row">

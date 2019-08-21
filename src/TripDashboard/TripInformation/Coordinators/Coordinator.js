@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import LeftCard from '../../../util/LeftCard'
-import RemoveCoordinator from './RemoveCoordinator';
+import RemoveCoordinator from './RemoveCoordinator'
 
 class Coordinator extends Component {
     handleEdit = updateObject => {
@@ -32,7 +32,7 @@ class Coordinator extends Component {
             <LeftCard>
                 <div className="row">
                     <div className="col-md-3 d-flex align-items-center">
-                        <Image src={image} diameter="55px" />
+                        <Image src={image} diameter="55px" name={name} />
                     </div>
                     <div className="col-md-7 d-flex flex-column justify-content-center">
                         {name && <p className="m-0">{name}</p>}

@@ -67,7 +67,7 @@ class Cover extends Component {
                             status={currentTrip.status}
                         />
                         <div className="pr-2">
-                            <span class="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover bg-primary">
+                            <span className="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover bg-primary">
                                 <ShareTrip
                                     travelers={this.state.travelers}
                                     tripId={this.tripId}

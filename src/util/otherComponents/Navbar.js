@@ -34,9 +34,9 @@ class Navbar extends Component {
                     </div>
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <li class="nav-item dropdown">
+                            <li className="nav-item dropdown">
                                 <a
-                                    class="nav-link dropdown-toggle text-light"
+                                    className="nav-link dropdown-toggle text-light"
                                     href="#"
                                     id="navbarDropdown"
                                     role="button"
@@ -44,29 +44,29 @@ class Navbar extends Component {
                                 >
                                     {currentUser.name}
                                 </a>
-                                <div class="dropdown-menu">
+                                <div className="dropdown-menu">
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.trips}
                                     >
                                         Trips
                                     </button>
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.account}
                                     >
                                         Account
                                     </button>
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.support}
                                     >
                                         Support
                                     </button>
 
-                                    <div class="dropdown-divider" />
+                                    <div className="dropdown-divider" />
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.signout}
                                     >
                                         Logout

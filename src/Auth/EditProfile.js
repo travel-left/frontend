@@ -91,7 +91,7 @@ export default class CreateProfile extends Component {
                                         />
                                         <FormField
                                             name="name"
-                                            label="Name"
+                                            label="Name*"
                                             placeholder="John Appleseed"
                                         />
                                         <div className="p mt-2">Email</div>
@@ -99,7 +99,10 @@ export default class CreateProfile extends Component {
                                             {currentUser.email}
                                         </div>
                                         <div className="p mt-2">
-                                            <div className="">Organization Id <ExplainOrganizationId /></div>
+                                            <div className="">
+                                                Organization Id{' '}
+                                                <ExplainOrganizationId />
+                                            </div>
                                         </div>
                                         <div className="p mt-2">
                                             {currentUser.organization}
@@ -113,7 +116,7 @@ export default class CreateProfile extends Component {
                                             name="phone"
                                             label="Phone Number"
                                             type="tel"
-                                            placeholder="5598675309"
+                                            placeholder="your phone number"
                                         />
                                         <button
                                             className="btn btn-lg btn-primary float-right m-4"

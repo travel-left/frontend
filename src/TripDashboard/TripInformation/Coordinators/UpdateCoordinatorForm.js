@@ -14,7 +14,6 @@ export default function UpdateCoordinatorForm(props) {
             .min(2, 'Please enter a longer name')
             .max(50, 'Please enter a shorter name')
             .required('Please enter a name'),
-        image: Yup.string().required('Please upload an image'),
         email: Yup.string().email('please enter a valid email')
     })
 
@@ -28,7 +27,7 @@ export default function UpdateCoordinatorForm(props) {
             initialValues={initialValues}
             {...props}
         >
-            <FormField name="name" label="Name" placeholder="John Appleseed" />
+            <FormField name="name" label="Name*" placeholder="John Appleseed" />
             <FormField
                 name="image"
                 label="Upload a new image"
@@ -36,7 +35,7 @@ export default function UpdateCoordinatorForm(props) {
             />
             <FormField
                 name="email"
-                label="Email"
+                label="Email*"
                 placeholder="john@travel-left.com"
                 type="email"
             />

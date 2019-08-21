@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 
 export default class Image extends Component {
-    DEFAULT_IMAGE =
-        'https://cdn.shopify.com/s/files/1/0882/1686/products/lastolite-grey-vinyl-background-275x6m-018_a36fc2d2-5860-48f1-8ec7-4b0ed98e2cf4.jpg?v=1490271176'
-
     state = {
-        error: false
+        error: this.props.src === 'https://' || !this.props.src
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -27,21 +24,50 @@ export default class Image extends Component {
     }
 
     render() {
-        const { src, diameter } = this.props
+        const { src, diameter, name } = this.props
         const { error } = this.state
-        const imageUrl = error ? '' : src
+        const imageUrl = error ? null : src
+        const initials = name ? getInitials(name) : ''
+        const renderInitials =
+            !imageUrl || error || src === 'https://' ? (
+                <h1
+                    className="text-light text-center"
+                    style={{
+                        position: 'absolute',
+                        zindex: 2,
+                        top: '22.5%',
+                        left: '27.5%'
+                    }}
+                >
+                    {initials}
+                </h1>
+            ) : null
+
+        console.log(name, error, src, imageUrl)
+
         return (
-            <img
-                src={imageUrl}
-                alt=""
-                className="rounded-circle bg-secondary"
-                style={{
-                    objectFit: 'cover',
-                    height: diameter,
-                    width: diameter
-                }}
-                onError={this.handleError}
-            />
+            <div className="text-center">
+                <img
+                    src={imageUrl}
+                    alt=""
+                    className="rounded-circle bg-secondary"
+                    style={{
+                        // objectFit: 'cover',
+                        height: diameter,
+                        width: diameter
+                    }}
+                    onError={this.handleError}
+                />
+                {renderInitials}
+            </div>
         )
     }
+}
+
+const getInitials = name => {
+    const nameArray = name.split(' ')
+    if (nameArray.length > 2) {
+        return name.charAt(0)
+    }
+    return nameArray[0].charAt(0) + nameArray[nameArray.length - 1].charAt(0)
 }

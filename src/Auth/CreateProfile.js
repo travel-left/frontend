@@ -88,14 +88,14 @@ export default class CreateProfile extends Component {
                                         />
                                         <FormField
                                             name="name"
-                                            label="Name"
+                                            label="Name*"
                                             placeholder="John Appleseed"
                                         />
                                         <FormField
                                             name="email"
-                                            label="Email"
+                                            label="Email*"
                                             type="email"
-                                            placeholder="john@travel-left.com"
+                                            placeholder="your email"
                                         />
                                         <FormField
                                             name="title"
@@ -106,7 +106,7 @@ export default class CreateProfile extends Component {
                                             name="phone"
                                             label="Phone Number"
                                             type="tel"
-                                            placeholder="5598675309"
+                                            placeholder="your phone number"
                                         />
                                     </div>
                                     <div className="col-sm-12 col-md-6">
@@ -117,7 +117,7 @@ export default class CreateProfile extends Component {
                                         />
                                         <FormField
                                             name="organization.name"
-                                            label="Name"
+                                            label="Name*"
                                             placeholder="Travel LEFT"
                                         />
                                         <FormField

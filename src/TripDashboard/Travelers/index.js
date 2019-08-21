@@ -23,18 +23,20 @@ const stati = [
 ]
 
 class Travelers extends Component {
+    allFilters = [
+        'INVITED',
+        'CONFIRMED',
+        'ON-TRIP',
+        'POST-TRIP',
+        'PAYMENT NEEDED',
+        'PAPERWORK NEEDED',
+        'OTHER'
+    ]
+
     state = {
         selected: {},
         allSelected: false,
-        filters: [
-            'INVITED',
-            'CONFIRMED',
-            'ON-TRIP',
-            'POST-TRIP',
-            'PAYMENT NEEDED',
-            'PAPERWORK NEEDED',
-            'OTHER'
-        ],
+        filters: this.allFilters,
         selectedTraveler: this.props.currentTrip.travelers[0]
     }
 
@@ -213,7 +215,7 @@ class Travelers extends Component {
         }
         let filters = selectedFilters
             ? selectedFilters.map(f => f.value)
-            : this.state.filters
+            : this.allFilters
         this.setState({ filters })
     }
 

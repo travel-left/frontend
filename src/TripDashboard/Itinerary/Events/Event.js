@@ -4,6 +4,10 @@ import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateFo
 import Map from './Map'
 
 class Event extends Component {
+    state = {
+        showMap: false
+    }
+
     remove = () => {
         this.props.removeEvent(this.props.event._id)
     }
@@ -12,8 +16,13 @@ class Event extends Component {
         this.props.updateEvent(this.props.event._id, updateObject)
     }
 
+    showMap = () => {
+        this.setState({ showMap: true })
+    }
+
     render() {
         let { event } = this.props
+        const { showMap } = this.state
         let iconString,
             color = ''
         switch (event.type) {
@@ -77,11 +86,7 @@ class Event extends Component {
 
         const map = event.coordinates ? (
             event.coordinates.lat && event.coordinates.long ? (
-                <div className="row">
-                    <div className="col-12">
-                        <Map coordinates={event.coordinates} />
-                    </div>
-                </div>
+                <Map coordinates={event.coordinates} />
             ) : null
         ) : null
 
@@ -117,6 +122,19 @@ class Event extends Component {
               ))
             : null
 
+        const renderMap = event.tripDate ? null : showMap ? (
+            map
+        ) : (
+            <div className="text-center">
+                <button
+                    className="btn btn-lg btn-outline-primary my-3"
+                    onClick={this.showMap}
+                >
+                    SHOW MAP
+                </button>
+            </div>
+        )
+
         return (
             <div className="card mb-3 border-0 shadow px-3 py-1 rounded-lg animated fadeIn">
                 <div className="row">
@@ -144,10 +162,10 @@ class Event extends Component {
                                 {documents}
                             </div>
                             <div className="col-md-6">
-                                {map}
                                 <div className="d-flex justify-content-center align-items-center mt-3">
                                     {address}
                                 </div>
+                                {renderMap}
                             </div>
                         </div>
                     </div>
