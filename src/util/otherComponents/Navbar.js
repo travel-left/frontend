@@ -23,11 +23,42 @@ class Navbar extends Component {
 
     render() {
         let { currentUser } = this.props
-        let loggedInContent = null
+        let accountController = null
+        let loggedInLinks
         let linkTo = '#'
 
+        const { pathname } = this.props.history.location
+
+        const badgePill = 'badge badge-secondary badge-pill px-4'
+
         if (currentUser.isAuthenticated) {
-            loggedInContent = (
+            loggedInLinks = (
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item h3">
+                            <Link
+                                class={`nav-link text-light mx-4 font-weight-bold h5 ${
+                                    pathname === '/trips' ? badgePill : ''
+                                }`}
+                                to="/trips"
+                            >
+                                Trips
+                            </Link>
+                        </li>
+                        <li class="nav-item h3">
+                            <Link
+                                class={`nav-link text-light mx-4 font-weight-bold h5 ${
+                                    pathname === '/travelers' ? badgePill : ''
+                                }`}
+                                to="/travelers"
+                            >
+                                Travelers
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+            )
+            accountController = (
                 <div className="collapse navbar-collapse justify-content-between">
                     <div className="navbar-nav navbar-text">
                         <ul className="navbar-nav mr-auto" />
@@ -45,12 +76,6 @@ class Navbar extends Component {
                                     {currentUser.name}
                                 </a>
                                 <div className="dropdown-menu">
-                                    <button
-                                        className="dropdown-item btn-link"
-                                        onClick={this.trips}
-                                    >
-                                        Trips
-                                    </button>
                                     <button
                                         className="dropdown-item btn-link"
                                         onClick={this.account}
@@ -103,7 +128,8 @@ class Navbar extends Component {
                         </h1>
                     </Link>
                 </div>
-                {loggedInContent}
+                {loggedInLinks}
+                {accountController}
             </nav>
         )
     }

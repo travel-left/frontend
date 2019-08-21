@@ -43,8 +43,6 @@ export default class Image extends Component {
                 </h1>
             ) : null
 
-        console.log(name, error, src, imageUrl)
-
         return (
             <div className="text-center">
                 <img

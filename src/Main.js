@@ -12,6 +12,7 @@ import EditProfile from './Auth/EditProfile'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
 import Support from './Support'
+import Travelers from './OrganizationDashboard/Travelers'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -92,6 +93,15 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 render={props => (
                     <WithAuth {...props}>
                         <Trips {...props} />
+                    </WithAuth>
+                )}
+            />
+            <Route
+                exact
+                path="/travelers"
+                render={props => (
+                    <WithAuth {...props}>
+                        <Travelers {...props} />
                     </WithAuth>
                 )}
             />
