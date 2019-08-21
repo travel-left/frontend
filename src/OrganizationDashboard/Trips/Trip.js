@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import TripStatus from '../util/otherComponents/TripStatus'
+import TripStatus from '../../util/otherComponents/TripStatus'
 
 class Trip extends Component {
     handleClick = () => {

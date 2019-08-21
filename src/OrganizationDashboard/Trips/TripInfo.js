@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import { apiCall } from '../util/api'
-import TripStatus from '../util/otherComponents/TripStatus'
+import { apiCall } from '../../util/api'
+import TripStatus from '../../util/otherComponents/TripStatus'
 
 class TripInfo extends Component {
     state = {
