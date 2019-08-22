@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import { apiCall } from '../../util/api'
-import AddTravelerForm from './Actions/AddTravelerForm'
-import ImportBulkForm from './Actions/ImportBulkForm'
-import TravelerList from './Travelers/TravelerList'
-import CreateEmailForm from './Actions/CreateEmailForm'
-import CreateTextForm from './Actions/CreateTextForm'
+import { apiCall } from '../util/api'
+import AddTravelerForm from '../TripDashboard/Travelers/Actions/AddTravelerForm'
+import ImportBulkForm from '../TripDashboard/Travelers/Actions/ImportBulkForm'
+import TravelerList from '../TripDashboard/Travelers/Travelers/TravelerList'
+import CreateEmailForm from '../TripDashboard/Travelers/Actions/CreateEmailForm'
+import CreateTextForm from '../TripDashboard/Travelers/Actions/CreateTextForm'
 import Select from 'react-select'
-import ChangeStatusForm from './Actions/ChangeStatusForm'
-import TravelerInfo from './Travelers/TravelerInfo'
-import Checkbox from '../../util/forms/Checkbox'
+import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusForm'
+import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
+import Checkbox from '../util/forms/Checkbox'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/managetravelers')
+ReactGA.pageview('/travelers')
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },
