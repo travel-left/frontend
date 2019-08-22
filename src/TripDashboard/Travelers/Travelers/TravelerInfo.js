@@ -8,7 +8,8 @@ import Email from './Email'
 
 export default class TravelerInfo extends Component {
     state = {
-        messages: []
+        messages: [],
+        showMessages: false
     }
 
     constructor(props) {
@@ -18,6 +19,7 @@ export default class TravelerInfo extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.traveler._id !== prevProps.traveler._id) {
+            this.setState({ showMessages: false })
             this.getMessages()
         }
     }
@@ -26,7 +28,7 @@ export default class TravelerInfo extends Component {
         const { _id } = this.props.traveler
         let messages = await apiCall('get', `/api/travelers/${_id}/messages`)
         messages = messages.sort((f, s) => f.createdAt < s.createdAt)
-        this.setState({ messages })
+        this.setState({ messages, showMessages: messages.length > 0 })
     }
 
     handleRemove = () => {
@@ -47,7 +49,16 @@ export default class TravelerInfo extends Component {
             personalNotes
         } = this.props.traveler
 
-        console.log(this.state.messages)
+        const { showMessages, messages } = this.state
+
+        const messageList = showMessages ? (
+            <div className="col-md-12 mt-3">
+                <div className="row h6 text-dark">Messages</div>
+                <div className="row text-black-50">
+                    <MessageList messages={messages} />
+                </div>
+            </div>
+        ) : null
 
         return (
             <div className="shadow px-3 pb-5">
@@ -79,12 +90,7 @@ export default class TravelerInfo extends Component {
                                 {personalNotes}
                             </div>
                         </div>
-                        <div className="col-md-12 mt-3">
-                            <div className="row h6 text-dark">Messages</div>
-                            <div className="row text-black-50">
-                                <MessageList messages={this.state.messages} />
-                            </div>
-                        </div>
+                        {messageList}
                         <div className="col-md-12 mt-3">
                             <UpdateTravelerForm
                                 {...this.props}
