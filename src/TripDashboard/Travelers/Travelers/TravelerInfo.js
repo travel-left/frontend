@@ -2,14 +2,38 @@ import React, { Component } from 'react'
 import UpdateTravelerForm from '../Actions/UpdateTravelerForm'
 import Image from '../../../util/otherComponents/Image'
 import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
+import { apiCall } from '../../../util/api'
 
 export default class TravelerInfo extends Component {
+    state = {
+        messages: []
+    }
+
+    constructor(props) {
+        super(props)
+        this.getMessages()
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.traveler._id !== prevProps.traveler._id) {
+            this.getMessages()
+        }
+    }
+
+    getMessages = async () => {
+        const { _id } = this.props.traveler
+        const messages = await apiCall('get', `/api/travelers/${_id}/messages`)
+        this.setState({ messages })
+    }
+
     handleRemove = () => {
         this.props.remove(this.props.traveler._id)
     }
+
     handleUpdate = updateObject => {
         this.props.update(this.props.traveler._id, updateObject)
     }
+
     render() {
         let {
             name,
@@ -19,6 +43,8 @@ export default class TravelerInfo extends Component {
             phone,
             personalNotes
         } = this.props.traveler
+
+        console.log(this.state.messages)
 
         return (
             <div className="shadow px-3 pb-5">
