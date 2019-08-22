@@ -3,6 +3,8 @@ import UpdateTravelerForm from '../Actions/UpdateTravelerForm'
 import Image from '../../../util/otherComponents/Image'
 import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 import { apiCall } from '../../../util/api'
+import Text from './Text'
+import Email from './Email'
 
 export default class TravelerInfo extends Component {
     state = {
@@ -22,7 +24,8 @@ export default class TravelerInfo extends Component {
 
     getMessages = async () => {
         const { _id } = this.props.traveler
-        const messages = await apiCall('get', `/api/travelers/${_id}/messages`)
+        let messages = await apiCall('get', `/api/travelers/${_id}/messages`)
+        messages = messages.sort((f, s) => f.createdAt < s.createdAt)
         this.setState({ messages })
     }
 
@@ -77,6 +80,12 @@ export default class TravelerInfo extends Component {
                             </div>
                         </div>
                         <div className="col-md-12 mt-3">
+                            <div className="row h6 text-dark">Messages</div>
+                            <div className="row text-black-50">
+                                <MessageList messages={this.state.messages} />
+                            </div>
+                        </div>
+                        <div className="col-md-12 mt-3">
                             <UpdateTravelerForm
                                 {...this.props}
                                 remove={this.handleRemove}
@@ -89,3 +98,12 @@ export default class TravelerInfo extends Component {
         )
     }
 }
+
+const MessageList = ({ messages }) =>
+    messages.map(m =>
+        m.__t === 'Text' ? (
+            <Text key={m._id} message={m.message} />
+        ) : (
+            <Email key={m._id} subject={m.subject} body={m.body} />
+        )
+    )
