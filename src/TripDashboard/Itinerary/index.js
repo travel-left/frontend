@@ -66,7 +66,7 @@ class Itinerary extends Component {
 
         createdEvent = await genericSubUpdater(
             `/api/trips/${this.props.currentTrip._id}/events/${
-                createdEvent._id
+            createdEvent._id
             }`,
             event,
             createdEvent,
@@ -77,12 +77,19 @@ class Itinerary extends Component {
     }
 
     updateEvent = async (eventId, updateObject) => {
-        updateObject.dtStart = `${updateObject.dateStart}T${
-            updateObject.timeStart
-        }:00`
-        updateObject.dtEnd = `${updateObject.dateEnd}T${
-            updateObject.timeEnd
-        }:00`
+        let localStart = moment.tz(
+            `${updateObject.dateStart}T${updateObject.timeStart}:00`,
+            updateObject.tzStart
+        )
+        let localEnd = moment.tz(
+            `${updateObject.dateEnd}T${updateObject.timeEnd}:00`,
+            updateObject.tzEnd
+        )
+        let gmtStart = moment.tz(localStart, 'GMT').toString()
+        let gmtEnd = moment.tz(localEnd, 'GMT').toString()
+
+        updateObject.dtStart = gmtStart
+        updateObject.dtEnd = gmtEnd
 
         const originalEvent = this.state.itinerary.find(
             e => e._id.toString() === eventId
@@ -149,8 +156,8 @@ class Itinerary extends Component {
                 handleClick={this.onDayClick}
             />
         ) : (
-            <p className="p-2">Click NEW EVENT to get started</p>
-        )
+                <p className="p-2">Click NEW EVENT to get started</p>
+            )
         const eventList = itinerary.length ? (
             <EventList
                 events={itinerary}
@@ -160,8 +167,8 @@ class Itinerary extends Component {
                 removeTripDate={this.removeTripDate}
             />
         ) : (
-            <h4 className="text-info" />
-        )
+                <h4 className="text-info" />
+            )
 
         return (
             <>
@@ -192,7 +199,7 @@ class Itinerary extends Component {
 
 export default Itinerary
 
-const time_sort_asc = function(event1, event2) {
+const time_sort_asc = function (event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')
