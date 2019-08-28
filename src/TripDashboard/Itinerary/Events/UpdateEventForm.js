@@ -5,6 +5,7 @@ import Uploader from '../../../util/forms/Uploader'
 import ModalForm from '../../../util/forms/ModalForm'
 import { schema, types, timezones } from './EventHelpers'
 import { FieldArray } from 'formik'
+import moment from 'moment'
 
 export default function UpdateEventForm(props) {
     const { event } = props
@@ -18,9 +19,9 @@ export default function UpdateEventForm(props) {
         documents: event.documents,
         address: event.address,
         dateStart: event.dateStart,
-        timeStart: event.dtStart.split(' ')[0],
+        timeStart: moment(event.dtStart, ["h:mm A"]).format("HH:mm"),
         dateEnd: event.dateEnd,
-        timeEnd: event.dtEnd.split(' ')[0]
+        timeEnd: moment(event.dtEnd, ["h:mm A"]).format("HH:mm"),
     }
 
     return (
