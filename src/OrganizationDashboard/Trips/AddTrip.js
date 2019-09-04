@@ -8,6 +8,7 @@ import {
     nameValidator,
     descriptionValidator
 } from '../../util/validators'
+import './AddTrip.css'
 
 export default function AddTrip({ submit }) {
     const initialValues = {
@@ -27,7 +28,7 @@ export default function AddTrip({ submit }) {
     })
 
     const button = {
-        classes: 'btn btn-lg btn-primary',
+        classes: 'btn btn-lg btn-primary AddTrip-button',
         text: 'ADD NEW TRIP'
     }
 
