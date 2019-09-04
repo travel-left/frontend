@@ -40,7 +40,7 @@ class Navbar extends Component {
                     <ul class="navbar-nav d-flex align-items-center ml-4">
                         <NavLink
                             activeClassName="active"
-                            className='Navbar main-nav-link mr-2'
+                            className='Navbar main-nav-link mr-3'
                             to="/trips"
                             name="/trips"
                         >
@@ -48,7 +48,7 @@ class Navbar extends Component {
                         </NavLink>
                         <NavLink
                             activeClassName="active"
-                            className='Navbar main-nav-link ml-2'
+                            className='Navbar main-nav-link ml-3'
                             to="/travelers"
                             name="/travelers"
                         >
@@ -108,7 +108,7 @@ class Navbar extends Component {
             <nav className="Left-Navbar navbar navbar navbar-expand container-fluid shadow px-5 bg-primary" style={{ zIndex: 2 }} >
                 <div className="navbar-brand">
 
-                    <Link to={linkTo} class="navbar-brand">
+                    <Link to={linkTo} class="navbar-brand ml-2">
                         <img src="left.png" alt="" style={{ height: '40px' }}></img>
                     </Link>
                 </div>
