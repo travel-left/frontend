@@ -28,3 +28,11 @@
     line-height: 15px;
 }
 
+.Navbar.user-name:hover {
+    cursor: default;
+    color: #FFFFFF;
+}
+
+.dropdown-toggle::after {
+  display:none;
+}

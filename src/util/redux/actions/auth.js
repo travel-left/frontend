@@ -28,7 +28,7 @@ export const authUser = (type, userData, history) => {
                         setAuthorizationToken(res.token)
                         dispatch(setCurrentUser(user))
                         if (user.lastChangedPassword) {
-                            history.push('/')
+                            history.push('/trips')
                         } else {
                             history.push('/newpassword')
                         }

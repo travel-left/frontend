@@ -58,22 +58,22 @@ class Navbar extends Component {
                 </div>
             )
             accountController = (
-                <div className="collapse navbar-collapse justify-content-between">
-                    <div className="navbar-nav navbar-text">
-                        <ul className="navbar-nav mr-auto" />
-                    </div>
+                <div className="collapse navbar-collapse justify-content-end">
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <li className="nav-item dropdown">
-                                <a
-                                    className="nav-link dropdown-toggle text-light Navbar user-name"
-                                    href="#"
+                            <li className="nav-item dropdown d-flex align-items-center justify-content-center">
+                                <li
+                                    className="Navbar user-name"
+                                >
+                                    {currentUser.name}
+                                </li>
+                                <i class="material-icons md-18 bg-secondary nav-link dropdown-toggle ml-3 hover"
                                     id="navbarDropdown"
                                     role="button"
                                     data-toggle="dropdown"
-                                >
-                                    {currentUser.name}
-                                </a>
+                                    style={{ borderRadius: '50%', padding: '0px', color: 'white' }}>
+                                    expand_more
+                                </i>
                                 <div className="dropdown-menu">
                                     <button
                                         className="dropdown-item btn-link"
@@ -97,14 +97,6 @@ class Navbar extends Component {
                                     </button>
                                 </div>
                             </li>
-                            <div className="a nav-link pr-4 hover">
-                                <span
-                                    className="text-light"
-                                    onClick={() =>
-                                        this.props.history.push('/editprofile')
-                                    }
-                                />
-                            </div>
                         </ul>
                     </div>
                 </div>
@@ -113,7 +105,7 @@ class Navbar extends Component {
         }
 
         return (
-            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid shadow px-4 py-2 bg-primary" style={{ zIndex: 2 }} >
+            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid shadow px-5 bg-primary" style={{ zIndex: 2 }} >
                 <div className="navbar-brand">
                     <Link to={linkTo}>
                         <h1
