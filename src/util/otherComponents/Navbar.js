@@ -107,13 +107,9 @@ class Navbar extends Component {
         return (
             <nav className="Left-Navbar navbar navbar navbar-expand container-fluid shadow px-5 bg-primary" style={{ zIndex: 2 }} >
                 <div className="navbar-brand">
-                    <Link to={linkTo}>
-                        <h1
-                            className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0"
-                            style={{ fontSize: '3.2rem' }}
-                        >
-                            left.
-                        </h1>
+
+                    <Link to={linkTo} class="navbar-brand">
+                        <img src="left.png" alt="" style={{ height: '40px' }}></img>
                     </Link>
                 </div>
                 {loggedInLinks}
