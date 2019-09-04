@@ -164,7 +164,10 @@ class Trips extends Component {
                     <div className="px-0 py-5 d-flex justify-content-center shadow">
                         <AddTrip submit={this.addTrip} />
                     </div>
-                    <div className="d-none d-sm-flex flex-column shadow">
+                    <div className="d-none d-sm-flex flex-column" style={{
+                        background: '#FFFFFF',
+                        boxShadow: '1px 0 20px 0 rgba(0, 0, 0, 0.13)'
+                    }}>
                         <ul className="list-group col px-0 ">
                             <SideNavItem
                                 text="All Trips"
