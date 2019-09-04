@@ -1,6 +1,5 @@
-body {
-    font-family: 'Roboto';
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400&display=swap');
 
 /* UTILITY CLASSES */
 .hover {
@@ -75,4 +74,26 @@ body {
     padding-left: 2rem;
     padding-right: 2rem;
     font-size: 0.8rem;
+}
+
+
+/* global modifications */
+.btn {
+    border-radius: 3px !important;
+}
+
+.lighter {
+    color: #FBFBFB !important;
+}
+
+.light {
+    color: #E8E8E8 !important;
+}
+
+.medium {
+    color: #D2D2D2 !important;
+}
+
+.dark {
+    color: #A3A3A3 !important;
 }

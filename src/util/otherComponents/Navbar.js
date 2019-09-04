@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../redux/actions/auth'
+import './Navbar.css'
 
 class Navbar extends Component {
     signout = () => {
@@ -29,32 +30,30 @@ class Navbar extends Component {
 
         const { pathname } = this.props.history.location
 
-        const badgePill = 'badge badge-secondary badge-pill px-4'
+        const badgePill = ' px-4'
+
+
 
         if (currentUser.isAuthenticated) {
             loggedInLinks = (
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item h3">
-                            <Link
-                                class={`nav-link text-light mx-4 font-weight-bold h5 ${
-                                    pathname === '/trips' ? badgePill : ''
-                                }`}
-                                to="/trips"
-                            >
-                                Trips
-                            </Link>
-                        </li>
-                        <li class="nav-item h3">
-                            <Link
-                                class={`nav-link text-light mx-4 font-weight-bold h5 ${
-                                    pathname === '/travelers' ? badgePill : ''
-                                }`}
-                                to="/travelers"
-                            >
-                                Travelers
-                            </Link>
-                        </li>
+                    <ul class="navbar-nav d-flex align-items-center ml-4">
+                        <NavLink
+                            activeClassName="active"
+                            className='Navbar main-nav-link mr-2'
+                            to="/trips"
+                            name="/trips"
+                        >
+                            Trips
+                        </NavLink>
+                        <NavLink
+                            activeClassName="active"
+                            className='Navbar main-nav-link ml-2'
+                            to="/travelers"
+                            name="/travelers"
+                        >
+                            Travelers
+                            </NavLink>
                     </ul>
                 </div>
             )
@@ -67,7 +66,7 @@ class Navbar extends Component {
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
                             <li className="nav-item dropdown">
                                 <a
-                                    className="nav-link dropdown-toggle text-light"
+                                    className="nav-link dropdown-toggle text-light Navbar user-name"
                                     href="#"
                                     id="navbarDropdown"
                                     role="button"
@@ -114,10 +113,7 @@ class Navbar extends Component {
         }
 
         return (
-            <nav
-                className="navbar navbar-expand container-fluid shadow px-4 py-2 bg-primary"
-                style={{ zIndex: 2 }}
-            >
+            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid shadow px-4 py-2 bg-primary" style={{ zIndex: 2 }} >
                 <div className="navbar-brand">
                     <Link to={linkTo}>
                         <h1

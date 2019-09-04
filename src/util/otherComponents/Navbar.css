@@ -1,0 +1,30 @@
+.Left-Navbar {
+    height: 80px;
+}
+
+.Navbar.main-nav-link {
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 22px;
+    color: #FFFFFF;
+    letter-spacing: 1.51px;
+    line-height: 15px;
+    border-radius: 20.29px;
+    padding: 1rem 1rem;
+}
+
+.Navbar.main-nav-link.active {
+    background-color: #83C9F4;
+    height: 41px;
+}
+
+.Navbar.user-name {
+    opacity: .9;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 18px;
+    color: #FFFFFF;
+    letter-spacing: 0.25px;
+    line-height: 15px;
+}
+
