@@ -146,14 +146,12 @@ class Trips extends Component {
         ) : null
 
         let tripInfo = selectedTrip ? (
-            <div className="col-md-4 shadow px-0 bg-light">
-                <TripInfo
-                    trip={selectedTrip}
-                    edit={this.editTrip}
-                    duplicateTrip={this.addTrip}
-                    archiveTrip={this.archiveTrip}
-                />
-            </div>
+            <TripInfo
+                trip={selectedTrip}
+                edit={this.editTrip}
+                duplicateTrip={this.addTrip}
+                archiveTrip={this.archiveTrip}
+            />
         ) : null
 
         let files = this.state.files
@@ -161,13 +159,11 @@ class Trips extends Component {
             : null
         return (
             <div className="row">
-                <div className="col-md-2">
-                    <div className="row">
-                        <div className="col px-0 py-5 d-flex justify-content-center shadow">
-                            <AddTrip submit={this.addTrip} />
-                        </div>
+                <div className="col-md-2 px-0">
+                    <div className="px-0 py-5 d-flex justify-content-center shadow">
+                        <AddTrip submit={this.addTrip} />
                     </div>
-                    <div className="row d-none d-sm-flex flex-column shadow">
+                    <div className="d-none d-sm-flex flex-column shadow">
                         <ul className="list-group col px-0 ">
                             <SideNavItem
                                 text="All Trips"
@@ -265,7 +261,9 @@ class Trips extends Component {
                             </div>
                             {tripList}
                         </div>
-                        {tripInfo}
+                        <div className="col-md-4 shadow px-0 bg-light">
+                            {tripInfo}
+                        </div>
                     </div>
                 </div>
             </div>
