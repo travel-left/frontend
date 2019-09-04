@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Moment from 'react-moment'
 import { apiCall } from '../../util/api'
 import TripStatus from '../../util/otherComponents/TripStatus'
+import './TripInfo.css'
 
 class TripInfo extends Component {
     state = {
@@ -63,65 +64,60 @@ class TripInfo extends Component {
             .length
 
         return (
-            <div className="pb-3 bg-light">
+            <div className="pb-3 Trip-info">
                 <div className="" style={{ position: 'relative' }}>
                     <img
                         src={image}
-                        className="card-img-top border-0 mb-4 px-2 mt-3 px-3"
+                        className="card-img-top mb-4 px-2 mt-3 px-3 TripInfo-image"
                         alt="..."
-                        style={{ backgroundColor: '#FBFBFB' }}
                     />
                 </div>
 
-                <div className="container bg-light">
-                    <span className="h4">{name}</span>
-                    <button
-                        onClick={this.handleEditClick}
-                        className="btn btn-lg btn-primary float-right"
-                    >
-                        VIEW
+                <div className="container px-4 mt-4">
+                    <div className="mb-5">
+                        <span className="TripInfo-title">{name}</span>
+                        <button
+                            onClick={this.handleEditClick}
+                            className="btn btn-lg btn-primary float-right"
+                        >
+                            EDIT
                     </button>
-                    <p className="py-3 text-black-50">{description}</p>
-                    <ul className="list-group list-group-flush px-0 mx-0 pb-4">
-                        <li className="list-group-item bg-light">
-                            Dates{' '}
-                            <span className="float-right text-primary">
-                                <Moment date={dateStart} format="MMM DD" />
-                                {' - '}
-                                <Moment date={dateEnd} format="MMM DD" />
-                            </span>
-                        </li>
-                        <li className="list-group-item bg-light">
-                            Status
-                            <span className="float-right">
-                                <TripStatus status={status} />
-                            </span>
-                        </li>
-                        <li className="list-group-item bg-light">
-                            Total Invited{' '}
-                            <span className="float-right badge badge-primary badge-pill px-2">
-                                {invited}
-                            </span>
-                        </li>
-                        <li className="list-group-item bg-light">
-                            Total Confirmed{' '}
-                            <span className="float-right badge badge-primary badge-pill px-2">
-                                {confirmed}
-                            </span>
-                        </li>
-                    </ul>
-                    <button
-                        className="btn btn-lg btn-secondary text-light"
-                        onClick={this.handleDuplicate}
-                    >
-                        DUPLICATE
+                    </div>
+
+                    <p className="TripInfo-description">{description}</p>
+                    <div className='TripInfo-details'>
+                        <div className='d-flex justify-content-between align-items-center '>
+                            <span className='TripInfo-details-title'>Date</span>
+                            <span className='TripInfo-details-date pr-2'><Moment date={dateStart} format="MMM DD" /></span>
+                        </div>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <span className='TripInfo-details-title'>Status</span>
+                            <span><TripStatus status={status} /></span>
+                        </div>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <span className='TripInfo-details-title'>Total Invited</span>
+                            <span className='badge badge-primary badge-pill d-flex align-items-center justify-content-center TripInfo-bubble'>{invited}</span>
+                        </div>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <span className='TripInfo-details-title'>Total Confirmed</span>
+                            <span className='badge badge-primary badge-pill d-flex align-items-center justify-content-center TripInfo-bubble'>{confirmed}</span>
+                        </div>
+                    </div>
+                    <div className='d-flex justify-content-end my-5'>
+                        <button
+                            className="btn btn-lg btn-secondary"
+                            onClick={this.handleDuplicate}
+                        >
+                            DUPLICATE
                     </button>
-                    <button
-                        className="btn btn-lg btn-secondary text-light float-right"
-                        onClick={this.handleArchive}
-                    >
-                        ARCHIVE
+                        <button
+                            className="btn btn-lg btn-secondary ml-5"
+                            onClick={this.handleArchive}
+                        >
+                            ARCHIVE
                     </button>
+                    </div>
+
                 </div>
             </div>
         )

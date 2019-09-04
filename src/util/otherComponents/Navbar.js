@@ -105,7 +105,7 @@ class Navbar extends Component {
         }
 
         return (
-            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid shadow px-5 bg-primary" style={{ zIndex: 2 }} >
+            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid px-5 bg-primary" style={{ zIndex: 2 }} >
                 <div className="navbar-brand">
 
                     <Link to={linkTo} class="navbar-brand ml-2">

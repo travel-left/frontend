@@ -160,14 +160,15 @@ class Trips extends Component {
             : null
         return (
             <div className="row">
-                <div className="col-md-2 px-0">
-                    <div className="px-0 py-5 d-flex justify-content-center shadow">
+                <div className="col-md-2 px-0" style={{
+                    background: '#FFFFFF',
+                    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)',
+                    borderRadius: '3px'
+                }}>
+                    <div className="px-0 py-5 d-flex justify-content-center">
                         <AddTrip submit={this.addTrip} />
                     </div>
-                    <div className="d-none d-sm-flex flex-column" style={{
-                        background: '#FFFFFF',
-                        boxShadow: '1px 0 20px 0 rgba(0, 0, 0, 0.13)'
-                    }}>
+                    <div className="d-none d-sm-flex flex-column" >
                         <ul className="list-group col px-0 ">
                             <SideNavItem
                                 text="All Trips"
@@ -206,7 +207,7 @@ class Trips extends Component {
                                 handleClick={this.onSideNavClick}
                             />
                         </ul>
-                        <div className="py-4 px-3">
+                        {/* <div className="py-4 px-3">
                             <Dropzone
                                 onDrop={acceptedFiles =>
                                     this.setState({
@@ -240,7 +241,7 @@ class Trips extends Component {
                                     </button>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="col-md-10 mt-3">
@@ -254,7 +255,7 @@ class Trips extends Component {
                             <TripsListHeader />
                             {tripList}
                         </div>
-                        <div className="col-md-4 shadow px-0 bg-light">
+                        <div className="col-md-4 px-0">
                             {tripInfo}
                         </div>
                     </div>

@@ -8,7 +8,6 @@ import {
     nameValidator,
     descriptionValidator
 } from '../../util/validators'
-import './AddTrip.css'
 
 export default function AddTrip({ submit }) {
     const initialValues = {
