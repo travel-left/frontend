@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import LeftCard from '../../../util/LeftCard'
 import RemoveCoordinator from './RemoveCoordinator'
+import './Coordinator.css'
 
 class Coordinator extends Component {
     handleEdit = updateObject => {
@@ -26,33 +27,41 @@ class Coordinator extends Component {
         const removeButton =
             currentUserId !== _id ? (
                 <RemoveCoordinator submit={this.handleDelete} />
-            ) : null
+            ) : <i className="fas fa-ellipsis-h text-muted float-right" style={{ color: '#ffffff' }}></i>
 
         return (
             <LeftCard>
-                <div className="row">
-                    <div className="col-md-3 d-flex align-items-center">
-                        <Image src={image} diameter="55px" name={name} />
-                    </div>
-                    <div className="col-md-7 d-flex flex-column justify-content-center">
-                        {name && <p className="m-0">{name}</p>}
-                        {title && <p className="m-0">{title}</p>}
-                        {email && (
-                            <p className="m-0">
-                                <small className="text-muted">{email}</small>
-                            </p>
-                        )}
-                        {phone && (
-                            <p className="m-0">
-                                <small className="text-muted">{phone}</small>
-                            </p>
-                        )}
-                    </div>
-                    <div className="col-2 d-flex justify-content-center align-items-center">
-                        {removeButton}
-                    </div>
+                <Image src={image} diameter="48px" name={name} />
+                <div className="col-md-7 d-flex flex-column justify-content-center">
+                    {name && <span className="Coordinator-name">{name}</span>}
+                    {title && <span className="Coordinator-info">{title}</span>}
+                    {phone && <span className="Coordinator-info">{phone}</span>}
                 </div>
+                {removeButton}
             </LeftCard>
+
+            // <LeftCard>
+            //     <div className="row align-items-center">
+            //         <Image src={image} diameter="48px" name={name} />
+            //         <div className="col-md-7 d-flex flex-column justify-content-center">
+            //             {name && <p className="m-0">{name}</p>}
+            //             {title && <p className="m-0">{title}</p>}
+            //             {email && (
+            //                 <p className="m-0">
+            //                     <small className="text-muted">{email}</small>
+            //                 </p>
+            //             )}
+            //             {phone && (
+            //                 <p className="m-0">
+            //                     <small className="text-muted">{phone}</small>
+            //                 </p>
+            //             )}
+            //         </div>
+
+            //         {removeButton}
+            //     </div>
+
+            // </LeftCard>
         )
     }
 }

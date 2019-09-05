@@ -12,6 +12,7 @@ import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import LeftCard from '../../util/LeftCard'
 import { apiCall } from '../../util/api'
+import './TripInfo.css'
 import ReactGA from 'react-ga'
 ReactGA.pageview('/tripinformation')
 
@@ -292,17 +293,17 @@ export default class TripInformation extends Component {
 const TripNameSection = ({ name, update }) => {
     return (
         <div className="mb-4 col-12">
-            <h4 className="mb-3">Trip Name</h4>
+            <h4 className="mb-3 TripInfo-heading">Trip Name</h4>
             <div
-                className="pb-2  ml-4"
+                className="pb-2"
                 style={{
-                    borderBottom: '1.5px solid black',
-                    width: '20vw'
+                    borderBottom: '2px solid #475561',
+                    width: '35vw'
                 }}
             >
                 {' '}
                 <div className="d-flex align-items-center">
-                    <h3 className="text-primary my-1 d-inline"> {name} </h3>
+                    <h3 className="text-primary my-3 d-inline TripInfo-name"> {name} </h3>
                     <TripNameForm name={name} submit={update} />
                 </div>
             </div>
@@ -370,8 +371,8 @@ const TripContactsSection = ({ list, create }) => {
 }
 
 const TripSection = props => (
-    <div className="my-4 col-12">
-        <h4 className="mb-3">{props.name}</h4>
+    <div className="col-12" style={{ marginTop: '5.7rem' }}>
+        <h4 className="mb-3 TripInfo-heading">{props.name}</h4>
         <div className="ml-3">{props.children}</div>
     </div>
 )
