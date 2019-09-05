@@ -111,7 +111,7 @@ class TripInfo extends Component {
                             DUPLICATE
                     </button>
                         <button
-                            className="btn btn-lg btn-secondary ml-5 mb-5 mb-xl-0"
+                            className="btn btn-lg btn-secondary ml-5 mb-5 mb-xl-0 mr-4"
                             onClick={this.handleArchive}
                         >
                             ARCHIVE
