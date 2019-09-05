@@ -16,7 +16,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
                     <SideNav ctId={currentTrip._id} />
                 </div>
                 <div className="col-md-10 px-0">
-                    <div className="m-4 pl-3">
+                    <div className="ml-4 mt-5">
                         <div className="row">
                             <TripRouter
                                 currentTrip={currentTrip}
