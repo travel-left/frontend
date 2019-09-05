@@ -17,26 +17,26 @@ class Trip extends Component {
 
         return (
             <div
-                className="mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around animated fadeIn Trip"
+                className="row mx-2 mx-xl-0 my-2 hover border-0 d-flex flex-row justify-content-around animated fadeIn Trip"
                 onClick={this.handleClick}
                 onDoubleClick={this.handleDoubleClick}
             >
-                <div className="col-md-2 px-0">
+                <div className="col-md-0 col-xl-2 px-0">
                     <img
                         src={image}
-                        className="card-img Trip-image"
+                        className="card-img Trip-image d-none d-xl-block"
                         alt="..."
                     />
                 </div>
-                <div className="col-4 col-md-4 d-flex align-items-center">
+                <div className="col-4 col-xl-4 d-flex align-items-center">
                     <p className="card-text Trip-name">{name}</p>
                 </div>
-                <div className="col-4 col-md-2 offset-md-1 d-flex align-items-center justify-content-center">
+                <div className="col-4 col-xl-2 offset-xl-1 d-flex align-items-center justify-content-center">
                     <span className="Trip-date d-flex align-items-center justify-content-center">
                         <Moment date={dateStart} format="MMM DD" />
                     </span>
                 </div>
-                <div className="col-4 col-md-3 d-flex align-items-center justify-content-center">
+                <div className="col-4 col-xl-3 d-flex align-items-center justify-content-center">
                     <TripStatus status={status} />
                 </div>
             </div>

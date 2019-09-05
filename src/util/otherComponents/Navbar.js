@@ -36,8 +36,8 @@ class Navbar extends Component {
 
         if (currentUser.isAuthenticated) {
             loggedInLinks = (
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav d-flex align-items-center ml-4">
+                <div class="collapse navbar-collapse " id="navbarNav">
+                    <ul class="navbar-nav d-none d-md-flex align-items-center ml-4">
                         <NavLink
                             activeClassName="active"
                             className='Navbar main-nav-link mr-3'

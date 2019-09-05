@@ -36,3 +36,4 @@ const TripStatus = ({ status }) => {
 }
 
 export default TripStatus
+

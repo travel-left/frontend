@@ -88,7 +88,7 @@ class TripInfo extends Component {
                     <div className='TripInfo-details'>
                         <div className='d-flex justify-content-between align-items-center '>
                             <span className='TripInfo-details-title'>Date</span>
-                            <span className='TripInfo-details-date pr-2'><Moment date={dateStart} format="MMM DD" /></span>
+                            <span className='TripInfo-details-date'><Moment date={dateStart} format="MMM DD" /></span>
                         </div>
                         <div className='d-flex justify-content-between align-items-center'>
                             <span className='TripInfo-details-title'>Status</span>
@@ -103,15 +103,15 @@ class TripInfo extends Component {
                             <span className='badge badge-primary badge-pill d-flex align-items-center justify-content-center TripInfo-bubble'>{confirmed}</span>
                         </div>
                     </div>
-                    <div className='d-flex justify-content-end my-5'>
+                    <div className='d-flex justify-content-end my-5 row'>
                         <button
-                            className="btn btn-lg btn-secondary"
+                            className="btn btn-lg btn-secondary mb-5 mb-xl-0"
                             onClick={this.handleDuplicate}
                         >
                             DUPLICATE
                     </button>
                         <button
-                            className="btn btn-lg btn-secondary ml-5"
+                            className="btn btn-lg btn-secondary ml-5 mb-5 mb-xl-0"
                             onClick={this.handleArchive}
                         >
                             ARCHIVE
