@@ -4,6 +4,7 @@ import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../util/api'
 import TripStatusForm from './TripStatusForm'
 import ShareTrip from '../../util/otherComponents/ShareTrip'
+import './Cover.css'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -24,7 +25,7 @@ class Cover extends Component {
                 updateObject
             )
             return this.props.setCurrentTrip(data)
-        } catch (err) {}
+        } catch (err) { }
     }
 
     getAndSetTravelers = async () => {
@@ -45,42 +46,33 @@ class Cover extends Component {
         return (
             <div className="row">
                 <div
-                    className="col-12 d-flex flex-column justify-content-between px-4 py-2"
+                    className="col-12 d-flex flex-column justify-content-end px-5 py-2 Cover-image"
                     style={{
                         backgroundImage: `url(${currentTrip.image})`,
-                        minHeight: '240px',
+                        height: '183px',
                         backgroundPosition: 'center',
-                        backgroundSize: 'cover'
+                        backgroundSize: 'cover',
+                        borderRadius: '3px'
                     }}
                 >
-                    <div className="row">
-                        <h2
-                            className="text-light left-shadow"
-                            style={{ paddingLeft: '.75rem' }}
-                        >
-                            {currentTrip.name}
-                        </h2>
-                    </div>
                     <div className="row justify-content-between">
                         <TripStatusForm
                             submit={this.updateTrip}
                             status={currentTrip.status}
                         />
                         <div className="pr-2">
-                            <span className="px-3 py-3 rounded-circle d-flex justify-content-center align-items-center hover bg-primary">
-                                <ShareTrip
-                                    travelers={this.state.travelers}
-                                    tripId={this.tripId}
-                                />
-                            </span>
+                            <ShareTrip
+                                travelers={this.state.travelers}
+                                tripId={this.tripId}
+                            />
                         </div>
                     </div>
                     <div className="row justify-content-between">
                         <div className="btn">
-                            <h5 className="d-inline text-light left-shadow">
+                            <h5 className="d-inline Cover-bottom-row">
                                 {invited} Invited
                             </h5>
-                            <h5 className="d-inline text-light ml-3 left-shadow">
+                            <h5 className="d-inline ml-5 Cover-bottom-row">
                                 {confirmed} Confirmed
                             </h5>
                         </div>

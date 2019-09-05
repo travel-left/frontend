@@ -1,0 +1,35 @@
+.Cover-image {
+    filter: drop-shadow(0 5px 5px #333);
+}
+
+.Cover-trip-name {
+    font-family: Roboto !important;
+    font-size: 28px !important;
+    font-weight: 400 !important;
+    color: #FFFFFF !important;
+    letter-spacing: 0 !important;
+}
+
+.Cover-bottom-row {
+    font-family: Roboto !important;
+    font-size: 22px !important;
+    font-weight: 400;
+    color: #FFFFFF !important;
+    letter-spacing: 0 !important;
+}
+
+.Cover-status {
+    opacity: 0.9 !important;
+    font-weight: 500 !important;
+    font-family: Roboto !important;
+    font-size: 14px !important;
+    color: #FFFFFF !important;
+    letter-spacing: 0.19px !important;
+}
+
+.Cover-share-trip {
+    border-radius: 50%; 
+    font-size: 24px;
+    padding: 13px; 
+    color: #FFFFFF;
+}
