@@ -12,7 +12,8 @@ export default function SideNavLink({ text, tripId, name }) {
                 fontFamily: 'Roboto',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: '#666666'
+                color: '#666666',
+                borderRadius: '3px'
             }}
         >
             {text}{' '}

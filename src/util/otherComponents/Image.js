@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './Image.css'
 
 export default class Image extends Component {
     state = {
@@ -30,32 +31,22 @@ export default class Image extends Component {
         const initials = name ? getInitials(name) : ''
         const renderInitials =
             !imageUrl || error || src === 'https://' ? (
-                <h1
-                    className="text-light text-center"
-                    style={{
-                        position: 'absolute',
-                        zindex: 2,
-                        top: '22.5%',
-                        left: '27.5%'
-                    }}
-                >
-                    {initials}
-                </h1>
-            ) : null
-
-        return (
-            <div className="text-center">
-                <img
+                <span data-letters={initials} className='d-flex jusitfy-content-center align-items-center'></span>
+            ) : <img
                     src={imageUrl}
                     alt=""
                     className="rounded-circle bg-secondary"
                     style={{
-                        // objectFit: 'cover',
+                        objectFit: 'cover',
                         height: diameter,
                         width: diameter
                     }}
                     onError={this.handleError}
                 />
+
+        return (
+            <div className="text-center">
+
                 {renderInitials}
             </div>
         )

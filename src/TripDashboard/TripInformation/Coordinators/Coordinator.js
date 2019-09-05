@@ -4,6 +4,7 @@ import LeftCard from '../../../util/LeftCard'
 import RemoveCoordinator from './RemoveCoordinator'
 import './Coordinator.css'
 
+
 class Coordinator extends Component {
     handleEdit = updateObject => {
         this.props.update(this.props._id, updateObject)
@@ -27,12 +28,12 @@ class Coordinator extends Component {
         const removeButton =
             currentUserId !== _id ? (
                 <RemoveCoordinator submit={this.handleDelete} />
-            ) : <i className="fas fa-ellipsis-h text-muted float-right" style={{ color: '#ffffff' }}></i>
+            ) : <span style={{ width: '54px' }}></span>
 
         return (
             <LeftCard>
                 <Image src={image} diameter="48px" name={name} />
-                <div className="col-md-7 d-flex flex-column justify-content-center">
+                <div className="d-flex flex-column justify-content-center">
                     {name && <span className="Coordinator-name">{name}</span>}
                     {title && <span className="Coordinator-info">{title}</span>}
                     {phone && <span className="Coordinator-info">{phone}</span>}

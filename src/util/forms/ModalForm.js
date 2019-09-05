@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
 import Mortal from 'react-mortal'
+
 // EXPECTED PROPS:
 //     title: this is the title of the modal
 //     validationSchema: this is a yup validation validationSchema
@@ -39,6 +40,7 @@ class ModalForm extends Component {
             icon,
             mIcon,
             button,
+            buttonType,
             submitButtonText
         } = this.props
         const { err } = this.state
@@ -62,7 +64,25 @@ class ModalForm extends Component {
             opener = mIcon
         }
 
-
+        if (buttonType === 'edit') {
+            opener = <span
+                onClick={this.toggleModal}
+                className='badg badge-pill text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '54px',
+                    height: '25px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#475561',
+                    textAlign: 'center'
+                }}
+            >
+                EDIT
+            </span>
+        }
 
         const submitButton = submit ? (<button
             type="submit"
