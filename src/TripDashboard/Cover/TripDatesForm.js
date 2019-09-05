@@ -25,7 +25,6 @@ export default function TripDatesForm({ dateStart, dateEnd, submit }) {
             <h5 className="Cover-bottom-row">
                 <Moment date={dateStartMoment} format="MMMM DD" /> {' - '}{' '}
                 <Moment date={dateEndMoment} format="MMMM DD" />{' '}
-                <i className="far fa-calendar-alt ml-1" />
             </h5>
         )
     }

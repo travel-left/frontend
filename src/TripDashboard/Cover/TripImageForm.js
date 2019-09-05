@@ -16,9 +16,8 @@ export default function TripImageForm({ image, submit }) {
     const button = {
         classes: 'Cover-bottom-row hover',
         text: (
-            <h5 className='left-shadow Cover-bottom-row'>
+            <h5 className='Cover-bottom-row'>
                 Change Cover Photo
-                <i className="far fa-images ml-2" />
             </h5>
         )
     }

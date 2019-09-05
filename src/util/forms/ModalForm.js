@@ -61,7 +61,7 @@ class ModalForm extends Component {
         }
 
         if (mIcon) {
-            opener = mIcon
+            opener = <span onClick={this.toggleModal}>{mIcon}</span>
         }
 
         if (buttonType === 'edit') {

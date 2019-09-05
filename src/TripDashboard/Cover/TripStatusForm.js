@@ -40,7 +40,6 @@ export default function TripDatesForm({ status, submit }) {
                 <h5 className="Cover-status mb-4">STATUS</h5>
                 <div className="mb-3">
                     <TripStatus status={status} />
-                    <i className="far fa-edit ml-2" />
                 </div>
             </div>
         )

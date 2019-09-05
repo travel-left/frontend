@@ -303,7 +303,6 @@ const TripNameSection = ({ name, update }) => {
             >
                 {' '}
                 <div className="d-flex align-items-center">
-                    <h3 className="text-primary my-3 d-inline TripInfo-name"> {name} </h3>
                     <TripNameForm name={name} submit={update} />
                 </div>
             </div>
