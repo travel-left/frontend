@@ -37,21 +37,32 @@ class ModalForm extends Component {
             submit,
             remove,
             icon,
+            mIcon,
             button,
             submitButtonText
         } = this.props
         const { err } = this.state
 
-        let opener = icon ? (
-            <i className={`hover ${icon}`} onClick={this.toggleModal} />
-        ) : (
-            <button
+        let opener
+
+        if (icon) {
+            opener = <i className={`hover ${icon}`} onClick={this.toggleModal} />
+        }
+
+        if (button) {
+            opener = <button
                 className={`btn ${button.classes}`}
                 onClick={this.toggleModal}
             >
                 {button.text}
             </button>
-        )
+        }
+
+        if (mIcon) {
+            opener = mIcon
+        }
+
+
 
         const submitButton = submit ? (<button
             type="submit"
@@ -119,7 +130,7 @@ class ModalForm extends Component {
                                             opacity: motion.opacity,
                                             transform: `translate3d(0, ${
                                                 motion.modalOffset
-                                            }px, 0)`
+                                                }px, 0)`
                                         }}
                                     >
                                         <Form>

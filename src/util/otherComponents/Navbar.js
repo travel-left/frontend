@@ -109,7 +109,7 @@ class Navbar extends Component {
                 <div className="navbar-brand">
 
                     <Link to={linkTo} class="navbar-brand ml-2">
-                        <img src="left.png" alt="" style={{ height: '40px' }}></img>
+                        <img src="/left.png" alt="" style={{ height: '40px' }}></img>
                     </Link>
                 </div>
                 {loggedInLinks}

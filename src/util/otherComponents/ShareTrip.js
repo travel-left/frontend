@@ -8,11 +8,9 @@ import * as Yup from 'yup'
 
 export default class ShareTrip extends Component {
     tripId = this.props.tripId
-    tripLink = `
-    
-Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
+    tripLink = `Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
         this.tripId
-    }/share`
+        }/share`
 
     state = {
         selectedTravelers: [],
@@ -75,7 +73,7 @@ Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
     }
 
     render() {
-        const icon = 'far fa-paper-plane fa-lg text-white'
+        const icon = <i class="material-icons bg-primary Cover-share-trip d-flex align-items-center justify-content-center hover mt-4">send</i>
         const customStyles = {
             container: (provided, state) => ({
                 ...provided
@@ -130,24 +128,24 @@ Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
                     className="d-block"
                 />
             ) : (
-                <>
-                    <FormField
-                        name="subject"
-                        label="Subject*"
-                        placeholder="Your email subject"
-                    />
-                    <FormField
-                        name="body"
-                        label="Body*"
-                        component="textarea"
-                        placeholder="Your email body"
-                        className="d-block"
-                    />
-                </>
-            )
+                    <>
+                        <FormField
+                            name="subject"
+                            label="Subject*"
+                            placeholder="Your email subject"
+                        />
+                        <FormField
+                            name="body"
+                            label="Body*"
+                            component="textarea"
+                            placeholder="Your email body"
+                            className="d-block"
+                        />
+                    </>
+                )
         return (
             <ModalForm
-                icon={icon}
+                mIcon={icon}
                 header="Message your travelers"
                 submit={this.submit}
                 submitButtonText="SEND"
