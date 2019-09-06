@@ -312,8 +312,8 @@ const TripNameSection = ({ name, update }) => {
 
 const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
     return (
-        <TripSection name={'Trip Coordinators'}>
-            <div className="row">
+        <TripSection name='Trip Coordinators'>
+            <div className="row mx-0">
                 {list}
                 <div className="col-md-4 my-2 d-flex flex-column justify-content-around align-items-center">
                     <CreateCoordinatorForm submit={create} />
@@ -327,7 +327,7 @@ const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
 const TripDateSection = ({ list, create }) => {
     return (
         <TripSection name="Trip Dates">
-            <div className="mt-4 px-5 py-3" style={{
+            <div className="mt-5 px-5 py-3" style={{
                 background: '#FFFFFF',
                 boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
                 borderRadius: '8px',
@@ -336,7 +336,7 @@ const TripDateSection = ({ list, create }) => {
                 width: '340px'
             }}>
                 {list}
-                <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
+                <div className="my-3 d-flex flex-row justify-content-start align-items-center">
                     <CreateTripDateForm formType="add" submit={create} />
                 </div>
             </div>
@@ -364,7 +364,7 @@ const TripDocumentSection = ({ list, create }) => {
 const TripContactsSection = ({ list, create }) => {
     return (
         <TripSection name="Trip Contacts">
-            <div className="row">
+            <div className="row mx-0">
                 {list}
                 <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
                     <CreateContactForm submit={create} />
@@ -377,6 +377,6 @@ const TripContactsSection = ({ list, create }) => {
 const TripSection = props => (
     <div className="col-12" style={{ marginTop: '5.7rem' }}>
         <h4 className="mb-3 TripInfo-heading">{props.name}</h4>
-        <div className="">{props.children}</div>
+        {props.children}
     </div>
 )

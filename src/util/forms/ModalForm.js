@@ -84,6 +84,27 @@ class ModalForm extends Component {
             </span>
         }
 
+        if (buttonType === 'add') {
+            opener = <span
+                onClick={this.toggleModal}
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '103px',
+                    height: '32px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#79828B',
+                    textAlign: 'center',
+                    borderRadius: '16px'
+                }}
+            >
+                ADD NEW
+            </span>
+        }
+
         const submitButton = submit ? (<button
             type="submit"
             className="btn btn-lg btn-primary float-right mr-4 mb-4"

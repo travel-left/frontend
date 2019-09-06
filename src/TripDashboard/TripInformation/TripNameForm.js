@@ -14,7 +14,7 @@ export default function TripNameForm({ name, submit }) {
     })
 
     const button = {
-        classes: '',
+        classes: 'px-0',
         text: (
             <h3 className="text-primary my-3 d-inline TripInfo-name"> {name} </h3>
         )
