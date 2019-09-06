@@ -364,7 +364,7 @@ const TripContactsSection = ({ list, create }) => {
         <TripSection name="Trip Contacts">
             <div className="row mx-0">
                 {list}
-                <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
+                <div className="col-md-4 my-4 pr-5 d-flex flex-row justify-content-around align-items-center">
                     <CreateContactForm submit={create} />
                 </div>
             </div>

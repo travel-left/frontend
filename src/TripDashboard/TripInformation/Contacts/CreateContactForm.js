@@ -22,14 +22,9 @@ export default function CreateContactForm({ submit }) {
         phone: phoneValidator
     })
 
-    const button = {
-        classes: 'btn btn-primary rounded-pill',
-        text: 'ADD NEW'
-    }
-
     return (
         <ModalForm
-            button={button}
+            buttonType='add'
             header="Add a new emergency contact"
             validationSchema={schema}
             initialValues={initialValues}
