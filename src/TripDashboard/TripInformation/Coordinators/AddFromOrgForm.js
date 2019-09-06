@@ -75,7 +75,7 @@ export default class AddFromOrgForm extends Component {
         const { coordinators } = this.state
         return (
             <ModalForm
-                button={button}
+                buttonType='addOrg'
                 header="Add other coordinators in your organization"
                 submit={this.submit}
                 submitButtonText="SUBMIT"

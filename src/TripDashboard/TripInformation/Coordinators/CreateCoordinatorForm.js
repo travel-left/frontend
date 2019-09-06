@@ -30,7 +30,7 @@ export default function NewCoordinatorForm({ submit }) {
 
     return (
         <ModalForm
-            button={button}
+            buttonType='add'
             header="Add a new coordinator to your trip"
             validationSchema={schema}
             initialValues={initialValues}

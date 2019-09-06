@@ -105,6 +105,27 @@ class ModalForm extends Component {
             </span>
         }
 
+        if (buttonType === 'addOrg') {
+            opener = <span
+                onClick={this.toggleModal}
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    minWidth: '103px',
+                    height: '32px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#83C9F5',
+                    textAlign: 'center',
+                    borderRadius: '16px'
+                }}
+            >
+                ADD FROM ORG
+            </span>
+        }
+
         const submitButton = submit ? (<button
             type="submit"
             className="btn btn-lg btn-primary float-right mr-4 mb-4"
