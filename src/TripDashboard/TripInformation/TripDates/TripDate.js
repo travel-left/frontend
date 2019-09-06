@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import UpdateTripDateForm from './UpdateTripDateForm'
 import moment from 'moment'
+import './TripDate.css'
 
 export default class TripDate extends Component {
     handleUpdate = putObject => {
@@ -44,25 +45,27 @@ export default class TripDate extends Component {
         const dateWithoutTimeorTZ = date.split('T')[0]
 
         return (
-            <div className="row my-2 animated fadeIn">
-                <div className="col-md-3 d-flex align-items-center justify-content-center">
-                    <i className={icon.string} style={{ color: icon.color }} />
+            <div className="row align-items-center justify-content-between py-2">
+                {/* <i className={icon.string} style={{ color: icon.color, width: '30px' }} /> */}
+                <div className="d-flex flex-column justify-content-center align-items-start">
+                    <span className="" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '14px',
+                        color: '#31394D',
+                        letterSpacing: 0
+                    }}>{name}</span>
+                    <span className="" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '12px',
+                        color: '#748AA1',
+                        letterSpacing: 0
+                    }}>{moment(dateWithoutTimeorTZ).format('MMMM DD')}</span>
                 </div>
-                <div className="col-md-6 d-flex flex-column justify-content-center">
-                    <p className="m-0">{name}</p>
-                    <p className="m-0">
-                        <small className="text-muted">
-                            {moment(dateWithoutTimeorTZ).format('MMMM DD')}
-                        </small>
-                    </p>
-                </div>
-                <div className="col-md-3 d-flex flex-column justify-content-center">
-                    <UpdateTripDateForm
-                        {...this.props}
-                        submit={this.handleUpdate}
-                        remove={this.handleDelete}
-                    />
-                </div>
+                <UpdateTripDateForm
+                    {...this.props}
+                    submit={this.handleUpdate}
+                    remove={this.handleDelete}
+                />
             </div>
         )
     }

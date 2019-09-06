@@ -327,13 +327,18 @@ const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
 const TripDateSection = ({ list, create }) => {
     return (
         <TripSection name="Trip Dates">
-            <div className="row">
-                <LeftCard>
-                    {list}
-                    <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
-                        <CreateTripDateForm formType="add" submit={create} />
-                    </div>
-                </LeftCard>
+            <div className="mt-4 px-5 py-3" style={{
+                background: '#FFFFFF',
+                boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+                borderRadius: '8px',
+                border: 'none',
+                minHeight: '100px',
+                width: '340px'
+            }}>
+                {list}
+                <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
+                    <CreateTripDateForm formType="add" submit={create} />
+                </div>
             </div>
         </TripSection>
     )
@@ -372,6 +377,6 @@ const TripContactsSection = ({ list, create }) => {
 const TripSection = props => (
     <div className="col-12" style={{ marginTop: '5.7rem' }}>
         <h4 className="mb-3 TripInfo-heading">{props.name}</h4>
-        <div className="ml-3">{props.children}</div>
+        <div className="">{props.children}</div>
     </div>
 )
