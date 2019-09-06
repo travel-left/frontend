@@ -16,14 +16,9 @@ const UpdateDocumentForm = props => {
         description: Yup.string().max(200, 'Please enter a shorter description')
     })
 
-    const button = {
-        classes: 'btn btn-dark rounded-pill',
-        text: 'EDIT'
-    }
-
     return (
         <ModalForm
-            button={button}
+            buttonType='edit'
             header="Add a document or link"
             validationSchema={schema}
             initialValues={initialValues}

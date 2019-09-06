@@ -21,14 +21,9 @@ const CreateDocumentForm = ({ submit }) => {
         link: Yup.string().required('Please select a link or file')
     })
 
-    const button = {
-        classes: 'btn btn-primary rounded-pill',
-        text: 'ADD NEW'
-    }
-
     return (
         <ModalForm
-            button={button}
+            buttonType='add'
             header="Add a document or link"
             validationSchema={schema}
             initialValues={initialValues}

@@ -345,19 +345,17 @@ const TripDateSection = ({ list, create }) => {
 }
 
 const TripDocumentSection = ({ list, create }) => {
-    let header = (
-        <div>
-            Trip Documents{' '}
-            <span className="pl-4">
-                {' '}
-                <CreateDocumentForm submit={create} />
-            </span>
-        </div>
-    )
     return (
-        <TripSection name={header}>
-            <div className="row">{list}</div>
-        </TripSection>
+        <div className="col-12">
+            <div className="col-7" style={{ marginTop: '5.7rem' }}>
+                <div className="row d-flex justify-content-between mb-4">
+                    <h4 className="TripInfo-heading">Trip Resources</h4>
+                    <CreateDocumentForm submit={create} />
+                </div>
+                <div className="row">{list}</div>
+            </div>
+            <div className="col-5"></div>
+        </div>
     )
 }
 
@@ -376,7 +374,7 @@ const TripContactsSection = ({ list, create }) => {
 
 const TripSection = props => (
     <div className="col-12" style={{ marginTop: '5.7rem' }}>
-        <h4 className="mb-3 TripInfo-heading">{props.name}</h4>
+        <h4 className="mb-4 TripInfo-heading">{props.name}</h4>
         {props.children}
     </div>
 )
