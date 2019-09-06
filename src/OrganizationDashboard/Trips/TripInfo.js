@@ -80,7 +80,7 @@ class TripInfo extends Component {
                             onClick={this.handleEditClick}
                             className="btn btn-lg btn-primary float-right"
                         >
-                            EDIT
+                            VIEW
                     </button>
                     </div>
 

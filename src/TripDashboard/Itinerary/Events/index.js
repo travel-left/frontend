@@ -14,7 +14,7 @@ export default ({
     return events.map(event => {
         let dayHeader = daysList.includes(event.dateStart) ? null : (
             <h3
-                className="mt-4 mb-3"
+                className="mt-4 mb-3 Document-title"
                 name={moment(event.dateStart).format('MMM DD YYYY')}
             >
                 {moment(event.dateStart).format('MMM DD')}
