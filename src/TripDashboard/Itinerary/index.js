@@ -25,7 +25,6 @@ class Itinerary extends Component {
     }
 
     getDaysAndEvents = async () => {
-        console.log('i am guessing the timezone as: ' + this.tz)
         let itinerary = await apiCall(
             'get',
             `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`

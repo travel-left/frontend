@@ -188,7 +188,7 @@ class Event extends Component {
                             {renderMap}
                         </div>
                     </div>
-                    <div className="row mx-0 my-3">
+                    <div className="row mx-0 mt-2">
                         {documents}
                     </div>
                 </div>

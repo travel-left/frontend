@@ -4,18 +4,16 @@ import Day from './Day'
 export default ({ days, handleClick, selectedDay }) => {
     days.sort(date_sort_asc)
     return (
-        <div className="">
-            <ul className="list-group list-group-flush Itinerary-trip-day-card ">
-                {days.map(day => (
-                    <Day
-                        handleClick={handleClick}
-                        selectedDay={selectedDay === day}
-                        key={day}
-                        day={day}
-                    />
-                ))}
-            </ul>
-        </div>
+        <ul className="list-group list-group-flush Itinerary-trip-day-card">
+            {days.map(day => (
+                <Day
+                    handleClick={handleClick}
+                    selectedDay={selectedDay === day}
+                    key={day}
+                    day={day}
+                />
+            ))}
+        </ul>
     )
 }
 
