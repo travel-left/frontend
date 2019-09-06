@@ -40,29 +40,6 @@ class Coordinator extends Component {
                 </div>
                 {removeButton}
             </LeftCard>
-
-            // <LeftCard>
-            //     <div className="row align-items-center">
-            //         <Image src={image} diameter="48px" name={name} />
-            //         <div className="col-md-7 d-flex flex-column justify-content-center">
-            //             {name && <p className="m-0">{name}</p>}
-            //             {title && <p className="m-0">{title}</p>}
-            //             {email && (
-            //                 <p className="m-0">
-            //                     <small className="text-muted">{email}</small>
-            //                 </p>
-            //             )}
-            //             {phone && (
-            //                 <p className="m-0">
-            //                     <small className="text-muted">{phone}</small>
-            //                 </p>
-            //             )}
-            //         </div>
-
-            //         {removeButton}
-            //     </div>
-
-            // </LeftCard>
         )
     }
 }

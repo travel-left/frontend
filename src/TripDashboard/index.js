@@ -12,7 +12,11 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
         <>
             <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             <div className="row">
-                <div className="col-md-2 px-0">
+                <div className="col-md-2 px-0" style={{
+                    background: '#FFFFFF',
+                    boxShadow: '1px 0 20px 0 rgba(0, 0, 0, 0.13)',
+                    borderRadius: '3px'
+                }}>
                     <SideNav ctId={currentTrip._id} />
                 </div>
                 <div className="col-md-10">

@@ -26,7 +26,7 @@ export default function SideNav({ ctId }) {
     return (
         <div className="px-0" style={{
             background: '#FFFFFF',
-            boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)',
+            boxShadow: '-2px 2px 4px 0 rgba(0, 0, 0, 0.3)',
             borderRadius: '8px'
         }}>
             <ul className="list-group list-group-flush">
