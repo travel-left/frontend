@@ -67,7 +67,7 @@ class ModalForm extends Component {
         if (buttonType === 'edit') {
             opener = <span
                 onClick={this.toggleModal}
-                className='badg badge-pill text-uppercase d-flex align-items-center justify-content-center hover'
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
                 style={{
                     fontWeight: '500',
                     fontFamily: 'roboto',
@@ -77,7 +77,8 @@ class ModalForm extends Component {
                     height: '25px',
                     color: '#FFFFFF',
                     backgroundColor: '#475561',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    borderRadius: '16px'
                 }}
             >
                 EDIT
