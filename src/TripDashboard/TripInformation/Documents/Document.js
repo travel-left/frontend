@@ -18,42 +18,47 @@ class Document extends Component {
         const linkImg = getIcon(link)
 
         return (
-            <div className="col-md-12 p-3 my-3 Document">
+            <div className="col-md-12 p-4 my-3 Document">
                 <div className="row d-flex justify-content-between px-3">
-                    <h4 className="Document-title">{name}</h4>
+                    <span className="Document-title">{name}</span>
                     <UpdateDocumentForm
                         {...this.props}
                         submit={this.handleEdit}
                         remove={this.handleDelete}
                     />
                 </div>
-                <p className="Document-description">{description}</p>
+                <p className="Document-description my-4">{description}</p>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="Document-card">
                             <div className="row no-gutters">
-                                <a
-                                    className="hove d-flex alighn-self-center py-1"
-                                    href={link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <img
-                                        src={linkImg}
-                                        alt=""
-                                        style={{ objectFit: 'cover' }}
-                                    />
-                                </a>
-                                <div className="card-body d-flex flex-column justify-content-around">
+                                <div className="Document-icon d-flex justify-content-center align-items-center">
                                     <a
-                                        className="hover card-text"
+                                        className="hover"
                                         href={link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        <small className="text-muted">
-                                            Open
-                                            </small>
+                                        <img
+                                            src={linkImg}
+                                            alt=""
+                                            className='Document-image'
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    </a>
+                                </div>
+                                <div className="card-body d-flex flex-column justify-content-around">
+                                    <a
+                                        className="hover"
+                                        href={link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <span className='Document-open-text pr-1'>
+                                            Download
+                                        </span>
+
+
                                     </a>
                                 </div>
                             </div>
