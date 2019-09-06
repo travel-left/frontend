@@ -40,11 +40,11 @@ export default function UpdateTripDateForm(props) {
         type: tripDateTypeValidator
     })
 
-    const icon = 'hover fas fa-ellipsis-h float-right TripDate-Edit'
+    const icon = <i class="material-icons TripDate-Edit hover">more_horiz</i>
 
     return (
         <ModalForm
-            icon={icon}
+            mIcon={icon}
             header="Add a Trip Date"
             validationSchema={schema}
             initialValues={initialValues}

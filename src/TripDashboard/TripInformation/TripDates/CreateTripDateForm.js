@@ -48,7 +48,7 @@ export default function TripDateForm({ submit }) {
 
     return (
         <ModalForm
-            button={button}
+            buttonType='add'
             header="Add a Trip Date"
             validationSchema={schema}
             initialValues={initialValues}

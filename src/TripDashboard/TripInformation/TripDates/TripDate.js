@@ -14,52 +14,46 @@ export default class TripDate extends Component {
 
     render() {
         let { name, date, type } = this.props
-        let icon = {
-            string: '',
-            color: ''
-        }
+        let icon
 
         switch (type) {
             case 'TRAVEL':
-                icon.string = 'fas fa-suitcase fa-2x'
-                icon.color = '#29CB97'
+                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#29CB97' }}>card_travel</i>
                 break
             case 'PAPERWORK':
-                icon.string = 'fas fa-sticky-note fa-2x '
-                icon.color = '#FEC400'
+                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FEC400' }}>folder_open</i>
                 break
             case 'MONEY':
-                icon.string = 'fas fa-money-bill-alt fa-2x'
-                icon.color = '#B558F6'
+                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#B558F6' }}>attach_money</i>
                 break
             case 'OTHER':
-                icon.string = 'fas fa-calendar-minus fa-2x'
-                icon.color = '#FFABAA'
+                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA' }}>calendar_today</i>
                 break
             default:
-                icon.string = 'fas fa-calendar-minus fa-2x'
-                icon.color = '#FFABAA'
+                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA' }}>calendar_today</i>
                 break
         }
 
         const dateWithoutTimeorTZ = date.split('T')[0]
 
         return (
-            <div className="row align-items-center justify-content-between py-2">
-                {/* <i className={icon.string} style={{ color: icon.color, width: '30px' }} /> */}
-                <div className="d-flex flex-column justify-content-center align-items-start">
-                    <span className="" style={{
-                        fontFamily: 'Roboto',
-                        fontSize: '14px',
-                        color: '#31394D',
-                        letterSpacing: 0
-                    }}>{name}</span>
-                    <span className="" style={{
-                        fontFamily: 'Roboto',
-                        fontSize: '12px',
-                        color: '#748AA1',
-                        letterSpacing: 0
-                    }}>{moment(dateWithoutTimeorTZ).format('MMMM DD')}</span>
+            <div className="row py-3 align-items-center justify-content-between px-2">
+                <div className="d-flex align-items-center justify-content-between">
+                    {icon}
+                    <div className="d-flex flex-column justify-content-center align-items-start ml-4">
+                        <span className="" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '14px',
+                            color: '#31394D',
+                            letterSpacing: 0
+                        }}>{name}</span>
+                        <span className="" style={{
+                            fontFamily: 'Roboto',
+                            fontSize: '12px',
+                            color: '#748AA1',
+                            letterSpacing: 0
+                        }}>{moment(dateWithoutTimeorTZ).format('MMMM DD')}</span>
+                    </div>
                 </div>
                 <UpdateTripDateForm
                     {...this.props}
