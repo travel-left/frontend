@@ -1,8 +1,9 @@
 .Itinerary-title {
     font-family: Roboto !important;
     font-weight: 700 !important;
-    font-size: 22px !important;
+    font-size: 30px !important;
     color: #333333 !important;
+    letter-spacing: 0;
 }
 
 .Itinerary-trip-day-card {

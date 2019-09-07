@@ -43,12 +43,12 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             {travelerList}
         </>
     ) : (
-        <p className="text-danger text-center">No Travelers Selected!</p>
-    )
+            <p className="text-danger text-center">No Travelers Selected!</p>
+        )
 
     return (
         <ModalForm
-            icon="far fa-envelope fa-2x text-primary"
+            buttonType='travelerEmail'
             header="Send an email to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}

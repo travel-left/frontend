@@ -6,7 +6,7 @@ import Uploader from '../../../util/forms/Uploader'
 
 export default function ImportBulkForm({ submit }) {
     const button = {
-        classes: 'btn btn-lg btn-secondary text-light mx-5',
+        classes: 'btn btn-lg btn-secondary',
         text: 'import bulk'
     }
 

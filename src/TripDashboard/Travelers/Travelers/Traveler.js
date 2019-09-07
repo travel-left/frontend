@@ -18,29 +18,22 @@ export default class Traveler extends Component {
 
         return (
             <div
-                className="card py-3 border my-2 shadow animated fadeIn hover"
+                className="d-flex left-shadow-sharp py-3 my-2 animated fadeIn hover col-12 justify-content-between align-items-center"
                 onDoubleClick={this.handleDoubleClick}
             >
-                <div className="row no-gutters justify-content-around align-items-center">
-                    <div className="col-md-1" onClick={this.handleToggle}>
-                        <Checkbox
-                            onChange={this.handleToggle}
-                            className="mx-3"
-                            checked={selected}
-                        />
-                    </div>
-                    <div className="col-md-2 d-none d-md-block d-flex justify-content-center">
-                        <Image diameter="75px" src={image} name={name} />
-                    </div>
-                    <div className="d-none d-md-flex col-md-2 d-flex justify-content-center">
-                        {name}
-                    </div>
-                    <div className="col-4 col-md-4 d-flex justify-content-center">
-                        {email}
-                    </div>
-                    <div className="col-4 col-md-2 d-flex justify-content-center">
-                        <TravelerStatus status={status} />
-                    </div>
+                <div className="col-md-1" onClick={this.handleToggle}>
+                    <Checkbox
+                        onChange={this.handleToggle}
+                        checked={selected}
+                    />
+                </div>
+                <div className="col-md-1">
+                    <Image diameter="40px" src={image} name={name} />
+                </div>
+                <div className="col-md-4 Travelers-name">{name}</div>
+                <div className="col-md-4">{email}</div>
+                <div className="col-md-2">
+                    <TravelerStatus status={status} />
                 </div>
             </div>
         )

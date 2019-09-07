@@ -66,11 +66,6 @@
     border-bottom: 2px solid #0f61d8 !important;
 }
 
-.left-shadow {
-    text-shadow: -1px 4px 12px rgba(0, 0, 0, 0.3),
-        3px 0px 20px rgba(0, 0, 0, 0.3), -2px -3px 2px rgba(0, 0, 0, 0.3);
-}
-
 .rounded-pill {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -100,13 +95,18 @@
 }
 
 /* Material classes */
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+.md-18 { font-size: 18px; }
+.md-24 { font-size: 24px; }
+.md-36 { font-size: 36px; }
+.md-48 { font-size: 48px; }
 
 .dropdown-item {
     font-weight: 700 !important;
     font-size: 14px;
     color: #666666;
+}
+
+.left-shadow-sharp {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
 }
