@@ -38,7 +38,7 @@ class Travelers extends Component {
         selected: {},
         allSelected: false,
         filters: this.allFilters,
-        selectedTraveler: this.props.currentTrip.travelers[0]
+        selectedTraveler: {}
     }
 
     constructor(props) {
@@ -75,6 +75,8 @@ class Travelers extends Component {
             currentTrip.travelers = newTravelers
             setCurrentTrip(currentTrip)
         }
+
+        this.setSelectedTraveler(travelerIds[0])
     }
 
     addTraveler = async traveler => {
@@ -360,7 +362,7 @@ class Travelers extends Component {
                         </div>
                     </div>
                     <div className="col-md-4 pr-0 left-shadow-blur">
-                        {travelerInfo}
+                        {this.state.selectedTraveler.name && travelerInfo}
                     </div>
                 </div>
             </div>
