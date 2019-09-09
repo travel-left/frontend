@@ -6,6 +6,7 @@ import Map from '../Itinerary/Events/Map'
 import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
 import { getIcon } from '../../util/file-icons'
 import Event from '../Itinerary/Events/Event'
+import './Share.css'
 import ReactGA from 'react-ga'
 ReactGA.pageview('/share')
 
@@ -63,7 +64,7 @@ class Share extends Component {
             let activeClass = day === selectedDay ? 'text-primary' : ''
             return (
                 <div
-                    className={`mx-4 d-flex flex-column align-items-center hover ${activeClass}`}
+                    className={`mx-4 d-flex flex-column align-items-center hover ${activeClass} Share-date`}
                     onClick={() => this.setSelectedDay(day)}
                 >
                     <span>{moment(day).format('dd')}</span>
@@ -81,23 +82,23 @@ class Share extends Component {
 
         const documentList = this.state.trip.documents
             ? this.state.trip.documents.map(doc => {
-                  return <ShareDocument doc={doc} />
-              })
+                return <ShareDocument doc={doc} />
+            })
             : null
 
         const contactsList =
             trip.contacts || trip.coordinators
                 ? [...trip.coordinators, ...trip.contacts].map(contact => {
-                      return <ShareContact contact={contact} />
-                  })
+                    return <ShareContact contact={contact} />
+                })
                 : null
 
         return (
             <div className="container-fluid">
                 <div className="">
                     <div className="row d-flex justify-content-between">
-                        <h2 className="text p-2">{trip.name}</h2>
-                        <h2 className="text p-2">{orgName}</h2>
+                        <span className="Share-title p-2">{trip.name}</span>
+                        <span className="Share-title p-2">{orgName}</span>
                     </div>
                     <ShareCover trip={trip} />
                     <div className="position-relative">
@@ -144,11 +145,9 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/`}
                             render={props => (
                                 <div>
-                                    <h4 className="mb-3">
+                                    <h4 className="mb-3 Share-Itinerary-Title">
                                         Itinerary:{' '}
-                                        {moment(trip.dateStart).format(
-                                            'MMM DD'
-                                        )}{' '}
+                                        {moment(trip.dateStart).format('MMM DD')}{' '}
                                         to{' '}
                                         {moment(trip.dateEnd).format('MMM DD')}
                                     </h4>
@@ -176,7 +175,7 @@ class Share extends Component {
 
 export default withRouter(Share)
 
-const time_sort_asc = function(event1, event2) {
+const time_sort_asc = function (event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')
@@ -190,7 +189,7 @@ const time_sort_asc = function(event1, event2) {
     return 0
 }
 
-const date_sort_asc = function(date1, date2) {
+const date_sort_asc = function (date1, date2) {
     if (date1 > date2) return 1
     if (date1 < date2) return -1
     return 0
@@ -268,8 +267,8 @@ const ShareCover = ({ trip }) => {
 
 const Navigation = ({ tripId, source }) => (
     <span
-        className="badge badge-light badge-pill rounded-pill px-4 py-2 shadow d-flex justify-content-around align-items-center"
-        style={{ width: '60vw', backgroundColor: 'black' }}
+        className="badge badge-light badge-pill rounded-pill px-4 py-2 left-shadow-sharp d-flex justify-content-around align-items-center"
+        style={{ width: '440px', height: '70px', backgroundColor: '#FFFFFF' }}
     >
         <NavLink
             activeClassName="bg-primary rounded-circle"

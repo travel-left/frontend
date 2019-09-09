@@ -1,0 +1,22 @@
+.Share-title {
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 40px;
+    color: #333333;
+    letter-spacing: 0;
+}
+
+.Share-Itinerary-Title {
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 40px;
+    color: #22272F;
+    letter-spacing: 0;
+}
+
+.Share-date {
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 24px;
+    color: #4A4A4A;
+}
