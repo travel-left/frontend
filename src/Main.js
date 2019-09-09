@@ -13,6 +13,7 @@ import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
 import Support from './Support'
 import Travelers from './OrganizationDashboard/Travelers'
+import SharePreview from './TripDashboard/Share/SharePreview'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -103,6 +104,12 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                     <WithAuth {...props}>
                         <Travelers {...props} />
                     </WithAuth>
+                )}
+            />
+            <Route
+                path="/trips/:tripId/preview"
+                render={routeProps => (
+                    <SharePreview currentTrip={currentTrip} {...routeProps} />
                 )}
             />
             <Route

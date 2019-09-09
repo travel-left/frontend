@@ -43,12 +43,6 @@ const Router = ({ currentTrip, currentUser, setCurrentTrip }) => {
                     />
                 )}
             />
-            <Route
-                path="/trips/:tripId/preview/"
-                render={routeProps => (
-                    <SharePreview currentTrip={currentTrip} {...routeProps} />
-                )}
-            />
         </Switch>
     )
 }
