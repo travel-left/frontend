@@ -102,7 +102,7 @@ class Share extends Component {
                         <span className="Share-title p-2">{trip.name}</span>
                         <span className="Share-title p-2">{orgName}</span>
                     </div>
-                    <ShareCover trip={trip} />
+                    <ShareCover trip={trip} source={this.source} />
                     <div className="position-relative">
                         <div
                             className="d-flex justify-content-center position-absolute"
@@ -289,7 +289,7 @@ const ShareContact = ({ contact }) => {
     )
 }
 
-const ShareCover = ({ trip }) => {
+const ShareCover = ({ trip, source }) => {
     return (
         <div
             className="row d-flex flex-column justify-content-between p-4"
@@ -299,7 +299,25 @@ const ShareCover = ({ trip }) => {
                 backgroundSize: 'cover',
                 height: '20vh'
             }}
-        />
+        >   {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
+            <span
+                className={`badge badge-secondary badge-pill text-uppercase hover d-flex align-items-center justify-content-center`}
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '118px',
+                    color: '#FFFFFF'
+                }}
+            >
+                EXIT PREVIEW
+                    <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}>
+                    cancel
+                    </i>
+            </span></a >}
+
+        </div >
     )
 }
 
