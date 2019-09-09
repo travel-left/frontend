@@ -260,6 +260,12 @@ class Travelers extends Component {
                 ...provided,
                 minHeight: '50px',
                 border: 'none'
+            }),
+            placeholder: (provided) => ({
+                ...provided,
+                color: '#333333',
+                fontFamily: 'Roboto',
+                fontWeight: '600'
             })
         }
 
@@ -274,7 +280,7 @@ class Travelers extends Component {
         return (
             <div className="col-md-12">
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="col-md-8 mt-4 px-4">
                         <h4 className="Itinerary-title">Travelers on This Trip </h4>
                         <div className="row mx-0 my-4">
                             <div className="col-md-12">
@@ -328,20 +334,21 @@ class Travelers extends Component {
                         </div>
                         <div className="row mx-0 my-4">
                             <div className="col-md-12">
-                                <div className="row justify-content-around left-shadow-sharp mb-3 py-3 align-items-center">
+                                <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
                                     <div className="col-md-1 Travelers-filter">
                                         <Checkbox
                                             onChange={this.toggleAll}
-                                            className="ml-2"
+                                            className=""
                                             checked={allSelected}
                                             label="noshow"
                                         />
                                     </div>
-                                    <div className="col-md-4 Travelers-filter">NAME</div>
-                                    <div className="col-md-4 Travelers-filter">CONTACT</div>
-                                    <div className="col-md-2 Travelers-filter">STATUS</div>
+                                    <div className="col-md-2"></div>
+                                    <div className="col-md-3 Travelers-filter">NAME</div>
+                                    <div className="col-md-3 Travelers-filter">CONTACT</div>
+                                    <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
                                 </div>
-                                <div className="row">
+                                <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
                                     <TravelerList
                                         items={filteredTravelers}
                                         selected={selected}
@@ -352,7 +359,7 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 pr-0 left-shadow-blur">
                         {travelerInfo}
                     </div>
                 </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import Traveler from './Traveler'
 
 export default ({ items, update, selected, remove, toggle, doubleClick }) =>
-    items.map(item => (
+    items.map((item, index) => (
         <Traveler
             {...item}
             selected={selected[item._id]}
@@ -11,5 +11,8 @@ export default ({ items, update, selected, remove, toggle, doubleClick }) =>
             key={item._id}
             toggle={toggle}
             onDoubleClick={doubleClick}
+            index={index + 1}
         />
     ))
+
+

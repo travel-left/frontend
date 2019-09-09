@@ -14,12 +14,14 @@ export default class Traveler extends Component {
     }
 
     render() {
-        let { name, email, status, image, selected } = this.props
-
+        let { name, email, status, image, selected, index } = this.props
+        let bgColor = index % 2 !== 0 ? '#F6FAFF' : '#FFFFFF'
         return (
             <div
-                className="d-flex left-shadow-sharp py-3 my-2 animated fadeIn hover col-12 justify-content-between align-items-center"
-                onDoubleClick={this.handleDoubleClick}
+                className="d-flex py-2 animated fadeIn col-12 justify-content-around align-items-center px-0"
+                style={{
+                    backgroundColor: bgColor
+                }}
             >
                 <div className="col-md-1" onClick={this.handleToggle}>
                     <Checkbox
@@ -27,13 +29,21 @@ export default class Traveler extends Component {
                         checked={selected}
                     />
                 </div>
-                <div className="col-md-1">
-                    <Image diameter="40px" src={image} name={name} />
+                <div className="col-md-2">
+                    <Image diameter="48px" src={image} name={name} />
                 </div>
-                <div className="col-md-4 Travelers-name">{name}</div>
-                <div className="col-md-4">{email}</div>
+                <div className="col-md-3 Travelers-name">{name}</div>
+                <div className="col-md-3" style={{
+                    fontFamily: 'Roboto',
+                    fontSize: '14px',
+                    color: '#475561'
+                }}>{email}</div>
                 <div className="col-md-2">
                     <TravelerStatus status={status} />
+                </div>
+                <div className="col-md-1 d-flex align-items-center justify-content-center">
+                    <i class="material-icons hover" style={{ color: '#AAB5C0', fontSize: '24px' }}
+                        onClick={this.handleDoubleClick}>more_vert</i>
                 </div>
             </div>
         )

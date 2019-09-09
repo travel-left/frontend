@@ -31,7 +31,10 @@ export default class Image extends Component {
         const initials = name ? getInitials(name) : ''
         const renderInitials =
             !imageUrl || error || src === 'https://' ? (
-                <span data-letters={initials} className='d-flex jusitfy-content-center align-items-center'></span>
+                <span data-letters={initials} className='d-flex jusitfy-content-center align-items-center' style={{
+                    height: diameter,
+                    width: diameter
+                }}></span>
             ) : <img
                     src={imageUrl}
                     alt=""
@@ -45,8 +48,7 @@ export default class Image extends Component {
                 />
 
         return (
-            <div className="text-center">
-
+            <div className="">
                 {renderInitials}
             </div>
         )

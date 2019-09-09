@@ -1,17 +1,16 @@
 import React from 'react'
 import Moment from 'react-moment'
+import LeftCard from "../../../util/LeftCard"
 
 const Text = ({ message, createdAt }) => (
-    <>
-        <u>
-            <Moment
-                date={createdAt}
-                format="MMMM DD, hh:mm A"
-                className="text-dark"
-            />
-        </u>
-        <p>{message}</p>
-    </>
+    <div className='col-12'>
+        <Moment
+            date={createdAt}
+            format="MMMM DD"
+            className="TravelerInfo-text-date"
+        />
+        <p>{message.substring(0, message.length - 32)}</p>
+    </div>
 )
 
 export default Text

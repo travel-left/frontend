@@ -21,7 +21,7 @@ export default function UpdateTravelerForm(props) {
     })
 
     const button = {
-        classes: 'btn btn-lg btn-secondary text-light float-right px-4',
+        classes: 'btn btn-lg btn-secondary float-right px-5 mt-5',
         text: 'EDIT'
     }
 

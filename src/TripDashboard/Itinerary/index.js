@@ -172,7 +172,7 @@ class Itinerary extends Component {
             )
 
         return (
-            <div className="col-md-12">
+            <div className="col-md-12 mt-4">
                 <div className="col-md-10 d-flex flex-row justify-content-between">
                     <h4 className='Itinerary-title'>Trip Days</h4>
                     <CreateEventForm
