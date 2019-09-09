@@ -266,56 +266,31 @@ const ShareCover = ({ trip }) => {
 }
 
 const Navigation = ({ tripId, source }) => (
-    <span
-        className="badge badge-light badge-pill rounded-pill px-4 py-2 left-shadow-sharp d-flex justify-content-around align-items-center"
-        style={{ width: '440px', height: '70px', backgroundColor: '#FFFFFF' }}
-    >
+    <div className='d-flex Share-Nav left-shadow-sharp'>
         <NavLink
-            activeClassName="bg-primary rounded-circle"
+            activeClassName="Share-Nav-active"
+            className='btn Share-Nav-btn Share-Nav-left'
             to={`/trips/${tripId}/${source}/itinerary`}
             name={`/trips/${tripId}/${source}/itinerary`}
         >
-            <span
-                className="rounded-circle hover d-flex align-items-center justify-content-center"
-                style={{
-                    width: '7vh',
-                    height: '7vh',
-                    zIndex: '999'
-                }}
-            >
-                <i className="far fa-calendar fa-2x text-light" />
-            </span>
+            <i class="material-icons-outlined px-4" style={{ color: '#000000', fontSize: '28px' }}>calendar_today</i>
         </NavLink>
 
         <NavLink
-            activeClassName="bg-primary rounded-circle"
+            activeClassName="Share-Nav-active"
+            className='btn Share-Nav-btn Share-Nav-center'
             to={`/trips/${tripId}/${source}/documents`}
             name={`/trips/${tripId}/${source}/documents`}
         >
-            <span
-                className="rounded-circle hover d-flex align-items-center justify-content-center"
-                style={{
-                    width: '8vh',
-                    height: '8vh'
-                }}
-            >
-                <i className="far fa-folder fa-2x text-light" />
-            </span>
+            <i class="material-icons-outlined px-4" style={{ color: '#000000', fontSize: '28px' }}>info</i>
         </NavLink>
         <NavLink
-            activeClassName="bg-primary rounded-circle"
+            activeClassName="Share-Nav-active"
+            className='btn Share-Nav-btn Share-Nav-right'
             to={`/trips/${tripId}/${source}/contacts`}
             name={`/trips/${tripId}/${source}/contacts`}
         >
-            <span
-                className="rounded-circle hover d-flex align-items-center justify-content-center"
-                style={{
-                    width: '8vh',
-                    height: '8vh'
-                }}
-            >
-                <i className="far fa-user fa-2x text-light" />
-            </span>
+            <i class="material-icons-outlined px-4" style={{ color: '#000000', fontSize: '28px' }} > person</i>
         </NavLink>
-    </span>
+    </div>
 )

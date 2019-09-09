@@ -1,3 +1,9 @@
+.Share-Nav {
+    z-index: 4000;
+    border-radius: 50px 50px 50px  50px !important; 
+    background-color: #FFFFFF;
+}
+
 .Share-title {
     font-family: Roboto;
     font-weight: 700;
@@ -19,4 +25,33 @@
     font-weight: 700;
     font-size: 24px;
     color: #4A4A4A;
+}
+
+.Share-Nav-btn {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.Share-Nav-right {
+    border-radius: 0px 50px 50px  0px !important; 
+    border: 15px solid #ffffff !important;
+}
+
+.Share-Nav-left {
+    border-radius: 50px 0px 0px  50px !important; 
+    border: 15px solid #ffffff !important;
+}
+
+.Share-Nav-center {
+    border: 15px solid #ffffff !important;
+}
+
+.Share-Nav-active {
+    background-color: #0F61D8 !important;
+    border: 15px solid #0F61D8 !important;
+    color: #FFFFFF;
+}
+
+.Share-Nav-active > i {
+    color: #FFFFFF !important;
 }
