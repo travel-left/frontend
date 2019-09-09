@@ -80,6 +80,8 @@ class Share extends Component {
             }
         })
 
+        const tripDateList = this.state.trip.tripDates ? this.state.trip.tripDates.map(tripDate => <ShareTripDate tripDate={tripDate} />) : null
+
         const documentList = this.state.trip.documents
             ? this.state.trip.documents.map(doc => {
                 return <ShareDocument doc={doc} />
@@ -124,6 +126,23 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/documents`}
                             render={props => (
                                 <div className="container">
+                                    <h4 className="mb-3 Share-title">
+                                        Trip Information
+                                    </h4>
+                                    <div className="row d-flex mb-4">
+                                        <div className="mt-4 px-5 py-3" style={{
+                                            background: '#FFFFFF',
+                                            boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+                                            borderRadius: '8px',
+                                            border: 'none',
+                                            minHeight: '100px',
+                                            width: '340px'
+                                        }}>
+                                            <span className='Share-Trip-Dates-title'>Trip Dates</span>
+                                            {tripDateList}
+                                        </div>
+
+                                    </div>
                                     <div className="row d-flex justify-content-around">
                                         {documentList}
                                     </div>
@@ -135,6 +154,9 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/contacts`}
                             render={props => (
                                 <div className="container">
+                                    <h4 className="mb-3 Share-title">
+                                        Trip Contacts
+                                    </h4>
                                     <div className="row d-flex justify-content-around">
                                         {contactsList}
                                     </div>
@@ -145,7 +167,7 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/`}
                             render={props => (
                                 <div>
-                                    <h4 className="mb-3 Share-Itinerary-Title">
+                                    <h4 className="mb-3 Share-title">
                                         Itinerary:{' '}
                                         {moment(trip.dateStart).format('MMM DD')}{' '}
                                         to{' '}
@@ -198,22 +220,44 @@ const date_sort_asc = function (date1, date2) {
 const ShareDocument = ({ doc }) => {
     const linkImg = getIcon(doc.link)
     return (
-        <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
-            <div className="card-body">
-                <div className="d-flex flex-column align-items-center justify-content-between">
-                    <a
-                        className="hove d-flex alighn-self-center py-1"
-                        href={doc.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src={linkImg}
-                            alt=""
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </a>
-                    <strong className="text-center"> {doc.name}</strong>
+        <div className="col-md-12 p-4 my-3 Document">
+            <div className="row d-flex justify-content-between px-3">
+                <span className="Document-title">{doc.name}</span>
+            </div>
+            <p className="Document-description my-4">{doc.description}</p>
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="Document-card">
+                        <div className="row no-gutters">
+                            <div className="Document-icon d-flex justify-content-center align-items-center">
+                                <a
+                                    className="hover"
+                                    href={doc.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <img
+                                        src={linkImg}
+                                        alt=""
+                                        className='Document-image'
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                </a>
+                            </div>
+                            <div className="card-body d-flex flex-column justify-content-around">
+                                <a
+                                    className="hover"
+                                    href={doc.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <span className='Document-open-text pr-1'>
+                                        Download
+                                        </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -221,30 +265,24 @@ const ShareDocument = ({ doc }) => {
 }
 
 const ShareContact = ({ contact }) => {
+    let { image, name, phone, email } = contact
     return (
-        <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
-            <div className="card-body">
-                <div className="d-flex flex-column align-items-center justify-content-center">
-                    <Image
-                        src={contact.image}
-                        diameter="65px"
-                        name={contact.name}
-                    />
-                    <strong className="h6 mt-3 text-center">
-                        {contact.name}
-                    </strong>
-                    <p
-                        className="card-text text-center"
-                        style={{ fontSize: '.6em' }}
-                    >
-                        {contact.number}
-                    </p>
-                    <p
-                        className="card-text text-center"
-                        style={{ fontSize: '.6em' }}
-                    >
-                        {contact.email}
-                    </p>
+        <div className="animated fadeIn my-4">
+            <div className="row align-items-center justify-content-around" style={{
+                background: '#FFFFFF',
+                boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+                borderRadius: '8px',
+                border: 'none',
+                height: '100px',
+                width: '280px'
+            }}>
+                <div className="row justify-content-around align-items-center">
+                    <Image src={image} diameter="48px" name={name} />
+                    <div className="d-flex flex-column pl-4">
+                        {name && <span className="Contact-name">{name}</span>}
+                        {phone && <span className="Contact-info">{phone}</span>}
+                        {email && <span className="Contact-info">{email}</span>}
+                    </div>
                 </div>
             </div>
         </div>
@@ -262,6 +300,54 @@ const ShareCover = ({ trip }) => {
                 height: '20vh'
             }}
         />
+    )
+}
+
+const ShareTripDate = ({ tripDate }) => {
+
+    let { name, date, type } = tripDate
+    let icon
+
+    switch (type) {
+        case 'TRAVEL':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#29CB97' }}>card_travel</i>
+            break
+        case 'PAPERWORK':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FEC400' }}>folder_open</i>
+            break
+        case 'MONEY':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#B558F6' }}>attach_money</i>
+            break
+        case 'OTHER':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA' }}>calendar_today</i>
+            break
+        default:
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA' }}>calendar_today</i>
+            break
+    }
+
+    const dateWithoutTimeorTZ = date.split('T')[0]
+
+    return (
+        <div className="row py-3 align-items-center justify-content-between px-2">
+            <div className="d-flex align-items-center justify-content-between">
+                {icon}
+                <div className="d-flex flex-column justify-content-center align-items-start ml-4">
+                    <span className="" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '14px',
+                        color: '#31394D',
+                        letterSpacing: 0
+                    }}>{name}</span>
+                    <span className="" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '12px',
+                        color: '#748AA1',
+                        letterSpacing: 0
+                    }}>{moment(dateWithoutTimeorTZ).format('MMMM DD')}</span>
+                </div>
+            </div>
+        </div>
     )
 }
 

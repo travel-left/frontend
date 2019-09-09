@@ -12,14 +12,6 @@
     letter-spacing: 0;
 }
 
-.Share-Itinerary-Title {
-    font-family: Roboto;
-    font-weight: 700;
-    font-size: 40px;
-    color: #22272F;
-    letter-spacing: 0;
-}
-
 .Share-date {
     font-family: Roboto;
     font-weight: 700;
@@ -54,4 +46,11 @@
 
 .Share-Nav-active > i {
     color: #FFFFFF !important;
+}
+
+.Share-Trip-Dates-title {
+    font-family: Roboto;
+    font-weight: 600;
+    font-size: 22px;
+    color: #333333;
 }
