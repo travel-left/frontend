@@ -23,7 +23,7 @@ export default function FormField({
     }
 
     const displayLabel = label ? (
-        <label htmlFor={name} className="d-block">
+        <label htmlFor={name} className="d-block Modal-Form-label">
             {label}
         </label>
     ) : null

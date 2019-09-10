@@ -38,8 +38,8 @@ export default ({ error, submit }) => {
         <div className="card col-10 shadow align-self-start my-4">
             {mError ? <p style={{ color: 'red' }}>{mError.message}</p> : null}
             <div className="card-body p-4">
-                <h1 className="heading">Start your Free Trial.</h1>
-                <h5 className="text-dark">
+                <h1 className="Auth-title ">Start your Free Trial.</h1>
+                <h5 className="Auth-sub">
                     Create your account by filling out the form below.
                 </h5>
                 <Formik

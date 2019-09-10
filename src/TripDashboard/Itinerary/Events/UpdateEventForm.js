@@ -82,7 +82,7 @@ export default function UpdateEventForm(props) {
                 label="Address"
                 placeholder="1 World Way, Los Angeles, CA, US"
             />
-            <div className="mt-2">Documents</div>
+            <label className="mt-2">Documents</label>
 
             <FieldArray name="documents">
                 {({ form, push, remove }) => (

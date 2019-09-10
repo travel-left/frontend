@@ -362,7 +362,7 @@ class Travelers extends Component {
                         </div>
                     </div>
                     <div className="col-md-4 pr-0 left-shadow-blur">
-                        {this.state.selectedTraveler.name && travelerInfo}
+                        {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
                     </div>
                 </div>
             </div>

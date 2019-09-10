@@ -9,8 +9,8 @@ export default function sidePicture({ type, onClick }) {
             <div className="bg-image" />
             <div className="container px-5 right text-left">
                 <h2 className="display-1 text-light font-weight-bold">left.</h2>
-                <h2 className="h1 text-secondary font-weight-bold">{header}</h2>
-                <h2 className="h4 text-light font-weight-light">{body}</h2>
+                <h2 className="Auth-side-sub">{header}</h2>
+                <h2 className="Auth-side-message">{body}</h2>
                 <button
                     onClick={onClick}
                     name={type}

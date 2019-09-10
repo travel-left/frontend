@@ -56,8 +56,8 @@ export default class CreateProfile extends Component {
                         {error ? (
                             <p style={{ color: 'red' }}>{error.message}</p>
                         ) : (
-                            <p className="text-primary">{successMessage}</p>
-                        )}
+                                <p className="text-primary">{successMessage}</p>
+                            )}
 
                         <Formik
                             initialValues={initialValues}
@@ -94,15 +94,15 @@ export default class CreateProfile extends Component {
                                             label="Name*"
                                             placeholder="John Appleseed"
                                         />
-                                        <div className="p mt-2">Email</div>
+                                        <label className="p mt-2">Email</label>
                                         <div className="p mt-2">
                                             {currentUser.email}
                                         </div>
                                         <div className="p mt-2">
-                                            <div className="">
+                                            <label className="">
                                                 Organization Id{' '}
                                                 <ExplainOrganizationId />
-                                            </div>
+                                            </label>
                                         </div>
                                         <div className="p mt-2">
                                             {currentUser.organization}

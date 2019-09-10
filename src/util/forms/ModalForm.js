@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
+import './Modal.css'
 import Mortal from 'react-mortal'
 
 // EXPECTED PROPS:
@@ -206,7 +207,7 @@ class ModalForm extends Component {
                                 />
                                 <div className="modal-dialog" role="document">
                                     <div
-                                        className="modal-content"
+                                        className="modal-content Modal-Form"
                                         style={{
                                             opacity: motion.opacity,
                                             transform: `translate3d(0, ${
@@ -215,21 +216,20 @@ class ModalForm extends Component {
                                         }}
                                     >
                                         <Form>
-                                            <div className="modal-header">
+                                            <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
                                                 <h5
-                                                    className="modal-title"
+                                                    className="modal-title Modal-Form-header pl-3"
                                                     id="addnewNameModal"
                                                 >
                                                     {header}
                                                 </h5>
                                                 <button
+                                                    className='btn btn-link'
                                                     type="reset"
-                                                    className="close"
                                                     aria-label="Close"
+                                                    style={{ backgroundColor: '0F58D1' }}
                                                 >
-                                                    <span aria-hidden="true">
-                                                        &times;
-                                                    </span>
+                                                    <i class="material-icons" style={{ color: 'white' }}>close</i>
                                                 </button>
                                             </div>
                                             <div className="modal-body">

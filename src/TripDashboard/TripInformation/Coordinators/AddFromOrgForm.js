@@ -80,7 +80,7 @@ export default class AddFromOrgForm extends Component {
                 submit={this.submit}
                 submitButtonText="SUBMIT"
             >
-                <span className="mt-2">Coordinators</span>
+                <label className="my-2">Coordinators</label>
                 <Select
                     isMulti
                     name="coordinators"
