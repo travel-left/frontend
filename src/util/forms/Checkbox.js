@@ -14,7 +14,7 @@ export default ({ name = '', label = '', className, checked, onChange }) => (
             onChange={onChange}
             id={name}
         />
-        <label htmlFor={name} className="custom-control-label hover">
+        <label htmlFor={name} className="custom-control-label hover" style={{ marginTop: '0px' }}>
             {label && label !== 'noshow' ? label : null}
         </label>
     </div>
