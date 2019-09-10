@@ -22,20 +22,15 @@ export default function CreateContactForm({ submit }) {
         phone: phoneValidator
     })
 
-    const button = {
-        classes: 'btn btn-primary rounded-pill',
-        text: 'ADD NEW'
-    }
-
     return (
         <ModalForm
-            button={button}
+            buttonType='add'
             header="Add a new emergency contact"
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" label="Name" placeholder="John Appleseed" />
+            <FormField name="name" label="Name*" placeholder="John Appleseed" />
             <FormField
                 component={Uploader}
                 name="image"
@@ -43,7 +38,7 @@ export default function CreateContactForm({ submit }) {
             />
             <FormField
                 name="email"
-                label="Email"
+                label="Email*"
                 placeholder="john@travel-left.com"
                 type="email"
             />

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
+import './Modal.css'
 import Mortal from 'react-mortal'
+
 // EXPECTED PROPS:
 //     title: this is the title of the modal
 //     validationSchema: this is a yup validation validationSchema
@@ -37,21 +39,112 @@ class ModalForm extends Component {
             submit,
             remove,
             icon,
+            mIcon,
             button,
+            buttonType,
             submitButtonText
         } = this.props
         const { err } = this.state
 
-        let opener = icon ? (
-            <i className={`hover ${icon}`} onClick={this.toggleModal} />
-        ) : (
-            <button
+        let opener
+
+        if (icon) {
+            opener = <i className={`hover ${icon}`} onClick={this.toggleModal} />
+        }
+
+        if (button) {
+            opener = <button
                 className={`btn ${button.classes}`}
                 onClick={this.toggleModal}
             >
                 {button.text}
             </button>
-        )
+        }
+
+        if (mIcon) {
+            opener = <span onClick={this.toggleModal}>{mIcon}</span>
+        }
+
+        if (buttonType === 'edit') {
+            opener = <span
+                onClick={this.toggleModal}
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '54px',
+                    height: '25px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#475561',
+                    textAlign: 'center',
+                    borderRadius: '16px'
+                }}
+            >
+                EDIT
+            </span>
+        }
+
+        if (buttonType === 'add') {
+            opener = <span
+                onClick={this.toggleModal}
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '103px',
+                    height: '32px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#79828B',
+                    textAlign: 'center',
+                    borderRadius: '16px'
+                }}
+            >
+                ADD NEW
+            </span>
+        }
+
+        if (buttonType === 'addOrg') {
+            opener = <span
+                onClick={this.toggleModal}
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    minWidth: '103px',
+                    height: '32px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#83C9F5',
+                    textAlign: 'center',
+                    borderRadius: '16px'
+                }}
+            >
+                ADD FROM ORG
+            </span>
+        }
+
+        if (buttonType === 'travelerEdit') {
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+                <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>edit</i>
+            </span>
+        }
+
+        if (buttonType === 'travelerText') {
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+                <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>sms</i>
+            </span>
+        }
+
+        if (buttonType === 'travelerEmail') {
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+                <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>markunread</i>
+            </span>
+        }
 
         const submitButton = submit ? (<button
             type="submit"
@@ -114,30 +207,29 @@ class ModalForm extends Component {
                                 />
                                 <div className="modal-dialog" role="document">
                                     <div
-                                        className="modal-content"
+                                        className="modal-content Modal-Form"
                                         style={{
                                             opacity: motion.opacity,
                                             transform: `translate3d(0, ${
                                                 motion.modalOffset
-                                            }px, 0)`
+                                                }px, 0)`
                                         }}
                                     >
                                         <Form>
-                                            <div className="modal-header">
+                                            <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
                                                 <h5
-                                                    className="modal-title"
+                                                    className="modal-title Modal-Form-header pl-3"
                                                     id="addnewNameModal"
                                                 >
                                                     {header}
                                                 </h5>
                                                 <button
+                                                    className='btn btn-link'
                                                     type="reset"
-                                                    className="close"
                                                     aria-label="Close"
+                                                    style={{ backgroundColor: '0F58D1' }}
                                                 >
-                                                    <span aria-hidden="true">
-                                                        &times;
-                                                    </span>
+                                                    <i class="material-icons" style={{ color: 'white' }}>close</i>
                                                 </button>
                                             </div>
                                             <div className="modal-body">

@@ -12,15 +12,22 @@ export default function TripNameForm({ name, submit }) {
     const schema = Yup.object().shape({
         name: nameValidator
     })
+
+    const button = {
+        classes: 'px-0',
+        text: (
+            <h3 className="text-primary my-3 d-inline TripInfo-name"> {name} </h3>
+        )
+    }
     return (
         <ModalForm
-            icon="far fa-edit fa-lg text-secondary float-right ml-2"
+            button={button}
             header="Edit trip name"
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" placeholder="Australia" label="Trip Name" />
+            <FormField name="name" placeholder="Australia" label="Trip Name*" />
         </ModalForm>
     )
 }

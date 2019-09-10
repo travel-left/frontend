@@ -39,12 +39,12 @@ export default function CreateTextForm({ submit, travelers, selected }) {
             {travelerList}
         </>
     ) : (
-        <p className="text-danger text-center">No Travelers Selected!</p>
-    )
+            <p className="text-danger text-center">No Travelers Selected!</p>
+        )
 
     return (
         <ModalForm
-            icon="far fa-comment fa-2x text-primary"
+            buttonType='travelerText'
             header="Send a text to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}
@@ -54,7 +54,7 @@ export default function CreateTextForm({ submit, travelers, selected }) {
             <div className="mb-4">{travelerList}</div>
             <FormField
                 name="body"
-                label="Body"
+                label="Body*"
                 component="textarea"
                 placeholder="Your text body"
                 className="d-block"

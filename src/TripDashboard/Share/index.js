@@ -5,6 +5,8 @@ import Image from '../../util/otherComponents/Image'
 import Map from '../Itinerary/Events/Map'
 import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
 import { getIcon } from '../../util/file-icons'
+import Event from '../Itinerary/Events/Event'
+import './Share.css'
 import ReactGA from 'react-ga'
 ReactGA.pageview('/share')
 
@@ -62,7 +64,7 @@ class Share extends Component {
             let activeClass = day === selectedDay ? 'text-primary' : ''
             return (
                 <div
-                    className={`mx-4 d-flex flex-column align-items-center hover ${activeClass}`}
+                    className={`mx-4 d-flex flex-column align-items-center hover ${activeClass} Share-date`}
                     onClick={() => this.setSelectedDay(day)}
                 >
                     <span>{moment(day).format('dd')}</span>
@@ -72,32 +74,35 @@ class Share extends Component {
         })
 
         const eventList = events.map(event => {
+            event.share = true
             if (event.dateStart === selectedDay) {
-                return <ShareEvent event={event} />
+                return <Event event={event} />
             }
         })
 
+        const tripDateList = this.state.trip.tripDates ? this.state.trip.tripDates.map(tripDate => <ShareTripDate tripDate={tripDate} />) : null
+
         const documentList = this.state.trip.documents
             ? this.state.trip.documents.map(doc => {
-                  return <ShareDocument doc={doc} />
-              })
+                return <ShareDocument doc={doc} />
+            })
             : null
 
         const contactsList =
             trip.contacts || trip.coordinators
                 ? [...trip.coordinators, ...trip.contacts].map(contact => {
-                      return <ShareContact contact={contact} />
-                  })
+                    return <ShareContact contact={contact} />
+                })
                 : null
 
         return (
             <div className="container-fluid">
                 <div className="">
                     <div className="row d-flex justify-content-between">
-                        <h2 className="text p-2">{trip.name}</h2>
-                        <h2 className="text p-2">{orgName}</h2>
+                        <span className="Share-title p-2">{trip.name}</span>
+                        <span className="Share-title p-2">{orgName}</span>
                     </div>
-                    <ShareCover trip={trip} />
+                    <ShareCover trip={trip} source={this.source} />
                     <div className="position-relative">
                         <div
                             className="d-flex justify-content-center position-absolute"
@@ -121,6 +126,23 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/documents`}
                             render={props => (
                                 <div className="container">
+                                    <h4 className="mb-3 Share-title">
+                                        Trip Information
+                                    </h4>
+                                    <div className="row d-flex mb-4">
+                                        <div className="mt-4 px-5 py-3" style={{
+                                            background: '#FFFFFF',
+                                            boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+                                            borderRadius: '8px',
+                                            border: 'none',
+                                            minHeight: '100px',
+                                            width: '340px'
+                                        }}>
+                                            <span className='Share-Trip-Dates-title'>Trip Dates</span>
+                                            {tripDateList}
+                                        </div>
+
+                                    </div>
                                     <div className="row d-flex justify-content-around">
                                         {documentList}
                                     </div>
@@ -132,6 +154,9 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/contacts`}
                             render={props => (
                                 <div className="container">
+                                    <h4 className="mb-3 Share-title">
+                                        Trip Contacts
+                                    </h4>
                                     <div className="row d-flex justify-content-around">
                                         {contactsList}
                                     </div>
@@ -142,11 +167,9 @@ class Share extends Component {
                             path={`/trips/:tripId/${this.source}/`}
                             render={props => (
                                 <div>
-                                    <h4 className="mb-3">
+                                    <h4 className="mb-3 Share-title">
                                         Itinerary:{' '}
-                                        {moment(trip.dateStart).format(
-                                            'MMM DD'
-                                        )}{' '}
+                                        {moment(trip.dateStart).format('MMM DD')}{' '}
                                         to{' '}
                                         {moment(trip.dateEnd).format('MMM DD')}
                                     </h4>
@@ -174,7 +197,7 @@ class Share extends Component {
 
 export default withRouter(Share)
 
-const time_sort_asc = function(event1, event2) {
+const time_sort_asc = function (event1, event2) {
     if (
         moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
         moment(event2.dtStart, ['h:mm A']).format('HH:mm')
@@ -188,126 +211,53 @@ const time_sort_asc = function(event1, event2) {
     return 0
 }
 
-const date_sort_asc = function(date1, date2) {
+const date_sort_asc = function (date1, date2) {
     if (date1 > date2) return 1
     if (date1 < date2) return -1
     return 0
 }
 
-class ShareEvent extends Component {
-    render() {
-        let { event } = this.props
-        let iconString,
-            color = ''
-        switch (event.type.toLowerCase()) {
-            case 'lodging':
-                iconString = 'fa-bed'
-                color = '#FEA600'
-                break
-            case 'transportation':
-                iconString = 'fa-car'
-                color = '#BF9DD9'
-                break
-            case 'event':
-                iconString = 'fa-calendar-check'
-                color = '#83C9F4'
-                break
-            case 'flight':
-                iconString = 'fa-plane'
-                color = '#CCAA55'
-                break
-            default:
-                break
-        }
-
-        if (event.tripDate) {
-            iconString = 'fa-calendar'
-            color = '#FF0000'
-        }
-        const date =
-            event.dtStart && event.dtEnd
-                ? `${event.dtStart} - ${event.dtEnd}`
-                : null
-
-        const map = event.coordinates ? (
-            event.coordinates.lat && event.coordinates.long ? (
-                <div className="row">
-                    <div className="col-12">
-                        <Map coordinates={event.coordinates} />
-                    </div>
-                </div>
-            ) : null
-        ) : null
-
-        const name = event.tripDate ? `Trip Date: ${event.name}` : event.name
-
-        const address = event.address ? (
-            <p className="card-text">{'Address: ' + event.address}</p>
-        ) : null
-
-        return (
-            <div
-                className="card mb-3 border-0 shadow px-3 rounded-lg animated fadeIn"
-                style={{ width: '100%' }}
-            >
-                <div className="row">
-                    <div className="card-body">
-                        <h5 className="card-title">
-                            <strong> {name}</strong>
-                            <i
-                                className={`fa ${iconString} float-right`}
-                                style={{ color: color }}
-                            />
-                        </h5>
-                        <div className="row">
-                            <div className="col-md-6 d-flex flex-column">
-                                <h6
-                                    className="card-subtitle mb-2"
-                                    style={{ color: color }}
-                                >
-                                    {date}
-                                </h6>
-                                <p className="card-text">{event.description}</p>
-                                <a
-                                    href={event.link}
-                                    className="card-link"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {event.linkDescription}
-                                </a>
-                            </div>
-                            <div className="col-md-6">
-                                {map}
-                                {address}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
-
 const ShareDocument = ({ doc }) => {
     const linkImg = getIcon(doc.link)
     return (
-        <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
-            <div className="card-body">
-                <div className="d-flex flex-column align-items-center justify-content-between">
-                    <a
-                        className="hove d-flex alighn-self-center py-1"
-                        href={doc.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <img
-                            src={linkImg}
-                            alt=""
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </a>
-                    <strong className="text-center"> {doc.name}</strong>
+        <div className="col-md-12 p-4 my-3 Document">
+            <div className="row d-flex justify-content-between px-3">
+                <span className="Document-title">{doc.name}</span>
+            </div>
+            <p className="Document-description my-4">{doc.description}</p>
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="Document-card">
+                        <div className="row no-gutters">
+                            <div className="Document-icon d-flex justify-content-center align-items-center">
+                                <a
+                                    className="hover"
+                                    href={doc.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <img
+                                        src={linkImg}
+                                        alt=""
+                                        className='Document-image'
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                </a>
+                            </div>
+                            <div className="card-body d-flex flex-column justify-content-around">
+                                <a
+                                    className="hover"
+                                    href={doc.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <span className='Document-open-text pr-1'>
+                                        Download
+                                        </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -315,33 +265,31 @@ const ShareDocument = ({ doc }) => {
 }
 
 const ShareContact = ({ contact }) => {
+    let { image, name, phone, email } = contact
     return (
-        <div className="card mb-3 border-0 shadow px-1 rounded-lg animated fadeIn col-5 mx-2">
-            <div className="card-body">
-                <div className="d-flex flex-column align-items-center justify-content-center">
-                    <Image src={contact.image} diameter="65px" />
-                    <strong className="h6 mt-3 text-center">
-                        {contact.name}
-                    </strong>
-                    <p
-                        className="card-text text-center"
-                        style={{ fontSize: '.6em' }}
-                    >
-                        {contact.number}
-                    </p>
-                    <p
-                        className="card-text text-center"
-                        style={{ fontSize: '.6em' }}
-                    >
-                        {contact.email}
-                    </p>
+        <div className="animated fadeIn my-4">
+            <div className="row align-items-center justify-content-around" style={{
+                background: '#FFFFFF',
+                boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+                borderRadius: '8px',
+                border: 'none',
+                height: '100px',
+                width: '280px'
+            }}>
+                <div className="row justify-content-around align-items-center">
+                    <Image src={image} diameter="48px" name={name} />
+                    <div className="d-flex flex-column pl-4">
+                        {name && <span className="Contact-name">{name}</span>}
+                        {phone && <span className="Contact-info">{phone}</span>}
+                        {email && <span className="Contact-info">{email}</span>}
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-const ShareCover = ({ trip }) => {
+const ShareCover = ({ trip, source }) => {
     return (
         <div
             className="row d-flex flex-column justify-content-between p-4"
@@ -351,61 +299,102 @@ const ShareCover = ({ trip }) => {
                 backgroundSize: 'cover',
                 height: '20vh'
             }}
-        />
+        >   {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
+            <span
+                className={`badge badge-secondary badge-pill text-uppercase hover d-flex align-items-center justify-content-center`}
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '118px',
+                    color: '#FFFFFF'
+                }}
+            >
+                EXIT PREVIEW
+                    <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}>
+                    cancel
+                    </i>
+            </span></a >}
+
+        </div >
+    )
+}
+
+const ShareTripDate = ({ tripDate }) => {
+
+    let { name, date, type } = tripDate
+    let icon
+
+    switch (type) {
+        case 'TRAVEL':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#29CB97' }}>card_travel</i>
+            break
+        case 'PAPERWORK':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FEC400' }}>folder_open</i>
+            break
+        case 'MONEY':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#B558F6' }}>attach_money</i>
+            break
+        case 'OTHER':
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA' }}>calendar_today</i>
+            break
+        default:
+            icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA' }}>calendar_today</i>
+            break
+    }
+
+    const dateWithoutTimeorTZ = date.split('T')[0]
+
+    return (
+        <div className="row py-3 align-items-center justify-content-between px-2">
+            <div className="d-flex align-items-center justify-content-between">
+                {icon}
+                <div className="d-flex flex-column justify-content-center align-items-start ml-4">
+                    <span className="" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '14px',
+                        color: '#31394D',
+                        letterSpacing: 0
+                    }}>{name}</span>
+                    <span className="" style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '12px',
+                        color: '#748AA1',
+                        letterSpacing: 0
+                    }}>{moment(dateWithoutTimeorTZ).format('MMMM DD')}</span>
+                </div>
+            </div>
+        </div>
     )
 }
 
 const Navigation = ({ tripId, source }) => (
-    <span
-        className="badge badge-light badge-pill rounded-pill px-4 py-2 shadow d-flex justify-content-around align-items-center"
-        style={{ width: '60vw', backgroundColor: 'black' }}
-    >
+    <div className='d-flex Share-Nav left-shadow-sharp'>
         <NavLink
-            activeClassName="bg-primary rounded-circle"
+            activeClassName="Share-Nav-active"
+            className='btn Share-Nav-btn Share-Nav-left'
             to={`/trips/${tripId}/${source}/itinerary`}
             name={`/trips/${tripId}/${source}/itinerary`}
         >
-            <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
-                style={{
-                    width: '7vh',
-                    height: '7vh',
-                    zIndex: '999'
-                }}
-            >
-                <i class="far fa-calendar fa-2x text-light" />
-            </span>
+            <i class="material-icons-outlined px-4" style={{ color: '#000000', fontSize: '28px' }}>calendar_today</i>
         </NavLink>
 
         <NavLink
-            activeClassName="bg-primary rounded-circle"
+            activeClassName="Share-Nav-active"
+            className='btn Share-Nav-btn Share-Nav-center'
             to={`/trips/${tripId}/${source}/documents`}
             name={`/trips/${tripId}/${source}/documents`}
         >
-            <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
-                style={{
-                    width: '8vh',
-                    height: '8vh'
-                }}
-            >
-                <i class="far fa-folder fa-2x text-light" />
-            </span>
+            <i class="material-icons-outlined px-4" style={{ color: '#000000', fontSize: '28px' }}>info</i>
         </NavLink>
         <NavLink
-            activeClassName="bg-primary rounded-circle"
+            activeClassName="Share-Nav-active"
+            className='btn Share-Nav-btn Share-Nav-right'
             to={`/trips/${tripId}/${source}/contacts`}
             name={`/trips/${tripId}/${source}/contacts`}
         >
-            <span
-                class="rounded-circle hover d-flex align-items-center justify-content-center"
-                style={{
-                    width: '8vh',
-                    height: '8vh'
-                }}
-            >
-                <i class="far fa-user fa-2x text-light" />
-            </span>
+            <i class="material-icons-outlined px-4" style={{ color: '#000000', fontSize: '28px' }} > person</i>
         </NavLink>
-    </span>
+    </div>
 )

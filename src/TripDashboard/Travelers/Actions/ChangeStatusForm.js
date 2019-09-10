@@ -31,12 +31,12 @@ export default function ChangeStatusForm({ submit, travelers, selected }) {
             {travelerList}
         </>
     ) : (
-        <p className="text-danger text-center">No Travelers Selected!</p>
-    )
+            <p className="text-danger text-center">No Travelers Selected!</p>
+        )
 
     return (
         <ModalForm
-            icon="far fa-edit fa-lg text-primary fa-2x"
+            buttonType='travelerEdit'
             header="Bulk update travelers status"
             initialValues={initialValues}
             submit={submit}
@@ -53,7 +53,7 @@ export default function ChangeStatusForm({ submit, travelers, selected }) {
                     { value: 'PAPERWORK NEEDED', label: 'Payment needed' },
                     { value: 'OTHER', label: 'Other' }
                 ]}
-                label="New Status"
+                label="New Status*"
             />
         </ModalForm>
     )

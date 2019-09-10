@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { apiCall } from '../util/api'
+import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
 // import Alert from '../util/otherComponents/Alert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
-import { setCurrentTrip } from '../util/redux/actions/trip'
+import { setCurrentTrip } from '../../util/redux/actions/trip'
 import AddTrip from './AddTrip'
-import SideNavItem from '../util/otherComponents/SideNavItem'
+import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
 import Dropzone from 'react-dropzone'
+import TripsListHeader from './TripsListHeader'
 ReactGA.pageview('/organizationdashboard')
 
 class Trips extends Component {
@@ -146,14 +147,12 @@ class Trips extends Component {
         ) : null
 
         let tripInfo = selectedTrip ? (
-            <div className="col-md-4 shadow px-0 bg-light">
-                <TripInfo
-                    trip={selectedTrip}
-                    edit={this.editTrip}
-                    duplicateTrip={this.addTrip}
-                    archiveTrip={this.archiveTrip}
-                />
-            </div>
+            <TripInfo
+                trip={selectedTrip}
+                edit={this.editTrip}
+                duplicateTrip={this.addTrip}
+                archiveTrip={this.archiveTrip}
+            />
         ) : null
 
         let files = this.state.files
@@ -161,13 +160,15 @@ class Trips extends Component {
             : null
         return (
             <div className="row">
-                <div className="col-md-2">
-                    <div className="row">
-                        <div className="col px-0 py-5 d-flex justify-content-center shadow">
-                            <AddTrip submit={this.addTrip} />
-                        </div>
+                <div className="col-md-2 px-0" style={{
+                    background: '#FFFFFF',
+                    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)',
+                    borderRadius: '3px'
+                }}>
+                    <div className="px-0 py-5 d-flex justify-content-center">
+                        <AddTrip submit={this.addTrip} />
                     </div>
-                    <div className="row d-none d-sm-flex flex-column shadow">
+                    <div className="d-none d-sm-flex flex-column" >
                         <ul className="list-group col px-0 ">
                             <SideNavItem
                                 text="All Trips"
@@ -206,7 +207,7 @@ class Trips extends Component {
                                 handleClick={this.onSideNavClick}
                             />
                         </ul>
-                        <div className="py-4 px-3">
+                        {/* <div className="py-4 px-3">
                             <Dropzone
                                 onDrop={acceptedFiles =>
                                     this.setState({
@@ -240,7 +241,7 @@ class Trips extends Component {
                                     </button>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className="col-md-10 mt-3">
@@ -251,21 +252,12 @@ class Trips extends Component {
                     </div> */}
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
-                            <div className="card shadow d-none d-md-flex flex-row justify-content-around py-3 mb-3 font-weight-bold align-items-center">
-                                <div className="col-md-3 border-bottom-5 border-primary text-uppercase ml-5">
-                                    TRIP NAME
-                                </div>
-                                <div className="col-md-4" />
-                                <div className="col-md-2 offset-md-1 text-uppercase text-dark">
-                                    Date
-                                </div>
-                                <div className="col-md-2 text-uppercase text-dark">
-                                    Status
-                                </div>
-                            </div>
+                            <TripsListHeader />
                             {tripList}
                         </div>
-                        {tripInfo}
+                        <div className="col-md-4 px-0">
+                            {tripInfo}
+                        </div>
                     </div>
                 </div>
             </div>

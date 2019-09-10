@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../redux/actions/auth'
+import './Navbar.css'
 
 class Navbar extends Component {
     signout = () => {
@@ -13,64 +14,89 @@ class Navbar extends Component {
         this.props.history.push(`/editprofile`)
     }
 
+    trips = () => {
+        this.props.history.push(`/`)
+    }
+
     support = () => {
         this.props.history.push(`/support`)
     }
 
     render() {
         let { currentUser } = this.props
-        let loggedInContent = null
+        let accountController = null
+        let loggedInLinks
         let linkTo = '#'
 
+        const { pathname } = this.props.history.location
+
+        const badgePill = ' px-4'
+
+
+
         if (currentUser.isAuthenticated) {
-            loggedInContent = (
-                <div className="collapse navbar-collapse justify-content-between">
-                    <div className="navbar-nav navbar-text">
-                        <ul className="navbar-nav mr-auto" />
-                    </div>
+            loggedInLinks = (
+                <div class="collapse navbar-collapse " id="navbarNav">
+                    <ul class="navbar-nav d-none d-md-flex align-items-center ml-4">
+                        <NavLink
+                            activeClassName="active"
+                            className='Navbar main-nav-link mr-3'
+                            to="/trips"
+                            name="/trips"
+                        >
+                            Trips
+                        </NavLink>
+                        {/* <NavLink
+                            activeClassName="active"
+                            className='Navbar main-nav-link ml-3'
+                            to="/travelers"
+                            name="/travelers"
+                        >
+                            Travelers
+                            </NavLink> */}
+                    </ul>
+                </div>
+            )
+            accountController = (
+                <div className="collapse navbar-collapse justify-content-end">
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle text-light"
-                                    href="#"
+                            <li className="nav-item dropdown d-flex align-items-center justify-content-center">
+                                <li
+                                    className="Navbar user-name"
+                                >
+                                    {currentUser.name}
+                                </li>
+                                <i class="material-icons md-18 bg-secondary nav-link dropdown-toggle ml-3 hover"
                                     id="navbarDropdown"
                                     role="button"
                                     data-toggle="dropdown"
-                                >
-                                    {currentUser.name}
-                                </a>
-                                <div class="dropdown-menu">
+                                    style={{ borderRadius: '50%', padding: '0px', color: 'white' }}>
+                                    expand_more
+                                </i>
+                                <div className="dropdown-menu">
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.account}
                                     >
                                         Account
                                     </button>
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.support}
                                     >
                                         Support
                                     </button>
 
-                                    <div class="dropdown-divider" />
+                                    <div className="dropdown-divider" />
                                     <button
-                                        class="dropdown-item btn-link"
+                                        className="dropdown-item btn-link"
                                         onClick={this.signout}
                                     >
                                         Logout
                                     </button>
                                 </div>
                             </li>
-                            <div className="a nav-link pr-4 hover">
-                                <span
-                                    className="text-light"
-                                    onClick={() =>
-                                        this.props.history.push('/editprofile')
-                                    }
-                                />
-                            </div>
                         </ul>
                     </div>
                 </div>
@@ -79,21 +105,15 @@ class Navbar extends Component {
         }
 
         return (
-            <nav
-                className="navbar navbar-expand container-fluid shadow px-4 py-2 bg-primary"
-                style={{ zIndex: 2 }}
-            >
+            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid px-5 bg-primary" style={{ zIndex: 2 }} >
                 <div className="navbar-brand">
-                    <Link to={linkTo}>
-                        <h1
-                            className="logo text-light font-weight-bold d-flex d-row align-items-center mb-0"
-                            style={{ fontSize: '3.2rem' }}
-                        >
-                            left.
-                        </h1>
+
+                    <Link to={linkTo} class="navbar-brand ml-2">
+                        <img src="/left.png" alt="" style={{ height: '40px' }}></img>
                     </Link>
                 </div>
-                {loggedInContent}
+                {loggedInLinks}
+                {accountController}
             </nav>
         )
     }

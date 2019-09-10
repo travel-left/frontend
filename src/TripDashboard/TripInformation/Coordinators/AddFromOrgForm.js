@@ -75,12 +75,12 @@ export default class AddFromOrgForm extends Component {
         const { coordinators } = this.state
         return (
             <ModalForm
-                button={button}
+                buttonType='addOrg'
                 header="Add other coordinators in your organization"
                 submit={this.submit}
                 submitButtonText="SUBMIT"
             >
-                <span className="mt-2">Coordinators</span>
+                <label className="my-2">Coordinators</label>
                 <Select
                     isMulti
                     name="coordinators"

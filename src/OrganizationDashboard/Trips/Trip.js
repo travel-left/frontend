@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Moment from 'react-moment'
-import TripStatus from '../util/otherComponents/TripStatus'
+import TripStatus from '../../util/otherComponents/TripStatus'
+import './Trip.css'
 
 class Trip extends Component {
     handleClick = () => {
@@ -16,28 +17,26 @@ class Trip extends Component {
 
         return (
             <div
-                className="card my-1 shadow mx-2 mx-md-0 my-2 hover border-0 d-md-flex flex-row justify-content-around animated fadeIn"
+                className="row mx-2 mx-xl-0 my-2 hover border-0 d-flex flex-row justify-content-around animated fadeIn Trip"
                 onClick={this.handleClick}
                 onDoubleClick={this.handleDoubleClick}
-                style={{ maxHeight: '13vh' }}
             >
-                <div className="col-md-3 px-0">
+                <div className="col-md-0 col-xl-2 px-0">
                     <img
                         src={image}
-                        className="card-img"
+                        className="card-img Trip-image d-none d-xl-block"
                         alt="..."
-                        style={{ maxHeight: '13vh' }}
                     />
                 </div>
-                <div className="col-4 col-md-4 d-flex align-items-center">
-                    <p className="card-text h4">{name}</p>
+                <div className="col-4 col-xl-4 d-flex align-items-center">
+                    <p className="card-text Trip-name">{name}</p>
                 </div>
-                <div className="col-4 col-md-2 offset-md-1 d-flex align-items-center">
-                    <p className="card-text text-dark pl-3">
+                <div className="col-4 col-xl-2 offset-xl-1 d-flex align-items-center justify-content-center">
+                    <span className="Trip-date d-flex align-items-center justify-content-center">
                         <Moment date={dateStart} format="MMM DD" />
-                    </p>
+                    </span>
                 </div>
-                <div className="col-4 col-md-2 d-flex align-items-center justify-content-center">
+                <div className="col-4 col-xl-3 d-flex align-items-center justify-content-center">
                     <TripStatus status={status} />
                 </div>
             </div>

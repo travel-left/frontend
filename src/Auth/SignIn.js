@@ -20,7 +20,7 @@ export default ({ error, submit }) => {
         <div className="card col-10 shadow align-self-start my-5">
             {error ? <p style={{ color: 'red' }}>{error.message}</p> : null}
             <div className="card-body p-4">
-                <h1 className="heading">Sign In.</h1>
+                <h1 className="Auth-title ">Sign In.</h1>
                 <h5 className="text-dark">Sign in to your account.</h5>
                 <Formik
                     initialValues={initialValues}
@@ -35,7 +35,7 @@ export default ({ error, submit }) => {
                                 name="email"
                                 label="Email"
                                 type="email"
-                                placeholder="john@travel-left.com"
+                                placeholder="your email"
                             />
                             <FormField
                                 name="password"

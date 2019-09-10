@@ -38,8 +38,8 @@ export default ({ error, submit }) => {
         <div className="card col-10 shadow align-self-start my-4">
             {mError ? <p style={{ color: 'red' }}>{mError.message}</p> : null}
             <div className="card-body p-4">
-                <h1 className="heading">Start your Free Trial.</h1>
-                <h5 className="text-dark">
+                <h1 className="Auth-title ">Start your Free Trial.</h1>
+                <h5 className="Auth-sub">
                     Create your account by filling out the form below.
                 </h5>
                 <Formik
@@ -59,21 +59,21 @@ export default ({ error, submit }) => {
                             <FormField
                                 name="orgId"
                                 placeholder="5d12b98a83b9787e8bb883ef"
-                                label="Organization Id"
+                                label="Organization Id*"
                             />
                         ) : null
                         return (
                             <Form>
                                 <FormField
                                     name="name"
-                                    label="Full name"
+                                    label="Full name*"
                                     placeholder="John Appleseed"
                                 />
                                 <FormField
                                     name="email"
-                                    label="Email"
+                                    label="Email*"
                                     type="email"
-                                    placeholder="john@travel-left.com"
+                                    placeholder="your email"
                                 />
                                 {orgIdForm}
                                 <CheckBox
@@ -91,13 +91,13 @@ export default ({ error, submit }) => {
                                 />
                                 <FormField
                                     name="password"
-                                    label="Password"
+                                    label="Password*"
                                     type="password"
                                     placeholder="••••••••••••"
                                 />
                                 <FormField
                                     name="confirmPassword"
-                                    label="Confirm Password"
+                                    label="Confirm Password*"
                                     type="password"
                                     placeholder="••••••••••••"
                                 />

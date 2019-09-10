@@ -1,9 +1,16 @@
 import React from 'react'
 
 export default props => (
-    <div className="col-md-4 my-2 animated fadeIn">
-        <div className="card shadow mx-2">
-            <div className="p-4">{props.children}</div>
+    <div className="col-lg-4 animated fadeIn my-4">
+        <div className="row align-items-center justify-content-around" style={{
+            background: '#FFFFFF',
+            boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+            borderRadius: '8px',
+            border: 'none',
+            height: '100px',
+            width: '320px'
+        }}>
+            {props.children}
         </div>
     </div>
 )

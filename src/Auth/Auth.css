@@ -19,3 +19,33 @@
     padding: 20px;
     text-align: center;
 }
+
+.Auth-title {
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 30px;
+    color: #475561;
+    letter-spacing: 0;
+}
+
+.Auth-sub {
+    font-family: OpenSans-SemiBold;
+    font-size: 14px;
+    color: #A1A1A1;
+    letter-spacing: 0.3px;
+}
+
+.Auth-side-message {
+    font-family: Roboto;
+    font-size: 16px;
+    color: #F6FAFF;
+    letter-spacing: 0;
+}
+
+.Auth-side-sub {
+    font-family: Roboto;
+    font-weight: 500px;
+    font-size: 40px;
+    color: #83C9F5;
+    letter-spacing: 0;
+}

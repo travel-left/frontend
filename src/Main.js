@@ -2,8 +2,9 @@ import React from 'react'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { authUser, setCurrentUser } from './util/redux/actions/auth'
-import Trips from './OrganizationDashboard/Trips'
-import withAuth from './util/hocs/withAuth'
+import Trips from './OrganizationDashboard/Trips/'
+import WithAuth from './util/hocs/withAuth'
+import WithoutAuth from './util/hocs/withoutAuth'
 import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
@@ -11,6 +12,8 @@ import EditProfile from './Auth/EditProfile'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
 import Support from './Support'
+import Travelers from './OrganizationDashboard/Travelers'
+import SharePreview from './TripDashboard/Share/SharePreview'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -19,49 +22,104 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/signin"
                 render={props => (
-                    <Auth onAuth={authUser} type="sign in" {...props} />
+                    <WithoutAuth {...props}>
+                        <Auth onAuth={authUser} type="sign in" {...props} />
+                    </WithoutAuth>
                 )}
             />
             <Route
                 exact
                 path="/signup"
                 render={props => (
-                    <Auth onAuth={authUser} type="sign up" {...props} />
+                    <WithoutAuth {...props}>
+                        <Auth onAuth={authUser} type="sign up" {...props} />
+                    </WithoutAuth>
                 )}
             />
             <Route
                 exact
                 path="/createprofile"
-                render={props => <CreateProfile onAuth={authUser} {...props} />}
+                render={props => (
+                    <WithoutAuth {...props}>
+                        <CreateProfile onAuth={authUser} {...props} />
+                    </WithoutAuth>
+                )}
             />
             <Route
                 exact
                 path="/editprofile"
                 render={props => (
-                    <EditProfile
-                        {...props}
-                        currentUser={currentUser}
-                        setCurrentUser={setCurrentUser}
-                    />
+                    <WithAuth {...props}>
+                        <EditProfile
+                            {...props}
+                            currentUser={currentUser}
+                            setCurrentUser={setCurrentUser}
+                        />
+                    </WithAuth>
                 )}
             />
             <Route
                 exact
                 path="/support"
                 render={props => (
-                    <Support {...props} currentUser={currentUser} />
+                    <WithAuth {...props}>
+                        <Support {...props} currentUser={currentUser} />
+                    </WithAuth>
                 )}
             />
             <Route
                 exact
                 path="/newpassword"
                 render={props => (
-                    <NewPassword coordinatorId={currentUser._id} {...props} />
+                    <WithAuth {...props}>
+                        <NewPassword
+                            coordinatorId={currentUser._id}
+                            {...props}
+                        />
+                    </WithAuth>
                 )}
             />
-            <Route exact path="/" component={withAuth(Trips)} />
-            <Route exact path="/trips" component={withAuth(Trips)} />
-            <Route path="/trips/:tripId" component={withAuth(TripDashboard)} />
+            <Route
+                exact
+                path="/"
+                render={props => (
+                    <WithAuth {...props}>
+                        <Trips {...props} />
+                    </WithAuth>
+                )}
+            />
+            <Route
+                exact
+                path="/trips"
+                render={props => (
+                    <WithAuth {...props}>
+                        <Trips {...props} />
+                    </WithAuth>
+                )}
+            />
+            <Route
+                exact
+                path="/travelers"
+                render={props => (
+                    <WithAuth {...props}>
+                        <Travelers {...props} />
+                    </WithAuth>
+                )}
+            />
+            <Route
+                path="/trips/:tripId/preview"
+                render={routeProps => (
+                    <SharePreview currentTrip={currentTrip} {...routeProps} />
+                )}
+            />
+            <Route
+                path="/trips/:tripId"
+                render={props => (
+                    <WithAuth {...props}>
+                        <TripDashboard {...props} />
+                    </WithAuth>
+                )}
+            />
             <Route component={ErrorPage} />
         </Switch>
     )

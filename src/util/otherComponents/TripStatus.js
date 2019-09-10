@@ -21,7 +21,15 @@ const TripStatus = ({ status }) => {
 
     return (
         <span
-            className={`badge badge-${statusColor} badge-pill text-light text-uppercase px-3 py-1`}
+            className={`badge badge-${statusColor} badge-pill text-uppercase`}
+            style={{
+                fontWeight: '500',
+                fontFamily: 'roboto',
+                fontSize: '12px',
+                padding: '.5rem .8rem',
+                minWidth: '88px',
+                color: '#FFFFFF'
+            }}
         >
             {status}
         </span>
@@ -29,3 +37,4 @@ const TripStatus = ({ status }) => {
 }
 
 export default TripStatus
+

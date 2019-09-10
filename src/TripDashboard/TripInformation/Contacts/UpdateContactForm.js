@@ -19,17 +19,15 @@ export default function UpdateCoordinatorForm(props) {
         phone: phoneValidator
     })
 
-    const icon = 'hover fas fa-ellipsis-h text-muted float-right'
-
     return (
         <ModalForm
-            icon={icon}
+            buttonType='edit'
             header="Edit coordinator"
             validationSchema={schema}
             initialValues={initialValues}
             {...props}
         >
-            <FormField name="name" label="Name" placeholder="John Appleseed" />
+            <FormField name="name" label="Name*" placeholder="John Appleseed" />
             <FormField
                 name="image"
                 label="Upload a new image"
@@ -37,7 +35,7 @@ export default function UpdateCoordinatorForm(props) {
             />
             <FormField
                 name="email"
-                label="Email"
+                label="Email*"
                 placeholder="john@travel-left.com"
                 type="email"
             />

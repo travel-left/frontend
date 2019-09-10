@@ -34,13 +34,12 @@ export default function TripDatesForm({ status, submit }) {
     })
 
     const button = {
-        classes: 'text-light hover',
+        classes: 'hover Cover-status',
         text: (
             <div className="text-light h5 ml-0 d-flex align-items-start flex-column">
-                <h5 className="left-shadow">STATUS</h5>
-                <div>
+                <h5 className="Cover-status mb-4">STATUS</h5>
+                <div className="mb-3">
                     <TripStatus status={status} />
-                    <i className="far fa-edit ml-2" />
                 </div>
             </div>
         )

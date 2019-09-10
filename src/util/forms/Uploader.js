@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Field } from 'formik'
 import { apiCall } from '../api'
 import { getIcon } from '../file-icons'
+import { ErrorMessage } from 'formik'
 
 export default class Uploader extends Component {
     state = {
@@ -25,6 +26,10 @@ export default class Uploader extends Component {
     }
 
     handleUpload = async file => {
+        const fileSize = file.size / 1024 / 1024 // In MB
+        if (fileSize > 100) {
+            throw new Error('File size is too large (maximum is 100 MB)')
+        }
         this.setState({ uploading: true })
         // readFileAsync(file).then(data => {
         //     this.setState({ filePreview: data })
@@ -42,7 +47,7 @@ export default class Uploader extends Component {
 
     render() {
         let {
-            form: { setFieldValue },
+            form: { setFieldValue, setFieldError, errors },
             field: { name }
         } = this.props
         const { typeLink, uploading, fileUrl, error } = this.state
@@ -71,6 +76,11 @@ export default class Uploader extends Component {
                 <>
                     <div className="col-8">
                         <div className="input-group">
+                            {errors[name] ? (
+                                <div className="text-danger">
+                                    {errors[name]}
+                                </div>
+                            ) : null}
                             <label
                                 htmlFor={name}
                                 className="btn btn-primary hover"
@@ -81,10 +91,14 @@ export default class Uploader extends Component {
                                     value=""
                                     type="file"
                                     onChange={async event => {
-                                        let docUrl = await this.handleUpload(
-                                            event.currentTarget.files[0]
-                                        )
-                                        setFieldValue(name, docUrl)
+                                        try {
+                                            let docUrl = await this.handleUpload(
+                                                event.currentTarget.files[0]
+                                            )
+                                            setFieldValue(name, docUrl)
+                                        } catch (err) {
+                                            setFieldError(name, err.message)
+                                        }
                                     }}
                                     className="d-none"
                                 />

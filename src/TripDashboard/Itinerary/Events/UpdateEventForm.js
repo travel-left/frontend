@@ -25,7 +25,7 @@ export default function UpdateEventForm(props) {
 
     return (
         <ModalForm
-            icon="hover fas fa-ellipsis-h text-muted float-right"
+            buttonType='edit'
             header="Edit your event"
             validationSchema={schema}
             initialValues={initialValues}
@@ -34,7 +34,7 @@ export default function UpdateEventForm(props) {
         >
             <div className="form-row">
                 <div className="col-6">
-                    <FormField name="name" label="Name" placeholder="Name" />
+                    <FormField name="name" label="Name*" placeholder="Name" />
                 </div>
                 <div className="col-6">
                     <SelectField name="type" options={types} label="Type" />
@@ -44,12 +44,12 @@ export default function UpdateEventForm(props) {
                 <div className="col-6">
                     <FormField
                         name="dateStart"
-                        label="Start Time"
+                        label="Start Time*"
                         type="date"
                     />
                 </div>
                 <div className="col-6">
-                    <FormField name="dateEnd" label="End Time" type="date" />
+                    <FormField name="dateEnd" label="End *" type="date" />
                 </div>
             </div>
             <div className="form-row">
@@ -81,7 +81,7 @@ export default function UpdateEventForm(props) {
                 label="Address"
                 placeholder="1 World Way, Los Angeles, CA, US"
             />
-            <div className="mt-2">Documents</div>
+            <label className="mt-2">Documents</label>
 
             <FieldArray name="documents">
                 {({ form, push, remove }) => (

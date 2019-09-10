@@ -1,0 +1,27 @@
+.Trip {
+    min-height: 80px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.30) !important;
+    border-radius: 3px !important;
+}
+
+.Trip-name {
+    font-family: roboto !important;
+    font-weight: 600 !important;
+    font-size: 22px !important;
+    color: #333333 !important;
+    letter-spacing: 0 !important;
+}
+
+.Trip-date {
+    font-family: Roboto !important;
+    font-size: 14px !important;
+    color: #999999 !important;
+    line-height: 21px !important;
+}
+
+.Trip-image {
+    width: 120px;
+    border-radius: 3px;
+    object-fit: cover;
+}

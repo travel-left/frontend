@@ -12,6 +12,7 @@ import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import LeftCard from '../../util/LeftCard'
 import { apiCall } from '../../util/api'
+import './TripInfo.css'
 import ReactGA from 'react-ga'
 ReactGA.pageview('/tripinformation')
 
@@ -264,7 +265,7 @@ export default class TripInformation extends Component {
             ) : null
 
         return (
-            <div className="col-md-12">
+            <div className="col-md-12 mt-4">
                 <TripNameSection name={name} update={this.updateTrip} />
                 <TripCoordinatorSection
                     list={coordinatorList}
@@ -292,17 +293,16 @@ export default class TripInformation extends Component {
 const TripNameSection = ({ name, update }) => {
     return (
         <div className="mb-4 col-12">
-            <h4 className="mb-3">Trip Name</h4>
+            <h4 className="mb-3 TripInfo-heading">Trip Name</h4>
             <div
-                className="pb-2  ml-4"
+                className="pb-2"
                 style={{
-                    borderBottom: '1.5px solid black',
-                    width: '20vw'
+                    borderBottom: '2px solid #475561',
+                    width: '35vw'
                 }}
             >
                 {' '}
                 <div className="d-flex align-items-center">
-                    <h3 className="text-primary my-1 d-inline"> {name} </h3>
                     <TripNameForm name={name} submit={update} />
                 </div>
             </div>
@@ -312,10 +312,10 @@ const TripNameSection = ({ name, update }) => {
 
 const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
     return (
-        <TripSection name={'Trip Coordinators'}>
-            <div className="row">
+        <TripSection name='Trip Coordinators'>
+            <div className="row mx-0">
                 {list}
-                <div className="col-md-4 my-2 d-flex flex-column justify-content-around align-items-center">
+                <div className="col-md-4 my-4 pr-5 d-flex flex-row justify-content-around align-items-center">
                     <CreateCoordinatorForm submit={create} />
                     <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} />
                 </div>
@@ -327,41 +327,44 @@ const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
 const TripDateSection = ({ list, create }) => {
     return (
         <TripSection name="Trip Dates">
-            <div className="row">
-                <LeftCard>
-                    {list}
-                    <div className="mt-3 d-flex flex-row justify-content-center align-items-center">
-                        <CreateTripDateForm formType="add" submit={create} />
-                    </div>
-                </LeftCard>
+            <div className="mt-5 px-5 py-3" style={{
+                background: '#FFFFFF',
+                boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
+                borderRadius: '8px',
+                border: 'none',
+                minHeight: '100px',
+                width: '340px'
+            }}>
+                {list}
+                <div className="my-3 d-flex flex-row justify-content-start align-items-center">
+                    <CreateTripDateForm formType="add" submit={create} />
+                </div>
             </div>
         </TripSection>
     )
 }
 
 const TripDocumentSection = ({ list, create }) => {
-    let header = (
-        <div>
-            Trip Documents{' '}
-            <span className="pl-4">
-                {' '}
-                <CreateDocumentForm submit={create} />
-            </span>
-        </div>
-    )
     return (
-        <TripSection name={header}>
-            <div className="row">{list}</div>
-        </TripSection>
+        <div className="col-12">
+            <div className="col-7" style={{ marginTop: '5.7rem' }}>
+                <div className="row d-flex justify-content-between mb-4">
+                    <h4 className="TripInfo-heading">Trip Resources</h4>
+                    <CreateDocumentForm submit={create} />
+                </div>
+                <div className="row">{list}</div>
+            </div>
+            <div className="col-5"></div>
+        </div>
     )
 }
 
 const TripContactsSection = ({ list, create }) => {
     return (
         <TripSection name="Trip Contacts">
-            <div className="row">
+            <div className="row mx-0">
                 {list}
-                <div className="col-md-4 my-2 d-flex justify-content-center align-items-center">
+                <div className="col-md-4 my-4 pr-5 d-flex flex-row justify-content-around align-items-center">
                     <CreateContactForm submit={create} />
                 </div>
             </div>
@@ -370,8 +373,8 @@ const TripContactsSection = ({ list, create }) => {
 }
 
 const TripSection = props => (
-    <div className="my-4 col-12">
-        <h4 className="mb-3">{props.name}</h4>
-        <div className="ml-3">{props.children}</div>
+    <div className="col-12" style={{ marginTop: '5.7rem' }}>
+        <h4 className="mb-4 TripInfo-heading">{props.name}</h4>
+        {props.children}
     </div>
 )

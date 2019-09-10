@@ -5,6 +5,8 @@ import { apiCall, genericSubUpdater } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
+import './Itinerary.css'
+
 import ReactGA from 'react-ga'
 ReactGA.pageview('/itinerary')
 
@@ -23,7 +25,6 @@ class Itinerary extends Component {
     }
 
     getDaysAndEvents = async () => {
-        console.log('i am guessing the timezone as: ' + this.tz)
         let itinerary = await apiCall(
             'get',
             `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
@@ -171,28 +172,25 @@ class Itinerary extends Component {
             )
 
         return (
-            <>
-                <div className="col-md-2">
-                    <div className="card shadow">
-                        <div className="p-3">
-                            <h3>Trip Days</h3>
-                            <hr />
+            <div className="col-md-12 mt-4">
+                <div className="col-md-10 d-flex flex-row justify-content-between">
+                    <h4 className='Itinerary-title'>Trip Days</h4>
+                    <CreateEventForm
+                        submit={this.createEvent}
+                        initDay={this.props.currentTrip.dateStart}
+                    />
+                </div>
+                <div className="row mx-0">
+                    <div className="col-md-2">
+                        <div className="Itinerary-trip-days-card mt-4">
+                            {dayList}
                         </div>
-                        {dayList}
+                    </div>
+                    <div className="col-md-8">
+                        {eventList}
                     </div>
                 </div>
-                <div className="col-md-10">
-                    <div className="row mb-5 mr-2 justify-content-end">
-                        <CreateEventForm
-                            submit={this.createEvent}
-                            initDay={this.props.currentTrip.dateStart}
-                        />
-                    </div>
-                    <div className="row mx-3 mt-5">
-                        <div className="col-md-12">{eventList}</div>
-                    </div>
-                </div>
-            </>
+            </div>
         )
     }
 }

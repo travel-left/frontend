@@ -24,8 +24,12 @@ export default function SideNav({ ctId }) {
         <SideNavLink key={name} text={text} name={name} tripId={ctId} />
     ))
     return (
-        <div className="shadow bg-light px-0">
-            <ul className="list-group list-group-flush bg-light shadow">
+        <div className="px-0" style={{
+            background: '#FFFFFF',
+            boxShadow: '-2px 2px 4px 0 rgba(0, 0, 0, 0.3)',
+            borderRadius: '8px'
+        }}>
+            <ul className="list-group list-group-flush">
                 {sideNavList}
             </ul>
         </div>

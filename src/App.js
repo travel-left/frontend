@@ -26,7 +26,6 @@ if (localStorage.token) {
 }
 
 const App = () => (
-    <ErrorBoundary>
         <HttpsRedirect>
             <Provider store={store}>
                 <Router>
@@ -45,7 +44,9 @@ const App = () => (
                                         id="app-root"
                                         style={{ minHeight: '90vh' }}
                                     >
-                                        <Main />
+                                        <ErrorBoundary>
+                                            <Main />
+                                        </ErrorBoundary>
                                     </div>
                                     <Footer />
                                 </div>
@@ -55,7 +56,6 @@ const App = () => (
                 </Router>
             </Provider>
         </HttpsRedirect>
-    </ErrorBoundary>
 )
 
 export default App

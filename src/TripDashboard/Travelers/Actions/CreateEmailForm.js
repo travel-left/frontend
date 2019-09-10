@@ -43,12 +43,12 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             {travelerList}
         </>
     ) : (
-        <p className="text-danger text-center">No Travelers Selected!</p>
-    )
+            <p className="text-danger text-center">No Travelers Selected!</p>
+        )
 
     return (
         <ModalForm
-            icon="far fa-envelope fa-2x text-primary"
+            buttonType='travelerEmail'
             header="Send an email to selected travelers"
             validationSchema={schema}
             initialValues={initialValues}
@@ -58,12 +58,12 @@ export default function CreateEmailForm({ submit, travelers, selected }) {
             <div className="mb-4">{travelerList}</div>
             <FormField
                 name="subject"
-                label="Subject"
+                label="Subject*"
                 placeholder="Your email subject"
             />
             <FormField
                 name="body"
-                label="Body"
+                label="Body*"
                 component="textarea"
                 placeholder="Your email body"
                 className="d-block"

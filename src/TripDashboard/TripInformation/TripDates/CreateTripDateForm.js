@@ -48,15 +48,15 @@ export default function TripDateForm({ submit }) {
 
     return (
         <ModalForm
-            button={button}
+            buttonType='add'
             header="Add a Trip Date"
             validationSchema={schema}
             initialValues={initialValues}
             submit={submit}
         >
-            <FormField name="name" label="Name" placeholder="Trip Date Name" />
-            <FormField name="date" label="Date" type="date" />
-            <SelectField name="type" options={options} label="Type" />
+            <FormField name="name" label="Name*" placeholder="Trip Date Name" />
+            <FormField name="date" label="Date*" type="date" />
+            <SelectField name="type" options={options} label="Type*" />
         </ModalForm>
     )
 }

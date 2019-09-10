@@ -16,14 +16,9 @@ const UpdateDocumentForm = props => {
         description: Yup.string().max(200, 'Please enter a shorter description')
     })
 
-    const button = {
-        classes: 'btn btn-dark rounded-pill',
-        text: 'EDIT'
-    }
-
     return (
         <ModalForm
-            button={button}
+            buttonType='edit'
             header="Add a document or link"
             validationSchema={schema}
             initialValues={initialValues}
@@ -32,11 +27,11 @@ const UpdateDocumentForm = props => {
         >
             <FormField
                 name="link"
-                label="Upload a document"
+                label="Upload a document*"
                 type="file"
                 component={Uploader}
             />
-            <FormField name="name" label="Name" placeholder="Document Name" />
+            <FormField name="name" label="Name*" placeholder="Document Name" />
             <FormField
                 name="description"
                 label="Description"
