@@ -207,7 +207,7 @@ class Trips extends Component {
                                 handleClick={this.onSideNavClick}
                             />
                         </ul>
-                        {/* <div className="py-4 px-3">
+                        <div className="py-4 px-3">
                             <Dropzone
                                 onDrop={acceptedFiles =>
                                     this.setState({
@@ -241,7 +241,7 @@ class Trips extends Component {
                                     </button>
                                 )}
                             </div>
-                        </div> */}
+                        </div>
                     </div>
                 </div>
                 <div className="col-md-10 mt-3">
