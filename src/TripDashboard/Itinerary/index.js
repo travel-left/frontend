@@ -6,9 +6,12 @@ import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Itinerary.css'
-
 import ReactGA from 'react-ga'
-ReactGA.pageview('/itinerary')
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/itinerary')
+}
+initializeReactGA()
 
 class Itinerary extends Component {
     tz = moment.tz.guess(true)

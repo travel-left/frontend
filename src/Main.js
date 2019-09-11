@@ -14,6 +14,7 @@ import NewPassword from './Auth/NewPassword'
 import Support from './Support'
 import Travelers from './OrganizationDashboard/Travelers'
 import SharePreview from './TripDashboard/Share/SharePreview'
+import CheckoutForm from './util/forms/CheckoutForm'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -43,6 +44,15 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                     <WithoutAuth {...props}>
                         <CreateProfile onAuth={authUser} {...props} />
                     </WithoutAuth>
+                )}
+            />
+            <Route
+                exact
+                path="/subscription"
+                render={props => (
+                    <WithAuth {...props}>
+                        <CheckoutForm {...props} currentUser={currentUser} />
+                    </WithAuth>
                 )}
             />
             <Route

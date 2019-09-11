@@ -11,7 +11,11 @@ import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '../../util/forms/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/managetravelers')
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/managetravelers')
+}
+initializeReactGA()
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },
