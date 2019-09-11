@@ -15,9 +15,6 @@ function initializeReactGA() {
     ReactGA.pageview('/orgtravelers')
 }
 
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
 
 
 const stati = [
@@ -51,6 +48,9 @@ class Travelers extends Component {
 
     constructor(props) {
         super(props)
+        if (process.env.NODE_ENV === 'production') {
+            initializeReactGA()
+        }
         this.getTravelers()
     }
 

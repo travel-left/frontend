@@ -8,13 +8,18 @@ function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/support')
 }
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
+
 
 export default class Support extends Component {
     state = {
         successMessage: ''
+    }
+
+    constructor(props) {
+        super(props)
+        if (process.env.NODE_ENV === 'production') {
+            initializeReactGA()
+        }
     }
 
     sendEmail = async email => {

@@ -12,15 +12,6 @@ import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import Share from './TripDashboard/Share/index'
 import ReactGA from 'react-ga'
 
-function initializeReactGA() {
-    ReactGA.initialize('UA-145382520-1')
-    ReactGA.pageview('/homepage')
-}
-
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
-
 const store = configureStore()
 
 if (localStorage.token) {

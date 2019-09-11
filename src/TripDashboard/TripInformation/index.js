@@ -17,10 +17,6 @@ function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripinformation')
 }
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
-
 
 export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
@@ -35,6 +31,9 @@ export default class TripInformation extends Component {
 
     constructor(props) {
         super(props)
+        if (process.env.NODE_ENV === 'production') {
+            initializeReactGA()
+        }
         this.getCoordinators()
         this.getContacts()
         this.getDocuments()

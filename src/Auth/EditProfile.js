@@ -17,15 +17,20 @@ function initializeReactGA() {
     ReactGA.pageview('/profile')
 }
 
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
 
 
 export default class CreateProfile extends Component {
     state = {
         error: '',
         successMessage: ''
+    }
+
+    constructor(props) {
+        super(props)
+        if (process.env.NODE_ENV === 'production') {
+            initializeReactGA()
+        }
+
     }
 
     setSuccessMessage = () => {

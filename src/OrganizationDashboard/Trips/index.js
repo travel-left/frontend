@@ -14,9 +14,6 @@ function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripsdashboard')
 }
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
 
 
 class Trips extends Component {
@@ -37,6 +34,10 @@ class Trips extends Component {
 
     constructor(props) {
         super(props)
+        if (process.env.NODE_ENV === 'production') {
+            initializeReactGA()
+        }
+
         this.getAllTripsAndSetState()
     }
 
