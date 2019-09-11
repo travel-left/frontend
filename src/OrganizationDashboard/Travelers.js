@@ -12,10 +12,8 @@ import Checkbox from '../util/forms/Checkbox'
 import ReactGA from 'react-ga'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
-    ReactGA.pageview('/orgtravelers')
+    ReactGA.pageview('/travelersdashboard')
 }
-
-
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },
