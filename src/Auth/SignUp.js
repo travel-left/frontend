@@ -101,6 +101,8 @@ export default ({ error, submit }) => {
                                     type="password"
                                     placeholder="••••••••••••"
                                 />
+
+
                                 <button
                                     className="btn btn-lg btn-primary float-right"
                                     style={{ marginTop: '35px' }}

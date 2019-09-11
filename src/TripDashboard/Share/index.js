@@ -8,8 +8,13 @@ import { getIcon } from '../../util/file-icons'
 import Event from '../Itinerary/Events/Event'
 import './Share.css'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/share')
-
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/share')
+}
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
 class Share extends Component {
     tripId = this.props.match.params.tripId
     source = this.props.match.path.includes('preview') ? 'preview' : 'share'

@@ -10,11 +10,17 @@ import CreateDocumentForm from './Documents/CreateDocumentForm'
 import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
-import LeftCard from '../../util/LeftCard'
 import { apiCall } from '../../util/api'
 import './TripInfo.css'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/tripinformation')
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/tripinformation')
+}
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
+
 
 export default class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id

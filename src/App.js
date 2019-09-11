@@ -17,7 +17,9 @@ function initializeReactGA() {
     ReactGA.pageview('/homepage')
 }
 
-initializeReactGA()
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
 
 const store = configureStore()
 
@@ -26,36 +28,36 @@ if (localStorage.token) {
 }
 
 const App = () => (
-        <HttpsRedirect>
-            <Provider store={store}>
-                <Router>
-                    <Switch>
-                        <Route
-                            path="/trips/:tripId/share"
-                            render={routeProps => <Share {...routeProps} />}
-                        />
-                        <Route
-                            path=""
-                            render={routeProps => (
-                                <div>
-                                    <Navbar />
-                                    <div
-                                        className="container-fluid content"
-                                        id="app-root"
-                                        style={{ minHeight: '90vh' }}
-                                    >
-                                        <ErrorBoundary>
-                                            <Main />
-                                        </ErrorBoundary>
-                                    </div>
-                                    <Footer />
+    <HttpsRedirect>
+        <Provider store={store}>
+            <Router>
+                <Switch>
+                    <Route
+                        path="/trips/:tripId/share"
+                        render={routeProps => <Share {...routeProps} />}
+                    />
+                    <Route
+                        path=""
+                        render={routeProps => (
+                            <div>
+                                <Navbar />
+                                <div
+                                    className="container-fluid content"
+                                    id="app-root"
+                                    style={{ minHeight: '90vh' }}
+                                >
+                                    <ErrorBoundary>
+                                        <Main />
+                                    </ErrorBoundary>
                                 </div>
-                            )}
-                        />
-                    </Switch>
-                </Router>
-            </Provider>
-        </HttpsRedirect>
+                                <Footer />
+                            </div>
+                        )}
+                    />
+                </Switch>
+            </Router>
+        </Provider>
+    </HttpsRedirect>
 )
 
 export default App
