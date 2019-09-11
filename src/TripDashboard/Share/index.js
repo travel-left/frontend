@@ -12,9 +12,7 @@ function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/share')
 }
-if (process.env.NODE_ENV === 'production') {
-    initializeReactGA()
-}
+
 class Share extends Component {
     tripId = this.props.match.params.tripId
     source = this.props.match.path.includes('preview') ? 'preview' : 'share'
@@ -29,6 +27,9 @@ class Share extends Component {
     }
     constructor(props) {
         super(props)
+        if (process.env.NODE_ENV === 'production') {
+            initializeReactGA()
+        }
         this.getTripInfo()
     }
 
