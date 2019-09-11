@@ -10,7 +10,15 @@ import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusFor
 import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
 import Checkbox from '../util/forms/Checkbox'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/travelers')
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/orgtravelers')
+}
+
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
+
 
 const stati = [
     { value: 'INVITED', label: 'Invited' },

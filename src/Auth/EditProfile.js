@@ -11,7 +11,16 @@ import Uploader from '../util/forms/Uploader'
 import './Auth.css'
 import { apiCall } from '../util/api'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/profile')
+
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/profile')
+}
+
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
+
 
 export default class CreateProfile extends Component {
     state = {

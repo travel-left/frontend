@@ -10,7 +10,14 @@ import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
 import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
-ReactGA.pageview('/organizationdashboard')
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/tripsdashboard')
+}
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
+
 
 class Trips extends Component {
     state = {

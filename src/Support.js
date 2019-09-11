@@ -4,7 +4,13 @@ import { Formik, Form } from 'formik'
 import FormField from './util/forms/FormField'
 import * as Yup from 'yup'
 import ReactGA from 'react-ga'
-ReactGA.pageview('/support')
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/support')
+}
+if (process.env.NODE_ENV === 'production') {
+    initializeReactGA()
+}
 
 export default class Support extends Component {
     state = {
