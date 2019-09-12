@@ -18,10 +18,11 @@ export default class Traveler extends Component {
         let bgColor = index % 2 !== 0 ? '#F6FAFF' : '#FFFFFF'
         return (
             <div
-                className="d-flex py-2 animated fadeIn col-12 justify-content-around align-items-center px-0"
+                className="d-flex py-2 animated fadeIn col-12 justify-content-around align-items-center px-0 hover"
                 style={{
                     backgroundColor: bgColor
                 }}
+                onDoubleClick={this.handleDoubleClick}
             >
                 <div className="col-md-1" onClick={this.handleToggle}>
                     <Checkbox
