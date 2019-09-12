@@ -82,13 +82,12 @@ export default class TripInformation extends Component {
     }
 
     addFromOrg = async coordinatorIds => {
-        const newCoordinators = await apiCall(
+        const coordinators = await apiCall(
             'post',
-            `/api/trips/${this.currentTripId}/coordinators/arrayofids`,
+            `/api/trips/${this.currentTripId}/coordinators/add`,
             coordinatorIds
         )
-        let { coordinators } = this.state
-        coordinators = [...coordinators, ...newCoordinators]
+
         this.setState({ coordinators })
     }
 

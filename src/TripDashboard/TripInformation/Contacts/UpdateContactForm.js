@@ -22,7 +22,7 @@ export default function UpdateCoordinatorForm(props) {
     return (
         <ModalForm
             buttonType='edit'
-            header="Edit coordinator"
+            header="Edit Contact"
             validationSchema={schema}
             initialValues={initialValues}
             {...props}

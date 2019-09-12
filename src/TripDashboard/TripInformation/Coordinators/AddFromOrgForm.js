@@ -16,7 +16,7 @@ export default class AddFromOrgForm extends Component {
     }
 
     getCoordinators = async () => {
-        const allCoordinators = await apiCall('get', '/api/coordinators')
+        const allCoordinators = await apiCall('get', '/api/coordinators/org')
         this.filterOnTrip(allCoordinators)
     }
 
