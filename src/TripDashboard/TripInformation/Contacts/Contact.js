@@ -10,6 +10,7 @@ class Contact extends Component {
     }
 
     handleDelete = () => {
+        console.log('contact id is ' + this.props._id)
         this.props.remove(this.props._id)
     }
 
@@ -24,7 +25,7 @@ class Contact extends Component {
                     {phone && <span className="Contact-info">{phone}</span>}
                     {email && <span className="Contact-info">{email}</span>}
                 </div>
-                <UpdateContactForm submit={this.handleDelete} />
+                <UpdateContactForm {...this.props} submit={this.handleEdit} remove={this.handleDelete} />
             </LeftCard>
         )
     }
