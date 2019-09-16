@@ -47,8 +47,6 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        const docs = event.documents
-        event.documents = []
         let localStart = moment.tz(
             `${event.dateStart}T${event.timeStart}:00`,
             event.tzStart
@@ -59,7 +57,7 @@ class Itinerary extends Component {
         )
         let gmtStart = moment.tz(localStart, 'GMT').toString()
         let gmtEnd = moment.tz(localEnd, 'GMT').toString()
-        let createdEvent = await apiCall(
+        await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
@@ -67,17 +65,6 @@ class Itinerary extends Component {
                 dtStart: gmtStart,
                 dtEnd: gmtEnd
             }
-        )
-
-        createdEvent.documents = docs
-
-        createdEvent = await genericSubUpdater(
-            `/api/trips/${this.props.currentTrip._id}/events/${
-            createdEvent._id
-            }`,
-            event,
-            createdEvent,
-            'documents'
         )
 
         this.getDaysAndEvents()
@@ -98,21 +85,13 @@ class Itinerary extends Component {
         updateObject.dtStart = gmtStart
         updateObject.dtEnd = gmtEnd
 
-        const originalEvent = this.state.itinerary.find(
-            e => e._id.toString() === eventId
-        )
-        updateObject = await genericSubUpdater(
-            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
-            originalEvent,
-            updateObject,
-            'documents'
-        )
-
+        console.log(updateObject)
         await apiCall(
-            'put',
+            'PUT',
             `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
             updateObject
         )
+
         this.getDaysAndEvents()
     }
 
