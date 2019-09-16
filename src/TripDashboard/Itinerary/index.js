@@ -47,16 +47,13 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        let localStart = moment.tz(
-            `${event.dateStart}T${event.timeStart}:00`,
-            event.tzStart
-        )
-        let localEnd = moment.tz(
-            `${event.dateEnd}T${event.timeEnd}:00`,
-            event.tzEnd
-        )
+        let localStart = moment.tz(`${event.dateStart}T${event.timeStart}:00`, event.tzStart)
+        let localEnd = moment.tz(`${event.dateEnd}T${event.timeEnd}:00`, event.tzEnd)
         let gmtStart = moment.tz(localStart, 'GMT').toString()
         let gmtEnd = moment.tz(localEnd, 'GMT').toString()
+
+        let noEmptyDocs = event.documents.filter(doc => doc.name.length > 3)
+        event.documents = noEmptyDocs
         await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
@@ -84,7 +81,8 @@ class Itinerary extends Component {
 
         updateObject.dtStart = gmtStart
         updateObject.dtEnd = gmtEnd
-
+        let noEmptyDocs = updateObject.documents.filter(doc => doc.name.length > 3)
+        updateObject.documents = noEmptyDocs
         await apiCall(
             'PUT',
             `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,

@@ -38,8 +38,8 @@ class Share extends Component {
             'get',
             `/api/trips/${this.tripId}/share?tz=${this.tz}`
         )
-        let events = data.itinerary
-        events.sort(time_sort_asc)
+
+        let events = data.trip.events.sort(time_sort_asc)
         let days = []
         events.forEach(event => {
             if (!days.includes(event.dateStart)) days.push(event.dateStart)
@@ -51,7 +51,7 @@ class Share extends Component {
         )
         this.setState({
             trip: data.trip,
-            events,
+            events: events,
             days,
             selectedDay: days[0],
             orgName
