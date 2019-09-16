@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DayList from './Days'
 import EventList from './Events'
-import { apiCall, genericSubUpdater } from '../../util/api'
+import { apiCall } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
@@ -85,7 +85,6 @@ class Itinerary extends Component {
         updateObject.dtStart = gmtStart
         updateObject.dtEnd = gmtEnd
 
-        console.log(updateObject)
         await apiCall(
             'PUT',
             `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
