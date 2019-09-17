@@ -33,9 +33,11 @@ class Travelers extends Component {
         'CONFIRMED',
         'ON-TRIP',
         'POST-TRIP',
-        'PAYMENT NEEDED',
+        'DOCS DUE',
+        'MONEY DUE',
+        'OTHER',
         'PAPERWORK NEEDED',
-        'OTHER'
+        'PAYMENT NEEDED'
     ]
 
     state = {
