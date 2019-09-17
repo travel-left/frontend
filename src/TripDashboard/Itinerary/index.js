@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DayList from './Days'
 import EventList from './Events'
-import { apiCall, genericSubUpdater } from '../../util/api'
+import { apiCall } from '../../util/api'
 import CreateEventForm from './Events/CreateEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
@@ -35,31 +35,30 @@ class Itinerary extends Component {
             'get',
             `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
         )
-        itinerary.sort(time_sort_asc)
-        let days = []
-        for (const event of itinerary) {
-            if (!days.includes(event.dateStart)) {
-                days.push(event.dateStart)
+        if (itinerary.length > 0) {
+            itinerary.sort(time_sort_asc)
+            let days = []
+            for (const event of itinerary) {
+                console.log(event)
+                if (!days.includes(event.dateStart)) {
+                    days.push(event.dateStart)
+                }
             }
-        }
 
-        this.setState({ itinerary, days, selectedDay: days[0] })
+
+            this.setState({ itinerary, days, selectedDay: days[0] })
+        }
     }
 
     createEvent = async event => {
-        const docs = event.documents
-        event.documents = []
-        let localStart = moment.tz(
-            `${event.dateStart}T${event.timeStart}:00`,
-            event.tzStart
-        )
-        let localEnd = moment.tz(
-            `${event.dateEnd}T${event.timeEnd}:00`,
-            event.tzEnd
-        )
+        let localStart = moment.tz(`${event.dateStart}T${event.timeStart}:00`, event.tzStart)
+        let localEnd = moment.tz(`${event.dateEnd}T${event.timeEnd}:00`, event.tzEnd)
         let gmtStart = moment.tz(localStart, 'GMT').toString()
         let gmtEnd = moment.tz(localEnd, 'GMT').toString()
-        let createdEvent = await apiCall(
+
+        let noEmptyDocs = event.documents.filter(doc => doc.name.length > 3)
+        event.documents = noEmptyDocs
+        await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
             {
@@ -67,17 +66,6 @@ class Itinerary extends Component {
                 dtStart: gmtStart,
                 dtEnd: gmtEnd
             }
-        )
-
-        createdEvent.documents = docs
-
-        createdEvent = await genericSubUpdater(
-            `/api/trips/${this.props.currentTrip._id}/events/${
-            createdEvent._id
-            }`,
-            event,
-            createdEvent,
-            'documents'
         )
 
         this.getDaysAndEvents()
@@ -97,22 +85,14 @@ class Itinerary extends Component {
 
         updateObject.dtStart = gmtStart
         updateObject.dtEnd = gmtEnd
-
-        const originalEvent = this.state.itinerary.find(
-            e => e._id.toString() === eventId
-        )
-        updateObject = await genericSubUpdater(
-            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
-            originalEvent,
-            updateObject,
-            'documents'
-        )
-
+        let noEmptyDocs = updateObject.documents.filter(doc => doc.name.length > 3)
+        updateObject.documents = noEmptyDocs
         await apiCall(
-            'put',
+            'PUT',
             `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
             updateObject
         )
+
         this.getDaysAndEvents()
     }
 

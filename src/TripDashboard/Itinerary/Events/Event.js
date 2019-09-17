@@ -160,21 +160,23 @@ class Event extends Component {
 
         return (
             <div className="Itinerary-event-card py-4 px-5 my-3 animated fadeIn">
-                <div className="row justify-content-between px-3">
-                    <span className="Document-title">
-                        <span className='d-flex justify-content-center align-items-center' style={{
-                            position: 'absolute', right: '95%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
-                        }}>
-                            <i className={`fa ${iconString}`} style={{
-                                color: '#FFFFFF',
-                                fontSize: '16px'
-                            }} />
-                        </span>
+                <div className="row">
+                    <div className="col-12 d-flex justify-content-between px-3">
+                        <span className="Document-title">
+                            <span className='d-flex justify-content-center align-items-center' style={{
+                                position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
+                            }}>
+                                <i className={`fa ${iconString}`} style={{
+                                    color: '#FFFFFF',
+                                    fontSize: '16px'
+                                }} />
+                            </span>
 
-                        {name}
-                    </span>
-                    {updater}
-                    <div className="row">
+                            {name}
+                        </span>
+                        {updater}
+                    </div>
+                    <div className="col-12 d-flex px-0">
                         <div className="col-md-6 d-flex flex-column">
                             <span className="my-3 Itinerary-event-date" style={{ color: color }}>
                                 {date}
@@ -188,7 +190,7 @@ class Event extends Component {
                             {renderMap}
                         </div>
                     </div>
-                    <div className="row mx-0 mt-2">
+                    <div className="col-12 row mx-0 mt-2">
                         {documents}
                     </div>
                 </div>
