@@ -28,6 +28,7 @@ const stati = [
 ]
 
 class Travelers extends Component {
+    currentTripId = this.props.currentTrip._id
     allFilters = [
         'INVITED',
         'CONFIRMED',
@@ -44,7 +45,8 @@ class Travelers extends Component {
         selected: {},
         allSelected: false,
         filters: this.allFilters,
-        selectedTraveler: {}
+        selectedTraveler: {},
+        travelers: []
     }
 
     constructor(props) {
@@ -56,80 +58,53 @@ class Travelers extends Component {
     }
 
     getTravelers = async () => {
-        const { currentTrip, setCurrentTrip } = this.props
-        const newTravelers = await apiCall(
+        const travelers = await apiCall(
             'get',
-            `/api/trips/${currentTrip._id}/travelers`
+            `/api/trips/${this.currentTripId}/travelers`
         )
-        const newTravelerIds = newTravelers.map(nt => nt._id)
-        const travelerIds = currentTrip.travelers.map(t => t._id)
-
-        let notEqual = false
-
-        for (const id of newTravelerIds) {
-            if (!travelerIds.includes(id)) {
-                notEqual = true
-            }
-        }
-
-        for (const id of travelerIds) {
-            if (!newTravelerIds.includes(id)) {
-                notEqual = true
-            }
-        }
-
-        if (notEqual) {
-            currentTrip.travelers = newTravelers
-            setCurrentTrip(currentTrip)
-        }
+        const travelerIds = travelers.map(traveler => traveler._id)
 
         this.setSelectedTraveler(travelerIds[0])
+        this.setState({ travelers })
     }
 
     addTraveler = async traveler => {
-        const { currentTrip, setCurrentTrip } = this.props
-        const createdTraveler = await apiCall(
+        await apiCall(
             'post',
-            `/api/trips/${currentTrip._id}/travelers`,
+            `/api/trips/${this.currentTripId}/travelers`,
             traveler
         )
-        currentTrip.travelers.push(createdTraveler)
-        setCurrentTrip(currentTrip)
+
+        this.getTravelers()
     }
 
     addTravelersCSV = async travelers => {
-        const { currentTrip, setCurrentTrip } = this.props
-        const createdTravelers = await apiCall(
+        await apiCall(
             'post',
-            `/api/trips/${currentTrip._id}/travelers/csv`,
+            `/api/trips/${this.currentTripId}/travelers/csv`,
             travelers
         )
-        currentTrip.travelers = [...currentTrip.travelers, ...createdTravelers]
-        setCurrentTrip(currentTrip)
+
+        this.getTravelers()
     }
 
     updateTraveler = async (travelerId, updateObject) => {
-        const { currentTrip, setCurrentTrip } = this.props
-        const updatedTraveler = await apiCall(
+        await apiCall(
             'put',
-            `/api/trips/${this.props.currentTrip._id}/travelers/${travelerId}`,
+            `/api/trips/${this.currentTripId}/travelers/${travelerId}`,
             updateObject
         )
-        const index = currentTrip.travelers.findIndex(t => t._id === travelerId)
-        currentTrip.travelers[index] = updatedTraveler
-        setCurrentTrip(currentTrip)
+
+        this.getTravelers()
     }
 
     removeTraveler = async travelerId => {
-        const { currentTrip, setCurrentTrip } = this.props
         await apiCall(
             'delete',
-            `/api/trips/${this.props.currentTrip._id}/travelers/${travelerId}`
+            `/api/trips/${this.currentTripId}/travelers/${travelerId}`
         )
-        currentTrip.travelers = currentTrip.travelers.filter(
-            t => t._id !== travelerId
-        )
-        setCurrentTrip(currentTrip)
+
+        this.getTravelers()
     }
 
     toggle = travelerId => {
@@ -146,7 +121,7 @@ class Travelers extends Component {
 
     toggleAll = () => {
         this.setState(prevState => {
-            const { travelers } = this.props.currentTrip
+            const { travelers } = prevState
             const newAllSelected = !prevState.allSelected
             let selected = {}
             if (newAllSelected) {
@@ -163,8 +138,7 @@ class Travelers extends Component {
     }
 
     emailSelectedTravelers = email => {
-        const { travelers } = this.props.currentTrip
-        const { selected } = this.state
+        const { selected, travelers } = this.state
         let travelersEmails = []
         for (const { _id, email } of travelers) {
             if (selected[_id]) {
@@ -180,26 +154,22 @@ class Travelers extends Component {
     }
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
-        const { currentTrip, setCurrentTrip } = this.props
-        const { selected } = this.state
+        const { selected, travelers } = this.state
         let travelerStatuses = []
-        const newTravelers = []
-        for (const traveler of currentTrip.travelers) {
+
+        for (const traveler of travelers) {
             if (selected[traveler._id]) {
                 travelerStatuses.push({ _id: traveler._id, update: { status } })
-            } else {
-                newTravelers.push(traveler)
             }
         }
 
-        const updatedTravelers = await apiCall(
+        await apiCall(
             'put',
-            `/api/trips/${this.props.currentTrip._id}/travelers`,
+            `/api/trips/${this.currentTripId}/travelers`,
             travelerStatuses
         )
-        const allTravelers = [...newTravelers, ...updatedTravelers]
-        currentTrip.travelers = allTravelers
-        setCurrentTrip(currentTrip)
+        this.getTravelers()
+
     }
 
     textSelectedTravelers = text => {
@@ -230,7 +200,7 @@ class Travelers extends Component {
     }
 
     setSelectedTraveler = travelerId => {
-        let newSelection = this.props.currentTrip.travelers.find(
+        let newSelection = this.state.travelers.find(
             t => t._id === travelerId
         )
         this.setState({
@@ -239,8 +209,7 @@ class Travelers extends Component {
     }
 
     render() {
-        let { selected, allSelected, filters, selectedTraveler } = this.state
-        let { travelers } = this.props.currentTrip
+        let { selected, allSelected, filters, selectedTraveler, travelers } = this.state
 
         const filteredTravelers = travelers.filter(traveler =>
             filters.includes(traveler.status)

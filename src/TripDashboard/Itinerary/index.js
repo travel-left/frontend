@@ -35,15 +35,19 @@ class Itinerary extends Component {
             'get',
             `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
         )
-        itinerary.sort(time_sort_asc)
-        let days = []
-        for (const event of itinerary) {
-            if (!days.includes(event.dateStart)) {
-                days.push(event.dateStart)
+        if (itinerary.length > 0) {
+            itinerary.sort(time_sort_asc)
+            let days = []
+            for (const event of itinerary) {
+                console.log(event)
+                if (!days.includes(event.dateStart)) {
+                    days.push(event.dateStart)
+                }
             }
-        }
 
-        this.setState({ itinerary, days, selectedDay: days[0] })
+
+            this.setState({ itinerary, days, selectedDay: days[0] })
+        }
     }
 
     createEvent = async event => {
