@@ -22,8 +22,8 @@ const stati = [
     { value: 'CONFIRMED', label: 'Confirmed' },
     { value: 'ON-TRIP', label: 'On trip' },
     { value: 'POST-TRIP', label: 'Post trip' },
-    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
-    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
+    { value: 'DOCS DUE', label: 'Docs due' },
+    { value: 'MONEY DUE', label: 'Money due' },
     { value: 'OTHER', label: 'Other' }
 ]
 
@@ -67,14 +67,12 @@ class Travelers extends Component {
         for (const id of newTravelerIds) {
             if (!travelerIds.includes(id)) {
                 notEqual = true
-                break
             }
         }
 
         for (const id of travelerIds) {
             if (!newTravelerIds.includes(id)) {
                 notEqual = true
-                break
             }
         }
 
