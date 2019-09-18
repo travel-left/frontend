@@ -62,10 +62,8 @@ class Travelers extends Component {
             'get',
             `/api/trips/${this.currentTripId}/travelers`
         )
-        const travelerIds = travelers.map(traveler => traveler._id)
 
-        this.setSelectedTraveler(travelerIds[0])
-        this.setState({ travelers })
+        this.setState({ travelers, selectedTraveler: travelers[0] })
     }
 
     addTraveler = async traveler => {
