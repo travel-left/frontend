@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
 import FormField from '../util/forms/FormField'
+import CheckoutForm from '../util/forms/CheckoutForm'
 import Validator, {
     nameValidator,
     phoneValidator,
@@ -132,6 +133,9 @@ export default class CreateProfile extends Component {
                                             type="tel"
                                             placeholder="your phone number"
                                         />
+
+                                        <CheckoutForm />
+
                                         <button
                                             className="btn btn-lg btn-primary float-right m-4"
                                             type="submit"
