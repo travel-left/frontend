@@ -10,7 +10,7 @@ export default function ExplainOrganizationId() {
             icon={icon}
             header="Organization Id"
         >
-            <div>Your Organization Id uniquely identifies your organization.  
+            <div>Your Organization Id uniquely identifies your organization.
             If you want to add someone to your organization, they will need
             this Id to sign up.  It is the same for all of your coordinators.</div>
         </ModalForm>
