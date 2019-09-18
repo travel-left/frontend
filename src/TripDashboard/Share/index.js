@@ -34,12 +34,12 @@ class Share extends Component {
     }
 
     getTripInfo = async () => {
-        let data = await apiCall(
+        let trip = await apiCall(
             'get',
             `/api/trips/${this.tripId}/share?tz=${this.tz}`
         )
 
-        let events = data.trip.events.sort(time_sort_asc)
+        let events = trip.events.sort(time_sort_asc)
         let days = []
         events.forEach(event => {
             if (!days.includes(event.dateStart)) days.push(event.dateStart)
@@ -47,10 +47,10 @@ class Share extends Component {
         days.sort(date_sort_asc)
         let orgName = await apiCall(
             'get',
-            `/api/organization/${data.trip.coordinators[0].organization}/name`
+            `/api/organization/${trip.coordinators[0].organization}/name`
         )
         this.setState({
-            trip: data.trip,
+            trip: trip,
             events: events,
             days,
             selectedDay: days[0],
