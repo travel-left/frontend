@@ -31,9 +31,11 @@ class Travelers extends Component {
         'CONFIRMED',
         'ON-TRIP',
         'POST-TRIP',
-        'PAYMENT NEEDED',
+        'DOCS DUE',
+        'MONEY DUE',
+        'OTHER',
         'PAPERWORK NEEDED',
-        'OTHER'
+        'PAYMENT NEEDED'
     ]
 
     state = {
@@ -53,49 +55,40 @@ class Travelers extends Component {
     }
 
     getTravelers = async () => {
-        const travelers = await apiCall('get', '/api/travelers')
+        const travelers = await apiCall('get', '/api/organization/travelers')
         this.setState({ travelers, selectedTraveler: travelers[0] })
     }
 
     addTraveler = async traveler => {
-        const { travelers } = this.state
-        const createdTraveler = await apiCall(
+        await apiCall(
             'post',
-            '/api/travelers',
+            '/api/organization/travelers',
             traveler
         )
-        travelers.push(createdTraveler)
-        this.setState({ travelers, selectedTraveler: createdTraveler })
+        this.getTravelers()
     }
 
     addTravelersCSV = async newTravelers => {
-        let { travelers } = this.state
-        const createdTravelers = await apiCall(
+        await apiCall(
             'post',
-            `/api/travelers/csv`,
+            `/api/organization/travelers/csv`,
             newTravelers
         )
-        travelers = [...travelers, ...createdTravelers]
-        this.setState({ travelers })
+        this.getTravelers()
     }
 
     updateTraveler = async (travelerId, updateObject) => {
-        let { travelers } = this.state
-        const updatedTraveler = await apiCall(
+        await apiCall(
             'put',
             `/api/travelers/${travelerId}`,
             updateObject
         )
-        const index = travelers.findIndex(t => t._id === travelerId)
-        travelers[index] = updatedTraveler
-        this.setState({ travelers })
+        this.getTravelers()
     }
 
     removeTraveler = async travelerId => {
-        let { travelers } = this.state
         await apiCall('delete', `/api/travelers/${travelerId}`)
-        travelers = travelers.filter(t => t._id !== travelerId)
-        this.setState({ travelers })
+        this.getTravelers()
     }
 
     toggle = travelerId => {
@@ -156,13 +149,12 @@ class Travelers extends Component {
             }
         }
 
-        const updatedTravelers = await apiCall(
+        await apiCall(
             'put',
             '/api/travelers',
             travelerStatuses
         )
-        const allTravelers = [...newTravelers, ...updatedTravelers]
-        this.setState({ travelers: allTravelers })
+        this.getTravelers()
     }
 
     textSelectedTravelers = text => {
@@ -213,16 +205,33 @@ class Travelers extends Component {
 
         const customStyles = {
             container: (provided, state) => ({
-                ...provided
+                ...provided,
+                height: '50px',
+                width: '180px',
+                boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.3)',
+                border: 'none',
+                borderRadius: '3px'
+            }),
+            control: (provided, state) => ({
+                ...provided,
+                border: 'none'
             }),
             select: provided => ({
                 ...provided,
                 background: 'white',
-                height: 'auto'
+                height: 'auto',
+                border: 'none'
             }),
             valueContainer: (provided, state) => ({
                 ...provided,
-                minHeight: '50px'
+                minHeight: '50px',
+                border: 'none'
+            }),
+            placeholder: (provided) => ({
+                ...provided,
+                color: '#333333',
+                fontFamily: 'Roboto',
+                fontWeight: '600'
             })
         }
 
@@ -235,103 +244,90 @@ class Travelers extends Component {
         ) : null
 
         return (
-            <div className="col-12">
+            <div className="col-md-12 pr-0">
                 <div className="row">
-                    <div className="col-md-8">
-                        <div className="row justify-content-between mb-4 align-items-center pr-3">
-                            <h2 className="text-black d-inline pl-3">
-                                Travelers in Your Organization
-                            </h2>
-                            <ImportBulkForm
-                                key={3}
-                                submit={this.addTravelersCSV}
-                            />
-                            <AddTravelerForm
-                                key={4}
-                                submit={this.addTraveler}
-                            />
-                        </div>
-                        <div className="row no-gutters mb-3 py-3">
+                    <div className="col-md-9 mt-4 px-4">
+                        <h4 className="Itinerary-title">Travelers in This Organization </h4>
+                        <div className="row mx-0 my-4">
                             <div className="col-md-12">
-                                <div className="shadow card">
-                                    <div className="row justify-content-between mx-3 py-3">
-                                        <div className="col-md-7">
-                                            <Select
-                                                isMulti
-                                                name="colors"
-                                                options={stati}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                                styles={customStyles}
-                                                placeholder="Filter by status"
-                                                onChange={
-                                                    this.handleFilterChange
-                                                }
-                                            />
-                                        </div>
-                                        <div className="col-md-1" />
-                                        <div className="d-flex col-md-4 justify-content-around align-items-center">
-                                            <ChangeStatusForm
-                                                submit={
-                                                    this
-                                                        .changeStatusOfSelectedTravelers
-                                                }
-                                                travelers={filteredTravelers}
-                                                selected={selected}
-                                            />
-                                            <CreateTextForm
-                                                key={1}
-                                                submit={
-                                                    this.textSelectedTravelers
-                                                }
-                                                travelers={filteredTravelers}
-                                                selected={selected}
-                                            />
-                                            <CreateEmailForm
-                                                key={2}
-                                                submit={
-                                                    this.emailSelectedTravelers
-                                                }
-                                                travelers={filteredTravelers}
-                                                selected={selected}
-                                            />
-                                        </div>
-                                    </div>
+                                <div className="row justify-content-between">
+                                    <Select
+                                        isMulti
+                                        name="colors"
+                                        options={stati}
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                        styles={customStyles}
+                                        placeholder="All Status"
+                                        onChange={
+                                            this.handleFilterChange
+                                        }
+                                    />
+                                    <ChangeStatusForm
+                                        submit={
+                                            this
+                                                .changeStatusOfSelectedTravelers
+                                        }
+                                        travelers={filteredTravelers}
+                                        selected={selected}
+                                    />
+                                    <CreateTextForm
+                                        key={1}
+                                        submit={
+                                            this.textSelectedTravelers
+                                        }
+                                        travelers={filteredTravelers}
+                                        selected={selected}
+                                    />
+                                    <CreateEmailForm
+                                        key={2}
+                                        submit={
+                                            this.emailSelectedTravelers
+                                        }
+                                        travelers={filteredTravelers}
+                                        selected={selected}
+                                    />
+                                    <ImportBulkForm
+                                        key={3}
+                                        submit={this.addTravelersCSV}
+                                    />
+                                    <AddTravelerForm
+                                        key={4}
+                                        submit={this.addTraveler}
+                                    />
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row mx-0 my-4">
                             <div className="col-md-12">
-                                <div className="card row d-flex flex-row no-gutters justify-content-around shadow mb-3 py-3 align-items-center px-3 px-md-0">
-                                    <div className="col-md-3 d-flex">
+                                <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
+                                    <div className="col-md-1 Travelers-filter">
                                         <Checkbox
                                             onChange={this.toggleAll}
-                                            className="ml-3 h6"
+                                            className=""
                                             checked={allSelected}
                                             label="noshow"
                                         />
                                     </div>
-                                    <div className="col-md-2 h6 d-flex justify-content-center">
-                                        NAME
-                                    </div>
-                                    <div className="col-4 col-md-4 h6 d-flex justify-content-center">
-                                        CONTACT
-                                    </div>
-                                    <div className="col-4 col-md-2 h6 d-flex justify-content-center">
-                                        {' '}
-                                        STATUS
-                                    </div>
+                                    <div className="col-md-2"></div>
+                                    <div className="col-md-3 Travelers-filter">NAME</div>
+                                    <div className="col-md-3 Travelers-filter">CONTACT</div>
+                                    <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
                                 </div>
-                                <TravelerList
-                                    items={filteredTravelers}
-                                    selected={selected}
-                                    toggle={this.toggle}
-                                    doubleClick={this.setSelectedTraveler}
-                                />
+                                <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
+                                    <TravelerList
+                                        items={filteredTravelers}
+                                        selected={selected}
+                                        toggle={this.toggle}
+                                        doubleClick={this.setSelectedTraveler}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4">{travelerInfo}</div>
+                    <div className="col-md-3 pr-0 left-shadow-blur">
+                        {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+                    </div>
                 </div>
             </div>
         )

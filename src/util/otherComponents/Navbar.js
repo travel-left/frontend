@@ -46,14 +46,14 @@ class Navbar extends Component {
                         >
                             Trips
                         </NavLink>
-                        {/* <NavLink
+                        <NavLink
                             activeClassName="active"
                             className='Navbar main-nav-link ml-3'
                             to="/travelers"
                             name="/travelers"
                         >
                             Travelers
-                            </NavLink> */}
+                            </NavLink>
                     </ul>
                 </div>
             )
