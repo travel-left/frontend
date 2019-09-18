@@ -153,7 +153,7 @@ export default class ShareTrip extends Component {
                     this.state.commType === 'text' ? textSchema : emailSchema
                 }
             >
-                <span className="mt-2">Travelers</span>
+                <label className="mt-2">Travelers</label>
                 <Select
                     isMulti
                     name="travelers"
@@ -167,7 +167,7 @@ export default class ShareTrip extends Component {
                     placeholder="Select..."
                     onChange={this.handleTravelerSelection}
                 />
-                <div className="mt-3">Send as</div>
+                <label className="mt-3">Send as</label>
                 <div className="row d-flex align-items-center">
                     <div className="col-md-4">
                         <Select
