@@ -145,9 +145,9 @@ export default class CreateProfile extends Component {
                                 )
                             }}
                         />
-                        {/* <h1 className="text-dark pt-2">Your Payment Info</h1>
+                        <h1 className="text-dark pt-2">Your Payment Info</h1>
                         <p>Left operates on a SaaS model. You will be charged $30 monthly.</p>
-                        {currentUser.stripeCustomerId ? (
+                        {currentUser.stripeCustomerId === 'a' ? (
                             <div>
                                 <div className="p mt-2">
                                     <label className="">
@@ -163,7 +163,7 @@ export default class CreateProfile extends Component {
                             <div>
                                 <CheckoutForm />
                             </div>
-                        } */}
+                        }
                     </div>
                 </div>
             </div>

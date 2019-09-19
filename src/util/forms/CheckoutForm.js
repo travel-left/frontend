@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements';
-import { apiCall } from '../api';
+import React, { Component } from 'react'
+import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
+import { apiCall } from '../api'
+import { setCurrentUser } from '../redux/actions/auth'
+import { connect } from 'react-redux'
 
 class _CardForm extends Component {
     state = {
@@ -20,12 +22,16 @@ class _CardForm extends Component {
             this.setState({ error: token.error.message })
         }
 
-        let response = await apiCall('POST', "/api/stripe", {
-            token: token.token.id
-        })
-
-        if (response.message === 'Success') {
-            this.setState({ success: 'Thank you for your subscription!' })
+        try {
+            let response = await apiCall('POST', "/api/stripe", {
+                token: token.token.id
+            })
+            if (response.message === 'Success') {
+                this.setState({ success: 'Your payment method has been updated!' })
+                this.props.setCurrentUser(response.user)
+            }
+        } catch (err) {
+            this.setState({ error: err.message })
         }
     }
 
@@ -36,14 +42,27 @@ class _CardForm extends Component {
             <div className="">
                 <p style={{ color: '#FF605F' }}>{this.state.error}</p>
                 <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
-                <label htmlFor="">Credit Card</label>
+                <label htmlFor="">Current card</label>
+                <p>{this.props.currentUser.cc.length === 4 ? `**** **** **** ${this.props.currentUser.cc}` : this.props.currentUser.cc}</p>
+                <label htmlFor="">Update card</label>
                 <CardElement />
                 <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
             </div>
         )
     }
+
 }
-const CardForm = injectStripe(_CardForm)
+
+const mapStateToProps = state => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+const CardForm = connect(
+    mapStateToProps,
+    { setCurrentUser }
+)(injectStripe(_CardForm))
 
 class Checkout extends Component {
     render() {

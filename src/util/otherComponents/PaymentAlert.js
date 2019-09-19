@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment'
+import { withRouter, NavLink } from 'react-router-dom'
 
 class PaymentAlert extends Component {
 
@@ -22,7 +23,7 @@ class PaymentAlert extends Component {
         console.log(today)
         var a = moment([...today.split('-')]);
         var b = moment([...startDate.split('-')]);
-        let daysLeft = a.diff(b, 'days')
+        let daysLeft = 10 - a.diff(b, 'days')
 
         return (
             this.state.showAlert && (<div
@@ -33,7 +34,14 @@ class PaymentAlert extends Component {
                     <i className="fas fa-thumbs-up fa-lg text-light" />
                 </div>
                 <div className="col-10">
-                    <span style={{ color: '#83C9F4' }}>Welcome to Left! Your free trial has {daysLeft} days remaining. Head over to <a href="/editprofile">your account</a> to start your subscription!</span>
+                    <span style={{ color: '#83C9F4' }}>Welcome to Left! Your free trial has <span style={{ color: '#0F61D8' }}>{daysLeft} days</span> remaining. Head over to {' '}
+                        <NavLink
+                            to="/editprofile"
+                            name="/editprofile"
+                        >
+                            your account
+                        </NavLink>{' '}
+                        to start your subscription!</span>
                 </div>
                 <div className="col-1 d-flex align-self-stretch justify-content-center align-items-center">
                     <i
@@ -48,4 +56,4 @@ class PaymentAlert extends Component {
 
 }
 
-export default PaymentAlert
+export default withRouter(PaymentAlert)
