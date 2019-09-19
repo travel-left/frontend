@@ -26,11 +26,11 @@ export default class CreateProfile extends Component {
             password,
             title: '',
             phone: '',
-            image: 'https://',
+            image: '',
             organization: {
-                image: 'https://',
+                image: '',
                 name: '',
-                website: 'https://'
+                website: ''
             }
         }
 
@@ -40,8 +40,7 @@ export default class CreateProfile extends Component {
             title: titleValidator,
             phone: phoneValidator,
             organization: Validator({
-                name: nameValidator,
-                website: urlValidator
+                name: nameValidator
             })
         })
 

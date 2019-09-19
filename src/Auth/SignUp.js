@@ -9,6 +9,7 @@ import Validator, {
     passwordValidator,
     match
 } from '../util/validators'
+import ExplainOrganizationId2 from './ExplainOrganizationId'
 
 export default ({ error, submit }) => {
     let mError = error
@@ -56,11 +57,14 @@ export default ({ error, submit }) => {
                     }}
                     render={({ isSubmitting, values, setFieldValue }) => {
                         const orgIdForm = !values.createOrg ? (
-                            <FormField
-                                name="orgId"
-                                placeholder="5d12b98a83b9787e8bb883ef"
-                                label="Organization Id*"
-                            />
+                            <>
+                                <FormField
+                                    name="orgId"
+                                    placeholder="5d12b98a83b9787e8bb883ef"
+                                    label={<span>Organization Id* <ExplainOrganizationId2 /></span>}
+                                />
+
+                            </>
                         ) : null
                         return (
                             <Form>
