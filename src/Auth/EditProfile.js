@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
 import FormField from '../util/forms/FormField'
+import CheckoutForm from '../util/forms/CheckoutForm'
 import Validator, {
     nameValidator,
     phoneValidator,
@@ -11,6 +12,7 @@ import Uploader from '../util/forms/Uploader'
 import './Auth.css'
 import { apiCall } from '../util/api'
 import ReactGA from 'react-ga'
+import ExplainCustomerId from './ExplainCustomerId'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -143,6 +145,25 @@ export default class CreateProfile extends Component {
                                 )
                             }}
                         />
+                        <h1 className="text-dark pt-2">Your Payment Info</h1>
+                        <p>Left operates on a SaaS model. You will be charged $30 monthly.</p>
+                        {currentUser.stripeCustomerId ? (
+                            <div>
+                                <div className="p mt-2">
+                                    <label className="">
+                                        Customer Id{' '}
+                                        <ExplainCustomerId />
+                                    </label>
+                                </div>
+                                <div className="p mt-2">
+                                    {currentUser.stripeCustomerId}
+                                </div>
+                            </div>
+                        ) :
+                            <div>
+                                <CheckoutForm />
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

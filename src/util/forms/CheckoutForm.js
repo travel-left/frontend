@@ -5,7 +5,8 @@ import { apiCall } from '../api';
 class _CardForm extends Component {
     state = {
         complete: false,
-        error: ''
+        error: '',
+        success: ''
     }
 
     constructor(props) {
@@ -16,7 +17,6 @@ class _CardForm extends Component {
         let token = await this.props.stripe.createToken({ name: "Name" })
 
         if (token.error) {
-            console.log('error')
             this.setState({ error: token.error.message })
         }
 
@@ -24,18 +24,21 @@ class _CardForm extends Component {
             token: token.token.id
         })
 
-        if (response.ok) console.log("Purchase Complete!")
+        if (response.message === 'Success') {
+            this.setState({ success: 'Thank you for your subscription!' })
+        }
     }
 
     render() {
         if (this.state.complete) return <h1>Purchase Complete</h1>;
 
         return (
-            <div className="container col-6">
+            <div className="">
                 <p style={{ color: '#FF605F' }}>{this.state.error}</p>
-                <p>Would you like to complete the purchase?</p>
+                <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
+                <label htmlFor="">Credit Card</label>
                 <CardElement />
-                <button className='btn btn-lg btn-primary' onClick={this.submit}>Send</button>
+                <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
             </div>
         )
     }

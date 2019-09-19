@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
-// import Alert from '../util/otherComponents/Alert'
+import PaymentAlert from '../../util/otherComponents/PaymentAlert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../../util/redux/actions/trip'
@@ -29,7 +29,6 @@ class Trips extends Component {
             PAST: 0,
             ARCHIVED: 0
         }
-        // showAlert: this.props.currentUser.showAlerts.trips
     }
 
     constructor(props) {
@@ -166,6 +165,7 @@ class Trips extends Component {
         let files = this.state.files
             ? this.state.files.map(file => <p>{file.name || file}</p>)
             : null
+
         return (
             <div className="row">
                 <div className="col-md-2 px-0" style={{
@@ -253,13 +253,9 @@ class Trips extends Component {
                     </div>
                 </div>
                 <div className="col-md-10 mt-3">
-                    {/* <div className="row">
-                        <div className="col-md-12 d-none d-md-block">
-                            {alert}
-                        </div>
-                    </div> */}
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
+                            <PaymentAlert user={this.props.currentUser}></PaymentAlert>
                             <TripsListHeader />
                             {tripList}
                         </div>
