@@ -255,7 +255,7 @@ class Trips extends Component {
                 <div className="col-md-10 mt-3">
                     <div className="row">
                         <div className="col-md-8 px-0 px-md-3">
-                            <PaymentAlert user={this.props.currentUser}></PaymentAlert>
+                            {/* <PaymentAlert user={this.props.currentUser}></PaymentAlert> */}
                             <TripsListHeader />
                             {tripList}
                         </div>
