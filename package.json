@@ -1,58 +1,54 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "axios": "^0.19.0",
-    "formik": "^1.5.7",
-    "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.25",
-    "per-env": "^1.0.2",
-    "prop-types": "^15.7.2",
-    "random-words": "^1.1.0",
-    "react": "^16.8.6",
-    "react-devices": "0.0.2",
-    "react-dom": "^16.8.6",
-    "react-dropzone": "^10.1.7",
-    "react-ga": "^2.6.0",
-    "react-https-redirect": "^1.1.0",
-    "react-map-gl": "^5.0.4",
-    "react-modal": "^3.8.2",
-    "react-moment": "^0.8.4",
-    "react-mortal": "^3.3.0",
-    "react-redux": "^6.0.1",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
-    "react-scroll": "^1.7.12",
-    "react-select": "^3.0.4",
-    "react-spring": "^8.0.27",
-    "react-stripe-elements": "^5.0.0",
-    "react-transition-group": "^4.2.1",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "serve": "^11.1.0",
-    "uniqid": "^5.0.3",
-    "yup": "^0.27.0"
-  },
-  "devDependencies": {
-    "@travelleft/prettier-config": "^2.0.0"
-  },
-  "scripts": {
-    "build": "npx react-scripts build",
-    "heroku-postbuild": "npm run build",
-    "start": "per-env",
-    "start:development": "npx react-scripts start",
-    "start:production": "serve -s build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "prettier": "@travelleft/prettier-config"
+    "name": "frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^0.19.0",
+        "formik": "^1.5.7",
+        "jwt-decode": "^2.2.0",
+        "moment": "^2.24.0",
+        "moment-timezone": "^0.5.25",
+        "per-env": "^1.0.2",
+        "prop-types": "^15.7.2",
+        "random-words": "^1.1.0",
+        "react": "^16.8.6",
+        "react-devices": "0.0.2",
+        "react-dom": "^16.8.6",
+        "react-dropzone": "^10.1.7",
+        "react-ga": "^2.6.0",
+        "react-https-redirect": "^1.1.0",
+        "react-map-gl": "^5.0.4",
+        "react-modal": "^3.8.2",
+        "react-moment": "^0.8.4",
+        "react-mortal": "^3.3.0",
+        "react-redux": "^6.0.1",
+        "react-router-dom": "^4.3.1",
+        "react-scripts": "2.1.5",
+        "react-scroll": "^1.7.12",
+        "react-select": "^3.0.4",
+        "react-spring": "^8.0.27",
+        "react-stripe-elements": "^5.0.0",
+        "react-transition-group": "^4.2.1",
+        "redux": "^4.0.1",
+        "redux-thunk": "^2.3.0",
+        "serve": "^11.1.0",
+        "uniqid": "^5.0.3",
+        "yup": "^0.27.0"
+    },
+    "scripts": {
+        "build": "npx react-scripts build",
+        "heroku-postbuild": "npm run build",
+        "start": "per-env",
+        "start:development": "npx react-scripts start",
+        "start:production": "serve -s build"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
 }

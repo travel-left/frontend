@@ -144,7 +144,7 @@ class Event extends Component {
             ))
             : null
 
-        const renderMap = event.tripDate ? null : showMap ? (
+        const renderMap = showMap ? (
             map
         ) : (
                 <div className="text-center">
