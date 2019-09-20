@@ -9,7 +9,7 @@ import Validator, {
     passwordValidator,
     match
 } from '../util/validators'
-import ExplainOrganizationId2 from './ExplainOrganizationId'
+import ExplainOrganizationId2 from './ExplainOrganizationId2'
 
 export default ({ error, submit }) => {
     let mError = error
