@@ -110,7 +110,7 @@ export default class TravelerInfo extends Component {
 
 const MessageList = ({ messages }) =>
     messages.map(m => (
-        m.__t === 'Text' ? <Text key={m._id} message={m.message} />
-            : <Email key={m._id} subject={m.subject} body={m.body} />
+        m.__t === 'Text' ? <Text key={m._id} message={m.message} createdAt={m.createdAt} />
+            : <Email key={m._id} subject={m.subject} body={m.body} createdAt={m.createdAt} />
     ))
 

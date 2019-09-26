@@ -1,6 +1,5 @@
 import React from 'react'
 import Moment from 'react-moment'
-import LeftCard from "../../../util/LeftCard"
 
 const Text = ({ message, createdAt }) => (
     <div className='col-12'>
