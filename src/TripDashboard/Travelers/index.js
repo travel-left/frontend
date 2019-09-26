@@ -152,7 +152,7 @@ class Travelers extends Component {
         this.getTravelers()
     }
 
-    emailSelectedTravelers = email => {
+    emailSelectedTravelers = async email => {
         const { selected, travelers } = this.state
         let travelersEmails = []
         for (const { _id, email } of travelers) {
@@ -161,11 +161,13 @@ class Travelers extends Component {
             }
         }
 
-        apiCall('post', '/api/communicate/email', {
+        await apiCall('post', '/api/communicate/email', {
             subject: email.subject,
             body: email.body,
             emails: travelersEmails
         })
+
+        this.getTravelers()
     }
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
