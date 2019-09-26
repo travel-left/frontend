@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import DayList from './Days'
 import EventList from './Events'
 import { apiCall } from '../../util/api'
-import CreateEventForm from './Events/CreateEventForm'
+import NewEventForm from './Events/NewEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Itinerary.css'
@@ -161,7 +161,7 @@ class Itinerary extends Component {
             <div className="col-md-12 mt-4">
                 <div className="col-md-10 d-flex flex-row justify-content-between">
                     <h4 className='Itinerary-title'>Trip Days</h4>
-                    <CreateEventForm
+                    <NewEventForm
                         submit={this.createEvent}
                         initDay={this.props.currentTrip.dateStart}
                     />
