@@ -135,7 +135,24 @@ class Travelers extends Component {
         })
     }
 
-    emailSelectedTravelers = email => {
+    textSelectedTravelers = async text => {
+        const { travelers, selected } = this.state
+        let travelersPhones = []
+        for (const { _id, phone } of travelers) {
+            if (selected[_id]) {
+                travelersPhones.push(phone)
+            }
+        }
+
+        await apiCall('post', '/api/communicate/text', {
+            body: text.body,
+            phones: travelersPhones
+        })
+
+        this.getTravelers()
+    }
+
+    emailSelectedTravelers = async email => {
         const { selected, travelers } = this.state
         let travelersEmails = []
         for (const { _id, email } of travelers) {
@@ -144,11 +161,13 @@ class Travelers extends Component {
             }
         }
 
-        apiCall('post', '/api/communicate/email', {
+        await apiCall('post', '/api/communicate/email', {
             subject: email.subject,
             body: email.body,
             emails: travelersEmails
         })
+
+        this.getTravelers()
     }
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
@@ -170,21 +189,6 @@ class Travelers extends Component {
 
     }
 
-    textSelectedTravelers = text => {
-        const { travelers } = this.props.currentTrip
-        const { selected } = this.state
-        let travelersPhones = []
-        for (const { _id, phone } of travelers) {
-            if (selected[_id]) {
-                travelersPhones.push(phone)
-            }
-        }
-
-        apiCall('post', '/api/communicate/text', {
-            body: text.body,
-            phones: travelersPhones
-        })
-    }
 
     handleFilterChange = selectedFilters => {
         if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
