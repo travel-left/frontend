@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Mortal from 'react-mortal'
-import { schema, types, timezones } from './EventHelpers'
+import { types, timezones } from './EventHelpers'
 import Select from 'react-select'
 import Calendar from 'react-calendar'
-import { customStyles } from '../../../util/forms/SelectStyles'
+import moment from 'moment'
+import { customStyles, eventFormDocs, eventTimezone } from '../../../util/forms/SelectStyles'
+import { apiCall } from '../../../util/api'
 
 export default class NewEventForm extends Component {
     state = {
@@ -12,10 +14,20 @@ export default class NewEventForm extends Component {
         err: '',
         name: '',
         date: '',
-        step: 1
+        step: 1,
+        eventType: 'EVENT',
+        docs: [],
+        selectedDocs: [],
+        startTime: '10:00',
+        endTime: '13:00',
+        timezone: moment.tz.guess(),
+        description: '',
+        location: ''
     }
     constructor(props) {
         super(props)
+
+        this.getDocuments()
     }
 
     handleRemove = () => {
@@ -33,8 +45,53 @@ export default class NewEventForm extends Component {
         this.setState({ date })
     }
 
+    handleEventTypeChange = eventType => {
+        this.setState({ eventType: eventType.value })
+    }
+
+    handleTimezoneChange = timeZone => {
+        this.setState({ timezone: timeZone.value })
+    }
+
+    handleDocumentsChange = documents => {
+        console.log(documents)
+        this.setState({
+            selectedDocs: documents.map(doc => doc.value)
+        })
+    }
+
+    handleSubmit = e => {
+        e.preventDefault()
+        let { eventType, name, date, selectedDocs, startTime, endTime, timezone, description, location } = this.state
+        this.props.submit({
+            name,
+            tzStart: timezone,
+            tzEnd: timezone,
+            type: eventType,
+            description,
+            address: location,
+            dateStart: date,
+            dateEnd: new Date(date.valueOf()),
+            timeStart: startTime,
+            timeEnd: endTime,
+            documents: []
+        })
+    }
+
     toggleModal = () => {
         this.setState(prevState => ({ open: !prevState.open }))
+    }
+
+    closeModal = () => {
+        this.setState({
+            eventType: '',
+            open: false,
+            err: '',
+            name: '',
+            date: '',
+            step: 1,
+            eventType: 'EVENT'
+        })
     }
 
     handleBackClick = e => {
@@ -55,6 +112,14 @@ export default class NewEventForm extends Component {
                 step: prevState.step + 1
             })
         )
+    }
+
+    getDocuments = async () => {
+        let docs = await apiCall(
+            'get',
+            `/api/trips/${this.props.tripId}/documents`
+        )
+        this.setState({ docs })
     }
 
     render() {
@@ -87,8 +152,7 @@ export default class NewEventForm extends Component {
                                 overflowY: 'auto'
                             }}
                         >
-                            <div
-                                className="Modal--overlay"
+                            <div className="Modal--overlay"
                                 style={{
                                     opacity: motion.opacity,
                                     pointerEvents: isVisible
@@ -113,41 +177,39 @@ export default class NewEventForm extends Component {
                                                 className="modal-title Modal-Form-header pl-3"
                                                 id="addnewNameModal"
                                             >
-                                                Create an event
+                                                Create an event - {this.state.step} of 3
                                                 </h5>
                                             <button
                                                 className='btn btn-link'
                                                 type="reset"
                                                 aria-label="Close"
                                                 style={{ backgroundColor: '0F58D1' }}
+                                                onClick={this.closeModal}
                                             >
                                                 <i class="material-icons" style={{ color: 'white' }}>close</i>
                                             </button>
                                         </div>
                                         <div className="modal-body">
-                                            <p className="text-danger">
-                                                {err ? err : null}
-                                            </p>{' '}
-                                            <div className="form-row">
-                                                <EventStep1 step={this.state.step} name={this.state.name} onChange={this.handleChange} onDateChange={this.handleDateChange}></EventStep1>
-                                                <EventStep2 step={this.state.step}></EventStep2>
-                                            </div>
-
+                                            <p className="text-danger"> {err ? err : null}</p>
+                                            <EventStep1 step={this.state.step} name={this.state.name} onChange={this.handleChange} handleEventTypeChange={this.handleEventTypeChange}></EventStep1>
+                                            <EventStep2 step={this.state.step}
+                                                eventType={this.state.eventType}
+                                                onDateChange={this.handleDateChange}
+                                                onChange={this.handleChange}
+                                                handleTimezoneChange={this.handleTimezoneChange}
+                                                timezone={this.state.timezone}
+                                                startTime={this.state.startTime}
+                                                endTime={this.state.endTime}>
+                                            </EventStep2>
+                                            <EventStep3 step={this.state.step}
+                                                docs={this.state.docs}
+                                                handleDocuments={this.handleDocumentsChange}
+                                                description={this.state.description}
+                                                location={this.props.location}
+                                                onChange={this.handleChange}>
+                                            </EventStep3>
                                             <hr className="my-4" />
-                                            {remove && (
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-lg btn-danger ml-4 mb-4 text-light hover"
-                                                    onClick={this.handleRemove}
-                                                >
-                                                    DELETE
-                                                </button>
-                                            )}
-                                            <button className="btn btn-lg btn-secondary">CREATE EVENT</button>
-                                            <div className="float-right">
-                                                <button className="btn btn-lg btn-link text-primary" onClick={this.handleBackClick}>PREV</button>
-                                                <button className="btn btn-lg btn-primary" onClick={this.handleNextClick}>NEXT</button>
-                                            </div>
+                                            <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
                                         </div>
                                     </form>
                                 </div>
@@ -166,14 +228,14 @@ class EventStep1 extends Component {
         return (
             this.props.step === 1 ?
                 <>
-                    <div className="col-12">
+                    <div className="">
                         <label htmlFor="" className="d-block">Name</label>
-                        <input type="text" name="name" placeholder="Name for your event" value={this.props.name} onChange={this.props.onChange} />
+                        <input className="d-block form-control" type="text" name="name" placeholder="Name for your event" value={this.props.name} onChange={this.props.onChange} />
                     </div>
-                    <div className="col-12 d-flex justify-content-start">
+                    <div className="d-flex justify-content-start">
                         <div className="mt-2">
-                            <label htmlFor="cal">Date</label>
-                            <Calendar onChange={this.props.onDateChange} />
+                            <label htmlFor="" className="d-block">Event Type</label>
+                            <Select name="type" options={types} defaultValue={types[1]} label="Type" className="left-select" styles={customStyles} onChange={this.props.handleEventTypeChange} />
                         </div>
 
                     </div>
@@ -186,13 +248,122 @@ class EventStep1 extends Component {
 class EventStep2 extends Component {
 
     render() {
+        let formContent
+        switch (this.props.eventType) {
+            case 'EVENT':
+                formContent = <div>
+                    <label className="d-block" htmlFor="cal">Date</label>
+                    <Calendar onChange={this.props.onDateChange} calendarType="US" />
+                    <div className="row">
+                        <div className="col-6">
+                            <label className="d-block" htmlFor="">Starts</label>
+                            <input name="startTime" className="d-block form-control" type="time" value={this.props.startTime} onChange={this.props.onChange} />
+                        </div>
+                        <div className="col-6">
+                            <label className="d-block" htmlFor="" >Ends</label>
+                            <input name="endTime" className="d-block form-control" type="time" value={this.props.endTime} onChange={this.props.onChange} />
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-6">
+                            <label className="d-block" htmlFor="" className="d-block">Timezone</label>
+                            <Select name="type" options={timezones} value={this.props.timezone} placeholder={this.props.timezone} label="Timezone" className="left-select" styles={eventTimezone} onChange={this.props.handleTimezoneChange} />
+                        </div>
+                        <div className="col-6">
+
+                        </div>
+                    </div>
+                </div>
+                break
+            case 'FLIGHT':
+
+                break
+            case 'TRANSPORTATION':
+
+                break
+            case 'LODGING':
+                break
+            default:
+
+                break
+        }
         return (
             this.props.step === 2 ?
-                <>
-                    <label htmlFor="" className="d-block">Event Type</label>
-                    <Select name="type" options={types} label="Type" className="left-select" styles={customStyles} />
-                </>
+                <div className="">
+                    {formContent}
+                </div>
                 : null
         )
     }
+}
+
+class EventStep3 extends Component {
+    render() {
+        return (
+            this.props.step === 3 ? (
+                <div>
+                    <label className="d-block" htmlFor="">Description</label>
+                    <textarea name="description"
+                        name="description"
+                        cols="70"
+                        rows="2"
+                        placeholder="A description of your event"
+                        className="d-block form-control"
+                        value={this.props.description}
+                        onChange={this.props.onChange}
+                    ></textarea>
+                    <label className="d-block" htmlFor="">Location</label>
+                    <input className="d-block form-control" type="text" name="location" id="" placeholder="Address for your event" value={this.props.location} onChange={this.props.onChange} />
+                    <label className="d-block" htmlFor="" className="d-block">Documents </label>
+                    <Select isMulti name="type" options={this.props.docs.map(doc => (
+                        {
+                            label: doc.name,
+                            value: doc._id
+                        }
+                    ))} label="Timezone" className="left-select" styles={eventFormDocs} onChange={this.props.handleDocuments} />
+                </div>
+            ) : null
+        )
+    }
+}
+
+const EventButtons = ({ step, back, next, submit }) => {
+    let buttons
+    switch (step) {
+        case 1:
+            buttons = (
+                <>
+                    <button className="btn btn-lg btn-secondary" onClick={submit}>CREATE EVENT</button>
+                    <div className="float-right">
+                        <button className="btn btn-lg btn-primary" onClick={next}>NEXT</button>
+                    </div>
+                </>
+            )
+            break
+        case 2:
+            buttons = (
+                <>
+                    <button className="btn btn-lg btn-secondary" onClick={submit}>CREATE EVENT</button>
+                    <div className="float-right">
+                        <button className="btn btn-lg btn-link text-primary" onClick={back}>PREV</button>
+                        <button className="btn btn-lg btn-primary" onClick={next}>NEXT</button>
+                    </div>
+                </>
+            )
+            break
+        case 3:
+            buttons = (
+                <>
+                    <div className="d-flex justify-content-end">
+                        <button className="btn btn-lg btn-link text-primary" onClick={back}>PREV</button>
+                        <button className="btn btn-lg btn-primary" onClick={submit}>CREATE EVENT</button>
+                    </div>
+                </>
+            )
+            break
+
+        default:
+            break
+    }
+    return buttons
 }

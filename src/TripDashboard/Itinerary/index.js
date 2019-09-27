@@ -51,13 +51,14 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        let localStart = moment.tz(`${event.dateStart}T${event.timeStart}:00`, event.tzStart)
-        let localEnd = moment.tz(`${event.dateEnd}T${event.timeEnd}:00`, event.tzEnd)
-        let gmtStart = moment.tz(localStart, 'GMT').toString()
-        let gmtEnd = moment.tz(localEnd, 'GMT').toString()
-
-        let noEmptyDocs = event.documents.filter(doc => doc.name.length > 3)
-        event.documents = noEmptyDocs
+        let timeStart = event.timeStart.split(":")
+        let timeEnd = event.timeEnd.split(":")
+        event.dateStart.setHours(timeStart[0], timeStart[1])
+        event.dateEnd.setHours(timeEnd[0], timeEnd[1])
+        let gmtStart = moment(event.dateStart).tz('GMT').toString()
+        let gmtEnd = moment(event.dateEnd).tz('GMT').toString()
+        // let noEmptyDocs = event.documents.filter(doc => doc.name.length > 3)
+        // event.documents = noEmptyDocs
         await apiCall(
             'post',
             `/api/trips/${this.props.currentTrip._id}/events`,
@@ -164,6 +165,7 @@ class Itinerary extends Component {
                     <NewEventForm
                         submit={this.createEvent}
                         initDay={this.props.currentTrip.dateStart}
+                        tripId={this.props.currentTrip._id}
                     />
                 </div>
                 <div className="row mx-0">
