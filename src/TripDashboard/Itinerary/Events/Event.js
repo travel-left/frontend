@@ -85,11 +85,7 @@ class Event extends Component {
                 ? `${event.dtStart} - ${event.dtEnd}`
                 : null
 
-        const map = event.coordinates ? (
-            event.coordinates.lat && event.coordinates.long ? (
-                <Map coordinates={event.coordinates} />
-            ) : null
-        ) : null
+        const map = event.coordinates ? <Map coordinates={event.coordinates} /> : null
 
         const name = event.tripDate ? (
             <>
@@ -100,7 +96,7 @@ class Event extends Component {
                 event.name
             )
 
-        const address = event.address ? (
+        const address = event.address.length > 3 ? (
             <p className="card-text text-muted">
                 {'Address: ' + event.address}
             </p>
@@ -187,7 +183,7 @@ class Event extends Component {
                             <div className="d-flex justify-content-center align-items-center mt-3 Itinerary-event-address">
                                 {address}
                             </div>
-                            {renderMap}
+                            {address && renderMap}
                         </div>
                     </div>
                     <div className="col-12 row mx-0 mt-2">

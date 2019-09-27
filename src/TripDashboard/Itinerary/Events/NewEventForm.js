@@ -13,7 +13,7 @@ export default class NewEventForm extends Component {
         open: false,
         err: '',
         name: '',
-        date: '',
+        date: new Date(this.props.trip.dateStart),
         step: 1,
         eventType: 'EVENT',
         docs: [],
@@ -74,8 +74,9 @@ export default class NewEventForm extends Component {
             dateEnd: new Date(date.valueOf()),
             timeStart: startTime,
             timeEnd: endTime,
-            documents: []
+            documents: selectedDocs
         })
+        this.closeModal()
     }
 
     toggleModal = () => {
@@ -90,7 +91,8 @@ export default class NewEventForm extends Component {
             name: '',
             date: '',
             step: 1,
-            eventType: 'EVENT'
+            eventType: 'EVENT',
+            date: new Date(this.props.trip.dateStart)
         })
     }
 
@@ -117,7 +119,7 @@ export default class NewEventForm extends Component {
     getDocuments = async () => {
         let docs = await apiCall(
             'get',
-            `/api/trips/${this.props.tripId}/documents`
+            `/api/trips/${this.props.trip._id}/documents`
         )
         this.setState({ docs })
     }
@@ -199,7 +201,9 @@ export default class NewEventForm extends Component {
                                                 handleTimezoneChange={this.handleTimezoneChange}
                                                 timezone={this.state.timezone}
                                                 startTime={this.state.startTime}
-                                                endTime={this.state.endTime}>
+                                                endTime={this.state.endTime}
+                                                calendarValue={this.state.date}
+                                            >
                                             </EventStep2>
                                             <EventStep3 step={this.state.step}
                                                 docs={this.state.docs}
@@ -249,44 +253,30 @@ class EventStep2 extends Component {
 
     render() {
         let formContent
-        switch (this.props.eventType) {
-            case 'EVENT':
-                formContent = <div>
-                    <label className="d-block" htmlFor="cal">Date</label>
-                    <Calendar onChange={this.props.onDateChange} calendarType="US" />
-                    <div className="row">
-                        <div className="col-6">
-                            <label className="d-block" htmlFor="">Starts</label>
-                            <input name="startTime" className="d-block form-control" type="time" value={this.props.startTime} onChange={this.props.onChange} />
-                        </div>
-                        <div className="col-6">
-                            <label className="d-block" htmlFor="" >Ends</label>
-                            <input name="endTime" className="d-block form-control" type="time" value={this.props.endTime} onChange={this.props.onChange} />
-                        </div>
+            = <div>
+                <label className="d-block" htmlFor="cal">Date</label>
+                <Calendar onChange={this.props.onDateChange} calendarType="US" value={this.props.calendarValue} />
+                <div className="row">
+                    <div className="col-6">
+                        <label className="d-block" htmlFor="">Starts</label>
+                        <input name="startTime" className="d-block form-control" type="time" value={this.props.startTime} onChange={this.props.onChange} />
                     </div>
-                    <div className="row">
-                        <div className="col-6">
-                            <label className="d-block" htmlFor="" className="d-block">Timezone</label>
-                            <Select name="type" options={timezones} value={this.props.timezone} placeholder={this.props.timezone} label="Timezone" className="left-select" styles={eventTimezone} onChange={this.props.handleTimezoneChange} />
-                        </div>
-                        <div className="col-6">
-
-                        </div>
+                    <div className="col-6">
+                        <label className="d-block" htmlFor="" >Ends</label>
+                        <input name="endTime" className="d-block form-control" type="time" value={this.props.endTime} onChange={this.props.onChange} />
                     </div>
                 </div>
-                break
-            case 'FLIGHT':
+                <div className="row">
+                    <div className="col-6">
+                        <label className="d-block" htmlFor="" className="d-block">Timezone</label>
+                        <Select name="type" options={timezones} value={this.props.timezone} placeholder={this.props.timezone} label="Timezone" className="left-select" styles={eventTimezone} onChange={this.props.handleTimezoneChange} />
+                    </div>
+                    <div className="col-6">
 
-                break
-            case 'TRANSPORTATION':
+                    </div>
+                </div>
+            </div>
 
-                break
-            case 'LODGING':
-                break
-            default:
-
-                break
-        }
         return (
             this.props.step === 2 ?
                 <div className="">

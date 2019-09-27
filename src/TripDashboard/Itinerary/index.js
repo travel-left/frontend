@@ -51,23 +51,7 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
-        let timeStart = event.timeStart.split(":")
-        let timeEnd = event.timeEnd.split(":")
-        event.dateStart.setHours(timeStart[0], timeStart[1])
-        event.dateEnd.setHours(timeEnd[0], timeEnd[1])
-        let gmtStart = moment(event.dateStart).tz('GMT').toString()
-        let gmtEnd = moment(event.dateEnd).tz('GMT').toString()
-        // let noEmptyDocs = event.documents.filter(doc => doc.name.length > 3)
-        // event.documents = noEmptyDocs
-        await apiCall(
-            'post',
-            `/api/trips/${this.props.currentTrip._id}/events`,
-            {
-                ...event,
-                dtStart: gmtStart,
-                dtEnd: gmtEnd
-            }
-        )
+        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
 
         this.getDaysAndEvents()
     }
@@ -165,7 +149,7 @@ class Itinerary extends Component {
                     <NewEventForm
                         submit={this.createEvent}
                         initDay={this.props.currentTrip.dateStart}
-                        tripId={this.props.currentTrip._id}
+                        trip={this.props.currentTrip}
                     />
                 </div>
                 <div className="row mx-0">
