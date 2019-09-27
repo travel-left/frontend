@@ -7,7 +7,8 @@ export default ({
     removeEvent,
     updateEvent,
     updateTripDate,
-    removeTripDate
+    removeTripDate,
+    trip
 }) => {
     let daysList = []
     events.sort(date_sort_asc)
@@ -30,6 +31,7 @@ export default ({
                     event={event}
                     removeEvent={remove}
                     updateEvent={update}
+                    trip={trip}
                 />
             </div>
         )

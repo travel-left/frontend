@@ -57,26 +57,8 @@ class Itinerary extends Component {
     }
 
     updateEvent = async (eventId, updateObject) => {
-        let localStart = moment.tz(
-            `${updateObject.dateStart}T${updateObject.timeStart}:00`,
-            updateObject.tzStart
-        )
-        let localEnd = moment.tz(
-            `${updateObject.dateEnd}T${updateObject.timeEnd}:00`,
-            updateObject.tzEnd
-        )
-        let gmtStart = moment.tz(localStart, 'GMT').toString()
-        let gmtEnd = moment.tz(localEnd, 'GMT').toString()
-
-        updateObject.dtStart = gmtStart
-        updateObject.dtEnd = gmtEnd
-        let noEmptyDocs = updateObject.documents.filter(doc => doc.name.length > 3)
-        updateObject.documents = noEmptyDocs
-        await apiCall(
-            'PUT',
-            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`,
-            updateObject
-        )
+        console.log(updateObject)
+        await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, updateObject)
 
         this.getDaysAndEvents()
     }
@@ -137,6 +119,7 @@ class Itinerary extends Component {
                 removeEvent={this.removeEvent}
                 updateTripDate={this.updateTripDate}
                 removeTripDate={this.removeTripDate}
+                trip={this.props.currentTrip}
             />
         ) : (
                 <h4 className="text-info" />

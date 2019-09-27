@@ -3,6 +3,7 @@ import UpdateEventForm from './UpdateEventForm'
 import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateForm'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
+import NewEditEventForm from './NewEditEventForm';
 
 class Event extends Component {
     state = {
@@ -64,20 +65,12 @@ class Event extends Component {
         }
 
         const updater = !event.share ? (
-            event.tripDate ? (
-                <UpdateTripDateForm
-                    {...event}
-                    submit={this.update}
-                    remove={this.remove}
-                    onItinerary={true}
-                />
-            ) : (
-                    <UpdateEventForm
-                        event={event}
-                        submit={this.update}
-                        remove={this.remove}
-                    />
-                )
+            <NewEditEventForm
+                trip={this.props.trip}
+                event={event}
+                submit={this.update}
+                remove={this.remove}
+            />
         ) : null
 
         const date =
