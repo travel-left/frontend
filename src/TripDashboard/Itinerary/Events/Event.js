@@ -7,7 +7,8 @@ import NewEditEventForm from './NewEditEventForm';
 
 class Event extends Component {
     state = {
-        showMap: false
+        showMap: false,
+        showUpdateForm: false
     }
 
     remove = () => {
@@ -20,6 +21,14 @@ class Event extends Component {
 
     showMap = () => {
         this.setState({ showMap: true })
+    }
+
+    openModal = () => {
+        this.setState({ showUpdateForm: true })
+    }
+
+    closeModal = () => {
+        this.setState({ showUpdateForm: false })
     }
 
     render() {
@@ -65,12 +74,24 @@ class Event extends Component {
         }
 
         const updater = !event.share ? (
-            <NewEditEventForm
-                trip={this.props.trip}
-                event={event}
-                submit={this.update}
-                remove={this.remove}
-            />
+            <span
+                onClick={this.openModal}
+                className='text-uppercase d-flex align-items-center justify-content-center hover'
+                style={{
+                    fontWeight: '500',
+                    fontFamily: 'roboto',
+                    fontSize: '12px',
+                    padding: '.5rem .8rem',
+                    width: '54px',
+                    height: '25px',
+                    color: '#FFFFFF',
+                    backgroundColor: '#475561',
+                    textAlign: 'center',
+                    borderRadius: '16px'
+                }}
+            >
+                EDIT
+            </span>
         ) : null
 
         const date =
@@ -148,39 +169,42 @@ class Event extends Component {
             )
 
         return (
-            <div className="Itinerary-event-card py-4 px-5 my-3 animated fadeIn">
-                <div className="row">
-                    <div className="col-12 d-flex justify-content-between px-3">
-                        <span className="Document-title">
-                            <span className='d-flex justify-content-center align-items-center' style={{
-                                position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
-                            }}>
-                                <i className={`fa ${iconString}`} style={{
-                                    color: '#FFFFFF',
-                                    fontSize: '16px'
-                                }} />
-                            </span>
+            <div>
+                {this.state.showUpdateForm && <NewEditEventForm close={this.closeModal} submit={this.update} remove={this.props.remove} trip={this.props.trip} event={this.props.event} />}
+                <div className="Itinerary-event-card py-4 px-5 my-3 animated fadeIn">
+                    <div className="row">
+                        <div className="col-12 d-flex justify-content-between px-3">
+                            <span className="Document-title">
+                                <span className='d-flex justify-content-center align-items-center' style={{
+                                    position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
+                                }}>
+                                    <i className={`fa ${iconString}`} style={{
+                                        color: '#FFFFFF',
+                                        fontSize: '16px'
+                                    }} />
+                                </span>
 
-                            {name}
-                        </span>
-                        {updater}
-                    </div>
-                    <div className="col-12 d-flex px-0">
-                        <div className="col-md-6 d-flex flex-column">
-                            <span className="my-3 Itinerary-event-date" style={{ color: color }}>
-                                {date}
+                                {name}
                             </span>
-                            <p className="Document-description">{event.description}</p>
+                            {updater}
                         </div>
-                        <div className="col-md-6">
-                            <div className="d-flex justify-content-center align-items-center mt-3 Itinerary-event-address">
-                                {address}
+                        <div className="col-12 d-flex px-0">
+                            <div className="col-md-6 d-flex flex-column">
+                                <span className="my-3 Itinerary-event-date" style={{ color: color }}>
+                                    {date}
+                                </span>
+                                <p className="Document-description">{event.description}</p>
                             </div>
-                            {address && renderMap}
+                            <div className="col-md-6">
+                                <div className="d-flex justify-content-center align-items-center mt-3 Itinerary-event-address">
+                                    {address}
+                                </div>
+                                {address && renderMap}
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-12 row mx-0 mt-2">
-                        {documents}
+                        <div className="col-12 row mx-0 mt-2">
+                            {documents}
+                        </div>
                     </div>
                 </div>
             </div>
