@@ -22,7 +22,8 @@ export default class NewEventForm extends Component {
         endTime: '13:00',
         timezone: moment.tz.guess(),
         description: '',
-        location: ''
+        location: '',
+        links: ['']
     }
     constructor(props) {
         super(props)
@@ -62,7 +63,7 @@ export default class NewEventForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        let { eventType, name, date, selectedDocs, startTime, endTime, timezone, description, location } = this.state
+        let { eventType, name, date, selectedDocs, startTime, endTime, timezone, description, location, links } = this.state
         this.props.submit({
             name,
             tzStart: timezone,
@@ -74,7 +75,8 @@ export default class NewEventForm extends Component {
             dateEnd: new Date(date.valueOf()),
             timeStart: startTime,
             timeEnd: endTime,
-            documents: selectedDocs
+            documents: selectedDocs,
+            links
         })
         this.closeModal()
     }
@@ -92,7 +94,8 @@ export default class NewEventForm extends Component {
             date: '',
             step: 1,
             eventType: 'EVENT',
-            date: new Date(this.props.trip.dateStart)
+            date: new Date(this.props.trip.dateStart),
+            links: ['']
         })
     }
 
@@ -122,6 +125,22 @@ export default class NewEventForm extends Component {
             `/api/trips/${this.props.trip._id}/documents`
         )
         this.setState({ docs })
+    }
+
+    handleAddingLink = e => {
+        e.preventDefault()
+        this.setState(prevState => {
+            return {
+                links: [...prevState.links, '']
+            }
+        })
+    }
+
+    handleLinkChange = e => {
+        let links = [...this.state.links]
+        let index = e.target.name.split('-')[1]
+        links[index] = e.target.value
+        this.setState({ links })
     }
 
     render() {
@@ -210,7 +229,11 @@ export default class NewEventForm extends Component {
                                                 handleDocuments={this.handleDocumentsChange}
                                                 description={this.state.description}
                                                 location={this.props.location}
-                                                onChange={this.handleChange}>
+                                                onChange={this.handleChange}
+                                                links={this.state.links}
+                                                addLink={this.handleAddingLink}
+                                                onLinkChange={this.handleLinkChange}
+                                            >
                                             </EventStep3>
                                             <hr className="my-4" />
                                             <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
@@ -289,6 +312,8 @@ class EventStep2 extends Component {
 
 class EventStep3 extends Component {
     render() {
+        let links = this.props.links.map((link, i) => <input name={'link-' + i} className="d-block form-control mt-2 mb-1" type="text" placeholder="Your link" onChange={this.props.onLinkChange} value={link} />)
+
         return (
             this.props.step === 3 ? (
                 <div>
@@ -304,13 +329,16 @@ class EventStep3 extends Component {
                     ></textarea>
                     <label className="d-block" htmlFor="">Location</label>
                     <input className="d-block form-control" type="text" name="location" id="" placeholder="Address for your event" value={this.props.location} onChange={this.props.onChange} />
-                    <label className="d-block" htmlFor="" className="d-block">Documents </label>
+                    <label className="d-block" htmlFor="" className="d-block">Resources </label>
                     <Select isMulti name="type" options={this.props.docs.map(doc => (
                         {
                             label: doc.name,
                             value: doc._id
                         }
                     ))} label="Timezone" className="left-select" styles={eventFormDocs} onChange={this.props.handleDocuments} />
+                    <label className="d-block" htmlFor="" className="d-block">Links </label>
+                    {links}
+                    <button className="btn btn-link" onClick={this.props.addLink}>Add another link</button>
                 </div>
             ) : null
         )

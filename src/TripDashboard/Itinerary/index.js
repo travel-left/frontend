@@ -51,6 +51,7 @@ class Itinerary extends Component {
     }
 
     createEvent = async event => {
+        console.log(event)
         await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
 
         this.getDaysAndEvents()

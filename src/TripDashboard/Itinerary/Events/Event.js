@@ -3,7 +3,8 @@ import UpdateEventForm from './UpdateEventForm'
 import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateForm'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
-import NewEditEventForm from './NewEditEventForm';
+import NewEditEventForm from './NewEditEventForm'
+import './Event.css'
 
 class Event extends Component {
     state = {
@@ -168,9 +169,11 @@ class Event extends Component {
                 </div>
             )
 
+        let links = event.links.map(link => <a href={link} className="Event-link">{link}</a>)
+
         return (
             <div>
-                {this.state.showUpdateForm && <NewEditEventForm close={this.closeModal} submit={this.update} remove={this.props.remove} trip={this.props.trip} event={this.props.event} />}
+                {this.state.showUpdateForm && <NewEditEventForm isOpened={true} close={this.closeModal} submit={this.update} remove={this.props.remove} trip={this.props.trip} event={this.props.event} />}
                 <div className="Itinerary-event-card py-4 px-5 my-3 animated fadeIn">
                     <div className="row">
                         <div className="col-12 d-flex justify-content-between px-3">
@@ -194,6 +197,7 @@ class Event extends Component {
                                     {date}
                                 </span>
                                 <p className="Document-description">{event.description}</p>
+                                {links}
                             </div>
                             <div className="col-md-6">
                                 <div className="d-flex justify-content-center align-items-center mt-3 Itinerary-event-address">
