@@ -1,4 +1,4 @@
-.Itinerary-title {
+.Events-title {
     font-family: Roboto !important;
     font-weight: 700 !important;
     font-size: 30px !important;
@@ -6,7 +6,7 @@
     letter-spacing: 0;
 }
 
-.Itinerary-trip-day-card {
+.Events-trip-day-card {
     font-family: Roboto;
     font-weight: 500;
     font-size: 14px;
@@ -14,17 +14,17 @@
     border-radius: 3px;
 }
 
-.Itinerary-trip-days-card {
+.Events-trip-days-card {
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 }
 
-.Itinerary-event-card {
+.Events-event-card {
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 }
 
-.Itinerary-document-title {
+.Events-document-title {
     font-family: Roboto;
     font-weight: 600;
     font-size: 16px;
@@ -32,31 +32,38 @@
     letter-spacing: 0;
 }
 
-.Itinerary-document-description {
+.Events-document-description {
     font-family: Helvetica;
     font-size: 12px;
     color: #768B9F;
     letter-spacing: 0;
 }
 
-.Itinerary-document-icon {
+.Events-document-icon {
     min-width: 95px; 
     background: #83C9F5;
     border-radius: 8px;
 }
-.Itinerary-document-image {
+.Events-document-image {
     filter: drop-shadow(2px 2px 5px #333);
 }
 
-.Itinerary-event-date {
+.Events-event-date {
     font-family: Roboto;
     font-size: 16px;
     letter-spacing: 0;
 }
 
-.Itinerary-event-address {
+.Events-event-address {
     font-family: Roboto;
     font-size: 16px;
     color: #748AA1;
+    letter-spacing: 0;
+}
+
+.Event-link {
+    font-family: Helvetica;
+    font-size: 16px;
+    color: #1062D8;
     letter-spacing: 0;
 }

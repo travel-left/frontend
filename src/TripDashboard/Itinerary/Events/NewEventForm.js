@@ -9,22 +9,24 @@ import { apiCall } from '../../../util/api'
 
 export default class NewEventForm extends Component {
     state = {
-        eventType: '',
         open: false,
         err: '',
-        name: '',
-        date: new Date(this.props.trip.dateStart),
         step: 1,
-        eventType: 'EVENT',
-        docs: [],
-        selectedDocs: [],
-        startTime: '10:00',
-        endTime: '13:00',
-        timezone: moment.tz.guess(),
-        description: '',
-        location: '',
-        links: ['']
+        documents: [],
+        event: {
+            name: '',
+            type: 'EVENT',
+            date: new Date(this.props.trip.dateStart),
+            timezone: moment.tz.guess(),
+            start: '10:00',
+            end: '13:00',
+            description: '',
+            documents: [],
+            address: '',
+            links: ['']
+        }
     }
+
     constructor(props) {
         super(props)
 
@@ -36,49 +38,66 @@ export default class NewEventForm extends Component {
         this.props.remove()
     }
 
-    handleChange = event => {
-        console.log(event)
+    handleChange = e => {
+        let key = e.target.name
+        let value = e.target.value
+        this.setState(prevState => ({
+            event: {
+                ...prevState.event,
+                [key]: value
+            }
+        }))
+    }
 
-        this.setState({ [event.target.name]: event.target.value });
+    handleTypeChange = type => {
+        this.setState(prevState => ({
+            event: {
+                ...prevState.event,
+                type: type.value
+            }
+        }))
     }
 
     handleDateChange = date => {
-        this.setState({ date })
+        this.setState(prevState => ({
+            event: {
+                ...prevState.event,
+                date
+            }
+        }))
     }
 
-    handleEventTypeChange = eventType => {
-        this.setState({ eventType: eventType.value })
+    handleTimezoneChange = timezone => {
+        this.setState(prevState => ({
+            event: {
+                ...prevState.event,
+                timezone: timezone.value
+            }
+        }))
     }
 
-    handleTimezoneChange = timeZone => {
-        this.setState({ timezone: timeZone.value })
-    }
-
-    handleDocumentsChange = documents => {
-        console.log(documents)
-        this.setState({
-            selectedDocs: documents.map(doc => doc.value)
-        })
+    handleDocumentsChange = docs => {
+        if (docs) {
+            this.setState(prevState => ({
+                event: {
+                    ...prevState.event,
+                    documents: docs.map(document => document.value)
+                }
+            }))
+        } else {
+            this.setState(prevState => ({
+                event: {
+                    ...prevState.event,
+                    documents: []
+                }
+            }))
+        }
     }
 
     handleSubmit = e => {
         e.preventDefault()
-        let { eventType, name, date, selectedDocs, startTime, endTime, timezone, description, location, links } = this.state
-        this.props.submit({
-            name,
-            tzStart: timezone,
-            tzEnd: timezone,
-            type: eventType,
-            description,
-            address: location,
-            dateStart: date,
-            dateEnd: new Date(date.valueOf()),
-            timeStart: startTime,
-            timeEnd: endTime,
-            documents: selectedDocs,
-            links
-        })
-        this.closeModal()
+        this.props.submit(this.state.event)
+        // this.closeModal()
     }
 
     toggleModal = () => {
@@ -87,64 +106,62 @@ export default class NewEventForm extends Component {
 
     closeModal = () => {
         this.setState({
-            eventType: '',
-            open: false,
-            err: '',
-            name: '',
-            date: '',
-            step: 1,
-            eventType: 'EVENT',
-            date: new Date(this.props.trip.dateStart),
-            links: ['']
+            event: {
+                even: '',
+                open: false,
+                err: '',
+                name: '',
+                date: '',
+                step: 1,
+                eventType: 'EVENT',
+                date: new Date(this.props.trip.dateStart),
+                links: ['']
+            }
         })
     }
 
     handleBackClick = e => {
         e.preventDefault()
-        this.setState(prevState => (
-            {
-                ...prevState,
-                step: prevState.step - 1
-            })
-        )
+        this.setState(prevState => ({ step: prevState.step - 1 }))
     }
 
     handleNextClick = e => {
         e.preventDefault()
-        this.setState(prevState => (
-            {
-                ...prevState,
-                step: prevState.step + 1
-            })
-        )
+        this.setState(prevState => ({ step: prevState.step + 1 }))
     }
 
     getDocuments = async () => {
-        let docs = await apiCall(
-            'get',
-            `/api/trips/${this.props.trip._id}/documents`
-        )
-        this.setState({ docs })
+        let documents = await apiCall('get', `/api/trips/${this.props.trip._id}/documents`)
+        this.setState({ documents })
     }
 
     handleAddingLink = e => {
         e.preventDefault()
         this.setState(prevState => {
             return {
-                links: [...prevState.links, '']
+                event: {
+                    ...prevState.event,
+                    links: [...prevState.event.links, '']
+                }
             }
         })
     }
 
     handleLinkChange = e => {
-        let links = [...this.state.links]
+        let links = [...this.state.event.links]
         let index = e.target.name.split('-')[1]
         links[index] = e.target.value
-        this.setState({ links })
+        this.setState(prevState => {
+            return {
+                event: {
+                    ...prevState.event,
+                    links
+                }
+            }
+        })
     }
 
     render() {
-        let { submit, remove } = this.props
         let { err } = this.state
         return (
             <>
@@ -212,25 +229,33 @@ export default class NewEventForm extends Component {
                                         </div>
                                         <div className="modal-body">
                                             <p className="text-danger"> {err ? err : null}</p>
-                                            <EventStep1 step={this.state.step} name={this.state.name} onChange={this.handleChange} handleEventTypeChange={this.handleEventTypeChange}></EventStep1>
-                                            <EventStep2 step={this.state.step}
-                                                eventType={this.state.eventType}
+                                            <EventStep1
+                                                step={this.state.step}
+                                                name={this.state.event.name}
+                                                onChange={this.handleChange}
+                                                onTypeChange={this.handleTypeChange}
+                                            >
+                                            </EventStep1>
+                                            <EventStep2
+                                                step={this.state.step}
+                                                type={this.state.event.type}
                                                 onDateChange={this.handleDateChange}
                                                 onChange={this.handleChange}
                                                 handleTimezoneChange={this.handleTimezoneChange}
-                                                timezone={this.state.timezone}
-                                                startTime={this.state.startTime}
-                                                endTime={this.state.endTime}
-                                                calendarValue={this.state.date}
+                                                timezone={this.state.event.timezone}
+                                                start={this.state.event.start}
+                                                end={this.state.event.end}
+                                                calendarValue={this.state.event.date}
                                             >
                                             </EventStep2>
-                                            <EventStep3 step={this.state.step}
-                                                docs={this.state.docs}
+                                            <EventStep3
+                                                step={this.state.step}
+                                                documents={this.state.documents}
                                                 handleDocuments={this.handleDocumentsChange}
-                                                description={this.state.description}
-                                                location={this.props.location}
+                                                description={this.state.event.description}
+                                                address={this.state.event.address}
                                                 onChange={this.handleChange}
-                                                links={this.state.links}
+                                                links={this.state.event.links}
                                                 addLink={this.handleAddingLink}
                                                 onLinkChange={this.handleLinkChange}
                                             >
@@ -262,7 +287,7 @@ class EventStep1 extends Component {
                     <div className="d-flex justify-content-start">
                         <div className="mt-2">
                             <label htmlFor="" className="d-block">Event Type</label>
-                            <Select name="type" options={types} defaultValue={types[1]} label="Type" className="left-select" styles={customStyles} onChange={this.props.handleEventTypeChange} />
+                            <Select name="type" options={types} defaultValue={types[1]} label="Type" className="left-select" styles={customStyles} onChange={this.props.onTypeChange} />
                         </div>
 
                     </div>
@@ -282,11 +307,11 @@ class EventStep2 extends Component {
                 <div className="row">
                     <div className="col-6">
                         <label className="d-block" htmlFor="">Starts</label>
-                        <input name="startTime" className="d-block form-control" type="time" value={this.props.startTime} onChange={this.props.onChange} />
+                        <input name="start" className="d-block form-control" type="time" value={this.props.start} onChange={this.props.onChange} />
                     </div>
                     <div className="col-6">
                         <label className="d-block" htmlFor="" >Ends</label>
-                        <input name="endTime" className="d-block form-control" type="time" value={this.props.endTime} onChange={this.props.onChange} />
+                        <input name="end" className="d-block form-control" type="time" value={this.props.end} onChange={this.props.onChange} />
                     </div>
                 </div>
                 <div className="row">
@@ -327,10 +352,10 @@ class EventStep3 extends Component {
                         value={this.props.description}
                         onChange={this.props.onChange}
                     ></textarea>
-                    <label className="d-block" htmlFor="">Location</label>
-                    <input className="d-block form-control" type="text" name="location" id="" placeholder="Address for your event" value={this.props.location} onChange={this.props.onChange} />
+                    <label className="d-block" htmlFor="">Address</label>
+                    <input className="d-block form-control" type="text" name="address" id="" placeholder="Address for your event" value={this.props.address} onChange={this.props.onChange} />
                     <label className="d-block" htmlFor="" className="d-block">Resources </label>
-                    <Select isMulti name="type" options={this.props.docs.map(doc => (
+                    <Select isMulti name="type" options={this.props.documents.map(doc => (
                         {
                             label: doc.name,
                             value: doc._id

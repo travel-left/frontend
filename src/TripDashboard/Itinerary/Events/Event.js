@@ -4,7 +4,7 @@ import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateFo
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
 import NewEditEventForm from './NewEditEventForm'
-import './Event.css'
+import moment from 'moment'
 
 class Event extends Component {
     state = {
@@ -34,9 +34,8 @@ class Event extends Component {
 
     render() {
         let { event } = this.props
-        const { showMap } = this.state
-        let iconString,
-            color = ''
+
+        let iconString, color = ''
         switch (event.type) {
             case 'LODGING':
                 iconString = 'fa-bed'
@@ -95,86 +94,42 @@ class Event extends Component {
             </span>
         ) : null
 
-        const date =
-            event.dtStart && event.dtEnd
-                ? `${event.dtStart} - ${event.dtEnd}`
-                : null
+        const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
+        const map = event.coordinates && this.state.showUpdateForm ? <Map coordinates={event.coordinates} />
+            :
+            <div className="text-center">
+                <button className="btn btn-lg btn-secondary my-3" style={{ color: '#FFFFFF' }} onClick={this.showMap}> SHOW MAP </button>
+            </div>
+        const name = event.name
+        const address = (
+            <p className="card-text text-muted">{'Address: ' + event.address}</p>
+        )
 
-        const map = event.coordinates ? <Map coordinates={event.coordinates} /> : null
-
-        const name = event.tripDate ? (
-            <>
-                <span>{event.name}</span>
-                <span className="text-muted h5"> (Trip Date)</span>{' '}
-            </>
-        ) : (
-                event.name
-            )
-
-        const address = event.address.length > 3 ? (
-            <p className="card-text text-muted">
-                {'Address: ' + event.address}
-            </p>
-        ) : null
-
-        const documents = event.documents
-            ? event.documents.map((d, i) => (
-                <div className="col-md-12 Document-card my-3 px-0">
-                    <div className="row no-gutters">
-                        <div className="Itinerary-document-icon d-flex justify-content-center align-items-center">
-                            <a
-                                className="hover"
-                                href={d.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <img
-                                    src={getIcon(d.link)}
-                                    alt=""
-                                    className='Itinerary-document-image'
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </a>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center pl-4 py-3">
-                            <span className="Itinerary-document-title">{d.name}</span>
-                            <p className="Itinerary-document-description">{d.description}</p>
-                            <a
-                                className="hover"
-                                href={d.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span className='Document-open-text pr-1'>
-                                    Download
-                                        </span>
-                            </a>
-                        </div>
+        const documents = event.documents.map((d, i) => (
+            <div className="col-md-12 Document-card my-3 px-0">
+                <div className="row no-gutters">
+                    <div className="Events-document-icon d-flex justify-content-center align-items-center">
+                        <a className="hover" href={d.link} target="_blank" rel="noopener noreferrer">
+                            <img src={getIcon(d.link)} alt="" className='Events-document-image' style={{ objectFit: 'cover' }} />
+                        </a>
+                    </div>
+                    <div className="d-flex flex-column justify-content-center pl-4 py-3">
+                        <span className="Events-document-title">{d.name}</span>
+                        <p className="Events-document-description">{d.description}</p>
+                        <a className="hover" href={d.link} target="_blank" rel="noopener noreferrer">
+                            <span className='Document-open-text pr-1'> Download </span>
+                        </a>
                     </div>
                 </div>
-            ))
-            : null
-
-        const renderMap = showMap ? (
-            map
-        ) : (
-                <div className="text-center">
-                    <button
-                        className="btn btn-lg btn-secondary my-3"
-                        style={{ color: '#FFFFFF' }}
-                        onClick={this.showMap}
-                    >
-                        SHOW MAP
-                </button>
-                </div>
-            )
+            </div>
+        ))
 
         let links = event.links.map(link => <a href={link} className="Event-link">{link}</a>)
 
         return (
             <div>
                 {this.state.showUpdateForm && <NewEditEventForm isOpened={true} close={this.closeModal} submit={this.update} remove={this.props.remove} trip={this.props.trip} event={this.props.event} />}
-                <div className="Itinerary-event-card py-4 px-5 my-3 animated fadeIn">
+                <div className="Events-event-card py-4 px-5 my-3 animated fadeIn">
                     <div className="row">
                         <div className="col-12 d-flex justify-content-between px-3">
                             <span className="Document-title">
@@ -193,17 +148,17 @@ class Event extends Component {
                         </div>
                         <div className="col-12 d-flex px-0">
                             <div className="col-md-6 d-flex flex-column">
-                                <span className="my-3 Itinerary-event-date" style={{ color: color }}>
-                                    {date}
+                                <span className="my-3 Events-event-date" style={{ color: color }}>
+                                    {time}
                                 </span>
                                 <p className="Document-description">{event.description}</p>
                                 {links}
                             </div>
                             <div className="col-md-6">
-                                <div className="d-flex justify-content-center align-items-center mt-3 Itinerary-event-address">
+                                <div className="d-flex justify-content-center align-items-center mt-3 Events-event-address">
                                     {address}
                                 </div>
-                                {address && renderMap}
+                                {address && map}
                             </div>
                         </div>
                         <div className="col-12 row mx-0 mt-2">

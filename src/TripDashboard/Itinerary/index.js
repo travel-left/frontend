@@ -5,21 +5,21 @@ import { apiCall } from '../../util/api'
 import NewEventForm from './Events/NewEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
-import './Itinerary.css'
+import './Events.css'
 import ReactGA from 'react-ga'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
-    ReactGA.pageview('/itinerary')
+    ReactGA.pageview('/events')
 }
 
 
-class Itinerary extends Component {
-    tz = moment.tz.guess(true)
+class events extends Component {
+    localTimezone = moment.tz.guess(true)
 
     state = {
         days: [],
         selectedDay: '',
-        itinerary: []
+        events: []
     }
 
     constructor(props) {
@@ -31,30 +31,38 @@ class Itinerary extends Component {
     }
 
     getDaysAndEvents = async () => {
-        let itinerary = await apiCall(
-            'get',
-            `/api/trips/${this.props.currentTrip._id}/itinerary?tz=${this.tz}`
-        )
-        if (itinerary.length > 0) {
-            itinerary.sort(time_sort_asc)
-            let days = []
-            for (const event of itinerary) {
-                console.log(event)
-                if (!days.includes(event.dateStart)) {
-                    days.push(event.dateStart)
-                }
+        let days = []
+        let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
+        events.sort(time_sort_asc)
+        events = events.map(event => {
+            return {
+                ...event,
+                start: moment(event.start).tz(this.localTimezone),
+                end: moment(event.end).tz(this.localTimezone)
             }
+        })
 
-
-            this.setState({ itinerary, days, selectedDay: days[0] })
+        for (const event of events) {
+            if (!days.includes(event.start)) days.push(event.start)
         }
+
+        this.setState({ events, days, selectedDay: days[0] })
     }
 
     createEvent = async event => {
         console.log(event)
+
+        let start = new Date(event.date.valueOf())
+        let end = new Date(event.date.valueOf())
+        start.setHours(event.start.split(':')[0])
+        end.setHours(event.end.split(':')[0])
+        event.start = start
+        event.end = end
+        delete event.date
+        console.log(event)
         await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
 
-        this.getDaysAndEvents()
+        // this.getDaysAndEvents()
     }
 
     updateEvent = async (eventId, updateObject) => {
@@ -103,7 +111,7 @@ class Itinerary extends Component {
     }
 
     render() {
-        const { days, itinerary, selectedDay } = this.state
+        const { days, events, selectedDay } = this.state
         const dayList = days.length ? (
             <DayList
                 selectedDay={selectedDay}
@@ -113,9 +121,9 @@ class Itinerary extends Component {
         ) : (
                 <p className="p-2">Click NEW EVENT to get started</p>
             )
-        const eventList = itinerary.length ? (
+        const eventList = events.length ? (
             <EventList
-                events={itinerary}
+                events={events}
                 updateEvent={this.updateEvent}
                 removeEvent={this.removeEvent}
                 updateTripDate={this.updateTripDate}
@@ -129,7 +137,7 @@ class Itinerary extends Component {
         return (
             <div className="col-md-12 mt-4">
                 <div className="col-md-10 d-flex flex-row justify-content-between">
-                    <h4 className='Itinerary-title'>Trip Days</h4>
+                    <h4 className='Events-title'>Trip Days</h4>
                     <NewEventForm
                         submit={this.createEvent}
                         initDay={this.props.currentTrip.dateStart}
@@ -138,7 +146,7 @@ class Itinerary extends Component {
                 </div>
                 <div className="row mx-0">
                     <div className="col-md-2">
-                        <div className="Itinerary-trip-days-card mt-4">
+                        <div className="Events-trip-days-card mt-4">
                             {dayList}
                         </div>
                     </div>
@@ -151,7 +159,7 @@ class Itinerary extends Component {
     }
 }
 
-export default Itinerary
+export default events
 
 const time_sort_asc = function (event1, event2) {
     if (
