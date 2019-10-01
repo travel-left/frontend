@@ -95,11 +95,15 @@ class Event extends Component {
         ) : null
 
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
-        const map = event.coordinates && this.state.showUpdateForm ? <Map coordinates={event.coordinates} />
-            :
-            <div className="text-center">
-                <button className="btn btn-lg btn-secondary my-3" style={{ color: '#FFFFFF' }} onClick={this.showMap}> SHOW MAP </button>
-            </div>
+
+        const mapButton = event.coordinates && !this.state.showMap ? <div className="text-center">
+            <button className="btn btn-lg btn-secondary my-3" style={{ color: '#FFFFFF' }} onClick={this.showMap}> SHOW MAP </button>
+        </div> : null
+
+        const map = this.state.showMap ? <Map coordinates={event.coordinates} /> : null
+
+
+
         const name = event.name
         const address = (
             <p className="card-text text-muted">{'Address: ' + event.address}</p>
@@ -158,7 +162,8 @@ class Event extends Component {
                                 <div className="d-flex justify-content-center align-items-center mt-3 Events-event-address">
                                     {address}
                                 </div>
-                                {address && map}
+                                {mapButton}
+                                {map}
                             </div>
                         </div>
                         <div className="col-12 row mx-0 mt-2">

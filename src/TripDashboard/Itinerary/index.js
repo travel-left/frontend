@@ -62,7 +62,7 @@ class events extends Component {
         console.log(event)
         await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
 
-        // this.getDaysAndEvents()
+        this.getDaysAndEvents()
     }
 
     updateEvent = async (eventId, updateObject) => {
@@ -72,27 +72,10 @@ class events extends Component {
         this.getDaysAndEvents()
     }
 
-    updateTripDate = async (tdId, updateObject) => {
-        await apiCall(
-            'put',
-            `/api/trips/${this.props.currentTrip._id}/tripDates/${tdId}`,
-            updateObject
-        )
-        this.getDaysAndEvents()
-    }
-
     removeEvent = async eventId => {
         await apiCall(
             'delete',
             `/api/trips/${this.props.currentTrip._id}/events/${eventId}`
-        )
-        this.getDaysAndEvents()
-    }
-
-    removeTripDate = async tripDateId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.props.currentTrip._id}/tripDates/${tripDateId}`
         )
         this.getDaysAndEvents()
     }
