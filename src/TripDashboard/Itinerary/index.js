@@ -118,9 +118,7 @@ class events extends Component {
                 days={days}
                 handleClick={this.onDayClick}
             />
-        ) : (
-                <p className="p-2">Click NEW EVENT to get started</p>
-            )
+        ) : null
         const eventList = events.length ? (
             <EventList
                 events={events}
