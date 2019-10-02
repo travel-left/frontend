@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import UpdateEventForm from './UpdateEventForm'
-import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateForm'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
 import moment from 'moment'
@@ -31,45 +29,9 @@ class Event extends Component {
     }
 
     render() {
-        let { event } = this.props
+        const { event } = this.props
 
-        let iconString, color = ''
-        switch (event.type) {
-            case 'LODGING':
-                iconString = 'fa-bed'
-                color = '#FEA600'
-                break
-            case 'TRANSPORTATION':
-                iconString = 'fa-car'
-                color = '#BF9DD9'
-                break
-            case 'EVENT':
-                iconString = 'fa-calendar-check'
-                color = '#83C9F4'
-                break
-            case 'FLIGHT':
-                iconString = 'fa-plane'
-                color = '#CCAA55'
-                break
-            case 'TRAVEL':
-                iconString = 'fas fa-suitcase'
-                color = '#29CB97'
-                break
-            case 'PAPERWORK':
-                iconString = 'fas fa-sticky-note'
-                color = '#FEC400'
-                break
-            case 'MONEY':
-                iconString = 'fas fa-money-bill-alt'
-                color = '#B558F6'
-                break
-            case 'OTHER':
-                iconString = 'fas fa-calendar-minus'
-                color = '#FFABAA'
-                break
-            default:
-                break
-        }
+        const icon = setIcon(event.type)
 
         const updateButton = !event.share ? (
             <span
@@ -102,7 +64,7 @@ class Event extends Component {
 
         const name = event.name
 
-        const address = <p className="card-text text-muted">{'Address: ' + event.address}</p>
+        const address = <p className="card-text text-muted text-center">{event.address}</p>
 
         const documents = event.documents.map((d, i) => (
             <div key={i} className="col-md-12 Document-card my-3 px-0">
@@ -131,9 +93,9 @@ class Event extends Component {
                     <div className="col-12 d-flex justify-content-between px-3">
                         <span className="Document-title">
                             <span className='d-flex justify-content-center align-items-center' style={{
-                                position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
+                                position: 'absolute', right: '101%', backgroundColor: icon.color, borderRadius: '50%', height: '40px', width: '40px'
                             }}>
-                                <i className={`fa ${iconString}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
+                                <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                             </span>
 
                             {name}
@@ -158,7 +120,7 @@ class Event extends Component {
                     </div>
                     <div className="col-12 d-flex px-0">
                         <div className="col-md-6 d-flex flex-column">
-                            <span className="my-3 Events-event-date" style={{ color: color }}>
+                            <span className="my-3 Events-event-date" style={{ color: icon.color }}>
                                 {time}
                             </span>
                             <p className="Document-description">{event.description}</p>
@@ -182,3 +144,48 @@ class Event extends Component {
 }
 
 export default Event
+
+function setIcon(eventType) {
+    let icon = {
+        string: '',
+        color: ''
+    }
+    switch (eventType) {
+        case 'LODGING':
+            icon.string = 'fa-bed'
+            icon.color = '#FEA600'
+            break
+        case 'TRANSPORTATION':
+            icon.string = 'fa-car'
+            icon.color = '#BF9DD9'
+            break
+        case 'EVENT':
+            icon.string = 'fa-calendar-check'
+            icon.color = '#83C9F4'
+            break
+        case 'FLIGHT':
+            icon.string = 'fa-plane'
+            icon.color = '#CCAA55'
+            break
+        case 'TRAVEL':
+            icon.string = 'fas fa-suitcase'
+            icon.color = '#29CB97'
+            break
+        case 'PAPERWORK':
+            icon.string = 'fas fa-sticky-note'
+            icon.color = '#FEC400'
+            break
+        case 'MONEY':
+            icon.string = 'fas fa-money-bill-alt'
+            icon.color = '#B558F6'
+            break
+        case 'OTHER':
+            icon.string = 'fas fa-calendar-minus'
+            icon.color = '#FFABAA'
+            break
+        default:
+            break
+    }
+
+    return icon
+}
