@@ -35,19 +35,15 @@ class events extends Component {
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
-
         for (const event of events) {
             if (!days.includes(event.start.split('T')[0])) days.push(event.start.split('T')[0])
         }
-        events = events.map(event => {
-            return {
-                ...event,
-                start: moment(event.start).tz(this.localTimezone),
-                end: moment(event.end).tz(this.localTimezone)
-            }
-        })
 
-        events = events.sort((a, b) => a.start.valueOf() - b.start.valueOf())
+        events = events.map(event => ({
+            ...event,
+            start: moment(event.start).tz(this.localTimezone),
+            end: moment(event.end).tz(this.localTimezone)
+        }))
 
         this.setState({ events, days, selectedDay: days[0] })
     }
