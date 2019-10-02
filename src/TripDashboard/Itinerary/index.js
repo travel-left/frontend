@@ -80,6 +80,7 @@ class events extends Component {
     }
 
     removeEvent = async eventId => {
+        console.log('removing')
         await apiCall(
             'delete',
             `/api/trips/${this.props.currentTrip._id}/events/${eventId}`
@@ -118,8 +119,6 @@ class events extends Component {
                 events={events}
                 updateEvent={this.updateEvent}
                 removeEvent={this.removeEvent}
-                updateTripDate={this.updateTripDate}
-                removeTripDate={this.removeTripDate}
                 trip={this.props.currentTrip}
             />
         ) : (

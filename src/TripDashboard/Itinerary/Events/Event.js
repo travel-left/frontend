@@ -15,6 +15,7 @@ class Event extends Component {
 
     remove = () => {
         this.props.removeEvent(this.props.event._id)
+        this.toggleModal()
     }
 
     update = updateObject => {
@@ -141,7 +142,7 @@ class Event extends Component {
                         {this.state.isOpen &&
                             <NewEventForm
                                 submit={this.update}
-                                remove={this.props.remove}
+                                remove={this.remove}
                                 trip={this.props.trip}
                                 toggleModal={this.toggleModal}
                                 isOpen={this.state.isOpen}

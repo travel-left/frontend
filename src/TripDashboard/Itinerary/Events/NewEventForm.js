@@ -34,8 +34,8 @@ export default class NewEventForm extends Component {
         this.getDocuments()
     }
 
-    handleRemove = () => {
-        this.toggleModal()
+    handleRemove = e => {
+        e.preventDefault()
         this.props.remove()
     }
 
@@ -97,6 +97,7 @@ export default class NewEventForm extends Component {
     }
 
     handleSubmit = e => {
+        console.log('updating')
         e.preventDefault()
         this.props.submit(this.state.event)
         this.handleToggleModal()
@@ -164,7 +165,7 @@ export default class NewEventForm extends Component {
                     <div className="modal-dialog" role="document">
                         <form className={`modal-content Modal-Form animated zoomIn ${this.state.formAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
                             <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
-                                <h5 className="modal-title Modal-Form-header pl-3" id="addnewNameModal"> Create an event - {this.state.step} of 3</h5>
+                                <h5 className="modal-title Modal-Form-header pl-3" id="addnewNameModal"> {this.props.event ? 'Edit' : 'Create'} an event - {this.state.step} of 3</h5>
                                 <button
                                     className='btn btn-link'
                                     type="reset"
@@ -210,7 +211,9 @@ export default class NewEventForm extends Component {
                                 >
                                 </EventStep3>
                                 <hr className="my-4" />
-                                <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
+                                <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}
+                                    text={this.props.event ? 'UPDATE' : 'CREATE'}
+                                    destroy={this.handleRemove}></EventButtons>
                             </div>
                         </form>
                     </div>
@@ -323,13 +326,14 @@ class EventStep3 extends Component {
     }
 }
 
-const EventButtons = ({ step, back, next, submit }) => {
+const EventButtons = ({ step, back, next, submit, text, destroy }) => {
     let buttons
+
     switch (step) {
         case 1:
             buttons = (
                 <>
-                    <button className="btn btn-lg btn-secondary" onClick={submit}>CREATE EVENT</button>
+                    <button className="btn btn-lg btn-secondary" onClick={submit}>{text} EVENT</button>
                     <div className="float-right">
                         <button className="btn btn-lg btn-primary" onClick={next}>NEXT</button>
                     </div>
@@ -339,7 +343,7 @@ const EventButtons = ({ step, back, next, submit }) => {
         case 2:
             buttons = (
                 <>
-                    <button className="btn btn-lg btn-secondary" onClick={submit}>CREATE EVENT</button>
+                    <button className="btn btn-lg btn-secondary" onClick={submit}>{text} EVENT</button>
                     <div className="float-right">
                         <button className="btn btn-lg btn-link text-primary" onClick={back}>PREV</button>
                         <button className="btn btn-lg btn-primary" onClick={next}>NEXT</button>
@@ -350,9 +354,10 @@ const EventButtons = ({ step, back, next, submit }) => {
         case 3:
             buttons = (
                 <>
-                    <div className="d-flex justify-content-end">
+                    {text === 'UPDATE' ? <button className="btn btn-lg btn-danger" onClick={destroy}>DELETE EVENT</button> : null}
+                    <div className="float-right">
                         <button className="btn btn-lg btn-link text-primary" onClick={back}>PREV</button>
-                        <button className="btn btn-lg btn-primary" onClick={submit}>CREATE EVENT</button>
+                        <button className="btn btn-lg btn-primary" onClick={submit}>{text} EVENT</button>
                     </div>
                 </>
             )
