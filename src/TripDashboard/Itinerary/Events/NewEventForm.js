@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Mortal from 'react-mortal'
+import { Portal } from 'react-portal'
 import { types, timezones } from './EventHelpers'
 import Select from 'react-select'
 import Calendar from 'react-calendar'
@@ -9,7 +9,6 @@ import { apiCall } from '../../../util/api'
 
 export default class NewEventForm extends Component {
     state = {
-        open: false,
         err: '',
         step: 1,
         documents: [],
@@ -24,7 +23,9 @@ export default class NewEventForm extends Component {
             documents: [],
             address: '',
             links: ['']
-        }
+        },
+        formAnimation: '',
+        overlayAnimation: ''
     }
 
     constructor(props) {
@@ -97,27 +98,15 @@ export default class NewEventForm extends Component {
     handleSubmit = e => {
         e.preventDefault()
         this.props.submit(this.state.event)
-        // this.closeModal()
+        this.handleToggleModal()
     }
 
-    toggleModal = () => {
-        this.setState(prevState => ({ open: !prevState.open }))
-    }
+    handleToggleModal = () => {
+        if (this.props.isOpen) this.setState({ formAnimation: 'zoomOut', overlayAnimation: 'fadeOut' })
+        setTimeout(() => {
+            this.props.toggleModal()
+        }, 210);
 
-    closeModal = () => {
-        this.setState({
-            event: {
-                even: '',
-                open: false,
-                err: '',
-                name: '',
-                date: '',
-                step: 1,
-                eventType: 'EVENT',
-                date: new Date(this.props.trip.dateStart),
-                links: ['']
-            }
-        })
     }
 
     handleBackClick = e => {
@@ -164,112 +153,67 @@ export default class NewEventForm extends Component {
     render() {
         let { err } = this.state
         return (
-            <>
-                <button
-                    className="btn btn-primary btn-lg"
-                    onClick={this.toggleModal}
+            <Portal >
+                <div className="modal d-block" style={{
+                    maxHeight: 'calc(100vh - 50px)',
+                    overflowY: 'auto'
+                }}
                 >
-                    NEW EVENT
-                </button>
-                <Mortal
-                    isOpened={this.state.open}
-                    onClose={this.toggleModal}
-                    motionStyle={(spring, isVisible) => ({
-                        opacity: spring(isVisible ? 1 : 0),
-                        modalOffset: spring(isVisible ? 0 : -90, {
-                            stiffness: isVisible ? 300 : 200,
-                            damping: isVisible ? 15 : 30
-                        })
-                    })}
-                >
-                    {(motion, isVisible) => (
-                        <div
-                            className="modal d-block"
-                            style={{
-                                maxHeight: 'calc(100vh - 50px)',
-                                overflowY: 'auto'
-                            }}
-                        >
-                            <div className="Modal--overlay"
-                                style={{
-                                    opacity: motion.opacity,
-                                    pointerEvents: isVisible
-                                        ? 'auto'
-                                        : 'none'
-                                }}
-                                onClick={this.toggleModal}
-                            />
-                            <div className="modal-dialog" role="document">
-                                <div
-                                    className="modal-content Modal-Form"
-                                    style={{
-                                        opacity: motion.opacity,
-                                        transform: `translate3d(0, ${
-                                            motion.modalOffset
-                                            }px, 0)`
-                                    }}
+                    <div className={`Modal--overlay animated fadeIn ${this.state.overlayAnimation}`} onClick={this.handleToggleModal} />
+                    <div className="modal-dialog" role="document">
+                        <form className={`modal-content Modal-Form animated zoomIn ${this.state.formAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
+                            <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
+                                <h5 className="modal-title Modal-Form-header pl-3" id="addnewNameModal"> Create an event - {this.state.step} of 3</h5>
+                                <button
+                                    className='btn btn-link'
+                                    type="reset"
+                                    aria-label="Close"
+                                    style={{ backgroundColor: '0F58D1' }}
+                                    onClick={this.handleToggleModal}
                                 >
-                                    <form >
-                                        <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
-                                            <h5
-                                                className="modal-title Modal-Form-header pl-3"
-                                                id="addnewNameModal"
-                                            >
-                                                Create an event - {this.state.step} of 3
-                                                </h5>
-                                            <button
-                                                className='btn btn-link'
-                                                type="reset"
-                                                aria-label="Close"
-                                                style={{ backgroundColor: '0F58D1' }}
-                                                onClick={this.closeModal}
-                                            >
-                                                <i class="material-icons" style={{ color: 'white' }}>close</i>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body">
-                                            <p className="text-danger"> {err ? err : null}</p>
-                                            <EventStep1
-                                                step={this.state.step}
-                                                name={this.state.event.name}
-                                                onChange={this.handleChange}
-                                                onTypeChange={this.handleTypeChange}
-                                            >
-                                            </EventStep1>
-                                            <EventStep2
-                                                step={this.state.step}
-                                                type={this.state.event.type}
-                                                onDateChange={this.handleDateChange}
-                                                onChange={this.handleChange}
-                                                handleTimezoneChange={this.handleTimezoneChange}
-                                                timezone={this.state.event.timezone}
-                                                start={this.state.event.start}
-                                                end={this.state.event.end}
-                                                calendarValue={this.state.event.date}
-                                            >
-                                            </EventStep2>
-                                            <EventStep3
-                                                step={this.state.step}
-                                                documents={this.state.documents}
-                                                handleDocuments={this.handleDocumentsChange}
-                                                description={this.state.event.description}
-                                                address={this.state.event.address}
-                                                onChange={this.handleChange}
-                                                links={this.state.event.links}
-                                                addLink={this.handleAddingLink}
-                                                onLinkChange={this.handleLinkChange}
-                                            >
-                                            </EventStep3>
-                                            <hr className="my-4" />
-                                            <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
-                                        </div>
-                                    </form>
-                                </div>
+                                    <i class="material-icons" style={{ color: 'white' }}>close</i>
+                                </button>
                             </div>
-                        </div>
-                    )}
-                </Mortal>
-            </>
+                            <div className="modal-body">
+                                <p className="text-danger"> {err ? err : null}</p>
+                                <EventStep1
+                                    step={this.state.step}
+                                    name={this.state.event.name}
+                                    onChange={this.handleChange}
+                                    onTypeChange={this.handleTypeChange}
+                                >
+                                </EventStep1>
+                                <EventStep2
+                                    step={this.state.step}
+                                    type={this.state.event.type}
+                                    onDateChange={this.handleDateChange}
+                                    onChange={this.handleChange}
+                                    handleTimezoneChange={this.handleTimezoneChange}
+                                    timezone={this.state.event.timezone}
+                                    start={this.state.event.start}
+                                    end={this.state.event.end}
+                                    calendarValue={this.state.event.date}
+                                >
+                                </EventStep2>
+                                <EventStep3
+                                    step={this.state.step}
+                                    documents={this.state.documents}
+                                    handleDocuments={this.handleDocumentsChange}
+                                    description={this.state.event.description}
+                                    address={this.state.event.address}
+                                    onChange={this.handleChange}
+                                    links={this.state.event.links}
+                                    addLink={this.handleAddingLink}
+                                    onLinkChange={this.handleLinkChange}
+                                >
+                                </EventStep3>
+                                <hr className="my-4" />
+                                <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </Portal>
         )
     }
 }

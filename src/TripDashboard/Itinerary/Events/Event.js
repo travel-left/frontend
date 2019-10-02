@@ -102,15 +102,12 @@ class Event extends Component {
 
         const map = this.state.showMap ? <Map coordinates={event.coordinates} /> : null
 
-
-
         const name = event.name
-        const address = (
-            <p className="card-text text-muted">{'Address: ' + event.address}</p>
-        )
+
+        const address = <p className="card-text text-muted">{'Address: ' + event.address}</p>
 
         const documents = event.documents.map((d, i) => (
-            <div className="col-md-12 Document-card my-3 px-0">
+            <div key={i} className="col-md-12 Document-card my-3 px-0">
                 <div className="row no-gutters">
                     <div className="Events-document-icon d-flex justify-content-center align-items-center">
                         <a className="hover" href={d.link} target="_blank" rel="noopener noreferrer">

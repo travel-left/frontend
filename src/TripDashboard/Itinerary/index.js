@@ -19,7 +19,8 @@ class events extends Component {
     state = {
         days: [],
         selectedDay: '',
-        events: []
+        events: [],
+        isOpen: false
     }
 
     constructor(props) {
@@ -93,6 +94,10 @@ class events extends Component {
         })
     }
 
+    toggleModal = () => {
+        this.setState(prevState => ({ isOpen: !prevState.isOpen }))
+    }
+
     render() {
         const { days, events, selectedDay } = this.state
         const dayList = days.length ? (
@@ -119,11 +124,21 @@ class events extends Component {
             <div className="col-md-12 mt-4">
                 <div className="col-md-10 d-flex flex-row justify-content-between">
                     <h4 className='Events-title'>Trip Days</h4>
-                    <NewEventForm
-                        submit={this.createEvent}
-                        initDay={this.props.currentTrip.dateStart}
-                        trip={this.props.currentTrip}
-                    />
+                    <button
+                        className="btn btn-primary btn-lg"
+                        onClick={this.toggleModal}
+                    >
+                        NEW EVENT
+                </button>
+                    {this.state.isOpen &&
+                        <NewEventForm
+                            submit={this.createEvent}
+                            initDay={this.props.currentTrip.dateStart}
+                            trip={this.props.currentTrip}
+                            toggleModal={this.toggleModal}
+                            isOpen={this.state.isOpen}
+                        />
+                    }
                 </div>
                 <div className="row mx-0">
                     <div className="col-md-2">
