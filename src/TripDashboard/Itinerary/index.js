@@ -49,40 +49,19 @@ class events extends Component {
     }
 
     createEvent = async event => {
-        console.log(event)
-
-        let start = new Date(event.date.valueOf())
-        let end = new Date(event.date.valueOf())
-        start.setHours(event.start.split(':')[0])
-        end.setHours(event.end.split(':')[0])
-        event.start = start
-        event.end = end
-        delete event.date
-        console.log(event)
+        event = formatEventForBackend(event)
         await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
-
         this.getDaysAndEvents()
     }
 
     updateEvent = async (eventId, event) => {
-        let start = new Date(event.date.valueOf())
-        let end = new Date(event.date.valueOf())
-        start.setHours(event.start.split(':')[0])
-        end.setHours(event.end.split(':')[0])
-        event.start = start
-        event.end = end
-        delete event.date
+        event = formatEventForBackend(event)
         await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event)
-
         this.getDaysAndEvents()
     }
 
     removeEvent = async eventId => {
-        console.log('removing')
-        await apiCall(
-            'delete',
-            `/api/trips/${this.props.currentTrip._id}/events/${eventId}`
-        )
+        await apiCall('delete', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`)
         this.getDaysAndEvents()
     }
 
@@ -119,20 +98,15 @@ class events extends Component {
                 removeEvent={this.removeEvent}
                 trip={this.props.currentTrip}
             />
-        ) : (
-                <h4 className="text-info" />
-            )
+        ) : <h4 className="text-info" />
 
         return (
             <div className="col-md-12 mt-4">
                 <div className="col-md-10 d-flex flex-row justify-content-between">
                     <h4 className='Events-title'>Trip Days</h4>
-                    <button
-                        className="btn btn-primary btn-lg"
-                        onClick={this.toggleModal}
-                    >
+                    <button className="btn btn-primary btn-lg" onClick={this.toggleModal}>
                         NEW EVENT
-                </button>
+                    </button>
                     {this.state.isOpen &&
                         <NewEventForm
                             submit={this.createEvent}
@@ -160,16 +134,15 @@ class events extends Component {
 
 export default events
 
-const time_sort_asc = function (event1, event2) {
-    if (
-        moment(event1.start, ['h:mm A']).format('HH:mm') >
-        moment(event2.start, ['h:mm A']).format('HH:mm')
-    )
-        return 1
-    if (
-        moment(event1.start, ['h:mm A']).format('HH:mm') <
-        moment(event2.start, ['h:mm A']).format('HH:mm')
-    )
-        return -1
-    return 0
+function formatEventForBackend(event) {
+    let formattedEvent = { ...event }
+    let start = new Date(formattedEvent.date.valueOf())
+    let end = new Date(formattedEvent.date.valueOf())
+    start.setHours(formattedEvent.start.split(':')[0])
+    end.setHours(formattedEvent.end.split(':')[0])
+    formattedEvent.start = start
+    formattedEvent.end = end
+    delete formattedEvent.date
+
+    return formattedEvent
 }
