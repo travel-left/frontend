@@ -12,7 +12,7 @@ export default class NewEventForm extends Component {
         err: '',
         step: 1,
         documents: [],
-        event: {
+        event: this.props.event ? this.props.event : {
             name: '',
             type: 'EVENT',
             date: new Date(this.props.trip.dateStart),

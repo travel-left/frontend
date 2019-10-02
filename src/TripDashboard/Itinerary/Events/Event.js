@@ -3,13 +3,14 @@ import UpdateEventForm from './UpdateEventForm'
 import UpdateTripDateForm from '../../TripInformation/TripDates/UpdateTripDateForm'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
-import NewEditEventForm from './NewEditEventForm'
 import moment from 'moment'
+import NewEventForm from './NewEventForm'
 
 class Event extends Component {
     state = {
         showMap: false,
-        showUpdateForm: false
+        showUpdateForm: false,
+        isOpen: false
     }
 
     remove = () => {
@@ -24,12 +25,8 @@ class Event extends Component {
         this.setState({ showMap: true })
     }
 
-    openModal = () => {
-        this.setState({ showUpdateForm: true })
-    }
-
-    closeModal = () => {
-        this.setState({ showUpdateForm: false })
+    toggleModal = () => {
+        this.setState(prevState => ({ isOpen: !prevState.isOpen }))
     }
 
     render() {
@@ -73,9 +70,9 @@ class Event extends Component {
                 break
         }
 
-        const updater = !event.share ? (
+        const updateButton = !event.share ? (
             <span
-                onClick={this.openModal}
+                onClick={this.toggleModal}
                 className='text-uppercase d-flex align-items-center justify-content-center hover'
                 style={{
                     fontWeight: '500',
@@ -128,44 +125,57 @@ class Event extends Component {
         let links = event.links.map(link => <a href={link} className="Event-link">{link}</a>)
 
         return (
-            <div>
-                {this.state.showUpdateForm && <NewEditEventForm isOpened={true} close={this.closeModal} submit={this.update} remove={this.props.remove} trip={this.props.trip} event={this.props.event} />}
-                <div className="Events-event-card py-4 px-5 my-3 animated fadeIn">
-                    <div className="row">
-                        <div className="col-12 d-flex justify-content-between px-3">
-                            <span className="Document-title">
-                                <span className='d-flex justify-content-center align-items-center' style={{
-                                    position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
-                                }}>
-                                    <i className={`fa ${iconString}`} style={{
-                                        color: '#FFFFFF',
-                                        fontSize: '16px'
-                                    }} />
-                                </span>
-
-                                {name}
+            <div className="Events-event-card py-4 px-5 my-3 animated fadeIn">
+                <div className="row">
+                    <div className="col-12 d-flex justify-content-between px-3">
+                        <span className="Document-title">
+                            <span className='d-flex justify-content-center align-items-center' style={{
+                                position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
+                            }}>
+                                <i className={`fa ${iconString}`} style={{
+                                    color: '#FFFFFF',
+                                    fontSize: '16px'
+                                }} />
                             </span>
-                            {updater}
+
+                            {name}
+                        </span>
+                        {updateButton}
+                        {this.state.isOpen &&
+                            <NewEventForm
+                                submit={this.update}
+                                remove={this.props.remove}
+                                trip={this.props.trip}
+                                toggleModal={this.toggleModal}
+                                isOpen={this.state.isOpen}
+                                event={{
+                                    ...event,
+                                    date: new Date(event.start),
+                                    start: moment(event.start).format('HH:mm'),
+                                    end: moment(event.end).format('HH:mm'),
+                                    timezone: moment.tz.guess()
+                                }}
+                            />
+                        }
+                    </div>
+                    <div className="col-12 d-flex px-0">
+                        <div className="col-md-6 d-flex flex-column">
+                            <span className="my-3 Events-event-date" style={{ color: color }}>
+                                {time}
+                            </span>
+                            <p className="Document-description">{event.description}</p>
+                            {links}
                         </div>
-                        <div className="col-12 d-flex px-0">
-                            <div className="col-md-6 d-flex flex-column">
-                                <span className="my-3 Events-event-date" style={{ color: color }}>
-                                    {time}
-                                </span>
-                                <p className="Document-description">{event.description}</p>
-                                {links}
+                        <div className="col-md-6">
+                            <div className="d-flex justify-content-center align-items-center mt-3 Events-event-address">
+                                {address}
                             </div>
-                            <div className="col-md-6">
-                                <div className="d-flex justify-content-center align-items-center mt-3 Events-event-address">
-                                    {address}
-                                </div>
-                                {mapButton}
-                                {map}
-                            </div>
+                            {mapButton}
+                            {map}
                         </div>
-                        <div className="col-12 row mx-0 mt-2">
-                            {documents}
-                        </div>
+                    </div>
+                    <div className="col-12 row mx-0 mt-2">
+                        {documents}
                     </div>
                 </div>
             </div>

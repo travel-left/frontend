@@ -6,6 +6,7 @@ import Calendar from 'react-calendar'
 import moment from 'moment'
 import { customStyles, eventFormDocs, eventTimezone } from '../../../util/forms/SelectStyles'
 import { apiCall } from '../../../util/api'
+import { Portal } from 'react-portal'
 
 export default class NewEditEventForm extends Component {
     state = {
@@ -89,24 +90,6 @@ export default class NewEditEventForm extends Component {
         this.setState(prevState => ({ open: !prevState.open }))
     }
 
-    closeModal = () => {
-        this.setState({
-            err: '',
-            name: this.props.event.name,
-            date: new Date(this.props.event.dateStart.split('-')[0], this.props.event.dateStart.split('-')[1] - 1, this.props.event.dateStart.split('-')[2]),
-            step: 1,
-            eventType: this.props.event.type,
-            docs: [],
-            selectedDocs: this.props.event.documents,
-            startTime: moment(this.props.event.dtStart, ["h:mm A"]).format("HH:mm"),
-            endTime: moment(this.props.event.dtEnd, ["h:mm A"]).format("HH:mm"),
-            timezone: this.props.event.tzStart.replace(' ', '_'),
-            description: this.props.event.description,
-            location: this.props.event.address
-        })
-        this.props.close()
-    }
-
     handleBackClick = e => {
         e.preventDefault()
         this.setState(prevState => (
@@ -142,95 +125,64 @@ export default class NewEditEventForm extends Component {
         let { submit, remove } = this.props
         let { err } = this.state
         return (
-            <Mortal
-                isOpened={this.state.open}
-                onClose={this.toggleModal}
-                motionStyle={(spring, isVisible) => ({
-                    opacity: spring(isVisible ? 1 : 0),
-                    modalOffset: spring(isVisible ? 0 : -90, {
-                        stiffness: isVisible ? 300 : 200,
-                        damping: isVisible ? 15 : 30
-                    })
-                })}
-            >
-                {(motion, isVisible) => (
-                    <div
-                        className="modal d-block"
-                        style={{
-                            maxHeight: 'calc(100vh - 50px)',
-                            overflowY: 'auto'
-                        }}
-                    >
-                        <div className="Modal--overlay"
-                            style={{
-                                opacity: motion.opacity,
-                                pointerEvents: isVisible
-                                    ? 'auto'
-                                    : 'none'
-                            }}
-                            onClick={this.toggleModal}
-                        />
-                        <div className="modal-dialog" role="document">
-                            <div
-                                className="modal-content Modal-Form"
-                                style={{
-                                    opacity: motion.opacity,
-                                    transform: `translate3d(0, ${
-                                        motion.modalOffset
-                                        }px, 0)`
-                                }}
-                            >
-                                <form >
-                                    <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
-                                        <h5
-                                            className="modal-title Modal-Form-header pl-3"
-                                            id="addnewNameModal"
-                                        >
-                                            Create an event - {this.state.step} of 3
-                                                </h5>
-                                        <button
-                                            className='btn btn-link'
-                                            type="reset"
-                                            aria-label="Close"
-                                            style={{ backgroundColor: '0F58D1' }}
-                                            onClick={this.closeModal}
-                                        >
-                                            <i class="material-icons" style={{ color: 'white' }}>close</i>
-                                        </button>
-                                    </div>
-                                    <div className="modal-body">
-                                        <p className="text-danger"> {err ? err : null}</p>
-                                        <EventStep1 step={this.state.step} name={this.state.name} onChange={this.handleChange} handleEventTypeChange={this.handleEventTypeChange}></EventStep1>
-                                        <EventStep2 step={this.state.step}
-                                            eventType={this.state.eventType}
-                                            onDateChange={this.handleDateChange}
-                                            onChange={this.handleChange}
-                                            handleTimezoneChange={this.handleTimezoneChange}
-                                            timezone={this.state.timezone}
-                                            startTime={this.state.startTime}
-                                            endTime={this.state.endTime}
-                                            calendarValue={this.state.date}
-                                        >
-                                        </EventStep2>
-                                        <EventStep3
-                                            step={this.state.step}
-                                            docs={this.state.docs}
-                                            handleDocuments={this.handleDocumentsChange}
-                                            description={this.state.description}
-                                            location={this.state.location}
-                                            onChange={this.handleChange}
-                                            selectedDocs={this.state.selectedDocs}
-                                        >
-                                        </EventStep3>
-                                        <hr className="my-4" />
-                                        <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
-                                    </div>
-                                </form>
-                            </div>
+            <Portal>
+                <div
+                    className="modal d-block"
+                    style={{
+                        maxHeight: 'calc(100vh - 50px)',
+                        overflowY: 'auto'
+                    }}
+                >
+                    <div className="Modal--overlay" onClick={this.toggleModal} />
+                    <div className="modal-dialog" role="document">
+                        <div
+                            className="modal-content Modal-Form"
+                        >
+                            <form >
+                                <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
+                                    <h5 className="modal-title Modal-Form-header pl-3" id="addnewNameModal"> Create an event - {this.state.step} of 3</h5>
+                                    <button
+                                        className='btn btn-link'
+                                        type="reset"
+                                        aria-label="Close"
+                                        style={{ backgroundColor: '0F58D1' }}
+                                        onClick={this.closeModal}
+                                    >
+                                        <i class="material-icons" style={{ color: 'white' }}>close</i>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p className="text-danger"> {err ? err : null}</p>
+                                    <EventStep1 step={this.state.step} name={this.state.name} onChange={this.handleChange} handleEventTypeChange={this.handleEventTypeChange}></EventStep1>
+                                    <EventStep2 step={this.state.step}
+                                        eventType={this.state.eventType}
+                                        onDateChange={this.handleDateChange}
+                                        onChange={this.handleChange}
+                                        handleTimezoneChange={this.handleTimezoneChange}
+                                        timezone={this.state.timezone}
+                                        startTime={this.state.startTime}
+                                        endTime={this.state.endTime}
+                                        calendarValue={this.state.date}
+                                    >
+                                    </EventStep2>
+                                    <EventStep3
+                                        step={this.state.step}
+                                        docs={this.state.docs}
+                                        handleDocuments={this.handleDocumentsChange}
+                                        description={this.state.description}
+                                        location={this.state.location}
+                                        onChange={this.handleChange}
+                                        selectedDocs={this.state.selectedDocs}
+                                    >
+                                    </EventStep3>
+                                    <hr className="my-4" />
+                                    <EventButtons step={this.state.step} back={this.handleBackClick} next={this.handleNextClick} submit={this.handleSubmit}></EventButtons>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                )}
-            </Mortal>
+                </div>
+            </Portal>
         )
     }
 }
