@@ -6,10 +6,10 @@ export default ({ events, removeEvent, updateEvent, trip }) => {
     let daysList = []
 
     return events.map(event => {
-        let dayHeader = daysList.includes(event.start) ? null
+        let dayHeader = daysList.includes(event.start.format('MMM DD YYYY')) ? null
             : <h3 className="mt-4 mb-3 Document-title" name={moment(event.start).format('MMM DD YYYY')}>{moment(event.start).format('MMM DD')}</h3>
 
-        daysList.push(event.start)
+        daysList.push(event.start.format('MMM DD YYYY'))
 
         return (
             <div key={event._id}>
