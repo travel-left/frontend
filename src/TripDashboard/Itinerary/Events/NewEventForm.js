@@ -79,10 +79,11 @@ export default class NewEventForm extends Component {
 
     handleDocumentsChange = docs => {
         if (docs) {
+            docs = docs.map(doc => doc.value)
             this.setState(prevState => ({
                 event: {
                     ...prevState.event,
-                    documents: docs.map(document => document.value)
+                    documents: this.state.documents.filter(document => docs.indexOf(document._id) !== -1)
                 }
             }))
         } else {
@@ -198,6 +199,7 @@ export default class NewEventForm extends Component {
                                 <EventStep3
                                     step={this.state.step}
                                     documents={this.state.documents}
+                                    selectedDocuments={this.state.event.documents}
                                     handleDocuments={this.handleDocumentsChange}
                                     description={this.state.event.description}
                                     address={this.state.event.address}
@@ -304,7 +306,14 @@ class EventStep3 extends Component {
                             label: doc.name,
                             value: doc._id
                         }
-                    ))} label="Timezone" className="left-select" styles={eventFormDocs} onChange={this.props.handleDocuments} />
+                    ))} value={
+                        this.props.selectedDocuments.map(doc => (
+                            {
+                                label: doc.name,
+                                value: doc._id
+                            }
+                        ))
+                    } label="Timezone" className="left-select" styles={eventFormDocs} onChange={this.props.handleDocuments} />
                     <label className="d-block" htmlFor="" className="d-block">Links </label>
                     {links}
                     <button className="btn btn-link" onClick={this.props.addLink}>Add another link</button>
