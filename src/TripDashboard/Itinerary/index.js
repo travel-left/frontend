@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import DayList from './Days'
-import EventList from './Events'
+import DayList from './Days/DaysList'
+import EventList from './Events/EventList'
 import { apiCall } from '../../util/api'
 import NewEventForm from './Events/NewEventForm'
 import moment from 'moment-timezone'
@@ -34,7 +34,11 @@ class events extends Component {
     getDaysAndEvents = async () => {
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
-        events.sort(time_sort_asc)
+
+
+        for (const event of events) {
+            if (!days.includes(event.start.split('T')[0])) days.push(event.start.split('T')[0])
+        }
         events = events.map(event => {
             return {
                 ...event,
@@ -43,9 +47,7 @@ class events extends Component {
             }
         })
 
-        for (const event of events) {
-            if (!days.includes(event.start)) days.push(event.start)
-        }
+        events = events.sort((a, b) => a.start.valueOf() - b.start.valueOf())
 
         this.setState({ events, days, selectedDay: days[0] })
     }
@@ -164,13 +166,13 @@ export default events
 
 const time_sort_asc = function (event1, event2) {
     if (
-        moment(event1.dtStart, ['h:mm A']).format('HH:mm') >
-        moment(event2.dtStart, ['h:mm A']).format('HH:mm')
+        moment(event1.start, ['h:mm A']).format('HH:mm') >
+        moment(event2.start, ['h:mm A']).format('HH:mm')
     )
         return 1
     if (
-        moment(event1.dtStart, ['h:mm A']).format('HH:mm') <
-        moment(event2.dtStart, ['h:mm A']).format('HH:mm')
+        moment(event1.start, ['h:mm A']).format('HH:mm') <
+        moment(event2.start, ['h:mm A']).format('HH:mm')
     )
         return -1
     return 0
