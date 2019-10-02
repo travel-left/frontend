@@ -11,6 +11,7 @@ import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '../../util/forms/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
+import { customStyles } from '../../util/forms/SelectStyles'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/managetravelers')
@@ -170,6 +171,7 @@ class Travelers extends Component {
         this.getTravelers()
     }
 
+
     changeStatusOfSelectedTravelers = async ({ status }) => {
         const { selected, travelers } = this.state
         let travelerStatuses = []
@@ -188,7 +190,6 @@ class Travelers extends Component {
         this.getTravelers()
 
     }
-
 
     handleFilterChange = selectedFilters => {
         if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
@@ -216,38 +217,6 @@ class Travelers extends Component {
         const filteredTravelers = travelers.filter(traveler =>
             filters.includes(traveler.status)
         )
-
-        const customStyles = {
-            container: (provided, state) => ({
-                ...provided,
-                height: '50px',
-                width: '180px',
-                boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.3)',
-                border: 'none',
-                borderRadius: '3px'
-            }),
-            control: (provided, state) => ({
-                ...provided,
-                border: 'none'
-            }),
-            select: provided => ({
-                ...provided,
-                background: 'white',
-                height: 'auto',
-                border: 'none'
-            }),
-            valueContainer: (provided, state) => ({
-                ...provided,
-                minHeight: '50px',
-                border: 'none'
-            }),
-            placeholder: (provided) => ({
-                ...provided,
-                color: '#333333',
-                fontFamily: 'Roboto',
-                fontWeight: '600'
-            })
-        }
 
         let travelerInfo = selectedTraveler ? (
             <TravelerInfo

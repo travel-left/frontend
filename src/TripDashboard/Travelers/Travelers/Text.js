@@ -3,6 +3,7 @@ import Moment from 'react-moment'
 
 const Text = ({ message, createdAt }) => (
     <div className='col-12'>
+        <p>{createdAt}</p>
         <Moment
             date={createdAt}
             format="MMMM DD"
