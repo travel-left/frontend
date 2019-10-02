@@ -6,28 +6,26 @@ export default class Map extends Component {
         viewport: {
             width: '100%',
             height: '200px',
-            latitude: this.props.coordinates.lat,
-            longitude: this.props.coordinates.long,
             zoom: 11
         }
     }
 
-    handleViewportChange = viewport => {
-        this.setState({ viewport })
-    }
+    handleViewportChange = viewport => this.setState({ viewport })
 
     render() {
-        const { coordinates } = this.props
+        const { lat, long } = this.props.coordinates
         return (
             <ReactMapGL
                 {...this.state.viewport}
+                latitude={lat}
+                longitude={long}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
                 onViewportChange={this.handleViewportChange}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
             >
                 <Marker
-                    latitude={coordinates.lat}
-                    longitude={coordinates.long}
+                    latitude={lat}
+                    longitude={long}
                     offsetLeft={-10}
                     offsetTop={-30}
                 >
