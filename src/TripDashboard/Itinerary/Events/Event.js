@@ -132,10 +132,7 @@ class Event extends Component {
                             <span className='d-flex justify-content-center align-items-center' style={{
                                 position: 'absolute', right: '101%', backgroundColor: color, borderRadius: '50%', height: '40px', width: '40px'
                             }}>
-                                <i className={`fa ${iconString}`} style={{
-                                    color: '#FFFFFF',
-                                    fontSize: '16px'
-                                }} />
+                                <i className={`fa ${iconString}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                             </span>
 
                             {name}

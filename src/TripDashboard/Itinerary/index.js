@@ -66,9 +66,15 @@ class events extends Component {
         this.getDaysAndEvents()
     }
 
-    updateEvent = async (eventId, updateObject) => {
-        console.log(updateObject)
-        await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, updateObject)
+    updateEvent = async (eventId, event) => {
+        let start = new Date(event.date.valueOf())
+        let end = new Date(event.date.valueOf())
+        start.setHours(event.start.split(':')[0])
+        end.setHours(event.end.split(':')[0])
+        event.start = start
+        event.end = end
+        delete event.date
+        await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event)
 
         this.getDaysAndEvents()
     }
