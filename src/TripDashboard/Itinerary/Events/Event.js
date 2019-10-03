@@ -85,7 +85,7 @@ class Event extends Component {
             </div>
         ))
 
-        let links = event.links.map(link => <a href={link} className="Event-link">{link}</a>)
+        let links = event.links.map(link => <a href={link} target="_blank" className="Event-link">{link}</a>)
 
         return (
             <div className="Events-event-card py-4 px-5 my-3 animated fadeIn">
