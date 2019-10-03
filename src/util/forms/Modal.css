@@ -1,5 +1,10 @@
 .Modal-Form {
     border: none !important;
+    animation-duration: .15s
+}
+
+.Modal--overlay {
+    animation-duration: .2s
 }
 
 .Modal-Form-header {

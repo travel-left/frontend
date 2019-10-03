@@ -9,7 +9,7 @@ export default class Day extends Component {
     render() {
         return (
             <li
-                className={`animated fadeIn Itinerary-trip-day-card list-group-item d-flex hover justify-content-between align-items-center border-right-0 border-left-0 py-3 ${this
+                className={`animated fadeIn Events-trip-day-card list-group-item d-flex hover justify-content-between align-items-center border-right-0 border-left-0 py-3 ${this
                     .props.selectedDay && 'active'}`}
                 onClick={this.handleClick}
             >
