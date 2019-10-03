@@ -39,21 +39,28 @@ class Share extends Component {
             `/api/trips/${this.tripId}/share?tz=${this.tz}`
         )
 
-        let events = trip.events.sort(time_sort_asc)
+        let events = trip.events
         let days = []
-        events.forEach(event => {
-            if (!days.includes(event.dateStart)) days.push(event.dateStart)
-        })
-        days.sort(date_sort_asc)
+        for (const event of events) {
+            if (!days.includes(event.start.split('T')[0])) days.push(event.start.split('T')[0])
+        }
+
+        events = events.map(event => ({
+            ...event,
+            start: moment(event.start).tz(this.localTimezone),
+            end: moment(event.end).tz(this.localTimezone)
+        }))
+
         let orgName = await apiCall(
             'get',
             `/api/organization/${trip.coordinators[0].organization}/name`
         )
+
         this.setState({
             trip: trip,
             events: events,
             days,
-            selectedDay: days[0],
+            selectedDay: events[0].start,
             orgName
         })
     }
@@ -81,7 +88,7 @@ class Share extends Component {
 
         const eventList = events.map(event => {
             event.share = true
-            if (event.dateStart === selectedDay) {
+            if (event.start === selectedDay) {
                 return <Event event={event} />
             }
         })
