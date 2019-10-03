@@ -32,6 +32,7 @@ class events extends Component {
     }
 
     getDaysAndEvents = async () => {
+        console.log('timezone guess is: ' + this.localTimezone)
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
