@@ -16,7 +16,7 @@ function initializeReactGA() {
 class Share extends Component {
     tripId = this.props.match.params.tripId
     source = this.props.match.path.includes('preview') ? 'preview' : 'share'
-    tz = moment.tz.guess(true)
+    localTimezone = moment.tz.guess(true)
 
     state = {
         trip: {},
@@ -60,7 +60,7 @@ class Share extends Component {
             trip: trip,
             events: events,
             days,
-            selectedDay: events[0].start,
+            selectedDay: days[0],
             orgName
         })
     }
@@ -88,7 +88,8 @@ class Share extends Component {
 
         const eventList = events.map(event => {
             event.share = true
-            if (event.start === selectedDay) {
+            console.log(event.start.format('YYYY-MM-DD'))
+            if (event.start.format('YYYY-MM-DD') === selectedDay) {
                 return <Event event={event} />
             }
         })
