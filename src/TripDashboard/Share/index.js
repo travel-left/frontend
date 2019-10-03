@@ -42,7 +42,7 @@ class Share extends Component {
         let events = trip.events
         let days = []
         for (const event of events) {
-            if (!days.includes(event.start.split('T')[0])) days.push(event.start.split('T')[0])
+            if (!days.includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) days.push(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))
         }
 
         events = events.map(event => ({
