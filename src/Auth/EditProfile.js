@@ -14,6 +14,7 @@ import './Auth.css'
 import { apiCall } from '../util/api'
 import ReactGA from 'react-ga'
 import ExplainCustomerId from './ExplainCustomerId'
+import YouMustPay from './YouMustPay';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -69,6 +70,11 @@ export default class CreateProfile extends Component {
 
         return (
             <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-10 ">
+                        {currentUser.cc.length !== 4 && <YouMustPay user={currentUser}></YouMustPay>}
+                    </div>
+                </div>
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-5 d-flex flex-column my-3">
                         <h1 className="text-dark pt-2">Your Account</h1>

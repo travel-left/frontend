@@ -72,7 +72,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/support"
                 render={props => (
-                    <WithAuth {...props}>
+                    <WithAuth {...props} currentUser={currentUser}>
                         <Support {...props} currentUser={currentUser} />
                     </WithAuth>
                 )}
@@ -81,7 +81,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/newpassword"
                 render={props => (
-                    <WithAuth {...props}>
+                    <WithAuth {...props} currentUser={currentUser}>
                         <NewPassword
                             coordinatorId={currentUser._id}
                             {...props}
@@ -93,7 +93,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/"
                 render={props => (
-                    <WithAuth onAuth={authUser} {...props}>
+                    <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
                         <Trips {...props} />
                     </WithAuth>
                 )}
@@ -102,7 +102,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/trips"
                 render={props => (
-                    <WithAuth onAuth={authUser} {...props}>
+                    <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
                         <Trips {...props} />
                     </WithAuth>
                 )}
@@ -111,7 +111,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/travelers"
                 render={props => (
-                    <WithAuth {...props}>
+                    <WithAuth {...props} currentUser={currentUser}>
                         <Travelers {...props} />
                     </WithAuth>
                 )}
@@ -125,7 +125,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
             <Route
                 path="/trips/:tripId"
                 render={props => (
-                    <WithAuth {...props}>
+                    <WithAuth {...props} currentUser={currentUser}>
                         <TripDashboard {...props} />
                     </WithAuth>
                 )}
