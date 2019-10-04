@@ -2,17 +2,25 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class WithAuth extends Component {
+
     constructor(props) {
         super(props)
+
         if (!props.isAuthenticated) {
-            props.history.push('/signin')
+            this.createAnonUser()
         }
     }
 
     componentWillUpdate() {
         if (!this.props.isAuthenticated) {
-            this.props.history.push('/signin')
+            this.createAnonUser()
         }
+    }
+
+    createAnonUser = async () => {
+        console.log(this.props.history)
+        await this.props.onAuth('signup', { coordinator: {}, organization: {} }, this.props.history)
+        this.props.history.push('/trips')
     }
 
     render() {

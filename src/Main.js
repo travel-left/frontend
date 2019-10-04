@@ -93,7 +93,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/"
                 render={props => (
-                    <WithAuth {...props}>
+                    <WithAuth onAuth={authUser} {...props}>
                         <Trips {...props} />
                     </WithAuth>
                 )}
@@ -102,7 +102,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 exact
                 path="/trips"
                 render={props => (
-                    <WithAuth {...props}>
+                    <WithAuth onAuth={authUser} {...props}>
                         <Trips {...props} />
                     </WithAuth>
                 )}
