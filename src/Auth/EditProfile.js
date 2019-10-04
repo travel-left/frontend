@@ -27,7 +27,8 @@ function initializeReactGA() {
 export default class CreateProfile extends Component {
     state = {
         error: '',
-        successMessage: ''
+        successMessage: '',
+        couponCode: ''
     }
 
     constructor(props) {
@@ -40,6 +41,25 @@ export default class CreateProfile extends Component {
 
     setSuccessMessage = () => {
         this.setState({ successMessage: 'Successfully submitted' })
+    }
+
+    handleChange = e => {
+        console.log(e)
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    handleCouponCode = async e => {
+        e.preventDefault()
+        if (this.state.couponCode === 'FREEMONTH') {
+            try {
+                await this.handleSubmit({
+                    cc: 'FREE'
+                })
+                this.setSuccessMessage()
+            } catch (error) {
+                this.setState(error)
+            }
+        }
     }
 
     handleSubmit = async userData => {
@@ -192,6 +212,17 @@ export default class CreateProfile extends Component {
                             </div>
                         ) :
                             <div>
+                                <form onSubmit={this.handleCouponCode}>
+                                    <label htmlFor="" className="d-block">Coupon Code</label>
+                                    <div className="row">
+                                        <div className="col-4">
+                                            <input className="d-block form-control" type="text" name="couponCode" value={this.state.couponCode} onChange={this.handleChange} />
+                                        </div>
+                                        <div className="col-3 pl-1 ml-1">
+                                            <button type="submit" className="btn btn-secondary" style={{ height: '34px' }}>SUBMIT</button>
+                                        </div>
+                                    </div>
+                                </form>
                                 <CheckoutForm />
                             </div>
                         }
