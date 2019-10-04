@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
 import FormField from '../util/forms/FormField'
+import moment from 'moment'
 import CheckoutForm from '../util/forms/CheckoutForm'
 import Validator, {
     nameValidator,
@@ -68,11 +69,18 @@ export default class CreateProfile extends Component {
             email: emailValidator
         })
 
+        let startDate = currentUser.createdAt.split('T')[0]
+        let date = new Date()
+        let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+        var a = moment([...today.split('-')])
+        var b = moment([...startDate.split('-')])
+        let daysLeft = 10 - a.diff(b, 'days')
+
         return (
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-10 ">
-                        {/* {currentUser.cc.length !== 4 && <YouMustPay user={currentUser}></YouMustPay>} */}
+                        {currentUser.cc.length !== 4 && daysLeft <= 0 && <YouMustPay user={currentUser}></YouMustPay>}
                     </div>
                 </div>
                 <div className="row justify-content-center align-items-center">
