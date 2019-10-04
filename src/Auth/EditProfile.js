@@ -5,7 +5,8 @@ import CheckoutForm from '../util/forms/CheckoutForm'
 import Validator, {
     nameValidator,
     phoneValidator,
-    titleValidator
+    titleValidator,
+    emailValidator
 } from '../util/validators'
 import ExplainOrganizationId from './ExplainOrganizationId'
 import Uploader from '../util/forms/Uploader'
@@ -55,13 +56,15 @@ export default class CreateProfile extends Component {
             name: currentUser.name,
             title: currentUser.title,
             phone: currentUser.phone,
-            image: currentUser.image
+            image: currentUser.image,
+            email: currentUser.email
         }
 
         const schema = Validator({
             name: nameValidator,
             title: titleValidator,
-            phone: phoneValidator
+            phone: phoneValidator,
+            email: emailValidator
         })
 
         return (
@@ -85,7 +88,8 @@ export default class CreateProfile extends Component {
                                         image: values.image,
                                         name: values.name,
                                         phone: values.phone,
-                                        title: values.title
+                                        title: values.title,
+                                        password: values.password
                                     }
 
                                     await this.handleSubmit(coordinator)
@@ -110,10 +114,23 @@ export default class CreateProfile extends Component {
                                             label="Name*"
                                             placeholder="John Appleseed"
                                         />
-                                        <label className="p mt-2">Email</label>
-                                        <div className="p mt-2">
-                                            {currentUser.email}
-                                        </div>
+                                        <FormField
+                                            name="email"
+                                            label="Email"
+                                            placeholder="your@email.com"
+                                        />
+                                        <FormField
+                                            name="password"
+                                            label="Password*"
+                                            type="password"
+                                            placeholder="••••••••••••"
+                                        />
+                                        <FormField
+                                            name="confirmPassword"
+                                            label="Confirm Password*"
+                                            type="password"
+                                            placeholder="••••••••••••"
+                                        />
                                         <div className="p mt-2">
                                             <label className="">
                                                 Organization Id{' '}
