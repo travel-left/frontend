@@ -72,7 +72,7 @@ export default class CreateProfile extends Component {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-10 ">
-                        {currentUser.cc.length !== 4 && <YouMustPay user={currentUser}></YouMustPay>}
+                        {/* {currentUser.cc.length !== 4 && <YouMustPay user={currentUser}></YouMustPay>} */}
                     </div>
                 </div>
                 <div className="row justify-content-center align-items-center">
