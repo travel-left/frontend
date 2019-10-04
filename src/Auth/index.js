@@ -53,8 +53,8 @@ export default class Auth extends Component {
             type === 'sign in' ? (
                 <SignIn error={error} submit={this.login} />
             ) : (
-                <SignUp error={error} submit={this.signUp} />
-            )
+                    <SignUp error={error} submit={this.signUp} />
+                )
         return (
             <div className="row">
                 <div className="col-sm-12 col-md-6 d-flex justify-content-center">
