@@ -8,17 +8,20 @@ class WithAuth extends Component {
 
         if (!props.isAuthenticated) {
             this.createAnonUser()
+        } else if (!this.props.hasPayed && this.props.history.location.pathname !== "/editprofile") {
+            props.history.push('/editprofile')
         }
     }
 
     componentWillUpdate() {
         if (!this.props.isAuthenticated) {
             this.createAnonUser()
+        } else if (!this.props.hasPayed && this.props.history.location.pathname !== "/editprofile") {
+            this.props.history.push('/editprofile')
         }
     }
 
     createAnonUser = async () => {
-        console.log(this.props.history)
         await this.props.onAuth('signup', { coordinator: {}, organization: {} }, this.props.history)
         this.props.history.push('/trips')
     }
@@ -30,7 +33,8 @@ class WithAuth extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.currentUser.isAuthenticated
+        isAuthenticated: state.currentUser.isAuthenticated,
+        hasPayed: state.currentUser.cc.length === 4
     }
 }
 
