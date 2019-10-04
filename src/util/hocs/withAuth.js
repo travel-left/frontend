@@ -1,22 +1,36 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 class WithAuth extends Component {
 
     constructor(props) {
         super(props)
 
-        if (!props.isAuthenticated) {
-            this.createAnonUser()
-        } else if (!this.props.hasPayed && this.props.history.location.pathname !== "/editprofile") {
-            props.history.push('/editprofile')
-        }
+        if (!props.isAuthenticated) this.createAnonUser()
+        this.redirectBecauseYouHaveToPay()
     }
 
     componentWillUpdate() {
-        if (!this.props.isAuthenticated) {
-            this.createAnonUser()
-        } else if (!this.props.hasPayed && this.props.history.location.pathname !== "/editprofile") {
+        if (!this.props.isAuthenticated) this.createAnonUser()
+        this.redirectBecauseYouHaveToPay()
+    }
+
+    redirectBecauseYouHaveToPay() {
+        let hasPayed = this.props.cc ? this.props.cc.length === 4 : false
+
+        let daysLeft = 10
+
+        if (this.props.user.createdAt) {
+            let startDate = this.props.user.createdAt.split('T')[0]
+            let date = new Date()
+            let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+            var a = moment([...today.split('-')])
+            var b = moment([...startDate.split('-')])
+            daysLeft = 10 - a.diff(b, 'days')
+        }
+
+        if (!hasPayed && this.props.history.location.pathname !== "/editprofile" && daysLeft <= 0) {
             this.props.history.push('/editprofile')
         }
     }
@@ -34,7 +48,8 @@ class WithAuth extends Component {
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.currentUser.isAuthenticated,
-        hasPayed: state.currentUser.cc.length === 4
+        cc: state.currentUser.cc,
+        user: state.currentUser
     }
 }
 
