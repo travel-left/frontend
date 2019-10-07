@@ -12,6 +12,7 @@ import Checkbox from '../../util/forms/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
 import { customStyles } from '../../util/forms/SelectStyles'
+import AddFromOrg from './Travelers/AddFromOrg';
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/managetravelers')
@@ -47,7 +48,8 @@ class Travelers extends Component {
         allSelected: false,
         filters: this.allFilters,
         selectedTraveler: {},
-        travelers: []
+        travelers: [],
+        travelersNotOnTrip: []
     }
 
     constructor(props) {
@@ -59,12 +61,14 @@ class Travelers extends Component {
     }
 
     getTravelers = async () => {
-        const travelers = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/travelers`
-        )
+        const travelers = await apiCall('get', `/api/trips/${this.currentTripId}/travelers`)
+        const travelersInOrg = await apiCall('get', '/api/organization/travelers')
 
-        this.setState({ travelers, selectedTraveler: travelers[0] })
+        const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
+
+
+
+        this.setState({ travelers, selectedTraveler: travelers[0], travelersNotOnTrip })
     }
 
     addTraveler = async traveler => {
@@ -279,6 +283,9 @@ class Travelers extends Component {
                                         submit={this.addTraveler}
                                     />
                                 </div>
+                                <div className="row">
+                                    <AddFromOrg travelers={this.state.travelersNotOnTrip}></AddFromOrg>
+                                </div>
                             </div>
                         </div>
                         <div className="row mx-0 my-4">
@@ -318,3 +325,8 @@ class Travelers extends Component {
 }
 
 export default Travelers
+
+const travelersInOrgNotOnTrip = (travelersOnTrip, traverlersInOrg) => {
+    travelersOnTrip = travelersOnTrip.map(t => t._id)
+    return traverlersInOrg.filter(traveler => !travelersOnTrip.includes(traveler._id))
+}
