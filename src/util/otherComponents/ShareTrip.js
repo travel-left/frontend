@@ -73,7 +73,7 @@ export default class ShareTrip extends Component {
     }
 
     render() {
-        const icon = <i class="material-icons bg-primary Cover-share-trip d-flex align-items-center justify-content-center hover mt-4">send</i>
+        const icon = <i class="material-icons bg-primary Cover-share-trip d-flex align-items-center justify-content-center hover">send</i>
         const customStyles = {
             container: (provided, state) => ({
                 ...provided

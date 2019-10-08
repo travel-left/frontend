@@ -49,7 +49,8 @@ class Travelers extends Component {
         filters: this.allFilters,
         selectedTraveler: {},
         travelers: [],
-        travelersNotOnTrip: []
+        travelersNotOnTrip: [],
+        addModalIsOpen: false
     }
 
     constructor(props) {
@@ -71,11 +72,12 @@ class Travelers extends Component {
         this.setState({ travelers, selectedTraveler: travelers[0], travelersNotOnTrip })
     }
 
-    addTraveler = async traveler => {
+    addTraveler = async travelers => {
+        console.log(travelers)
         await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/travelers`,
-            traveler
+            travelers
         )
 
         this.getTravelers()
@@ -215,6 +217,12 @@ class Travelers extends Component {
         })
     }
 
+    toggleAddModal = () => {
+        this.setState(prevState => ({
+            addModalIsOpen: !prevState.addModalIsOpen
+        }))
+    }
+
     render() {
         let { selected, allSelected, filters, selectedTraveler, travelers } = this.state
 
@@ -233,9 +241,13 @@ class Travelers extends Component {
         return (
             <div className="col-md-12">
                 <div className="row">
-                    <div className="col-md-8 mt-4 px-4">
-                        <h4 className="Itinerary-title">Travelers on This Trip </h4>
-                        <div className="row mx-0 my-4">
+                    <div className="col-md-12 mt-4 pl-0">
+                        <h4 className="mb-3 TripInfo-heading">Travelers on this trip</h4>
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <div className="col-md-8 pl-0">
+                        <div className="row mx-0">
                             <div className="col-md-12">
                                 <div className="row justify-content-between">
                                     <Select
@@ -250,41 +262,49 @@ class Travelers extends Component {
                                             this.handleFilterChange
                                         }
                                     />
-                                    <ChangeStatusForm
-                                        submit={
-                                            this
-                                                .changeStatusOfSelectedTravelers
-                                        }
-                                        travelers={filteredTravelers}
-                                        selected={selected}
-                                    />
-                                    <CreateTextForm
-                                        key={1}
-                                        submit={
-                                            this.textSelectedTravelers
-                                        }
-                                        travelers={filteredTravelers}
-                                        selected={selected}
-                                    />
-                                    <CreateEmailForm
-                                        key={2}
-                                        submit={
-                                            this.emailSelectedTravelers
-                                        }
-                                        travelers={filteredTravelers}
-                                        selected={selected}
-                                    />
-                                    <ImportBulkForm
+                                    <div className="d-flex flex-row">
+                                        <ChangeStatusForm
+                                            submit={
+                                                this
+                                                    .changeStatusOfSelectedTravelers
+                                            }
+                                            travelers={filteredTravelers}
+                                            selected={selected}
+                                        />
+                                        <CreateTextForm
+                                            key={1}
+                                            submit={
+                                                this.textSelectedTravelers
+                                            }
+                                            travelers={filteredTravelers}
+                                            selected={selected}
+                                        />
+                                        <CreateEmailForm
+                                            key={2}
+                                            submit={
+                                                this.emailSelectedTravelers
+                                            }
+                                            travelers={filteredTravelers}
+                                            selected={selected}
+                                        />
+                                    </div>
+                                    <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
+                                    {this.state.addModalIsOpen &&
+                                        <AddFromOrg
+                                            submit={this.addTraveler}
+                                            toggleModal={this.toggleAddModal}
+                                            isOpen={this.state.addModalIsOpen}
+                                            travelers={this.state.travelersNotOnTrip}
+                                        />
+                                    }
+                                    {/* <ImportBulkForm
                                         key={3}
                                         submit={this.addTravelersCSV}
                                     />
                                     <AddTravelerForm
                                         key={4}
                                         submit={this.addTraveler}
-                                    />
-                                </div>
-                                <div className="row">
-                                    <AddFromOrg travelers={this.state.travelersNotOnTrip}></AddFromOrg>
+                                    /> */}
                                 </div>
                             </div>
                         </div>
@@ -299,9 +319,9 @@ class Travelers extends Component {
                                             label="noshow"
                                         />
                                     </div>
-                                    <div className="col-md-2"></div>
+                                    <div className="col-md-1"></div>
                                     <div className="col-md-3 Travelers-filter">NAME</div>
-                                    <div className="col-md-3 Travelers-filter">CONTACT</div>
+                                    <div className="col-md-4 Travelers-filter">CONTACT</div>
                                     <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
                                 </div>
                                 <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
@@ -315,7 +335,7 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4 pr-0 left-shadow-blur">
+                    <div className="col-md-4 left-shadow-sharp">
                         {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
                     </div>
                 </div>

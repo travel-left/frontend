@@ -44,50 +44,47 @@ class Cover extends Component {
         let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
             .length
         return (
-            <div className="row">
-                <div
-                    className="col-12 d-flex flex-column justify-content-end px-5 py-2 Cover-image"
-                    style={{
-                        backgroundImage: `url(${currentTrip.image})`,
-                        height: '183px',
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover',
-                        borderRadius: '3px'
-                    }}
-                >
-                    <div className="row justify-content-between">
-                        <TripStatusForm
-                            submit={this.updateTrip}
-                            status={currentTrip.status}
-                        />
-                        <div className="pr-2">
-                            <ShareTrip
-                                travelers={this.state.travelers}
-                                tripId={this.tripId}
-                            />
-                        </div>
-                    </div>
-                    <div className="row justify-content-between">
-                        <div className="btn">
-                            <h5 className="d-inline Cover-bottom-row">
-                                {invited} Invited
-                            </h5>
-                            <h5 className="d-inline ml-5 Cover-bottom-row">
-                                {confirmed} Confirmed
-                            </h5>
-                        </div>
-                        <TripDatesForm
-                            dateStart={currentTrip.dateStart}
-                            dateEnd={currentTrip.dateEnd}
-                            submit={this.updateTrip}
-                        />
-                        <TripImageForm
-                            image={currentTrip.image}
-                            submit={this.updateTrip}
+            <div
+                className="col-12 d-flex flex-column justify-content-end px-5 py-2 Cover-image"
+                style={{
+                    backgroundImage: `url(${currentTrip.image})`,
+                    height: '210px',
+                    backgroundPosition: 'center',
+                    backgroundSize: 'cover',
+                    borderRadius: '3px'
+                }}
+            >
+                <div className="row justify-content-between">
+                    <TripStatusForm
+                        submit={this.updateTrip}
+                        status={currentTrip.status}
+                    />
+                    <div className="pr-2">
+                        <ShareTrip
+                            travelers={this.state.travelers}
+                            tripId={this.tripId}
                         />
                     </div>
                 </div>
-                <div className="col-3" />
+                <div className="row justify-content-between">
+                    <div className="btn">
+                        <h5 className="d-inline Cover-bottom-row">
+                            {invited} Invited
+                            </h5>
+                        <h5 className="d-inline ml-5 Cover-bottom-row">
+                            {confirmed} Confirmed
+                            </h5>
+                    </div>
+                    <TripDatesForm
+                        dateStart={currentTrip.dateStart}
+                        dateEnd={currentTrip.dateEnd}
+                        submit={this.updateTrip}
+                    />
+                    <TripImageForm
+                        image={currentTrip.image}
+                        submit={this.updateTrip}
+                    />
+                </div>
             </div>
         )
     }

@@ -30,11 +30,11 @@ export default class Traveler extends Component {
                         checked={selected}
                     />
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-1">
                     <Image diameter="48px" src={image} name={name} />
                 </div>
                 <div className="col-md-3 Travelers-name">{name}</div>
-                <div className="col-md-3" style={{
+                <div className="col-md-4" style={{
                     fontFamily: 'Roboto',
                     fontSize: '14px',
                     color: '#475561'
