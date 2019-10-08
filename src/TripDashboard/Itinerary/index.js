@@ -101,29 +101,24 @@ class events extends Component {
         ) : <h4 className="text-info" />
 
         return (
-            <div className="col-md-12 mt-4">
-                <div className="col-md-10 d-flex flex-row justify-content-between">
-                    <h4 className='Events-title'>Trip Days</h4>
-                    <button className="btn btn-primary btn-lg" onClick={this.toggleModal}>
-                        NEW EVENT
-                    </button>
-                    {this.state.isOpen &&
-                        <NewEventForm
-                            submit={this.createEvent}
-                            initDay={this.props.currentTrip.dateStart}
-                            trip={this.props.currentTrip}
-                            toggleModal={this.toggleModal}
-                            isOpen={this.state.isOpen}
-                        />
-                    }
-                </div>
+            <div className="col-md-12 mt-4 mx-0 px-0">
                 <div className="row mx-0">
-                    <div className="col-md-2">
+                    <div className="col-md-2 pl-0">
+                        <button className="btn btn-primary btn-lg" onClick={this.toggleModal}>NEW EVENT</button>
+                        {this.state.isOpen &&
+                            <NewEventForm
+                                submit={this.createEvent}
+                                initDay={this.props.currentTrip.dateStart}
+                                trip={this.props.currentTrip}
+                                toggleModal={this.toggleModal}
+                                isOpen={this.state.isOpen}
+                            />
+                        }
                         <div className="Events-trip-days-card mt-4">
                             {dayList}
                         </div>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-10 pr-0">
                         {eventList}
                     </div>
                 </div>

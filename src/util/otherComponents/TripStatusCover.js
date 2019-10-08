@@ -5,15 +5,19 @@ const TripStatus = ({ status }) => {
     switch (status) {
         case 'LEFT':
             statusColor = 'left'
+            status = 'Left'
             break
         case 'PLANNING':
             statusColor = 'secondary'
+            status = 'Planning'
             break
         case 'PAST':
             statusColor = 'dark'
+            status = 'Past'
             break
         case 'ARCHIVED':
             statusColor = 'archived'
+            status = 'Archived'
             break
         default:
             break
@@ -25,7 +29,7 @@ const TripStatus = ({ status }) => {
             style={{
                 fontWeight: '500',
                 fontFamily: 'roboto',
-                fontSize: '12px',
+                fontSize: '18px',
                 padding: '.5rem .8rem',
                 minWidth: '88px',
                 color: '#FFFFFF'

@@ -42,7 +42,8 @@ class ModalForm extends Component {
             mIcon,
             button,
             buttonType,
-            submitButtonText
+            submitButtonText,
+            deleteText
         } = this.props
         const { err } = this.state
 
@@ -129,19 +130,19 @@ class ModalForm extends Component {
         }
 
         if (buttonType === 'travelerEdit') {
-            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover mx-2' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
                 <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>edit</i>
             </span>
         }
 
         if (buttonType === 'travelerText') {
-            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover mx-2' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
                 <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>sms</i>
             </span>
         }
 
         if (buttonType === 'travelerEmail') {
-            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover mx-2' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
                 <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>markunread</i>
             </span>
         }
@@ -245,7 +246,7 @@ class ModalForm extends Component {
                                                     className="btn btn-lg btn-danger ml-4 mb-4 text-light hover"
                                                     onClick={this.handleRemove}
                                                 >
-                                                    DELETE
+                                                    {deleteText || 'DELETE'}
                                                 </button>
                                             )}
                                             {submitButton}

@@ -33,7 +33,7 @@ const App = () => (
                             <div>
                                 <Navbar />
                                 <div
-                                    className="container-fluid content"
+                                    className="container-fluid content mb-5"
                                     id="app-root"
                                     style={{ minHeight: '90vh' }}
                                 >

@@ -21,7 +21,7 @@ export default function UpdateTravelerForm(props) {
     })
 
     const button = {
-        classes: 'btn btn-lg btn-secondary float-right px-5 mt-5',
+        classes: 'btn btn-lg btn-secondary float-right px-5 mt-5 mb-3',
         text: 'EDIT'
     }
 
@@ -33,6 +33,7 @@ export default function UpdateTravelerForm(props) {
             initialValues={initialValues}
             submit={props.submit}
             remove={props.remove}
+            deleteText='Remove'
         >
             <FormField name="name" label="Name" placeholder="John Appleseed" />
             <SelectField
