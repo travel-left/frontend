@@ -87,7 +87,7 @@ class Travelers extends Component {
     }
 
     removeTraveler = async travelerId => {
-        await apiCall('delete', `/api/travelers/${travelerId}`)
+        await apiCall('delete', `/api/travelers/${travelerId}/org`)
         this.getTravelers()
     }
 
@@ -244,11 +244,15 @@ class Travelers extends Component {
         ) : null
 
         return (
-            <div className="col-md-12 pr-0">
+            <div className="col-md-12 ">
                 <div className="row">
-                    <div className="col-md-9 mt-4 px-4">
-                        <h4 className="Itinerary-title">Travelers in This Organization </h4>
-                        <div className="row mx-0 my-4">
+                    <div className="col-md-12 mt-4">
+                        <h4 className="mb-3 TripInfo-heading">Travelers in your organization </h4>
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <div className="col-md-9 px-4">
+                        <div className="row mx-0">
                             <div className="col-md-12">
                                 <div className="row justify-content-between">
                                     <Select
@@ -263,38 +267,43 @@ class Travelers extends Component {
                                             this.handleFilterChange
                                         }
                                     />
-                                    <ChangeStatusForm
-                                        submit={
-                                            this
-                                                .changeStatusOfSelectedTravelers
-                                        }
-                                        travelers={filteredTravelers}
-                                        selected={selected}
-                                    />
-                                    <CreateTextForm
-                                        key={1}
-                                        submit={
-                                            this.textSelectedTravelers
-                                        }
-                                        travelers={filteredTravelers}
-                                        selected={selected}
-                                    />
-                                    <CreateEmailForm
-                                        key={2}
-                                        submit={
-                                            this.emailSelectedTravelers
-                                        }
-                                        travelers={filteredTravelers}
-                                        selected={selected}
-                                    />
-                                    <ImportBulkForm
-                                        key={3}
-                                        submit={this.addTravelersCSV}
-                                    />
-                                    <AddTravelerForm
-                                        key={4}
-                                        submit={this.addTraveler}
-                                    />
+                                    <div className="d-flex flex-row">
+                                        <ChangeStatusForm
+                                            submit={
+                                                this
+                                                    .changeStatusOfSelectedTravelers
+                                            }
+                                            travelers={filteredTravelers}
+                                            selected={selected}
+                                        />
+                                        <CreateTextForm
+                                            key={1}
+                                            submit={
+                                                this.textSelectedTravelers
+                                            }
+                                            travelers={filteredTravelers}
+                                            selected={selected}
+                                        />
+                                        <CreateEmailForm
+                                            key={2}
+                                            submit={
+                                                this.emailSelectedTravelers
+                                            }
+                                            travelers={filteredTravelers}
+                                            selected={selected}
+                                        />
+                                        <div className='px-3'>
+                                            <ImportBulkForm
+                                                key={3}
+                                                submit={this.addTravelersCSV}
+                                            />
+                                        </div>
+
+                                        <AddTravelerForm
+                                            key={4}
+                                            submit={this.addTraveler}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -325,7 +334,7 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-3 pr-0 left-shadow-blur">
+                    <div className="col-md-3 left-shadow-sharp">
                         {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
                     </div>
                 </div>

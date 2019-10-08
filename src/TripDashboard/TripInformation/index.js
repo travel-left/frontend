@@ -11,6 +11,7 @@ import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import { apiCall } from '../../util/api'
+import LeftCard from '../../util/LeftCard'
 import './TripInfo.css'
 import ReactGA from 'react-ga'
 function initializeReactGA() {
@@ -269,7 +270,7 @@ export default class TripInformation extends Component {
             ) : null
 
         return (
-            <div className="col-md-12 mt-4">
+            <div className="col-md-12 mt-4 px-0">
                 <TripNameSection name={name} update={this.updateTrip} />
                 <TripCoordinatorSection
                     list={coordinatorList}
@@ -296,7 +297,7 @@ export default class TripInformation extends Component {
 
 const TripNameSection = ({ name, update }) => {
     return (
-        <div className="mb-4 col-12">
+        <div className="mb-4 col-12 px-0">
             <h4 className="mb-3 TripInfo-heading">Trip Name</h4>
             <div
                 className="pb-2"
@@ -319,10 +320,17 @@ const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
         <TripSection name='Trip Coordinators'>
             <div className="row mx-0">
                 {list}
-                <div className="col-md-4 my-4 pr-5 d-flex flex-row justify-content-around align-items-center">
-                    <CreateCoordinatorForm submit={create} />
-                    <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} />
+                <div className="col-md-4 animated fadeIn my-4 mx-3">
+                    <div className="row align-items-center justify-content-around" style={{
+                        borderRadius: '8px',
+                        border: 'none',
+                        height: '100px',
+                    }}>
+                        <CreateCoordinatorForm submit={create} />
+                        <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} />
+                    </div>
                 </div>
+
             </div>
         </TripSection>
     )
@@ -350,8 +358,8 @@ const TripDateSection = ({ list, create }) => {
 
 const TripDocumentSection = ({ list, create }) => {
     return (
-        <div className="col-12">
-            <div className="col-7" style={{ marginTop: '5.7rem' }}>
+        <div className="col-md-10 px-0">
+            <div className="col-12" style={{ marginTop: '5.7rem' }}>
                 <div className="row d-flex justify-content-between mb-4">
                     <h4 className="TripInfo-heading">Trip Resources</h4>
                     <CreateDocumentForm submit={create} />
@@ -377,7 +385,7 @@ const TripContactsSection = ({ list, create }) => {
 }
 
 const TripSection = props => (
-    <div className="col-12" style={{ marginTop: '5.7rem' }}>
+    <div className="col-12 px-0" style={{ marginTop: '5.7rem' }}>
         <h4 className="mb-4 TripInfo-heading">{props.name}</h4>
         {props.children}
     </div>

@@ -3,7 +3,7 @@ import SelectField from '../../util/forms/SelectField'
 import * as Yup from 'yup'
 import ModalForm from '../../util/forms/ModalForm'
 import { tripStatusValidator } from '../../util/validators'
-import TripStatus from '../../util/otherComponents/TripStatus'
+import TripStatusCover from '../../util/otherComponents/TripStatusCover'
 
 export default function TripDatesForm({ status, submit }) {
     const initialValues = {
@@ -36,10 +36,9 @@ export default function TripDatesForm({ status, submit }) {
     const button = {
         classes: 'hover Cover-status',
         text: (
-            <div className="text-light h5 ml-0 d-flex align-items-start flex-column">
-                <h5 className="Cover-status mb-4">STATUS</h5>
+            <div className="text-light h4 ml-0 d-flex align-items-start flex-column">
                 <div className="mb-3">
-                    <TripStatus status={status} />
+                    <TripStatusCover status={status} />
                 </div>
             </div>
         )
