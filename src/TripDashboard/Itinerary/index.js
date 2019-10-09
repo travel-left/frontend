@@ -7,6 +7,7 @@ import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Events.css'
 import ReactGA from 'react-ga'
+import message from '../../util/message'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/events')
@@ -50,7 +51,13 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
+        try {
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
+            message('success', 'Success!')
+        } catch (err) {
+            message('error', 'There was an error submitting your event')
+        }
+
         this.getDaysAndEvents()
     }
 
