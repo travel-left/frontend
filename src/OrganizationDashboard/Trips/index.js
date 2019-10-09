@@ -10,6 +10,7 @@ import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
 import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
+import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripsdashboard')
@@ -260,6 +261,7 @@ class Trips extends Component {
                             {tripList}
                         </div>
                         <div className="col-md-4 px-0">
+                            {this.props.currentUser.passwordUpdated == 0 && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
                             {tripInfo}
                         </div>
                     </div>

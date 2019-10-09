@@ -15,7 +15,6 @@ export const emailValidator = Yup.string()
 
 export const passwordValidator = Yup.string()
     .required('Please enter a password')
-    .min(8, 'Password must be longer than 8 characters')
 
 export const tripStatusValidator = Yup.string()
     .matches(/(PLANNING|COMPLETED|LEFT|PAST)/)
@@ -45,11 +44,11 @@ export const phoneValidator = Yup.string().matches(
     'Phone number is not valid'
 )
 
-export const match = function(key, message, func) {
+export const match = function (key, message, func) {
     const notNullMessage = message || 'Values do not match'
     const notNullFunc =
         func ||
-        function(value) {
+        function (value) {
             return value === this.parent[key]
         }
 
