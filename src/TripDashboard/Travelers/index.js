@@ -77,7 +77,8 @@ class Travelers extends Component {
         await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/travelers`,
-            travelers
+            travelers,
+            true
         )
 
         this.getTravelers()
@@ -87,7 +88,8 @@ class Travelers extends Component {
         await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/travelers/csv`,
-            travelers
+            travelers,
+            true
         )
 
         this.getTravelers()
@@ -97,7 +99,7 @@ class Travelers extends Component {
         await apiCall(
             'put',
             `/api/trips/${this.currentTripId}/travelers/${travelerId}`,
-            updateObject
+            updateObject, true
         )
 
         this.getTravelers()
@@ -154,7 +156,7 @@ class Travelers extends Component {
         await apiCall('post', '/api/communicate/text', {
             body: text.body,
             phones: travelersPhones
-        })
+        }, true)
 
         this.getTravelers()
     }
@@ -172,7 +174,7 @@ class Travelers extends Component {
             subject: email.subject,
             body: email.body,
             emails: travelersEmails
-        })
+        }, true)
 
         this.getTravelers()
     }
@@ -191,7 +193,7 @@ class Travelers extends Component {
         await apiCall(
             'put',
             `/api/trips/${this.currentTripId}/travelers`,
-            travelerStatuses
+            travelerStatuses, true
         )
         this.getTravelers()
 

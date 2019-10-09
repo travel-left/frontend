@@ -51,19 +51,13 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-        try {
-            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
-            message('success', 'Success!')
-        } catch (err) {
-            message('error', 'There was an error submitting your event')
-        }
-
+        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
         this.getDaysAndEvents()
     }
 
     updateEvent = async (eventId, event) => {
         event = formatEventForBackend(event)
-        await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event)
+        await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event, true)
         this.getDaysAndEvents()
     }
 

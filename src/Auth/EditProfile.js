@@ -64,7 +64,7 @@ export default class CreateProfile extends Component {
         const newCoord = await apiCall(
             'put',
             `/api/coordinators/${this.props.currentUser._id}`,
-            userData
+            userData, true
         )
         this.props.setCurrentUser(newCoord)
     }

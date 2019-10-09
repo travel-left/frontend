@@ -57,7 +57,7 @@ export default class ShareTrip extends Component {
             phones: travelers.map(t =>
                 this.state.selectedTravelers.includes(t._id) ? t.phone : null
             )
-        })
+        }, true)
     }
 
     emailSelectedTravelers = async email => {
@@ -69,7 +69,7 @@ export default class ShareTrip extends Component {
             emails: travelers.map(t =>
                 this.state.selectedTravelers.includes(t._id) ? t.email : null
             )
-        })
+        }, true)
     }
 
     render() {

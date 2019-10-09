@@ -23,16 +23,11 @@ class _CardForm extends Component {
             message('error', token.error.message)
         }
 
-        try {
-            let response = await apiCall('POST', "/api/stripe", {
-                token: token.token.id
-            })
-            if (response.message === 'Success') {
-                message('success', 'Your payment method has been updated!')
-                this.props.setCurrentUser(response.user)
-            }
-        } catch (err) {
-            message('error', err.message)
+        let response = await apiCall('POST', "/api/stripe", {
+            token: token.token.id
+        }, true)
+        if (response.message === 'Success') {
+            this.props.setCurrentUser(response.user)
         }
     }
 

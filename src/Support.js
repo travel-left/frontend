@@ -36,7 +36,7 @@ export default class Support extends Component {
             subject: formattedEmail.subject,
             body: formattedEmail.body,
             emails: ['jordan@travel-left.com']
-        })
+        }, true)
         this.setState({
             successMessage:
                 'Thanks for submitting. Someone from our team will be with you shortly.'
