@@ -3,6 +3,7 @@ import { CardElement, injectStripe, Elements, StripeProvider } from 'react-strip
 import { apiCall } from '../api'
 import { setCurrentUser } from '../redux/actions/auth'
 import { connect } from 'react-redux'
+import message from '../message'
 
 class _CardForm extends Component {
     state = {
@@ -19,7 +20,7 @@ class _CardForm extends Component {
         let token = await this.props.stripe.createToken({ name: "Name" })
 
         if (token.error) {
-            this.setState({ error: token.error.message })
+            message('error', token.error.message)
         }
 
         try {
@@ -27,11 +28,11 @@ class _CardForm extends Component {
                 token: token.token.id
             })
             if (response.message === 'Success') {
-                this.setState({ success: 'Your payment method has been updated!' })
+                message('success', 'Your payment method has been updated!')
                 this.props.setCurrentUser(response.user)
             }
         } catch (err) {
-            this.setState({ error: err.message })
+            message('error', err.message)
         }
     }
 
