@@ -97,7 +97,7 @@ export default class TripInformation extends Component {
     deleteCoordinator = async coordinatorId => {
         await apiCall(
             'delete',
-            `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`
+            `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`, true
         )
         const { coordinators } = this.state
         const newCoordinators = coordinators.filter(
@@ -141,7 +141,7 @@ export default class TripInformation extends Component {
     deleteContact = async contactId => {
         await apiCall(
             'delete',
-            `/api/trips/${this.currentTripId}/contacts/${contactId}`
+            `/api/trips/${this.currentTripId}/contacts/${contactId}`, true
         )
         const { contacts } = this.state
         const newContacts = contacts.filter(d => d._id !== contactId)
@@ -182,7 +182,7 @@ export default class TripInformation extends Component {
     deleteDocument = async docId => {
         await apiCall(
             'delete',
-            `/api/trips/${this.currentTripId}/documents/${docId}`
+            `/api/trips/${this.currentTripId}/documents/${docId}`, true
         )
         const { documents } = this.state
         const newDocuments = documents.filter(d => d._id !== docId)
@@ -225,7 +225,7 @@ export default class TripInformation extends Component {
     deleteTripDate = async tripDateId => {
         await apiCall(
             'delete',
-            `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`
+            `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`, true
         )
         const { tripDates } = this.state
         const newTripDates = tripDates.filter(d => d._id !== tripDateId)

@@ -47,14 +47,9 @@ export default class CreateProfile extends Component {
     handleCouponCode = async e => {
         e.preventDefault()
         if (this.state.couponCode === 'FREEMONTH') {
-            try {
-                await this.handleSubmit({
-                    cc: 'FREE'
-                })
-                message('success', 'Your coupon code has been accepted')
-            } catch (error) {
-                message('error', 'There was an error with your coupon code')
-            }
+            await this.handleSubmit({
+                cc: 'FREE'
+            })
         } else {
             message('error', 'There was an error with your coupon code')
         }
@@ -96,7 +91,6 @@ export default class CreateProfile extends Component {
 
         return (
             <div className="container">
-                <message />
                 <div className="row justify-content-center">
                     <div className="col-10 ">
                         {currentUser.cc.length !== 4 && daysLeft <= 0 && <YouMustPay user={currentUser}></YouMustPay>}
@@ -122,10 +116,8 @@ export default class CreateProfile extends Component {
 
                                     await this.handleSubmit(coordinator)
                                     actions.setSubmitting(false)
-                                    message('success', 'Your profile has been updated')
+
                                 } catch (error) {
-                                    console.log(error)
-                                    message('error', error.message)
                                     actions.setSubmitting(false)
                                 }
                             }}
