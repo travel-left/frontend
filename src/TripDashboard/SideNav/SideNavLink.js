@@ -1,26 +1,22 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import './SideNav.css'
 
-export default function SideNavLink({ text, tripId, name, icon }) {
+export default function SideNavLink({ text, tripId, name }) {
     return (
         <NavLink
-            className="d-flex justify-content-start align-items-center border-0 py-3 side-nav-link hover"
-            activeClassName="side-nav-link-active"
+            className="list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 py-3"
+            activeClassName="active"
             to={`/trips/${tripId}/${name}`}
             name={`/trips/${tripId}/${name}`}
             style={{
                 fontFamily: 'Roboto',
-                fontSize: '20px',
-                fontWeight: '700',
+                fontSize: '14px',
+                fontWeight: '500',
                 color: '#666666',
                 borderRadius: '3px'
             }}
         >
-            <i class="material-icons-outlined mr-4" style={{ fontWeight: 'bold' }}>
-                {icon}
-            </i>
-            {text}
+            {text}{' '}
         </NavLink>
     )
 }
