@@ -26,7 +26,7 @@ export default class SharePreview extends Component {
                 this.tripId
                 }/share`,
             phones: travelersPhones
-        })
+        }, true)
     }
 
     getAndSetTravelers = async () => {

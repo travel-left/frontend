@@ -63,7 +63,8 @@ class Travelers extends Component {
         await apiCall(
             'post',
             '/api/organization/travelers',
-            traveler
+            traveler,
+            true
         )
         this.getTravelers()
     }
@@ -72,7 +73,8 @@ class Travelers extends Component {
         await apiCall(
             'post',
             `/api/organization/travelers/csv`,
-            newTravelers
+            newTravelers,
+            true
         )
         this.getTravelers()
     }
@@ -81,7 +83,8 @@ class Travelers extends Component {
         await apiCall(
             'put',
             `/api/travelers/${travelerId}`,
-            updateObject
+            updateObject,
+            true
         )
         this.getTravelers()
     }
@@ -134,7 +137,7 @@ class Travelers extends Component {
             subject: email.subject,
             body: email.body,
             emails: travelersEmails
-        })
+        }, true)
     }
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
@@ -152,7 +155,8 @@ class Travelers extends Component {
         await apiCall(
             'put',
             '/api/travelers',
-            travelerStatuses
+            travelerStatuses,
+            true
         )
         this.getTravelers()
     }
@@ -169,7 +173,7 @@ class Travelers extends Component {
         apiCall('post', '/api/communicate/text', {
             body: text.body,
             phones: travelersPhones
-        })
+        }, true)
     }
 
     handleFilterChange = selectedFilters => {

@@ -22,7 +22,7 @@ class Cover extends Component {
             const data = await apiCall(
                 'put',
                 `/api/trips/${this.tripId}`,
-                updateObject
+                updateObject, true
             )
             return this.props.setCurrentTrip(data)
         } catch (err) { }

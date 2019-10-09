@@ -46,7 +46,7 @@ class Trips extends Component {
         for await (let file of files) {
             let formData = new FormData()
             formData.append('file', file)
-            await apiCall('post', '/api/fileUploads/unAuth', formData)
+            await apiCall('post', '/api/fileUploads/unAuth', formData, true)
         }
         this.setState({ files: ['Succesfully Uploaded'] })
     }
@@ -79,7 +79,7 @@ class Trips extends Component {
     }
 
     addTrip = async trip => {
-        const createdTrip = await apiCall('post', '/api/trips', trip)
+        const createdTrip = await apiCall('post', '/api/trips', trip, true)
         const { trips, filter, tripStatusCounts } = this.state
         trips.push(createdTrip)
         tripStatusCounts[createdTrip.status]++
@@ -93,7 +93,7 @@ class Trips extends Component {
         const { trips, filter } = this.state
         const updatedTrip = await apiCall('put', `/api/trips/${id}`, {
             status: 'ARCHIVED'
-        })
+        }, true)
         const updatedIndex = trips.findIndex(e => e._id.toString() === id)
         const { status } = trips[updatedIndex]
         trips[updatedIndex] = updatedTrip

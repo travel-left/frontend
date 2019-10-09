@@ -15,7 +15,9 @@ import './Auth.css'
 import { apiCall } from '../util/api'
 import ReactGA from 'react-ga'
 import ExplainCustomerId from './ExplainCustomerId'
-import YouMustPay from './YouMustPay';
+import YouMustPay from './YouMustPay'
+import message from '../util/message'
+
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -26,8 +28,6 @@ function initializeReactGA() {
 
 export default class CreateProfile extends Component {
     state = {
-        error: '',
-        successMessage: '',
         couponCode: ''
     }
 
@@ -37,10 +37,6 @@ export default class CreateProfile extends Component {
             initializeReactGA()
         }
 
-    }
-
-    setSuccessMessage = () => {
-        this.setState({ successMessage: 'Successfully submitted' })
     }
 
     handleChange = e => {
@@ -55,10 +51,12 @@ export default class CreateProfile extends Component {
                 await this.handleSubmit({
                     cc: 'FREE'
                 })
-                this.setSuccessMessage()
+                message('success', 'Your coupon code has been accepted')
             } catch (error) {
-                this.setState(error)
+                message('error', 'There was an error with your coupon code')
             }
+        } else {
+            message('error', 'There was an error with your coupon code')
         }
     }
 
@@ -66,14 +64,14 @@ export default class CreateProfile extends Component {
         const newCoord = await apiCall(
             'put',
             `/api/coordinators/${this.props.currentUser._id}`,
-            userData
+            userData, true
         )
         this.props.setCurrentUser(newCoord)
     }
 
     render() {
         const { currentUser } = this.props
-        const { error, successMessage } = this.state
+
         const initialValues = {
             name: currentUser.name,
             title: currentUser.title,
@@ -98,6 +96,7 @@ export default class CreateProfile extends Component {
 
         return (
             <div className="container">
+                <message />
                 <div className="row justify-content-center">
                     <div className="col-10 ">
                         {currentUser.cc.length !== 4 && daysLeft <= 0 && <YouMustPay user={currentUser}></YouMustPay>}
@@ -106,11 +105,6 @@ export default class CreateProfile extends Component {
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-5 d-flex flex-column my-3">
                         <h1 className="text-dark pt-2">Your Account</h1>
-                        {error ? (
-                            <p style={{ color: 'red' }}>{error.message}</p>
-                        ) : (
-                                <p className="text-primary">{successMessage}</p>
-                            )}
 
                         <Formik
                             initialValues={initialValues}
@@ -128,10 +122,10 @@ export default class CreateProfile extends Component {
 
                                     await this.handleSubmit(coordinator)
                                     actions.setSubmitting(false)
-                                    this.setSuccessMessage()
+                                    message('success', 'Your profile has been updated')
                                 } catch (error) {
-                                    console.error(error)
-                                    this.setState({ error })
+                                    console.log(error)
+                                    message('error', error.message)
                                     actions.setSubmitting(false)
                                 }
                             }}

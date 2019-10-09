@@ -45,7 +45,7 @@ export default class TripInformation extends Component {
         const updatedTrip = await apiCall(
             'put',
             `/api/trips/${this.currentTripId}`,
-            updateObject
+            updateObject, true
         )
         this.props.setCurrentTrip(updatedTrip)
     }
@@ -62,7 +62,7 @@ export default class TripInformation extends Component {
         const updatedCoordinator = await apiCall(
             'put',
             `/api/coordinators/${coordinatorId}`,
-            updateObject
+            updateObject, true
         )
         const { coordinators } = this.state
         const index = coordinators.findIndex(d => d._id === coordinatorId)
@@ -75,7 +75,8 @@ export default class TripInformation extends Component {
         const createdCoordinator = await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/coordinators`,
-            coordinator
+            coordinator,
+            true
         )
         const { coordinators } = this.state
         coordinators.push(createdCoordinator)
@@ -86,7 +87,8 @@ export default class TripInformation extends Component {
         const coordinators = await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/coordinators/add`,
-            coordinatorIds
+            coordinatorIds,
+            true
         )
 
         this.setState({ coordinators })
@@ -116,7 +118,7 @@ export default class TripInformation extends Component {
         const updatedContact = await apiCall(
             'put',
             `/api/trips/${this.currentTripId}/contacts/${contactId}`,
-            updateObject
+            updateObject, true
         )
         const { contacts } = this.state
         const index = contacts.findIndex(d => d._id === contactId)
@@ -128,7 +130,8 @@ export default class TripInformation extends Component {
         const createdContact = await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/contacts`,
-            newContact
+            newContact,
+            true
         )
         const { contacts } = this.state
         contacts.push(createdContact)
@@ -157,7 +160,7 @@ export default class TripInformation extends Component {
         const updatedDocument = await apiCall(
             'put',
             `/api/trips/${this.currentTripId}/documents/${documentId}`,
-            updateObject
+            updateObject, true
         )
         const { documents } = this.state
         const index = documents.findIndex(d => d._id === documentId)
@@ -169,7 +172,8 @@ export default class TripInformation extends Component {
         const createdDocument = await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/documents`,
-            doc
+            doc,
+            true
         )
         const { documents } = this.state
         this.setState({ documents: [...documents, createdDocument] })
@@ -197,7 +201,7 @@ export default class TripInformation extends Component {
         const updatedTripDate = await apiCall(
             'put',
             `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`,
-            updateObject
+            updateObject, true
         )
         const { tripDates } = this.state
         const index = tripDates.findIndex(d => d._id === tripDateId)
@@ -210,7 +214,8 @@ export default class TripInformation extends Component {
         const createdTD = await apiCall(
             'post',
             `/api/trips/${this.currentTripId}/tripDates`,
-            tripDate
+            tripDate,
+            true
         )
         const { tripDates } = this.state
         tripDates.push(createdTD)

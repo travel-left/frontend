@@ -1,4 +1,5 @@
 import axios from 'axios'
+import message from './message'
 
 export const setTokenHeader = token => {
     if (token) {
@@ -8,14 +9,16 @@ export const setTokenHeader = token => {
     }
 }
 
-export const apiCall = async (method, path, data) => {
+export const apiCall = async (method, path, data, msg) => {
     try {
         const res = await axios[method.toLowerCase()](
             `${process.env.REACT_APP_BACKEND_ENDPOINT}${path}`,
             data
         )
+        if (msg) message('success', 'Success!')
         return res.data
     } catch (err) {
-        throw err.response.data.error
+        if (msg) message('error', 'There was an error with your request.')
+        return err
     }
 }

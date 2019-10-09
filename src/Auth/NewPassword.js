@@ -20,7 +20,7 @@ export default class NewPassword extends Component {
             lastChangedPassword: new Date()
         }
         try {
-            await apiCall('put', `/api/coordinators/${coordinatorId}`, user)
+            await apiCall('put', `/api/coordinators/${coordinatorId}`, user, true)
         } catch (error) {
             this.setState({
                 error
