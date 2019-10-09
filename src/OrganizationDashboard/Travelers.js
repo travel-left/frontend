@@ -90,7 +90,7 @@ class Travelers extends Component {
     }
 
     removeTraveler = async travelerId => {
-        await apiCall('delete', `/api/travelers/${travelerId}/org`)
+        await apiCall('delete', `/api/travelers/${travelerId}/org`, true)
         this.getTravelers()
     }
 
