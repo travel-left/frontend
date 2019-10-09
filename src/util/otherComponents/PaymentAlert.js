@@ -28,12 +28,12 @@ class PaymentAlert extends Component {
         return (
             this.state.showAlert && (<div
                 className="d-none d-md-flex flex-row justify-content-around my-3 text-primary align-items-center TripsListHeader"
-                style={{ height: '65px' }}
+                style={{ fontSize: '16px' }}
             >
                 <div className="col-1 d-flex align-self-stretch justify-content-center align-items-center" style={{ backgroundColor: '#83C9F4' }}>
                     <i className="fas fa-thumbs-up fa-lg text-light" />
                 </div>
-                <div className="col-10">
+                <div className="col-10 py-3">
                     <span style={{ color: '#83C9F4' }}>Welcome to Left! Your free trial has <span style={{ color: '#0F61D8' }}>{daysLeft} days</span> remaining. Head over to {' '}
                         <NavLink
                             to="/editprofile"
