@@ -5,31 +5,31 @@ export default function SideNav({ ctId }) {
     const sideNavComponents = [
         {
             name: 'edit',
-            text: 'Trip Information',
-            icon: 'info'
+            text: 'Trip Information'
         },
         {
             name: 'itinerary',
-            text: 'Manage Itinerary',
-            icon: 'event'
+            text: 'Manage Itinerary'
         },
         {
             name: 'travelers',
-            text: 'Manage Travelers',
-            icon: 'people_alt'
+            text: 'Manage Travelers'
         },
         {
             name: 'preview',
-            text: 'Trip Preview',
-            icon: 'mobile_screen_share'
+            text: 'Trip Preview'
         }
     ]
-    const sideNavList = sideNavComponents.map(({ name, text, icon }) => (
-        <SideNavLink key={name} text={text} name={name} tripId={ctId} icon={icon} />
+    const sideNavList = sideNavComponents.map(({ name, text }) => (
+        <SideNavLink key={name} text={text} name={name} tripId={ctId} />
     ))
     return (
-        <div className="px-0 mt-4">
-            <ul className="pl-1" >
+        <div className="px-0" style={{
+            background: '#FFFFFF',
+            boxShadow: '-2px 2px 4px 0 rgba(0, 0, 0, 0.3)',
+            borderRadius: '8px'
+        }}>
+            <ul className="list-group list-group-flush">
                 {sideNavList}
             </ul>
         </div>
