@@ -159,12 +159,6 @@ export default class CreateProfile extends Component {
                                             type="password"
                                             placeholder="••••••••••••"
                                         />
-                                        <FormField
-                                            name="confirmPassword"
-                                            label="Confirm Password*"
-                                            type="password"
-                                            placeholder="••••••••••••"
-                                        />
                                         <div className="p mt-2">
                                             <label className="">
                                                 Organization Id{' '}
