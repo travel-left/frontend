@@ -261,7 +261,7 @@ class Trips extends Component {
                             {tripList}
                         </div>
                         <div className="col-md-4 px-0">
-                            {this.props.currentUser.passwordUpdated == 0 && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
+                            {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
                             {tripInfo}
                         </div>
                     </div>

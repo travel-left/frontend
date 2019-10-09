@@ -9,12 +9,6 @@ class WithoutAuth extends Component {
         }
     }
 
-    componentWillUpdate() {
-        if (this.props.isAuthenticated) {
-            this.props.history.push('/')
-        }
-    }
-
     render() {
         return !this.props.isAuthenticated && this.props.children
     }
