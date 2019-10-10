@@ -3,6 +3,11 @@ import * as Yup from 'yup'
 import ModalForm from '../../util/forms/ModalForm'
 import Uploader from '../../util/forms/Uploader'
 import FormField from '../../util/forms/FormField'
+import moment from 'moment'
+import { ErrorMessage, Field } from 'formik'
+import { DatePicker } from 'antd'
+import 'antd/es/date-picker/style/css'
+
 import {
     dateValidator,
     nameValidator,
@@ -15,14 +20,13 @@ export default function AddTrip({ submit }) {
         image: 'https://',
         dateStart: '',
         dateEnd: '',
-        description: ''
+        description: '',
+        date: [moment(), moment()]
     }
 
     const schema = Yup.object().shape({
         name: nameValidator,
         image: Yup.string().required('Please upload an image'),
-        dateStart: dateValidator,
-        dateEnd: dateValidator,
         description: descriptionValidator
     })
 
@@ -30,6 +34,19 @@ export default function AddTrip({ submit }) {
         classes: 'btn btn-lg btn-primary AddTrip-button',
         text: 'ADD NEW TRIP'
     }
+
+    const { RangePicker } = DatePicker
+    const CustomInputComponent = ({
+        field, // { name, value, onChange, onBlur }
+        form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+        ...props
+    }) => (
+            <div>
+                <RangePicker {...field} {...props} onChange={e => setFieldValue('date', e)} />
+                {touched[field.name] &&
+                    errors[field.name] && <div className="error">{errors[field.name]}</div>}
+            </div>
+        )
 
     return (
         <ModalForm
@@ -45,18 +62,10 @@ export default function AddTrip({ submit }) {
                 label="Upload an image*"
                 component={Uploader}
             />
-            <FormField
-                name="dateStart"
-                label="Trip Start Date*"
-                placeholder={initialValues.dateStart}
-                type="date"
-            />
-            <FormField
-                name="dateEnd"
-                label="Trip End Date*"
-                placeholder={initialValues.dateEnd}
-                type="date"
-            />
+            <label htmlFor="date" className="d-block Modal-Form-label">
+                TRIP DATES
+            </label>
+            <Field name='date' component={CustomInputComponent} />
             <FormField
                 name="description"
                 label="Trip Description"

@@ -79,14 +79,16 @@ class Trips extends Component {
     }
 
     addTrip = async trip => {
-        const createdTrip = await apiCall('post', '/api/trips', trip, true)
-        const { trips, filter, tripStatusCounts } = this.state
-        trips.push(createdTrip)
-        tripStatusCounts[createdTrip.status]++
-        this.filterTripsAndSetState(trips, 'ALL TRIPS', {
-            selectedTrip: createdTrip,
-            tripStatusCounts
-        })
+        console.log(trip.date[0].format('YYYY-MM-DD'))
+        console.log(trip.date[1].format('YYYY-MM-DD'))
+        // const createdTrip = await apiCall('post', '/api/trips', trip, true)
+        // const { trips, filter, tripStatusCounts } = this.state
+        // trips.push(createdTrip)
+        // tripStatusCounts[createdTrip.status]++
+        // this.filterTripsAndSetState(trips, 'ALL TRIPS', {
+        //     selectedTrip: createdTrip,
+        //     tripStatusCounts
+        // })
     }
 
     archiveTrip = async id => {
