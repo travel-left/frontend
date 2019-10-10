@@ -7,7 +7,7 @@ import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Events.css'
 import ReactGA from 'react-ga'
-import message from '../../util/message'
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/events')

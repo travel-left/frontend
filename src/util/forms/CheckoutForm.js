@@ -3,13 +3,14 @@ import { CardElement, injectStripe, Elements, StripeProvider } from 'react-strip
 import { apiCall } from '../api'
 import { setCurrentUser } from '../redux/actions/auth'
 import { connect } from 'react-redux'
-import message from '../message'
+import Snack from '../Snack'
 
 class _CardForm extends Component {
     state = {
         complete: false,
         error: '',
-        success: ''
+        success: '',
+        showSnack: false
     }
 
     constructor(props) {
@@ -20,7 +21,7 @@ class _CardForm extends Component {
         let token = await this.props.stripe.createToken({ name: "Name" })
 
         if (token.error) {
-            message('error', token.error.message)
+            this.setState({ showSnack: true })
         }
 
         let response = await apiCall('POST', "/api/stripe", {
@@ -43,6 +44,7 @@ class _CardForm extends Component {
                 <label htmlFor="">Update card</label>
                 <CardElement />
                 <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
+                {this.state.showSnack && <Snack></Snack>}
             </div>
         )
     }
