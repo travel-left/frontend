@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import * as Yup from 'yup'
 import ModalForm from '../../util/forms/ModalForm'
 import Uploader from '../../util/forms/Uploader'
@@ -20,10 +20,11 @@ export default function AddTrip({ submit }) {
     const initialValues = {
         name: '',
         image: 'https://',
-        dateStart: '',
-        dateEnd: '',
-        description: '',
-        date: [moment(), moment()]
+        dates: {
+            startDate: moment(),
+            endDate: moment().add(7, 'days')
+        },
+        description: ''
     }
 
     const schema = Yup.object().shape({
@@ -37,18 +38,10 @@ export default function AddTrip({ submit }) {
         text: 'ADD NEW TRIP'
     }
 
-    const { RangePicker } = DatePicker
-    const CustomInputComponent = ({
-        field, // { name, value, onChange, onBlur }
-        form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-        ...props
-    }) => (
-            <div>
-                <RangePicker {...field} {...props} onChange={e => setFieldValue('date', e)} />
-                {touched[field.name] &&
-                    errors[field.name] && <div className="error">{errors[field.name]}</div>}
-            </div>
-        )
+    const CustomInputComponent = ({ field, form: { touched, errors, setFieldValue }, ...props }) => (
+        <DateRangePickerWrapper {...field} {...props} onChange={e => setFieldValue('dates', e)} />
+    )
+
 
     return (
         <ModalForm
@@ -67,7 +60,7 @@ export default function AddTrip({ submit }) {
             <label htmlFor="date" className="d-block Modal-Form-label">
                 TRIP DATES
             </label>
-            <Field name='date' component={CustomInputComponent} />
+            <Field name='dates' component={CustomInputComponent} />
             <FormField
                 name="description"
                 label="Trip Description"
@@ -77,4 +70,40 @@ export default function AddTrip({ submit }) {
             />
         </ModalForm>
     )
+}
+
+class DateRangePickerWrapper extends Component {
+    state = {
+        focusedInput: moment()
+    }
+
+    onDatesChange = ({ startDate, endDate }) => {
+        this.setState({
+            startDate,
+            endDate
+        });
+    }
+
+    onFocusChange = (focusedInput) => {
+        this.setState({ focusedInput });
+    }
+
+    render() {
+        const { focusedInput } = this.state;
+        const { value } = this.props
+        console.log(this.props)
+        return (
+            <div>
+                <DateRangePicker
+                    onDatesChange={this.props.onChange}
+                    onFocusChange={this.onFocusChange}
+                    focusedInput={focusedInput}
+                    startDate={value.startDate}
+                    startDateId="your_unique_start_date_id"
+                    endDateId="your_unique_end_date_id"
+                    endDate={value.endDate}
+                />
+            </div>
+        );
+    }
 }
