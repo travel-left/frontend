@@ -7,6 +7,7 @@ import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Events.css'
 import ReactGA from 'react-ga'
+import Snack from '../../util/Snack'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -21,7 +22,12 @@ class events extends Component {
         days: [],
         selectedDay: '',
         events: [],
-        isOpen: false
+        isOpen: false,
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
@@ -31,6 +37,8 @@ class events extends Component {
         }
         this.getDaysAndEvents()
     }
+
+    closeSnack = () => (this.setState({ snack: { show: false } }))
 
     getDaysAndEvents = async () => {
         let days = []
@@ -51,19 +59,74 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-        await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
-        this.getDaysAndEvents()
+
+        try {
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            this.getDaysAndEvents()
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     updateEvent = async (eventId, event) => {
         event = formatEventForBackend(event)
-        await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event, true)
-        this.getDaysAndEvents()
+
+        try {
+            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            this.getDaysAndEvents()
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     removeEvent = async eventId => {
-        await apiCall('delete', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, true)
-        this.getDaysAndEvents()
+        try {
+            await apiCall('delete', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            this.getDaysAndEvents()
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     onDayClick = day => {
@@ -123,6 +186,7 @@ class events extends Component {
                         {eventList}
                     </div>
                 </div>
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
