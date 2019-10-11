@@ -40,7 +40,6 @@ const App = () => (
                                     <ErrorBoundary>
                                         <Main />
                                     </ErrorBoundary>
-                                    <div id="snack-root"></div>
                                 </div>
                                 <Footer />
                             </div>
