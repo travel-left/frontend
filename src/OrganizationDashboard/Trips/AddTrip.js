@@ -7,7 +7,9 @@ import moment from 'moment'
 import { ErrorMessage, Field } from 'formik'
 import { DatePicker } from 'antd'
 import 'antd/es/date-picker/style/css'
-
+import 'react-dates/initialize'
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
 import {
     dateValidator,
     nameValidator,
