@@ -10,25 +10,54 @@ class _CardForm extends Component {
         complete: false,
         error: '',
         success: '',
-        showSnack: false
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
         super(props)
     }
 
+    closeSnack = () => (this.setState({ snack: { show: false } }))
+
     submit = async ev => {
         let token = await this.props.stripe.createToken({ name: "Name" })
 
         if (token.error) {
-            this.setState({ showSnack: true })
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
         }
 
-        let response = await apiCall('POST', "/api/stripe", {
-            token: token.token.id
-        }, true)
-        if (response.message === 'Success') {
-            this.props.setCurrentUser(response.user)
+        try {
+            let response = await apiCall('POST', "/api/stripe", {
+                token: token.token.id
+            }, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            if (response.message === 'Success') {
+                this.props.setCurrentUser(response.user)
+            }
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
         }
     }
 
@@ -44,7 +73,7 @@ class _CardForm extends Component {
                 <label htmlFor="">Update card</label>
                 <CardElement />
                 <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
-                {this.state.showSnack && <Snack></Snack>}
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
