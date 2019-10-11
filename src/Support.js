@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik'
 import FormField from './util/forms/FormField'
 import * as Yup from 'yup'
 import ReactGA from 'react-ga'
+import Snack from './util/Snack'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/support')
@@ -12,7 +13,12 @@ function initializeReactGA() {
 
 export default class Support extends Component {
     state = {
-        successMessage: ''
+        successMessage: '',
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
@@ -21,6 +27,8 @@ export default class Support extends Component {
             initializeReactGA()
         }
     }
+
+    closeSnack = () => (this.setState({ snack: { show: false } }))
 
     sendEmail = async email => {
         const formattedEmail = {
@@ -32,15 +40,28 @@ export default class Support extends Component {
             body: email.body
         }
 
-        await apiCall('post', '/api/communicate/email', {
-            subject: formattedEmail.subject,
-            body: formattedEmail.body,
-            emails: ['jordan@travel-left.com']
-        }, true)
-        this.setState({
-            successMessage:
-                'Thanks for submitting. Someone from our team will be with you shortly.'
-        })
+        try {
+            await apiCall('post', '/api/communicate/email', {
+                subject: formattedEmail.subject,
+                body: formattedEmail.body,
+                emails: ['jordan@travel-left.com']
+            }, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Thanks for submitting. Someone from our team will be with you shortly.'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     render() {
@@ -102,6 +123,7 @@ export default class Support extends Component {
                         </p>
                     </div>
                 </div>
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }

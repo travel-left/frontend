@@ -11,9 +11,10 @@ import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
 import { apiCall } from '../../util/api'
-import LeftCard from '../../util/LeftCard'
 import './TripInfo.css'
 import ReactGA from 'react-ga'
+import Snack from '../../util/Snack'
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripinformation')
@@ -27,7 +28,12 @@ export default class TripInformation extends Component {
         coordinators: [],
         contacts: [],
         documents: [],
-        tripDates: []
+        tripDates: [],
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
@@ -41,13 +47,32 @@ export default class TripInformation extends Component {
         this.getTripDates()
     }
 
+    closeSnack = () => (this.setState({ snack: { show: false } }))
+
     updateTrip = async updateObject => {
-        const updatedTrip = await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}`,
-            updateObject, true
-        )
-        this.props.setCurrentTrip(updatedTrip)
+        try {
+            const updatedTrip = await apiCall(
+                'put',
+                `/api/trips/${this.currentTripId}`,
+                updateObject, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            this.props.setCurrentTrip(updatedTrip)
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     getCoordinators = async () => {
@@ -59,51 +84,122 @@ export default class TripInformation extends Component {
     }
 
     updateCoordinator = async (coordinatorId, updateObject) => {
-        const updatedCoordinator = await apiCall(
-            'put',
-            `/api/coordinators/${coordinatorId}`,
-            updateObject, true
-        )
-        const { coordinators } = this.state
-        const index = coordinators.findIndex(d => d._id === coordinatorId)
-        coordinators[index] = updatedCoordinator
-        this.setState({ coordinators })
+        try {
+            const updatedCoordinator = await apiCall(
+                'put',
+                `/api/coordinators/${coordinatorId}`,
+                updateObject, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { coordinators } = this.state
+            const index = coordinators.findIndex(d => d._id === coordinatorId)
+            coordinators[index] = updatedCoordinator
+            this.setState({ coordinators })
+
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     createCoordinator = async coordinator => {
-        coordinator.organization = this.props.currentUser.organization
-        const createdCoordinator = await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/coordinators`,
-            coordinator,
-            true
-        )
-        const { coordinators } = this.state
-        coordinators.push(createdCoordinator)
-        this.setState({ coordinators })
+        try {
+            coordinator.organization = this.props.currentUser.organization
+            const createdCoordinator = await apiCall(
+                'post',
+                `/api/trips/${this.currentTripId}/coordinators`,
+                coordinator,
+                true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { coordinators } = this.state
+            coordinators.push(createdCoordinator)
+            this.setState({ coordinators })
+
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     addFromOrg = async coordinatorIds => {
-        const coordinators = await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/coordinators/add`,
-            coordinatorIds,
-            true
-        )
+        try {
+            const coordinators = await apiCall(
+                'post',
+                `/api/trips/${this.currentTripId}/coordinators/add`,
+                coordinatorIds,
+                true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
 
-        this.setState({ coordinators })
+            this.setState({ coordinators })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     deleteCoordinator = async coordinatorId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`, true
-        )
-        const { coordinators } = this.state
-        const newCoordinators = coordinators.filter(
-            d => d._id !== coordinatorId
-        )
-        this.setState({ coordinators: newCoordinators })
+        try {
+            await apiCall(
+                'delete',
+                `/api/trips/${this.currentTripId}/coordinators/${coordinatorId}`, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { coordinators } = this.state
+            const newCoordinators = coordinators.filter(
+                d => d._id !== coordinatorId
+            )
+            this.setState({ coordinators: newCoordinators })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     getContacts = async () => {
@@ -115,37 +211,88 @@ export default class TripInformation extends Component {
     }
 
     updateContact = async (contactId, updateObject) => {
-        const updatedContact = await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/contacts/${contactId}`,
-            updateObject, true
-        )
-        const { contacts } = this.state
-        const index = contacts.findIndex(d => d._id === contactId)
-        contacts[index] = updatedContact
-        this.setState({ contacts })
+        try {
+            const updatedContact = await apiCall(
+                'put',
+                `/api/trips/${this.currentTripId}/contacts/${contactId}`,
+                updateObject, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { contacts } = this.state
+            const index = contacts.findIndex(d => d._id === contactId)
+            contacts[index] = updatedContact
+            this.setState({ contacts })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     createContact = async newContact => {
-        const createdContact = await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/contacts`,
-            newContact,
-            true
-        )
-        const { contacts } = this.state
-        contacts.push(createdContact)
-        this.setState({ contacts })
+        try {
+            const createdContact = await apiCall(
+                'post',
+                `/api/trips/${this.currentTripId}/contacts`,
+                newContact,
+                true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { contacts } = this.state
+            contacts.push(createdContact)
+            this.setState({ contacts })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     deleteContact = async contactId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/contacts/${contactId}`, true
-        )
-        const { contacts } = this.state
-        const newContacts = contacts.filter(d => d._id !== contactId)
-        this.setState({ contacts: newContacts })
+        try {
+            await apiCall(
+                'delete',
+                `/api/trips/${this.currentTripId}/contacts/${contactId}`, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { contacts } = this.state
+            const newContacts = contacts.filter(d => d._id !== contactId)
+            this.setState({ contacts: newContacts })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     getDocuments = async () => {
@@ -157,36 +304,88 @@ export default class TripInformation extends Component {
     }
 
     updateDocument = async (documentId, updateObject) => {
-        const updatedDocument = await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/documents/${documentId}`,
-            updateObject, true
-        )
-        const { documents } = this.state
-        const index = documents.findIndex(d => d._id === documentId)
-        documents[index] = updatedDocument
-        this.setState({ documents })
+        try {
+            const updatedDocument = await apiCall(
+                'put',
+                `/api/trips/${this.currentTripId}/documents/${documentId}`,
+                updateObject, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { documents } = this.state
+            const index = documents.findIndex(d => d._id === documentId)
+            documents[index] = updatedDocument
+            this.setState({ documents })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     createDocument = async doc => {
-        const createdDocument = await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/documents`,
-            doc,
-            true
-        )
-        const { documents } = this.state
-        this.setState({ documents: [...documents, createdDocument] })
+        try {
+            const createdDocument = await apiCall(
+                'post',
+                `/api/trips/${this.currentTripId}/documents`,
+                doc,
+                true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { documents } = this.state
+            this.setState({ documents: [...documents, createdDocument] })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     deleteDocument = async docId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/documents/${docId}`, true
-        )
-        const { documents } = this.state
-        const newDocuments = documents.filter(d => d._id !== docId)
-        this.setState({ documents: newDocuments })
+        try {
+            await apiCall(
+                'delete',
+                `/api/trips/${this.currentTripId}/documents/${docId}`, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { documents } = this.state
+            const newDocuments = documents.filter(d => d._id !== docId)
+            this.setState({ documents: newDocuments })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     getTripDates = async () => {
@@ -198,38 +397,92 @@ export default class TripInformation extends Component {
     }
 
     updateTripDate = async (tripDateId, updateObject) => {
-        const updatedTripDate = await apiCall(
-            'put',
-            `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`,
-            updateObject, true
-        )
-        const { tripDates } = this.state
-        const index = tripDates.findIndex(d => d._id === tripDateId)
-        tripDates[index] = updatedTripDate
-        this.setState({ tripDates })
+        try {
+            const updatedTripDate = await apiCall(
+                'put',
+                `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`,
+                updateObject, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { tripDates } = this.state
+            const index = tripDates.findIndex(d => d._id === tripDateId)
+            tripDates[index] = updatedTripDate
+            this.setState({ tripDates })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     createTripDate = async tripDate => {
-        tripDate.type.toUpperCase()
-        const createdTD = await apiCall(
-            'post',
-            `/api/trips/${this.currentTripId}/tripDates`,
-            tripDate,
-            true
-        )
-        const { tripDates } = this.state
-        tripDates.push(createdTD)
-        this.setState({ tripDates })
+        try {
+            tripDate.type.toUpperCase()
+            const createdTD = await apiCall(
+                'post',
+                `/api/trips/${this.currentTripId}/tripDates`,
+                tripDate,
+                true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { tripDates } = this.state
+            tripDates.push(createdTD)
+            this.setState({ tripDates })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     deleteTripDate = async tripDateId => {
-        await apiCall(
-            'delete',
-            `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`, true
-        )
-        const { tripDates } = this.state
-        const newTripDates = tripDates.filter(d => d._id !== tripDateId)
-        this.setState({ tripDates: newTripDates })
+        try {
+            await apiCall(
+                'delete',
+                `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`, true
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            const { tripDates } = this.state
+            const newTripDates = tripDates.filter(d => d._id !== tripDateId)
+            this.setState({ tripDates: newTripDates })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     render() {
@@ -295,6 +548,7 @@ export default class TripInformation extends Component {
                     list={contactsList}
                     create={this.createContact}
                 />
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
