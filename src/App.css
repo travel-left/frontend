@@ -34,26 +34,6 @@
     border-color: #0f61d8;
 }
 
-.screen {
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    display: block;
-    border-radius: 1px;
-    box-shadow: 0 0 0 3px #111;
-}
-
-.iphone6 {
-    width: 375px;
-    height: 667px;
-    padding: 105px 24px;
-    background: #d9dbdc;
-    border-radius: 56px;
-    box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    box-sizing: content-box !important;
-}
-
 .badge-left {
     background-color: #4ce2a7 !important;
 }
@@ -116,10 +96,42 @@
     border-radius: 3px;
 }
 
-label {
+/* label {
     margin-top: 1rem;
+} */
+
+* {
+  outline: none !important;
 }
 
-.left-select {
-    
+.CalendarDay__selected_span {
+  background: #8FCFF5 !important;
+  color: white !important;
+  border: 1px solid #8FCFF5 !important;
+}
+
+.CalendarDay__selected {
+  border: 1px solid #0f61d8 !important;
+    background: #0f61d8 !important;
+  color: white !important;
+}
+
+.CalendarDay__selected:hover {
+  background: #8FCFF5 !important;
+  color: white !important;
+}
+
+.CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+      border: 1px solid #8FCFF5 !important;
+  background: #8FCFF5 !important;
+  color: white !important;
+}
+
+.DateInput_input__focused {
+    border: 1px solid #0f61d8 !important;
+}
+
+.DayPickerKeyboardShortcuts_buttonReset {
+    display: none !important;
 }

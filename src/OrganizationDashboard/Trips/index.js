@@ -5,13 +5,23 @@ import PaymentAlert from '../../util/otherComponents/PaymentAlert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../../util/redux/actions/trip'
-import AddTrip from './AddTrip'
 import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
 import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
 import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
 import Snack from '../../util/Snack'
+import NewModal from '../../util/NewModal'
+import Button from '@material-ui/core/Button'
+import NewAddTripForm from './NewAddTripForm'
+import * as Yup from 'yup'
+import moment from 'moment'
+import 'react-dates/initialize'
+import {
+    nameValidator,
+    descriptionValidator
+} from '../../util/validators'
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripsdashboard')
@@ -35,7 +45,8 @@ class Trips extends Component {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+        isOpen: false,
     }
 
     constructor(props) {
@@ -48,6 +59,7 @@ class Trips extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    toggleModal = () => (this.setState(prevState => ({ isOpen: !prevState.isOpen })))
 
     uploadFiles = async () => {
         let files = [...this.state.files]
@@ -88,7 +100,9 @@ class Trips extends Component {
 
     addTrip = async trip => {
         const { trips, tripStatusCounts } = this.state
-
+        trip.dateStart = trip.dates.startDate
+        trip.dateEnd = trip.dates.endDate
+        delete trip.dates
         try {
             const createdTrip = await apiCall('post', '/api/trips', trip, true)
             this.setState({
@@ -99,6 +113,7 @@ class Trips extends Component {
                 }
             })
             trips.push(createdTrip)
+            console.log('after push')
             tripStatusCounts[createdTrip.status]++
             this.filterTripsAndSetState(trips, 'ALL TRIPS', {
                 selectedTrip: createdTrip,
@@ -113,7 +128,6 @@ class Trips extends Component {
                 }
             })
         }
-
     }
 
     archiveTrip = async id => {
@@ -211,6 +225,7 @@ class Trips extends Component {
             ? this.state.files.map(file => <p>{file.name || file}</p>)
             : null
 
+        let tripForm = <NewAddTripForm />
         return (
             <div className="row">
                 <div className="col-md-2 px-0" style={{
@@ -219,7 +234,30 @@ class Trips extends Component {
                     borderRadius: '3px'
                 }}>
                     <div className="px-0 py-5 d-flex justify-content-center">
-                        <AddTrip submit={this.addTrip} />
+                        <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
+                            ADD NEW TRIP
+    </Button>
+                        {this.state.isOpen && <NewModal
+                            isOpen={this.state.isOpen}
+                            title='Add New Trip'
+                            toggleModal={this.toggleModal}
+                            initialValues={{
+                                name: '',
+                                image: 'https://',
+                                dates: {
+                                    startDate: moment(),
+                                    endDate: moment().add(7, 'days')
+                                },
+                                description: ''
+                            }}
+
+                            validationSchema={Yup.object().shape({
+                                name: nameValidator,
+                                image: Yup.string().required('Please upload an image'),
+                                description: descriptionValidator
+                            })}
+                            submit={this.addTrip}
+                        />}
                     </div>
                     <div className="d-none d-sm-flex flex-column" >
                         <ul className="list-group col px-0 ">
