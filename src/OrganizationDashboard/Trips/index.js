@@ -11,6 +11,7 @@ import ReactGA from 'react-ga'
 import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
 import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
+import Snack from '../../util/Snack'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripsdashboard')
@@ -29,6 +30,11 @@ class Trips extends Component {
             PLANNING: 0,
             PAST: 0,
             ARCHIVED: 0
+        },
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
         }
     }
 
@@ -40,6 +46,8 @@ class Trips extends Component {
 
         this.getAllTripsAndSetState()
     }
+
+    closeSnack = () => (this.setState({ snack: { show: false } }))
 
     uploadFiles = async () => {
         let files = [...this.state.files]
@@ -81,31 +89,66 @@ class Trips extends Component {
     addTrip = async trip => {
         console.log(trip.date[0].format('YYYY-MM-DD'))
         console.log(trip.date[1].format('YYYY-MM-DD'))
-        // const createdTrip = await apiCall('post', '/api/trips', trip, true)
-        // const { trips, filter, tripStatusCounts } = this.state
-        // trips.push(createdTrip)
-        // tripStatusCounts[createdTrip.status]++
-        // this.filterTripsAndSetState(trips, 'ALL TRIPS', {
-        //     selectedTrip: createdTrip,
-        //     tripStatusCounts
-        // })
+        const { trips, tripStatusCounts } = this.state
+
+        try {
+            const createdTrip = await apiCall('post', '/api/trips', trip, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            trips.push(createdTrip)
+            tripStatusCounts[createdTrip.status]++
+            this.filterTripsAndSetState(trips, 'ALL TRIPS', {
+                selectedTrip: createdTrip,
+                tripStatusCounts
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     archiveTrip = async id => {
         const { trips, filter } = this.state
-        const updatedTrip = await apiCall('put', `/api/trips/${id}`, {
-            status: 'ARCHIVED'
-        }, true)
-        const updatedIndex = trips.findIndex(e => e._id.toString() === id)
-        const { status } = trips[updatedIndex]
-        trips[updatedIndex] = updatedTrip
-        const newStatusCount = { ...this.state.tripStatusCounts }
-        newStatusCount.ARCHIVED++
-        newStatusCount[status]--
-        this.setState({ trips })
-        this.filterTripsAndSetState(trips, filter, {
-            tripStatusCounts: newStatusCount
-        })
+        try {
+            const updatedTrip = await apiCall('put', `/api/trips/${id}`, {
+                status: 'ARCHIVED'
+            }, true)
+            const updatedIndex = trips.findIndex(e => e._id.toString() === id)
+            const { status } = trips[updatedIndex]
+            trips[updatedIndex] = updatedTrip
+            const newStatusCount = { ...this.state.tripStatusCounts }
+            newStatusCount.ARCHIVED++
+            newStatusCount[status]--
+            this.setState({ trips })
+            this.filterTripsAndSetState(trips, filter, {
+                tripStatusCounts: newStatusCount
+            })
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     setSelectedTrip = tripId => {
@@ -268,6 +311,7 @@ class Trips extends Component {
                         </div>
                     </div>
                 </div>
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
