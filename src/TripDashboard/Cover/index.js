@@ -5,11 +5,17 @@ import { apiCall } from '../../util/api'
 import TripStatusForm from './TripStatusForm'
 import ShareTrip from '../../util/otherComponents/ShareTrip'
 import './Cover.css'
+import Snack from '../../util/Snack'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
     state = {
-        travelers: []
+        travelers: [],
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
@@ -17,6 +23,9 @@ class Cover extends Component {
 
         this.getAndSetTravelers()
     }
+
+    closeSnack = () => (this.setState({ snack: { show: false } }))
+
     updateTrip = async updateObject => {
         try {
             const data = await apiCall(
@@ -24,8 +33,23 @@ class Cover extends Component {
                 `/api/trips/${this.tripId}`,
                 updateObject, true
             )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
             return this.props.setCurrentTrip(data)
-        } catch (err) { }
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     getAndSetTravelers = async () => {
@@ -36,6 +60,59 @@ class Cover extends Component {
         this.setState({
             travelers
         })
+    }
+
+
+
+    textSelectedTravelers = async (text, phones) => {
+        console.log(text)
+        console.log(phones)
+        try {
+            await apiCall('post', '/api/communicate/text', {
+                body: text, phones
+            }, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
+    }
+
+    emailSelectedTravelers = async (subject, body, emails) => {
+        try {
+            await apiCall('post', '/api/communicate/email', {
+                subject,
+                body,
+                emails
+            })
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     render() {
@@ -64,6 +141,8 @@ class Cover extends Component {
                             <ShareTrip
                                 travelers={this.state.travelers}
                                 tripId={this.tripId}
+                                text={this.textSelectedTravelers}
+                                email={this.emailSelectedTravelers}
                             />
                         </div>
                     </div>
@@ -88,6 +167,7 @@ class Cover extends Component {
                     </div>
                 </div>
                 <div className="col-3" />
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }

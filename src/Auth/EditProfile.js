@@ -16,19 +16,21 @@ import { apiCall } from '../util/api'
 import ReactGA from 'react-ga'
 import ExplainCustomerId from './ExplainCustomerId'
 import YouMustPay from './YouMustPay'
-import message from '../util/message'
-
+import Snack from '../util/Snack'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/profile')
 }
 
-
-
 export default class CreateProfile extends Component {
     state = {
-        couponCode: ''
+        couponCode: '',
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
@@ -39,6 +41,14 @@ export default class CreateProfile extends Component {
 
     }
 
+    closeSnack = () => {
+        this.setState({
+            snack: {
+                show: false,
+            }
+        })
+    }
+
     handleChange = e => {
         console.log(e)
         this.setState({ [e.target.name]: e.target.value })
@@ -47,22 +57,67 @@ export default class CreateProfile extends Component {
     handleCouponCode = async e => {
         e.preventDefault()
         if (this.state.couponCode === 'FREEMONTH') {
-            await this.handleSubmit({
-                cc: 'FREE'
-            })
+            try {
+                await this.handleSubmit({
+                    cc: 'FREE'
+                })
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'success',
+                        message: 'Your coupon code was accepted.'
+                    }
+                })
+            } catch (err) {
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'error',
+                        message: 'There was an error processing your coupon code.'
+                    }
+                })
+            }
+
+
         } else {
-            message('error', 'There was an error with your coupon code')
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'That coupon code is invalid.'
+                }
+            })
         }
     }
 
     handleSubmit = async userData => {
-        const newCoord = await apiCall(
-            'put',
-            `/api/coordinators/${this.props.currentUser._id}`,
-            userData, true
-        )
-        this.props.setCurrentUser(newCoord)
+        try {
+            const newCoord = await apiCall(
+                'put',
+                `/api/coordinators/${this.props.currentUser._id}`,
+                userData
+            )
+            this.props.setCurrentUser(newCoord)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
+
+
 
     render() {
         const { currentUser } = this.props
@@ -99,7 +154,6 @@ export default class CreateProfile extends Component {
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-5 d-flex flex-column my-3">
                         <h1 className="text-dark pt-2">Your Account</h1>
-
                         <Formik
                             initialValues={initialValues}
                             validationSchema={schema}
@@ -208,6 +262,7 @@ export default class CreateProfile extends Component {
                         }
                     </div>
                 </div>
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }

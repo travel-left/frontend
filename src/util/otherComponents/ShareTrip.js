@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 
 export default class ShareTrip extends Component {
     tripId = this.props.tripId
-    tripLink = `Here's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
+    tripLink = ` \nHere's a link to your trip! ${process.env.REACT_APP_BASE_URL}/trips/${
         this.tripId
         }/share`
 
@@ -25,19 +25,6 @@ export default class ShareTrip extends Component {
         })
     }
 
-    //conditionally send a text or email with/withou the trip link
-    submit = async object => {
-        object.body += this.state.tripLink ? this.tripLink : ''
-        this.state.commType === 'text'
-            ? await this.textSelectedTravelers(object)
-            : await this.emailSelectedTravelers(object)
-        this.setState({
-            selectedTravelers: [],
-            commType: 'text',
-            tripLink: false
-        })
-    }
-
     toggleCheckbox = () => {
         this.setState(prevState => ({
             ...prevState,
@@ -49,27 +36,27 @@ export default class ShareTrip extends Component {
         this.setState({ commType: object.value })
     }
 
-    textSelectedTravelers = async text => {
-        const { travelers } = this.props
-
-        await apiCall('post', '/api/communicate/text', {
-            body: text.body,
-            phones: travelers.map(t =>
-                this.state.selectedTravelers.includes(t._id) ? t.phone : null
-            )
-        }, true)
-    }
-
-    emailSelectedTravelers = async email => {
-        const { travelers } = this.props
-
-        await apiCall('post', '/api/communicate/email', {
-            subject: email.subject,
-            body: email.body,
-            emails: travelers.map(t =>
-                this.state.selectedTravelers.includes(t._id) ? t.email : null
-            )
-        }, true)
+    //conditionally send a text or email with/withou the trip link
+    handleSubmit = async object => {
+        object.body += this.state.tripLink ? this.tripLink : ''
+        console.log(object)
+        this.state.commType === 'text'
+            ? await this.props.text(
+                object.body,
+                this.props.travelers.map(t =>
+                    this.state.selectedTravelers.includes(t._id) ? t.phone : null
+                ))
+            : await this.props.email(
+                object.subject,
+                object.body,
+                this.props.travelers.map(t =>
+                    this.state.selectedTravelers.includes(t._id) ? t.email : null
+                ))
+        this.setState({
+            selectedTravelers: [],
+            commType: 'text',
+            tripLink: false
+        })
     }
 
     render() {
@@ -144,54 +131,57 @@ export default class ShareTrip extends Component {
                     </>
                 )
         return (
-            <ModalForm
-                mIcon={icon}
-                header="Message your travelers"
-                submit={this.submit}
-                submitButtonText="SEND"
-                validationSchema={
-                    this.state.commType === 'text' ? textSchema : emailSchema
-                }
-            >
-                <label className="mt-2">Travelers</label>
-                <Select
-                    isMulti
-                    name="travelers"
-                    options={this.props.travelers.map(t => ({
-                        value: t._id,
-                        label: t.name
-                    }))}
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    styles={customStyles}
-                    placeholder="Select..."
-                    onChange={this.handleTravelerSelection}
-                />
-                <label className="mt-3">Send as</label>
-                <div className="row d-flex align-items-center">
-                    <div className="col-md-4">
-                        <Select
-                            name="type"
-                            options={types}
-                            defaultValue={types[0]}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            styles={customStyles}
-                            placeholder="Msg type..."
-                            onChange={this.toggleCommType}
-                        />
+            <>
+                <ModalForm
+                    mIcon={icon}
+                    header="Message your travelers"
+                    submit={this.handleSubmit}
+                    submitButtonText="SEND"
+                    validationSchema={
+                        this.state.commType === 'text' ? textSchema : emailSchema
+                    }
+                >
+                    <label className="mt-2">Travelers</label>
+                    <Select
+                        isMulti
+                        name="travelers"
+                        options={this.props.travelers.map(t => ({
+                            value: t._id,
+                            label: t.name
+                        }))}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        styles={customStyles}
+                        placeholder="Select..."
+                        onChange={this.handleTravelerSelection}
+                    />
+                    <label className="mt-3">Send as</label>
+                    <div className="row d-flex align-items-center">
+                        <div className="col-md-4">
+                            <Select
+                                name="type"
+                                options={types}
+                                defaultValue={types[0]}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                styles={customStyles}
+                                placeholder="Msg type..."
+                                onChange={this.toggleCommType}
+                            />
+                        </div>
                     </div>
-                </div>
-                {commFields}
+                    {commFields}
 
-                <CheckBox
-                    name="linkTrip"
-                    label="Share trip link"
-                    className="text-primary mt-3"
-                    checked={this.state.tripLink}
-                    onChange={this.toggleCheckbox}
-                />
-            </ModalForm>
+                    <CheckBox
+                        name="linkTrip"
+                        label="Share trip link"
+                        className="text-primary mt-3"
+                        checked={this.state.tripLink}
+                        onChange={this.toggleCheckbox}
+                    />
+                </ModalForm>
+            </>
+
         )
     }
 }

@@ -10,6 +10,7 @@ import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusFor
 import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
 import Checkbox from '../util/forms/Checkbox'
 import ReactGA from 'react-ga'
+import Snack from '../util/Snack'
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/travelersdashboard')
@@ -43,7 +44,12 @@ class Travelers extends Component {
         allSelected: false,
         filters: this.allFilters,
         selectedTraveler: null,
-        travelers: []
+        travelers: [],
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        }
     }
 
     constructor(props) {
@@ -54,44 +60,115 @@ class Travelers extends Component {
         this.getTravelers()
     }
 
+    closeSnack = () => (this.setState({ snack: { show: false } }))
+
     getTravelers = async () => {
         const travelers = await apiCall('get', '/api/organization/travelers')
         this.setState({ travelers, selectedTraveler: travelers[0] })
     }
 
     addTraveler = async traveler => {
-        await apiCall(
-            'post',
-            '/api/organization/travelers',
-            traveler,
-            true
-        )
-        this.getTravelers()
+        try {
+            await apiCall(
+                'post',
+                '/api/organization/travelers',
+                traveler,
+                true
+            )
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+
     }
 
     addTravelersCSV = async newTravelers => {
-        await apiCall(
-            'post',
-            `/api/organization/travelers/csv`,
-            newTravelers,
-            true
-        )
-        this.getTravelers()
+        try {
+            await apiCall(
+                'post',
+                `/api/organization/travelers/csv`,
+                newTravelers,
+                true
+            )
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     updateTraveler = async (travelerId, updateObject) => {
-        await apiCall(
-            'put',
-            `/api/travelers/${travelerId}`,
-            updateObject,
-            true
-        )
-        this.getTravelers()
+        try {
+            await apiCall(
+                'put',
+                `/api/travelers/${travelerId}`,
+                updateObject,
+                true
+            )
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     removeTraveler = async travelerId => {
-        await apiCall('delete', `/api/travelers/${travelerId}/org`, true)
-        this.getTravelers()
+        try {
+            await apiCall('delete', `/api/travelers/${travelerId}/org`, true)
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     toggle = travelerId => {
@@ -124,7 +201,7 @@ class Travelers extends Component {
         })
     }
 
-    emailSelectedTravelers = email => {
+    emailSelectedTravelers = async email => {
         const { selected, travelers } = this.state
         let travelersEmails = []
         for (const { _id, email } of travelers) {
@@ -133,11 +210,28 @@ class Travelers extends Component {
             }
         }
 
-        apiCall('post', '/api/communicate/email', {
-            subject: email.subject,
-            body: email.body,
-            emails: travelersEmails
-        }, true)
+        try {
+            await apiCall('post', '/api/communicate/email', {
+                subject: email.subject,
+                body: email.body,
+                emails: travelersEmails
+            }, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
@@ -152,16 +246,33 @@ class Travelers extends Component {
             }
         }
 
-        await apiCall(
-            'put',
-            '/api/travelers',
-            travelerStatuses,
-            true
-        )
-        this.getTravelers()
+        try {
+            await apiCall(
+                'put',
+                '/api/travelers',
+                travelerStatuses,
+                true
+            )
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
-    textSelectedTravelers = text => {
+    textSelectedTravelers = async text => {
         const { selected, travelers } = this.state
         let travelersPhones = []
         for (const { _id, phone } of travelers) {
@@ -170,10 +281,27 @@ class Travelers extends Component {
             }
         }
 
-        apiCall('post', '/api/communicate/text', {
-            body: text.body,
-            phones: travelersPhones
-        }, true)
+        try {
+            await apiCall('post', '/api/communicate/text', {
+                body: text.body,
+                phones: travelersPhones
+            }, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     handleFilterChange = selectedFilters => {
@@ -342,6 +470,7 @@ class Travelers extends Component {
                         {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
                     </div>
                 </div>
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
