@@ -14,10 +14,6 @@ export default function SideNav({ ctId }) {
         {
             name: 'travelers',
             text: 'Manage Travelers'
-        },
-        {
-            name: 'preview',
-            text: 'Trip Preview'
         }
     ]
     const sideNavList = sideNavComponents.map(({ name, text }) => (
@@ -31,6 +27,17 @@ export default function SideNav({ ctId }) {
         }}>
             <ul className="list-group list-group-flush">
                 {sideNavList}
+                <a href={`/trips/${ctId}/preview`} target="_blank" className="list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 py-3"
+                    activeClassName="active"
+                    style={{
+                        fontFamily: 'Roboto',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: '#666666',
+                        borderRadius: '3px'
+                    }}
+                >
+                    Trip Preview</a>
             </ul>
         </div>
     )
