@@ -3,7 +3,9 @@ import TripImageForm from './TripImageForm'
 import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../util/api'
 import TripStatusForm from './TripStatusForm'
-import ShareTrip from '../../util/otherComponents/ShareTrip'
+import Fab from '@material-ui/core/Fab'
+import NewShareTrip from '../../util/otherComponents/NewShareTrip'
+import SendIcon from '@material-ui/icons/Send'
 import './Cover.css'
 import Snack from '../../util/Snack'
 
@@ -15,7 +17,8 @@ class Cover extends Component {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+        isShareTripOpen: false
     }
 
     constructor(props) {
@@ -25,6 +28,16 @@ class Cover extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    toggleSharetTripModal = () => (this.setState(prevState => ({
+        isShareTripOpen: !prevState.isShareTripOpen
+    })))
+    closeSharetTripModal = () => (this.setState(prevState => ({
+        isShareTripOpen: !prevState.isShareTripOpen, snack: {
+            show: true,
+            variant: 'success',
+            message: 'Copied!'
+        }
+    })))
 
     updateTrip = async updateObject => {
         try {
@@ -118,8 +131,8 @@ class Cover extends Component {
     render() {
         let currentTrip = this.props.currentTrip
         let invited = this.state.travelers.length
-        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
-            .length
+        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
+
         return (
             <div className="row">
                 <div
@@ -138,12 +151,14 @@ class Cover extends Component {
                             status={currentTrip.status}
                         />
                         <div className="pr-2">
-                            <ShareTrip
-                                travelers={this.state.travelers}
-                                tripId={this.tripId}
-                                text={this.textSelectedTravelers}
-                                email={this.emailSelectedTravelers}
-                            />
+                            <Fab onClick={this.toggleSharetTripModal} color="primary">
+                                <SendIcon style={{ color: 'white' }} fontSize="large" />
+                            </Fab>
+                            {this.state.isShareTripOpen && <NewShareTrip
+                                isOpen={this.state.isShareTripOpen}
+                                toggleModal={this.closeSharetTripModal}
+                                tripId={currentTrip._id}
+                            />}
                         </div>
                     </div>
                     <div className="row justify-content-between">
