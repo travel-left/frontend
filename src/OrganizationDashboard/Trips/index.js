@@ -11,16 +11,8 @@ import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
 import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
 import Snack from '../../util/Snack'
-import NewModal from '../../util/NewModal'
 import Button from '@material-ui/core/Button'
-import NewAddTripForm from './NewAddTripForm'
-import * as Yup from 'yup'
-import moment from 'moment'
-import 'react-dates/initialize'
-import {
-    nameValidator,
-    descriptionValidator
-} from '../../util/validators'
+import CreateTripModalForm from './CreateTripModalForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -113,7 +105,6 @@ class Trips extends Component {
                 }
             })
             trips.push(createdTrip)
-            console.log('after push')
             tripStatusCounts[createdTrip.status]++
             this.filterTripsAndSetState(trips, 'ALL TRIPS', {
                 selectedTrip: createdTrip,
@@ -225,7 +216,6 @@ class Trips extends Component {
             ? this.state.files.map(file => <p>{file.name || file}</p>)
             : null
 
-        let tripForm = <NewAddTripForm />
         return (
             <div className="row">
                 <div className="col-md-2 px-0" style={{
@@ -236,26 +226,11 @@ class Trips extends Component {
                     <div className="px-0 py-5 d-flex justify-content-center">
                         <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
                             ADD NEW TRIP
-    </Button>
-                        {this.state.isOpen && <NewModal
+                        </Button>
+                        {this.state.isOpen && <CreateTripModalForm
                             isOpen={this.state.isOpen}
                             title='Add New Trip'
                             toggleModal={this.toggleModal}
-                            initialValues={{
-                                name: '',
-                                image: 'https://',
-                                dates: {
-                                    startDate: moment(),
-                                    endDate: moment().add(7, 'days')
-                                },
-                                description: ''
-                            }}
-
-                            validationSchema={Yup.object().shape({
-                                name: nameValidator,
-                                image: Yup.string().required('Please upload an image'),
-                                description: descriptionValidator
-                            })}
                             submit={this.addTrip}
                         />}
                     </div>

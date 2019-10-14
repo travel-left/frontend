@@ -135,3 +135,12 @@
 .DayPickerKeyboardShortcuts_buttonReset {
     display: none !important;
 }
+
+.ShareTrip-link {
+    border: 2px solid #E3E3E3;
+    border-radius: 4px;
+    width: 400px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
