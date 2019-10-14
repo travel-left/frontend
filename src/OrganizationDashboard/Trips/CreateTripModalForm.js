@@ -67,7 +67,7 @@ export default class CreateTripModalForm extends Component {
                         <form className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
                             <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
                                 <h5 className="modal-title Modal-Form-header pl-3"> {this.props.title}</h5>
-                                <IconButton onClick={this.handleToggleModal} style={{ backgroundColor: '#1C61D8' }}>
+                                <IconButton onClick={this.handleToggleModal} color='primary'>
                                     <CloseIcon style={{ color: 'white' }} fontSize="large" />
                                 </IconButton>
                             </div>
