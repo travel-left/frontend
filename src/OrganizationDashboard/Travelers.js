@@ -5,26 +5,50 @@ import ImportBulkForm from '../TripDashboard/Travelers/Actions/ImportBulkForm'
 import TravelerList from '../TripDashboard/Travelers/Travelers/TravelerList'
 import CreateEmailForm from '../TripDashboard/Travelers/Actions/CreateEmailForm'
 import CreateTextForm from '../TripDashboard/Travelers/Actions/CreateTextForm'
-import Select from 'react-select'
+// import Select from 'react-select'
 import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusForm'
 import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
-import Checkbox from '../util/forms/Checkbox'
+// import Checkbox from '../util/forms/Checkbox'
+import { withStyles } from '@material-ui/core/styles'
 import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import ListItemText from '@material-ui/core/ListItemText'
+import Select from '@material-ui/core/Select'
+import Checkbox from '@material-ui/core/Checkbox'
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/travelersdashboard')
 }
 
-const stati = [
-    { value: 'INVITED', label: 'Invited' },
-    { value: 'CONFIRMED', label: 'Confirmed' },
-    { value: 'ON-TRIP', label: 'On trip' },
-    { value: 'POST-TRIP', label: 'Post trip' },
-    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
-    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
-    { value: 'OTHER', label: 'Other' }
-]
+const styles = {
+    title: {
+        fontFamily: 'Roboto',
+        fontWeight: '600',
+        fontSize: '30px',
+        color: '#333333'
+    },
+    formControl: {
+        margin: '0 1rem 1rem 1rem',
+        minWidth: 180,
+        maxWidth: 180,
+    }
+}
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+}
 
 class Travelers extends Component {
     allFilters = [
@@ -43,13 +67,19 @@ class Travelers extends Component {
         selected: {},
         allSelected: false,
         filters: this.allFilters,
-        selectedTraveler: null,
+        filtersChecked: [
+            'INVITED',
+            'CONFIRMED',
+            'ON-TRIP',
+            'POST-TRIP'],
         travelers: [],
+        selectedTraveler: null,
         snack: {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+
     }
 
     constructor(props) {
@@ -304,15 +334,9 @@ class Travelers extends Component {
         }
     }
 
-    handleFilterChange = selectedFilters => {
-        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
-            //handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
-            selectedFilters = null
-        }
-        let filters = selectedFilters
-            ? selectedFilters.map(f => f.value)
-            : this.allFilters
-        this.setState({ filters })
+    handleFilterChange = filtersChecked => {
+        filtersChecked = filtersChecked.target.value
+        this.setState({ filtersChecked })
     }
 
     setSelectedTraveler = travelerId => {
@@ -326,46 +350,16 @@ class Travelers extends Component {
         let {
             selected,
             allSelected,
-            filters,
+            filtersChecked,
             selectedTraveler,
             travelers
         } = this.state
 
-        const filteredTravelers = travelers.filter(traveler =>
-            filters.includes(traveler.status)
-        )
+        const { classes } = this.props
 
-        const customStyles = {
-            container: (provided, state) => ({
-                ...provided,
-                height: '50px',
-                width: '180px',
-                boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.3)',
-                border: 'none',
-                borderRadius: '3px'
-            }),
-            control: (provided, state) => ({
-                ...provided,
-                border: 'none'
-            }),
-            select: provided => ({
-                ...provided,
-                background: 'white',
-                height: 'auto',
-                border: 'none'
-            }),
-            valueContainer: (provided, state) => ({
-                ...provided,
-                minHeight: '50px',
-                border: 'none'
-            }),
-            placeholder: (provided) => ({
-                ...provided,
-                color: '#333333',
-                fontFamily: 'Roboto',
-                fontWeight: '600'
-            })
-        }
+        const filteredTravelers = travelers.filter(traveler =>
+            filtersChecked.includes(traveler.status)
+        )
 
         let travelerInfo = selectedTraveler ? (
             <TravelerInfo
@@ -379,7 +373,7 @@ class Travelers extends Component {
             <div className="col-md-12 ">
                 <div className="row">
                     <div className="col-md-12 mt-4">
-                        <h4 className="mb-3 TripInfo-heading">Travelers in your organization </h4>
+                        <h4 className={classes.title} >Travelers in Your Organization </h4>
                     </div>
                 </div>
                 <div className="row mt-2">
@@ -387,18 +381,27 @@ class Travelers extends Component {
                         <div className="row mx-0">
                             <div className="col-md-12">
                                 <div className="row justify-content-between">
-                                    <Select
-                                        isMulti
-                                        name="colors"
-                                        options={stati}
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
-                                        styles={customStyles}
-                                        placeholder="All Status"
-                                        onChange={
-                                            this.handleFilterChange
-                                        }
-                                    />
+                                    <div className="left-shadow-sharp">
+                                        <FormControl className={classes.formControl} >
+                                            <InputLabel htmlFor="select-multiple-checkbox">All Status</InputLabel>
+                                            <Select
+                                                multiple
+                                                value={this.state.filtersChecked}
+                                                onChange={this.handleFilterChange}
+                                                input={<Input id="select-multiple-checkbox" />}
+                                                renderValue={selected => selected.join(', ')}
+                                                MenuProps={MenuProps}
+                                            >
+                                                {this.allFilters.map((filter, i) => (
+                                                    <MenuItem key={i} value={filter}>
+                                                        <Checkbox color='primary' checked={this.state.filtersChecked.indexOf(filter) > -1} />
+                                                        <ListItemText primary={filter} />
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+
+                                    </div>
                                     <div className="d-flex flex-row">
                                         <ChangeStatusForm
                                             submit={
@@ -448,6 +451,7 @@ class Travelers extends Component {
                                             className=""
                                             checked={allSelected}
                                             label="noshow"
+                                            color='primary'
                                         />
                                     </div>
                                     <div className="col-md-2"></div>
@@ -476,4 +480,4 @@ class Travelers extends Component {
     }
 }
 
-export default Travelers
+export default withStyles(styles)(Travelers)
