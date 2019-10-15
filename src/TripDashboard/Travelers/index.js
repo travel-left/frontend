@@ -5,10 +5,11 @@ import ImportBulkForm from './Actions/ImportBulkForm'
 import TravelerList from './Travelers/TravelerList'
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
+import { withStyles } from '@material-ui/core/styles'
 import Select from 'react-select'
 import ChangeStatusForm from './Actions/ChangeStatusForm'
 import TravelerInfo from './Travelers/TravelerInfo'
-import Checkbox from '../../util/forms/Checkbox'
+import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
 import { customStyles } from '../../util/forms/SelectStyles'
@@ -29,6 +30,15 @@ const stati = [
     { value: 'MONEY DUE', label: 'Money due' },
     { value: 'OTHER', label: 'Other' }
 ]
+
+const styles = {
+    title: {
+        fontFamily: 'Roboto',
+        fontWeight: '600',
+        fontSize: '30px',
+        color: '#333333'
+    },
+}
 
 class Travelers extends Component {
     currentTripId = this.props.currentTrip._id
@@ -345,7 +355,7 @@ class Travelers extends Component {
 
     render() {
         let { selected, allSelected, filters, selectedTraveler, travelers } = this.state
-
+        const { classes } = this.props
         const filteredTravelers = travelers.filter(traveler =>
             filters.includes(traveler.status)
         )
@@ -362,7 +372,7 @@ class Travelers extends Component {
             <div className="col-md-12">
                 <div className="row">
                     <div className="col-md-12 mt-4 pl-0">
-                        <h4 className="mb-3 TripInfo-heading">Travelers on this trip</h4>
+                        <h4 className={classes.title} >Travelers on This Trip</h4>
                     </div>
                 </div>
                 <div className="row mt-2">
@@ -437,6 +447,7 @@ class Travelers extends Component {
                                             className=""
                                             checked={allSelected}
                                             label="noshow"
+                                            color="primary"
                                         />
                                     </div>
                                     <div className="col-md-1"></div>
@@ -465,7 +476,7 @@ class Travelers extends Component {
     }
 }
 
-export default Travelers
+export default withStyles(styles)(Travelers)
 
 const travelersInOrgNotOnTrip = (travelersOnTrip, traverlersInOrg) => {
     travelersOnTrip = travelersOnTrip.map(t => t._id)

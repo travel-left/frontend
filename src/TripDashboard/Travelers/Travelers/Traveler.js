@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 
 import Image from '../../../util/otherComponents/Image'
-import Checkbox from '../../../util/forms/Checkbox'
+import Checkbox from '@material-ui/core/Checkbox'
 import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 
 export default class Traveler extends Component {
     handleToggle = () => {
+        console.log('toggling')
         this.props.toggle(this.props._id)
     }
 
@@ -24,10 +25,11 @@ export default class Traveler extends Component {
                 }}
                 onDoubleClick={this.handleDoubleClick}
             >
-                <div className="col-md-1" onClick={this.handleToggle}>
+                <div className="col-md-1">
                     <Checkbox
                         onChange={this.handleToggle}
                         checked={selected}
+                        color='primary'
                     />
                 </div>
                 <div className="col-md-1">
