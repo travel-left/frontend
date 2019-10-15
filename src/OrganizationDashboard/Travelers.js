@@ -5,20 +5,13 @@ import ImportBulkForm from '../TripDashboard/Travelers/Actions/ImportBulkForm'
 import TravelerList from '../TripDashboard/Travelers/Travelers/TravelerList'
 import CreateEmailForm from '../TripDashboard/Travelers/Actions/CreateEmailForm'
 import CreateTextForm from '../TripDashboard/Travelers/Actions/CreateTextForm'
-// import Select from 'react-select'
 import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusForm'
 import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
-// import Checkbox from '../util/forms/Checkbox'
 import { withStyles } from '@material-ui/core/styles'
 import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
-import Input from '@material-ui/core/Input'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormControl from '@material-ui/core/FormControl'
-import ListItemText from '@material-ui/core/ListItemText'
-import Select from '@material-ui/core/Select'
 import Checkbox from '@material-ui/core/Checkbox'
+import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -37,17 +30,6 @@ const styles = {
         minWidth: 180,
         maxWidth: 180,
     }
-}
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
 }
 
 class Travelers extends Component {
@@ -71,7 +53,8 @@ class Travelers extends Component {
             'INVITED',
             'CONFIRMED',
             'ON-TRIP',
-            'POST-TRIP'],
+            'POST-TRIP'
+        ],
         travelers: [],
         selectedTraveler: null,
         snack: {
@@ -382,25 +365,7 @@ class Travelers extends Component {
                             <div className="col-md-12">
                                 <div className="row justify-content-between">
                                     <div className="left-shadow-sharp">
-                                        <FormControl className={classes.formControl} >
-                                            <InputLabel htmlFor="select-multiple-checkbox">All Status</InputLabel>
-                                            <Select
-                                                multiple
-                                                value={this.state.filtersChecked}
-                                                onChange={this.handleFilterChange}
-                                                input={<Input id="select-multiple-checkbox" />}
-                                                renderValue={selected => selected.join(', ')}
-                                                MenuProps={MenuProps}
-                                            >
-                                                {this.allFilters.map((filter, i) => (
-                                                    <MenuItem key={i} value={filter}>
-                                                        <Checkbox color='primary' checked={this.state.filtersChecked.indexOf(filter) > -1} />
-                                                        <ListItemText primary={filter} />
-                                                    </MenuItem>
-                                                ))}
-                                            </Select>
-                                        </FormControl>
-
+                                        <LeftMultipleSelect allValues={this.allFilters} selectedValues={this.state.filtersChecked} onChange={this.handleFilterChange} label='All Status'></LeftMultipleSelect>
                                     </div>
                                     <div className="d-flex flex-row">
                                         <ChangeStatusForm
