@@ -51,6 +51,9 @@ export default function ChangeStatusForm({ submit, travelers, selected }) {
                     { value: 'POST-TRIP', label: 'Post trip' },
                     { value: 'DOCS DUE', label: 'Docs due' },
                     { value: 'MONEY DUE', label: 'Money due' },
+                    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
+                    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
+                    { value: 'NOT-GOING', label: 'Not going' },
                     { value: 'OTHER', label: 'Other' }
                 ]}
                 label="New Status*"

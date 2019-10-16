@@ -12,6 +12,7 @@ import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
 import Checkbox from '@material-ui/core/Checkbox'
 import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
+import { travelerStatus } from '../util/globals'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -33,22 +34,10 @@ const styles = {
 }
 
 class Travelers extends Component {
-    allFilters = [
-        'INVITED',
-        'CONFIRMED',
-        'ON-TRIP',
-        'POST-TRIP',
-        'DOCS DUE',
-        'MONEY DUE',
-        'OTHER',
-        'PAPERWORK NEEDED',
-        'PAYMENT NEEDED'
-    ]
-
     state = {
         selected: {},
         allSelected: false,
-        filters: this.allFilters,
+        filters: travelerStatus,
         filtersChecked: [
             'INVITED',
             'CONFIRMED',
@@ -365,7 +354,7 @@ class Travelers extends Component {
                             <div className="col-md-12">
                                 <div className="row justify-content-between">
                                     <div className="left-shadow-sharp">
-                                        <LeftMultipleSelect allValues={this.allFilters} selectedValues={this.state.filtersChecked} onChange={this.handleFilterChange} label='All Status'></LeftMultipleSelect>
+                                        <LeftMultipleSelect allValues={travelerStatus} selectedValues={this.state.filtersChecked} onChange={this.handleFilterChange} label='All Status'></LeftMultipleSelect>
                                     </div>
                                     <div className="d-flex flex-row">
                                         <ChangeStatusForm
