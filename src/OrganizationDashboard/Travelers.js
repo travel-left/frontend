@@ -10,10 +10,12 @@ import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
 import { withStyles } from '@material-ui/core/styles'
 import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
+import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
 import { travelerStatus } from '../util/globals'
 import Card from '@material-ui/core/Card';
+import ImportCsvModalForm from './ImportCsvModalForm';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -51,6 +53,7 @@ class Travelers extends Component {
         tripFiltersChecked: [],
         travelers: [],
         selectedTraveler: null,
+        isImportCsvOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -69,6 +72,7 @@ class Travelers extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
 
     getTravelers = async () => {
         const travelers = await apiCall('get', '/api/organization/travelers')
@@ -110,12 +114,12 @@ class Travelers extends Component {
     }
 
     addTravelersCSV = async newTravelers => {
+        console.log(newTravelers)
         try {
             await apiCall(
                 'post',
                 `/api/organization/travelers/csv`,
                 newTravelers,
-                true
             )
             this.getTravelers()
             this.setState({
@@ -396,10 +400,20 @@ class Travelers extends Component {
                                             </div>
                                             <div className="d-flex flex-row">
                                                 <div className='px-3'>
-                                                    <ImportBulkForm
+                                                    <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.toggleImportCsvModal}>
+                                                        IMPORT FROM CSV
+                                                    </Button>
+                                                    {this.state.isImportCsvOpen && <ImportCsvModalForm
+                                                        isOpen={this.state.isImportCsvOpen}
+                                                        toggleModal={this.toggleImportCsvModal}
+                                                        submit={this.addTravelersCSV}
+                                                    >
+
+                                                    </ImportCsvModalForm>}
+                                                    {/* <ImportBulkForm
                                                         key={3}
                                                         submit={this.addTravelersCSV}
-                                                    />
+                                                    /> */}
                                                 </div>
 
                                                 <AddTravelerForm
