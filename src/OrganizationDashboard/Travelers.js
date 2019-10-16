@@ -13,6 +13,7 @@ import Snack from '../util/Snack'
 import Checkbox from '@material-ui/core/Checkbox'
 import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
 import { travelerStatus } from '../util/globals'
+import Card from '@material-ui/core/Card';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -30,6 +31,9 @@ const styles = {
         margin: '0 1rem 1rem 1rem',
         minWidth: 180,
         maxWidth: 180,
+    },
+    card: {
+        width: '100%'
     }
 }
 
@@ -395,8 +399,8 @@ class Travelers extends Component {
                             </div>
                         </div>
                         <div className="row mx-0 my-4">
-                            <div className="col-md-12">
-                                <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
+                            <Card className={classes.card}>
+                                <div className="row justify-content-around py-3 align-items-center">
                                     <div className="col-md-1 Travelers-filter">
                                         <Checkbox
                                             onChange={this.toggleAll}
@@ -406,19 +410,24 @@ class Travelers extends Component {
                                             color='primary'
                                         />
                                     </div>
-                                    <div className="col-md-2"></div>
                                     <div className="col-md-3 Travelers-filter">NAME</div>
                                     <div className="col-md-3 Travelers-filter">CONTACT</div>
-                                    <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
+                                    <div className="col-md-2 Travelers-filter" >STATUS</div>
+                                    <div className="col-md-2 Travelers-filter">TRIP</div>
+                                    <div className="col-md-1"></div>
                                 </div>
-                                <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
-                                    <TravelerList
-                                        items={filteredTravelers}
-                                        selected={selected}
-                                        toggle={this.toggle}
-                                        doubleClick={this.setSelectedTraveler}
-                                    />
-                                </div>
+                            </Card>
+                            <div className="mt-3">
+                                <Card className={classes.card}>
+                                    <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
+                                        <TravelerList
+                                            items={filteredTravelers}
+                                            selected={selected}
+                                            toggle={this.toggle}
+                                            doubleClick={this.setSelectedTraveler}
+                                        />
+                                    </div>
+                                </Card>
                             </div>
                         </div>
                     </div>

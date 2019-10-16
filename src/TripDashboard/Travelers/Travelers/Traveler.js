@@ -15,7 +15,7 @@ export default class Traveler extends Component {
     }
 
     render() {
-        let { name, email, status, image, selected, index } = this.props
+        let { name, email, status, image, selected, index, trip } = this.props
         let bgColor = index % 2 !== 0 ? '#F6FAFF' : '#FFFFFF'
         return (
             <div
@@ -35,14 +35,23 @@ export default class Traveler extends Component {
                 <div className="col-md-1">
                     <Image diameter="48px" src={image} name={name} />
                 </div>
-                <div className="col-md-3 Travelers-name">{name}</div>
-                <div className="col-md-4" style={{
+                <div className="col-md-2 Travelers-name">{name}</div>
+                <div className="col-md-3" style={{
                     fontFamily: 'Roboto',
                     fontSize: '14px',
                     color: '#475561'
                 }}>{email}</div>
                 <div className="col-md-2">
                     <TravelerStatus status={status} />
+                </div>
+                <div className="col-md-2" style={{
+                    fontFamily: 'Roboto',
+                    fontSize: '14px',
+                    color: '#333333',
+                    fontWeight: '600',
+                    textAlign: 'left',
+                }}>
+                    {trip}
                 </div>
                 <div className="col-md-1 d-flex align-items-center justify-content-center">
                     <i class="material-icons hover" style={{ color: '#AAB5C0', fontSize: '24px' }}
