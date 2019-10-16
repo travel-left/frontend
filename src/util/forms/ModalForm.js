@@ -57,6 +57,7 @@ class ModalForm extends Component {
             opener = <button
                 className={`btn ${button.classes}`}
                 onClick={this.toggleModal}
+                style={{ height: '50px' }}
             >
                 {button.text}
             </button>
@@ -130,7 +131,7 @@ class ModalForm extends Component {
         }
 
         if (buttonType === 'travelerEdit') {
-            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover mx-2' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
+            opener = <span onClick={this.toggleModal} className='d-flex justify-content-center align-items-center left-shadow-sharp hover mr-2' style={{ height: '50px', width: '72px', borderRadius: '3px' }}>
                 <i class="material-icons-outlined md-30" style={{ color: '#4B5864' }}>edit</i>
             </span>
         }

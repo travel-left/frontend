@@ -461,6 +461,7 @@ class Travelers extends Component {
                                         selected={selected}
                                         toggle={this.toggle}
                                         doubleClick={this.setSelectedTraveler}
+                                        showTrip={false}
                                     />
                                 </div>
                             </div>

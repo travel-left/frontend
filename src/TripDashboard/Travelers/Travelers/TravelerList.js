@@ -1,7 +1,7 @@
 import React from 'react'
 import Traveler from './Traveler'
 
-export default ({ items, update, selected, remove, toggle, doubleClick }) =>
+export default ({ items, update, selected, remove, toggle, doubleClick, showTrip }) =>
     items.map((item, index) => (
         <Traveler
             {...item}
@@ -12,6 +12,7 @@ export default ({ items, update, selected, remove, toggle, doubleClick }) =>
             toggle={toggle}
             onDoubleClick={doubleClick}
             index={index + 1}
+            showTrip={showTrip}
         />
     ))
 

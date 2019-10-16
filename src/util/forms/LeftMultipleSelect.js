@@ -12,7 +12,7 @@ import Card from '@material-ui/core/Card'
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'wrap'
     },
     formControl: {
         margin: theme.spacing(2),
