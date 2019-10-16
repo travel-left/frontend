@@ -3,6 +3,7 @@ import { apiCall } from '../../util/api'
 import AddTravelerForm from './Actions/AddTravelerForm'
 import ImportBulkForm from './Actions/ImportBulkForm'
 import TravelerList from './Travelers/TravelerList'
+import Card from '@material-ui/core/Card';
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
 import { withStyles } from '@material-ui/core/styles'
@@ -28,7 +29,9 @@ const stati = [
     { value: 'POST-TRIP', label: 'Post trip' },
     { value: 'DOCS DUE', label: 'Docs due' },
     { value: 'MONEY DUE', label: 'Money due' },
-    { value: 'OTHER', label: 'Other' }
+    { value: 'OTHER', label: 'Other' },
+    { value: 'NONE', label: 'None' },
+    { value: 'NOT-GOING', label: 'Not going' },
 ]
 
 const styles = {
@@ -36,8 +39,13 @@ const styles = {
         fontFamily: 'Roboto',
         fontWeight: '600',
         fontSize: '30px',
-        color: '#333333'
+        color: '#333333',
+        paddingTop: '2rem',
+        paddingBottom: '2rem'
     },
+    sideColumn: {
+        height: '120vh'
+    }
 }
 
 class Travelers extends Component {
@@ -51,7 +59,9 @@ class Travelers extends Component {
         'MONEY DUE',
         'OTHER',
         'PAPERWORK NEEDED',
-        'PAYMENT NEEDED'
+        'PAYMENT NEEDED',
+        'NONE',
+        'NOT-GOING'
     ]
 
     state = {
@@ -371,104 +381,98 @@ class Travelers extends Component {
         return (
             <div className="col-md-12">
                 <div className="row">
-                    <div className="col-md-12 mt-4 pl-0">
+                    <div className="col-md-8 pl-3">
                         <h4 className={classes.title} >Travelers on This Trip</h4>
-                    </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="col-md-8 pl-0">
-                        <div className="row mx-0">
+                        <div className="row">
                             <div className="col-md-12">
-                                <div className="row justify-content-between">
-                                    <Select
-                                        isMulti
-                                        name="colors"
-                                        options={stati}
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
-                                        styles={customStyles}
-                                        placeholder="All Status"
-                                        onChange={
-                                            this.handleFilterChange
-                                        }
-                                    />
-                                    <div className="d-flex flex-row">
-                                        <ChangeStatusForm
-                                            submit={
-                                                this
-                                                    .changeStatusOfSelectedTravelers
+                                <div className="row mx-0">
+                                    <div className="col-md-12">
+                                        <div className="row justify-content-between">
+                                            <Select
+                                                isMulti
+                                                name="colors"
+                                                options={stati}
+                                                className="basic-multi-select"
+                                                classNamePrefix="select"
+                                                styles={customStyles}
+                                                placeholder="All Status"
+                                                onChange={
+                                                    this.handleFilterChange
+                                                }
+                                            />
+                                            <div className="d-flex flex-row">
+                                                <ChangeStatusForm
+                                                    submit={
+                                                        this
+                                                            .changeStatusOfSelectedTravelers
+                                                    }
+                                                    travelers={filteredTravelers}
+                                                    selected={selected}
+                                                />
+                                                <CreateTextForm
+                                                    key={1}
+                                                    submit={
+                                                        this.textSelectedTravelers
+                                                    }
+                                                    travelers={filteredTravelers}
+                                                    selected={selected}
+                                                />
+                                                <CreateEmailForm
+                                                    key={2}
+                                                    submit={
+                                                        this.emailSelectedTravelers
+                                                    }
+                                                    travelers={filteredTravelers}
+                                                    selected={selected}
+                                                />
+                                            </div>
+                                            <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
+                                            {this.state.addModalIsOpen &&
+                                                <AddFromOrg
+                                                    submit={this.addTraveler}
+                                                    toggleModal={this.toggleAddModal}
+                                                    isOpen={this.state.addModalIsOpen}
+                                                    travelers={this.state.travelersNotOnTrip}
+                                                />
                                             }
-                                            travelers={filteredTravelers}
-                                            selected={selected}
-                                        />
-                                        <CreateTextForm
-                                            key={1}
-                                            submit={
-                                                this.textSelectedTravelers
-                                            }
-                                            travelers={filteredTravelers}
-                                            selected={selected}
-                                        />
-                                        <CreateEmailForm
-                                            key={2}
-                                            submit={
-                                                this.emailSelectedTravelers
-                                            }
-                                            travelers={filteredTravelers}
-                                            selected={selected}
-                                        />
+                                        </div>
                                     </div>
-                                    <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
-                                    {this.state.addModalIsOpen &&
-                                        <AddFromOrg
-                                            submit={this.addTraveler}
-                                            toggleModal={this.toggleAddModal}
-                                            isOpen={this.state.addModalIsOpen}
-                                            travelers={this.state.travelersNotOnTrip}
-                                        />
-                                    }
-                                    {/* <ImportBulkForm
-                                        key={3}
-                                        submit={this.addTravelersCSV}
-                                    />
-                                    <AddTravelerForm
-                                        key={4}
-                                        submit={this.addTraveler}
-                                    /> */}
                                 </div>
-                            </div>
-                        </div>
-                        <div className="row mx-0 my-4">
-                            <div className="col-md-12">
-                                <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
-                                    <div className="col-md-1 Travelers-filter">
-                                        <Checkbox
-                                            onChange={this.toggleAll}
-                                            className=""
-                                            checked={allSelected}
-                                            label="noshow"
-                                            color="primary"
-                                        />
+                                <div className="row mx-0 my-4">
+                                    <div className="col-md-12">
+                                        <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
+                                            <div className="col-md-1 Travelers-filter">
+                                                <Checkbox
+                                                    onChange={this.toggleAll}
+                                                    className=""
+                                                    checked={allSelected}
+                                                    label="noshow"
+                                                    color="primary"
+                                                />
+                                            </div>
+                                            <div className="col-md-1"></div>
+                                            <div className="col-md-3 Travelers-filter">NAME</div>
+                                            <div className="col-md-4 Travelers-filter">CONTACT</div>
+                                            <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
+                                        </div>
+                                        <div className="row left-shadow-sharp mt-4" style={{ borderRadius: '3px' }}>
+                                            <TravelerList
+                                                items={filteredTravelers}
+                                                selected={selected}
+                                                toggle={this.toggle}
+                                                doubleClick={this.setSelectedTraveler}
+                                                showTrip={false}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="col-md-1"></div>
-                                    <div className="col-md-3 Travelers-filter">NAME</div>
-                                    <div className="col-md-4 Travelers-filter">CONTACT</div>
-                                    <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
-                                </div>
-                                <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
-                                    <TravelerList
-                                        items={filteredTravelers}
-                                        selected={selected}
-                                        toggle={this.toggle}
-                                        doubleClick={this.setSelectedTraveler}
-                                        showTrip={false}
-                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-4 left-shadow-sharp">
-                        {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+                    <div className="col-md-4 px-0 mr-0" style={{ minHeight: '120vh' }}>
+                        <Card className={classes.sideColumn}>
+                            {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+                        </Card>
                     </div>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}

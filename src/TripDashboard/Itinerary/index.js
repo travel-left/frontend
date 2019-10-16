@@ -165,7 +165,7 @@ class events extends Component {
         ) : <h4 className="text-info" />
 
         return (
-            <div className="col-md-12 mt-4 mx-0 px-0">
+            <div className="col-md-12 mt-4 mx-0 p-3">
                 <div className="row mx-0">
                     <div className="col-md-2 pl-0">
                         <button className="btn btn-primary btn-lg" onClick={this.toggleModal}>NEW EVENT</button>
