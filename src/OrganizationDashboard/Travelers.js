@@ -353,9 +353,7 @@ class Travelers extends Component {
                         <div className="row mx-0">
                             <div className="col-md-12">
                                 <div className="row justify-content-between">
-                                    <div className="left-shadow-sharp">
-                                        <LeftMultipleSelect allValues={travelerStatus} selectedValues={this.state.filtersChecked} onChange={this.handleFilterChange} label='All Status'></LeftMultipleSelect>
-                                    </div>
+                                    <LeftMultipleSelect allValues={travelerStatus} selectedValues={this.state.filtersChecked} onChange={this.handleFilterChange} label='All Status'></LeftMultipleSelect>
                                     <div className="d-flex flex-row">
                                         <ChangeStatusForm
                                             submit={

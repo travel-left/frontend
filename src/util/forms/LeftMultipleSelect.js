@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,19 +15,9 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap',
     },
     formControl: {
-        margin: theme.spacing(1),
+        margin: theme.spacing(2),
         minWidth: 180,
         maxWidth: 180,
-    },
-    chips: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    chip: {
-        margin: 2,
-    },
-    noLabel: {
-        marginTop: theme.spacing(3),
     },
 }));
 
@@ -44,23 +35,25 @@ const MenuProps = {
 export default ({ selectedValues, allValues, onChange, label }) => {
     const classes = useStyles()
     return (
-        <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="select-multiple-checkbox">{label}</InputLabel>
-            <Select
-                multiple
-                value={selectedValues}
-                onChange={onChange}
-                input={<Input id="select-multiple-checkbox" />}
-                renderValue={selected => selected.join(', ')}
-                MenuProps={MenuProps}
-            >
-                {allValues.map((filter, i) => (
-                    <MenuItem key={i} value={filter}>
-                        <Checkbox color='primary' checked={selectedValues.indexOf(filter) > -1} />
-                        <ListItemText primary={filter} />
-                    </MenuItem>
-                ))}
-            </Select>
-        </FormControl>
+        <Card>
+            <FormControl className={classes.formControl} >
+                <InputLabel htmlFor="select-multiple-checkbox">{label}</InputLabel>
+                <Select
+                    multiple
+                    value={selectedValues}
+                    onChange={onChange}
+                    input={<Input id="select-multiple-checkbox" />}
+                    renderValue={selected => selected.join(', ')}
+                    MenuProps={MenuProps}
+                >
+                    {allValues.map((filter, i) => (
+                        <MenuItem key={i} value={filter}>
+                            <Checkbox color='primary' checked={selectedValues.indexOf(filter) > -1} />
+                            <ListItemText primary={filter} />
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+        </Card>
     )
 }
