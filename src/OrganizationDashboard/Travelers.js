@@ -16,6 +16,7 @@ import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
 import { travelerStatus } from '../util/globals'
 import Card from '@material-ui/core/Card';
 import ImportCsvModalForm from './ImportCsvModalForm';
+import AddNewTravelerModalForm from './AddNewTravelerModalForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -54,6 +55,7 @@ class Travelers extends Component {
         travelers: [],
         selectedTraveler: null,
         isImportCsvOpen: false,
+        isAddTravelerOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -73,6 +75,7 @@ class Travelers extends Component {
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
     toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
+    toggleAddTravelerModal = () => (this.setState(prevState => ({ isAddTravelerOpen: !prevState.isAddTravelerOpen })))
 
     getTravelers = async () => {
         const travelers = await apiCall('get', '/api/organization/travelers')
@@ -408,18 +411,21 @@ class Travelers extends Component {
                                                         toggleModal={this.toggleImportCsvModal}
                                                         submit={this.addTravelersCSV}
                                                     >
-
                                                     </ImportCsvModalForm>}
-                                                    {/* <ImportBulkForm
-                                                        key={3}
-                                                        submit={this.addTravelersCSV}
-                                                    /> */}
                                                 </div>
-
-                                                <AddTravelerForm
+                                                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.toggleAddTravelerModal}>
+                                                    ADD NEW TRAVELER
+                                                    </Button>
+                                                {this.state.isAddTravelerOpen && <AddNewTravelerModalForm
+                                                    isOpen={this.state.isAddTravelerOpen}
+                                                    toggleModal={this.toggleAddTravelerModal}
+                                                    submit={this.addTraveler}
+                                                >
+                                                </AddNewTravelerModalForm>}
+                                                {/* <AddTravelerForm
                                                     key={4}
                                                     submit={this.addTraveler}
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
 
