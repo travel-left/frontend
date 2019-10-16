@@ -10,15 +10,11 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
         <>
             <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             <div className="row">
-                <div className="col-md-2 px-0" style={{
-                    background: '#FFFFFF',
-                    boxShadow: '1px 0 20px 0 rgba(0, 0, 0, 0.13)',
-                    borderRadius: '3px'
-                }}>
+                <div className="col-md-2 pl-0">
                     <SideNav ctId={currentTrip._id} />
                 </div>
                 <div className="col-md-10">
-                    <div className="row p-5">
+                    <div className="row">
                         <TripRouter
                             currentTrip={currentTrip}
                             currentUser={currentUser}

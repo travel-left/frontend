@@ -21,7 +21,7 @@ export default class Traveler extends Component {
         let contactClasses = showTrip ? "col-md-3" : "col-md-4"
         return (
             <div
-                className="d-flex py-2 animated fadeIn col-12 justify-content-around align-items-center px-0 hover"
+                className="d-flex py-2 animated fadeIn col-12 justify-content-around align-items-center hover"
                 style={{
                     backgroundColor: bgColor
                 }}

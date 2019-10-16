@@ -57,7 +57,7 @@ export default class TravelerInfo extends Component {
         ) : null
 
         return (
-            <div className="pt-4">
+            <div className="pt-2 px-3">
                 <div className="row d-flex flex-column justify-content-center align-items-center pt-4">
                     <Image src={image} diameter="65px" name={name} />
                 </div>

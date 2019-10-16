@@ -10,10 +10,13 @@ import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
 import { withStyles } from '@material-ui/core/styles'
 import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
+import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
 import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
 import { travelerStatus } from '../util/globals'
 import Card from '@material-ui/core/Card';
+import ImportCsvModalForm from './ImportCsvModalForm';
+import AddNewTravelerModalForm from './AddNewTravelerModalForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -25,7 +28,8 @@ const styles = {
         fontFamily: 'Roboto',
         fontWeight: '600',
         fontSize: '30px',
-        color: '#333333'
+        color: '#333333',
+        marginBottom: '2rem'
     },
     formControl: {
         margin: '0 1rem 1rem 1rem',
@@ -34,6 +38,9 @@ const styles = {
     },
     card: {
         width: '100%'
+    },
+    sideColumn: {
+        height: '120vh'
     }
 }
 
@@ -47,6 +54,8 @@ class Travelers extends Component {
         tripFiltersChecked: [],
         travelers: [],
         selectedTraveler: null,
+        isImportCsvOpen: false,
+        isAddTravelerOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -65,6 +74,8 @@ class Travelers extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
+    toggleAddTravelerModal = () => (this.setState(prevState => ({ isAddTravelerOpen: !prevState.isAddTravelerOpen })))
 
     getTravelers = async () => {
         const travelers = await apiCall('get', '/api/organization/travelers')
@@ -106,12 +117,12 @@ class Travelers extends Component {
     }
 
     addTravelersCSV = async newTravelers => {
+        console.log(newTravelers)
         try {
             await apiCall(
                 'post',
                 `/api/organization/travelers/csv`,
                 newTravelers,
-                true
             )
             this.getTravelers()
             this.setState({
@@ -375,14 +386,10 @@ class Travelers extends Component {
         ) : null
 
         return (
-            <div className="col-md-12 ">
+            <div className="col-md-12 px-0">
                 <div className="row">
-                    <div className="col-md-12 mt-4">
+                    <div className="col-md-9 mt-4">
                         <h4 className={classes.title} >Travelers in Your Organization </h4>
-                    </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="col-md-9 px-4">
                         <div className="row mx-0">
                             <div className="col-md-12">
                                 <div className="row">
@@ -396,16 +403,29 @@ class Travelers extends Component {
                                             </div>
                                             <div className="d-flex flex-row">
                                                 <div className='px-3'>
-                                                    <ImportBulkForm
-                                                        key={3}
+                                                    <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.toggleImportCsvModal}>
+                                                        IMPORT FROM CSV
+                                                    </Button>
+                                                    {this.state.isImportCsvOpen && <ImportCsvModalForm
+                                                        isOpen={this.state.isImportCsvOpen}
+                                                        toggleModal={this.toggleImportCsvModal}
                                                         submit={this.addTravelersCSV}
-                                                    />
+                                                    >
+                                                    </ImportCsvModalForm>}
                                                 </div>
-
-                                                <AddTravelerForm
+                                                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.toggleAddTravelerModal}>
+                                                    ADD NEW TRAVELER
+                                                    </Button>
+                                                {this.state.isAddTravelerOpen && <AddNewTravelerModalForm
+                                                    isOpen={this.state.isAddTravelerOpen}
+                                                    toggleModal={this.toggleAddTravelerModal}
+                                                    submit={this.addTraveler}
+                                                >
+                                                </AddNewTravelerModalForm>}
+                                                {/* <AddTravelerForm
                                                     key={4}
                                                     submit={this.addTraveler}
-                                                />
+                                                /> */}
                                             </div>
                                         </div>
 
@@ -438,7 +458,7 @@ class Travelers extends Component {
                         </div>
                         <div className="row mx-0 my-4">
                             <Card className={classes.card}>
-                                <div className="row justify-content-around py-3 align-items-center">
+                                <div className="row justify-content-around py-3 align-items-center" style={{ paddingLeft: '15px', paddingRight: '15px' }}>
                                     <div className="col-md-1 Travelers-filter">
                                         <Checkbox
                                             onChange={this.toggleAll}
@@ -457,7 +477,7 @@ class Travelers extends Component {
                             </Card>
                             <div className="col-12 px-0 mt-3">
                                 <Card className={classes.card}>
-                                    <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
+                                    <div className="row mt-4">
                                         <TravelerList
                                             items={filteredTravelers}
                                             selected={selected}
@@ -470,8 +490,11 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-3 left-shadow-sharp">
-                        {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+
+                    <div className="col-md-3 px-0" style={{ minHeight: '120vh' }}>
+                        <Card className={classes.sideColumn}>
+                            {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+                        </Card>
                     </div>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
