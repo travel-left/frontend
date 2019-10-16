@@ -5,51 +5,54 @@ import ImportBulkForm from '../TripDashboard/Travelers/Actions/ImportBulkForm'
 import TravelerList from '../TripDashboard/Travelers/Travelers/TravelerList'
 import CreateEmailForm from '../TripDashboard/Travelers/Actions/CreateEmailForm'
 import CreateTextForm from '../TripDashboard/Travelers/Actions/CreateTextForm'
-import Select from 'react-select'
 import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusForm'
 import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
-import Checkbox from '../util/forms/Checkbox'
+import { withStyles } from '@material-ui/core/styles'
 import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
+import Checkbox from '@material-ui/core/Checkbox'
+import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
+import { travelerStatus } from '../util/globals'
+import Card from '@material-ui/core/Card';
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/travelersdashboard')
 }
 
-const stati = [
-    { value: 'INVITED', label: 'Invited' },
-    { value: 'CONFIRMED', label: 'Confirmed' },
-    { value: 'ON-TRIP', label: 'On trip' },
-    { value: 'POST-TRIP', label: 'Post trip' },
-    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
-    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
-    { value: 'OTHER', label: 'Other' }
-]
+const styles = {
+    title: {
+        fontFamily: 'Roboto',
+        fontWeight: '600',
+        fontSize: '30px',
+        color: '#333333'
+    },
+    formControl: {
+        margin: '0 1rem 1rem 1rem',
+        minWidth: 180,
+        maxWidth: 180,
+    },
+    card: {
+        width: '100%'
+    }
+}
 
 class Travelers extends Component {
-    allFilters = [
-        'INVITED',
-        'CONFIRMED',
-        'ON-TRIP',
-        'POST-TRIP',
-        'DOCS DUE',
-        'MONEY DUE',
-        'OTHER',
-        'PAPERWORK NEEDED',
-        'PAYMENT NEEDED'
-    ]
-
     state = {
         selected: {},
         allSelected: false,
-        filters: this.allFilters,
-        selectedTraveler: null,
+        statusFilters: travelerStatus,
+        statusFiltersChecked: [],
+        tripFilters: [],
+        tripFiltersChecked: [],
         travelers: [],
+        selectedTraveler: null,
         snack: {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+
     }
 
     constructor(props) {
@@ -58,6 +61,7 @@ class Travelers extends Component {
             initializeReactGA()
         }
         this.getTravelers()
+        this.getTrips()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -65,6 +69,12 @@ class Travelers extends Component {
     getTravelers = async () => {
         const travelers = await apiCall('get', '/api/organization/travelers')
         this.setState({ travelers, selectedTraveler: travelers[0] })
+    }
+
+    getTrips = async () => {
+        const trips = await apiCall('get', '/api/organization/trips')
+        trips.push('none')
+        this.setState({ tripFilters: trips, tripFiltersChecked: [] })
     }
 
     addTraveler = async traveler => {
@@ -304,15 +314,14 @@ class Travelers extends Component {
         }
     }
 
-    handleFilterChange = selectedFilters => {
-        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
-            //handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
-            selectedFilters = null
-        }
-        let filters = selectedFilters
-            ? selectedFilters.map(f => f.value)
-            : this.allFilters
-        this.setState({ filters })
+    handleStatusFilterChange = statusFiltersChecked => {
+        statusFiltersChecked = statusFiltersChecked.target.value
+        this.setState({ statusFiltersChecked })
+    }
+
+    handleTripFilterChange = tripFiltersChecked => {
+        tripFiltersChecked = tripFiltersChecked.target.value
+        this.setState({ tripFiltersChecked })
     }
 
     setSelectedTraveler = travelerId => {
@@ -326,45 +335,35 @@ class Travelers extends Component {
         let {
             selected,
             allSelected,
-            filters,
+            statusFiltersChecked,
             selectedTraveler,
-            travelers
+            travelers,
+            tripFilters,
+            tripFiltersChecked
         } = this.state
 
-        const filteredTravelers = travelers.filter(traveler =>
-            filters.includes(traveler.status)
-        )
+        const { classes } = this.props
 
-        const customStyles = {
-            container: (provided, state) => ({
-                ...provided,
-                height: '50px',
-                width: '180px',
-                boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.3)',
-                border: 'none',
-                borderRadius: '3px'
-            }),
-            control: (provided, state) => ({
-                ...provided,
-                border: 'none'
-            }),
-            select: provided => ({
-                ...provided,
-                background: 'white',
-                height: 'auto',
-                border: 'none'
-            }),
-            valueContainer: (provided, state) => ({
-                ...provided,
-                minHeight: '50px',
-                border: 'none'
-            }),
-            placeholder: (provided) => ({
-                ...provided,
-                color: '#333333',
-                fontFamily: 'Roboto',
-                fontWeight: '600'
-            })
+        let filteredTravelers = []
+        console.log(statusFiltersChecked.length)
+        console.log(tripFiltersChecked.length)
+        if ((statusFiltersChecked.length > 0) && (tripFiltersChecked.length > 0)) {
+            filteredTravelers = travelers.filter(traveler =>
+                statusFiltersChecked.includes(traveler.status) && tripFiltersChecked.includes(traveler.trip)
+            )
+        }
+        else if ((statusFiltersChecked.length > 0 && tripFiltersChecked.length === 0)) {
+            filteredTravelers = travelers.filter(traveler =>
+                statusFiltersChecked.includes(traveler.status)
+            )
+        }
+        else if ((statusFiltersChecked.length === 0 && tripFiltersChecked.length > 0)) {
+            filteredTravelers = travelers.filter(traveler =>
+                tripFiltersChecked.includes(traveler.trip)
+            )
+        }
+        else if ((statusFiltersChecked.length === 0 && tripFiltersChecked.length === 0)) {
+            filteredTravelers = travelers
         }
 
         let travelerInfo = selectedTraveler ? (
@@ -379,32 +378,41 @@ class Travelers extends Component {
             <div className="col-md-12 ">
                 <div className="row">
                     <div className="col-md-12 mt-4">
-                        <h4 className="mb-3 TripInfo-heading">Travelers in your organization </h4>
+                        <h4 className={classes.title} >Travelers in Your Organization </h4>
                     </div>
                 </div>
                 <div className="row mt-2">
                     <div className="col-md-9 px-4">
                         <div className="row mx-0">
                             <div className="col-md-12">
-                                <div className="row justify-content-between">
-                                    <Select
-                                        isMulti
-                                        name="colors"
-                                        options={stati}
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
-                                        styles={customStyles}
-                                        placeholder="All Status"
-                                        onChange={
-                                            this.handleFilterChange
-                                        }
-                                    />
+                                <div className="row">
+                                    <div className="col-12 px-0">
+                                        <div className="d-flex flex-row justify-content-between mb-3">
+                                            <div className="d-flex flex-row">
+                                                <div className="mr-3">
+                                                    <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
+                                                </div>
+                                                <LeftMultipleSelect allValues={tripFilters} selectedValues={tripFiltersChecked} onChange={this.handleTripFilterChange} label='All Trips'></LeftMultipleSelect>
+                                            </div>
+                                            <div className="d-flex flex-row">
+                                                <div className='px-3'>
+                                                    <ImportBulkForm
+                                                        key={3}
+                                                        submit={this.addTravelersCSV}
+                                                    />
+                                                </div>
+
+                                                <AddTravelerForm
+                                                    key={4}
+                                                    submit={this.addTraveler}
+                                                />
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <div className="d-flex flex-row">
                                         <ChangeStatusForm
-                                            submit={
-                                                this
-                                                    .changeStatusOfSelectedTravelers
-                                            }
+                                            submit={this.changeStatusOfSelectedTravelers}
                                             travelers={filteredTravelers}
                                             selected={selected}
                                         />
@@ -424,45 +432,41 @@ class Travelers extends Component {
                                             travelers={filteredTravelers}
                                             selected={selected}
                                         />
-                                        <div className='px-3'>
-                                            <ImportBulkForm
-                                                key={3}
-                                                submit={this.addTravelersCSV}
-                                            />
-                                        </div>
-
-                                        <AddTravelerForm
-                                            key={4}
-                                            submit={this.addTraveler}
-                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="row mx-0 my-4">
-                            <div className="col-md-12">
-                                <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
+                            <Card className={classes.card}>
+                                <div className="row justify-content-around py-3 align-items-center">
                                     <div className="col-md-1 Travelers-filter">
                                         <Checkbox
                                             onChange={this.toggleAll}
                                             className=""
                                             checked={allSelected}
                                             label="noshow"
+                                            color='primary'
                                         />
                                     </div>
-                                    <div className="col-md-2"></div>
                                     <div className="col-md-3 Travelers-filter">NAME</div>
                                     <div className="col-md-3 Travelers-filter">CONTACT</div>
-                                    <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
+                                    <div className="col-md-2 Travelers-filter" >STATUS</div>
+                                    <div className="col-md-2 Travelers-filter">TRIP</div>
+                                    <div className="col-md-1"></div>
                                 </div>
-                                <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
-                                    <TravelerList
-                                        items={filteredTravelers}
-                                        selected={selected}
-                                        toggle={this.toggle}
-                                        doubleClick={this.setSelectedTraveler}
-                                    />
-                                </div>
+                            </Card>
+                            <div className="col-12 px-0 mt-3">
+                                <Card className={classes.card}>
+                                    <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
+                                        <TravelerList
+                                            items={filteredTravelers}
+                                            selected={selected}
+                                            toggle={this.toggle}
+                                            doubleClick={this.setSelectedTraveler}
+                                            showTrip
+                                        />
+                                    </div>
+                                </Card>
                             </div>
                         </div>
                     </div>
@@ -476,4 +480,4 @@ class Travelers extends Component {
     }
 }
 
-export default Travelers
+export default withStyles(styles)(Travelers)
