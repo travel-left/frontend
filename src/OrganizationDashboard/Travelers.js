@@ -25,7 +25,8 @@ const styles = {
         fontFamily: 'Roboto',
         fontWeight: '600',
         fontSize: '30px',
-        color: '#333333'
+        color: '#333333',
+        marginBottom: '2rem'
     },
     formControl: {
         margin: '0 1rem 1rem 1rem',
@@ -34,6 +35,9 @@ const styles = {
     },
     card: {
         width: '100%'
+    },
+    sideColumn: {
+        height: '120vh'
     }
 }
 
@@ -375,14 +379,10 @@ class Travelers extends Component {
         ) : null
 
         return (
-            <div className="col-md-12 ">
+            <div className="col-md-12 px-0">
                 <div className="row">
-                    <div className="col-md-12 mt-4">
+                    <div className="col-md-9 mt-4">
                         <h4 className={classes.title} >Travelers in Your Organization </h4>
-                    </div>
-                </div>
-                <div className="row mt-2">
-                    <div className="col-md-9 px-4">
                         <div className="row mx-0">
                             <div className="col-md-12">
                                 <div className="row">
@@ -438,7 +438,7 @@ class Travelers extends Component {
                         </div>
                         <div className="row mx-0 my-4">
                             <Card className={classes.card}>
-                                <div className="row justify-content-around py-3 align-items-center">
+                                <div className="row justify-content-around py-3 align-items-center" style={{ paddingLeft: '15px', paddingRight: '15px' }}>
                                     <div className="col-md-1 Travelers-filter">
                                         <Checkbox
                                             onChange={this.toggleAll}
@@ -457,7 +457,7 @@ class Travelers extends Component {
                             </Card>
                             <div className="col-12 px-0 mt-3">
                                 <Card className={classes.card}>
-                                    <div className="row left-shadow-sharp mt-4" style={{ paddingBottom: '33vh', borderRadius: '3px' }}>
+                                    <div className="row mt-4">
                                         <TravelerList
                                             items={filteredTravelers}
                                             selected={selected}
@@ -470,8 +470,11 @@ class Travelers extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-3 left-shadow-sharp">
-                        {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+
+                    <div className="col-md-3 px-0" style={{ minHeight: '120vh' }}>
+                        <Card className={classes.sideColumn}>
+                            {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
+                        </Card>
                     </div>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
