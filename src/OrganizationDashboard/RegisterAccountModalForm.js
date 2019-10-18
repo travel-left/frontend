@@ -19,13 +19,12 @@ export default class RegisterAccountModalForm extends Component {
     state = {
         modalAnimation: '',
         overlayAnimation: '',
-        company: {
-            name: '',
-            number: '',
-            address: '',
-            tax_id: '',
-            url: ''
-        }
+        name: '',
+        number: '',
+        address: '',
+        tax_id: '',
+        url: ''
+
     }
 
     handleOnChange = e => {
@@ -61,6 +60,12 @@ export default class RegisterAccountModalForm extends Component {
         }
     }
 
+    handleCompanyChange = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     render() {
         const steps = ['Company Information', 'Representative Information', 'Owner Information']
         let { activeStep } = this.state
@@ -89,11 +94,7 @@ export default class RegisterAccountModalForm extends Component {
                                         </Step>
                                     ))}
                                 </Stepper>
-                                <div className="row">
-                                    <div className="col-10">
-                                        <CompanySection company={this.state.company}></CompanySection>
-                                    </div>
-                                </div>
+                                <CompanySection handleChange={this.handleCompanyChange} name={this.state.name} number={this.state.number} address={this.state.address} tax_id={this.state.tax_id} url={this.state.url}></CompanySection>
                                 <hr className="my-4" />
                                 <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.handleSubmit}>SUBMIT</Button>
                             </div>
@@ -105,8 +106,8 @@ export default class RegisterAccountModalForm extends Component {
     }
 }
 
-const CompanySection = ({ handleOnChange, company }) => {
-    let { name, number, address, tax_id, url } = company
+const CompanySection = ({ handleChange, url, name, number, address, tax_id }) => {
+    // let { name, number, address, tax_id, url } = company
     //company name
     //wesbite
     //TOS accept date
@@ -127,7 +128,7 @@ const CompanySection = ({ handleOnChange, company }) => {
                         placeholder="Name of your company"
                         margin="normal"
                         className="mx-2 mt-4"
-                        onChange={handleOnChange}
+                        onChange={handleChange}
                         name="name"
                         style={{ width: '100%' }}
                     />
@@ -143,7 +144,7 @@ const CompanySection = ({ handleOnChange, company }) => {
                         placeholder="Company's website"
                         margin="normal"
                         className="mx-2 mt-4"
-                        onChange={handleOnChange}
+                        onChange={handleChange}
                         name="url"
                         style={{ width: '100%' }}
                     />
@@ -159,8 +160,8 @@ const CompanySection = ({ handleOnChange, company }) => {
                         placeholder="Company's public phone number"
                         margin="normal"
                         className="mx-2 mt-4"
-                        onChange={handleOnChange}
-                        name="phone"
+                        onChange={handleChange}
+                        name="number"
                         style={{ width: '100%' }}
                     />
                 </div>
@@ -175,7 +176,7 @@ const CompanySection = ({ handleOnChange, company }) => {
                         placeholder="Company's address"
                         margin="normal"
                         className="mx-2 mt-4"
-                        onChange={handleOnChange}
+                        onChange={handleChange}
                         name="address"
                         style={{ width: '100%' }}
                     />
@@ -191,7 +192,7 @@ const CompanySection = ({ handleOnChange, company }) => {
                         placeholder="Company's tax id"
                         margin="normal"
                         className="mx-2 mt-4"
-                        onChange={handleOnChange}
+                        onChange={handleChange}
                         name="tax_id"
                         style={{ width: '100%' }}
                     />
