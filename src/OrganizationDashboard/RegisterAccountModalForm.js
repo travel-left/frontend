@@ -19,14 +19,17 @@ export default class RegisterAccountModalForm extends Component {
     state = {
         modalAnimation: '',
         overlayAnimation: '',
-        name: '',
-        email: '',
-        phone: '',
-        personalNotes: ''
+        company: {
+            name: '',
+            number: '',
+            address: '',
+            tax_id: '',
+            url: ''
+        }
     }
 
     handleOnChange = e => {
-        this.setState({ [e.target.name]: e.target.value })
+        // this.setState({ [e.target.name]: e.target.value })
     }
 
     handleSubmit = e => {
@@ -59,7 +62,7 @@ export default class RegisterAccountModalForm extends Component {
     }
 
     render() {
-        const steps = ['Account type', 'Collection method', 'Personal details', 'Company Details', 'Terms of service']
+        const steps = ['Company Information', 'Representative Information', 'Owner Information']
         let { activeStep } = this.state
 
         return (
@@ -88,7 +91,7 @@ export default class RegisterAccountModalForm extends Component {
                                 </Stepper>
                                 <div className="row">
                                     <div className="col-10">
-                                        <AccountandTrasactionTypeSection></AccountandTrasactionTypeSection>
+                                        <CompanySection company={this.state.company}></CompanySection>
                                     </div>
                                 </div>
                                 <hr className="my-4" />
@@ -102,14 +105,98 @@ export default class RegisterAccountModalForm extends Component {
     }
 }
 
-const AccountandTrasactionTypeSection = ({ value, handleChange }) => {
+const CompanySection = ({ handleOnChange, company }) => {
+    let { name, number, address, tax_id, url } = company
+    //company name
+    //wesbite
+    //TOS accept date
+    //TOS id
+    //us phone number
+    //us address
+    //company tax id
+    //MCC - 4722
     return (
-        <FormControl component="fieldset">
-            <FormLabel component="legend">Account type</FormLabel>
-            <RadioGroup value={value} onChange={handleChange}>
-                <FormControlLabel value="company" control={<Radio />} label="Company" />
-                <FormControlLabel value="individual" control={<Radio />} label="Individual" />
-            </RadioGroup>
-        </FormControl>
+        <>
+            <div className="row">
+                <div className="col-10">
+                    <TextField
+                        required
+                        id="standard-required"
+                        label="company name"
+                        value={name}
+                        placeholder="Name of your company"
+                        margin="normal"
+                        className="mx-2 mt-4"
+                        onChange={handleOnChange}
+                        name="name"
+                        style={{ width: '100%' }}
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-10">
+                    <TextField
+                        required
+                        id="standard-required"
+                        label="website"
+                        value={url}
+                        placeholder="Company's website"
+                        margin="normal"
+                        className="mx-2 mt-4"
+                        onChange={handleOnChange}
+                        name="url"
+                        style={{ width: '100%' }}
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-10">
+                    <TextField
+                        required
+                        id="standard-required"
+                        label="phone number"
+                        value={number}
+                        placeholder="Company's public phone number"
+                        margin="normal"
+                        className="mx-2 mt-4"
+                        onChange={handleOnChange}
+                        name="phone"
+                        style={{ width: '100%' }}
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-10">
+                    <TextField
+                        required
+                        id="standard-required"
+                        label="company address"
+                        value={address}
+                        placeholder="Company's address"
+                        margin="normal"
+                        className="mx-2 mt-4"
+                        onChange={handleOnChange}
+                        name="address"
+                        style={{ width: '100%' }}
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-10">
+                    <TextField
+                        required
+                        id="standard-required"
+                        label="tax id"
+                        value={tax_id}
+                        placeholder="Company's tax id"
+                        margin="normal"
+                        className="mx-2 mt-4"
+                        onChange={handleOnChange}
+                        name="tax_id"
+                        style={{ width: '100%' }}
+                    />
+                </div>
+            </div>
+        </>
     )
 }
