@@ -203,16 +203,16 @@ const CompanySection = ({ handleChange, url, name, number, address, tax_id }) =>
 }
 
 const StepThroughButtons = ({ length, step, back, next, onSubmit, onDestroy }) => {
-    let firstPage = (
+    // let firstPage = (
 
-    )
+    // )
 
-    let inbetweenPages = (
+    // let inbetweenPages = (
 
-    )
-    let lastPage = (
+    // )
+    // let lastPage = (
 
-    )
+    // )
 
-    return buttons
+    // return buttons
 }
