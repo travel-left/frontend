@@ -23,8 +23,8 @@ export default class RegisterAccountModalForm extends Component {
         number: '',
         address: '',
         tax_id: '',
-        url: ''
-
+        url: '',
+        mcc: 4722
     }
 
     handleOnChange = e => {
@@ -115,7 +115,7 @@ const CompanySection = ({ handleChange, url, name, number, address, tax_id }) =>
     //us phone number
     //us address
     //company tax id
-    //MCC - 4722
+    //MCC - 
     return (
         <>
             <div className="row">
@@ -200,4 +200,19 @@ const CompanySection = ({ handleChange, url, name, number, address, tax_id }) =>
             </div>
         </>
     )
+}
+
+const StepThroughButtons = ({ length, step, back, next, onSubmit, onDestroy }) => {
+    let firstPage = (
+
+    )
+
+    let inbetweenPages = (
+
+    )
+    let lastPage = (
+
+    )
+
+    return buttons
 }
