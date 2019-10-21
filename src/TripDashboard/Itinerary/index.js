@@ -200,8 +200,8 @@ function formatEventForBackend(event) {
     let end = new Date(formattedEvent.date.valueOf())
     start.setHours(formattedEvent.start.split(':')[0])
     end.setHours(formattedEvent.end.split(':')[0])
-    formattedEvent.start = start
-    formattedEvent.end = end
+    formattedEvent.start = start.toString()
+    formattedEvent.end = end.toString()
     delete formattedEvent.date
 
     return formattedEvent
