@@ -59,8 +59,9 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-        console.log('formatted event date')
-        console.log(event)
+        console.log('Sending start date as: ' + event.start)
+        console.log('Sending end date as: ' + event.end)
+
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
             this.setState({
@@ -209,8 +210,6 @@ function formatEventForBackend(event) {
 
 function formatDateToLocalTimezone(date) {
     let localTimezone = moment.tz.guess(true)
-    console.log('date before timezone change (utc): ' + date)
     date = moment(date).tz(localTimezone)
-    console.log('date after timezone change: ' + date)
     return date
 }
