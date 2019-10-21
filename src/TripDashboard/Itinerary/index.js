@@ -50,8 +50,8 @@ class events extends Component {
 
         events = events.map(event => ({
             ...event,
-            start: moment(event.start).tz(this.localTimezone),
-            end: moment(event.end).tz(this.localTimezone)
+            start: formatDateToLocalTimezone(event.start),
+            end: formatDateToLocalTimezone(event.end)
         }))
 
         this.setState({ events, days, selectedDay: days[0] })
@@ -205,4 +205,12 @@ function formatEventForBackend(event) {
     delete formattedEvent.date
 
     return formattedEvent
+}
+
+function formatDateToLocalTimezone(date) {
+    let localTimezone = moment.tz.guess(true)
+    console.log('date before timezone change (utc): ' + date)
+    date = moment(date).tz(localTimezone)
+    console.log('date after timezone change: ' + date)
+    return date
 }
