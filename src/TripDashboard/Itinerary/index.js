@@ -59,7 +59,8 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-
+        console.log('formatted event date')
+        console.log(event)
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
             this.setState({
@@ -203,7 +204,6 @@ function formatEventForBackend(event) {
     formattedEvent.start = start.toString()
     formattedEvent.end = end.toString()
     delete formattedEvent.date
-
     return formattedEvent
 }
 
