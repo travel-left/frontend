@@ -19,6 +19,7 @@ export default class RegisterAccountModalForm extends Component {
     state = {
         modalAnimation: '',
         overlayAnimation: '',
+        step: 0,
         name: '',
         number: '',
         address: '',
@@ -29,6 +30,15 @@ export default class RegisterAccountModalForm extends Component {
 
     handleOnChange = e => {
         // this.setState({ [e.target.name]: e.target.value })
+    }
+
+    next = e => {
+        e.preventDefault()
+        this.setState(prevState => ({ ...prevState, step: prevState.step + 1 }))
+    }
+    back = e => {
+        e.preventDefault()
+        this.setState(prevState => ({ ...prevState, step: prevState.step - 1 }))
     }
 
     handleSubmit = e => {
@@ -68,7 +78,7 @@ export default class RegisterAccountModalForm extends Component {
 
     render() {
         const steps = ['Company Information', 'Representative Information', 'Owner Information']
-        let { activeStep } = this.state
+        let { step } = this.state
 
         return (
             <Portal >
@@ -87,7 +97,7 @@ export default class RegisterAccountModalForm extends Component {
                                 </IconButton>
                             </div>
                             <div className="modal-body">
-                                <Stepper activeStep={activeStep} alternativeLabel>
+                                <Stepper activeStep={step} alternativeLabel>
                                     {steps.map(label => (
                                         <Step key={label}>
                                             <StepLabel>{label}</StepLabel>
@@ -96,7 +106,8 @@ export default class RegisterAccountModalForm extends Component {
                                 </Stepper>
                                 <CompanySection handleChange={this.handleCompanyChange} name={this.state.name} number={this.state.number} address={this.state.address} tax_id={this.state.tax_id} url={this.state.url}></CompanySection>
                                 <hr className="my-4" />
-                                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.handleSubmit}>SUBMIT</Button>
+                                {/* <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.handleSubmit}>SUBMIT</Button> */}
+                                <StepThroughButtons step={this.state.step} length={2} back={this.back} next={this.next} onSubmit={this.handleSubmit}></StepThroughButtons>
                             </div>
                         </form>
                     </div>
@@ -203,16 +214,34 @@ const CompanySection = ({ handleChange, url, name, number, address, tax_id }) =>
 }
 
 const StepThroughButtons = ({ length, step, back, next, onSubmit, onDestroy }) => {
-    // let firstPage = (
+    let buttons
+    if (step === 0) {//first page
+        buttons = (
+            <div className="float-right">
+                <Button size="large" variant="contained" color="secondary" style={{ width: '180px', height: '50px', color: "white" }} onClick={next}>
+                    NEXT
+                </Button>
+            </div>
+        )
+    } else if (step === length) {//last page
+        buttons = (
+            <div className="float-right">
+                <button className="btn btn-lg btn-link text-primary" onClick={back}>PREV</button>
+                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', color: "white" }} onClick={next}>
+                    SUBMIT
+                </Button>
+            </div>
+        )
+    } else {//in between pages
+        buttons = (
+            <div className="float-right">
+                <button className="btn btn-lg btn-link text-primary" onClick={back}>PREV</button>
+                <Button size="large" variant="contained" color="secondary" style={{ width: '180px', height: '50px', color: "white" }} onClick={next}>
+                    NEXT
+                </Button>
+            </div>
+        )
+    }
 
-    // )
-
-    // let inbetweenPages = (
-
-    // )
-    // let lastPage = (
-
-    // )
-
-    // return buttons
+    return buttons
 }
