@@ -5,12 +5,17 @@ import CloseIcon from '@material-ui/icons/Close'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import InputLabel from '@material-ui/core/InputLabel'
-import SendIcon from '@material-ui/icons/Send'
 import { Portal } from 'react-portal'
 import Select from '@material-ui/core/Select'
 import Input from '@material-ui/core/Input'
 import MenuItem from '@material-ui/core/MenuItem'
 import Chip from '@material-ui/core/Chip'
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,7 +34,8 @@ export default class CollectMoneyModalForm extends Component {
         overlayAnimation: '',
         message: '',
         amount: '',
-        selectedTravelers: this.props.selectedTravelers
+        selectedTravelers: this.props.selectedTravelers,
+        sendAs: 'text'
     }
 
     handleChange = e => {
@@ -44,10 +50,10 @@ export default class CollectMoneyModalForm extends Component {
     }
 
     handleSubmit = e => {
-        const { selectedTravelers, amount, message } = this.state
+        const { selectedTravelers, amount, message, sendAs } = this.state
         e.preventDefault()
         this.props.submit(
-            selectedTravelers, amount, message
+            selectedTravelers, amount, message, sendAs
         )
         this.handleToggleModal()
     }
@@ -71,7 +77,7 @@ export default class CollectMoneyModalForm extends Component {
 
     render() {
         let { allTravelers } = this.props
-        let { selectedTravelers } = this.state
+        let { selectedTravelers, sendAs } = this.state
 
         selectedTravelers = selectedTravelers.map(t => t.name)
         allTravelers = allTravelers.map(t => t.name)
@@ -87,7 +93,7 @@ export default class CollectMoneyModalForm extends Component {
                     <div className="modal-dialog" role="document">
                         <form className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
                             <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
-                                <h5 className="modal-title Modal-Form-header pl-3"> Collect Money from Travelers</h5>
+                                <h5 className="modal-title Modal-Form-header pl-3"> Collect money from travelers</h5>
                                 <IconButton onClick={this.handleToggleModal} color='primary'>
                                     <CloseIcon style={{ color: 'white' }} fontSize="large" />
                                 </IconButton>
@@ -95,7 +101,7 @@ export default class CollectMoneyModalForm extends Component {
                             <div className="modal-body">
                                 <div className="row">
                                     <div className="col-10">
-                                        <InputLabel htmlFor="select-multiple-chip">Travelers</InputLabel>
+                                        <InputLabel htmlFor="select-multiple-chip" className="mx-2 mt-4">Travelers</InputLabel>
                                         <Select
                                             multiple
                                             value={selectedTravelers}
@@ -108,6 +114,7 @@ export default class CollectMoneyModalForm extends Component {
                                                     ))}
                                                 </div>
                                             )}
+                                            className="mx-2"
                                             MenuProps={MenuProps}
                                             style={{ width: '100%' }}
                                         >
@@ -153,6 +160,16 @@ export default class CollectMoneyModalForm extends Component {
                                             name="message"
                                             style={{ width: '100%' }}
                                         />
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-10">
+                                        <FormLabel component="legend" className="mx-2 mt-4">SEND AS</FormLabel>
+                                        <RadioGroup name="sendAs" className="mx-2" value={sendAs} onChange={this.handleChange}>
+                                            <FormControlLabel value="text" control={<Radio />} label="text" />
+                                            <FormControlLabel value="email" control={<Radio />} label="email" />
+                                            <FormControlLabel value="both" control={<Radio />} label="both" />
+                                        </RadioGroup>
                                     </div>
                                 </div>
                                 <hr className="my-4" />

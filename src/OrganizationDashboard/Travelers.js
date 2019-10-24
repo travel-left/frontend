@@ -387,10 +387,11 @@ class Travelers extends Component {
         win.focus()
     }
 
-    collectMoneyFromTravelers = (travelers, amount, message) => {
+    collectMoneyFromTravelers = (travelers, amount, message, sendAs) => {
         console.log(travelers)
         console.log(amount)
         console.log(message)
+        console.log(sendAs)
     }
 
     render() {
