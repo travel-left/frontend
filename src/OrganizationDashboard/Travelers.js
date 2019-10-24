@@ -61,6 +61,7 @@ class Travelers extends Component {
         isAddTravelerOpen: false,
         isCollectMoneyModalOpen: false,
         isRegisterAccountModalOpen: false,
+        canRequestPayments: false,
         snack: {
             show: false,
             variant: '',
@@ -76,13 +77,14 @@ class Travelers extends Component {
         }
         this.getTravelers()
         this.getTrips()
+        this.getStripeAccount()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
     toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
     toggleAddTravelerModal = () => (this.setState(prevState => ({ isAddTravelerOpen: !prevState.isAddTravelerOpen })))
     toggleCollectMoneyModal = () => {
-        if (!this.props.currentUser.stripeConnectAccountId) {
+        if (!this.state.canRequestPayments) {
             this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen }))
         }
         else {
@@ -99,6 +101,11 @@ class Travelers extends Component {
         const trips = await apiCall('get', '/api/organization/trips')
         trips.push('none')
         this.setState({ tripFilters: trips, tripFiltersChecked: [] })
+    }
+
+    getStripeAccount = async () => {
+        const account = await apiCall('GET', '/api/stripe/connect')
+        this.setState({ canRequestPayments: account.charges_enabled })
     }
 
     addTraveler = async traveler => {
@@ -375,8 +382,7 @@ class Travelers extends Component {
         const { classes } = this.props
 
         let filteredTravelers = []
-        console.log(statusFiltersChecked.length)
-        console.log(tripFiltersChecked.length)
+
         if ((statusFiltersChecked.length > 0) && (tripFiltersChecked.length > 0)) {
             filteredTravelers = travelers.filter(traveler =>
                 statusFiltersChecked.includes(traveler.status) && tripFiltersChecked.includes(traveler.trip)
@@ -441,10 +447,6 @@ class Travelers extends Component {
                                                     submit={this.addTraveler}
                                                 >
                                                 </AddNewTravelerModalForm>}
-                                                {/* <AddTravelerForm
-                                                    key={4}
-                                                    submit={this.addTraveler}
-                                                /> */}
                                             </div>
                                         </div>
 

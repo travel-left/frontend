@@ -105,7 +105,7 @@ class Checkout extends Component {
 
 export default () => {
     return (
-        <StripeProvider apiKey="pk_live_sOoLWWPaOzjSvtlcc0Tq6SH700iO3VEd99">
+        < StripeProvider apiKey={process.env.STRIPE_KEY}>
             <Checkout />
         </StripeProvider>
     )
