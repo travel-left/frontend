@@ -14,6 +14,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Fab from '@material-ui/core/Fab'
 
 export default class RegisterAccountModalForm extends Component {
     state = {
@@ -51,6 +52,7 @@ export default class RegisterAccountModalForm extends Component {
     handleSubmit = e => {
         e.preventDefault()
         console.log(this.state)
+        this.props.submit()
         this.handleToggleModal()
     }
 
@@ -98,43 +100,25 @@ export default class RegisterAccountModalForm extends Component {
                                 </IconButton>
                             </div>
                             <div className="modal-body">
-                                <Stepper activeStep={step} alternativeLabel>
-                                    {steps.map(label => (
-                                        <Step key={label}>
-                                            <StepLabel>{label}</StepLabel>
-                                        </Step>
-                                    ))}
-                                </Stepper>
-
-                                {step === 0 && <CompanySection
-                                    handleChange={this.handleCompanyChange}
-                                    name={this.state.name}
-                                    number={this.state.number}
-                                    address={this.state.address}
-                                    tax_id={this.state.tax_id}
-                                    url={this.state.url}
-                                ></CompanySection>}
-
-                                {step === 1 && <RepresentativeSection
-                                    handleChange={this.handleCompanyChange}
-                                    firstName={firstName}
-                                    lastName={lastName}
-                                    dob={dob}
-                                    repAddress={repAddress}
-                                    ssn={ssn}
-                                    title={title}
-                                    email={email}
-                                    repPhone={repPhone}
-                                ></RepresentativeSection>}
-                                {step === 2 && <OwnerSection
-                                    handleChange={this.handleCompanyChange}
-                                    ownerFirstName={ownerFirstName}
-                                    ownerLastName={ownerLastName}
-                                    ownerEmail={ownerEmail}
-                                ></OwnerSection>}
-                                <hr className="my-4" />
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="px-4">
+                                            <p style={{
+                                                fontFamily: 'Roboto',
+                                                fontSize: '18px',
+                                                color: '#666666',
+                                                lineHeight: '24px',
+                                                paddingTop: '10px',
+                                                paddingBottom: '15px'
+                                            }}>In order to collect payments, you need to register your account. The process takes about 15 minutes. <br></br>Click the button below when you're ready to register.</p>
+                                            <div className="d-flex justify-content-center align-items-center mb-4">
+                                                <Fab variant="extended" aria-label="delete" className="linky-boi-button" onClick={this.props.submit}>I'm ready to register my account!</Fab>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 {/* <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.handleSubmit}>SUBMIT</Button> */}
-                                <StepThroughButtons step={this.state.step} length={2} back={this.back} next={this.next} onSubmit={this.handleSubmit}></StepThroughButtons>
+                                {/* <StepThroughButtons step={this.state.step} length={2} back={this.back} next={this.next} onSubmit={this.handleSubmit}></StepThroughButtons> */}
                             </div>
                         </form>
                     </div>
@@ -470,3 +454,44 @@ const StepThroughButtons = ({ length, step, back, next, onSubmit, onDestroy }) =
 
     return buttons
 }
+
+{/* <Stepper activeStep={step} alternativeLabel>
+    {steps.map(label => (
+        <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+        </Step>
+    ))}
+</Stepper>
+
+{
+step === 0 && <CompanySection
+    handleChange={this.handleCompanyChange}
+    name={this.state.name}
+    number={this.state.number}
+    address={this.state.address}
+    tax_id={this.state.tax_id}
+    url={this.state.url}
+></CompanySection>
+}
+
+{
+step === 1 && <RepresentativeSection
+    handleChange={this.handleCompanyChange}
+    firstName={firstName}
+    lastName={lastName}
+    dob={dob}
+    repAddress={repAddress}
+    ssn={ssn}
+    title={title}
+    email={email}
+    repPhone={repPhone}
+></RepresentativeSection>
+}
+{
+step === 2 && <OwnerSection
+    handleChange={this.handleCompanyChange}
+    ownerFirstName={ownerFirstName}
+    ownerLastName={ownerLastName}
+    ownerEmail={ownerEmail}
+></OwnerSection>
+} */}

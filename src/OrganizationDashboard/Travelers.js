@@ -355,6 +355,12 @@ class Travelers extends Component {
         })
     }
 
+    registerAccount = async () => {
+        let link = await apiCall('POST', '/api/stripe/connect')
+        var win = window.open(link.url, '_blank');
+        win.focus()
+    }
+
     render() {
         let {
             selected,
