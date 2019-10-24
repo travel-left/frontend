@@ -56,6 +56,7 @@ class Travelers extends Component {
         tripFilters: [],
         tripFiltersChecked: [],
         travelers: [],
+        selectedTravelers: [],
         selectedTraveler: null,
         isImportCsvOpen: false,
         isAddTravelerOpen: false,
@@ -213,6 +214,7 @@ class Travelers extends Component {
     }
 
     toggle = travelerId => {
+        const { selectedTravelers, travelers } = this.state
         this.setState(prevState => {
             const { selected } = prevState
             selected[travelerId] = !selected[travelerId]
@@ -222,6 +224,23 @@ class Travelers extends Component {
                 selected
             }
         })
+
+        if (selectedTravelers.filter(t => t._id === travelerId)[0] == null) {
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    selectedTravelers: [travelers.filter(t => t._id === travelerId)[0], ...prevState.selectedTravelers]
+                }
+            })
+        }
+        else {
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    selectedTravelers: prevState.selectedTravelers.filter(t => t._id !== travelerId)
+                }
+            })
+        }
     }
 
     toggleAll = () => {
@@ -368,6 +387,12 @@ class Travelers extends Component {
         win.focus()
     }
 
+    collectMoneyFromTravelers = (travelers, amount, message) => {
+        console.log(travelers)
+        console.log(amount)
+        console.log(message)
+    }
+
     render() {
         let {
             selected,
@@ -481,7 +506,9 @@ class Travelers extends Component {
                                         {this.state.isCollectMoneyModalOpen && <CollectMoneyModalForm
                                             isOpen={this.state.isCollectMoneyModalOpen}
                                             toggleModal={this.toggleCollectMoneyModal}
-                                            submit={this.sendMoneyForms}
+                                            submit={this.collectMoneyFromTravelers}
+                                            allTravelers={this.state.travelers}
+                                            selectedTravelers={this.state.selectedTravelers}
                                         >
                                         </CollectMoneyModalForm>}
                                         {this.state.isRegisterAccountModalOpen && <RegisterAccountModalForm

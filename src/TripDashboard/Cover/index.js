@@ -78,8 +78,6 @@ class Cover extends Component {
 
 
     textSelectedTravelers = async (text, phones) => {
-        console.log(text)
-        console.log(phones)
         try {
             await apiCall('post', '/api/communicate/text', {
                 body: text, phones
