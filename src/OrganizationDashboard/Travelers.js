@@ -388,18 +388,58 @@ class Travelers extends Component {
     }
 
     collectMoneyFromTravelers = async (travelers, amount, message, sendAs) => {
-        console.log(travelers)
-        console.log(amount)
-        console.log(message)
-        console.log(sendAs)
-        let formId = await apiCall('post', '/api/coordinators/paymentForm', {
-            travelers: travelers.map(t => t._id),
-            amount,
-            message,
-            sendAs
-        })
+        //create form, if form created successfully
+        let form
+        try {
+            form = await apiCall('post', '/api/coordinators/paymentForm', {
+                travelers: travelers.map(t => t._id),
+                amount,
+                message,
+                sendAs
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'There was an error creating your form.'
+                }
+            })
+        }
 
-        console.log(formId)
+
+        let travelersPhones = []
+        let travelersEmails = []
+
+        for (const { phone, email } of travelers) {
+            travelersPhones.push(phone)
+            travelersEmails.push(email)
+        }
+
+        try {
+            let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
+                emails: travelersEmails,
+                phones: travelersPhones,
+                tripId: '5d9d2d9e75c127155cc77301',
+                sendAs: 'both'
+            })
+
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Your payment requests have been sent!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred sending your payment requests'
+                }
+            })
+        }
     }
 
     render() {
