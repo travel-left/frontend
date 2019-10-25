@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
 import { apiCall } from '../api'
-import { setCurrentUser } from '../redux/actions/auth'
-import { connect } from 'react-redux'
 import Snack from '../Snack'
 
 class _CardForm extends Component {
@@ -24,7 +22,7 @@ class _CardForm extends Component {
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     submit = async ev => {
-        let token = await this.props.stripe.createToken({ name: "Name" })
+        let token = await this.props.stripe.createToken({ name: "traveler_card" })
 
         if (token.error) {
             this.setState({
@@ -37,7 +35,7 @@ class _CardForm extends Component {
         }
 
         try {
-            let response = await apiCall('POST', "/api/stripe", {
+            let response = await apiCall('POST', "/api/stripe/connect/charge", {
                 token: token.token.id
             }, true)
             this.setState({
@@ -48,8 +46,9 @@ class _CardForm extends Component {
                 }
             })
             if (response.message === 'Success') {
-                this.props.setCurrentUser(response.user)
+
             }
+            console.log(response)
         } catch (err) {
             this.setState({
                 snack: {
@@ -69,7 +68,7 @@ class _CardForm extends Component {
                 <p style={{ color: '#FF605F' }}>{this.state.error}</p>
                 <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
                 <label htmlFor="">Current card</label>
-                <p>{this.props.currentUser.cc.length === 4 ? `**** **** **** ${this.props.currentUser.cc}` : this.props.currentUser.cc}</p>
+                {/* <p>{this.props.currentUser.cc.length === 4 ? `**** **** **** ${this.props.currentUser.cc}` : this.props.currentUser.cc}</p> */}
                 <label htmlFor="">Update card</label>
                 <CardElement />
                 <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
@@ -86,10 +85,7 @@ const mapStateToProps = state => {
     }
 }
 
-const CardForm = connect(
-    mapStateToProps,
-    { setCurrentUser }
-)(injectStripe(_CardForm))
+const CardForm = injectStripe(_CardForm)
 
 class Checkout extends Component {
     render() {
@@ -105,7 +101,7 @@ class Checkout extends Component {
 
 export default () => {
     return (
-        < StripeProvider apiKey={`${process.env.STRIPE_KEY}`}>
+        < StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
             <Checkout />
         </StripeProvider>
     )

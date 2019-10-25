@@ -387,11 +387,19 @@ class Travelers extends Component {
         win.focus()
     }
 
-    collectMoneyFromTravelers = (travelers, amount, message, sendAs) => {
+    collectMoneyFromTravelers = async (travelers, amount, message, sendAs) => {
         console.log(travelers)
         console.log(amount)
         console.log(message)
         console.log(sendAs)
+        let formId = await apiCall('post', '/api/coordinators/paymentForm', {
+            travelers: travelers.map(t => t._id),
+            amount,
+            message,
+            sendAs
+        })
+
+        console.log(formId)
     }
 
     render() {
