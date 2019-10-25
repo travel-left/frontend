@@ -46,7 +46,7 @@ export default class CollectPayment extends Component {
     }
 
     getCoordinatorInfo = async () => {
-        let coordinator = await apiCall('GET', `/api/coordinators/${this.coordinatorId}`)
+        let coordinator = await apiCall('GET', `/api/coordinators/${this.coordinatorId}/name`)
         this.setState({ coordinator })
     }
 
