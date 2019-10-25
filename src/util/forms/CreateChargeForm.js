@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
 import { apiCall } from '../api'
+import Button from '@material-ui/core/Button'
 import Snack from '../Snack'
 
 class _CardForm extends Component {
@@ -67,11 +68,13 @@ class _CardForm extends Component {
             <div className="">
                 <p style={{ color: '#FF605F' }}>{this.state.error}</p>
                 <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
-                <label htmlFor="">Current card</label>
-                {/* <p>{this.props.currentUser.cc.length === 4 ? `**** **** **** ${this.props.currentUser.cc}` : this.props.currentUser.cc}</p> */}
-                <label htmlFor="">Update card</label>
-                <CardElement />
-                <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
+                <span><strong>Card details</strong></span>
+                <div className='mt-3 mb-4'>
+                    <CardElement />
+                </div>
+                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit}>
+                    Send
+                                </Button>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )

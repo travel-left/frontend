@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { apiCall } from '../util/api'
 import CheckoutForm from '../util/forms/CheckoutForm'
 import CreateChargeForm from '../util/forms/CreateChargeForm'
+import Navbar from '../util/otherComponents/Navbar'
+import Image from '../util/otherComponents/Image';
 
 export default class CollectPayment extends Component {
     tripId = this.props.match.params.tripId
@@ -11,7 +13,8 @@ export default class CollectPayment extends Component {
     state = {
         trip: {},
         orgName: '',
-        formInfo: {}
+        formInfo: {},
+        coordinator: {}
     }
 
     constructor(props) {
@@ -19,6 +22,7 @@ export default class CollectPayment extends Component {
 
         this.getTripInfo()
         this.getFormInfo()
+        this.getCoordinatorInfo()
     }
 
     getTripInfo = async () => {
@@ -41,34 +45,29 @@ export default class CollectPayment extends Component {
         this.setState({ formInfo })
     }
 
+    getCoordinatorInfo = async () => {
+        let coordinator = await apiCall('GET', `/api/coordinators/${this.coordinatorId}`)
+        this.setState({ coordinator })
+    }
+
     render() {
-        let { trip, orgName, formInfo } = this.state
+        let { trip, orgName, formInfo, coordinator } = this.state
         return (
-            <div className="container-fluid">
-                <div className="">
-                    <div className="row d-flex justify-content-between">
-                        <span className="Share-title p-2">{trip.name}</span>
-                        <span className="Share-title p-2">{orgName}</span>
-                    </div>
-                    <div
-                        className="row d-flex flex-column justify-content-between p-4"
-                        style={{
-                            backgroundImage: `url(${trip.image})`,
-                            backgroundPosition: 'center',
-                            backgroundSize: 'cover',
-                            height: '20vh'
-                        }}
-                    >
-                    </div >
-                    <div className="row justify-content-center">
-                        <h2>Coordinator is requesting {formInfo.amount} for your {trip.name} trip.</h2>
-                    </div>
-                    <div className="row justify-content-center">
-                        <h5>{formInfo.message}</h5>
-                    </div>
-                    <div className="row justify-content-center">
-                        <div className="col-xs-10 col-lg-3">
-                            <CreateChargeForm></CreateChargeForm>
+            <div className="container-fluid px-0 mx-0">
+                <Navbar></Navbar>
+                <div className="col-xs-10 col-md-8 mt-5">
+                    <div className="row justify-content-start px-4">
+                        <div className="col-2 px-0">
+                            <Image src={coordinator.image} style={{ maxWidth: '20vw' }} diameter='48px'></Image>
+                        </div>
+                        <div className="col-10 pl-2 pr-0">
+                            <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for {trip.name}</span>
+                            <div className="mt-3">
+                                <span className='text-muted'>{formInfo.message}</span>
+                            </div>
+                            <div style={{ width: '100%' }}>
+                                <CreateChargeForm></CreateChargeForm>
+                            </div>
                         </div>
                     </div>
                 </div>
