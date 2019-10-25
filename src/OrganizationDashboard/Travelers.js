@@ -106,7 +106,11 @@ class Travelers extends Component {
 
     getStripeAccount = async () => {
         const account = await apiCall('GET', '/api/stripe/connect')
-        this.setState({ canRequestPayments: account.charges_enabled })
+        if (account.id === 'acct_1F9D9wISOcFp9WE7') {
+            this.setState({ canRequestPayments: false })
+        } else {
+            this.setState({ canRequestPayments: account.charges_enabled })
+        }
     }
 
     addTraveler = async traveler => {
