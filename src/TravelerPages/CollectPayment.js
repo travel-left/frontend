@@ -66,7 +66,7 @@ export default class CollectPayment extends Component {
                                 <span className='text-muted'>{formInfo.message}</span>
                             </div>
                             <div style={{ width: '100%' }}>
-                                <CreateChargeForm></CreateChargeForm>
+                                <CreateChargeForm coordinatorId={this.coordinatorId}></CreateChargeForm>
                             </div>
                         </div>
                     </div>

@@ -83,30 +83,31 @@ class _CardForm extends Component {
 
 }
 
-const mapStateToProps = state => {
-    return {
-        currentUser: state.currentUser
-    }
-}
-
 const CardForm = injectStripe(_CardForm)
 
 class Checkout extends Component {
+
     render() {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CardForm />
+                    <CardForm coordinatorId={this.props.coordinatorId} />
                 </Elements>
             </div>
         )
     }
 }
 
-export default () => {
-    return (
-        < StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
-            <Checkout />
-        </StripeProvider>
-    )
+export default class CreateChargeForm extends Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        return (
+            < StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
+                <Checkout coordinatorId={this.props.coordinatorId} />
+            </StripeProvider>
+        )
+
+    }
 }
