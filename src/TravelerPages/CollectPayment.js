@@ -53,25 +53,27 @@ export default class CollectPayment extends Component {
     render() {
         let { trip, orgName, formInfo, coordinator } = this.state
         return (
-            <div className="container-fluid px-0 mx-0">
+            <>
                 <Navbar></Navbar>
-                <div className="col-xs-10 col-md-8 mt-5">
-                    <div className="row justify-content-start px-4">
-                        <div className="col-2 px-0">
-                            <Image src={coordinator.image} style={{ maxWidth: '20vw' }} diameter='48px'></Image>
-                        </div>
-                        <div className="col-10 pl-2 pr-0">
-                            <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for {trip.name}</span>
-                            <div className="mt-3">
-                                <span className='text-muted'>{formInfo.message}</span>
+                <div className="container-fluid px-0 mx-0 justify-content-center">
+                    <div className="mt-5 d-flex justify-content-center">
+                        <div className="row justify-content-center px-5">
+                            <div className="col-2 px-0">
+                                <Image src={coordinator.image} style={{ maxWidth: '20vw' }} diameter='48px'></Image>
                             </div>
-                            <div style={{ width: '100%' }}>
-                                <CreateChargeForm coordinatorId={this.coordinatorId}></CreateChargeForm>
+                            <div className="col-10 pl-2 pr-0">
+                                <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for {trip.name}</span>
+                                <div className="mt-3">
+                                    <span className='text-muted'>{formInfo.message}</span>
+                                </div>
+                                <div style={{ width: '100%' }}>
+                                    <CreateChargeForm coordinatorId={this.coordinatorId} amount={formInfo.amount}></CreateChargeForm>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 }

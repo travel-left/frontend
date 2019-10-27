@@ -38,7 +38,8 @@ class _CardForm extends Component {
         try {
             let response = await apiCall('POST', "/api/stripe/connect/charge", {
                 token: token.token.id,
-                coordinatorId: this.props.coordinatorId
+                coordinatorId: this.props.coordinatorId,
+                amount: this.props.amount
             }, true)
             this.setState({
                 snack: {
@@ -91,7 +92,7 @@ class Checkout extends Component {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CardForm coordinatorId={this.props.coordinatorId} />
+                    <CardForm coordinatorId={this.props.coordinatorId} amount={this.props.amount} />
                 </Elements>
             </div>
         )
@@ -105,7 +106,7 @@ export default class CreateChargeForm extends Component {
     render() {
         return (
             < StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
-                <Checkout coordinatorId={this.props.coordinatorId} />
+                <Checkout coordinatorId={this.props.coordinatorId} amount={this.props.amount} />
             </StripeProvider>
         )
 
