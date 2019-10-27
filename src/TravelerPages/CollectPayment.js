@@ -40,7 +40,7 @@ export default class CollectPayment extends Component {
     }
 
     getFormInfo = async () => {
-        let formInfo = await apiCall('GET', `/api/paymentForms/${this.formId}`)
+        let formInfo = await apiCall('GET', `/api/left/paymentForms/${this.formId}`)
 
         this.setState({ formInfo })
     }
