@@ -112,7 +112,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/travelers"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>
-                        <Travelers {...props} />
+                        <Travelers {...props} currentUser={currentUser} />
                     </WithAuth>
                 )}
             />

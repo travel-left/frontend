@@ -50,8 +50,8 @@ class events extends Component {
 
         events = events.map(event => ({
             ...event,
-            start: moment(event.start).tz(this.localTimezone),
-            end: moment(event.end).tz(this.localTimezone)
+            start: formatDateToLocalTimezone(event.start),
+            end: formatDateToLocalTimezone(event.end)
         }))
 
         this.setState({ events, days, selectedDay: days[0] })
@@ -59,6 +59,8 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
+        console.log('Sending start date as: ' + event.start)
+        console.log('Sending end date as: ' + event.end)
 
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
@@ -203,6 +205,11 @@ function formatEventForBackend(event) {
     formattedEvent.start = start.toString()
     formattedEvent.end = end.toString()
     delete formattedEvent.date
-
     return formattedEvent
+}
+
+function formatDateToLocalTimezone(date) {
+    let localTimezone = moment.tz.guess(true)
+    date = moment(date).tz(localTimezone)
+    return date
 }

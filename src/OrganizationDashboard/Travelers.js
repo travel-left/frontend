@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
-import AddTravelerForm from '../TripDashboard/Travelers/Actions/AddTravelerForm'
-import ImportBulkForm from '../TripDashboard/Travelers/Actions/ImportBulkForm'
 import TravelerList from '../TripDashboard/Travelers/Travelers/TravelerList'
 import CreateEmailForm from '../TripDashboard/Travelers/Actions/CreateEmailForm'
 import CreateTextForm from '../TripDashboard/Travelers/Actions/CreateTextForm'
 import ChangeStatusForm from '../TripDashboard/Travelers/Actions/ChangeStatusForm'
 import TravelerInfo from '../TripDashboard/Travelers/Travelers/TravelerInfo'
+import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles'
 import ReactGA from 'react-ga'
 import Snack from '../util/Snack'
@@ -16,7 +15,11 @@ import LeftMultipleSelect from '../util/forms/LeftMultipleSelect';
 import { travelerStatus } from '../util/globals'
 import Card from '@material-ui/core/Card';
 import ImportCsvModalForm from './ImportCsvModalForm';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AddNewTravelerModalForm from './AddNewTravelerModalForm'
+import CollectMoneyModalForm from './CollectMoneyModalForm';
+import RegisterAccountModalForm from './RegisterAccountModalForm'
+import Paper from '@material-ui/core/Paper'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -53,9 +56,13 @@ class Travelers extends Component {
         tripFilters: [],
         tripFiltersChecked: [],
         travelers: [],
+        selectedTravelers: [],
         selectedTraveler: null,
         isImportCsvOpen: false,
         isAddTravelerOpen: false,
+        isCollectMoneyModalOpen: false,
+        isRegisterAccountModalOpen: false,
+        canRequestPayments: false,
         snack: {
             show: false,
             variant: '',
@@ -71,12 +78,21 @@ class Travelers extends Component {
         }
         this.getTravelers()
         this.getTrips()
+        this.getStripeAccount()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
     toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
     toggleAddTravelerModal = () => (this.setState(prevState => ({ isAddTravelerOpen: !prevState.isAddTravelerOpen })))
-
+    toggleCollectMoneyModal = () => {
+        if (!this.state.canRequestPayments) {
+            this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen }))
+        }
+        else {
+            this.setState(prevState => ({ isCollectMoneyModalOpen: !prevState.isCollectMoneyModalOpen }))
+        }
+    }
+    toggleRegisterAccontModal = () => (this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen })))
     getTravelers = async () => {
         const travelers = await apiCall('get', '/api/organization/travelers')
         this.setState({ travelers, selectedTraveler: travelers[0] })
@@ -86,6 +102,15 @@ class Travelers extends Component {
         const trips = await apiCall('get', '/api/organization/trips')
         trips.push('none')
         this.setState({ tripFilters: trips, tripFiltersChecked: [] })
+    }
+
+    getStripeAccount = async () => {
+        const account = await apiCall('GET', '/api/stripe/connect')
+        if (account.id === 'acct_1F9D9wISOcFp9WE7') {
+            this.setState({ canRequestPayments: false })
+        } else {
+            this.setState({ canRequestPayments: account.charges_enabled })
+        }
     }
 
     addTraveler = async traveler => {
@@ -193,6 +218,7 @@ class Travelers extends Component {
     }
 
     toggle = travelerId => {
+        const { selectedTravelers, travelers } = this.state
         this.setState(prevState => {
             const { selected } = prevState
             selected[travelerId] = !selected[travelerId]
@@ -202,6 +228,23 @@ class Travelers extends Component {
                 selected
             }
         })
+
+        if (selectedTravelers.filter(t => t._id === travelerId)[0] == null) {
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    selectedTravelers: [travelers.filter(t => t._id === travelerId)[0], ...prevState.selectedTravelers]
+                }
+            })
+        }
+        else {
+            this.setState(prevState => {
+                return {
+                    ...prevState,
+                    selectedTravelers: prevState.selectedTravelers.filter(t => t._id !== travelerId)
+                }
+            })
+        }
     }
 
     toggleAll = () => {
@@ -342,6 +385,67 @@ class Travelers extends Component {
         })
     }
 
+    registerAccount = async () => {
+        let link = await apiCall('POST', '/api/stripe/connect')
+        var win = window.open(link.url, '_blank');
+        win.focus()
+    }
+
+    collectMoneyFromTravelers = async (travelers, amount, message, sendAs) => {
+        //create form, if form created successfully
+        let form
+        try {
+            form = await apiCall('post', '/api/coordinators/paymentForm', {
+                travelers: travelers.map(t => t._id),
+                amount,
+                message,
+                sendAs
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'There was an error creating your form.'
+                }
+            })
+        }
+
+
+        let travelersPhones = []
+        let travelersEmails = []
+
+        for (const { phone, email } of travelers) {
+            travelersPhones.push(phone)
+            travelersEmails.push(email)
+        }
+
+        try {
+            let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
+                emails: travelersEmails,
+                phones: travelersPhones,
+                tripId: '5d9d2d9e75c127155cc77301',
+                sendAs: 'both'
+            })
+
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Your payment requests have been sent!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred sending your payment requests'
+                }
+            })
+        }
+    }
+
     render() {
         let {
             selected,
@@ -356,8 +460,7 @@ class Travelers extends Component {
         const { classes } = this.props
 
         let filteredTravelers = []
-        console.log(statusFiltersChecked.length)
-        console.log(tripFiltersChecked.length)
+
         if ((statusFiltersChecked.length > 0) && (tripFiltersChecked.length > 0)) {
             filteredTravelers = travelers.filter(traveler =>
                 statusFiltersChecked.includes(traveler.status) && tripFiltersChecked.includes(traveler.trip)
@@ -422,10 +525,6 @@ class Travelers extends Component {
                                                     submit={this.addTraveler}
                                                 >
                                                 </AddNewTravelerModalForm>}
-                                                {/* <AddTravelerForm
-                                                    key={4}
-                                                    submit={this.addTraveler}
-                                                /> */}
                                             </div>
                                         </div>
 
@@ -452,6 +551,25 @@ class Travelers extends Component {
                                             travelers={filteredTravelers}
                                             selected={selected}
                                         />
+                                        <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
+                                                <AttachMoneyIcon fontSize="large" />
+                                            </IconButton>
+                                        </Paper>
+                                        {this.state.isCollectMoneyModalOpen && <CollectMoneyModalForm
+                                            isOpen={this.state.isCollectMoneyModalOpen}
+                                            toggleModal={this.toggleCollectMoneyModal}
+                                            submit={this.collectMoneyFromTravelers}
+                                            allTravelers={this.state.travelers}
+                                            selectedTravelers={this.state.selectedTravelers}
+                                        >
+                                        </CollectMoneyModalForm>}
+                                        {this.state.isRegisterAccountModalOpen && <RegisterAccountModalForm
+                                            isOpen={this.state.isRegisterAccountModalOpen}
+                                            toggleModal={this.toggleRegisterAccontModal}
+                                            submit={this.registerAccount}
+                                        >
+                                        </RegisterAccountModalForm>}
                                     </div>
                                 </div>
                             </div>

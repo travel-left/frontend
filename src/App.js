@@ -12,8 +12,7 @@ import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import Share from './TripDashboard/Share/index'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
-import { purple } from '@material-ui/core/colors'
-import ReactGA from 'react-ga'
+import CollectPayment from './TravelerPages/CollectPayment';
 
 const store = configureStore()
 
@@ -41,6 +40,10 @@ const App = () => (
                         <Route
                             path="/trips/:tripId/share"
                             render={routeProps => <Share {...routeProps} />}
+                        />
+                        <Route
+                            path="/trips/:tripId/coordinator/:coordinatorId/form/:formId"
+                            render={routeProps => <CollectPayment {...routeProps} />}
                         />
                         <Route
                             path=""
