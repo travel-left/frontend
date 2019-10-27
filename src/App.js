@@ -42,7 +42,7 @@ const App = () => (
                             render={routeProps => <Share {...routeProps} />}
                         />
                         <Route
-                            path="/trips/:tripId/coordinator/:coordinatorId/form/:formId"
+                            path="/coordinator/:coordinatorId/form/:formId"
                             render={routeProps => <CollectPayment {...routeProps} />}
                         />
                         <Route
