@@ -36,7 +36,7 @@ class _CardForm extends Component {
         }
 
         try {
-            let response = await apiCall('POST', "/api/stripe/connect/charge", {
+            let response = await apiCall('POST', "/api/left/stripe/connect/charge", {
                 token: token.token.id,
                 coordinatorId: this.props.coordinatorId,
                 amount: this.props.amount
