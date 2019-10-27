@@ -6,13 +6,10 @@ import Navbar from '../util/otherComponents/Navbar'
 import Image from '../util/otherComponents/Image';
 
 export default class CollectPayment extends Component {
-    tripId = this.props.match.params.tripId
     coordinatorId = this.props.match.params.coordinatorId
     formId = this.props.match.params.formId
 
     state = {
-        trip: {},
-        orgName: '',
         formInfo: {},
         coordinator: {}
     }
@@ -20,23 +17,8 @@ export default class CollectPayment extends Component {
     constructor(props) {
         super(props)
 
-        this.getTripInfo()
         this.getFormInfo()
         this.getCoordinatorInfo()
-    }
-
-    getTripInfo = async () => {
-        let trip = await apiCall(
-            'get',
-            `/api/trips/${this.tripId}/share`
-        )
-
-        let orgName = await apiCall(
-            'get',
-            `/api/organization/${trip.coordinators[0].organization}/name`
-        )
-
-        this.setState({ trip, orgName })
     }
 
     getFormInfo = async () => {
@@ -51,7 +33,7 @@ export default class CollectPayment extends Component {
     }
 
     render() {
-        let { trip, orgName, formInfo, coordinator } = this.state
+        let { formInfo, coordinator } = this.state
         return (
             <>
                 <Navbar></Navbar>
@@ -62,7 +44,7 @@ export default class CollectPayment extends Component {
                                 <Image src={coordinator.image} style={{ maxWidth: '20vw' }} diameter='48px'></Image>
                             </div>
                             <div className="col-10 pl-2 pr-0">
-                                <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for {trip.name}</span>
+                                <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for your trip.</span>
                                 <div className="mt-3">
                                     <span className='text-muted'>{formInfo.message}</span>
                                 </div>

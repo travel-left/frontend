@@ -424,8 +424,7 @@ class Travelers extends Component {
             let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
                 emails: travelersEmails,
                 phones: travelersPhones,
-                tripId: '5d9d2d9e75c127155cc77301',
-                sendAs: 'both'
+                sendAs: sendAs
             })
 
             this.setState({
