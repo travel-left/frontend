@@ -121,6 +121,35 @@ class Trips extends Component {
         }
     }
 
+    copyTrip = async trip => {
+        const { trips, tripStatusCounts } = this.state
+
+        try {
+            const createdTrip = await apiCall('post', '/api/trips', trip, true)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            trips.push(createdTrip)
+            tripStatusCounts[createdTrip.status]++
+            this.filterTripsAndSetState(trips, 'ALL TRIPS', {
+                selectedTrip: createdTrip,
+                tripStatusCounts
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+    }
+
     archiveTrip = async id => {
         const { trips, filter } = this.state
         try {
@@ -207,7 +236,7 @@ class Trips extends Component {
             <TripInfo
                 trip={selectedTrip}
                 edit={this.editTrip}
-                duplicateTrip={this.addTrip}
+                duplicateTrip={this.copyTrip}
                 archiveTrip={this.archiveTrip}
             />
         ) : null
