@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DayList from './Days/DaysList'
 import EventList from './Events/EventList'
-import { apiCall } from '../../util/api'
+import { apiCall, flightApi } from '../../util/api'
 import NewEventForm from './Events/NewEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
@@ -44,11 +44,38 @@ class events extends Component {
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
-        for (const event of events) {
+        let flightEvents = []
+        let newevents = await Promise.all(events.map(async event => {
             if (!days.includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) days.push(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))
-        }
 
-        events = events.map(event => ({
+            if (event.type === 'FLIGHT') {
+                try {
+                    let flightStats = await apiCall('post', '/api/flightstats', {
+                        date: event.start,
+                        airline: event.airline,
+                        flightNumber: event.flightNumber
+                    })
+                    event = {
+                        ...event,
+                        flightNumber: flightStats.flightNumber,
+                        departureTerminal: flightStats.departureTerminal,
+                        departureGate: flightStats.departureGate,
+                        departureAirportCode: flightStats.departureAirportCode,
+                        arrivalAirportCode: flightStats.arrivalAirportCode,
+                        start: flightStats.startDate,
+                        end: flightStats.endDate
+                    }
+                    console.log(event)
+                    flightEvents.push(event)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+
+            return event
+        }))
+
+        events = newevents.map(event => ({
             ...event,
             start: formatDateToLocalTimezone(event.start),
             end: formatDateToLocalTimezone(event.end)
@@ -59,8 +86,6 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-        console.log('Sending start date as: ' + event.start)
-        console.log('Sending end date as: ' + event.end)
 
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)

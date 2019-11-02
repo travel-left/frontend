@@ -86,7 +86,7 @@ class Event extends Component {
         ))
 
         let links = event.links.map(link => <a href={link} target="_blank" className="Event-link">{link}</a>)
-
+        let airports = event.arrivalAirportCode ? `${event.arrivalAirportCode} - ${event.departureAirportCode} Terminal ${event.departureTerminal} Gate ${event.departureGate} Flight ${event.flightNumber}` : null
         return (
             <div className="Events-event-card py-4 px-5 my-3 animated fadeIn">
                 <div className="row">
@@ -98,7 +98,7 @@ class Event extends Component {
                                 <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                             </span>
 
-                            {name}
+                            {name} {airports}
                         </span>
                         {updateButton}
                         {this.state.isOpen &&
@@ -123,6 +123,7 @@ class Event extends Component {
                             <span className="my-3 Events-event-date" style={{ color: icon.color }}>
                                 {time}
                             </span>
+                            <p></p>
                             <p className="Document-description">{event.description}</p>
                             {links}
                         </div>
