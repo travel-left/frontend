@@ -6,6 +6,7 @@ import Calendar from 'react-calendar'
 import moment from 'moment'
 import { customStyles, eventFormDocs, eventTimezone } from '../../../util/forms/SelectStyles'
 import { apiCall } from '../../../util/api'
+import { airlines } from '../../../util/airlines'
 
 export default class NewEventForm extends Component {
     state = {
@@ -20,6 +21,8 @@ export default class NewEventForm extends Component {
             start: '10:00',
             end: '13:00',
             description: '',
+            airline: '',
+            flightNumber: '',
             documents: [],
             address: '',
             links: ['']
@@ -94,6 +97,10 @@ export default class NewEventForm extends Component {
                 }
             }))
         }
+    }
+
+    handleAirlineChange = airline => {
+        this.setState(prevState => ({ event: { ...prevState.event, airline: airline.value } }))
     }
 
     handleSubmit = e => {
@@ -195,6 +202,7 @@ export default class NewEventForm extends Component {
                                     start={this.state.event.start}
                                     end={this.state.event.end}
                                     calendarValue={this.state.event.date}
+                                    onAirlineChange={this.handleAirlineChange}
                                 >
                                 </EventStep2>
                                 <EventStep3
@@ -247,36 +255,58 @@ class EventStep1 extends Component {
 }
 
 class EventStep2 extends Component {
-
     render() {
         let formContent
-            = <div>
-                <label className="d-block" htmlFor="cal">Date</label>
-                <Calendar onChange={this.props.onDateChange} calendarType="US" value={this.props.calendarValue} />
-                <div className="row">
-                    <div className="col-6">
-                        <label className="d-block" htmlFor="">Starts</label>
-                        <input name="start" className="d-block form-control" type="time" value={this.props.start} onChange={this.props.onChange} />
+        switch (this.props.type) {
+            case 'FLIGHT':
+                formContent = (
+                    <div className="row">
+                        <div className="col-6">
+                            <label className="d-block" htmlFor="" className="d-block">Airline</label>
+                            <Select name="type" options={airlines} label="Type" className="left-select" styles={customStyles} onChange={this.props.onAirlineChange} />
+                        </div>
+                        <div className="col-6">
+                            <label htmlFor="">Flight Number</label>
+                            <input className="d-block form-control" type="text" name="flightNumber" placeholder="32" style={{
+                                height: '49px',
+                                width: '180px',
+                            }} onChange={this.props.onChange} />
+                        </div>
                     </div>
-                    <div className="col-6">
-                        <label className="d-block" htmlFor="" >Ends</label>
-                        <input name="end" className="d-block form-control" type="time" value={this.props.end} onChange={this.props.onChange} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-6">
-                        <label className="d-block" htmlFor="" className="d-block">Timezone</label>
-                        <Select name="type" options={timezones} value={this.props.timezone} placeholder={this.props.timezone} label="Timezone" className="left-select" styles={eventTimezone} onChange={this.props.handleTimezoneChange} />
-                    </div>
-                    <div className="col-6">
+                )
+                break
 
-                    </div>
-                </div>
-            </div>
+            default:
+                formContent = (
+                    <>
+                        <div className="row">
+                            <div className="col-6">
+                                <label className="d-block" htmlFor="">Starts</label>
+                                <input name="start" className="d-block form-control" type="time" value={this.props.start} onChange={this.props.onChange} />
+                            </div>
+                            <div className="col-6">
+                                <label className="d-block" htmlFor="" >Ends</label>
+                                <input name="end" className="d-block form-control" type="time" value={this.props.end} onChange={this.props.onChange} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <label className="d-block" htmlFor="" className="d-block">Timezone</label>
+                                <Select name="type" options={timezones} value={this.props.timezone} placeholder={this.props.timezone} label="Timezone" className="left-select" styles={eventTimezone} onChange={this.props.handleTimezoneChange} />
+                            </div>
+                            <div className="col-6">
 
+                            </div>
+                        </div>
+                    </>
+                )
+                break
+        }
         return (
             this.props.step === 2 ?
                 <div className="">
+                    <label className="d-block" htmlFor="cal">Date</label>
+                    <Calendar onChange={this.props.onDateChange} calendarType="US" value={this.props.calendarValue} />
                     {formContent}
                 </div>
                 : null
