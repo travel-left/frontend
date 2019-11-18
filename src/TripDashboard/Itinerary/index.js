@@ -85,8 +85,9 @@ class events extends Component {
     }
 
     createEvent = async event => {
+        console.log(event)
         event = formatEventForBackend(event)
-
+        console.log(event)
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
             this.setState({
@@ -224,9 +225,11 @@ export default events
 function formatEventForBackend(event) {
     let formattedEvent = { ...event }
     let start = new Date(formattedEvent.date.valueOf())
+    console.log(start)
     let end = new Date(formattedEvent.date.valueOf())
-    start.setHours(formattedEvent.start.split(':')[0])
-    end.setHours(formattedEvent.end.split(':')[0])
+    start.setHours(event.start.split(':')[0], event.start.split(':')[1])
+    end.setHours(formattedEvent.end.split(':')[0], event.end.split(':')[1])
+    console.log(start)
     formattedEvent.start = start.toString()
     formattedEvent.end = end.toString()
     delete formattedEvent.date
