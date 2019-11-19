@@ -57,9 +57,14 @@ export default class Auth extends Component {
                 )
         return (
             <div className="row">
-                <div className="col-sm-12 col-md-6 d-flex justify-content-center">
+                <div className="col-sm-12 col-md-6 d-flex flex-column align-items-center" style={{
+                    marginTop: '10vh',
+                    marginBottom: '10vh'
+                }}>
                     {form}
+                    <span className="footer-text" style={{ marginTop: '15px' }}>© 2019 Travel Left, Inc.</span>
                 </div>
+
                 <div className="col-sm-12 col-md-6 px-0">
                     <SidePicture onClick={this.handleSwitch} type={type} />
                 </div>

@@ -12,6 +12,7 @@ import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import Share from './TripDashboard/Share/index'
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core/styles'
+import { palette, spacing, typography } from '@material-ui/system'
 import CollectPayment from './TravelerPages/CollectPayment';
 
 const store = configureStore()
@@ -23,11 +24,30 @@ if (localStorage.token) {
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#235CE0',
+            main: '#0A58CE',
         },
         secondary: {
-            main: '#92CFF8',
+            main: '#83C9F4',
         },
+        error: {
+            main: '#E24C4C'
+        }
+    },
+    typography: {
+        h5: {
+            fontSize: 30,
+            fontWeight: 700,
+            color: '#475561'
+        }
+    },
+    overrides: {
+        // Style sheet name ⚛️
+        MuiTextField: {
+            root: {
+                marginTop: 25
+            }
+        },
+
     },
 })
 
@@ -51,7 +71,7 @@ const App = () => (
                                 <div>
                                     <Navbar />
                                     <div
-                                        className="container-fluid content mb-5"
+                                        className="container-fluid content"
                                         id="app-root"
                                         style={{ minHeight: '90vh' }}
                                     >
@@ -59,7 +79,7 @@ const App = () => (
                                             <Main />
                                         </ErrorBoundary>
                                     </div>
-                                    <Footer />
+                                    {/* <Footer /> */}
                                 </div>
                             )}
                         />
