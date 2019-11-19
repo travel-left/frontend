@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     card: {
         height: 425,
         width: 358,
-        padding: '35px 23px',
+        padding: '35px 23px'
     },
     leftSubHeader: {
         fontFamily: 'OpenSans-SemiBold',

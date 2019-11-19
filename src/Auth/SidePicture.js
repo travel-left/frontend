@@ -1,5 +1,7 @@
 import React from 'react'
 import './Auth.css'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button';
 
 export default function sidePicture({ type, onClick }) {
     const { header, body, button } =
@@ -12,23 +14,21 @@ export default function sidePicture({ type, onClick }) {
         }}>
             <div className="bg-image" />
             <div className="container px-5 right text-left">
-                <h2 className="display-1 text-light font-weight-bold">left.</h2>
-                <h2 className="Auth-side-sub">{header}</h2>
+                <Typography variant="h4" gutterBottom>
+                    {header}
+                </Typography>
                 <h2 className="Auth-side-message">{body}</h2>
-                <button
-                    onClick={onClick}
-                    name={type}
-                    className="btn btn-lg btn-outline-light my-5"
-                >
+                <Button variant="outlined" color="secondary" disableRipple style={{ height: 50, width: 150, float: 'right' }} onClick={onClick}
+                    name={type}>
                     {button}
-                </button>
+                </Button>
             </div>
         </div>
     )
 }
 
 const signUpText = {
-    header: 'Already have an account?',
+    header: 'Do you already have an account?',
     body: "That's awesome!  You can login by clicking on the button below.",
     button: 'Log in'
 }

@@ -34,6 +34,11 @@ const theme = createMuiTheme({
         }
     },
     typography: {
+        h4: {
+            fontSize: 40,
+            fontWeight: 700,
+            color: '#475561'
+        },
         h5: {
             fontSize: 30,
             fontWeight: 700,
@@ -46,6 +51,11 @@ const theme = createMuiTheme({
             root: {
                 marginTop: 25
             }
+        },
+        MuiButton: {
+            containedSecondary: {
+                color: 'white',
+            },
         },
 
     },

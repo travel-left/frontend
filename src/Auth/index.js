@@ -4,6 +4,7 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 import './Auth.css'
 import Snack from '../util/Snack'
+import Paper from '@material-ui/core/Paper';
 
 export default class Auth extends Component {
     state = {
@@ -51,14 +52,8 @@ export default class Auth extends Component {
 
     handleSwitch = e => {
         e.preventDefault()
-        switch (e.target.name) {
-            case 'sign in':
-                return this.props.history.push('/signup')
-            case 'sign up':
-                return this.props.history.push('/signin')
-            default:
-                break
-        }
+        const route = e.target.name === 'sign in' ? '/signup' : '/signin'
+        return this.props.history.push(route)
     }
 
     render() {
@@ -72,14 +67,14 @@ export default class Auth extends Component {
                 )
         return (
             <div className="row">
-                <div className="col-sm-12 col-md-6 d-flex flex-column align-items-center" style={{
-                    marginTop: '10vh',
-                    marginBottom: '10vh'
+                <Paper className="col-sm-12 col-md-6 d-flex flex-column align-items-center justify-content-center" style={{
+                    zIndex: 15
                 }}>
-                    {form}
-                    <span className="footer-text" style={{ marginTop: '15px' }}>© 2019 Travel Left, Inc.</span>
-                </div>
 
+                    {form}
+                    <span className="footer-text" style={{ marginTop: '15px', marginBottom: '25px' }}>© 2019 Travel Left, Inc.</span>
+
+                </Paper>
                 <div className="col-sm-12 col-md-6 px-0">
                     <SidePicture onClick={this.handleSwitch} type={type} />
                 </div>
