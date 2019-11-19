@@ -3,34 +3,49 @@ import SidePicture from './SidePicture'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import './Auth.css'
+import Snack from '../util/Snack'
 
 export default class Auth extends Component {
     state = {
-        error: ''
+        snack: {
+            show: false,
+            variant: '',
+            message: ''
+        },
     }
-
+    closeSnack = () => (this.setState({ snack: { show: false } }))
     login = async state => {
         const { onAuth, history } = this.props
         try {
             await onAuth('signin', state, history)
         } catch (err) {
             console.error(err)
-            this.setState({ error: err })
+            this.setState({
+                snack: {
+                    snack: {
+                        show: true,
+                        variant: 'error',
+                        message: 'An error occurred.'
+                    }
+                }
+            })
         }
     }
 
-    signUp = async formInfo => {
+    signUp = async coordinator => {
         const { onAuth, history } = this.props
+
         try {
-            if (formInfo.createOrg) {
-                history.push('/createprofile', formInfo)
-            } else {
-                const newCoordinator = createNewCoordinator(formInfo)
-                await onAuth('signup', { coordinator: newCoordinator }, history)
-            }
+            await onAuth('signup', coordinator, history)
+
         } catch (err) {
-            console.error(err)
-            this.setState({ error: err })
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
         }
     }
 
@@ -68,6 +83,7 @@ export default class Auth extends Component {
                 <div className="col-sm-12 col-md-6 px-0">
                     <SidePicture onClick={this.handleSwitch} type={type} />
                 </div>
+                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
