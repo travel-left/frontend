@@ -1,60 +1,60 @@
-import React from 'react'
-import { Formik, Form } from 'formik'
-import FormField from '../util/forms/FormField'
-import Validator, {
-    emailValidator,
-    passwordValidator
-} from '../util/validators'
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
 
-export default ({ error, submit }) => {
-    const initialValues = {
-        email: '',
-        password: ''
+const useStyles = makeStyles({
+    card: {
+        height: 345,
+        width: 358,
+        padding: '35px 23px'
+    },
+    leftSubHeader: {
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: '14px',
+        color: '#A1A1A1',
+        letterSpacing: '0.3px'
     }
-    const schema = Validator({
-        email: emailValidator,
-        password: passwordValidator
-    })
+})
+
+export default ({ submit }) => {
+    const classes = useStyles()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     return (
-        <div className="card col-10 shadow align-self-start my-5">
-            {error ? <p style={{ color: 'red' }}>{error.message}</p> : null}
-            <div className="card-body p-4">
-                <h1 className="Auth-title">Sign In.</h1>
-                <h5 className="text-dark">Sign in to your account.</h5>
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={schema}
-                    onSubmit={async (values, actions) => {
-                        await submit(values)
-                        actions.setSubmitting(false)
-                    }}
-                    render={({ isSubmitting }) => (
-                        <Form>
-                            <FormField
-                                name="email"
-                                label="Email"
-                                type="email"
-                                placeholder="your email"
-                            />
-                            <FormField
-                                name="password"
-                                label="Password"
-                                type="password"
-                                placeholder="••••••••••••"
-                            />
-                            <button
-                                className="btn btn-lg btn-primary float-right"
-                                style={{ marginTop: '35px' }}
-                                type="submit"
-                                disabled={isSubmitting}
-                            >
-                                Log In
-                            </button>
-                        </Form>
-                    )}
-                />{' '}
-            </div>
-        </div>
+        <Card className={classes.card} >
+            <Typography variant="h5" >
+                Welcome back!
+            </Typography>
+            <span className={classes.leftSubHeader}>Please sign into your account.</span>
+            <TextField
+                required
+                id="standard-required"
+                label="Email"
+                value={email}
+                placeholder="Your email address"
+                onChange={e => setEmail(e.target.value)}
+                name="email"
+                type="email"
+                fullWidth
+            />
+            <TextField
+                required
+                id="standard-required"
+                label="Password"
+                value={password}
+                placeholder="Create a password"
+                onChange={e => setPassword(e.target.value)}
+                name="password"
+                type="password"
+                fullWidth
+            />
+            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} onClick={() => submit({ email, password })}>
+                Sign in
+            </Button>
+        </Card>
     )
 }
