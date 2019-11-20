@@ -18,7 +18,7 @@ export default function sidePicture({ type, onClick }) {
                     {header}
                 </Typography>
                 <h2 className="Auth-side-message">{body}</h2>
-                <Button variant="outlined" color="secondary" disableRipple style={{ height: 50, width: 150, float: 'right' }} onClick={onClick}
+                <Button variant="outlined" color="secondary" disableRipple style={{ height: 50, width: 180, float: 'right' }} onClick={onClick}
                     name={type}>
                     {button}
                 </Button>

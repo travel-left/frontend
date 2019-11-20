@@ -4,10 +4,12 @@ import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import { withFormik } from "formik";
+import * as Yup from 'yup'
 
 const useStyles = makeStyles({
     card: {
-        height: 345,
+        minHeight: 345,
         width: 358,
         padding: '35px 23px'
     },
@@ -19,10 +21,81 @@ const useStyles = makeStyles({
     }
 })
 
+const form = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+    } = props
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                id="standard-required"
+                label="Email"
+                value={values.email}
+                placeholder="Your email address"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="email"
+                type="email"
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email ? errors.email : ""}
+                fullWidth
+            />
+            <TextField
+                required
+                id="standard-required"
+                label="Password"
+                value={values.password}
+                placeholder="Create a password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="password"
+                type="password"
+                error={touched.password && Boolean(errors.password)}
+                helperText={touched.password ? errors.password : ""}
+                fullWidth
+            />
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Sign in
+            </Button>
+        </form>
+    )
+}
+
+const Form = withFormik({
+    mapPropsToValues: ({
+        email,
+        password
+    }) => {
+        return {
+            email: email || "",
+            password: password || "",
+        };
+    },
+
+    validationSchema: Yup.object().shape({
+        email: Yup.string()
+            .email("Enter a valid email")
+            .required("Email is required"),
+        password: Yup.string()
+            .min(8, "Password must contain at least 8 characters")
+            .required("Enter your password"),
+    }),
+
+    handleSubmit: (values, { setSubmitting, props }) => {
+        props.submit(values).then(() => setSubmitting(false))
+    }
+})(form)
+
 export default ({ submit }) => {
     const classes = useStyles()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
 
     return (
         <Card className={classes.card} >
@@ -30,31 +103,7 @@ export default ({ submit }) => {
                 Welcome back!
             </Typography>
             <span className={classes.leftSubHeader}>Please sign into your account.</span>
-            <TextField
-                required
-                id="standard-required"
-                label="Email"
-                value={email}
-                placeholder="Your email address"
-                onChange={e => setEmail(e.target.value)}
-                name="email"
-                type="email"
-                fullWidth
-            />
-            <TextField
-                required
-                id="standard-required"
-                label="Password"
-                value={password}
-                placeholder="Create a password"
-                onChange={e => setPassword(e.target.value)}
-                name="password"
-                type="password"
-                fullWidth
-            />
-            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} onClick={() => submit({ email, password })}>
-                Sign in
-            </Button>
+            <Form submit={submit} />
         </Card>
     )
 }

@@ -15,19 +15,18 @@ export default class Auth extends Component {
         },
     }
     closeSnack = () => (this.setState({ snack: { show: false } }))
+
     login = async state => {
         const { onAuth, history } = this.props
+
         try {
             await onAuth('signin', state, history)
         } catch (err) {
-            console.error(err)
             this.setState({
                 snack: {
-                    snack: {
-                        show: true,
-                        variant: 'error',
-                        message: 'An error occurred.'
-                    }
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
                 }
             })
         }
@@ -38,7 +37,6 @@ export default class Auth extends Component {
 
         try {
             await onAuth('signup', coordinator, history)
-
         } catch (err) {
             this.setState({
                 snack: {
@@ -58,13 +56,8 @@ export default class Auth extends Component {
 
     render() {
         const { type } = this.props
-        const { error } = this.state
-        const form =
-            type === 'sign in' ? (
-                <SignIn error={error} submit={this.login} />
-            ) : (
-                    <SignUp error={error} submit={this.signUp} />
-                )
+        const form = type === 'sign in' ? <SignIn submit={this.login} /> : <SignUp submit={this.signUp} />
+
         return (
             <div className="row">
                 <Paper className="col-sm-12 col-md-6 d-flex flex-column align-items-center justify-content-center" style={{
@@ -81,16 +74,5 @@ export default class Auth extends Component {
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
-    }
-}
-
-const createNewCoordinator = formInfo => {
-    const { name, email, password, orgId } = formInfo
-
-    return {
-        name,
-        email,
-        password,
-        organization: orgId
     }
 }
