@@ -30,55 +30,56 @@ const form = props => {
         handleChange,
         handleBlur,
         handleSubmit,
-        handleReset
     } = props
 
-    return (<form onSubmit={handleSubmit}>
-        <TextField
-            required
-            onChange={handleChange}
-            onBlur={handleBlur}
-            id="standard-required"
-            label="Full Name"
-            value={values.name}
-            placeholder="Your full name"
-            name="name"
-            error={touched.name && Boolean(errors.name)}
-            helperText={touched.name ? errors.name : ""}
-            fullWidth
-        />
-        <TextField
-            required
-            onChange={handleChange}
-            onBlur={handleBlur}
-            id="standard-required"
-            label="Email"
-            value={values.email}
-            placeholder="Your email address"
-            name="email"
-            type="email"
-            error={touched.email && Boolean(errors.email)}
-            helperText={touched.email ? errors.email : ""}
-            fullWidth
-        />
-        <TextField
-            required
-            onChange={handleChange}
-            onBlur={handleBlur}
-            id="standard-required"
-            label="Password"
-            value={values.password}
-            placeholder="Create a password"
-            name="password"
-            type="password"
-            error={touched.password && Boolean(errors.password)}
-            helperText={touched.password ? errors.password : ""}
-            fullWidth
-        />
-        <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-            Sign up
-        </Button>
-    </form>)
+    return (
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Full Name"
+                value={values.name}
+                placeholder="Your full name"
+                name="name"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
+            />
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Email"
+                value={values.email}
+                placeholder="Your email address"
+                name="email"
+                type="email"
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email ? errors.email : ""}
+                fullWidth
+            />
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Password"
+                value={values.password}
+                placeholder="Create a password"
+                name="password"
+                type="password"
+                error={touched.password && Boolean(errors.password)}
+                helperText={touched.password ? errors.password : ""}
+                fullWidth
+            />
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Sign up
+            </Button>
+        </form>
+    )
 }
 
 const Form = withFormik({
@@ -105,8 +106,6 @@ const Form = withFormik({
     }),
 
     handleSubmit: (values, { setSubmitting, props }) => {
-        console.log('hello')
-        console.log(values)
         props.submit(values).then(() => setSubmitting(false))
     }
 })(form)
