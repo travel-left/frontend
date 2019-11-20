@@ -15,6 +15,7 @@ import Support from './Support'
 import Travelers from './OrganizationDashboard/Travelers'
 import SharePreview from './TripDashboard/Share/SharePreview'
 import CheckoutForm from './util/forms/CheckoutForm'
+import Container from '@material-ui/core/Container'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -103,7 +104,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/trips"
                 render={props => (
                     <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
-                        <Trips {...props} />
+                        <Container maxWidth='xl' >
+                            <Trips {...props} />
+                        </Container>
                     </WithAuth>
                 )}
             />
@@ -126,6 +129,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/trips/:tripId"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>
+
                         <TripDashboard {...props} />
                     </WithAuth>
                 )}

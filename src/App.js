@@ -34,6 +34,12 @@ const theme = createMuiTheme({
         }
     },
     typography: {
+        h2: {
+            fontFamily: 'roboto',
+            fontWeight: 600,
+            fontSize: 22,
+            color: '#333333',
+        },
         h4: {
             fontSize: 40,
             fontWeight: 700,
@@ -43,6 +49,13 @@ const theme = createMuiTheme({
             fontSize: 30,
             fontWeight: 700,
             color: '#475561'
+        },
+        h6: {
+            fontFamily: 'roboto',
+            fontWeight: 600,
+            fontSize: 14,
+            color: '#666666',
+            letterSpacing: 0
         }
     },
     overrides: {
@@ -57,7 +70,11 @@ const theme = createMuiTheme({
                 color: 'white',
             },
         },
-
+        MuiContainer: {
+            maxWidthXl: {
+                maxWidth: 1474
+            }
+        }
     },
 })
 

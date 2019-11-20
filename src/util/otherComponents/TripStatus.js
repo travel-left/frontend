@@ -1,38 +1,37 @@
 import React from 'react'
+import Chip from '@material-ui/core/Chip'
 
 const TripStatus = ({ status }) => {
     let statusColor = 'primary'
     switch (status) {
         case 'LEFT':
-            statusColor = 'left'
+            statusColor = '#1F5FD9'
             break
         case 'PLANNING':
-            statusColor = 'secondary'
+            statusColor = '#83C9F4'
             break
         case 'PAST':
-            statusColor = 'dark'
+            statusColor = '#FCB511'
             break
         case 'ARCHIVED':
-            statusColor = 'archived'
+            statusColor = '#B4BDC8'
             break
         default:
             break
     }
 
     return (
-        <span
-            className={`badge badge-${statusColor} badge-pill`}
+        <Chip
+            className={`text-uppercase`}
             style={{
                 fontWeight: '500',
                 fontFamily: 'roboto',
                 fontSize: '12px',
-                padding: '.5rem .8rem',
+                color: '#FFFFFF',
+                backgroundColor: statusColor,
                 minWidth: '88px',
-                color: '#FFFFFF'
             }}
-        >
-            {status}
-        </span>
+            label={status} />
     )
 }
 

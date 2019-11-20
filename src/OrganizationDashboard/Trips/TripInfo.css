@@ -23,7 +23,6 @@
     font-size: 16px !important;
     color: #666666 !important;
     letter-spacing: 0 !important;
-    margin-bottom: 2.5rem;
 }
 
 .TripInfo-details-title {
@@ -42,10 +41,6 @@
     text-align: center;
     line-height: 17px;
     padding: .3rem .8rem;
-}
-
-.TripInfo-details div {
-    margin-bottom: 2rem;
 }
 
 .TripInfo-bubble {

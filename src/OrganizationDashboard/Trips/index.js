@@ -13,6 +13,9 @@ import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
 import Snack from '../../util/Snack'
 import Button from '@material-ui/core/Button'
 import CreateTripModalForm from './CreateTripModalForm'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper';
+import List from '@material-ui/core/List'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -191,10 +194,8 @@ class Trips extends Component {
         })
     }
 
-    onSideNavClick = e => {
-        e.preventDefault()
-        const filter = e.target.name.toUpperCase()
-        this.filterTripsAndSetState(this.state.trips, filter)
+    onSideNavClick = tripFilter => {
+        this.filterTripsAndSetState(this.state.trips, tripFilter.toUpperCase())
     }
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
@@ -246,12 +247,8 @@ class Trips extends Component {
             : null
 
         return (
-            <div className="row">
-                <div className="col-md-2 px-0" style={{
-                    background: '#FFFFFF',
-                    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)',
-                    borderRadius: '3px'
-                }}>
+            <Grid container spacing={2} style={{ marginTop: 8 }}>
+                <Grid item xs={12} md={2}>
                     <div className="px-0 py-5 d-flex justify-content-center">
                         <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
                             ADD NEW TRIP
@@ -263,46 +260,50 @@ class Trips extends Component {
                             submit={this.addTrip}
                         />}
                     </div>
-                    <div className="d-none d-sm-flex flex-column" >
-                        <ul className="list-group col px-0 ">
-                            <SideNavItem
-                                text="All Trips"
-                                total={trips.length - tripStatusCounts.ARCHIVED}
-                                active={filter === 'ALL TRIPS'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Planning"
-                                total={tripStatusCounts.PLANNING}
-                                active={filter === 'PLANNING'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Completed"
-                                total={tripStatusCounts.COMPLETED}
-                                active={filter === 'COMPLETED'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="LEFT"
-                                total={tripStatusCounts.LEFT}
-                                active={filter === 'LEFT'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Past"
-                                total={tripStatusCounts.PAST}
-                                active={filter === 'PAST'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Archived"
-                                total={tripStatusCounts.ARCHIVED}
-                                active={filter === 'ARCHIVED'}
-                                handleClick={this.onSideNavClick}
-                            />
-                        </ul>
-                        <div className="py-4 px-3">
+                    <List component="div" style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <SideNavItem
+                            text="All Trips"
+                            total={trips.length - tripStatusCounts.ARCHIVED}
+                            active={filter === 'ALL TRIPS'}
+                            handleClick={this.onSideNavClick}
+                        />
+                        <SideNavItem
+                            text="Planning"
+                            total={tripStatusCounts.PLANNING}
+                            active={filter === 'PLANNING'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="Completed"
+                            total={tripStatusCounts.COMPLETED}
+                            active={filter === 'COMPLETED'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="LEFT"
+                            total={tripStatusCounts.LEFT}
+                            active={filter === 'LEFT'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="Past"
+                            total={tripStatusCounts.PAST}
+                            active={filter === 'PAST'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="Archived"
+                            total={tripStatusCounts.ARCHIVED}
+                            active={filter === 'ARCHIVED'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                    </List>
+                    {/* <div className="py-4 px-3">
                             <Dropzone
                                 onDrop={acceptedFiles =>
                                     this.setState({
@@ -325,8 +326,8 @@ class Trips extends Component {
                                         </div>
                                     </section>
                                 )}
-                            </Dropzone>
-                            <div className="row justify-content-center align-items-center">
+                            </Dropzone> */}
+                    {/* <div className="row justify-content-center align-items-center">
                                 {files && (
                                     <button
                                         className="btn btn-primary"
@@ -336,24 +337,22 @@ class Trips extends Component {
                                     </button>
                                 )}
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-10 mt-3">
-                    <div className="row">
-                        <div className="col-md-8 px-0 px-md-3">
-                            {this.props.currentUser.cc.length > 4 ? <PaymentAlert user={this.props.currentUser}></PaymentAlert> : null}
-                            <TripsListHeader />
-                            {tripList}
-                        </div>
-                        <div className="col-md-4 px-0">
-                            {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
-                            {tripInfo}
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+
+                </Grid>
+                <Grid container spacing={2} xs={12} md={10} style={{ padding: 8 }}>
+                    <Grid item xs={12} md={8}>
+                        {this.props.currentUser.cc.length > 4 ? <PaymentAlert user={this.props.currentUser}></PaymentAlert> : null}
+                        <TripsListHeader />
+                        {tripList}
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
+                        {tripInfo}
+                    </Grid>
+                </Grid>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            </Grid >
         )
     }
 }
