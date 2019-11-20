@@ -3,15 +3,19 @@ import { withRouter, NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../redux/actions/auth'
 import './Navbar.css'
-import Fab from '@material-ui/core/Fab';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Fab from '@material-ui/core/Fab'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
 
 class Navbar extends Component {
     state = {
         anchorEl: null
+    }
+
+    constructor(props) {
+        super(props)
     }
     signout = () => {
         this.props.history.push(`/signin`)
@@ -33,17 +37,16 @@ class Navbar extends Component {
         this.handleClose()
     }
 
-    handleClick = event => {
+    handleClick = (event) => {
         this.setState({ anchorEl: event.currentTarget })
-    };
+    }
 
     handleClose = () => {
         this.setState({ anchorEl: null })
-    };
+    }
 
     render() {
         const { currentUser } = this.props
-        const { anchorEl } = this.state
         let accountController
         let loggedInLinks
         let linkTo = '#'
@@ -89,8 +92,8 @@ class Navbar extends Component {
                             </IconButton>
                             <Menu
                                 id="simple-menu"
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
+                                anchorEl={this.state.anchorEl}
+                                open={Boolean(this.state.anchorEl)}
                                 onClose={this.handleClose}
                             >
                                 <MenuItem onClick={this.account}>Account</MenuItem>

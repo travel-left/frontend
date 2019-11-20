@@ -62,7 +62,7 @@ const form = props => {
                 helperText={touched.password ? errors.password : ""}
                 fullWidth
             />
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            <Button size="large" type="submit" id="signin" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Sign in
             </Button>
         </form>
