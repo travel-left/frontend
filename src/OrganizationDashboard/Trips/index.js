@@ -340,7 +340,7 @@ class Trips extends Component {
                         </div> */}
 
                 </Grid>
-                <Grid container spacing={2} xs={12} md={10} style={{ padding: 8 }}>
+                <Grid container spacing={2} xs={12} md={10} style={{ paddingLeft: 8 }}>
                     <Grid item xs={12} md={8}>
                         {this.props.currentUser.cc.length > 4 ? <PaymentAlert user={this.props.currentUser}></PaymentAlert> : null}
                         <TripsListHeader />

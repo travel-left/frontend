@@ -95,7 +95,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/"
                 render={props => (
                     <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
-                        <Trips {...props} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <Trips {...props} />
+                        </Container>
                     </WithAuth>
                 )}
             />
@@ -104,7 +106,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/trips"
                 render={props => (
                     <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
-                        <Container maxWidth='xl' >
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
                             <Trips {...props} />
                         </Container>
                     </WithAuth>
