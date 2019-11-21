@@ -346,7 +346,7 @@ class Trips extends Component {
                         <TripsListHeader />
                         {tripList}
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={4} style={{ paddingRight: 0 }}>
                         {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
                         {tripInfo}
                     </Grid>
