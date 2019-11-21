@@ -32,7 +32,9 @@ class Trip extends Component {
                     />
                 </Grid>
 
-                <Grid item xs={3} className='text-center'>                <Typography variant="h2">{name}</Typography></Grid>
+                <Grid item xs={3} className=''>
+                    <Typography variant="h2">{name}</Typography>
+                </Grid>
 
                 <Grid item xs={3} className='text-center'>
                     <Moment date={dateStart} format="MMM DD" className="Trip-date" />
