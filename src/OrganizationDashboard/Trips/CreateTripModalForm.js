@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import 'react-dates/lib/css/_datepicker.css'
 import { Portal } from 'react-portal'
+import Divider from '@material-ui/core/Divider'
 
 export default class CreateTripModalForm extends Component {
     state = {
@@ -58,63 +59,49 @@ export default class CreateTripModalForm extends Component {
         return (
             <Portal >
                 <div className="modal d-block" style={{
-                    maxHeight: 'calc(100vh - 50px)',
+                    maxHeight: 'calc(100vh - 48px)',
                     overflowY: 'auto'
                 }}
                 >
                     <div className={`Modal--overlay animated fadeIn ${this.state.overlayAnimation}`} onClick={this.handleToggleModal} />
                     <div className="modal-dialog" role="document">
                         <form className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
-                            <div className="modal-header Modal-Form-header py-3 d-flex align-items-center">
-                                <h5 className="modal-title Modal-Form-header pl-3"> {this.props.title}</h5>
+                            <div className="modal-header Modal-Form-header d-flex align-items-center bg-primary" style={{ padding: 16 }}>
+                                <h5 className="modal-title Modal-Form-header"> {this.props.title}</h5>
                                 <IconButton onClick={this.handleToggleModal} color='primary'>
                                     <CloseIcon style={{ color: 'white' }} fontSize="large" />
                                 </IconButton>
                             </div>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="col-10">
-                                        <TextField
-                                            required
-                                            id="standard-required"
-                                            label="Trip name"
-                                            value={this.state.name}
-                                            placeholder="Austrailia"
-                                            margin="normal"
-                                            className="mx-2 mt-4"
-                                            onChange={this.handleOnChange}
-                                            name="name"
-                                            style={{ width: '100%' }}
-                                        />
-                                    </div>
+                            <div className="modal-body" style={{ paddingLeft: 16, paddingRight: 16 }}>
+                                <TextField
+                                    required
+                                    id="standard-required"
+                                    label="Trip name"
+                                    value={this.state.name}
+                                    placeholder="Austrailia"
+                                    margin="normal"
+                                    onChange={this.handleOnChange}
+                                    name="name"
+                                    fullWidth
+                                />
+                                <TextField
+                                    id="standard-multiline-static"
+                                    label="Description"
+                                    value={this.state.description}
+                                    placeholder="2020 Summer Study Abroad South Africa Cal State Fullerton"
+                                    margin="normal"
+                                    onChange={this.handleOnChange}
+                                    name="description"
+                                    fullWidth
+                                />
+                                <div style={{ marginTop: 42 }}>
+                                    <InputLabel>Dates</InputLabel>
+                                    <DateRangePickerWrapper name="dates" value={this.state.dates} onChange={this.handleOnChange} />
                                 </div>
-                                <div className="row">
-                                    <div className="col-10">
-                                        <TextField
-                                            id="standard-multiline-static"
-                                            label="Description"
-                                            value={this.state.description}
-                                            multiline
-                                            rows="2"
-                                            placeholder="2020 Summer Study Abroad South Africa Cal State Fullerton"
-                                            className="mx-2 mt-4"
-                                            margin="normal"
-                                            onChange={this.handleOnChange}
-                                            name="description"
-                                            style={{ width: '100%' }}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-10">
-                                        <div className="mx-2 mt-4">
-                                            <InputLabel>Dates</InputLabel>
-                                            <DateRangePickerWrapper name="dates" value={this.state.dates} onChange={this.handleOnChange} />
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr className="my-4" />
-                                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.handleSubmit}>SUBMIT</Button>
+                            </div>
+                            <Divider style={{ marginTop: 40 }} />
+                            <div>
+                                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16, marginRight: 16, marginBottom: 16 }} onClick={this.handleSubmit}>SUBMIT</Button>
                             </div>
                         </form>
                     </div>

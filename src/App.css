@@ -136,6 +136,11 @@
     display: none !important;
 }
 
+.DateRangePickerInput__withBorder {
+    border-radius: 2px;
+    border: 1px solid #979797 !important;
+}
+
 .ShareTrip-link {
     border: 2px solid #E3E3E3;
     border-radius: 4px;
