@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import TripImageForm from './TripImageForm'
-import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../util/api'
 import Fab from '@material-ui/core/Fab'
 import NewShareTrip from '../../util/otherComponents/NewShareTrip'
 import SendIcon from '@material-ui/icons/Send'
 import './Cover.css'
 import Snack from '../../util/Snack'
-import TripStatus from '../../util/otherComponents/TripStatus';
-import LeftModal from '../../util/otherComponents/LeftModal';
+import TripStatus from '../../util/otherComponents/TripStatus'
+import LeftModal from '../../util/otherComponents/LeftModal'
 import ChangeTripStatusForm from './ChangeTripStatusForm'
+import ChangeTripDatesForm from './ChangeTripDatesForm'
+import Moment from 'react-moment'
+import moment from 'moment'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -33,6 +35,7 @@ class Cover extends Component {
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
     closeModal = modal => (this.setState({ [modal]: false }))
+    openModal = modal => (this.setState({ [modal]: true }))
 
     updateTrip = async updateObject => {
         try {
@@ -138,7 +141,7 @@ class Cover extends Component {
                     }}
                 >
                     <div className="d-flex justify-content-between align-items-center">
-                        <TripStatus onClick={this.toggleTripStatusModal} status={currentTrip.status} fab></TripStatus>
+                        <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>
                         {this.state.isTripStatusOpen && <LeftModal
                             isOpen={this.state.isTripStatusOpen}
                             toggleModal={() => this.closeModal('isTripStatusOpen')}
@@ -148,7 +151,7 @@ class Cover extends Component {
                             status={currentTrip.status}
                         />}
                         <div className="">
-                            <Fab onClick={this.toggleSharetTripModal} color="primary">
+                            <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary">
                                 <SendIcon style={{ color: 'white' }} fontSize="large" />
                             </Fab>
                             {this.state.isShareTripOpen && <NewShareTrip
@@ -159,7 +162,7 @@ class Cover extends Component {
                         </div>
                     </div>
                     <div className="d-flex justify-content-between align-items-center">
-                        <div className="">
+                        <div className="" >
                             <h5 className="d-inline Cover-bottom-row">
                                 {invited} Invited
                             </h5>
@@ -167,11 +170,19 @@ class Cover extends Component {
                                 {confirmed} Confirmed
                             </h5>
                         </div>
-                        <TripDatesForm
-                            dateStart={currentTrip.dateStart}
-                            dateEnd={currentTrip.dateEnd}
+                        <h5 className="Cover-bottom-row hover" onClick={() => this.openModal('isTripDatesOpen')}>
+                            <Moment date={currentTrip.dateStart.split('T')[0]} format="MMMM DD" /> {' - '}{' '}
+                            <Moment date={currentTrip.dateEnd.split('T')[0]} format="MMMM DD" />{' '}
+                        </h5>
+                        {this.state.isTripDatesOpen && <LeftModal
+                            isOpen={this.state.isTripDatesOpen}
+                            toggleModal={() => this.closeModal('isTripDatesOpen')}
+                            title='Change trip dates'
+                            form={ChangeTripDatesForm}
                             submit={this.updateTrip}
-                        />
+                            dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
+                            dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
+                        />}
                         <TripImageForm
                             image={currentTrip.image}
                             submit={this.updateTrip}
