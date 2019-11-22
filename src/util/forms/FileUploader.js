@@ -1,35 +1,33 @@
 import React, { Component } from 'react'
+import { DropzoneArea } from 'material-ui-dropzone'
 import { apiCall } from '../api'
 
 export default class FileUploader extends Component {
-    handleUpload = async e => {
-        const [file] = e.target.files
+
+    handleChange = async file => {
+        this.props.handleUploading(true)
         let formData = new FormData()
         formData.append('file', file)
-        const { isAuth } = this.props
-        let ret = null
-        if (isAuth) {
-            ret = await apiCall('post', '/api/files', formData)
-        } else {
-            ret = await apiCall('post', '/api/files/unAuth', formData)
+        try {
+            let s3 = await apiCall('post', '/api/fileUploads/unAuth', formData)
+            this.props.handleUploading(false)
+            this.props.handleChange(s3.url)
+        } catch (err) {
+            this.props.handleUploading(false)
         }
-        this.props.onUpload(ret.url)
     }
 
     render() {
-        const { accept, id } = this.props
-
         return (
-            <label className="btn btn-primary hover" htmlFor={id}>
-                <input
-                    type="file"
-                    className="d-none"
-                    onChange={this.handleUpload}
-                    accept={accept}
-                    id={id}
-                />
-                Upload
-            </label>
+            <DropzoneArea
+                onDrop={this.handleChange}
+                showAlerts={false}
+                filesLimit={1}
+                showPreviews
+                showPreviewsInDropzone={false}
+                dropzoneParagraphClass='TripInfo-description'
+                dropzoneClass='FileUploader'
+            />
         )
     }
-}
+} 

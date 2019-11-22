@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import MenuItem from '@material-ui/core/MenuItem'
-import Uploader from '../../util/forms/Uploader'
-import FormField from '../../util/forms/FormField'
+import FileUploader from '../../util/forms/FileUploader'
+import TextField from '@material-ui/core/TextField'
 import { withFormik } from "formik"
-import { tripStatus } from '../../util/globals'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import * as Yup from 'yup'
 
 const form = props => {
@@ -16,22 +15,32 @@ const form = props => {
         isSubmitting,
         handleChange,
         handleBlur,
-        handleSubmit
+        handleSubmit,
+        setFieldValue,
     } = props
 
-    const options = tripStatus.map(status => (
-        <MenuItem value={status}>{status}</MenuItem>
-    ))
+    const [isUploading, setIsUploading] = useState(false)
+
+    let buttonContent = isUploading ? <CircularProgress color='primary' /> : 'Submit'
+
     return (
         <form onSubmit={handleSubmit} style={{ marginTop: 41 }}>
-            <FormField
-                name="image"
-                label="Upload a cover photo"
-                component={Uploader}
+            <FileUploader value={values.file} name='file' handleChange={value => {
+                setFieldValue("file", value)
+            }} handleUploading={uploadState => setIsUploading(uploadState)}></FileUploader>
+            <TextField
+                label="Link a file instead"
+                value={values.link}
+                placeholder="https://yourlink.com"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="link"
+                type="link"
+                fullWidth
             />
             <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                Submit
+            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isUploading}>
+                {buttonContent}
             </Button>
         </form>
     )
@@ -39,21 +48,20 @@ const form = props => {
 
 const Form = withFormik({
     mapPropsToValues: ({
-        status,
+        link, file
     }) => {
         return {
-            status
+            link,
+            file
         };
     },
-    validationSchema: Yup.object().shape({
-        status: Yup.string()
-            .required("Enter your status")
-    }),
+
     handleSubmit: (values, { setSubmitting, props }) => {
-        props.submit(values).then(() => setSubmitting(false))
+        const image = values.link ? values.link : values.file
+        props.submit({ image }).then(() => setSubmitting(false))
     }
 })(form)
 
-export default ({ submit, status }) => {
-    return <Form submit={submit} status={status} />
+export default (props) => {
+    return <Form {...props} />
 }

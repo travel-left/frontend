@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import TripImageForm from './TripImageForm'
 import { apiCall } from '../../util/api'
 import Fab from '@material-ui/core/Fab'
 import NewShareTrip from '../../util/otherComponents/NewShareTrip'
@@ -13,6 +12,7 @@ import ChangeTripDatesForm from './ChangeTripDatesForm'
 import ChangeCoverPhotoForm from './ChangeCoverPhotoForm'
 import Moment from 'react-moment'
 import moment from 'moment'
+import Typography from '@material-ui/core/Typography'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -151,7 +151,7 @@ class Cover extends Component {
                         padding: 16
                     }}
                 >
-                    <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: 32 }}>
                         <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>
                         {this.state.isTripStatusOpen && <LeftModal
                             isOpen={this.state.isTripStatusOpen}
@@ -175,19 +175,19 @@ class Cover extends Component {
                             />}
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex justify-content-between align-items-center" >
                         <div className="" >
-                            <h5 className="d-inline Cover-bottom-row">
-                                {invited} Invited
-                            </h5>
-                            <h5 className="d-inline ml-5 Cover-bottom-row">
-                                {confirmed} Confirmed
-                            </h5>
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{invited} Invited</Typography>{' '}
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{confirmed} Confirmed</Typography>
                         </div>
-                        <h5 className="Cover-bottom-row hover" onClick={() => this.openModal('isTripDatesOpen')}>
-                            <Moment date={currentTrip.dateStart.split('T')[0]} format="MMMM DD" /> {' - '}{' '}
-                            <Moment date={currentTrip.dateEnd.split('T')[0]} format="MMMM DD" />{' '}
-                        </h5>
+                        <div className="hover" onClick={() => this.openModal('isTripDatesOpen')}>
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                                <Moment date={currentTrip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
+                            </Typography>
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                                <Moment date={currentTrip.dateEnd.split('T')[0]} format="MMMM DD" />
+                            </Typography>
+                        </div>
                         {this.state.isTripDatesOpen && <LeftModal
                             isOpen={this.state.isTripDatesOpen}
                             toggleModal={() => this.closeModal('isTripDatesOpen')}
@@ -197,9 +197,10 @@ class Cover extends Component {
                             dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
                             dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
                         />}
-                        <h5 className='Cover-bottom-row hover' onClick={() => this.openModal('isChangeCoverOpen')}>
+                        <Typography variant="h1" className='hover' style={{ color: 'white', display: 'inline' }} onClick={() => this.openModal('isChangeCoverOpen')}>
                             Change Cover Photo
-                        </h5>
+                        </Typography>
+
                         {this.state.isChangeCoverOpen && <LeftModal
                             isOpen={this.state.isChangeCoverOpen}
                             toggleModal={() => this.closeModal('isChangeCoverOpen')}
@@ -209,7 +210,6 @@ class Cover extends Component {
                         />}
                     </div>
                 </div>
-                <div className="col-3" />
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </>
         )
