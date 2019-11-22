@@ -11,4 +11,11 @@ const travelerStatus = [
     'NOT-GOING'
 ]
 
-export { travelerStatus }
+const tripStatus = [
+    'LEFT',
+    'PLANNING',
+    'PAST',
+    'ARCHIVED'
+]
+
+export { travelerStatus, tripStatus }

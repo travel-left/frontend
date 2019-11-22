@@ -17,19 +17,3 @@
     color: #FFFFFF !important;
     letter-spacing: 0 !important;
 }
-
-.Cover-status {
-    /* opacity: 0.9 !important; */
-    font-weight: 500 !important;
-    font-family: Roboto !important;
-    font-size: 22px !important;
-    color: #FFFFFF !important;
-    letter-spacing: 0.19px !important;
-}
-
-.Cover-share-trip {
-    border-radius: 50%; 
-    font-size: 22px;
-    padding: 13px; 
-    color: #FFFFFF;
-}

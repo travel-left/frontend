@@ -131,8 +131,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/trips/:tripId"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>
-
-                        <TripDashboard {...props} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <TripDashboard {...props} />
+                        </Container>
                     </WithAuth>
                 )}
             />

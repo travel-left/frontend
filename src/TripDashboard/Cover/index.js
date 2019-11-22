@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import TripImageForm from './TripImageForm'
 import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../util/api'
-import TripStatusForm from './TripStatusForm'
 import Fab from '@material-ui/core/Fab'
 import NewShareTrip from '../../util/otherComponents/NewShareTrip'
 import SendIcon from '@material-ui/icons/Send'
 import './Cover.css'
 import Snack from '../../util/Snack'
+import TripStatus from '../../util/otherComponents/TripStatus';
+import LeftModal from '../../util/otherComponents/LeftModal';
+import ChangeTripStatusForm from './ChangeTripStatusForm'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -18,7 +20,10 @@ class Cover extends Component {
             variant: '',
             message: ''
         },
-        isShareTripOpen: false
+        isShareTripOpen: false,
+        isTripStatusOpen: false,
+        isTripDatesOpen: false,
+        isChangeCoverOoen: false
     }
 
     constructor(props) {
@@ -31,11 +36,34 @@ class Cover extends Component {
     toggleSharetTripModal = () => (this.setState(prevState => ({
         isShareTripOpen: !prevState.isShareTripOpen
     })))
-    closeSharetTripModal = () => (this.setState(prevState => ({
-        isShareTripOpen: !prevState.isShareTripOpen, snack: {
+    toggleTripStatusModal = () => (this.setState({
+        isTripStatusOpen: true
+    }))
+    toggleTripDatesModal = () => (this.setState(prevState => ({
+        isTripDatesOpen: !prevState.isTripDatesOpen
+    })))
+    toggleChangeCoverModal = () => (this.setState(prevState => ({
+        isChangeCoverOpen: !prevState.isChangeCoverOoen
+    })))
+    closeSharetTripModal = () => (this.setState({
+        isShareTripOpen: false
+    }))
+    closeTripStatusModal = () => (this.setState({
+        isTripStatusOpen: false
+    }))
+
+    closeTripDatesModal = () => (this.setState(prevState => ({
+        isTripDatesOpen: !prevState.isTripDatesOpen, snack: {
             show: true,
             variant: 'success',
-            message: 'Copied!'
+            message: 'Updated!'
+        }
+    })))
+    closeChangeCoverModal = () => (this.setState(prevState => ({
+        isChangeCoverOpen: !prevState.isChangeCoverOpen, snack: {
+            show: true,
+            variant: 'success',
+            message: 'Updated!'
         }
     })))
 
@@ -53,7 +81,7 @@ class Cover extends Component {
                     message: 'Success!'
                 }
             })
-            return this.props.setCurrentTrip(data)
+            this.props.setCurrentTrip(data)
         } catch (err) {
             this.setState({
                 snack: {
@@ -132,23 +160,29 @@ class Cover extends Component {
         let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
 
         return (
-            <div className="row">
+            <>
                 <div
-                    className="col-12 d-flex flex-column justify-content-end px-5 py-2 Cover-image"
+                    className="d-flex flex-column justify-content-end Cover-image"
                     style={{
                         backgroundImage: `url(${currentTrip.image})`,
                         height: '183px',
                         backgroundPosition: 'center',
                         backgroundSize: 'cover',
-                        borderRadius: '3px'
+                        borderRadius: '3px',
+                        padding: 16
                     }}
                 >
-                    <div className="row justify-content-between">
-                        <TripStatusForm
+                    <div className="d-flex justify-content-between align-items-center">
+                        <TripStatus onClick={this.toggleTripStatusModal} status={currentTrip.status} fab></TripStatus>
+                        {this.state.isTripStatusOpen && <LeftModal
+                            isOpen={this.state.isTripStatusOpen}
+                            toggleModal={this.closeTripStatusModal}
+                            title='Change trip status'
+                            form={ChangeTripStatusForm}
                             submit={this.updateTrip}
                             status={currentTrip.status}
-                        />
-                        <div className="pr-2">
+                        />}
+                        <div className="">
                             <Fab onClick={this.toggleSharetTripModal} color="primary">
                                 <SendIcon style={{ color: 'white' }} fontSize="large" />
                             </Fab>
@@ -159,8 +193,8 @@ class Cover extends Component {
                             />}
                         </div>
                     </div>
-                    <div className="row justify-content-between">
-                        <div className="btn">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div className="">
                             <h5 className="d-inline Cover-bottom-row">
                                 {invited} Invited
                             </h5>
@@ -181,7 +215,7 @@ class Cover extends Component {
                 </div>
                 <div className="col-3" />
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            </>
         )
     }
 }
