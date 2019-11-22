@@ -10,6 +10,7 @@ import TripStatus from '../../util/otherComponents/TripStatus'
 import LeftModal from '../../util/otherComponents/LeftModal'
 import ChangeTripStatusForm from './ChangeTripStatusForm'
 import ChangeTripDatesForm from './ChangeTripDatesForm'
+import ChangeCoverPhotoForm from './ChangeCoverPhotoForm'
 import Moment from 'react-moment'
 import moment from 'moment'
 
@@ -25,7 +26,7 @@ class Cover extends Component {
         isShareTripOpen: false,
         isTripStatusOpen: false,
         isTripDatesOpen: false,
-        isChangeCoverOoen: false
+        isChangeCoverOpen: false
     }
 
     constructor(props) {
@@ -61,6 +62,16 @@ class Cover extends Component {
                 }
             })
         }
+    }
+
+    copiedLink = () => {
+        this.setState({
+            snack: {
+                show: true,
+                variant: 'success',
+                message: 'Copied!'
+            }
+        })
     }
 
     getAndSetTravelers = async () => {
@@ -154,10 +165,13 @@ class Cover extends Component {
                             <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary">
                                 <SendIcon style={{ color: 'white' }} fontSize="large" />
                             </Fab>
-                            {this.state.isShareTripOpen && <NewShareTrip
+                            {this.state.isShareTripOpen && <LeftModal
                                 isOpen={this.state.isShareTripOpen}
                                 toggleModal={() => this.closeModal('isShareTripOpen')}
+                                title='Change trip cover photo'
                                 tripId={currentTrip._id}
+                                submit={this.copiedLink}
+                                form={NewShareTrip}
                             />}
                         </div>
                     </div>
@@ -183,10 +197,16 @@ class Cover extends Component {
                             dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
                             dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
                         />}
-                        <TripImageForm
-                            image={currentTrip.image}
+                        <h5 className='Cover-bottom-row hover' onClick={() => this.openModal('isChangeCoverOpen')}>
+                            Change Cover Photo
+                        </h5>
+                        {this.state.isChangeCoverOpen && <LeftModal
+                            isOpen={this.state.isChangeCoverOpen}
+                            toggleModal={() => this.closeModal('isChangeCoverOpen')}
+                            title='Change cover photo'
+                            form={ChangeCoverPhotoForm}
                             submit={this.updateTrip}
-                        />
+                        />}
                     </div>
                 </div>
                 <div className="col-3" />
