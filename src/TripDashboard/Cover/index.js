@@ -28,44 +28,11 @@ class Cover extends Component {
 
     constructor(props) {
         super(props)
-
         this.getAndSetTravelers()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
-    toggleSharetTripModal = () => (this.setState(prevState => ({
-        isShareTripOpen: !prevState.isShareTripOpen
-    })))
-    toggleTripStatusModal = () => (this.setState({
-        isTripStatusOpen: true
-    }))
-    toggleTripDatesModal = () => (this.setState(prevState => ({
-        isTripDatesOpen: !prevState.isTripDatesOpen
-    })))
-    toggleChangeCoverModal = () => (this.setState(prevState => ({
-        isChangeCoverOpen: !prevState.isChangeCoverOoen
-    })))
-    closeSharetTripModal = () => (this.setState({
-        isShareTripOpen: false
-    }))
-    closeTripStatusModal = () => (this.setState({
-        isTripStatusOpen: false
-    }))
-
-    closeTripDatesModal = () => (this.setState(prevState => ({
-        isTripDatesOpen: !prevState.isTripDatesOpen, snack: {
-            show: true,
-            variant: 'success',
-            message: 'Updated!'
-        }
-    })))
-    closeChangeCoverModal = () => (this.setState(prevState => ({
-        isChangeCoverOpen: !prevState.isChangeCoverOpen, snack: {
-            show: true,
-            variant: 'success',
-            message: 'Updated!'
-        }
-    })))
+    closeModal = modal => (this.setState({ [modal]: false }))
 
     updateTrip = async updateObject => {
         try {
@@ -102,8 +69,6 @@ class Cover extends Component {
             travelers
         })
     }
-
-
 
     textSelectedTravelers = async (text, phones) => {
         try {
@@ -176,7 +141,7 @@ class Cover extends Component {
                         <TripStatus onClick={this.toggleTripStatusModal} status={currentTrip.status} fab></TripStatus>
                         {this.state.isTripStatusOpen && <LeftModal
                             isOpen={this.state.isTripStatusOpen}
-                            toggleModal={this.closeTripStatusModal}
+                            toggleModal={() => this.closeModal('isTripStatusOpen')}
                             title='Change trip status'
                             form={ChangeTripStatusForm}
                             submit={this.updateTrip}
@@ -188,7 +153,7 @@ class Cover extends Component {
                             </Fab>
                             {this.state.isShareTripOpen && <NewShareTrip
                                 isOpen={this.state.isShareTripOpen}
-                                toggleModal={this.closeSharetTripModal}
+                                toggleModal={() => this.closeModal('isShareTripOpen')}
                                 tripId={currentTrip._id}
                             />}
                         </div>
