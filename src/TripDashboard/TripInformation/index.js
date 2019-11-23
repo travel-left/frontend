@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import TripNameForm from './TripNameForm'
 import NewTripNameForm from './NewTripNameForm'
 import Coordinator from './Coordinators/Coordinator'
-import CreateCoordinatorForm from './Coordinators/CreateCoordinatorForm'
+import AddCoordinatorToTripForm from './Coordinators/AddCoordinatorToTripForm'
 import AddFromOrgForm from './Coordinators/AddFromOrgForm'
 import TripDate from './TripDates/TripDate'
 import CreateTripDateForm from './TripDates/CreateTripDateForm'
@@ -18,6 +18,8 @@ import Snack from '../../util/Snack'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import LeftModal from '../../util/otherComponents/LeftModal'
+import Fab from '@material-ui/core/Fab'
+import Grid from '@material-ui/core/Grid'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -38,7 +40,8 @@ export default class TripInformation extends Component {
             variant: '',
             message: ''
         },
-        editTripNameModal: false
+        editTripNameModal: false,
+        addNewCoordinator: false
     }
 
     constructor(props) {
@@ -555,7 +558,10 @@ export default class TripInformation extends Component {
                     list={coordinatorList}
                     create={this.createCoordinator}
                     addFromOrg={this.addFromOrg}
+                    addNewCoordinator={this.state.addNewCoordinator}
                     onTrip={coordinators}
+                    openModal={this.openModal}
+                    closeModal={this.closeModal}
                 />
                 <TripDateSection
                     list={tripDatesList}
@@ -575,23 +581,30 @@ export default class TripInformation extends Component {
     }
 }
 
-const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
+const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip, addNewCoordinator, openModal, closeModal }) => {
     return (
         <TripSection name='Trip Coordinators'>
-            <div className="row mx-0">
+            <Grid container spacing={2}>
                 {list}
-                <div className="col-md-4 animated fadeIn my-4 mx-3">
-                    <div className="row align-items-center justify-content-around" style={{
-                        borderRadius: '8px',
-                        border: 'none',
-                        height: '100px',
-                    }}>
-                        <CreateCoordinatorForm submit={create} />
-                        <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} />
-                    </div>
-                </div>
-
-            </div>
+                <Grid item  >
+                    <Grid item className='d-flex justify-content-around align-items-center animated fadeIn' style={{ height: 100, width: 420, marginTop: 16, marginRight: 32, marginBottom: 16 }}>
+                        <Fab onClick={() => openModal('addNewCoordinator')} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+                            Add New
+                        </Fab>
+                    </Grid>
+                </Grid>
+                {
+                    addNewCoordinator && <LeftModal
+                        isOpen={addNewCoordinator}
+                        toggleModal={() => closeModal('addNewCoordinator')}
+                        title='Add a coordinator to this trip'
+                        submit={addFromOrg}
+                        form={AddCoordinatorToTripForm}
+                    />
+                }
+                {/* <CreateCoordinatorForm submit={create} />
+                        <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} /> */}
+            </Grid>
         </TripSection>
     )
 }
@@ -645,8 +658,8 @@ const TripContactsSection = ({ list, create }) => {
 }
 
 const TripSection = props => (
-    <div className="col-12 px-0" style={{ marginTop: 72 }}>
-        <Typography variant="h2">
+    <div className="" style={{ marginTop: 72 }}>
+        <Typography variant="h2" style={{ marginBottom: 32 }}>
             {props.name}
         </Typography>
         {props.children}
