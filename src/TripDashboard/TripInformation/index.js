@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import TripNameForm from './TripNameForm'
+import NewTripNameForm from './NewTripNameForm'
 import Coordinator from './Coordinators/Coordinator'
 import CreateCoordinatorForm from './Coordinators/CreateCoordinatorForm'
 import AddFromOrgForm from './Coordinators/AddFromOrgForm'
@@ -14,6 +15,9 @@ import { apiCall } from '../../util/api'
 import './TripInfo.css'
 import ReactGA from 'react-ga'
 import Snack from '../../util/Snack'
+import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
+import LeftModal from '../../util/otherComponents/LeftModal'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -33,7 +37,8 @@ export default class TripInformation extends Component {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+        editTripNameModal: false
     }
 
     constructor(props) {
@@ -48,6 +53,8 @@ export default class TripInformation extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    closeModal = modal => (this.setState({ [modal]: false }))
+    openModal = modal => (this.setState({ [modal]: true }))
 
     updateTrip = async updateObject => {
         try {
@@ -528,8 +535,22 @@ export default class TripInformation extends Component {
             ) : null
 
         return (
-            <div className="col-md-12 mt-4 p-3">
-                <TripNameSection name={name} update={this.updateTrip} />
+            <div className="" style={{ paddingTop: 16, paddingLeft: 16 }}>
+                <div className="" style={{ marginBottom: 32 }}>
+                    <Typography variant="h2">
+                        Trip Name
+                    </Typography>
+                    <h3 className="text-primary TripInfo-name hover" onClick={() => this.openModal('editTripNameModal')} style={{ marginTop: 24 }}> {name} </h3>
+                    {this.state.editTripNameModal && <LeftModal
+                        isOpen={this.state.editTripNameModal}
+                        toggleModal={() => this.closeModal('editTripNameModal')}
+                        title='Change trip name'
+                        submit={this.updateTrip}
+                        form={NewTripNameForm}
+                        name={name}
+                    />}
+                    <Divider style={{ width: '30vw', backgroundColor: '#475561', height: 2 }}></Divider>
+                </div>
                 <TripCoordinatorSection
                     list={coordinatorList}
                     create={this.createCoordinator}
@@ -552,26 +573,6 @@ export default class TripInformation extends Component {
             </div>
         )
     }
-}
-
-const TripNameSection = ({ name, update }) => {
-    return (
-        <div className="mb-4 col-12 px-0">
-            <h4 className="mb-3 TripInfo-heading">Trip Name</h4>
-            <div
-                className="pb-2"
-                style={{
-                    borderBottom: '2px solid #475561',
-                    width: '35vw'
-                }}
-            >
-                {' '}
-                <div className="d-flex align-items-center">
-                    <TripNameForm name={name} submit={update} />
-                </div>
-            </div>
-        </div>
-    )
 }
 
 const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip }) => {
@@ -644,8 +645,10 @@ const TripContactsSection = ({ list, create }) => {
 }
 
 const TripSection = props => (
-    <div className="col-12 px-0" style={{ marginTop: '5.7rem' }}>
-        <h4 className="mb-4 TripInfo-heading">{props.name}</h4>
+    <div className="col-12 px-0" style={{ marginTop: 72 }}>
+        <Typography variant="h2">
+            {props.name}
+        </Typography>
         {props.children}
     </div>
 )
