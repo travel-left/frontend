@@ -37,7 +37,7 @@ export default class TripDate extends Component {
         const dateWithoutTimeorTZ = date.split('T')[0]
 
         return (
-            <div className="row py-3 align-items-center justify-content-between px-2">
+            <div className="row align-items-center justify-content-between" style={{ padding: '16px 32px' }}>
                 <div className="d-flex align-items-center justify-content-between">
                     {icon}
                     <div className="d-flex flex-column justify-content-center align-items-start ml-4">

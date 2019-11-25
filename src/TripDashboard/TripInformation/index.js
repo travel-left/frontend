@@ -18,6 +18,8 @@ import Divider from '@material-ui/core/Divider'
 import LeftModal from '../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
 import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import moment from 'moment'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -40,7 +42,9 @@ export default class TripInformation extends Component {
             message: ''
         },
         editTripNameModal: false,
-        addNewCoordinator: false
+        addNewCoordinator: false,
+        addNewTripDate: false,
+        editTripDate: false,
     }
 
     constructor(props) {
@@ -440,13 +444,13 @@ export default class TripInformation extends Component {
     }
 
     createTripDate = async tripDate => {
+        console.log(tripDate)
         try {
-            tripDate.type.toUpperCase()
+            tripDate.type = tripDate.category.value.toUpperCase()
             const createdTD = await apiCall(
                 'post',
                 `/api/trips/${this.currentTripId}/tripDates`,
-                tripDate,
-                true
+                tripDate
             )
             this.setState({
                 snack: {
@@ -499,7 +503,7 @@ export default class TripInformation extends Component {
     }
 
     render() {
-        let { name } = this.props.currentTrip
+        let { name, dateStart } = this.props.currentTrip
         let { coordinators, contacts, documents, tripDates, coordinatorsFromOrg } = this.state
         tripDates = tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
         let coordinatorList =
@@ -569,14 +573,22 @@ export default class TripInformation extends Component {
                 <TripDateSection
                     list={tripDatesList}
                     create={this.createTripDate}
+                    openModal={this.openModal}
+                    closeModal={this.closeModal}
+                    addNewTripDate={this.state.addNewTripDate}
+                    dateStart={dateStart}
                 />
                 <TripDocumentSection
                     list={documentsList}
                     create={this.createDocument}
+                    openModal={this.openModal}
+                    closeModal={this.closeModal}
                 />
                 <TripContactsSection
                     list={contactsList}
                     create={this.createContact}
+                    openModal={this.openModal}
+                    closeModal={this.closeModal}
                 />
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
@@ -612,23 +624,32 @@ const TripCoordinatorSection = ({ list, create, coordinators, coordinatorsFromOr
     )
 }
 
-const TripDateSection = ({ list, create }) => {
+const TripDateSection = ({ list, create, openModal, closeModal, addNewTripDate, dateStart }) => {
     return (
-        <TripSection name="Trip Dates">
-            <div className="mt-5 px-5 py-3" style={{
-                background: '#FFFFFF',
-                boxShadow: '0 0 50px 0 rgba(0,0,0,0.10)',
-                borderRadius: '8px',
-                border: 'none',
-                minHeight: '100px',
-                width: '340px'
-            }}>
-                {list}
-                <div className="my-3 d-flex flex-row justify-content-start align-items-center">
-                    <CreateTripDateForm formType="add" submit={create} />
-                </div>
-            </div>
-        </TripSection>
+        <Grid container spacing={2}>
+            <Grid item xs={12} sm={6} lg={4}>
+                <TripSection name="Trip Dates">
+                    <Card>
+                        {list}
+                        <div className='d-flex justify-content-center' style={{ paddingBottom: 16 }}>
+                            <Fab onClick={() => openModal('addNewTripDate')} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+                                Add New
+                            </Fab>
+                            {
+                                addNewTripDate && <LeftModal
+                                    isOpen={addNewTripDate}
+                                    toggleModal={() => closeModal('addNewTripDate')}
+                                    title='Add a trip date'
+                                    submit={create}
+                                    date={moment(dateStart).format('MM-DD-YYYY')}
+                                    form={CreateTripDateForm}
+                                />
+                            }
+                        </div>
+                    </Card>
+                </TripSection>
+            </Grid>
+        </Grid>
     )
 }
 
