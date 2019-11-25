@@ -1,33 +1,63 @@
 import React from 'react'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
+import { withFormik } from "formik"
 import * as Yup from 'yup'
-import ModalForm from '../../util/forms/ModalForm'
-import FormField from '../../util/forms/FormField'
-import { nameValidator } from '../../util/validators'
 
-export default function TripNameForm({ name, submit }) {
-    const initialValues = {
-        name: name
-    }
+const form = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit
+    } = props
 
-    const schema = Yup.object().shape({
-        name: nameValidator
-    })
-
-    const button = {
-        classes: 'px-0',
-        text: (
-            <h3 className="text-primary my-3 d-inline TripInfo-name"> {name} </h3>
-        )
-    }
     return (
-        <ModalForm
-            button={button}
-            header="Edit trip name"
-            validationSchema={schema}
-            initialValues={initialValues}
-            submit={submit}
-        >
-            <FormField name="name" placeholder="Australia" label="Trip Name*" />
-        </ModalForm>
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                id="standard-required"
+                label="Trip name"
+                value={values.name}
+                placeholder="A name for trip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="name"
+                type="text"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
+                initialValues={{ name: values.name }}
+            />
+            <Divider style={{ marginTop: 40 }} />
+            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Submit
+            </Button>
+        </form>
     )
+}
+
+const Form = withFormik({
+    mapPropsToValues: ({
+        name,
+    }) => {
+        return {
+            name
+        };
+    },
+    validationSchema: Yup.object().shape({
+        name: Yup.string()
+            .required("Enter a trip name")
+    }),
+    handleSubmit: (values, { setSubmitting, props }) => {
+        props.submit(values).then(() => setSubmitting(false))
+    }
+})(form)
+
+export default ({ submit, name }) => {
+    return <Form submit={submit} name={name} />
 }

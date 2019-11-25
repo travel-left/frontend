@@ -37,7 +37,7 @@ export default class LeftModal extends Component {
                 }}
                 >
                     <div className={`Modal--overlay animated fadeIn ${this.state.overlayAnimation}`} onClick={this.handleToggleModal} />
-                    <div className="modal-dialog" role="document">
+                    <div className="modal-dialog" role="document" >
                         <div className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
                             <div className="modal-header Modal-Form-header d-flex align-items-center bg-primary" style={{ padding: 16 }}>
                                 <h5 className="modal-title Modal-Form-header"> {this.props.title}</h5>

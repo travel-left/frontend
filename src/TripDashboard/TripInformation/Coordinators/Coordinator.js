@@ -54,7 +54,7 @@ class Coordinator extends Component {
             ) : <span style={{ width: '54px', }}></span>
 
         return (
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <Card className='d-flex justify-content-around align-items-center animated fadeIn' style={{ height: 100, width: 420, marginTop: 16, marginRight: 32, marginBottom: 16 }}>
                     <Image src={image} diameter="48px" name={name} />
                     <div className="d-flex flex-column justify-content-center">

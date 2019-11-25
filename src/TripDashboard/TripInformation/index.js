@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import TripNameForm from './TripNameForm'
-import NewTripNameForm from './NewTripNameForm'
 import Coordinator from './Coordinators/Coordinator'
 import AddCoordinatorToTripForm from './Coordinators/AddCoordinatorToTripForm'
-import AddFromOrgForm from './Coordinators/AddFromOrgForm'
 import TripDate from './TripDates/TripDate'
 import CreateTripDateForm from './TripDates/CreateTripDateForm'
 import Document from './Documents/Document'
@@ -32,6 +30,7 @@ export default class TripInformation extends Component {
 
     state = {
         coordinators: [],
+        coordinatorsFromOrg: [],
         contacts: [],
         documents: [],
         tripDates: [],
@@ -50,6 +49,7 @@ export default class TripInformation extends Component {
             initializeReactGA()
         }
         this.getCoordinators()
+        this.getCoordinatorsFromOrg()
         this.getContacts()
         this.getDocuments()
         this.getTripDates()
@@ -93,6 +93,14 @@ export default class TripInformation extends Component {
         this.setState({ coordinators })
     }
 
+    getCoordinatorsFromOrg = async () => {
+        let coordinatorsFromOrg = await apiCall(
+            'get',
+            `/api/trips/${this.currentTripId}/coordinators/org`
+        )
+        this.setState({ coordinatorsFromOrg })
+    }
+
     updateCoordinator = async (coordinatorId, updateObject) => {
         try {
             const updatedCoordinator = await apiCall(
@@ -123,63 +131,60 @@ export default class TripInformation extends Component {
         }
     }
 
-    createCoordinator = async coordinator => {
-        try {
-            coordinator.organization = this.props.currentUser.organization
-            const createdCoordinator = await apiCall(
-                'post',
-                `/api/trips/${this.currentTripId}/coordinators`,
-                coordinator,
-                true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { coordinators } = this.state
-            coordinators.push(createdCoordinator)
-            this.setState({ coordinators })
+    createCoordinator = async data => {
+        if (data.fromOrg) {
+            try {
+                const coordinators = await apiCall(
+                    'post',
+                    `/api/trips/${this.currentTripId}/coordinators/add`,
+                    data.coordinatorsToAdd.map(c => c._id)
+                )
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'success',
+                        message: 'Success!'
+                    }
+                })
 
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
+                this.setState({ coordinators })
+            } catch (err) {
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'error',
+                        message: 'An error occurred.'
+                    }
+                })
+            }
+        } else {
+            let coordinator = data
+            try {
+                coordinator.organization = this.props.currentUser.organization
+                const createdCoordinator = await apiCall(
+                    'post',
+                    `/api/trips/${this.currentTripId}/coordinators`,
+                    coordinator
+                )
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'success',
+                        message: 'Success!'
+                    }
+                })
 
-    }
+                this.setState(prevState => ({ coordinators: [...prevState.coordinators, createdCoordinator] }))
 
-    addFromOrg = async coordinatorIds => {
-        try {
-            const coordinators = await apiCall(
-                'post',
-                `/api/trips/${this.currentTripId}/coordinators/add`,
-                coordinatorIds,
-                true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-
-            this.setState({ coordinators })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
+            } catch (err) {
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'error',
+                        message: 'An error occurred.'
+                    }
+                })
+            }
         }
     }
 
@@ -196,11 +201,9 @@ export default class TripInformation extends Component {
                     message: 'Success!'
                 }
             })
-            const { coordinators } = this.state
-            const newCoordinators = coordinators.filter(
-                d => d._id !== coordinatorId
-            )
-            this.setState({ coordinators: newCoordinators })
+
+            this.getCoordinators()
+            this.getCoordinatorsFromOrg()
         } catch (err) {
             this.setState({
                 snack: {
@@ -497,7 +500,7 @@ export default class TripInformation extends Component {
 
     render() {
         let { name } = this.props.currentTrip
-        let { coordinators, contacts, documents, tripDates } = this.state
+        let { coordinators, contacts, documents, tripDates, coordinatorsFromOrg } = this.state
         tripDates = tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
         let coordinatorList =
             coordinators.length > 0 ? (
@@ -549,7 +552,7 @@ export default class TripInformation extends Component {
                         toggleModal={() => this.closeModal('editTripNameModal')}
                         title='Change trip name'
                         submit={this.updateTrip}
-                        form={NewTripNameForm}
+                        form={TripNameForm}
                         name={name}
                     />}
                     <Divider style={{ width: '30vw', backgroundColor: '#475561', height: 2 }}></Divider>
@@ -557,9 +560,9 @@ export default class TripInformation extends Component {
                 <TripCoordinatorSection
                     list={coordinatorList}
                     create={this.createCoordinator}
-                    addFromOrg={this.addFromOrg}
                     addNewCoordinator={this.state.addNewCoordinator}
-                    onTrip={coordinators}
+                    coordinators={coordinators}
+                    coordinatorsFromOrg={coordinatorsFromOrg}
                     openModal={this.openModal}
                     closeModal={this.closeModal}
                 />
@@ -581,7 +584,7 @@ export default class TripInformation extends Component {
     }
 }
 
-const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip, addNewCoordinator, openModal, closeModal }) => {
+const TripCoordinatorSection = ({ list, create, coordinators, coordinatorsFromOrg, addNewCoordinator, openModal, closeModal }) => {
     return (
         <TripSection name='Trip Coordinators'>
             <Grid container spacing={2}>
@@ -598,12 +601,12 @@ const TripCoordinatorSection = ({ list, create, addFromOrg, onTrip, addNewCoordi
                         isOpen={addNewCoordinator}
                         toggleModal={() => closeModal('addNewCoordinator')}
                         title='Add a coordinator to this trip'
-                        submit={addFromOrg}
+                        coordinators={coordinators}
+                        coordinatorsFromOrg={coordinatorsFromOrg.filter(c => !coordinators.map(d => d._id).includes(c._id))}
+                        submit={create}
                         form={AddCoordinatorToTripForm}
                     />
                 }
-                {/* <CreateCoordinatorForm submit={create} />
-                        <AddFromOrgForm submit={addFromOrg} onTrip={onTrip} /> */}
             </Grid>
         </TripSection>
     )
