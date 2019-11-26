@@ -5,15 +5,26 @@ import './Document.css'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import LeftModal from '../../../util/otherComponents/LeftModal'
+import Fab from '@material-ui/core/Fab'
 
 class Document extends Component {
+    state = {
+        isEditModalOpen: false
+    }
+
     handleEdit = putObject => {
         this.props.update(this.props._id, putObject)
+        this.closeModal()
     }
 
     handleDelete = () => {
         this.props.remove(this.props._id)
+        this.closeModal()
     }
+
+    closeModal = () => (this.setState({ isEditModalOpen: false }))
+    openModal = () => (this.setState({ isEditModalOpen: true }))
 
     render() {
         let { name, description, link } = this.props
@@ -22,14 +33,24 @@ class Document extends Component {
 
         return (
             <Grid item xs={12} md={6}>
-                <Card style={{ padding: 16, marginTop: 32, width: 420 }} className="animated fadeIn">
+                <Card style={{ padding: 16, marginTop: 32, width: 420, height: 272 }} className="animated fadeIn d-flex justify-content-between flex-column">
                     <div className="d-flex justify-content-between">
                         <Typography variant="h2" style={{ marginBottom: 16 }}>{name}</Typography>
-                        <UpdateDocumentForm
-                            {...this.props}
-                            submit={this.handleEdit}
-                            remove={this.handleDelete}
-                        />
+                        <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                            Edit
+                        </Fab>
+                        {
+                            this.state.isEditModalOpen && <LeftModal
+                                isOpen={this.state.isEditModalOpen}
+                                toggleModal={this.closeModal}
+                                title='Edit a trip resource'
+                                name={name}
+                                description={description}
+                                submit={this.handleEdit}
+                                remove={this.handleDelete}
+                                form={UpdateDocumentForm}
+                            />
+                        }
                     </div>
                     <Typography variant="subtitle1">{description}</Typography>
                     <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16 }}>

@@ -518,8 +518,8 @@ const TripCoordinatorSection = ({ list, create, coordinators, coordinatorsFromOr
 const TripDateSection = ({ list, create, openModal, closeModal, addNewTripDate, dateStart }) => {
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} lg={4}>
-                <TripSection name="Trip Dates">
+            <Grid item xs={12} sm={6} lg={4} style={{ maxWidth: 436 }}>
+                <TripSection name="Trip Dates" >
                     <Card>
                         {list}
                         <div className='d-flex justify-content-center' style={{ paddingBottom: 16 }}>

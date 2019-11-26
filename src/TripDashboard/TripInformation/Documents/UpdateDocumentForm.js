@@ -1,46 +1,80 @@
 import React from 'react'
-import * as Yup from 'yup'
-import FormField from '../../../util/forms/FormField'
-import ModalForm from '../../../util/forms/ModalForm'
-import Uploader from '../../../util/forms/Uploader'
-import Validator, { nameValidator } from '../../../util/validators'
+import Button from '@material-ui/core/Button'
+import { withFormik } from "formik"
+import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
 
-const UpdateDocumentForm = props => {
-    const initialValues = {
-        ...props
-    }
-
-    const schema = Validator({
-        name: nameValidator,
-        link: Yup.string().required('Please select a link or file'),
-        description: Yup.string().max(200, 'Please enter a shorter description')
-    })
+const form = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        remove
+    } = props
 
     return (
-        <ModalForm
-            buttonType='edit'
-            header="Add a document or link"
-            validationSchema={schema}
-            initialValues={initialValues}
-            submit={props.submit}
-            remove={props.remove}
-        >
-            <FormField
-                name="link"
-                label="Upload a document*"
-                type="file"
-                component={Uploader}
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Name"
+                value={values.name}
+                placeholder="Resource name"
+                name="name"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
             />
-            <FormField name="name" label="Name*" placeholder="Document Name" />
-            <FormField
-                name="description"
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
                 label="Description"
-                component="textarea"
-                placeholder="A description for your document"
-                className="d-block"
+                value={values.description}
+                placeholder="Resource description"
+                name="description"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
             />
-        </ModalForm>
+            <Divider style={{ marginTop: 40 }} />
+            <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                Remove
+            </Button>
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Submit
+            </Button>
+        </form>
     )
 }
 
-export default UpdateDocumentForm
+const Form = withFormik({
+    mapPropsToValues: ({
+        name,
+        description
+    }) => {
+        return {
+            name,
+            description
+        };
+    },
+
+    handleSubmit: (values, { setSubmitting, props }) => {
+        props.submit(values).then(() => setSubmitting(false))
+    }
+})(form)
+
+export default ({ submit, remove, name, description }) => {
+
+    return (
+        <Form submit={submit} name={name} description={description} remove={remove} />
+    )
+}
+

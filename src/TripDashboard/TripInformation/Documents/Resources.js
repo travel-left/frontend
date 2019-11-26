@@ -130,7 +130,7 @@ export default class Resources extends Component {
         const { docs } = this.state
         const uploadZone = (
             <Grid item xs={12} md={6}>
-                <div style={{ marginTop: 32, width: 420, height: 110 }}>
+                <div style={{ marginTop: 32, width: 420, height: 272 }}>
                     <FileUploader
                         handleChange={this.createDocument}
                         handleUploading={this.uploadInProgress}
