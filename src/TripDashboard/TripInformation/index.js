@@ -44,7 +44,7 @@ export default class TripInformation extends Component {
         editTripNameModal: false,
         addNewCoordinator: false,
         addNewTripDate: false,
-        editTripDate: false,
+        editTripDate: false
     }
 
     constructor(props) {
@@ -414,11 +414,12 @@ export default class TripInformation extends Component {
     }
 
     updateTripDate = async (tripDateId, updateObject) => {
+        updateObject.type = updateObject.category.value.toUpperCase()
         try {
             const updatedTripDate = await apiCall(
                 'put',
                 `/api/trips/${this.currentTripId}/tripDates/${tripDateId}`,
-                updateObject, true
+                updateObject
             )
             this.setState({
                 snack: {

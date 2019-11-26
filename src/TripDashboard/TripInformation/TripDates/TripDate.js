@@ -2,15 +2,27 @@ import React, { Component } from 'react'
 import UpdateTripDateForm from './UpdateTripDateForm'
 import moment from 'moment'
 import './TripDate.css'
+import IconButton from '@material-ui/core/IconButton'
+import LeftModal from '../../../util/otherComponents/LeftModal'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 export default class TripDate extends Component {
+
+    state = {
+        isModalOpen: false
+    }
+
     handleUpdate = putObject => {
         this.props.update(this.props._id, putObject)
     }
 
     handleDelete = () => {
+        console.log('hi')
         this.props.remove(this.props._id)
     }
+
+    closeModal = () => this.setState({ isModalOpen: false })
+    openModal = () => this.setState({ isModalOpen: true })
 
     render() {
         let { name, date, type } = this.props
@@ -55,11 +67,22 @@ export default class TripDate extends Component {
                         }}>{moment(dateWithoutTimeorTZ).format('MMMM DD')}</span>
                     </div>
                 </div>
-                <UpdateTripDateForm
-                    {...this.props}
-                    submit={this.handleUpdate}
-                    remove={this.handleDelete}
-                />
+                <IconButton onClick={this.openModal} style={{ color: '#475561' }}>
+                    <MoreHorizIcon />
+                </IconButton>
+                {
+                    this.state.isModalOpen && <LeftModal
+                        isOpen={this.state.isModalOpen}
+                        toggleModal={() => this.closeModal('updateTripDate')}
+                        title='Update trip date'
+                        submit={this.handleUpdate}
+                        remove={this.handleDelete}
+                        date={moment(date).format('MM-DD-YYYY')}
+                        category={type}
+                        name={name}
+                        form={UpdateTripDateForm}
+                    />
+                }
             </div>
         )
     }

@@ -1,58 +1,131 @@
 import React from 'react'
-import FormField from '../../../util/forms/FormField'
-import SelectField from '../../../util/forms/SelectField'
+import Button from '@material-ui/core/Button'
+import { withFormik } from "formik";
 import * as Yup from 'yup'
-import ModalForm from '../../../util/forms/ModalForm'
-import {
-    nameValidator,
-    dateValidator,
-    tripDateTypeValidator
-} from '../../../util/validators'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
+import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import MomentUtils from '@date-io/moment'
 
-export default function UpdateTripDateForm(props) {
-    const initialValues = {
-        ...props,
-        date: props.date.split('T')[0]
+const categories = [
+    {
+        label: 'Travel Date',
+        value: 'TRAVEL'
+    },
+    {
+        label: 'Money Date',
+        value: 'MONEY'
+    },
+    {
+        label: 'Paperwork Date',
+        value: 'PAPERWORK'
+    },
+    {
+        label: 'Other Date',
+        value: 'OTHER'
     }
+]
 
-    const options = [
-        {
-            label: 'Travel Date',
-            value: 'TRAVEL'
-        },
-        {
-            label: 'Money Date',
-            value: 'MONEY'
-        },
-        {
-            label: 'Paperwork Date',
-            value: 'PAPERWORK'
-        },
-        {
-            label: 'Other Date',
-            value: 'OTHER'
-        }
-    ]
-
-    const schema = Yup.object().shape({
-        name: nameValidator,
-        date: dateValidator,
-        type: tripDateTypeValidator
-    })
-
-    const icon = <i class="material-icons TripDate-Edit hover">more_horiz</i>
+const form = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        setFieldValue,
+        remove
+    } = props
 
     return (
-        <ModalForm
-            mIcon={icon}
-            header="Add a Trip Date"
-            validationSchema={schema}
-            initialValues={initialValues}
-            {...props}
-        >
-            <FormField name="name" label="Name*" placeholder="Trip Date Name" />
-            <FormField name="date" label="Date*" type="date" />
-            <SelectField name="type" options={options} label="Type*" />
-        </ModalForm>
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Name"
+                value={values.name}
+                placeholder="Trip date name"
+                name="name"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
+            />
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+                <KeyboardDatePicker
+                    disableToolbar
+                    autoOk
+                    variant="inline"
+                    format="MM-DD-YYYY"
+                    id="Start"
+                    label="Start"
+                    value={values.date}
+                    onChange={value => {
+                        setFieldValue("date", value)
+                    }}
+                    onBlur={handleBlur}
+                    name="dateStart"
+                    fullWidth
+                    error={touched.status && Boolean(errors.status)}
+                    helperText={touched.status ? errors.status : ""}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                    }}
+                />
+            </MuiPickersUtilsProvider>
+            <InputLabel style={{ marginTop: 16 }}>Category</InputLabel>
+            <Select
+                required
+                displayEmpty
+                value={values.category}
+                placeholder='Select a category'
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="category"
+                renderValue={value => value.label}
+                fullWidth
+            >
+                {categories.map(category => <MenuItem value={category}>{category.label}</MenuItem>)}
+            </Select>
+            <Divider style={{ marginTop: 40 }} />
+            <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                Remove
+            </Button>
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Submit
+            </Button>
+        </form>
+    )
+}
+
+const Form = withFormik({
+    mapPropsToValues: ({
+        name,
+        date,
+        category
+    }) => {
+        return {
+            name,
+            date,
+            category: categories.filter(c => c.value === category)[0]
+        };
+    },
+
+    handleSubmit: (values, { setSubmitting, props }) => {
+        props.submit(values).then(() => setSubmitting(false))
+    }
+})(form)
+
+export default ({ submit, date, category, name, remove }) => {
+
+    return (
+        <Form submit={submit} date={date} category={category} name={name} remove={remove} />
     )
 }
