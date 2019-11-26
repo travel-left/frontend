@@ -63,6 +63,12 @@ const theme = createMuiTheme({
             fontSize: 14,
             color: '#666666',
             letterSpacing: 0
+        },
+        subtitle1: {
+            fontFamily: 'Roboto',
+            fontSize: 16,
+            color: '#768B9F',
+            letterSpacing: 0
         }
     },
     overrides: {

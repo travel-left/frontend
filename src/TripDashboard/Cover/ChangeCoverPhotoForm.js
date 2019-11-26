@@ -26,7 +26,7 @@ const form = props => {
     return (
         <form onSubmit={handleSubmit} style={{ marginTop: 41 }}>
             <FileUploader value={values.file} name='file' handleChange={value => {
-                setFieldValue("file", value)
+                setFieldValue("file", value.url)
             }} handleUploading={uploadState => setIsUploading(uploadState)}></FileUploader>
             <TextField
                 label="Link a file instead"

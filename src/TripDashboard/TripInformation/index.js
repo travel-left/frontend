@@ -4,8 +4,6 @@ import Coordinator from './Coordinators/Coordinator'
 import AddCoordinatorToTripForm from './Coordinators/AddCoordinatorToTripForm'
 import TripDate from './TripDates/TripDate'
 import CreateTripDateForm from './TripDates/CreateTripDateForm'
-import Document from './Documents/Document'
-import CreateDocumentForm from './Documents/CreateDocumentForm'
 import Contact from './Contacts/Contact'
 import CreateContactForm from './Contacts/CreateContactForm'
 import ItemList from '../../util/ItemList'
@@ -20,6 +18,7 @@ import Fab from '@material-ui/core/Fab'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import moment from 'moment'
+import Resources from './Documents/Resources';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -34,7 +33,6 @@ export default class TripInformation extends Component {
         coordinators: [],
         coordinatorsFromOrg: [],
         contacts: [],
-        documents: [],
         tripDates: [],
         snack: {
             show: false,
@@ -55,7 +53,6 @@ export default class TripInformation extends Component {
         this.getCoordinators()
         this.getCoordinatorsFromOrg()
         this.getContacts()
-        this.getDocuments()
         this.getTripDates()
     }
 
@@ -312,99 +309,6 @@ export default class TripInformation extends Component {
         }
     }
 
-    getDocuments = async () => {
-        let documents = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/documents`
-        )
-        this.setState({ documents })
-    }
-
-    updateDocument = async (documentId, updateObject) => {
-        try {
-            const updatedDocument = await apiCall(
-                'put',
-                `/api/trips/${this.currentTripId}/documents/${documentId}`,
-                updateObject, true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { documents } = this.state
-            const index = documents.findIndex(d => d._id === documentId)
-            documents[index] = updatedDocument
-            this.setState({ documents })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
-    createDocument = async doc => {
-        try {
-            const createdDocument = await apiCall(
-                'post',
-                `/api/trips/${this.currentTripId}/documents`,
-                doc,
-                true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { documents } = this.state
-            this.setState({ documents: [...documents, createdDocument] })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-
-    }
-
-    deleteDocument = async docId => {
-        try {
-            await apiCall(
-                'delete',
-                `/api/trips/${this.currentTripId}/documents/${docId}`, true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { documents } = this.state
-            const newDocuments = documents.filter(d => d._id !== docId)
-            this.setState({ documents: newDocuments })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
     getTripDates = async () => {
         let tripDates = await apiCall(
             'get',
@@ -445,7 +349,6 @@ export default class TripInformation extends Component {
     }
 
     createTripDate = async tripDate => {
-        console.log(tripDate)
         try {
             tripDate.type = tripDate.category.value.toUpperCase()
             const createdTD = await apiCall(
@@ -526,15 +429,7 @@ export default class TripInformation extends Component {
                     remove={this.deleteContact}
                 />
             ) : null
-        let documentsList =
-            documents.length > 0 ? (
-                <ItemList
-                    C={Document}
-                    items={documents}
-                    update={this.updateDocument}
-                    remove={this.deleteDocument}
-                />
-            ) : null
+
         let tripDatesList =
             tripDates.length > 0 ? (
                 <ItemList
@@ -579,12 +474,7 @@ export default class TripInformation extends Component {
                     addNewTripDate={this.state.addNewTripDate}
                     dateStart={dateStart}
                 />
-                <TripDocumentSection
-                    list={documentsList}
-                    create={this.createDocument}
-                    openModal={this.openModal}
-                    closeModal={this.closeModal}
-                />
+                <Resources tripId={this.currentTripId}></Resources>
                 <TripContactsSection
                     list={contactsList}
                     create={this.createContact}
@@ -654,21 +544,6 @@ const TripDateSection = ({ list, create, openModal, closeModal, addNewTripDate, 
     )
 }
 
-const TripDocumentSection = ({ list, create }) => {
-    return (
-        <div className="col-md-10 px-0">
-            <div className="col-12" style={{ marginTop: '5.7rem' }}>
-                <div className="row d-flex justify-content-between mb-4">
-                    <h4 className="TripInfo-heading">Trip Resources</h4>
-                    <CreateDocumentForm submit={create} />
-                </div>
-                <div className="row">{list}</div>
-            </div>
-            <div className="col-5"></div>
-        </div>
-    )
-}
-
 const TripContactsSection = ({ list, create }) => {
     return (
         <TripSection name="Trip Contacts">
@@ -683,8 +558,8 @@ const TripContactsSection = ({ list, create }) => {
 }
 
 const TripSection = props => (
-    <div className="" style={{ marginTop: 72 }}>
-        <Typography variant="h2" style={{ marginBottom: 32 }}>
+    <div className="" style={{ marginTop: 32 }}>
+        <Typography variant="h2" style={{ marginBottom: 16 }}>
             {props.name}
         </Typography>
         {props.children}

@@ -157,3 +157,11 @@
     justify-content: center !important;
     border-radius: 3px;
 }
+
+.docDropzone {
+    max-height: 100px !important;
+}
+
+.DropzoneArea-dropZone-225 {
+    min-height: 253px !important;
+}
