@@ -1,53 +1,98 @@
 import React from 'react'
-import FormField from '../../../util/forms/FormField'
-import ModalForm from '../../../util/forms/ModalForm'
-import Uploader from '../../../util/forms/Uploader'
-import Validator, {
-    nameValidator,
-    emailValidator,
-    phoneValidator
-} from '../../../util/validators'
+import Button from '@material-ui/core/Button'
+import { withFormik } from "formik";
+import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
 
-export default function CreateContactForm({ submit }) {
-    const initialValues = {
-        name: '',
-        image: 'https://',
-        email: '',
-        phone: ''
-    }
-
-    const schema = Validator({
-        name: nameValidator,
-        email: emailValidator,
-        phone: phoneValidator
-    })
+const form = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        remove
+    } = props
 
     return (
-        <ModalForm
-            buttonType='add'
-            header="Add a new emergency contact"
-            validationSchema={schema}
-            initialValues={initialValues}
-            submit={submit}
-        >
-            <FormField name="name" label="Name*" placeholder="John Appleseed" />
-            <FormField
-                component={Uploader}
-                name="image"
-                label="Upload an Image"
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Full Name"
+                value={values.name}
+                placeholder="Your full name"
+                name="name"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
             />
-            <FormField
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Email"
+                value={values.email}
+                placeholder="Email address"
                 name="email"
-                label="Email*"
-                placeholder="john@travel-left.com"
                 type="email"
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email ? errors.email : ""}
+                fullWidth
             />
-            <FormField
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Phone"
+                value={values.phone}
+                placeholder="Phone number"
                 name="phone"
-                label="Phone number"
-                placeholder="5598675309"
-                type="phone"
+                type="text"
+                error={touched.phone && Boolean(errors.phone)}
+                helperText={touched.phone ? errors.phone : ""}
+                fullWidth
             />
-        </ModalForm>
+            <Divider style={{ marginTop: 40 }} />
+            {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                Remove
+            </Button>}
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Submit
+            </Button>
+        </form>
+    )
+}
+
+const Form = withFormik({
+    mapPropsToValues: ({
+        name,
+        email,
+        phone,
+        remove
+    }) => {
+        return {
+            name: name || "",
+            phone: phone || "",
+            email: email || "",
+            remove: remove || null
+        };
+    },
+
+    handleSubmit: (values, { setSubmitting, props }) => {
+        props.submit(values).then(() => setSubmitting(false))
+    }
+})(form)
+
+export default ({ submit, name, phone, email, remove }) => {
+
+    return (
+        <Form submit={submit} name={name} phone={phone} email={email} remove={remove} />
     )
 }

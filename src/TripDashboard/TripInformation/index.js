@@ -19,6 +19,7 @@ import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import moment from 'moment'
 import Resources from './Documents/Resources';
+import Contacts from './Contacts/Contacts';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -32,7 +33,6 @@ export default class TripInformation extends Component {
     state = {
         coordinators: [],
         coordinatorsFromOrg: [],
-        contacts: [],
         tripDates: [],
         snack: {
             show: false,
@@ -52,7 +52,6 @@ export default class TripInformation extends Component {
         }
         this.getCoordinators()
         this.getCoordinatorsFromOrg()
-        this.getContacts()
         this.getTripDates()
     }
 
@@ -216,99 +215,6 @@ export default class TripInformation extends Component {
         }
     }
 
-    getContacts = async () => {
-        let contacts = await apiCall(
-            'get',
-            `/api/trips/${this.currentTripId}/contacts`
-        )
-        this.setState({ contacts })
-    }
-
-    updateContact = async (contactId, updateObject) => {
-        try {
-            const updatedContact = await apiCall(
-                'put',
-                `/api/trips/${this.currentTripId}/contacts/${contactId}`,
-                updateObject, true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { contacts } = this.state
-            const index = contacts.findIndex(d => d._id === contactId)
-            contacts[index] = updatedContact
-            this.setState({ contacts })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
-    createContact = async newContact => {
-        try {
-            const createdContact = await apiCall(
-                'post',
-                `/api/trips/${this.currentTripId}/contacts`,
-                newContact,
-                true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { contacts } = this.state
-            contacts.push(createdContact)
-            this.setState({ contacts })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
-    deleteContact = async contactId => {
-        try {
-            await apiCall(
-                'delete',
-                `/api/trips/${this.currentTripId}/contacts/${contactId}`, true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            const { contacts } = this.state
-            const newContacts = contacts.filter(d => d._id !== contactId)
-            this.setState({ contacts: newContacts })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
     getTripDates = async () => {
         let tripDates = await apiCall(
             'get',
@@ -420,15 +326,6 @@ export default class TripInformation extends Component {
                     remove={this.deleteCoordinator}
                 />
             ) : null
-        let contactsList =
-            contacts.length > 0 ? (
-                <ItemList
-                    C={Contact}
-                    items={contacts}
-                    update={this.updateContact}
-                    remove={this.deleteContact}
-                />
-            ) : null
 
         let tripDatesList =
             tripDates.length > 0 ? (
@@ -475,12 +372,7 @@ export default class TripInformation extends Component {
                     dateStart={dateStart}
                 />
                 <Resources tripId={this.currentTripId}></Resources>
-                <TripContactsSection
-                    list={contactsList}
-                    create={this.createContact}
-                    openModal={this.openModal}
-                    closeModal={this.closeModal}
-                />
+                <Contacts tripId={this.currentTripId}></Contacts>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
@@ -541,19 +433,6 @@ const TripDateSection = ({ list, create, openModal, closeModal, addNewTripDate, 
                 </TripSection>
             </Grid>
         </Grid>
-    )
-}
-
-const TripContactsSection = ({ list, create }) => {
-    return (
-        <TripSection name="Trip Contacts">
-            <div className="row mx-0">
-                {list}
-                <div className="col-md-4 my-4 pr-5 d-flex flex-row justify-content-around align-items-center">
-                    <CreateContactForm submit={create} />
-                </div>
-            </div>
-        </TripSection>
     )
 }
 

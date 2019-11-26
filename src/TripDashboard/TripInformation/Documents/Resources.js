@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography'
 import { apiCall } from '../../../util/api'
 import Snack from '../../../util/Snack'
 import Document from './Document'
-import Card from '@material-ui/core/Card'
 import FileUploader from '../../../util/forms/FileUploader'
 
 export default class Resources extends Component {
