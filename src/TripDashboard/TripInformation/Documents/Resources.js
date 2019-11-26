@@ -13,8 +13,6 @@ export default class Resources extends Component {
 
     state = {
         docs: [],
-        isUpdateModalOpen: false,
-        isCreateModalOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -28,8 +26,6 @@ export default class Resources extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
-    closeModal = modal => (this.setState({ [modal]: false }))
-    openModal = modal => (this.setState({ [modal]: true }))
 
     createDocument = async doc => {
         doc.link = doc.url
