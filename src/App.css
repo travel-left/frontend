@@ -158,11 +158,8 @@
     border-radius: 3px;
 }
 
-.docDropzone {
-    max-height: 100px !important;
-}
-
 .DropzoneArea-dropZone-225 {
-    min-height: 253px !important;
-    height: 272px !important;
+    min-height: 196px !important;
+    margin-top: 12px;
+    height: auto !important;
 }

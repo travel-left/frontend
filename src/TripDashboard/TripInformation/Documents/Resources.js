@@ -5,6 +5,7 @@ import { apiCall } from '../../../util/api'
 import Snack from '../../../util/Snack'
 import Document from './Document'
 import FileUploader from '../../../util/forms/FileUploader'
+import LeftItem from '../../../util/LeftItem';
 
 export default class Resources extends Component {
 
@@ -124,18 +125,16 @@ export default class Resources extends Component {
     render() {
         const { docs } = this.state
         const uploadZone = (
-            <Grid item xs={12} md={6}>
-                <div style={{ marginTop: 32, width: 420, height: 272 }}>
-                    <FileUploader
-                        handleChange={this.createDocument}
-                        handleUploading={this.uploadInProgress}
-                        showPreviews={false}
-                        showPreviewsInDropzone={false}
-                        class='docDropzone'
-                        filesLimit={100}
-                    ></FileUploader>
-                </div>
-            </Grid>
+            <LeftItem>
+                <FileUploader
+                    handleChange={this.createDocument}
+                    handleUploading={this.uploadInProgress}
+                    showPreviews={false}
+                    showPreviewsInDropzone={false}
+                    class='docDropzone'
+                    filesLimit={100}
+                ></FileUploader>
+            </LeftItem>
         )
 
         let documents = docs.map(doc =>

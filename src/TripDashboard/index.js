@@ -15,7 +15,7 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
             <Grid item xs={12} md={2}>
                 <SideNav ctId={currentTrip._id} />
             </Grid>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={10} lg={8}>
                 <TripRouter
                     currentTrip={currentTrip}
                     currentUser={currentUser}

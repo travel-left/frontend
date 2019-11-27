@@ -9,6 +9,25 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import MomentUtils from '@date-io/moment'
 
+const categories = [
+    {
+        label: 'Travel Date',
+        value: 'TRAVEL'
+    },
+    {
+        label: 'Money Date',
+        value: 'MONEY'
+    },
+    {
+        label: 'Paperwork Date',
+        value: 'PAPERWORK'
+    },
+    {
+        label: 'Other Date',
+        value: 'OTHER'
+    }
+]
+
 const form = props => {
     const {
         values,
@@ -18,26 +37,10 @@ const form = props => {
         handleChange,
         handleBlur,
         handleSubmit,
-        setFieldValue
+        setFieldValue,
+        remove
     } = props
-    const categories = [
-        {
-            label: 'Travel Date',
-            value: 'TRAVEL'
-        },
-        {
-            label: 'Money Date',
-            value: 'MONEY'
-        },
-        {
-            label: 'Paperwork Date',
-            value: 'PAPERWORK'
-        },
-        {
-            label: 'Other Date',
-            value: 'OTHER'
-        }
-    ]
+
     return (
         <form onSubmit={handleSubmit}>
             <TextField
@@ -90,6 +93,9 @@ const form = props => {
                 {categories.map(category => <MenuItem value={category}>{category.label}</MenuItem>)}
             </Select>
             <Divider style={{ marginTop: 40 }} />
+            {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                Remove
+            </Button>}
             <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Submit
             </Button>
@@ -100,12 +106,13 @@ const form = props => {
 const Form = withFormik({
     mapPropsToValues: ({
         name,
-        date
+        date,
+        category,
     }) => {
         return {
             name: name || "",
             date: date || new Date(),
-            category: {
+            category: categories.filter(c => c.value == category)[0] || {
                 label: 'Travel Date',
                 value: 'TRAVEL'
             }
@@ -117,9 +124,9 @@ const Form = withFormik({
     }
 })(form)
 
-export default ({ submit, date }) => {
+export default ({ submit, date, name, category, remove }) => {
 
     return (
-        <Form submit={submit} date={date} />
+        <Form submit={submit} date={date} name={name} category={category} remove={remove} />
     )
 }

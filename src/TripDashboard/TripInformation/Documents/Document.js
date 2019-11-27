@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
+import LeftItem from '../../../util/LeftItem';
 
 class Document extends Component {
     state = {
@@ -32,8 +33,8 @@ class Document extends Component {
         const linkImg = getIcon(link)
 
         return (
-            <Grid item xs={12} md={6}>
-                <Card style={{ padding: 16, marginTop: 32, width: 420, height: 272 }} className="animated fadeIn d-flex justify-content-between flex-column">
+            <LeftItem>
+                <Card style={{ padding: 16 }} className="animated fadeIn d-flex justify-content-between flex-column">
                     <div className="d-flex justify-content-between">
                         <Typography variant="h2" style={{ marginBottom: 16 }}>{name}</Typography>
                         <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
@@ -81,7 +82,7 @@ class Document extends Component {
                         </div>
                     </Card>
                 </Card>
-            </Grid>
+            </LeftItem>
         )
     }
 }

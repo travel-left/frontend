@@ -6,7 +6,8 @@ import Grid from '@material-ui/core/Grid'
 import Snack from '../../../util/Snack'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
-import CreateContactForm from './CreateContactForm'
+import ContactForm from './ContactForm'
+import LeftItem from '../../../util/LeftItem';
 
 export default class Contacts extends Component {
     TRIP_ID = this.props.tripId
@@ -14,7 +15,6 @@ export default class Contacts extends Component {
     state = {
         contacts: [],
         isNewContactModalOpen: false,
-
         snack: {
             show: false,
             variant: '',
@@ -29,6 +29,7 @@ export default class Contacts extends Component {
 
     closeModal = () => (this.setState({ isNewContactModalOpen: false }))
     openModal = () => (this.setState({ isNewContactModalOpen: true }))
+    closeSnack = () => (this.setState({ snack: { show: false } }))
 
     getContacts = async () => {
         let contacts = await apiCall(
@@ -97,7 +98,7 @@ export default class Contacts extends Component {
         try {
             await apiCall(
                 'delete',
-                `/api/trips/${this.TRIP_ID}/contacts/${contactId}`, true
+                `/api/trips/${this.TRIP_ID}/contacts/${contactId}`,
             )
             this.setState({
                 snack: {
@@ -119,7 +120,7 @@ export default class Contacts extends Component {
         }
     }
 
-    closeSnack = () => (this.setState({ snack: { show: false } }))
+
 
     render() {
         const { contacts } = this.state
@@ -136,26 +137,26 @@ export default class Contacts extends Component {
             ></Contact>
         )
 
+        const newContactButton = <LeftItem height={100}>
+            <Fab onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+                Add New
+                    </Fab>
+        </LeftItem>
+
+        contactList.splice(1, 0, newContactButton)
+
         return (
             <div style={{ marginTop: 64 }}>
                 <Typography variant="h2" style={{ marginBottom: 16 }}>Trip Contacts</Typography>
-                <Grid container spacing={2}>
+                <Grid container>
                     {contactList}
-                    <Grid item  >
-                        <Grid item className='d-flex justify-content-around align-items-center animated fadeIn' style={{ height: 100, width: 420, marginTop: 16, marginRight: 32, marginBottom: 16 }}>
-                            <Fab onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
-                                Add New
-                        </Fab>
-                        </Grid>
-                    </Grid>
-                    {
-                        this.state.isNewContactModalOpen && <LeftModal
-                            isOpen={this.state.isNewContactModalOpen}
-                            toggleModal={this.closeModal}
-                            title='Add a contact to this trip'
-                            submit={this.createContact}
-                            form={CreateContactForm}
-                        />
+                    {this.state.isNewContactModalOpen && <LeftModal
+                        isOpen={this.state.isNewContactModalOpen}
+                        toggleModal={this.closeModal}
+                        title='Add a contact to this trip'
+                        submit={this.createContact}
+                        form={ContactForm}
+                    />
                     }
                 </Grid>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
