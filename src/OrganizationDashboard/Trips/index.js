@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
-import PaymentAlert from '../../util/otherComponents/PaymentAlert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../../util/redux/actions/trip'
 import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
-import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
 import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
 import Snack from '../../util/Snack'
 import Button from '@material-ui/core/Button'
 import CreateTripModalForm from './CreateTripModalForm'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List'
+import Alert from '../../util/otherComponents/Alert'
+import moment from 'moment'
+import { withRouter, NavLink } from 'react-router-dom'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -55,16 +55,6 @@ class Trips extends Component {
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
     toggleModal = () => (this.setState(prevState => ({ isOpen: !prevState.isOpen })))
-
-    uploadFiles = async () => {
-        let files = [...this.state.files]
-        for await (let file of files) {
-            let formData = new FormData()
-            formData.append('file', file)
-            await apiCall('post', '/api/fileUploads/unAuth', formData, true)
-        }
-        this.setState({ files: ['Succesfully Uploaded'] })
-    }
 
     getAllTripsAndSetState = async () => {
         const trips = await apiCall('get', '/api/trips')
@@ -242,9 +232,22 @@ class Trips extends Component {
             />
         ) : null
 
-        let files = this.state.files
-            ? this.state.files.map(file => <p>{file.name || file}</p>)
-            : null
+        let startDate = this.props.currentUser.createdAt.split('T')[0]
+        let date = new Date();
+        let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+        var a = moment([...today.split('-')]);
+        var b = moment([...startDate.split('-')]);
+        let daysLeft = 10 - a.diff(b, 'days')
+        let freeTrialAlertText = <div>
+            Welcome to Left! Your free trial has <span style={{ color: '#0F61D8' }}>{daysLeft} days remaining. Head over to
+                <NavLink
+                    to="/editprofile"
+                    name="/editprofile"
+                >
+                    your account
+                </NavLink>
+                to start your subscription!</span>
+        </div>
 
         return (
             <Grid container spacing={2} style={{ marginTop: 8 }}>
@@ -303,51 +306,15 @@ class Trips extends Component {
                             divider
                         />
                     </List>
-                    {/* <div className="py-4 px-3">
-                            <Dropzone
-                                onDrop={acceptedFiles =>
-                                    this.setState({
-                                        files: acceptedFiles
-                                    })
-                                }
-                            >
-                                {({ getRootProps, getInputProps }) => (
-                                    <section>
-                                        <div
-                                            {...getRootProps()}
-                                            className="d-flex flex-column jusity-content-center align-items-center hover"
-                                        >
-                                            <input {...getInputProps()} />
-                                            <p className="text-center">
-                                                Drag files or click here to
-                                                upload to the LEFT cloud.
-                                            </p>
-                                            {files}
-                                        </div>
-                                    </section>
-                                )}
-                            </Dropzone> */}
-                    {/* <div className="row justify-content-center align-items-center">
-                                {files && (
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={this.uploadFiles}
-                                    >
-                                        UPLOAD
-                                    </button>
-                                )}
-                            </div>
-                        </div> */}
-
                 </Grid>
                 <Grid container spacing={2} xs={12} md={10} style={{ paddingLeft: 8 }}>
                     <Grid item xs={12} md={8}>
-                        {this.props.currentUser.cc.length > 4 ? <PaymentAlert user={this.props.currentUser}></PaymentAlert> : null}
+                        {/* {this.props.currentUser.cc.length > 4 ? <Alert text={freeTrialAlertText}></Alert> : null} */}
                         <TripsListHeader />
                         {tripList}
                     </Grid>
                     <Grid item xs={12} md={4} style={{ paddingRight: 0 }}>
-                        {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
+                        {/* {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>} */}
                         {tripInfo}
                     </Grid>
                 </Grid>
@@ -363,7 +330,7 @@ const mapStatetoProps = state => {
     }
 }
 
-export default connect(
+export default withRouter(connect(
     mapStatetoProps,
     { setCurrentTrip }
-)(Trips)
+)(Trips))
