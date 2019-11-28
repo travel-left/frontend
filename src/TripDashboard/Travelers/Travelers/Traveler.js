@@ -35,7 +35,7 @@ export default class Traveler extends Component {
                     />
                 </div>
                 <div className="col-md-1">
-                    <Image diameter="48px" src={image} name={name} />
+                    <Image diameter="64px" src={image} name={name} />
                 </div>
                 <div className={nameClasses}>{name}</div>
                 <div className={contactClasses} style={{
