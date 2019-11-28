@@ -23,7 +23,7 @@ class Navbar extends Component {
     }
 
     account = () => {
-        this.props.history.push(`/editprofile`)
+        this.props.history.push(`/account/personal`)
         this.handleClose()
     }
 

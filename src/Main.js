@@ -16,6 +16,7 @@ import Travelers from './OrganizationDashboard/Travelers'
 import SharePreview from './TripDashboard/Share/SharePreview'
 import CheckoutForm from './util/forms/CheckoutForm'
 import Container from '@material-ui/core/Container'
+import Account from './Auth/Account'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -48,20 +49,10 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 )}
             />
             <Route
-                exact
-                path="/subscription"
+                path="/account"
                 render={props => (
                     <WithAuth {...props}>
-                        <CheckoutForm {...props} currentUser={currentUser} />
-                    </WithAuth>
-                )}
-            />
-            <Route
-                exact
-                path="/editprofile"
-                render={props => (
-                    <WithAuth {...props}>
-                        <EditProfile
+                        <Account
                             {...props}
                             currentUser={currentUser}
                             setCurrentUser={setCurrentUser}

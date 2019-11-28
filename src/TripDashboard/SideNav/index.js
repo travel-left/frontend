@@ -28,7 +28,7 @@ export default withRouter(function SideNav({ ctId, location }) {
         }
     ]
     const sideNavList = sideNavComponents.map(({ name, text, divider, active }) => (
-        <SideNavLink key={name} text={text} name={name} tripId={ctId} divider={divider} active={active} />
+        <SideNavLink key={name} text={text} name={name} divider={divider} active={active} route={`/trips/${ctId}/${name}`} />
     ))
     return (
         <List component="div" style={{ paddingTop: 0, paddingBottom: 0 }}>

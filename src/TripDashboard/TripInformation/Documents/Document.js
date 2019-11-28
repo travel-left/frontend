@@ -4,7 +4,6 @@ import { getIcon } from '../../../util/file-icons'
 import './Document.css'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
 import LeftItem from '../../../util/LeftItem';
@@ -36,7 +35,7 @@ class Document extends Component {
             <LeftItem>
                 <Card style={{ padding: 16 }} className="animated fadeIn d-flex justify-content-between flex-column">
                     <div className="d-flex justify-content-between">
-                        <Typography variant="h2" style={{ marginBottom: 16 }}>{name}</Typography>
+                        <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
                         <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
                             Edit
                         </Fab>
@@ -53,7 +52,7 @@ class Document extends Component {
                             />
                         }
                     </div>
-                    <Typography variant="subtitle1">{description}</Typography>
+                    <Typography variant="caption">{description}</Typography>
                     <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16 }}>
                         <div className="Document-icon d-flex justify-content-center align-items-center">
                             <a
