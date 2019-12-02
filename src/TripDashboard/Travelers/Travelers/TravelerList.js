@@ -5,7 +5,7 @@ export default ({ items, update, selected, remove, toggle, doubleClick, showTrip
     items.map((item, index) => (
         <Traveler
             {...item}
-            selected={selected[item._id] === true}
+            selected={item.selected === true}
             update={update}
             remove={remove}
             key={item._id}

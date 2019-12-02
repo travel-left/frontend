@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import AddTravelerForm from './Actions/AddTravelerForm'
 import ImportBulkForm from './Actions/ImportBulkForm'
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './Travelers/TravelerList'
 import Card from '@material-ui/core/Card';
 import CreateEmailForm from './Actions/CreateEmailForm'
@@ -16,7 +17,10 @@ import AddFromOrg from './Travelers/AddFromOrg';
 import Snack from '../../util/Snack'
 import LeftMultipleSelect from '../../util/forms/LeftMultipleSelect'
 import { travelerStatus } from '../../util/globals'
-
+import Paper from '@material-ui/core/Paper'
+import IconButton from '@material-ui/core/IconButton'
+import LeftModal from '../../util/otherComponents/LeftModal'
+import ChangeTravelerStatusForm from './ChangeTravelerStatusForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -41,13 +45,15 @@ class Travelers extends Component {
     currentTripId = this.props.currentTrip._id
 
     state = {
-        selected: {},
+        selectedTravelers: [],
         allSelected: false,
         selectedTraveler: {},
         statusFiltersChecked: [],
         travelers: [],
+        filteredTravelers: [],
         travelersNotOnTrip: [],
         addModalIsOpen: false,
+        isChangeStatusModalOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -63,6 +69,8 @@ class Travelers extends Component {
         this.getTravelers()
     }
 
+    closeChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: false }))
+    openChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: true }))
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     getTravelers = async () => {
@@ -71,12 +79,26 @@ class Travelers extends Component {
 
         const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
 
-        this.setState({ travelers, selectedTraveler: travelers[0], travelersNotOnTrip })
+        this.setState({
+            travelers, selectedTraveler: travelers[0], travelersNotOnTrip,
+            allSelected: false,
+            statusFiltersChecked: []
+        })
     }
 
     handleStatusFilterChange = statusFiltersChecked => {
         statusFiltersChecked = statusFiltersChecked.target.value
-        this.setState({ statusFiltersChecked })
+
+        this.setState(prevState => {
+            return {
+                statusFiltersChecked,
+                travelers: prevState.travelers.map(t =>
+                    statusFiltersChecked.includes(t.status) ?
+                        { ...t, filtered: true }
+                        : { ...t, filtered: false }
+                ),
+            }
+        })
     }
 
     addTraveler = async travelers => {
@@ -185,32 +207,33 @@ class Travelers extends Component {
         }
     }
 
-    toggle = travelerId => {
+    toggle = clickedTravelerId => {
         this.setState(prevState => {
-            const { selected } = prevState
-            selected[travelerId] = !selected[travelerId]
-            return {
-                ...prevState,
-                allSelected: false,
-                selected
-            }
+            this.setState({
+                travelers: prevState.travelers.map(t =>
+                    t._id == clickedTravelerId ?
+                        { ...t, selected: t.selected ? false : true }
+                        : t
+                ),
+                allSelected: false
+            })
         })
     }
 
     toggleAll = () => {
         this.setState(prevState => {
-            const { travelers } = prevState
-            const newAllSelected = !prevState.allSelected
-            let selected = {}
-            if (newAllSelected) {
-                for (const { _id } of travelers) {
-                    selected[_id] = newAllSelected
+            const isSelectingAll = !prevState.allSelected
+
+            if (isSelectingAll) {//if user is trying to select all
+                return {
+                    travelers: prevState.travelers.map(t => ({ ...t, selected: true })),
+                    allSelected: true
                 }
-            }
-            return {
-                ...prevState,
-                allSelected: newAllSelected,
-                selected
+            } else {//if user is trying to deselect all
+                return {
+                    travelers: prevState.travelers.map(t => ({ ...t, selected: false })),
+                    allSelected: false
+                }
             }
         })
     }
@@ -284,12 +307,14 @@ class Travelers extends Component {
 
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
-        const { selected, travelers } = this.state
+        console.log(status)
+        const { travelers } = this.state
+
         let travelerStatuses = []
 
-        for (const traveler of travelers) {
-            if (selected[traveler._id]) {
-                travelerStatuses.push({ _id: traveler._id, update: { status } })
+        for (const t of travelers) {
+            if (t.selected && (this.state.statusFiltersChecked.length > 0 ? t.filtered : true)) {
+                travelerStatuses.push({ _id: t._id, update: { status } })
             }
         }
 
@@ -297,7 +322,7 @@ class Travelers extends Component {
             await apiCall(
                 'put',
                 `/api/trips/${this.currentTripId}/travelers`,
-                travelerStatuses, true
+                travelerStatuses
             )
             this.setState({
                 snack: {
@@ -318,17 +343,6 @@ class Travelers extends Component {
         }
     }
 
-    handleFilterChange = selectedFilters => {
-        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
-            //handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
-            selectedFilters = null
-        }
-        let filters = selectedFilters
-            ? selectedFilters.map(f => f.value)
-            : this.allFilters
-        this.setState({ filters })
-    }
-
     setSelectedTraveler = travelerId => {
         let newSelection = this.state.travelers.find(
             t => t._id === travelerId
@@ -345,17 +359,8 @@ class Travelers extends Component {
     }
 
     render() {
-        const { selected, allSelected, filters, statusFiltersChecked, selectedTraveler, travelers } = this.state
+        const { allSelected, selectedTravelers, statusFiltersChecked, selectedTraveler, travelers } = this.state
         const { classes } = this.props
-        let filteredTravelers = []
-
-        if (statusFiltersChecked.length === 0) {
-            filteredTravelers = travelers
-        } else {
-            filteredTravelers = travelers.filter(traveler =>
-                statusFiltersChecked.includes(traveler.status)
-            )
-        }
 
         let travelerInfo = selectedTraveler ? (
             <TravelerInfo
@@ -376,17 +381,28 @@ class Travelers extends Component {
                                     <div className="col-md-12">
                                         <div className="row justify-content-between">
                                             <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
-
                                             <div className="d-flex flex-row">
-                                                <ChangeStatusForm
-                                                    submit={
-                                                        this
-                                                            .changeStatusOfSelectedTravelers
-                                                    }
+                                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                    <IconButton onClick={this.openChangeStatusModal}>
+                                                        <CreateOutlinedIcon fontSize="large" />
+                                                    </IconButton>
+                                                </Paper>
+                                                {
+                                                    this.state.isChangeStatusModalOpen && <LeftModal
+                                                        isOpen={this.state.isChangeStatusModalOpen}
+                                                        toggleModal={this.closeChangeStatusModal}
+                                                        title='Change traveler status'
+                                                        submit={this.changeStatusOfSelectedTravelers}
+                                                        travelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                                        form={ChangeTravelerStatusForm}
+                                                    />
+                                                }
+                                                {/* <ChangeStatusForm
+                                                    submit={this.changeStatusOfSelectedTravelers}
                                                     travelers={filteredTravelers}
                                                     selected={selected}
-                                                />
-                                                <CreateTextForm
+                                                /> */}
+                                                {/* <CreateTextForm
                                                     key={1}
                                                     submit={
                                                         this.textSelectedTravelers
@@ -401,7 +417,7 @@ class Travelers extends Component {
                                                     }
                                                     travelers={filteredTravelers}
                                                     selected={selected}
-                                                />
+                                                /> */}
                                             </div>
                                             <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
                                             {this.state.addModalIsOpen &&
@@ -434,8 +450,8 @@ class Travelers extends Component {
                                         </div>
                                         <div className="row left-shadow-sharp mt-4" style={{ borderRadius: '3px' }}>
                                             <TravelerList
-                                                items={filteredTravelers}
-                                                selected={selected}
+                                                items={statusFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
+                                                selected={selectedTravelers}
                                                 toggle={this.toggle}
                                                 doubleClick={this.setSelectedTraveler}
                                                 showTrip={false}

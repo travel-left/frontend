@@ -6,7 +6,6 @@ import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 
 export default class Traveler extends Component {
     handleToggle = () => {
-        console.log('toggling')
         this.props.toggle(this.props._id)
     }
 
