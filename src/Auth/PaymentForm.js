@@ -73,7 +73,7 @@ class _CardForm extends Component {
                 <label style={{
                     color: 'rgba(0, 0, 0, 0.54)',
                     padding: 0,
-                    fontSize: '1rem',
+                    fontSize: '.75rem',
                     fontFamily: "Roboto",
                     fontWeight: 400,
                     lineHeight: 1,
@@ -83,7 +83,7 @@ class _CardForm extends Component {
                 <label style={{
                     color: 'rgba(0, 0, 0, 0.54)',
                     padding: 0,
-                    fontSize: '1rem',
+                    fontSize: '.75rem',
                     fontFamily: "Roboto",
                     fontWeight: 400,
                     lineHeight: 1,

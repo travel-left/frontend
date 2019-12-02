@@ -7,32 +7,21 @@ import Card from '@material-ui/core/Card';
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
 import { withStyles } from '@material-ui/core/styles'
-import Select from 'react-select'
 import ChangeStatusForm from './Actions/ChangeStatusForm'
 import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
-import { customStyles } from '../../util/forms/SelectStyles'
 import AddFromOrg from './Travelers/AddFromOrg';
 import Snack from '../../util/Snack'
+import LeftMultipleSelect from '../../util/forms/LeftMultipleSelect'
+import { travelerStatus } from '../../util/globals'
+
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/managetravelers')
 }
-
-
-const stati = [
-    { value: 'INVITED', label: 'Invited' },
-    { value: 'CONFIRMED', label: 'Confirmed' },
-    { value: 'ON-TRIP', label: 'On trip' },
-    { value: 'POST-TRIP', label: 'Post trip' },
-    { value: 'DOCS DUE', label: 'Docs due' },
-    { value: 'MONEY DUE', label: 'Money due' },
-    { value: 'OTHER', label: 'Other' },
-    { value: 'NONE', label: 'None' },
-    { value: 'NOT-GOING', label: 'Not going' },
-]
 
 const styles = {
     title: {
@@ -50,25 +39,12 @@ const styles = {
 
 class Travelers extends Component {
     currentTripId = this.props.currentTrip._id
-    allFilters = [
-        'INVITED',
-        'CONFIRMED',
-        'ON-TRIP',
-        'POST-TRIP',
-        'DOCS DUE',
-        'MONEY DUE',
-        'OTHER',
-        'PAPERWORK NEEDED',
-        'PAYMENT NEEDED',
-        'NONE',
-        'NOT-GOING'
-    ]
 
     state = {
         selected: {},
         allSelected: false,
-        filters: this.allFilters,
         selectedTraveler: {},
+        statusFiltersChecked: [],
         travelers: [],
         travelersNotOnTrip: [],
         addModalIsOpen: false,
@@ -96,6 +72,11 @@ class Travelers extends Component {
         const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
 
         this.setState({ travelers, selectedTraveler: travelers[0], travelersNotOnTrip })
+    }
+
+    handleStatusFilterChange = statusFiltersChecked => {
+        statusFiltersChecked = statusFiltersChecked.target.value
+        this.setState({ statusFiltersChecked })
     }
 
     addTraveler = async travelers => {
@@ -364,11 +345,17 @@ class Travelers extends Component {
     }
 
     render() {
-        let { selected, allSelected, filters, selectedTraveler, travelers } = this.state
+        const { selected, allSelected, filters, statusFiltersChecked, selectedTraveler, travelers } = this.state
         const { classes } = this.props
-        const filteredTravelers = travelers.filter(traveler =>
-            filters.includes(traveler.status)
-        )
+        let filteredTravelers = []
+
+        if (statusFiltersChecked.length === 0) {
+            filteredTravelers = travelers
+        } else {
+            filteredTravelers = travelers.filter(traveler =>
+                statusFiltersChecked.includes(traveler.status)
+            )
+        }
 
         let travelerInfo = selectedTraveler ? (
             <TravelerInfo
@@ -388,18 +375,8 @@ class Travelers extends Component {
                                 <div className="row mx-0">
                                     <div className="col-md-12">
                                         <div className="row justify-content-between">
-                                            <Select
-                                                isMulti
-                                                name="colors"
-                                                options={stati}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                                styles={customStyles}
-                                                placeholder="All Status"
-                                                onChange={
-                                                    this.handleFilterChange
-                                                }
-                                            />
+                                            <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
+
                                             <div className="d-flex flex-row">
                                                 <ChangeStatusForm
                                                     submit={
