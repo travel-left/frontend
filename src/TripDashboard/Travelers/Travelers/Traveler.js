@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-
 import Image from '../../../util/otherComponents/Image'
 import Checkbox from '@material-ui/core/Checkbox'
 import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 export default class Traveler extends Component {
     handleToggle = () => {
@@ -16,37 +17,38 @@ export default class Traveler extends Component {
     render() {
         let { name, email, status, image, selected, index, trip, showTrip } = this.props
         let bgColor = index % 2 !== 0 ? '#F6FAFF' : '#FFFFFF'
-        let nameClasses = showTrip ? "col-md-2 Travelers-name" : "col-md-3 Travelers-name"
-        let contactClasses = showTrip ? "col-md-3" : "col-md-4"
+
         return (
-            <div
-                className="d-flex py-2 animated fadeIn col-12 justify-content-around align-items-center hover"
+            <Grid container
+                className="d-flex animated fadeIn justify-content-around align-items-center hover flex-grow-1"
                 style={{
-                    backgroundColor: bgColor
+                    backgroundColor: bgColor,
+                    paddingTop: 8,
+                    paddingBottom: 8
                 }}
                 onDoubleClick={this.handleDoubleClick}
             >
-                <div className="col-md-1">
+                <Grid item xs={1} >
                     <Checkbox
                         onChange={this.handleToggle}
                         checked={selected}
                         color='primary'
                     />
-                </div>
-                <div className="col-md-1">
+                </Grid>
+                <Grid item xs={2} className="d-none d-xl-flex">
                     <Image diameter="64px" src={image} name={name} />
-                </div>
-                <div className={nameClasses}>{name}</div>
-                <div className={contactClasses} style={{
-                    fontFamily: 'Roboto',
-                    fontSize: '14px',
-                    color: '#475561'
-                }}>{email}</div>
-                <div className="col-md-2">
+                </Grid>
+                <Grid item xs={2}>
+                    <Typography variant="h6" style={{ color: '#333333', }}>{name}</Typography>
+                </Grid>
+                <Grid item xs={3} className="d-none d-xl-flex">
+                    <Typography variant="subtitle2">{email}</Typography>
+                </Grid>
+                <Grid item xs={3}>
                     <TravelerStatus status={status} />
-                </div>
+                </Grid>
                 {showTrip &&
-                    <div className="col-md-2" style={{
+                    <Grid item xs={3} style={{
                         fontFamily: 'Roboto',
                         fontSize: '14px',
                         color: '#333333',
@@ -54,13 +56,13 @@ export default class Traveler extends Component {
                         textAlign: 'left',
                     }}>
                         {trip}
-                    </div>
+                    </Grid>
                 }
-                <div className="col-md-1 d-flex align-items-center justify-content-center">
+                <Grid item xs={1}>
                     <i class="material-icons hover" style={{ color: '#AAB5C0', fontSize: '24px' }}
                         onClick={this.handleDoubleClick}>more_vert</i>
-                </div>
-            </div>
+                </Grid>
+            </Grid>
         )
     }
 }
