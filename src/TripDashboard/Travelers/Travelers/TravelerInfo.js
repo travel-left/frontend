@@ -36,9 +36,11 @@ export default class TravelerInfo extends Component {
 
     getMessages = async () => {
         const { _id } = this.props.traveler
-        let messages = await apiCall('get', `/api/travelers/${_id}/messages`)
-        messages = messages.sort((f, s) => f.createdAt < s.createdAt)
-        this.setState({ messages, showMessages: messages.length > 0 })
+        if (_id) {
+            let messages = await apiCall('get', `/api/travelers/${_id}/messages`)
+            messages = messages.sort((f, s) => f.createdAt < s.createdAt)
+            this.setState({ messages, showMessages: messages.length > 0 })
+        }
     }
 
     handleRemove = () => {

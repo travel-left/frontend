@@ -8,15 +8,13 @@ import WithoutAuth from './Auth/withoutAuth'
 import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth'
 import CreateProfile from './Auth/CreateProfile'
-import EditProfile from './Auth/EditProfile'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
 import Support from './Support'
-import Travelers from './OrganizationDashboard/Travelers'
 import SharePreview from './TripDashboard/Share/SharePreview'
-import CheckoutForm from './util/forms/CheckoutForm'
 import Container from '@material-ui/core/Container'
 import Account from './Auth/Account'
+import Travelers from './TripDashboard/Travelers/index'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -108,7 +106,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/travelers"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>
-                        <Travelers {...props} currentUser={currentUser} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <Travelers {...props} currentUser={currentUser} />
+                        </Container>
                     </WithAuth>
                 )}
             />
