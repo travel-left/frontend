@@ -1,78 +1,124 @@
 import React from 'react'
-import FormField from '../../../util/forms/FormField'
-import ModalForm from '../../../util/forms/ModalForm'
-import Uploader from '../../../util/forms/Uploader'
-import SelectField from '../../../util/forms/SelectField'
-import Validator, {
-    nameValidator,
-    emailValidator,
-    phoneValidator
-} from '../../../util/validators'
+import Button from '@material-ui/core/Button'
+import { withFormik } from "formik";
+import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import { travelerStatus } from '../../../util/globals'
 
-export default function UpdateTravelerForm(props) {
-    const initialValues = {
-        ...props.traveler
-    }
-
-    const schema = Validator({
-        name: nameValidator,
-        email: emailValidator,
-        phone: phoneValidator
-    })
-
-    const button = {
-        classes: 'btn btn-lg btn-secondary float-right px-5 mt-5 mb-3',
-        text: 'EDIT'
-    }
+const form = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        setFieldValue,
+        remove
+    } = props
 
     return (
-        <ModalForm
-            button={button}
-            header="Edit traveler"
-            validationSchema={schema}
-            initialValues={initialValues}
-            submit={props.submit}
-            remove={props.remove}
-            deleteText='Remove'
-        >
-            <FormField name="name" label="Name" placeholder="John Appleseed" />
-            <SelectField
+        <form onSubmit={handleSubmit}>
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Full Name"
+                value={values.name}
+                placeholder="Full name"
+                name="name"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
+            />
+            <InputLabel style={{ marginTop: 16 }}>Status</InputLabel>
+            <Select
+                required
+                displayEmpty
+                value={values.status}
+                placeholder='Select a status'
+                onChange={handleChange}
+                onBlur={handleBlur}
                 name="status"
-                options={[
-                    { value: 'INVITED', label: 'Invited' },
-                    { value: 'CONFIRMED', label: 'Confirmed' },
-                    { value: 'ON-TRIP', label: 'On trip' },
-                    { value: 'POST-TRIP', label: 'Post trip' },
-                    { value: 'PAYMENT NEEDED', label: 'Payment needed' },
-                    { value: 'PAPERWORK NEEDED', label: 'Paperwork needed' },
-                    { value: 'OTHER', label: 'Other' }
-                ]}
-                label="Status"
-            />
-            <FormField
-                name="image"
-                label="Upload a new image"
-                component={Uploader}
-            />
-            <FormField
-                name="email"
+                fullWidth
+            >
+                {travelerStatus.map(status => <MenuItem value={status}>{status}</MenuItem>)}
+            </Select>
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
                 label="Email"
-                placeholder="john@travel-left.com"
+                value={values.email}
+                placeholder="Email address"
+                name="email"
                 type="email"
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email ? errors.email : ""}
+                fullWidth
             />
-            <FormField
-                name="phone"
+            <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
                 label="Phone number"
-                placeholder="5598675309"
+                value={values.phone}
+                placeholder="Phone number"
+                name="phone"
                 type="text"
+                fullWidth
             />
-            <FormField
+            <TextField
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Personal Notes"
+                value={values.personalNotes}
+                placeholder="Personal notes"
                 name="personalNotes"
-                label="Personal notes"
-                component="textarea"
-                placeholder="Any extra notes about this traveler"
-                className="d-block"
+                type="text"
+                fullWidth
             />
-        </ModalForm>
+            <Divider style={{ marginTop: 40 }} />
+            {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                Remove
+            </Button>}
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                Submit
+            </Button>
+        </form>
+    )
+}
+
+const Form = withFormik({
+    mapPropsToValues: ({
+        name,
+        personalNotes,
+        email,
+        phone,
+        status,
+    }) => {
+        return {
+            name: name || "",
+            status: status || travelerStatus[0],
+            personalNotes: personalNotes || '',
+            email: email || '',
+            phone: phone || '',
+        };
+    },
+
+    handleSubmit: (values, { setSubmitting, props }) => {
+        props.submit(values).then(() => setSubmitting(false))
+    }
+})(form)
+
+export default ({ submit, traveler, remove }) => {
+
+    return (
+        <Form submit={submit} name={traveler.name} status={traveler.status} personalNotes={traveler.personalNotes} email={traveler.email} phone={traveler.phone} remove={remove} />
     )
 }

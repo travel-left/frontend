@@ -310,16 +310,8 @@ class Travelers extends Component {
     render() {
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers } = this.state
 
-        let travelerInfo = selectedTraveler ? (
-            <TravelerInfo
-                traveler={selectedTraveler}
-                update={this.updateTraveler}
-                remove={this.removeTraveler}
-            />
-        ) : null
-
         return (
-            <div className="d-flex row" style={{ paddingLeft: 16, paddingRight: 16, marginTop: 16 }}>
+            <div className="d-flex row" style={{ paddingLeft: 24, paddingRight: 16, marginTop: 16 }}>
                 <div className="col-12 col-lg-8 p-0">
                     <Grid item xs={12} style={{ marginRight: 16 }}>
                         <Typography variant="h2">Travelers on this Trip</Typography>
@@ -416,11 +408,11 @@ class Travelers extends Component {
 
                 </div>
                 <div className="col-12 col-lg-4 px-0">
-                    <Grid item xs={12}>
-                        <Card style={{ minHeight: 400 }}>
-                            {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
-                        </Card>
-                    </Grid>
+                    {this.state.selectedTraveler && <TravelerInfo
+                        traveler={selectedTraveler}
+                        update={this.updateTraveler}
+                        remove={this.removeTraveler}
+                    />}
                 </div>
 
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}

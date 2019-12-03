@@ -5,18 +5,27 @@ import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 import { apiCall } from '../../../util/api'
 import Text from './Text'
 import Email from './Email'
+import Button from '@material-ui/core/Button'
 import './TravelerInfo.css'
+import LeftModal from '../../../util/otherComponents/LeftModal'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
 
 export default class TravelerInfo extends Component {
     state = {
         messages: [],
-        showMessages: false
+        showMessages: false,
+        isEditModalOpen: false
     }
 
     constructor(props) {
         super(props)
         this.getMessages()
     }
+
+    closeEditModal = () => this.setState({ isEditModalOpen: false })
+    openEditModal = () => this.setState({ isEditModalOpen: true })
 
     componentDidUpdate(prevProps) {
         if (this.props.traveler._id !== prevProps.traveler._id) {
@@ -34,6 +43,7 @@ export default class TravelerInfo extends Component {
 
     handleRemove = () => {
         this.props.remove(this.props.traveler._id)
+        this.closeEditModal()
     }
 
     handleUpdate = updateObject => {
@@ -57,53 +67,51 @@ export default class TravelerInfo extends Component {
         ) : null
 
         return (
-            <div style={{ padding: 16 }}>
-                <div className="row d-flex flex-column justify-content-center align-items-center" style={{ paddingTop: 16 }}>
+            <Card style={{ padding: 16 }}>
+                <div className="row d-flex flex-column justify-content-center align-items-center" style={{ paddingTop: 16, marginBottom: 24 }}>
                     <Image src={image} diameter="65px" name={name} />
                 </div>
-                <div className="row">
-                    <div className="container" style={{ paddingLeft: 16, paddingRight: 16 }}>
-                        <div className="mt-4 d-flex justify-content-center">
-                            <span className="mt-2 TravelerInfo-name">{name}</span>
-                        </div>
-                        <div className="row pt-5">
-                            <div className="col">
-                                <span className="TravelerInfo-key d-block">Email</span>
-                                <span className="TravelerInfo-value">{email}</span>
-                            </div>
-                            <div className="col">
-                                <span className="TravelerInfo-key d-block">Phone</span>
-                                <span className="TravelerInfo-value">{phone}</span>
-                            </div>
-                        </div>
-                        <div className="row pt-4">
-                            <div className="col TravelerInfo-key">Status</div>
-                            <div className="col text-primary">
-                                <TravelerStatus status={status} />
-                            </div>
-                        </div>
-                        <div className="col-md-12 pt-4">
-                            <div className="row TravelerInfo-key">Notes</div>
-                            <div className="row TravelerInfo-notes">
-                                {personalNotes}
-                            </div>
-                        </div>
-                        <div className="col-md-12 pt-4">
-                            <div className="row TravelerInfo-key">Conversation History</div>
-                            <div className="row">
-                                {messageList}
-                            </div>
-                        </div>
-                        <div className="col-md-12 mt-3">
-                            <UpdateTravelerForm
-                                {...this.props}
-                                remove={this.handleRemove}
-                                submit={this.handleUpdate}
-                            />
-                        </div>
+                <div className="d-flex justify-content-center" style={{ marginBottom: 24 }}>
+                    <Typography variant="h2">{name}</Typography>
+                </div>
+                <div className='TripInfo-details' style={{ marginBottom: 24 }}>
+                    <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                        <Typography variant="h6">Email</Typography>
+                        <span className='TripInfo-details-date'>{email}</span>
+                    </div>
+                    <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                        <Typography variant="h6">Phone</Typography>
+                        <span className='TripInfo-details-date'>{phone}</span>
+                    </div>
+                    <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                        <Typography variant="h6">Status</Typography>
+                        <span><TravelerStatus status={status} /></span>
+                    </div>
+                    <div className='d-flex flex-column align-items-start' style={{ marginBottom: 24 }}>
+                        <Typography variant="h6">Notes</Typography>
+                        <span className='TripInfo-description'>{personalNotes}</span>
+                    </div>
+                    <div className='d-flex flex-column' style={{ marginBottom: 24 }}>
+                        <Typography variant="h6">Conversation History</Typography>
+                        {messageList}
                     </div>
                 </div>
-            </div>
+                <Button size="large" variant="contained" color="secondary" style={{ width: '180px', height: '50px', float: 'right' }} onClick={this.openEditModal}>
+                    EDIT TRAVELER
+                            </Button>
+                {
+                    this.state.isEditModalOpen &&
+                    <LeftModal
+                        isOpen={this.state.isEditModalOpen}
+                        toggleModal={this.closeEditModal}
+                        title='Edit traveler'
+                        submit={this.handleUpdate}
+                        remove={this.handleRemove}
+                        traveler={this.props.traveler}
+                        form={UpdateTravelerForm}
+                    />
+                }
+            </Card >
         )
     }
 }
