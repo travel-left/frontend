@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import AddTravelerForm from './Actions/AddTravelerForm'
-import ImportBulkForm from './Actions/ImportBulkForm'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './Travelers/TravelerList'
 import Card from '@material-ui/core/Card';
 import CreateEmailForm from './Actions/CreateEmailForm'
 import CreateTextForm from './Actions/CreateTextForm'
-import { withStyles } from '@material-ui/core/styles'
-import ChangeStatusForm from './Actions/ChangeStatusForm'
 import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
@@ -23,24 +20,12 @@ import LeftModal from '../../util/otherComponents/LeftModal'
 import ChangeTravelerStatusForm from './ChangeTravelerStatusForm'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
+import CommunicateWithTravelersForm from './CommunicateWithTravelersForm'
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/managetravelers')
-}
-
-const styles = {
-    title: {
-        fontFamily: 'Roboto',
-        fontWeight: '600',
-        fontSize: '30px',
-        color: '#333333',
-        paddingTop: '2rem',
-        paddingBottom: '2rem'
-    },
-    sideColumn: {
-        height: '120vh'
-    }
 }
 
 class Travelers extends Component {
@@ -54,6 +39,7 @@ class Travelers extends Component {
         travelersNotOnTrip: [],
         addModalIsOpen: false,
         isChangeStatusModalOpen: false,
+        isCommunicateModalOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -71,6 +57,8 @@ class Travelers extends Component {
 
     closeChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: false }))
     openChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: true }))
+    closeCommunicateModal = () => (this.setState({ isCommunicateModalOpen: false }))
+    openCommunicateModal = () => (this.setState({ isCommunicateModalOpen: true }))
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     getTravelers = async () => {
@@ -238,54 +226,25 @@ class Travelers extends Component {
         })
     }
 
-    textSelectedTravelers = async text => {
-        const { travelers, selected } = this.state
-        let travelersPhones = []
-        for (const { _id, phone } of travelers) {
-            if (selected[_id]) {
-                travelersPhones.push(phone)
+    communicateWithSelectedTravelers = async data => {
+        const travelerContacts = data.messageType === "email" ?
+            data.selectedTravelers.map(t => t.email) :
+            data.selectedTravelers.map(t => t.phone)
+
+        const communicationTypeEndpoint = data.messageType
+        const requestBody = communicationTypeEndpoint === 'email' ?
+            {
+                subject: data.subject,
+                body: data.message,
+                emails: travelerContacts
+            } :
+            {
+                body: data.message,
+                phones: travelerContacts
             }
-        }
 
         try {
-            await apiCall('post', '/api/communicate/text', {
-                body: text.body,
-                phones: travelersPhones
-            }, true)
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            this.getTravelers()
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
-    emailSelectedTravelers = async email => {
-        const { selected, travelers } = this.state
-        let travelersEmails = []
-        for (const { _id, email } of travelers) {
-            if (selected[_id]) {
-                travelersEmails.push(email)
-            }
-        }
-
-        try {
-            await apiCall('post', '/api/communicate/email', {
-                subject: email.subject,
-                body: email.body,
-                emails: travelersEmails
-            }, true)
+            await apiCall('post', `/api/communicate/${communicationTypeEndpoint}`, requestBody)
             this.setState({
                 snack: {
                     show: true,
@@ -307,7 +266,6 @@ class Travelers extends Component {
 
 
     changeStatusOfSelectedTravelers = async ({ status }) => {
-        console.log(status)
         const { travelers } = this.state
 
         let travelerStatuses = []
@@ -360,7 +318,6 @@ class Travelers extends Component {
 
     render() {
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers } = this.state
-        const { classes } = this.props
 
         let travelerInfo = selectedTraveler ? (
             <TravelerInfo
@@ -392,6 +349,23 @@ class Travelers extends Component {
                                     form={ChangeTravelerStatusForm}
                                 />
                             }
+                            <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <IconButton onClick={this.openCommunicateModal}>
+                                    <MessageOutlinedIcon fontSize="large" />
+                                </IconButton>
+                            </Paper>
+                            {
+                                this.state.isCommunicateModalOpen && <LeftModal
+                                    isOpen={this.state.isCommunicateModalOpen}
+                                    toggleModal={this.closeCommunicateModal}
+                                    title='Communicate with your travelers'
+                                    submit={this.communicateWithSelectedTravelers}
+                                    travelers={this.state.travelers}
+                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                    form={CommunicateWithTravelersForm}
+                                />
+                            }
+
                             {/* <CreateTextForm
                                 submit={
                                     this.textSelectedTravelers
@@ -471,7 +445,7 @@ class Travelers extends Component {
     }
 }
 
-export default withStyles(styles)(Travelers)
+export default Travelers
 
 const travelersInOrgNotOnTrip = (travelersOnTrip, traverlersInOrg) => {
     travelersOnTrip = travelersOnTrip.map(t => t._id)
