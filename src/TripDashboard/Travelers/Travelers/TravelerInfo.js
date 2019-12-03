@@ -57,12 +57,12 @@ export default class TravelerInfo extends Component {
         ) : null
 
         return (
-            <div className="pt-2 px-3">
-                <div className="row d-flex flex-column justify-content-center align-items-center pt-4">
+            <div style={{ padding: 16 }}>
+                <div className="row d-flex flex-column justify-content-center align-items-center" style={{ paddingTop: 16 }}>
                     <Image src={image} diameter="65px" name={name} />
                 </div>
                 <div className="row">
-                    <div className="container px-4">
+                    <div className="container" style={{ paddingLeft: 16, paddingRight: 16 }}>
                         <div className="mt-4 d-flex justify-content-center">
                             <span className="mt-2 TravelerInfo-name">{name}</span>
                         </div>

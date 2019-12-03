@@ -374,7 +374,7 @@ class Travelers extends Component {
             <div className="d-flex row" style={{ paddingLeft: 16, paddingRight: 16, marginTop: 16 }}>
                 <div className="col-12 col-lg-8 p-0">
                     <Grid item xs={12} style={{ marginRight: 16 }}>
-                        <Typography variant="h2">Travelers on This Trip</Typography>
+                        <Typography variant="h2">Travelers on this Trip</Typography>
                         <div className="d-flex justify-content-between" style={{ marginTop: 16 }}>
                             <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
                             <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -392,27 +392,21 @@ class Travelers extends Component {
                                     form={ChangeTravelerStatusForm}
                                 />
                             }
-                            {/* <ChangeStatusForm
-                                                    submit={this.changeStatusOfSelectedTravelers}
-                                                    travelers={filteredTravelers}
-                                                    selected={selected}
-                                                /> */}
                             {/* <CreateTextForm
-                                                    key={1}
-                                                    submit={
-                                                        this.textSelectedTravelers
-                                                    }
-                                                    travelers={filteredTravelers}
-                                                    selected={selected}
-                                                />
-                                                <CreateEmailForm
-                                                    key={2}
-                                                    submit={
-                                                        this.emailSelectedTravelers
-                                                    }
-                                                    travelers={filteredTravelers}
-                                                    selected={selected}
-                                                /> */}
+                                submit={
+                                    this.textSelectedTravelers
+                                }
+                                travelers={filteredTravelers}
+                                selected={selected}
+                            />
+                            <CreateEmailForm
+                                key={2}
+                                submit={
+                                    this.emailSelectedTravelers
+                                }
+                                travelers={filteredTravelers}
+                                selected={selected}
+                            /> */}
                             <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
                             {this.state.addModalIsOpen &&
                                 <AddFromOrg
@@ -424,7 +418,7 @@ class Travelers extends Component {
                             }
                         </div>
                         <Paper style={{ marginTop: 16 }}>
-                            <div className="d-none d-md-flex flex-row justify-content-around align-items-center TripsListHeader">
+                            <div className="d-flex flex-row justify-content-around align-items-center TripsListHeader">
                                 <Grid item xs={1} >
                                     <Checkbox
                                         onChange={this.toggleAll}
@@ -434,22 +428,23 @@ class Travelers extends Component {
                                         color="primary"
                                     />
                                 </Grid>
-                                <Grid item xs={2}></Grid>
+                                <Grid item xs={2} className="d-none d-xl-flex"></Grid>
                                 <Grid item xs={2}>
                                     <Typography variant="h6">
                                         NAME
                                 </Typography>
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={3} className="d-none d-xl-flex">
                                     <Typography variant="h6">
                                         CONTACT
                                 </Typography>
                                 </Grid>
-                                <Grid item xs={4}>
+                                <Grid item xs={3}>
                                     <Typography variant="h6">
                                         STATUS
                                 </Typography>
                                 </Grid>
+                                <Grid item xs={1}></Grid>
                             </div>
                         </Paper>
 
