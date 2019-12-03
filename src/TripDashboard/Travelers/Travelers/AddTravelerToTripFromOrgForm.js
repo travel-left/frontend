@@ -2,12 +2,16 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
+import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Chip from '@material-ui/core/Chip'
-import Input from '@material-ui/core/Input'
-import { travelerStatus } from '../../util/globals'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormLabel from '@material-ui/core/FormLabel'
 
 const form = props => {
     const {
@@ -18,7 +22,7 @@ const form = props => {
         handleChange,
         handleBlur,
         handleSubmit,
-        setFieldValue,
+        setFieldValue
     } = props
 
     let travelerList = (
@@ -60,23 +64,9 @@ const form = props => {
         <>
             {travelerList}
             <form onSubmit={handleSubmit}>
-                <InputLabel style={{ marginTop: 16 }}>Status</InputLabel>
-                <Select
-                    required
-                    displayEmpty
-                    value={values.status}
-                    placeholder='Select a status'
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    name="status"
-                    // renderValue={value => value.label}
-                    fullWidth
-                >
-                    {travelerStatus.map(status => <MenuItem value={status}>{status.toLowerCase()}</MenuItem>)}
-                </Select>
                 <Divider style={{ marginTop: 40 }} />
                 <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                    Submit
+                    ADD TO TRIP
             </Button>
             </form>
         </>
@@ -85,14 +75,12 @@ const form = props => {
 
 const Form = withFormik({
     mapPropsToValues: ({
-        travelers,
-        selectedTravelers
+        travelers
     }) => {
         return {
             travelers: travelers || [],
-            selectedTravelers: selectedTravelers || null,
-            status: travelers.length > 0 ? travelers[0].status : 'confirmed'
-        };
+            selectedTravelers: []
+        }
     },
 
     handleSubmit: (values, { setSubmitting, props }) => {
@@ -100,9 +88,9 @@ const Form = withFormik({
     }
 })(form)
 
-export default ({ submit, selectedTravelers, travelers }) => {
+export default ({ submit, travelers }) => {
 
     return (
-        <Form submit={submit} travelers={travelers} selectedTravelers={selectedTravelers} />
+        <Form submit={submit} travelers={travelers} />
     )
 }

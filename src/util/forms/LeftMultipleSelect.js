@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,34 +8,10 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card'
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap'
-    },
-    formControl: {
-        margin: theme.spacing(2),
-        minWidth: 180,
-        maxWidth: 180,
-    },
-}));
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-}
-
 export default ({ selectedValues, allValues, onChange, label }) => {
-    const classes = useStyles()
     return (
-        <Card>
-            <FormControl className={classes.formControl} >
+        <Card style={{ height: 80, padding: 16, marginBottom: 16 }}>
+            <FormControl style={{ width: 180 }} >
                 <InputLabel htmlFor="select-multiple-checkbox">{label}</InputLabel>
                 <Select
                     multiple
@@ -44,7 +19,13 @@ export default ({ selectedValues, allValues, onChange, label }) => {
                     onChange={onChange}
                     input={<Input id="select-multiple-checkbox" />}
                     renderValue={selected => selected.join(', ')}
-                    MenuProps={MenuProps}
+                    MenuProps={{
+                        PaperProps: {
+                            style: {
+                                maxHeight: 320
+                            }
+                        }
+                    }}
                 >
                     {allValues.map((filter, i) => (
                         <MenuItem key={i} value={filter}>

@@ -42,7 +42,7 @@ export default class Traveler extends Component {
                     <Typography variant="h6" style={{ color: '#333333', }}>{name}</Typography>
                 </Grid>
                 <Grid item xs={3} className="d-none d-xl-flex">
-                    <Typography variant="subtitle2">{email}</Typography>
+                    <Typography variant="caption">{email}</Typography>
                 </Grid>
                 <Grid item xs={3}>
                     <TravelerStatus status={status} />

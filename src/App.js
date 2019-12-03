@@ -79,7 +79,7 @@ const theme = createMuiTheme({
         },
         caption: {
             fontFamily: 'Roboto',
-            fontSize: '12px',
+            fontSize: 12,
             color: '#79828B',
             letterSpacing: 0,
             fontWeight: 400

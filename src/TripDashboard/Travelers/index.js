@@ -4,13 +4,11 @@ import AddTravelerForm from './Actions/AddTravelerForm'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './Travelers/TravelerList'
 import Card from '@material-ui/core/Card';
-import CreateEmailForm from './Actions/CreateEmailForm'
-import CreateTextForm from './Actions/CreateTextForm'
 import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
-import AddFromOrg from './Travelers/AddFromOrg'
+import AddTravelerToTripFromOrgForm from './Travelers/AddTravelerToTripFromOrgForm'
 import Snack from '../../util/Snack'
 import LeftMultipleSelect from '../../util/forms/LeftMultipleSelect'
 import { travelerStatus } from '../../util/globals'
@@ -19,9 +17,10 @@ import IconButton from '@material-ui/core/IconButton'
 import LeftModal from '../../util/otherComponents/LeftModal'
 import ChangeTravelerStatusForm from './ChangeTravelerStatusForm'
 import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography'
 import CommunicateWithTravelersForm from './CommunicateWithTravelersForm'
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
+import Button from '@material-ui/core/Button'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -40,6 +39,7 @@ class Travelers extends Component {
         addModalIsOpen: false,
         isChangeStatusModalOpen: false,
         isCommunicateModalOpen: false,
+        isAddModalOpen: false,
         snack: {
             show: false,
             variant: '',
@@ -59,16 +59,18 @@ class Travelers extends Component {
     openChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: true }))
     closeCommunicateModal = () => (this.setState({ isCommunicateModalOpen: false }))
     openCommunicateModal = () => (this.setState({ isCommunicateModalOpen: true }))
+    closeAddModal = () => (this.setState({ isAddModalOpen: false }))
+    openAddModal = () => (this.setState({ isAddModalOpen: true }))
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     getTravelers = async () => {
         const travelers = await apiCall('get', `/api/trips/${this.currentTripId}/travelers`)
         const travelersInOrg = await apiCall('get', '/api/organization/travelers')
-
         const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
 
         this.setState({
-            travelers, selectedTraveler: travelers[0], travelersNotOnTrip,
+            travelers, selectedTraveler: travelers[0],
+            travelersNotOnTrip,
             allSelected: false,
             statusFiltersChecked: []
         })
@@ -89,13 +91,12 @@ class Travelers extends Component {
         })
     }
 
-    addTraveler = async travelers => {
+    addTraveler = async data => {
         try {
             await apiCall(
                 'post',
                 `/api/trips/${this.currentTripId}/travelers`,
-                travelers,
-                true
+                data.selectedTravelers
             )
             this.setState({
                 snack: {
@@ -265,22 +266,12 @@ class Travelers extends Component {
     }
 
 
-    changeStatusOfSelectedTravelers = async ({ status }) => {
-        const { travelers } = this.state
-
-        let travelerStatuses = []
-
-        for (const t of travelers) {
-            if (t.selected && (this.state.statusFiltersChecked.length > 0 ? t.filtered : true)) {
-                travelerStatuses.push({ _id: t._id, update: { status } })
-            }
-        }
-
+    changeStatusOfSelectedTravelers = async data => {
         try {
             await apiCall(
                 'put',
                 `/api/trips/${this.currentTripId}/travelers`,
-                travelerStatuses
+                data.selectedTravelers.map(t => ({ _id: t._id, update: { status: data.status } }))
             )
             this.setState({
                 snack: {
@@ -332,62 +323,55 @@ class Travelers extends Component {
                 <div className="col-12 col-lg-8 p-0">
                     <Grid item xs={12} style={{ marginRight: 16 }}>
                         <Typography variant="h2">Travelers on this Trip</Typography>
-                        <div className="d-flex justify-content-between" style={{ marginTop: 16 }}>
+                        <div className="d-flex justify-content-between row mx-0" style={{ marginTop: 16 }}>
                             <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
-                            <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <IconButton onClick={this.openChangeStatusModal}>
-                                    <CreateOutlinedIcon fontSize="large" />
-                                </IconButton>
-                            </Paper>
-                            {
-                                this.state.isChangeStatusModalOpen && <LeftModal
-                                    isOpen={this.state.isChangeStatusModalOpen}
-                                    toggleModal={this.closeChangeStatusModal}
-                                    title='Change traveler status'
-                                    submit={this.changeStatusOfSelectedTravelers}
-                                    travelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
-                                    form={ChangeTravelerStatusForm}
-                                />
-                            }
-                            <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <IconButton onClick={this.openCommunicateModal}>
-                                    <MessageOutlinedIcon fontSize="large" />
-                                </IconButton>
-                            </Paper>
-                            {
-                                this.state.isCommunicateModalOpen && <LeftModal
-                                    isOpen={this.state.isCommunicateModalOpen}
-                                    toggleModal={this.closeCommunicateModal}
-                                    title='Communicate with your travelers'
-                                    submit={this.communicateWithSelectedTravelers}
-                                    travelers={this.state.travelers}
-                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
-                                    form={CommunicateWithTravelersForm}
-                                />
-                            }
+                            <div className="d-flex flex-row">
+                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
+                                    <IconButton onClick={this.openChangeStatusModal}>
+                                        <CreateOutlinedIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                                {
+                                    this.state.isChangeStatusModalOpen && <LeftModal
+                                        isOpen={this.state.isChangeStatusModalOpen}
+                                        toggleModal={this.closeChangeStatusModal}
+                                        title='Change traveler status'
+                                        submit={this.changeStatusOfSelectedTravelers}
+                                        travelers={this.state.travelers}
+                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                        form={ChangeTravelerStatusForm}
+                                    />
+                                }
+                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
+                                    <IconButton onClick={this.openCommunicateModal}>
+                                        <MessageOutlinedIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                                {
+                                    this.state.isCommunicateModalOpen && <LeftModal
+                                        isOpen={this.state.isCommunicateModalOpen}
+                                        toggleModal={this.closeCommunicateModal}
+                                        title='Communicate with your travelers'
+                                        submit={this.communicateWithSelectedTravelers}
+                                        travelers={this.state.travelers}
+                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                        form={CommunicateWithTravelersForm}
+                                    />
+                                }
 
-                            {/* <CreateTextForm
-                                submit={
-                                    this.textSelectedTravelers
-                                }
-                                travelers={filteredTravelers}
-                                selected={selected}
-                            />
-                            <CreateEmailForm
-                                key={2}
-                                submit={
-                                    this.emailSelectedTravelers
-                                }
-                                travelers={filteredTravelers}
-                                selected={selected}
-                            /> */}
-                            <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
-                            {this.state.addModalIsOpen &&
-                                <AddFromOrg
+                            </div>
+
+                            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.openAddModal}>
+                                ADD TRAVELER
+                            </Button>
+                            {this.state.isAddModalOpen &&
+                                <LeftModal
+                                    isOpen={this.state.isAddModalOpen}
+                                    toggleModal={this.closeAddModal}
+                                    title='Add travelers to this trip'
                                     submit={this.addTraveler}
-                                    toggleModal={this.toggleAddModal}
-                                    isOpen={this.state.addModalIsOpen}
                                     travelers={this.state.travelersNotOnTrip}
+                                    form={AddTravelerToTripFromOrgForm}
                                 />
                             }
                         </div>
