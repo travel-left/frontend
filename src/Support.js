@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { apiCall } from './util/api'
-import { Formik, Form } from 'formik'
-import FormField from './util/forms/FormField'
 import * as Yup from 'yup'
 import ReactGA from 'react-ga'
 import Snack from './util/Snack'
+import Card from '@material-ui/core/Card'
+import SupportForm from './util/forms/SupportForm'
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/support')
@@ -78,7 +79,7 @@ export default class Support extends Component {
         return (
             <div className="container">
                 <div className="row justify-content-center align-items-center">
-                    <div className="col-md-7 d-flex flex-column my-3">
+                    <Card style={{ padding: 16 }}>
                         <h1 className="text-dark pt-2">
                             Feature request? Need assistance? Found a bug?
                         </h1>
@@ -86,42 +87,8 @@ export default class Support extends Component {
                         <h4>
                             Fill out the form below and we will respond asap.
                         </h4>
-                        <Formik
-                            validationSchema={emailSchema}
-                            onSubmit={async (
-                                values,
-                                { resetForm, setSubmitting }
-                            ) => {
-                                await this.sendEmail(values)
-                                setSubmitting(false)
-                            }}
-                        >
-                            <Form>
-                                <FormField
-                                    name="subject"
-                                    label="Subject*"
-                                    placeholder="Your email subject"
-                                />
-                                <FormField
-                                    name="body"
-                                    label="Body*"
-                                    component="textarea"
-                                    placeholder="Your email body"
-                                    className="d-block"
-                                />
-                                <button
-                                    className="btn btn-lg btn-primary float-right m-4"
-                                    type="submit"
-                                >
-                                    SEND
-                                </button>
-                            </Form>
-                        </Formik>
-                        <p className="text-primary">
-                            {' '}
-                            {this.state.successMessage}
-                        </p>
-                    </div>
+                        <SupportForm submit={this.sendEmail}></SupportForm>
+                    </Card>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>

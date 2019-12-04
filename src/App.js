@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Navbar from './util/otherComponents/Navbar'
 import Main from './Main'
 import { setAuthorizationToken } from './util/redux/actions/auth'
-import Footer from './util/otherComponents/Footer'
 import HttpsRedirect from 'react-https-redirect'
 import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import Share from './TripDashboard/Share/index'
@@ -133,7 +132,6 @@ const App = () => (
                                             <Main />
                                         </ErrorBoundary>
                                     </div>
-                                    {/* <Footer /> */}
                                 </div>
                             )}
                         />

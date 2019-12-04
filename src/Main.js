@@ -7,7 +7,6 @@ import WithAuth from './Auth/withAuth'
 import WithoutAuth from './Auth/withoutAuth'
 import ErrorPage from './util/otherComponents/ErrorPage'
 import Auth from './Auth'
-import CreateProfile from './Auth/CreateProfile'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Auth/NewPassword'
 import Support from './Support'
@@ -34,15 +33,6 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 render={props => (
                     <WithoutAuth {...props}>
                         <Auth onAuth={authUser} type="sign up" {...props} />
-                    </WithoutAuth>
-                )}
-            />
-            <Route
-                exact
-                path="/createprofile"
-                render={props => (
-                    <WithoutAuth {...props}>
-                        <CreateProfile onAuth={authUser} {...props} />
                     </WithoutAuth>
                 )}
             />

@@ -7,13 +7,11 @@ import { setCurrentTrip } from '../../util/redux/actions/trip'
 import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
 import TripsListHeader from './TripsListHeader'
-import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
 import Snack from '../../util/Snack'
 import Button from '@material-ui/core/Button'
 import CreateTripModalForm from './CreateTripModalForm'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
-import Alert from '../../util/otherComponents/Alert'
 import moment from 'moment'
 import { withRouter, NavLink } from 'react-router-dom'
 
@@ -309,12 +307,10 @@ class Trips extends Component {
                 </Grid>
                 <Grid container spacing={2} xs={12} md={10} style={{ paddingLeft: 8 }}>
                     <Grid item xs={12} md={8}>
-                        {/* {this.props.currentUser.cc.length > 4 ? <Alert text={freeTrialAlertText}></Alert> : null} */}
                         <TripsListHeader />
                         {tripList}
                     </Grid>
                     <Grid item xs={12} md={4} style={{ paddingRight: 0 }}>
-                        {/* {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>} */}
                         {tripInfo}
                     </Grid>
                 </Grid>
