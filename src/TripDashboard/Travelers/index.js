@@ -21,9 +21,9 @@ import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
 import Button from '@material-ui/core/Button'
 import ImportCsvForm from '../../OrganizationDashboard/ImportCsvForm'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
-import CollectMoneyModalForm from '../../OrganizationDashboard/CollectMoneyModalForm'
 import RegisterAccountModalForm from '../../OrganizationDashboard/RegisterAccountModalForm'
 import TravelerForm from './Actions/TravelerForm'
+import CollectMoneyForm from '../../OrganizationDashboard/CollectMoneyForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -46,6 +46,9 @@ class Travelers extends Component {
         isCommunicateModalOpen: false,
         isAddNewTravelerOrgModalOpen: false,
         isAddModalOpen: false,
+        isCollectMoneyModalOpen: false,
+        isRegisterAccountModalOpen: false,
+        canRequestPayments: true,
         snack: {
             show: false,
             variant: '',
@@ -405,15 +408,17 @@ class Travelers extends Component {
         win.focus()
     }
 
-    collectMoneyFromTravelers = async (travelers, amount, message, sendAs) => {
+    collectMoneyFromTravelers = async data => {
+        console.log(data)
+        const { selectedTravelers, amount, message, messageType } = data
         //create form, if form created successfully
         let form
         try {
             form = await apiCall('post', '/api/coordinators/paymentForm', {
-                travelers: travelers.map(t => t._id),
+                travelers: selectedTravelers.map(t => t._id),
                 amount,
                 message,
-                sendAs
+                sendAs: messageType
             })
         } catch (err) {
             this.setState({
@@ -429,7 +434,7 @@ class Travelers extends Component {
         let travelersPhones = []
         let travelersEmails = []
 
-        for (const { phone, email } of travelers) {
+        for (const { phone, email } of selectedTravelers) {
             travelersPhones.push(phone)
             travelersEmails.push(email)
         }
@@ -438,7 +443,7 @@ class Travelers extends Component {
             let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
                 emails: travelersEmails,
                 phones: travelersPhones,
-                sendAs: sendAs
+                sendAs: messageType
             })
 
             this.setState({
@@ -555,14 +560,16 @@ class Travelers extends Component {
                                                 <AttachMoneyIcon fontSize="large" />
                                             </IconButton>
                                         </Paper>
-                                        {this.state.isCollectMoneyModalOpen && <CollectMoneyModalForm
+                                        {this.state.isCollectMoneyModalOpen && <LeftModal
+                                            title="Collect money from travelers"
                                             isOpen={this.state.isCollectMoneyModalOpen}
                                             toggleModal={this.toggleCollectMoneyModal}
                                             submit={this.collectMoneyFromTravelers}
-                                            allTravelers={this.state.travelers}
-                                            selectedTravelers={this.state.selectedTravelers}
+                                            travelers={this.state.travelers}
+                                            selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                            form={CollectMoneyForm}
                                         >
-                                        </CollectMoneyModalForm>}
+                                        </LeftModal>}
                                         {this.state.isRegisterAccountModalOpen && <LeftModal
                                             isOpen={this.state.isRegisterAccountModalOpen}
                                             toggleModal={this.toggleRegisterAccontModal}
