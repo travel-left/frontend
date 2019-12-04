@@ -41,7 +41,7 @@ export default class CollectPayment extends Component {
                     <div className="mt-5 d-flex justify-content-center">
                         <div className="row justify-content-center px-5">
                             <div className="col-2 px-0">
-                                <Image src={coordinator.image} style={{ maxWidth: '20vw' }} diameter='48px'></Image>
+                                <Image src={coordinator.image} style={{ maxWidth: '20vw' }} diameter='64px'></Image>
                             </div>
                             <div className="col-10 pl-2 pr-0">
                                 <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for your trip.</span>
