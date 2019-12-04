@@ -5,6 +5,7 @@ import { apiCall } from '../api'
 export default class FileUploader extends Component {
 
     handleChange = async file => {
+        console.log('trying to upload: ' + file)
         this.props.handleUploading(true)
         let formData = new FormData()
         formData.append('file', file)
@@ -29,6 +30,7 @@ export default class FileUploader extends Component {
                 showPreviewsInDropzone={this.props.showPreviewsInDropzone}
                 dropzoneParagraphClass='TripInfo-description'
                 dropzoneClass='FileUploader'
+                acceptedFiles={this.props.acceptedFiles}
             />
         )
     }

@@ -21,7 +21,7 @@ import Typography from '@material-ui/core/Typography'
 import CommunicateWithTravelersForm from './CommunicateWithTravelersForm'
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
 import Button from '@material-ui/core/Button'
-import ImportCsvModalForm from '../../OrganizationDashboard/ImportCsvModalForm'
+import ImportCsvForm from '../../OrganizationDashboard/ImportCsvForm'
 import AddNewTravelerModalForm from '../../OrganizationDashboard/AddNewTravelerModalForm'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import CollectMoneyModalForm from '../../OrganizationDashboard/CollectMoneyModalForm'
@@ -160,6 +160,7 @@ class Travelers extends Component {
     }
 
     addTravelersCSV = async newTravelers => {
+        console.log(newTravelers)
         try {
             await apiCall(
                 'post',
@@ -478,12 +479,13 @@ class Travelers extends Component {
             <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.toggleImportCsvModal}>
                 IMPORT FROM CSV
             </Button>
-            {this.state.isImportCsvOpen && <ImportCsvModalForm
+            {this.state.isImportCsvOpen && <LeftModal
                 isOpen={this.state.isImportCsvOpen}
                 toggleModal={this.toggleImportCsvModal}
+                title='Import travelers from CSV file'
                 submit={this.addTravelersCSV}
-            >
-            </ImportCsvModalForm>}
+                form={ImportCsvForm}
+            />}
         </>
         )
 
@@ -491,7 +493,7 @@ class Travelers extends Component {
             <>
                 <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16, marginBottom: 16 }} onClick={this.toggleAddTravelerModal}>
                     ADD NEW TRAVELER
-                                                    </Button>
+                </Button>
                 {this.state.isAddTravelerOpen && <AddNewTravelerModalForm
                     isOpen={this.state.isAddTravelerOpen}
                     toggleModal={this.toggleAddTravelerModal}
@@ -573,7 +575,7 @@ class Travelers extends Component {
                                     <>
                                         <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', }} onClick={this.openAddModal}>
                                             ADD TRAVELER
-                                    </Button>
+                                        </Button>
                                         {this.state.isAddModalOpen &&
                                             <LeftModal
                                                 isOpen={this.state.isAddModalOpen}
