@@ -41,14 +41,14 @@ export default class Traveler extends Component {
                 <Grid item xs={2}>
                     <Typography variant="h6" style={{ color: '#333333', }}>{name}</Typography>
                 </Grid>
-                <Grid item xs={3} className="d-none d-xl-flex">
+                <Grid item xs={showTrip ? 2 : 3} className="d-none d-xl-flex">
                     <Typography variant="caption">{email}</Typography>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={showTrip ? 2 : 3}>
                     <TravelerStatus status={status} />
                 </Grid>
                 {showTrip &&
-                    <Grid item xs={3} style={{
+                    <Grid item xs={2} style={{
                         fontFamily: 'Roboto',
                         fontSize: '14px',
                         color: '#333333',

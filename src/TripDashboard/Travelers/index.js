@@ -627,17 +627,21 @@ class Travelers extends Component {
                                         NAME
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={3} className="d-none d-xl-flex">
+                                <Grid item xs={!this.props.currentTrip ? 2 : 3} className="d-none d-xl-flex">
                                     <Typography variant="h6">
                                         CONTACT
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={3}>
+                                <Grid item xs={!this.props.currentTrip ? 2 : 3}>
                                     <Typography variant="h6">
                                         STATUS
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={1}></Grid>
+                                {!this.props.currentTrip &&
+                                    <Grid item xs={2}>
+                                        <Typography variant="h6">TRIP NAME</Typography>
+                                    </Grid>
+                                }<Grid item xs={1}></Grid>
                             </div>
                         </Paper>
 
@@ -645,7 +649,7 @@ class Travelers extends Component {
                             items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
                             toggle={this.toggle}
                             doubleClick={this.setSelectedTraveler}
-                            showTrip={false}
+                            showTrip={this.props.currentTrip ? false : true}
                         />
                     </Grid >
 
