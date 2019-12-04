@@ -18,34 +18,32 @@ const form = props => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div style={{ marginTop: 40 }}>
-                <TextField
-                    required
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    id="standard-required"
-                    label="Subject"
-                    value={values.subject}
-                    placeholder="Email subject"
-                    name="subject"
-                    fullWidth
-                />
-                <TextField
-                    required
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    id="standard-required"
-                    label="Message"
-                    value={values.message}
-                    placeholder="Message"
-                    name="message"
-                    fullWidth
-                />
-                <Divider style={{ marginTop: 40 }} />
-                <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                    SEND
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Subject"
+                value={values.subject}
+                placeholder="Email subject"
+                name="subject"
+                fullWidth
+            />
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Message"
+                value={values.message}
+                placeholder="Message"
+                name="message"
+                fullWidth
+            />
+            <Divider style={{ marginTop: 40 }} />
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                SEND
             </Button>
-            </div>
         </form>
     )
 }

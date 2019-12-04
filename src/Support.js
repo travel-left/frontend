@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { apiCall } from './util/api'
-import * as Yup from 'yup'
 import ReactGA from 'react-ga'
 import Snack from './util/Snack'
 import Card from '@material-ui/core/Card'
 import SupportForm from './util/forms/SupportForm'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -38,7 +39,7 @@ export default class Support extends Component {
                 this.props.currentUser.name +
                 ' -- ' +
                 email.subject,
-            body: email.body
+            body: email.message
         }
 
         try {
@@ -66,27 +67,12 @@ export default class Support extends Component {
     }
 
     render() {
-        const emailSchema = Yup.object().shape({
-            subject: Yup.string()
-                .min(2, 'Please enter a longer subject')
-                .max(200, 'Please enter a shorter subject')
-                .required('Please enter a subject'),
-            body: Yup.string()
-                .min(2, 'Please enter a longer body')
-                .max(5000, 'Please enter a shorter body')
-                .required('Please enter a body')
-        })
         return (
             <div className="container">
-                <div className="row justify-content-center align-items-center">
-                    <Card style={{ padding: 16 }}>
-                        <h1 className="text-dark pt-2">
-                            Feature request? Need assistance? Found a bug?
-                        </h1>
-                        <h3> </h3>
-                        <h4>
-                            Fill out the form below and we will respond asap.
-                        </h4>
+                <div className="d-flex justify-content-center">
+                    <Card style={{ padding: 16, maxWidth: 482, marginTop: 128 }}>
+                        <Typography variant="h5">Feature request? Need assistance? Found a bug?</Typography>
+                        <Typography variant="h6">Fill out the form below and we will respond asap.</Typography>
                         <SupportForm submit={this.sendEmail}></SupportForm>
                     </Card>
                 </div>
