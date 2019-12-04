@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import UpdateTravelerForm from '../Actions/UpdateTravelerForm'
+import TravelerForm from '../Actions/TravelerForm'
 import Image from '../../../util/otherComponents/Image'
 import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
 import { apiCall } from '../../../util/api'
@@ -110,7 +110,7 @@ export default class TravelerInfo extends Component {
                         submit={this.handleUpdate}
                         remove={this.handleRemove}
                         traveler={this.props.traveler}
-                        form={UpdateTravelerForm}
+                        form={TravelerForm}
                     />
                 }
             </Card >

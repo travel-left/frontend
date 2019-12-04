@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
-import AddTravelerForm from './Actions/AddTravelerForm'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './Travelers/TravelerList'
-import Card from '@material-ui/core/Card'
 import TravelerInfo from './Travelers/TravelerInfo'
 import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
@@ -22,10 +20,10 @@ import CommunicateWithTravelersForm from './CommunicateWithTravelersForm'
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
 import Button from '@material-ui/core/Button'
 import ImportCsvForm from '../../OrganizationDashboard/ImportCsvForm'
-import AddNewTravelerModalForm from '../../OrganizationDashboard/AddNewTravelerModalForm'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import CollectMoneyModalForm from '../../OrganizationDashboard/CollectMoneyModalForm'
 import RegisterAccountModalForm from '../../OrganizationDashboard/RegisterAccountModalForm'
+import TravelerForm from './Actions/TravelerForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -46,6 +44,7 @@ class Travelers extends Component {
         addModalIsOpen: false,
         isChangeStatusModalOpen: false,
         isCommunicateModalOpen: false,
+        isAddNewTravelerOrgModalOpen: false,
         isAddModalOpen: false,
         snack: {
             show: false,
@@ -74,6 +73,8 @@ class Travelers extends Component {
     openChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: true }))
     closeCommunicateModal = () => (this.setState({ isCommunicateModalOpen: false }))
     openCommunicateModal = () => (this.setState({ isCommunicateModalOpen: true }))
+    closeAddNewTravelerOrgModal = () => (this.setState({ isAddNewTravelerOrgModalOpen: false }))
+    openAddNewTravelerOrgModal = () => (this.setState({ isAddNewTravelerOrgModalOpen: true }))
     closeAddModal = () => (this.setState({ isAddModalOpen: false }))
     openAddModal = () => (this.setState({ isAddModalOpen: true }))
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -476,7 +477,7 @@ class Travelers extends Component {
     render() {
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = (<>
-            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.toggleImportCsvModal}>
+            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginBottom: 16 }} onClick={this.toggleImportCsvModal}>
                 IMPORT FROM CSV
             </Button>
             {this.state.isImportCsvOpen && <LeftModal
@@ -491,15 +492,19 @@ class Travelers extends Component {
 
         const newTravelerInOrg = (
             <>
-                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16, marginBottom: 16 }} onClick={this.toggleAddTravelerModal}>
-                    ADD NEW TRAVELER
+                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right' }} onClick={this.openAddNewTravelerOrgModal}>
+                    NEW TRAVELER
                 </Button>
-                {this.state.isAddTravelerOpen && <AddNewTravelerModalForm
-                    isOpen={this.state.isAddTravelerOpen}
-                    toggleModal={this.toggleAddTravelerModal}
-                    submit={this.addTravelerToOrg}
-                >
-                </AddNewTravelerModalForm>}
+                {
+                    this.state.isAddNewTravelerOrgModalOpen &&
+                    <LeftModal
+                        isOpen={this.state.isAddNewTravelerOrgModalOpen}
+                        toggleModal={this.closeAddNewTravelerOrgModal}
+                        title='Add new traveler'
+                        submit={this.addTravelerToOrg}
+                        form={TravelerForm}
+                    />
+                }
             </>
         )
         return (

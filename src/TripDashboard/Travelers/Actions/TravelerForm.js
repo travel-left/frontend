@@ -96,18 +96,14 @@ const form = props => {
 
 const Form = withFormik({
     mapPropsToValues: ({
-        name,
-        personalNotes,
-        email,
-        phone,
-        status,
+        traveler
     }) => {
         return {
-            name: name || "",
-            status: status || travelerStatus[0],
-            personalNotes: personalNotes || '',
-            email: email || '',
-            phone: phone || '',
+            name: traveler ? traveler.name : "",
+            status: traveler ? traveler.status : travelerStatus[0],
+            personalNotes: traveler ? traveler.personalNotes : '',
+            email: traveler ? traveler.email : '',
+            phone: traveler ? traveler.phone : '',
         };
     },
 
@@ -116,9 +112,9 @@ const Form = withFormik({
     }
 })(form)
 
-export default ({ submit, traveler, remove }) => {
+export default (props) => {
 
     return (
-        <Form submit={submit} name={traveler.name} status={traveler.status} personalNotes={traveler.personalNotes} email={traveler.email} phone={traveler.phone} remove={remove} />
+        <Form {...props} />
     )
 }
