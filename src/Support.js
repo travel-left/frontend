@@ -4,7 +4,6 @@ import ReactGA from 'react-ga'
 import Snack from './util/Snack'
 import Card from '@material-ui/core/Card'
 import SupportForm from './util/forms/SupportForm'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 function initializeReactGA() {
