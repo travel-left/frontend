@@ -48,7 +48,7 @@ class Travelers extends Component {
         isAddModalOpen: false,
         isCollectMoneyModalOpen: false,
         isRegisterAccountModalOpen: false,
-        canRequestPayments: true,
+        canRequestPayments: false,
         snack: {
             show: false,
             variant: '',
@@ -67,9 +67,8 @@ class Travelers extends Component {
         else {
             this.getOrgTravelers()
             this.getTrips()
-            // this.getStripeAccount()
         }
-
+        this.getStripeAccount()
     }
 
     closeChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: false }))
@@ -164,7 +163,6 @@ class Travelers extends Component {
     }
 
     addTravelersCSV = async newTravelers => {
-        console.log(newTravelers)
         try {
             await apiCall(
                 'post',
@@ -198,6 +196,21 @@ class Travelers extends Component {
                 statusFiltersChecked,
                 travelers: prevState.travelers.map(t =>
                     statusFiltersChecked.includes(t.status) ?
+                        { ...t, filtered: true }
+                        : { ...t, filtered: false }
+                ),
+            }
+        })
+    }
+
+    handleTripFilterChange = tripFiltersChecked => {
+        tripFiltersChecked = tripFiltersChecked.target.value
+
+        this.setState(prevState => {
+            return {
+                tripFiltersChecked,
+                travelers: prevState.travelers.map(t =>
+                    tripFiltersChecked.includes(t.trip) ?
                         { ...t, filtered: true }
                         : { ...t, filtered: false }
                 ),
@@ -519,7 +532,7 @@ class Travelers extends Component {
                         <Typography variant="h2">{this.props.currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
                         <div className="d-flex justify-content-between row mx-0" style={{ marginTop: 16 }}>
                             <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
-                            {!this.props.currentTrip && <LeftMultipleSelect allValues={tripFilters} selectedValues={tripFiltersChecked} onChange={() => console.log('changing trip filter')} label='All Trips'></LeftMultipleSelect>}
+                            {!this.props.currentTrip && <LeftMultipleSelect allValues={tripFilters} selectedValues={tripFiltersChecked} onChange={this.handleTripFilterChange} label='All Trips'></LeftMultipleSelect>}
                             <div className="d-flex flex-row" style={{ marginBottom: 16 }}>
                                 <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
                                     <IconButton onClick={this.openChangeStatusModal}>
@@ -533,7 +546,7 @@ class Travelers extends Component {
                                         title='Change traveler status'
                                         submit={this.changeStatusOfSelectedTravelers}
                                         travelers={this.state.travelers}
-                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
                                         form={ChangeTravelerStatusForm}
                                     />
                                 }
@@ -549,37 +562,33 @@ class Travelers extends Component {
                                         title='Communicate with your travelers'
                                         submit={this.communicateWithSelectedTravelers}
                                         travelers={this.state.travelers}
-                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
+                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
                                         form={CommunicateWithTravelersForm}
                                     />
                                 }
-                                {!this.props.currentTrip && (
-                                    <>
-                                        <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
-                                            <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
-                                                <AttachMoneyIcon fontSize="large" />
-                                            </IconButton>
-                                        </Paper>
-                                        {this.state.isCollectMoneyModalOpen && <LeftModal
-                                            title="Collect money from travelers"
-                                            isOpen={this.state.isCollectMoneyModalOpen}
-                                            toggleModal={this.toggleCollectMoneyModal}
-                                            submit={this.collectMoneyFromTravelers}
-                                            travelers={this.state.travelers}
-                                            selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 ? t.filtered : true))}
-                                            form={CollectMoneyForm}
-                                        >
-                                        </LeftModal>}
-                                        {this.state.isRegisterAccountModalOpen && <LeftModal
-                                            isOpen={this.state.isRegisterAccountModalOpen}
-                                            toggleModal={this.toggleRegisterAccontModal}
-                                            title="Register your account to collect payments"
-                                            submit={this.registerAccount}
-                                            form={RegisterAccountModalForm}
-                                        >
-                                        </LeftModal>}
-                                    </>
-                                )}
+                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
+                                    <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
+                                        <AttachMoneyIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                                {this.state.isCollectMoneyModalOpen && <LeftModal
+                                    title="Collect money from travelers"
+                                    isOpen={this.state.isCollectMoneyModalOpen}
+                                    toggleModal={this.toggleCollectMoneyModal}
+                                    submit={this.collectMoneyFromTravelers}
+                                    travelers={this.state.travelers}
+                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                                    form={CollectMoneyForm}
+                                >
+                                </LeftModal>}
+                                {this.state.isRegisterAccountModalOpen && <LeftModal
+                                    isOpen={this.state.isRegisterAccountModalOpen}
+                                    toggleModal={this.toggleRegisterAccontModal}
+                                    title="Register your account to collect payments"
+                                    submit={this.registerAccount}
+                                    form={RegisterAccountModalForm}
+                                >
+                                </LeftModal>}
                             </div>
                             <div className="d-flex flex-column">
                                 {!this.props.currentTrip && csvUpload}
@@ -616,24 +625,24 @@ class Travelers extends Component {
                                 <Grid item xs={2}>
                                     <Typography variant="h6">
                                         NAME
-                                </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={3} className="d-none d-xl-flex">
                                     <Typography variant="h6">
                                         CONTACT
-                                </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Typography variant="h6">
                                         STATUS
-                                </Typography>
+                                    </Typography>
                                 </Grid>
                                 <Grid item xs={1}></Grid>
                             </div>
                         </Paper>
 
                         <TravelerList
-                            items={statusFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
+                            items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
                             toggle={this.toggle}
                             doubleClick={this.setSelectedTraveler}
                             showTrip={false}
