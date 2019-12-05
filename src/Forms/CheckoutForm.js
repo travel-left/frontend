@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
-import { apiCall } from '../api'
-import Button from '@material-ui/core/Button'
-import Snack from '../Snack'
+import { apiCall } from '../util/api'
+import { setCurrentUser } from '../util/redux/actions/auth'
+import { connect } from 'react-redux'
+import Snack from '../util/otherComponents/Snack'
 
 class _CardForm extends Component {
     state = {
@@ -23,7 +24,7 @@ class _CardForm extends Component {
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     submit = async ev => {
-        let token = await this.props.stripe.createToken({ name: "traveler_card" })
+        let token = await this.props.stripe.createToken({ name: "Name" })
 
         if (token.error) {
             this.setState({
@@ -36,10 +37,8 @@ class _CardForm extends Component {
         }
 
         try {
-            let response = await apiCall('POST', "/api/left/stripe/connect/charge", {
-                token: token.token.id,
-                coordinatorId: this.props.coordinatorId,
-                amount: this.props.amount
+            let response = await apiCall('POST', "/api/stripe", {
+                token: token.token.id
             }, true)
             this.setState({
                 snack: {
@@ -49,9 +48,8 @@ class _CardForm extends Component {
                 }
             })
             if (response.message === 'Success') {
-
+                this.props.setCurrentUser(response.user)
             }
-            console.log(response)
         } catch (err) {
             this.setState({
                 snack: {
@@ -70,13 +68,11 @@ class _CardForm extends Component {
             <div className="">
                 <p style={{ color: '#FF605F' }}>{this.state.error}</p>
                 <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
-                <span><strong>Card details</strong></span>
-                <div className='mt-3 mb-4'>
-                    <CardElement />
-                </div>
-                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit}>
-                    Send
-                                </Button>
+                <label htmlFor="">Current card</label>
+                <p>{this.props.currentUser.cc.length === 4 ? `**** **** **** ${this.props.currentUser.cc}` : this.props.currentUser.cc}</p>
+                <label htmlFor="">Update card</label>
+                <CardElement />
+                <button className='btn btn-lg btn-primary float-right m-4' onClick={this.submit}>SAVE</button>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
@@ -84,31 +80,33 @@ class _CardForm extends Component {
 
 }
 
-const CardForm = injectStripe(_CardForm)
+const mapStateToProps = state => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+const CardForm = connect(
+    mapStateToProps,
+    { setCurrentUser }
+)(injectStripe(_CardForm))
 
 class Checkout extends Component {
-
     render() {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CardForm coordinatorId={this.props.coordinatorId} amount={this.props.amount} />
+                    <CardForm />
                 </Elements>
             </div>
         )
     }
 }
 
-export default class CreateChargeForm extends Component {
-    constructor(props) {
-        super(props)
-    }
-    render() {
-        return (
-            < StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
-                <Checkout coordinatorId={this.props.coordinatorId} amount={this.props.amount} />
-            </StripeProvider>
-        )
-
-    }
+export default () => {
+    return (
+        < StripeProvider apiKey={`${process.env.STRIPE_KEY}`}>
+            <Checkout />
+        </StripeProvider>
+    )
 }

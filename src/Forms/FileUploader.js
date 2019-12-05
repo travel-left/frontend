@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { DropzoneArea } from 'material-ui-dropzone'
-import { apiCall } from '../api'
+import { apiCall } from '../util/api'
 
 export default class FileUploader extends Component {
 

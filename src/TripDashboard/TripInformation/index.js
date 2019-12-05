@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import TripNameForm from './TripNameForm'
 import { apiCall } from '../../util/api'
 import './TripInfo.css'
 import ReactGA from 'react-ga'
-import Snack from '../../util/Snack'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import LeftModal from '../../util/otherComponents/LeftModal'
@@ -11,6 +9,8 @@ import Resources from './Documents/Resources'
 import Contacts from './Contacts/Contacts'
 import TripDates from './TripDates/TripDates'
 import Coordinators from './Coordinators/Coordinators'
+import TripNameForm from '../../Forms/TripNameForm'
+import Snack from '../../util/otherComponents/Snack';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')

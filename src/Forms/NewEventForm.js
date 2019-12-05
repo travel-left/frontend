@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Portal } from 'react-portal'
-import { types, timezones } from './EventHelpers'
+import { types, timezones } from '../TripDashboard/Itinerary/Events/EventHelpers'
 import Select from 'react-select'
 import Calendar from 'react-calendar'
 import moment from 'moment'
-import { customStyles, eventFormDocs, eventTimezone } from '../../../util/forms/SelectStyles'
-import { apiCall } from '../../../util/api'
-import { airlines } from '../../../util/airlines'
+import { customStyles, eventFormDocs, eventTimezone } from './SelectStyles'
+import { apiCall } from '../util/api'
+import { airlines } from '../util/airlines'
 
 export default class NewEventForm extends Component {
     state = {

@@ -4,8 +4,8 @@ import './TripDate.css'
 import IconButton from '@material-ui/core/IconButton'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
-import TripDateForm from './TripDateForm'
 import Typography from '@material-ui/core/Typography'
+import TripDateForm from '../../../Forms/TripDateForm'
 
 export default class TripDate extends Component {
 

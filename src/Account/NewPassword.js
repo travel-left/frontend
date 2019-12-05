@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { apiCall } from '../util/api'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import ChangePasswordForm from './ChangePasswordForm'
+import ChangePasswordForm from '../Forms/ChangePasswordForm'
 
 export default class NewPassword extends Component {
     state = {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { apiCall } from './util/api'
+import { apiCall } from '../util/api'
 import ReactGA from 'react-ga'
-import Snack from './util/Snack'
+import Snack from '../util/otherComponents/Snack'
 import Card from '@material-ui/core/Card'
-import SupportForm from './util/forms/SupportForm'
+import SupportForm from '../Forms/SupportForm'
 import Typography from '@material-ui/core/Typography'
 
 function initializeReactGA() {

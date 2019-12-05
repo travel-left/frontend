@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import Fab from '@material-ui/core/Fab'
 import Grid from '@material-ui/core/Grid'
 import Coordinator from './Coordinator'
-import AddCoordinatorToTripForm from './AddCoordinatorToTripForm'
 import Typography from '@material-ui/core/Typography'
 import { apiCall } from '../../../util/api'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import LeftItem from '../../../util/LeftItem';
+import LeftItem from '../../../util/otherComponents/LeftItem'
+import AddCoordinatorToTripForm from '../../../Forms/AddCoordinatorToTripForm'
 
 export default class Coordinators extends Component {
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import FileUploader from '../util/forms/FileUploader'
+import FileUploader from './FileUploader'
 import { withFormik } from "formik"
 import CircularProgress from '@material-ui/core/CircularProgress'
 

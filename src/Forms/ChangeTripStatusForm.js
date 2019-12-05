@@ -4,7 +4,7 @@ import Divider from '@material-ui/core/Divider'
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select'
 import { withFormik } from "formik"
-import { tripStatus } from '../../util/globals'
+import { tripStatus } from '../util/globals'
 import * as Yup from 'yup'
 
 const form = props => {

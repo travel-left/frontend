@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import DayList from './Days/DaysList'
 import EventList from './Events/EventList'
 import { apiCall, flightApi } from '../../util/api'
-import NewEventForm from './Events/NewEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Events.css'
 import ReactGA from 'react-ga'
-import Snack from '../../util/Snack'
+import Snack from '../../util/otherComponents/Snack'
+import NewEventForm from '../../Forms/NewEventForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')

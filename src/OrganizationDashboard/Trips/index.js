@@ -7,13 +7,13 @@ import { setCurrentTrip } from '../../util/redux/actions/trip'
 import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
 import TripsListHeader from './TripsListHeader'
-import Snack from '../../util/Snack'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
 import { withRouter } from 'react-router-dom'
 import LeftModal from '../../util/otherComponents/LeftModal'
-import CreateTripForm from './CreateTripForm'
+import CreateTripForm from '../../Forms/CreateTripForm'
+import Snack from '../../util/otherComponents/Snack'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')

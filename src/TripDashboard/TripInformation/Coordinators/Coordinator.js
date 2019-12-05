@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import Fab from '@material-ui/core/Fab'
 import './Coordinator.css'
-import Card from '@material-ui/core/Card'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import RemoveCoordinatorForm from './RemoveCoordinatorForm'
-import Grid from '@material-ui/core/Grid'
-import LeftCardNew from '../../../util/LeftCardNew'
+import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
+import RemoveCoordinatorForm from '../../../Forms/RemoveCoordinatorForm'
 
 
 class Coordinator extends Component {

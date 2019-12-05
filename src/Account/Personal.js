@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import './Auth.css'
 import { apiCall } from '../util/api'
-import Snack from '../util/Snack'
-import PersonalInfoForm from './PersonalInfoForm'
+import Snack from '../util/otherComponents/Snack'
+import PersonalInfoForm from '../Forms/PersonalInfoForm'
 import Card from '@material-ui/core/Card'
 
 export default class Personal extends Component {

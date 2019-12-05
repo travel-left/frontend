@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import FileUploader from '../../util/forms/FileUploader'
 import TextField from '@material-ui/core/TextField'
 import { withFormik } from "formik"
 import CircularProgress from '@material-ui/core/CircularProgress'
-import * as Yup from 'yup'
+import FileUploader from './FileUploader'
 
 const form = props => {
     const {

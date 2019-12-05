@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
 import moment from 'moment'
-import NewEventForm from './NewEventForm'
+import NewEventForm from '../../../Forms/NewEventForm'
 
 class Event extends Component {
     state = {

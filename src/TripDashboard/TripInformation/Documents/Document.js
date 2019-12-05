@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import UpdateDocumentForm from './UpdateDocumentForm'
 import { getIcon } from '../../../util/file-icons'
 import './Document.css'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
-import LeftItem from '../../../util/LeftItem';
+import LeftItem from '../../../util/otherComponents/LeftItem'
+import DocumentForm from '../../../Forms/DocumentForm'
 
 class Document extends Component {
     state = {
@@ -48,7 +48,7 @@ class Document extends Component {
                                 description={description}
                                 submit={this.handleEdit}
                                 remove={this.handleDelete}
-                                form={UpdateDocumentForm}
+                                form={DocumentForm}
                             />
                         }
                     </div>

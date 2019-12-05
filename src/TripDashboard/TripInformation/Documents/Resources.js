@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { apiCall } from '../../../util/api'
-import Snack from '../../../util/Snack'
+import Snack from '../../../util/otherComponents/Snack'
 import Document from './Document'
-import FileUploader from '../../../util/forms/FileUploader'
-import LeftItem from '../../../util/LeftItem';
+import FileUploader from '../../../Forms/FileUploader'
+import LeftItem from '../../../util/otherComponents/LeftItem'
 
 export default class Resources extends Component {
 

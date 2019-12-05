@@ -3,13 +3,12 @@ import TripDate from './TripDate'
 import { apiCall } from '../../../util/api'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import Snack from '../../../util/Snack'
+import Snack from '../../../util/otherComponents/Snack'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
-import TripDateForm from './TripDateForm'
 import moment from 'moment'
-import Card from '@material-ui/core/Card'
-import LeftCardNew from '../../../util/LeftCardNew';
+import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
+import TripDateForm from '../../../Forms/TripDateForm'
 
 export default class TripDates extends Component {
     TRIP_ID = this.props.tripId

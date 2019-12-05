@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
-import Snack from '../util/Snack'
+import Snack from '../util/otherComponents/Snack'
 import { apiCall } from '../util/api'
 import { setCurrentUser } from '../util/redux/actions/auth'
 

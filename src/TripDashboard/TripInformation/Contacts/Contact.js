@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import Card from '@material-ui/core/Card'
-import Grid from '@material-ui/core/Grid'
 import './Contact.css'
-import CreateContactForm from './ContactForm'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
-import LeftCardNew from '../../../util/LeftCardNew'
+import ContactForm from '../../../Forms/ContactForm'
+import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
 
 class Contact extends Component {
     state = {
@@ -45,7 +43,7 @@ class Contact extends Component {
                             isOpen={this.state.isEditContactModalOpen}
                             toggleModal={this.closeModal}
                             title='Remove contact from trip'
-                            form={CreateContactForm}
+                            form={ContactForm}
                             submit={this.handleEdit}
                             name={name}
                             phone={phone}

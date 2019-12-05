@@ -3,11 +3,11 @@ import Contact from './Contact'
 import { apiCall } from '../../../util/api'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import Snack from '../../../util/Snack'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
-import ContactForm from './ContactForm'
-import LeftItem from '../../../util/LeftItem';
+import ContactForm from '../../../Forms/ContactForm'
+import LeftItem from '../../../util/otherComponents/LeftItem'
+import Snack from '../../../util/otherComponents/Snack'
 
 export default class Contacts extends Component {
     TRIP_ID = this.props.tripId

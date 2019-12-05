@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
-import CheckoutForm from '../util/forms/CheckoutForm'
-import CreateChargeForm from '../util/forms/CreateChargeForm'
 import Navbar from '../util/otherComponents/Navbar'
-import Image from '../util/otherComponents/Image';
+import Image from '../util/otherComponents/Image'
+import CreateChargeForm from '../Forms/CreateChargeForm'
 
 export default class CollectPayment extends Component {
     coordinatorId = this.props.match.params.coordinatorId

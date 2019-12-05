@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import Card from '@material-ui/core/Card'
-import Typography from '@material-ui/core/Typography'
 import { apiCall } from '../util/api'
-import OrganizationForm from './OrganizationForm'
-import Snack from '../util/Snack'
+import OrganizationForm from '../Forms/OrganizationForm'
+import Snack from '../util/otherComponents/Snack'
 
 export default class Organization extends Component {
 

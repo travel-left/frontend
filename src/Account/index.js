@@ -3,8 +3,8 @@ import SidePicture from './SidePicture'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 import './Auth.css'
-import Snack from '../util/Snack'
-import Paper from '@material-ui/core/Paper';
+import Paper from '@material-ui/core/Paper'
+import Snack from '../util/otherComponents/Snack'
 
 export default class Auth extends Component {
     state = {

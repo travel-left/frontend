@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import TravelerForm from '../Actions/TravelerForm'
-import Image from '../../../util/otherComponents/Image'
-import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
-import { apiCall } from '../../../util/api'
+import Image from '../../util/otherComponents/Image'
+import TravelerStatus from '../../util/otherComponents/TravelerStatus'
+import { apiCall } from '../../util/api'
 import Text from './Text'
 import Email from './Email'
 import Button from '@material-ui/core/Button'
 import './TravelerInfo.css'
-import LeftModal from '../../../util/otherComponents/LeftModal'
-import Paper from '@material-ui/core/Paper'
+import LeftModal from '../../util/otherComponents/LeftModal'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
+import TravelerForm from '../../Forms/TravelerForm'
 
 export default class TravelerInfo extends Component {
     state = {

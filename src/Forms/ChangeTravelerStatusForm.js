@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import Chip from '@material-ui/core/Chip'
 import Input from '@material-ui/core/Input'
-import { travelerStatus } from '../../util/globals'
+import { travelerStatus } from '../util/globals'
 
 const form = props => {
     const {

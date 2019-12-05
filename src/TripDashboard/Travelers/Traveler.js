@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Image from '../../../util/otherComponents/Image'
+import Image from '../../util/otherComponents/Image'
 import Checkbox from '@material-ui/core/Checkbox'
-import TravelerStatus from '../../../util/otherComponents/TravelerStatus'
+import TravelerStatus from '../../util/otherComponents/TravelerStatus'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
