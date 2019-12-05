@@ -26,7 +26,7 @@ const Router = ({ currentTrip, currentUser, setCurrentTrip }) => {
                 exact
                 path="/trips/:tripId/itinerary"
                 render={routeProps => (
-                    <Grid item xs={12} md={10} lg={8}>
+                    <Grid item xs={12} md={10} lg={10}>
                         <Itinerary
                             {...routeProps}
                             currentTrip={currentTrip}

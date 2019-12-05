@@ -8,6 +8,11 @@ import './Events.css'
 import ReactGA from 'react-ga'
 import Snack from '../../util/otherComponents/Snack'
 import NewEventForm from '../../Forms/NewEventForm'
+import Grid from '@material-ui/core/Grid'
+import CreateQuickEventForm from '../../Forms/CreateQuickEventForm'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Card from '@material-ui/core/Card'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -20,7 +25,7 @@ class events extends Component {
 
     state = {
         days: [],
-        selectedDay: '',
+        selectedDay: {},
         events: [],
         isOpen: false,
         snack: {
@@ -46,8 +51,12 @@ class events extends Component {
 
         let flightEvents = []
         let newevents = await Promise.all(events.map(async event => {
-            if (!days.includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) days.push(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))
-
+            if (!days.includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
+                days.push({
+                    day: moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'),
+                    name: event.name
+                })
+            }
             if (event.type === 'FLIGHT') {
                 try {
                     let flightStats = await apiCall('post', '/api/flightstats', {
@@ -81,7 +90,7 @@ class events extends Component {
             end: formatDateToLocalTimezone(event.end)
         }))
 
-        this.setState({ events, days, selectedDay: days[0] })
+        this.setState({ events, days, selectedDay: days[0].day })
     }
 
     createEvent = async event => {
@@ -193,25 +202,37 @@ class events extends Component {
         ) : <h4 className="text-info" />
 
         return (
-            <div className="col-md-12 mt-4 mx-0 p-3">
-                <div className="row mx-0">
-                    <div className="col-md-2 pl-0">
-                        <button className="btn btn-primary btn-lg" onClick={this.toggleModal}>NEW EVENT</button>
-                        {this.state.isOpen &&
-                            <NewEventForm
-                                submit={this.createEvent}
-                                initDay={this.props.currentTrip.dateStart}
-                                trip={this.props.currentTrip}
-                                toggleModal={this.toggleModal}
-                                isOpen={this.state.isOpen}
-                            />
-                        }
-                        <div className="Events-trip-days-card mt-4">
+            <div className="d-flex row" style={{ paddingLeft: 24, paddingRight: 16, marginTop: 16 }}>
+                <div className="col-12 col-lg-8">
+                    <Grid item xs={12} style={{ marginRight: 16 }}>
+                        <div className="row justify-content-between">
+                            <Typography variant="h2">Trip Itinerary</Typography>
+                            <CreateQuickEventForm></CreateQuickEventForm>
+                        </div>
+                        <div className="row d-flex flex-column">
+                            {eventList}
+                        </div>
+                    </Grid>
+                </div>
+                <div className="col-12 col-lg-4 px-0">
+                    <div style={{ padding: 16 }}>
+                        <div className="row flex-column align-items-center" style={{ marginBottom: 16 }}>
+                            <Button size="large" onClick={this.toggleModal} variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 25, marginBottom: 25, marginLeft: 16, marginRight: 16 }} >
+                                NEW EVENT
+                            </Button>
+                            {this.state.isOpen &&
+                                <NewEventForm
+                                    submit={this.createEvent}
+                                    initDay={this.props.currentTrip.dateStart}
+                                    trip={this.props.currentTrip}
+                                    toggleModal={this.toggleModal}
+                                    isOpen={this.state.isOpen}
+                                />
+                            }
+                        </div>
+                        <div className="row flex-column">
                             {dayList}
                         </div>
-                    </div>
-                    <div className="col-md-10 pr-0">
-                        {eventList}
                     </div>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
