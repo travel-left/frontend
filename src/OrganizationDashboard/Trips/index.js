@@ -9,11 +9,11 @@ import ReactGA from 'react-ga'
 import TripsListHeader from './TripsListHeader'
 import Snack from '../../util/Snack'
 import Button from '@material-ui/core/Button'
-import CreateTripModalForm from './CreateTripModalForm'
 import Grid from '@material-ui/core/Grid'
 import List from '@material-ui/core/List'
-import moment from 'moment'
-import { withRouter, NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import LeftModal from '../../util/otherComponents/LeftModal'
+import CreateTripForm from './CreateTripForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -83,11 +83,9 @@ class Trips extends Component {
 
     addTrip = async trip => {
         const { trips, tripStatusCounts } = this.state
-        trip.dateStart = trip.dates.startDate
-        trip.dateEnd = trip.dates.endDate
-        delete trip.dates
+
         try {
-            const createdTrip = await apiCall('post', '/api/trips', trip, true)
+            const createdTrip = await apiCall('post', '/api/trips', trip)
             this.setState({
                 snack: {
                     show: true,
@@ -230,23 +228,6 @@ class Trips extends Component {
             />
         ) : null
 
-        let startDate = this.props.currentUser.createdAt.split('T')[0]
-        let date = new Date();
-        let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-        var a = moment([...today.split('-')]);
-        var b = moment([...startDate.split('-')]);
-        let daysLeft = 10 - a.diff(b, 'days')
-        let freeTrialAlertText = <div>
-            Welcome to Left! Your free trial has <span style={{ color: '#0F61D8' }}>{daysLeft} days remaining. Head over to
-                <NavLink
-                    to="/editprofile"
-                    name="/editprofile"
-                >
-                    your account
-                </NavLink>
-                to start your subscription!</span>
-        </div>
-
         return (
             <Grid container spacing={2} style={{ marginTop: 8 }}>
                 <Grid item xs={12} md={2}>
@@ -254,10 +235,11 @@ class Trips extends Component {
                         <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
                             ADD NEW TRIP
                         </Button>
-                        {this.state.isOpen && <CreateTripModalForm
+                        {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
                             title='Add New Trip'
                             toggleModal={this.toggleModal}
+                            form={CreateTripForm}
                             submit={this.addTrip}
                         />}
                     </div>
