@@ -7,12 +7,12 @@ import { scroller } from 'react-scroll'
 import './Events.css'
 import ReactGA from 'react-ga'
 import Snack from '../../util/otherComponents/Snack'
-import NewEventForm from '../../Forms/NewEventForm'
 import Grid from '@material-ui/core/Grid'
 import CreateQuickEventForm from '../../Forms/CreateQuickEventForm'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
+import LeftModal from '../../util/otherComponents/LeftModal';
+import EventForm from '../../Forms/EventForm'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -24,6 +24,7 @@ class events extends Component {
     localTimezone = moment.tz.guess(true)
 
     state = {
+        documents: [],
         days: [],
         selectedDay: {},
         events: [],
@@ -41,6 +42,7 @@ class events extends Component {
             initializeReactGA()
         }
         this.getDaysAndEvents()
+        this.getDocuments()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -51,7 +53,7 @@ class events extends Component {
 
         let flightEvents = []
         let newevents = await Promise.all(events.map(async event => {
-            if (!days.includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
+            if (!days.map(day => day.day).includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
                 days.push({
                     day: moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'),
                     name: event.name
@@ -93,12 +95,42 @@ class events extends Component {
         this.setState({ events, days, selectedDay: days[0].day })
     }
 
+    getDocuments = async () => {
+        let documents = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/documents`)
+        this.setState({ documents })
+    }
+
     createEvent = async event => {
         console.log(event)
         event = formatEventForBackend(event)
         console.log(event)
         try {
-            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+        this.getDaysAndEvents()
+    }
+
+    createQuickEvent = async event => {
+        event.start = new Date(event.date)
+        event.end = new Date(event.date.setHours(event.start.getHours() + 1))
+        try {
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
             this.setState({
                 snack: {
                     show: true,
@@ -207,7 +239,10 @@ class events extends Component {
                     <Grid item xs={12} style={{ marginRight: 16 }}>
                         <div className="row justify-content-between">
                             <Typography variant="h2">Trip Itinerary</Typography>
-                            <CreateQuickEventForm></CreateQuickEventForm>
+                            <CreateQuickEventForm
+                                submit={this.createQuickEvent}
+                                date={this.props.currentTrip.dateStart}
+                            ></CreateQuickEventForm>
                         </div>
                         <div className="row d-flex flex-column">
                             {eventList}
@@ -221,12 +256,15 @@ class events extends Component {
                                 NEW EVENT
                             </Button>
                             {this.state.isOpen &&
-                                <NewEventForm
+                                <LeftModal
                                     submit={this.createEvent}
-                                    initDay={this.props.currentTrip.dateStart}
+                                    date={this.props.currentTrip.dateStart}
+                                    documents={this.state.documents}
                                     trip={this.props.currentTrip}
                                     toggleModal={this.toggleModal}
                                     isOpen={this.state.isOpen}
+                                    title='Create a new event'
+                                    form={EventForm}
                                 />
                             }
                         </div>
@@ -244,17 +282,20 @@ class events extends Component {
 export default events
 
 function formatEventForBackend(event) {
-    let formattedEvent = { ...event }
-    let start = new Date(formattedEvent.date.valueOf())
-    console.log(start)
-    let end = new Date(formattedEvent.date.valueOf())
-    start.setHours(event.start.split(':')[0], event.start.split(':')[1])
-    end.setHours(formattedEvent.end.split(':')[0], event.end.split(':')[1])
-    console.log(start)
-    formattedEvent.start = start.toString()
-    formattedEvent.end = end.toString()
-    delete formattedEvent.date
-    return formattedEvent
+    //get date from event.date
+    let date = new Date(event.date.valueOf())
+    //get start and end time
+    let startTime = new Date(event.start.valueOf()).getTime()
+    let endTime = new Date(event.end.valueOf()).getTime()
+    //set the hours of start and end
+    event.start = new Date(date.setTime(startTime))
+    event.end = new Date(date.setTime(endTime))
+    event.type = event.type.toUpperCase()
+    event.documents = event.selectedDocuments
+    event.links = event.links.length ? event.links.split(' ').map(link => link) : []
+    delete event.selectedDocuments
+    delete event.date
+    return event
 }
 
 function formatDateToLocalTimezone(date) {

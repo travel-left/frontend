@@ -2,7 +2,6 @@ import React from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers'
-import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import MomentUtils from '@date-io/moment'
 
@@ -35,14 +34,14 @@ const form = props => {
                     autoOk
                     variant="inline"
                     ampm
-                    format="yyyy/MM/dd HH:mm"
+                    format="MM/DD/YYYY hh:mmA"
                     label="Date"
                     value={values.date}
                     onChange={value => {
-                        setFieldValue("start", value)
+                        setFieldValue("date", value)
                     }}
                     onBlur={handleBlur}
-                    name="start"
+                    name="date"
                     error={touched.status && Boolean(errors.status)}
                     helperText={touched.status ? errors.status : ""}
                     KeyboardButtonProps={{
@@ -60,12 +59,12 @@ const form = props => {
 
 const Form = withFormik({
     mapPropsToValues: ({
-        name,
+        date,
     }) => {
         return {
             name: "New Quick Event",
-            start: new Date(),
-        };
+            date: new Date(date).setHours(13) || new Date()
+        }
     },
 
     handleSubmit: (values, { setSubmitting, props }) => {

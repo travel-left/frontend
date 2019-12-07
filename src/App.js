@@ -9,9 +9,8 @@ import { setAuthorizationToken } from './util/redux/actions/auth'
 import HttpsRedirect from 'react-https-redirect'
 import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import Share from './TripDashboard/Share/index'
-import { ThemeProvider } from '@material-ui/styles'
+import { ThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core/styles'
-import { palette, spacing, typography } from '@material-ui/system'
 import CollectPayment from './TravelerPages/CollectPayment';
 
 const store = configureStore()

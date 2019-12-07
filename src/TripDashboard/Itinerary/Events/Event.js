@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
 import moment from 'moment'
-import NewEventForm from '../../../Forms/NewEventForm'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import { Grid } from '@material-ui/core'
+import Fab from '@material-ui/core/Fab'
+import LeftModal from '../../../util/otherComponents/LeftModal'
+import EventForm from '../../../Forms/EventForm'
 
 class Event extends Component {
     state = {
@@ -35,28 +37,6 @@ class Event extends Component {
         const { event } = this.props
 
         const icon = setIcon(event.type)
-
-        const updateButton = !event.share ? (
-            <span
-                onClick={this.toggleModal}
-                className='text-uppercase d-flex align-items-center justify-content-center hover'
-                style={{
-                    fontWeight: '500',
-                    fontFamily: 'roboto',
-                    fontSize: '12px',
-                    padding: '.5rem .8rem',
-                    width: '54px',
-                    height: '25px',
-                    color: '#FFFFFF',
-                    backgroundColor: '#475561',
-                    textAlign: 'center',
-                    borderRadius: '16px'
-                }}
-            >
-                EDIT
-            </span>
-        ) : null
-
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
         const map = event.coordinates && <Map coordinates={event.coordinates} />
         const name = event.name
@@ -92,10 +72,10 @@ class Event extends Component {
             </Card>
         ))
 
-        let links = event.links.map(link => <a href={link} target="_blank" className="Event-link">{link}</a>)
+        let links = event.links.map(link => <a href={link} target="_blank" className="d-block" style={{ padding: 4 }}>{link}</a>)
         let airports = event.arrivalAirportCode ? `${event.arrivalAirportCode} - ${event.departureAirportCode} Terminal ${event.departureTerminal} Gate ${event.departureGate} Flight ${event.flightNumber}` : null
         return (
-            <Card style={{ padding: 16 }}>
+            <Card style={{ padding: 16, marginTop: 16, marginBottom: 16 }}>
                 <div className="d-flex justify-content-between">
                     <div className='d-flex align-items-center'>
                         <span className='d-flex justify-content-center align-items-center' style={{
@@ -106,21 +86,18 @@ class Event extends Component {
                         <Typography variant="h2">
                             {name} {airports}</Typography>
                     </div>
-                    {updateButton}
-                    {this.state.isOpen &&
-                        <NewEventForm
+                    <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                        Edit
+                        </Fab>
+                    {
+                        this.state.isOpen && <LeftModal
+                            isOpen={this.state.isOpen}
+                            toggleModal={this.toggleModal}
+                            title='Edit event'
+                            {...event}
                             submit={this.update}
                             remove={this.remove}
-                            trip={this.props.trip}
-                            toggleModal={this.toggleModal}
-                            isOpen={this.state.isOpen}
-                            event={{
-                                ...event,
-                                date: new Date(event.start),
-                                start: moment(event.start).format('HH:mm'),
-                                end: moment(event.end).format('HH:mm'),
-                                timezone: moment.tz.guess()
-                            }}
+                            form={EventForm}
                         />
                     }
                 </div>
@@ -153,19 +130,19 @@ function setIcon(eventType) {
     switch (eventType) {
         case 'LODGING':
             icon.string = 'fa-bed'
-            icon.color = '#FEA600'
+            icon.color = '#ED6A5A'
             break
         case 'TRANSPORTATION':
             icon.string = 'fa-car'
-            icon.color = '#BF9DD9'
+            icon.color = '#7C7287'
             break
         case 'EVENT':
             icon.string = 'fa-calendar-check'
-            icon.color = '#83C9F4'
+            icon.color = '#36393B'
             break
         case 'FLIGHT':
             icon.string = 'fa-plane'
-            icon.color = '#CCAA55'
+            icon.color = '#71B48D'
             break
         case 'TRAVEL':
             icon.string = 'fas fa-suitcase'

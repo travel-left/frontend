@@ -10,9 +10,7 @@ let tz = moment.tz.names().map(label => {
     }
 })
 
-export const timezones = tz.sort((f, s) => {
-    return parseInt(f.offset, 10) - parseInt(s.offset, 10)
-})
+export const timezones = moment.tz.names()
 
 export const types = [
     {
