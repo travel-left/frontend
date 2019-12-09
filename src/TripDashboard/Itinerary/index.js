@@ -129,8 +129,10 @@ class events extends Component {
     }
 
     createQuickEvent = async event => {
-        event.start = new Date(event.date)
-        event.end = new Date(event.date.setHours(event.start.getHours() + 1))
+        let date = moment(event.date).toDate()
+        event.start = new Date(date)
+        event.end = new Date(date.setHours(event.start.getHours() + 1))
+        event.timezone = this.localTimezone
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
             this.setState({

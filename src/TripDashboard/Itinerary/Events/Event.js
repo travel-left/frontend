@@ -105,14 +105,14 @@ class Event extends Component {
                 </div>
                 <Typography variant="subtitle2" style={{ color: icon.color, paddingTop: 16 }}> {time}</Typography>
                 <div className="d-flex justify-content-between">
-                    <Grid item xs={6}>
+                    <Grid item xs={12} sm={6} md={6}>
                         <Typography variant="subtitle1" style={{ paddingTop: 16 }}> {event.description}</Typography>
                         <div style={{ marginTop: 16, marginBottom: 16 }}>
                             {links}
                         </div>
                         {documents}
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={0} sm={5} md={5} className="d-none d-md-block">
                         {map}
                         <Typography variant="subtitle1"> {address} </Typography>
                     </Grid>
