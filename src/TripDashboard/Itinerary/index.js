@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import LeftModal from '../../util/otherComponents/LeftModal';
 import EventForm from '../../Forms/EventForm'
+import Card from '@material-ui/core/Card'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -240,10 +241,6 @@ class events extends Component {
                     <Grid item xs={12} style={{ marginRight: 16 }}>
                         <div className="row justify-content-between">
                             <Typography variant="h2">Trip Itinerary</Typography>
-                            <CreateQuickEventForm
-                                submit={this.createQuickEvent}
-                                date={this.props.currentTrip.dateStart}
-                            ></CreateQuickEventForm>
                         </div>
                         <div className="row d-flex flex-column">
                             {eventList}
@@ -271,6 +268,12 @@ class events extends Component {
                         </div>
                         <div className="row flex-column">
                             {dayList}
+                            <Card style={{ padding: 16 }}>
+                                <CreateQuickEventForm
+                                    submit={this.createQuickEvent}
+                                    date={this.props.currentTrip.dateStart}
+                                ></CreateQuickEventForm>
+                            </Card>
                         </div>
                     </div>
                 </div>

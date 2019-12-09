@@ -27,7 +27,7 @@ const form = props => {
                 value={values.name}
                 placeholder="Event name"
                 name="name"
-                style={{ marginRight: 16, marginTop: 0 }}
+                fullWidth
             />
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDateTimePicker
@@ -47,10 +47,10 @@ const form = props => {
                     KeyboardButtonProps={{
                         'aria-label': 'change date',
                     }}
-                    style={{ marginLeft: 16, marginRight: 16, marginTop: 0 }}
+                    fullWidth
                 />
             </MuiPickersUtilsProvider>
-            <Button size="large" type="submit" variant="contained" color="secondary" style={{ width: '180px', height: '50px', float: 'right', marginLeft: 16 }} disabled={isSubmitting}>
+            <Button size="large" type="submit" variant="contained" color="secondary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 16 }} disabled={isSubmitting}>
                 QUICK EVENT
             </Button>
         </form>
