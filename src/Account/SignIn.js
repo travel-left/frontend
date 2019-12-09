@@ -53,7 +53,7 @@ const form = props => {
                 id="standard-required"
                 label="Password"
                 value={values.password}
-                placeholder="Create a password"
+                placeholder="Enter your password"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="password"

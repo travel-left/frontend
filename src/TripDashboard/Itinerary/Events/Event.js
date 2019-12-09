@@ -112,7 +112,7 @@ class Event extends Component {
                         </div>
                         {documents}
                     </Grid>
-                    <Grid item xs={0} sm={5} md={5} className="d-none d-md-block">
+                    <Grid item xs={0} sm={5} gitmd={5} className="d-none d-md-block">
                         {map}
                         <Typography variant="subtitle1"> {address} </Typography>
                     </Grid>
