@@ -3,6 +3,10 @@ import Moment from 'react-moment'
 import { apiCall } from '../../util/api'
 import TripStatus from '../../util/otherComponents/TripStatus'
 import './TripInfo.css'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip'
+import Typography from '@material-ui/core/Typography';
 
 class TripInfo extends Component {
     state = {
@@ -60,66 +64,51 @@ class TripInfo extends Component {
         dateEnd = dateEnd.split('T')[0]
 
         let invited = this.state.travelers.length
-        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED')
-            .length
+        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
 
+        console.log(confirmed)
         return (
-            <div className="pb-3 Trip-info">
-                <div className="" style={{ position: 'relative' }}>
+            <Paper style={{ padding: 16 }}>
+                <div className="" style={{ position: 'relative', marginBottom: 32 }}>
                     <img
                         src={image}
-                        className="card-img-top mb-4 px-2 mt-3 px-3 TripInfo-image"
+                        className="card-img-top TripInfo-image"
                         alt="..."
                     />
                 </div>
 
-                <div className="container px-4 mt-4">
-                    <div className="mb-5">
-                        <span className="TripInfo-title">{name}</span>
-                        <button
-                            onClick={this.handleEditClick}
-                            className="btn btn-lg btn-primary float-right"
-                        >
-                            VIEW
-                    </button>
+                <div className="">
+                    <div className="d-flex justify-content-between" style={{ marginBottom: 32 }}>
+                        <Typography variant="h2">{name}</Typography>
+                        <Button size="large" variant="contained" color="primary" onClick={this.handleEditClick} className="float-right" style={{ width: 120, height: 50 }}>VIEW</Button>
                     </div>
-
-                    <p className="TripInfo-description">{description}</p>
-                    <div className='TripInfo-details'>
-                        <div className='d-flex justify-content-between align-items-center '>
-                            <span className='TripInfo-details-title'>Date</span>
+                    <div style={{ marginBottom: 24 }}>
+                        <p className="TripInfo-description">{description}</p>
+                    </div>
+                    <div className='TripInfo-details' style={{ marginBottom: 24 }}>
+                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                            <Typography variant="h6">Date</Typography>
                             <span className='TripInfo-details-date'><Moment date={dateStart} format="MMM DD" /></span>
                         </div>
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <span className='TripInfo-details-title'>Status</span>
+                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                            <Typography variant="h6">Status</Typography>
                             <span><TripStatus status={status} /></span>
                         </div>
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <span className='TripInfo-details-title'>Total Invited</span>
-                            <span className='badge badge-primary badge-pill d-flex align-items-center justify-content-center TripInfo-bubble'>{invited}</span>
+                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                            <Typography variant="h6">Total Invited</Typography>
+                            <Chip color="primary" size="small" label={invited} style={{ fontSize: 12, fontWeight: 600 }} />
                         </div>
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <span className='TripInfo-details-title'>Total Confirmed</span>
-                            <span className='badge badge-primary badge-pill d-flex align-items-center justify-content-center TripInfo-bubble'>{confirmed}</span>
+                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                            <Typography variant="h6">Total Confirmed</Typography>
+                            <Chip color="primary" size="small" label={confirmed} style={{ fontSize: 12, fontWeight: 600 }} />
                         </div>
                     </div>
-                    <div className='d-flex justify-content-end my-5 row'>
-                        <button
-                            className="btn btn-lg btn-secondary mb-5 mb-xl-0"
-                            onClick={this.handleDuplicate}
-                        >
-                            DUPLICATE
-                    </button>
-                        <button
-                            className="btn btn-lg btn-secondary ml-5 mb-5 mb-xl-0 mr-4"
-                            onClick={this.handleArchive}
-                        >
-                            ARCHIVE
-                    </button>
+                    <div className='d-flex justify-content-between'>
+                        <Button size="large" variant="contained" color="secondary" onClick={this.handleDuplicate} className="float-right" style={{ width: 120, height: 50 }}>DUPLICATE</Button>
+                        <Button size="large" variant="contained" color="secondary" onClick={this.handleArchive} className="float-right" style={{ width: 120, height: 50 }}>ARCHIVE</Button>
                     </div>
-
                 </div>
-            </div>
+            </Paper>
         )
     }
 }

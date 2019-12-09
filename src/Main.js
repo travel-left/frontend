@@ -5,16 +5,15 @@ import { authUser, setCurrentUser } from './util/redux/actions/auth'
 import Trips from './OrganizationDashboard/Trips/'
 import WithAuth from './Auth/withAuth'
 import WithoutAuth from './Auth/withoutAuth'
-import ErrorPage from './util/otherComponents/ErrorPage'
-import Auth from './Auth'
-import CreateProfile from './Auth/CreateProfile'
-import EditProfile from './Auth/EditProfile'
+import Auth from './Account'
 import TripDashboard from './TripDashboard'
-import NewPassword from './Auth/NewPassword'
-import Support from './Support'
-import Travelers from './OrganizationDashboard/Travelers'
+import NewPassword from './Account/NewPassword'
 import SharePreview from './TripDashboard/Share/SharePreview'
-import CheckoutForm from './util/forms/CheckoutForm'
+import Container from '@material-ui/core/Container'
+import Account from './Account/Account'
+import Travelers from './TripDashboard/Travelers/index'
+import ErrorPage from './OtherPages/ErrorPage'
+import Support from './OtherPages/Support'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -38,29 +37,10 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 )}
             />
             <Route
-                exact
-                path="/createprofile"
-                render={props => (
-                    <WithoutAuth {...props}>
-                        <CreateProfile onAuth={authUser} {...props} />
-                    </WithoutAuth>
-                )}
-            />
-            <Route
-                exact
-                path="/subscription"
+                path="/account"
                 render={props => (
                     <WithAuth {...props}>
-                        <CheckoutForm {...props} currentUser={currentUser} />
-                    </WithAuth>
-                )}
-            />
-            <Route
-                exact
-                path="/editprofile"
-                render={props => (
-                    <WithAuth {...props}>
-                        <EditProfile
+                        <Account
                             {...props}
                             currentUser={currentUser}
                             setCurrentUser={setCurrentUser}
@@ -94,7 +74,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/"
                 render={props => (
                     <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
-                        <Trips {...props} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <Trips {...props} />
+                        </Container>
                     </WithAuth>
                 )}
             />
@@ -103,7 +85,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/trips"
                 render={props => (
                     <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
-                        <Trips {...props} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <Trips {...props} />
+                        </Container>
                     </WithAuth>
                 )}
             />
@@ -112,7 +96,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/travelers"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>
-                        <Travelers {...props} currentUser={currentUser} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <Travelers {...props} currentUser={currentUser} />
+                        </Container>
                     </WithAuth>
                 )}
             />
@@ -126,7 +112,9 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/trips/:tripId"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>
-                        <TripDashboard {...props} />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <TripDashboard {...props} />
+                        </Container>
                     </WithAuth>
                 )}
             />

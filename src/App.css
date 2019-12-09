@@ -136,6 +136,11 @@
     display: none !important;
 }
 
+.DateRangePickerInput__withBorder {
+    border-radius: 2px;
+    border: 1px solid #979797 !important;
+}
+
 .ShareTrip-link {
     border: 2px solid #E3E3E3;
     border-radius: 4px;
@@ -143,4 +148,43 @@
     height: 50px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.FileUploader {
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 3px;
+}
+
+.DropzoneArea-dropZone-225 {
+    min-height: 196px !important;
+    margin-top: 12px;
+    height: auto !important;
+}
+
+.Modal-Form {
+    border: none !important;
+    animation-duration: .3s
+}
+
+.Modal--overlay {
+    animation-duration: .32s
+}
+
+.Modal-Form-header {
+    color: #FFFFFF;
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 22px;
+    letter-spacing: 0;
+}
+
+label {
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333333;
+    /* text-transform: uppercase; */
 }

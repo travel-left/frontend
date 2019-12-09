@@ -8,14 +8,8 @@
     font-size: 22px;
     color: #FFFFFF;
     letter-spacing: 1.51px;
-    line-height: 15px;
-    border-radius: 20.29px;
-    padding: 1rem 1rem;
-}
-
-.Navbar.main-nav-link.active {
-    background-color: #83C9F4;
-    height: 41px;
+    line-height: 1;
+    text-transform: none;
 }
 
 .Navbar.user-name {

@@ -29,8 +29,8 @@ class WithAuth extends Component {
     }
 
     createAnonUser = async () => {
-        await this.props.onAuth('signup', { coordinator: { needsPasswordChanged: true, needsEmailChanged: true }, organization: {} }, this.props.history)
-        this.props.history.push('/trips')
+        // await this.props.onAuth('signup', { coordinator: { needsPasswordChanged: true, needsEmailChanged: true }, organization: {} }, this.props.history)
+        this.props.history.push('/signup')
     }
 
     render() {

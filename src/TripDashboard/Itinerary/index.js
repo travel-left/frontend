@@ -2,12 +2,19 @@ import React, { Component } from 'react'
 import DayList from './Days/DaysList'
 import EventList from './Events/EventList'
 import { apiCall, flightApi } from '../../util/api'
-import NewEventForm from './Events/NewEventForm'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Events.css'
 import ReactGA from 'react-ga'
-import Snack from '../../util/Snack'
+import Snack from '../../util/otherComponents/Snack'
+import Grid from '@material-ui/core/Grid'
+import CreateQuickEventForm from '../../Forms/CreateQuickEventForm'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import LeftModal from '../../util/otherComponents/LeftModal';
+import EventForm from '../../Forms/EventForm'
+import Card from '@material-ui/core/Card'
+import ContainedUploader from '../../Forms/ContainedUploader'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -19,8 +26,9 @@ class events extends Component {
     localTimezone = moment.tz.guess(true)
 
     state = {
+        documents: [],
         days: [],
-        selectedDay: '',
+        selectedDay: {},
         events: [],
         isOpen: false,
         snack: {
@@ -36,6 +44,7 @@ class events extends Component {
             initializeReactGA()
         }
         this.getDaysAndEvents()
+        this.getDocuments()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -46,8 +55,12 @@ class events extends Component {
 
         let flightEvents = []
         let newevents = await Promise.all(events.map(async event => {
-            if (!days.includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) days.push(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))
-
+            if (!days.map(day => day.day).includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
+                days.push({
+                    day: moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'),
+                    name: event.name
+                })
+            }
             if (event.type === 'FLIGHT') {
                 try {
                     let flightStats = await apiCall('post', '/api/flightstats', {
@@ -81,7 +94,12 @@ class events extends Component {
             end: formatDateToLocalTimezone(event.end)
         }))
 
-        this.setState({ events, days, selectedDay: days[0] })
+        this.setState({ events, days, selectedDay: days[0].day })
+    }
+
+    getDocuments = async () => {
+        let documents = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/documents`)
+        this.setState({ documents })
     }
 
     createEvent = async event => {
@@ -89,7 +107,34 @@ class events extends Component {
         event = formatEventForBackend(event)
         console.log(event)
         try {
-            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event, true)
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+        this.getDaysAndEvents()
+    }
+
+    createQuickEvent = async event => {
+        let date = moment(event.date).toDate()
+        event.start = new Date(date)
+        event.end = new Date(date.setHours(event.start.getHours() + 1))
+        event.timezone = this.localTimezone
+        try {
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
             this.setState({
                 snack: {
                     show: true,
@@ -189,29 +234,53 @@ class events extends Component {
                 updateEvent={this.updateEvent}
                 removeEvent={this.removeEvent}
                 trip={this.props.currentTrip}
+                documents={this.state.documents}
             />
         ) : <h4 className="text-info" />
 
         return (
-            <div className="col-md-12 mt-4 mx-0 p-3">
-                <div className="row mx-0">
-                    <div className="col-md-2 pl-0">
-                        <button className="btn btn-primary btn-lg" onClick={this.toggleModal}>NEW EVENT</button>
-                        {this.state.isOpen &&
-                            <NewEventForm
-                                submit={this.createEvent}
-                                initDay={this.props.currentTrip.dateStart}
-                                trip={this.props.currentTrip}
-                                toggleModal={this.toggleModal}
-                                isOpen={this.state.isOpen}
-                            />
-                        }
-                        <div className="Events-trip-days-card mt-4">
-                            {dayList}
+            <div className="d-flex row" style={{ paddingLeft: 24, paddingRight: 16, marginTop: 16 }}>
+                <div className="col-12 col-lg-8">
+                    <Grid item xs={12} style={{ marginRight: 16 }}>
+                        <div className="row justify-content-between">
+                            <Typography variant="h2">Trip Itinerary</Typography>
                         </div>
-                    </div>
-                    <div className="col-md-10 pr-0">
-                        {eventList}
+                        <div className="row d-flex flex-column">
+                            {eventList}
+                        </div>
+                    </Grid>
+                </div>
+                <div className="col-12 col-lg-4 px-0">
+                    <div style={{ padding: 16 }}>
+                        <div className="row flex-column align-items-center" style={{ marginBottom: 16 }}>
+                            <Button size="large" onClick={this.toggleModal} variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 25, marginBottom: 25, marginLeft: 16, marginRight: 16 }} >
+                                NEW EVENT
+                            </Button>
+                            {this.state.isOpen &&
+                                <LeftModal
+                                    submit={this.createEvent}
+                                    date={this.props.currentTrip.dateStart}
+                                    documents={this.state.documents}
+                                    trip={this.props.currentTrip}
+                                    toggleModal={this.toggleModal}
+                                    isOpen={this.state.isOpen}
+                                    title='Create a new event'
+                                    form={EventForm}
+                                />
+                            }
+                        </div>
+                        <div className="row flex-column">
+                            {dayList}
+                            <Card style={{ padding: 16, marginTop: 16 }}>
+                                <CreateQuickEventForm
+                                    submit={this.createQuickEvent}
+                                    date={this.props.currentTrip.dateStart}
+                                ></CreateQuickEventForm>
+                            </Card>
+                            <div style={{ marginTop: 16 }}>
+                                <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
@@ -223,19 +292,31 @@ class events extends Component {
 export default events
 
 function formatEventForBackend(event) {
-    let formattedEvent = { ...event }
-    let start = new Date(formattedEvent.date.valueOf())
-    console.log(start)
-    let end = new Date(formattedEvent.date.valueOf())
-    start.setHours(event.start.split(':')[0], event.start.split(':')[1])
-    end.setHours(formattedEvent.end.split(':')[0], event.end.split(':')[1])
-    console.log(start)
-    formattedEvent.start = start.toString()
-    formattedEvent.end = end.toString()
-    delete formattedEvent.date
-    return formattedEvent
+    //get date from event.date
+    let date = moment(event.date).toDate()
+    //get start and end time
+    let startTimeHours = new Date(event.start.valueOf()).getHours()
+    let endTimeHours = new Date(event.end.valueOf()).getHours()
+    let startTimeMinutes = new Date(event.start.valueOf()).getMinutes()
+    let endTimeMinutes = new Date(event.end.valueOf()).getMinutes()
+    //set the hours of start and end
+    event.start = new Date(date.setHours(startTimeHours))
+    event.start = new Date(date.setMinutes(startTimeMinutes))
+    event.end = new Date(date.setHours(endTimeHours))
+    event.end = new Date(event.end.setMinutes(endTimeMinutes))
+
+    event.type = event.type.toUpperCase()
+    event.documents = event.selectedDocuments
+    console.log(event.links)
+    event.links = event.links.length ? event.links.split(' ').map(link => link) : []
+    event.airline = event.airline.value
+
+    delete event.selectedDocuments
+    delete event.date
+    return event
 }
 
+//takes the UTC date and converts it to the user's timezone
 function formatDateToLocalTimezone(date) {
     let localTimezone = moment.tz.guess(true)
     date = moment(date).tz(localTimezone)

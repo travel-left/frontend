@@ -1,9 +1,6 @@
 .Trip {
     min-height: 80px !important;
     max-height: 82px !important;
-    background: #FFFFFF !important;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.30) !important;
-    border-radius: 3px !important;
 }
 
 .Trip-name {

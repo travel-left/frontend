@@ -1,7 +1,7 @@
 .Document {
     background: #FFFFFF;
     box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 3px;
 }
 
 .Document-title {
@@ -22,14 +22,14 @@
 .Document-card {
     background: #FFFFFF;
     box-shadow: 0 4px 16px 0 rgba(0,0,0,0.1);
-    border-radius: 8px;
+    border-radius: 3px;
 }
 
 .Document-icon {
     height: 110px;
     width: 130px;
     background: #83C9F5;
-    border-radius: 8px;
+    border-radius: 3px;
 }
 
 .Document-image {

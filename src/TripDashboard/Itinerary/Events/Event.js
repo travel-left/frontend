@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import Map from './Map'
 import { getIcon } from '../../../util/file-icons'
 import moment from 'moment'
-import NewEventForm from './NewEventForm'
+import Card from '@material-ui/core/Card'
+import Typography from '@material-ui/core/Typography'
+import { Grid } from '@material-ui/core'
+import Fab from '@material-ui/core/Fab'
+import LeftModal from '../../../util/otherComponents/LeftModal'
+import EventForm from '../../../Forms/EventForm'
 
 class Event extends Component {
     state = {
@@ -32,114 +37,87 @@ class Event extends Component {
         const { event } = this.props
 
         const icon = setIcon(event.type)
-
-        const updateButton = !event.share ? (
-            <span
-                onClick={this.toggleModal}
-                className='text-uppercase d-flex align-items-center justify-content-center hover'
-                style={{
-                    fontWeight: '500',
-                    fontFamily: 'roboto',
-                    fontSize: '12px',
-                    padding: '.5rem .8rem',
-                    width: '54px',
-                    height: '25px',
-                    color: '#FFFFFF',
-                    backgroundColor: '#475561',
-                    textAlign: 'center',
-                    borderRadius: '16px'
-                }}
-            >
-                EDIT
-            </span>
-        ) : null
-
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
-
-        const mapButton = event.coordinates && !this.state.showMap ? <div className="text-center">
-            <button className="btn btn-lg btn-secondary my-3" style={{ color: '#FFFFFF' }} onClick={this.showMap}> SHOW MAP </button>
-        </div> : null
-
-        const map = this.state.showMap ? <Map coordinates={event.coordinates} /> : null
-
+        const map = event.coordinates && <Map coordinates={event.coordinates} />
         const name = event.name
-
         const address = <p className="card-text text-muted text-center">{event.address}</p>
 
         const documents = event.documents.map((d, i) => (
-            <div key={i} className="col-md-12 Document-card my-3 px-0">
-                <div className="row no-gutters">
-                    <div className="Events-document-icon d-flex justify-content-center align-items-center">
-                        <a className="hover" href={d.link} target="_blank" rel="noopener noreferrer">
-                            <img src={getIcon(d.link)} alt="" className='Events-document-image' style={{ objectFit: 'cover' }} />
-                        </a>
-                    </div>
-                    <div className="d-flex flex-column justify-content-center pl-4 py-3">
-                        <span className="Events-document-title">{d.name}</span>
-                        <p className="Events-document-description">{d.description}</p>
-                        <a className="hover" href={d.link} target="_blank" rel="noopener noreferrer">
-                            <span className='Document-open-text pr-1'> Download </span>
-                        </a>
-                    </div>
+            <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16 }}>
+                <div className="Document-icon d-flex justify-content-center align-items-center" style={{ width: 80, height: 80 }}>
+                    <a
+                        className="hover"
+                        href={d.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download>
+                        <img
+                            src={getIcon(d.link)}
+                            alt=""
+                            className='Document-image'
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </a>
                 </div>
-            </div>
+                <div className="card-body d-flex flex-column justify-content-end">
+                    <a
+                        className="hover Document-open-text"
+                        href={d.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Typography variant="caption">{d.name.substring(0, 25)}</Typography>
+                    </a>
+                </div>
+            </Card>
         ))
 
-        let links = event.links.map(link => <a href={link} target="_blank" className="Event-link">{link}</a>)
+        let links = event.links.map(link => <a href={link} target="_blank" className="d-block" style={{ padding: 4 }}>{link}</a>)
         let airports = event.arrivalAirportCode ? `${event.arrivalAirportCode} - ${event.departureAirportCode} Terminal ${event.departureTerminal} Gate ${event.departureGate} Flight ${event.flightNumber}` : null
         return (
-            <div className="Events-event-card py-4 px-5 my-3 animated fadeIn">
-                <div className="row">
-                    <div className="col-12 d-flex justify-content-between px-3">
-                        <span className="Document-title">
-                            <span className='d-flex justify-content-center align-items-center' style={{
-                                position: 'absolute', right: '101%', backgroundColor: icon.color, borderRadius: '50%', height: '40px', width: '40px'
-                            }}>
-                                <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
-                            </span>
-
-                            {name} {airports}
+            <Card style={{ padding: 16, marginTop: 16, marginBottom: 16 }}>
+                <div className="d-flex justify-content-between">
+                    <div className='d-flex align-items-center'>
+                        <span className='d-flex justify-content-center align-items-center' style={{
+                            backgroundColor: icon.color, borderRadius: '50%', height: 40, width: 40, marginRight: 16
+                        }}>
+                            <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                         </span>
-                        {updateButton}
-                        {this.state.isOpen &&
-                            <NewEventForm
-                                submit={this.update}
-                                remove={this.remove}
-                                trip={this.props.trip}
-                                toggleModal={this.toggleModal}
-                                isOpen={this.state.isOpen}
-                                event={{
-                                    ...event,
-                                    date: new Date(event.start),
-                                    start: moment(event.start).format('HH:mm'),
-                                    end: moment(event.end).format('HH:mm'),
-                                    timezone: moment.tz.guess()
-                                }}
-                            />
-                        }
+                        <Typography variant="h2">
+                            {name} {airports}</Typography>
                     </div>
-                    <div className="col-12 d-flex px-0">
-                        <div className="col-md-6 d-flex flex-column">
-                            <span className="my-3 Events-event-date" style={{ color: icon.color }}>
-                                {time}
-                            </span>
-                            <p></p>
-                            <p className="Document-description">{event.description}</p>
+                    <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                        Edit
+                        </Fab>
+                    {
+                        this.state.isOpen && <LeftModal
+                            isOpen={this.state.isOpen}
+                            toggleModal={this.toggleModal}
+                            title='Edit event'
+                            {...event}
+                            submit={this.update}
+                            remove={this.remove}
+                            form={EventForm}
+                            selectedDocuments={event.documents.map(doc => doc._id)}
+                            documents={this.props.documents}
+                        />
+                    }
+                </div>
+                <Typography variant="subtitle2" style={{ color: icon.color, paddingTop: 16 }}> {time}</Typography>
+                <div className="d-flex justify-content-between">
+                    <Grid item xs={12} sm={6} md={6}>
+                        <Typography variant="subtitle1" style={{ paddingTop: 16 }}> {event.description}</Typography>
+                        <div style={{ marginTop: 16, marginBottom: 16 }}>
                             {links}
                         </div>
-                        <div className="col-md-6">
-                            <div className="d-flex justify-content-center align-items-center mt-3 Events-event-address">
-                                {address}
-                            </div>
-                            {mapButton}
-                            {map}
-                        </div>
-                    </div>
-                    <div className="col-12 row mx-0 mt-2">
                         {documents}
-                    </div>
+                    </Grid>
+                    <Grid item xs={0} sm={5} gitmd={5} className="d-none d-md-block">
+                        {map}
+                        <Typography variant="subtitle1"> {address} </Typography>
+                    </Grid>
                 </div>
-            </div>
+            </Card >
         )
     }
 }
@@ -154,19 +132,19 @@ function setIcon(eventType) {
     switch (eventType) {
         case 'LODGING':
             icon.string = 'fa-bed'
-            icon.color = '#FEA600'
+            icon.color = '#ED6A5A'
             break
         case 'TRANSPORTATION':
             icon.string = 'fa-car'
-            icon.color = '#BF9DD9'
+            icon.color = '#7C7287'
             break
         case 'EVENT':
             icon.string = 'fa-calendar-check'
-            icon.color = '#83C9F4'
+            icon.color = '#36393B'
             break
         case 'FLIGHT':
             icon.string = 'fa-plane'
-            icon.color = '#CCAA55'
+            icon.color = '#71B48D'
             break
         case 'TRAVEL':
             icon.string = 'fas fa-suitcase'
