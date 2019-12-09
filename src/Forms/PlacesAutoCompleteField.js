@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function GoogleMaps(props) {
     const classes = useStyles();
-    const [inputValue, setInputValue] = React.useState('');
+    const [inputValue, setInputValue] = React.useState({ description: props.value });
     const [options, setOptions] = React.useState([]);
     const loaded = React.useRef(false);
 
@@ -91,13 +91,19 @@ export default function GoogleMaps(props) {
             getOptionLabel={option => (typeof option === 'string' ? option : option.description)}
             filterOptions={x => x}
             options={options}
+            searchText={props.value}
             autoComplete
             includeInputInList
             freeSolo
             disableOpenOnFocus
             fullWidth
+            value={inputValue}
             onChange={(e, value) => {
-                props.handleChange(value.description)
+                if (value !== null) {
+                    props.handleChange(value.description)
+                } else {
+                    props.handleChange('')
+                }
             }}
             renderInput={params => (
                 <TextField

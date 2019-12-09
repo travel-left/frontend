@@ -230,6 +230,7 @@ class events extends Component {
                 updateEvent={this.updateEvent}
                 removeEvent={this.removeEvent}
                 trip={this.props.currentTrip}
+                documents={this.state.documents}
             />
         ) : <h4 className="text-info" />
 
@@ -283,21 +284,30 @@ export default events
 
 function formatEventForBackend(event) {
     //get date from event.date
-    let date = new Date(event.date.valueOf())
+    let date = moment(event.date).toDate()
     //get start and end time
-    let startTime = new Date(event.start.valueOf()).getTime()
-    let endTime = new Date(event.end.valueOf()).getTime()
+    let startTimeHours = new Date(event.start.valueOf()).getHours()
+    let endTimeHours = new Date(event.end.valueOf()).getHours()
+    let startTimeMinutes = new Date(event.start.valueOf()).getMinutes()
+    let endTimeMinutes = new Date(event.end.valueOf()).getMinutes()
     //set the hours of start and end
-    event.start = new Date(date.setTime(startTime))
-    event.end = new Date(date.setTime(endTime))
+    event.start = new Date(date.setHours(startTimeHours))
+    event.start = new Date(date.setMinutes(startTimeMinutes))
+    event.end = new Date(date.setHours(endTimeHours))
+    event.end = new Date(event.end.setMinutes(endTimeMinutes))
+
     event.type = event.type.toUpperCase()
     event.documents = event.selectedDocuments
+    console.log(event.links)
     event.links = event.links.length ? event.links.split(' ').map(link => link) : []
+    event.airline = event.airline.value
+
     delete event.selectedDocuments
     delete event.date
     return event
 }
 
+//takes the UTC date and converts it to the user's timezone
 function formatDateToLocalTimezone(date) {
     let localTimezone = moment.tz.guess(true)
     date = moment(date).tz(localTimezone)

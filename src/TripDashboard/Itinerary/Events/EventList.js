@@ -2,7 +2,7 @@ import React from 'react'
 import Event from './Event'
 import moment from 'moment'
 
-export default ({ events, removeEvent, updateEvent, trip }) => {
+export default ({ events, removeEvent, updateEvent, trip, documents }) => {
     let daysList = []
 
     return events.map(event => {
@@ -14,7 +14,7 @@ export default ({ events, removeEvent, updateEvent, trip }) => {
         return (
             <div key={event._id}>
                 {dayHeader}
-                <Event event={event} removeEvent={removeEvent} updateEvent={updateEvent} trip={trip} />
+                <Event event={event} removeEvent={removeEvent} updateEvent={updateEvent} trip={trip} documents={documents} />
             </div>
         )
     })

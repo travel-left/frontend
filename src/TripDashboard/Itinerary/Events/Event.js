@@ -98,6 +98,8 @@ class Event extends Component {
                             submit={this.update}
                             remove={this.remove}
                             form={EventForm}
+                            selectedDocuments={event.documents.map(doc => doc._id)}
+                            documents={this.props.documents}
                         />
                     }
                 </div>

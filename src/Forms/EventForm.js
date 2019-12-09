@@ -31,7 +31,8 @@ const form = props => {
         handleBlur,
         handleSubmit,
         setFieldValue,
-        initialValues
+        initialValues,
+        remove
     } = props
 
     let documentList = (
@@ -41,8 +42,8 @@ const form = props => {
                 labelId="demo-mutiple-chip-label"
                 id="demo-mutiple-chip"
                 multiple
-                value={values.selectedDocuments}
-                name="coordinatorsToAdd"
+                value={values.selectedDocuments || []}
+                name="selectedDocuments"
                 onChange={event => {
                     setFieldValue("selectedDocuments", event.target.value)
                 }}
@@ -79,7 +80,7 @@ const form = props => {
                         onBlur={handleBlur}
                         id="standard-required"
                         label="Name"
-                        value={values.message}
+                        value={values.name}
                         placeholder="Event name"
                         name="name"
                         style={{ width: 199 }}
@@ -109,10 +110,10 @@ const form = props => {
                 <div style={{ marginTop: 41 }}>
                     <FormLabel component="legend" >Event type</FormLabel>
                     <RadioGroup aria-label="Event type" name="type" value={values.type} onChange={handleChange} className="d-flex flex-row justify-content-around">
-                        <FormControlLabel value="LODGING" control={<Radio />} label="Lodging" />
-                        <FormControlLabel value="EVENT" control={<Radio />} label="Event" />
-                        <FormControlLabel value="TRANSPORTATION" control={<Radio />} label="Transportation" />
-                        <FormControlLabel value="FLIGHT" control={<Radio />} label="Flight" />
+                        <FormControlLabel value="LODGING" control={<Radio color="primary" />} label="Lodging" />
+                        <FormControlLabel value="EVENT" control={<Radio color="primary" />} label="Event" />
+                        <FormControlLabel value="TRANSPORTATION" control={<Radio color="primary" />} label="Transportation" />
+                        <FormControlLabel value="FLIGHT" control={<Radio color="primary" />} label="Flight" />
                     </RadioGroup>
                 </div>
                 {values.type === 'FLIGHT' && (
@@ -229,12 +230,12 @@ const form = props => {
                     onBlur={handleBlur}
                     id="standard-required"
                     label="Description"
-                    value={values.message}
+                    value={values.description}
                     placeholder="Description"
                     name="description"
                     fullWidth
                 />
-                <PlacesAutoCompleteField handleChange={address => setFieldValue("address", address)}></PlacesAutoCompleteField>
+                <PlacesAutoCompleteField handleChange={address => setFieldValue("address", address)} value={values.address}></PlacesAutoCompleteField>
                 {documentList}
                 <TextField
                     onChange={handleChange}
@@ -247,8 +248,11 @@ const form = props => {
                     fullWidth
                 />
                 <Divider style={{ marginTop: 40 }} />
+                {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                    Remove
+                </Button>}
                 <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                    CREATE
+                    submit
                 </Button>
             </form>
         </>
@@ -273,18 +277,18 @@ const Form = withFormik({
     }) => {
         return {
             name: name || '',
-            timezone: timezone || moment.tz.guess(),
-            date: new Date(date).setHours(13) || new Date(),
-            start: new Date(date).setHours(13) || new Date(),
-            end: new Date(date).setHours(14) || new Date(),
+            timezone: moment.tz.guess(),
+            date: start || new Date(date).setHours(13),
+            start: start || new Date(date).setHours(13),
+            end: end || new Date(date).setHours(14),
             type: type || 'Event',
             description: description || '',
             airline: airline || '',
             flightNumber: flightNumber || '',
             address: address || '',
-            links: links || [],
+            links: links.join(' ') || [],
             documents: documents || [],
-            selectedDocuments: selectedDocuments || []
+            selectedDocuments: documents.filter(doc => selectedDocuments.includes(doc._id)) || []
 
         }
     },
