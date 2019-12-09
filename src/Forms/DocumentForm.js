@@ -22,7 +22,6 @@ const form = props => {
                 required
                 onChange={handleChange}
                 onBlur={handleBlur}
-                id="standard-required"
                 label="Name"
                 value={values.name}
                 placeholder="Resource name"
@@ -32,10 +31,8 @@ const form = props => {
                 fullWidth
             />
             <TextField
-                required
                 onChange={handleChange}
                 onBlur={handleBlur}
-                id="standard-required"
                 label="Description"
                 value={values.description}
                 placeholder="Resource description"

@@ -4,8 +4,8 @@ import Typography from '@material-ui/core/Typography'
 import { apiCall } from '../../../util/api'
 import Snack from '../../../util/otherComponents/Snack'
 import Document from './Document'
-import FileUploader from '../../../Forms/FileUploader'
 import LeftItem from '../../../util/otherComponents/LeftItem'
+import ContainedUploader from '../../../Forms/ContainedUploader'
 
 export default class Resources extends Component {
 
@@ -26,44 +26,6 @@ export default class Resources extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
-
-    createDocument = async doc => {
-        doc.link = doc.url
-
-        try {
-            await apiCall(
-                'post',
-                `/api/trips/${this.TRIP_ID}/documents`,
-                doc
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            this.getDocuments()
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
-    uploadInProgress = () => {
-        this.setState({
-            snack: {
-                show: true,
-                variant: 'info',
-                message: 'Uploading file. . .'
-            }
-        })
-    }
 
     getDocuments = async () => {
         let docs = await apiCall('get', `/api/trips/${this.TRIP_ID}/documents`)
@@ -126,14 +88,7 @@ export default class Resources extends Component {
         const { docs } = this.state
         const uploadZone = (
             <LeftItem>
-                <FileUploader
-                    handleChange={this.createDocument}
-                    handleUploading={this.uploadInProgress}
-                    showPreviews={false}
-                    showPreviewsInDropzone={false}
-                    class='docDropzone'
-                    filesLimit={100}
-                ></FileUploader>
+                <ContainedUploader tripId={this.TRIP_ID} onUploadFinish={this.getDocuments}></ContainedUploader>
             </LeftItem>
         )
 
