@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography'
 import LeftModal from '../../util/otherComponents/LeftModal';
 import EventForm from '../../Forms/EventForm'
 import Card from '@material-ui/core/Card'
+import ContainedUploader from '../../Forms/ContainedUploader'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -268,12 +269,15 @@ class events extends Component {
                         </div>
                         <div className="row flex-column">
                             {dayList}
-                            <Card style={{ padding: 16 }}>
+                            <Card style={{ padding: 16, marginTop: 16 }}>
                                 <CreateQuickEventForm
                                     submit={this.createQuickEvent}
                                     date={this.props.currentTrip.dateStart}
                                 ></CreateQuickEventForm>
                             </Card>
+                            <div style={{ marginTop: 16 }}>
+                                <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
+                            </div>
                         </div>
                     </div>
                 </div>
