@@ -4,6 +4,7 @@ import Divider from '@material-ui/core/Divider'
 import FileUploader from './FileUploader'
 import { withFormik } from "formik"
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Fab from '@material-ui/core/Fab'
 
 const form = props => {
     const {
@@ -35,8 +36,13 @@ const form = props => {
                     setFieldValue("file", value.url)
                 }}
                 handleUploading={uploadState => setIsUploading(uploadState)}></FileUploader>
+            <div style={{ margin: 16 }}>
+                <div className="d-flex justify-content-center align-items-center">
+                    <Fab variant="extended" color='primary' href="https://travel-left-public.s3.amazonaws.com/UploadTravelers.csv" style={{ color: 'white' }}>Download a Template CSV File</Fab>
+                </div>
+            </div>
             <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isUploading || isSubmitting}>
+            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} >
                 {buttonContent}
             </Button>
         </form>
