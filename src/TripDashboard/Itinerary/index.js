@@ -61,29 +61,29 @@ class events extends Component {
                     name: event.name
                 })
             }
-            if (event.type === 'FLIGHT') {
-                try {
-                    let flightStats = await apiCall('post', '/api/flightstats', {
-                        date: event.start,
-                        airline: event.airline,
-                        flightNumber: event.flightNumber
-                    })
-                    event = {
-                        ...event,
-                        flightNumber: flightStats.flightNumber,
-                        departureTerminal: flightStats.departureTerminal,
-                        departureGate: flightStats.departureGate,
-                        departureAirportCode: flightStats.departureAirportCode,
-                        arrivalAirportCode: flightStats.arrivalAirportCode,
-                        start: flightStats.startDate,
-                        end: flightStats.endDate
-                    }
-                    console.log(event)
-                    flightEvents.push(event)
-                } catch (err) {
-                    console.log(err)
-                }
-            }
+            // if (event.type === 'FLIGHT') {
+            //     try {
+            //         let flightStats = await apiCall('post', '/api/flightstats', {
+            //             date: event.start,
+            //             airline: event.airline,
+            //             flightNumber: event.flightNumber
+            //         })
+            //         event = {
+            //             ...event,
+            //             flightNumber: flightStats.flightNumber,
+            //             departureTerminal: flightStats.departureTerminal,
+            //             departureGate: flightStats.departureGate,
+            //             departureAirportCode: flightStats.departureAirportCode,
+            //             arrivalAirportCode: flightStats.arrivalAirportCode,
+            //             start: flightStats.startDate,
+            //             end: flightStats.endDate
+            //         }
+            //         console.log(event)
+            //         flightEvents.push(event)
+            //     } catch (err) {
+            //         console.log(err)
+            //     }
+            // }
 
             return event
         }))
