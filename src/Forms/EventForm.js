@@ -286,9 +286,9 @@ const Form = withFormik({
             airline: airline || '',
             flightNumber: flightNumber || '',
             address: address || '',
-            links: links.join(' ') || [],
+            links: links ? links.join(' ') : [],
             documents: documents || [],
-            selectedDocuments: documents.filter(doc => selectedDocuments.includes(doc._id)) || []
+            selectedDocuments: selectedDocuments ? documents.filter(doc => selectedDocuments.includes(doc._id)) : []
 
         }
     },
