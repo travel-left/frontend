@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
 import { connect } from 'react-redux'
-import PaymentAlert from '../../util/otherComponents/PaymentAlert'
 import TripList from './TripList'
 import TripInfo from './TripInfo'
 import { setCurrentTrip } from '../../util/redux/actions/trip'
 import SideNavItem from '../../util/otherComponents/SideNavItem'
 import ReactGA from 'react-ga'
-import Dropzone from 'react-dropzone'
 import TripsListHeader from './TripsListHeader'
-import ChangeEmailAlert from '../../util/otherComponents/ChangeEmailAlert'
-import Snack from '../../util/Snack'
 import Button from '@material-ui/core/Button'
-import CreateTripModalForm from './CreateTripModalForm'
+import Grid from '@material-ui/core/Grid'
+import List from '@material-ui/core/List'
+import { withRouter } from 'react-router-dom'
+import LeftModal from '../../util/otherComponents/LeftModal'
+import CreateTripForm from '../../Forms/CreateTripForm'
+import Snack from '../../util/otherComponents/Snack'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -53,16 +54,6 @@ class Trips extends Component {
     closeSnack = () => (this.setState({ snack: { show: false } }))
     toggleModal = () => (this.setState(prevState => ({ isOpen: !prevState.isOpen })))
 
-    uploadFiles = async () => {
-        let files = [...this.state.files]
-        for await (let file of files) {
-            let formData = new FormData()
-            formData.append('file', file)
-            await apiCall('post', '/api/fileUploads/unAuth', formData, true)
-        }
-        this.setState({ files: ['Succesfully Uploaded'] })
-    }
-
     getAllTripsAndSetState = async () => {
         const trips = await apiCall('get', '/api/trips')
         this.setStatusesAndState(trips)
@@ -92,11 +83,9 @@ class Trips extends Component {
 
     addTrip = async trip => {
         const { trips, tripStatusCounts } = this.state
-        trip.dateStart = trip.dates.startDate
-        trip.dateEnd = trip.dates.endDate
-        delete trip.dates
+
         try {
-            const createdTrip = await apiCall('post', '/api/trips', trip, true)
+            const createdTrip = await apiCall('post', '/api/trips', trip)
             this.setState({
                 snack: {
                     show: true,
@@ -191,10 +180,8 @@ class Trips extends Component {
         })
     }
 
-    onSideNavClick = e => {
-        e.preventDefault()
-        const filter = e.target.name.toUpperCase()
-        this.filterTripsAndSetState(this.state.trips, filter)
+    onSideNavClick = tripFilter => {
+        this.filterTripsAndSetState(this.state.trips, tripFilter.toUpperCase())
     }
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
@@ -241,119 +228,76 @@ class Trips extends Component {
             />
         ) : null
 
-        let files = this.state.files
-            ? this.state.files.map(file => <p>{file.name || file}</p>)
-            : null
-
         return (
-            <div className="row">
-                <div className="col-md-2 px-0" style={{
-                    background: '#FFFFFF',
-                    boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.3)',
-                    borderRadius: '3px'
-                }}>
+            <Grid container spacing={2} style={{ marginTop: 8 }}>
+                <Grid item xs={12} md={2}>
                     <div className="px-0 py-5 d-flex justify-content-center">
                         <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
                             ADD NEW TRIP
                         </Button>
-                        {this.state.isOpen && <CreateTripModalForm
+                        {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
                             title='Add New Trip'
                             toggleModal={this.toggleModal}
+                            form={CreateTripForm}
                             submit={this.addTrip}
                         />}
                     </div>
-                    <div className="d-none d-sm-flex flex-column" >
-                        <ul className="list-group col px-0 ">
-                            <SideNavItem
-                                text="All Trips"
-                                total={trips.length - tripStatusCounts.ARCHIVED}
-                                active={filter === 'ALL TRIPS'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Planning"
-                                total={tripStatusCounts.PLANNING}
-                                active={filter === 'PLANNING'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Completed"
-                                total={tripStatusCounts.COMPLETED}
-                                active={filter === 'COMPLETED'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="LEFT"
-                                total={tripStatusCounts.LEFT}
-                                active={filter === 'LEFT'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Past"
-                                total={tripStatusCounts.PAST}
-                                active={filter === 'PAST'}
-                                handleClick={this.onSideNavClick}
-                            />
-                            <SideNavItem
-                                text="Archived"
-                                total={tripStatusCounts.ARCHIVED}
-                                active={filter === 'ARCHIVED'}
-                                handleClick={this.onSideNavClick}
-                            />
-                        </ul>
-                        <div className="py-4 px-3">
-                            <Dropzone
-                                onDrop={acceptedFiles =>
-                                    this.setState({
-                                        files: acceptedFiles
-                                    })
-                                }
-                            >
-                                {({ getRootProps, getInputProps }) => (
-                                    <section>
-                                        <div
-                                            {...getRootProps()}
-                                            className="d-flex flex-column jusity-content-center align-items-center hover"
-                                        >
-                                            <input {...getInputProps()} />
-                                            <p className="text-center">
-                                                Drag files or click here to
-                                                upload to the LEFT cloud.
-                                            </p>
-                                            {files}
-                                        </div>
-                                    </section>
-                                )}
-                            </Dropzone>
-                            <div className="row justify-content-center align-items-center">
-                                {files && (
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={this.uploadFiles}
-                                    >
-                                        UPLOAD
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-md-10 mt-3">
-                    <div className="row">
-                        <div className="col-md-8 px-0 px-md-3">
-                            {this.props.currentUser.cc.length > 4 ? <PaymentAlert user={this.props.currentUser}></PaymentAlert> : null}
-                            <TripsListHeader />
-                            {tripList}
-                        </div>
-                        <div className="col-md-4 px-0">
-                            {(this.props.currentUser.needsPasswordChanged || this.props.currentUser.needsEmailChanged) && <ChangeEmailAlert user={this.props.currentUser}></ChangeEmailAlert>}
-                            {tripInfo}
-                        </div>
-                    </div>
-                </div>
+                    <List component="div" style={{ paddingTop: 0, paddingBottom: 0 }}>
+                        <SideNavItem
+                            text="All Trips"
+                            total={trips.length - tripStatusCounts.ARCHIVED}
+                            active={filter === 'ALL TRIPS'}
+                            handleClick={this.onSideNavClick}
+                        />
+                        <SideNavItem
+                            text="Planning"
+                            total={tripStatusCounts.PLANNING}
+                            active={filter === 'PLANNING'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="Completed"
+                            total={tripStatusCounts.COMPLETED}
+                            active={filter === 'COMPLETED'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="LEFT"
+                            total={tripStatusCounts.LEFT}
+                            active={filter === 'LEFT'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="Past"
+                            total={tripStatusCounts.PAST}
+                            active={filter === 'PAST'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                        <SideNavItem
+                            text="Archived"
+                            total={tripStatusCounts.ARCHIVED}
+                            active={filter === 'ARCHIVED'}
+                            handleClick={this.onSideNavClick}
+                            divider
+                        />
+                    </List>
+                </Grid>
+                <Grid container spacing={2} xs={12} md={10} style={{ paddingLeft: 8 }}>
+                    <Grid item xs={12} md={8}>
+                        <TripsListHeader />
+                        {tripList}
+                    </Grid>
+                    <Grid item xs={12} md={4} style={{ paddingRight: 0 }}>
+                        {tripInfo}
+                    </Grid>
+                </Grid>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            </Grid >
         )
     }
 }
@@ -364,7 +308,7 @@ const mapStatetoProps = state => {
     }
 }
 
-export default connect(
+export default withRouter(connect(
     mapStatetoProps,
     { setCurrentTrip }
-)(Trips)
+)(Trips))

@@ -1,32 +1,58 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import UpdateContactForm from './UpdateContactForm'
-import LeftCard from '../../../util/LeftCard'
 import './Contact.css'
+import LeftModal from '../../../util/otherComponents/LeftModal'
+import Fab from '@material-ui/core/Fab'
+import ContactForm from '../../../Forms/ContactForm'
+import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
 
 class Contact extends Component {
+    state = {
+        isEditContactModalOpen: false
+    }
+
+    closeModal = () => (this.setState({ isEditContactModalOpen: false }))
+    openModal = () => (this.setState({ isEditContactModalOpen: true }))
+
     handleEdit = updateObject => {
         this.props.update(this.props._id, updateObject)
     }
 
     handleDelete = () => {
-        console.log('contact id is ' + this.props._id)
         this.props.remove(this.props._id)
+        this.closeModal()
     }
 
     render() {
         let { name, phone, email, image } = this.props
 
         return (
-            <LeftCard>
-                <Image src={image} diameter="48px" name={name} />
+            <LeftCardNew height={100}>
+                <Image src={image} name={name} />
                 <div className="d-flex flex-column justify-content-center">
-                    {name && <span className="Contact-name">{name}</span>}
-                    {phone && <span className="Contact-info">{phone}</span>}
-                    {email && <span className="Contact-info">{email}</span>}
+                    {name && <span className="Coordinator-name">{name}</span>}
+                    {phone && <span className="Coordinator-info">{phone}</span>}
+                    {email && <span className="Coordinator-info">{email}</span>}
                 </div>
-                <UpdateContactForm {...this.props} submit={this.handleEdit} remove={this.handleDelete} />
-            </LeftCard>
+                <>
+                    <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                        Edit
+                    </Fab>
+                    {
+                        this.state.isEditContactModalOpen && <LeftModal
+                            isOpen={this.state.isEditContactModalOpen}
+                            toggleModal={this.closeModal}
+                            title='Remove contact from trip'
+                            form={ContactForm}
+                            submit={this.handleEdit}
+                            name={name}
+                            phone={phone}
+                            email={email}
+                            remove={this.handleDelete}
+                        />
+                    }
+                </>
+            </LeftCardNew>
         )
     }
 }

@@ -51,7 +51,7 @@ class Share extends Component {
             end: moment(event.end).tz(this.localTimezone)
         }))
 
-        let orgName = await apiCall(
+        let org = await apiCall(
             'get',
             `/api/organization/${trip.coordinators[0].organization}/name`
         )
@@ -61,7 +61,7 @@ class Share extends Component {
             events: events,
             days,
             selectedDay: days[0],
-            orgName
+            orgName: org.name
         })
     }
 
@@ -291,7 +291,7 @@ const ShareContact = ({ contact }) => {
                 width: '280px'
             }}>
                 <div className="row justify-content-around align-items-center">
-                    <Image src={image} diameter="48px" name={name} />
+                    <Image src={image} diameter="64px" name={name} />
                     <div className="d-flex flex-column pl-4">
                         {name && <span className="Contact-name">{name}</span>}
                         {phone && <span className="Contact-info">{phone}</span>}

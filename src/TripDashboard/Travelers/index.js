@@ -1,77 +1,55 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
-import AddTravelerForm from './Actions/AddTravelerForm'
-import ImportBulkForm from './Actions/ImportBulkForm'
-import TravelerList from './Travelers/TravelerList'
-import Card from '@material-ui/core/Card';
-import CreateEmailForm from './Actions/CreateEmailForm'
-import CreateTextForm from './Actions/CreateTextForm'
-import { withStyles } from '@material-ui/core/styles'
-import Select from 'react-select'
-import ChangeStatusForm from './Actions/ChangeStatusForm'
-import TravelerInfo from './Travelers/TravelerInfo'
+import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
+import TravelerList from './TravelerList'
+import TravelerInfo from './TravelerInfo'
 import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
-import { customStyles } from '../../util/forms/SelectStyles'
-import AddFromOrg from './Travelers/AddFromOrg';
-import Snack from '../../util/Snack'
+import AddTravelerToTripFromOrgForm from '../../Forms/AddTravelerToTripFromOrgForm'
+import Snack from '../../util/otherComponents/Snack'
+import LeftMultipleSelect from '../../Forms/LeftMultipleSelect'
+import { travelerStatus } from '../../util/globals'
+import Paper from '@material-ui/core/Paper'
+import IconButton from '@material-ui/core/IconButton'
+import LeftModal from '../../util/otherComponents/LeftModal'
+import ChangeTravelerStatusForm from '../../Forms/ChangeTravelerStatusForm'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import CommunicateWithTravelersForm from '../../Forms/CommunicateWithTravelersForm'
+import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
+import Button from '@material-ui/core/Button'
+import ImportCsvForm from '../../Forms/ImportCsvForm'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import RegisterAccountModalForm from '../../Forms/RegisterAccountModalForm'
+import CollectMoneyForm from '../../Forms/CollectMoneyForm'
+import TravelerForm from '../../Forms/TravelerForm'
+
+
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/managetravelers')
 }
 
-
-const stati = [
-    { value: 'INVITED', label: 'Invited' },
-    { value: 'CONFIRMED', label: 'Confirmed' },
-    { value: 'ON-TRIP', label: 'On trip' },
-    { value: 'POST-TRIP', label: 'Post trip' },
-    { value: 'DOCS DUE', label: 'Docs due' },
-    { value: 'MONEY DUE', label: 'Money due' },
-    { value: 'OTHER', label: 'Other' },
-    { value: 'NONE', label: 'None' },
-    { value: 'NOT-GOING', label: 'Not going' },
-]
-
-const styles = {
-    title: {
-        fontFamily: 'Roboto',
-        fontWeight: '600',
-        fontSize: '30px',
-        color: '#333333',
-        paddingTop: '2rem',
-        paddingBottom: '2rem'
-    },
-    sideColumn: {
-        height: '120vh'
-    }
-}
-
 class Travelers extends Component {
-    currentTripId = this.props.currentTrip._id
-    allFilters = [
-        'INVITED',
-        'CONFIRMED',
-        'ON-TRIP',
-        'POST-TRIP',
-        'DOCS DUE',
-        'MONEY DUE',
-        'OTHER',
-        'PAPERWORK NEEDED',
-        'PAYMENT NEEDED',
-        'NONE',
-        'NOT-GOING'
-    ]
+    currentTripId = this.props.currentTrip ? this.props.currentTrip._id : null
 
     state = {
-        selected: {},
         allSelected: false,
-        filters: this.allFilters,
         selectedTraveler: {},
+        statusFiltersChecked: [],
+        tripFilters: [],
+        tripFiltersChecked: [],
         travelers: [],
         travelersNotOnTrip: [],
         addModalIsOpen: false,
+        isChangeStatusModalOpen: false,
+        isCommunicateModalOpen: false,
+        isAddNewTravelerOrgModalOpen: false,
+        isAddModalOpen: false,
+        isCollectMoneyModalOpen: false,
+        isRegisterAccountModalOpen: false,
+        canRequestPayments: false,
         snack: {
             show: false,
             variant: '',
@@ -84,27 +62,169 @@ class Travelers extends Component {
         if (process.env.NODE_ENV === 'production') {
             initializeReactGA()
         }
-        this.getTravelers()
+        if (props.currentTrip) {
+            this.getTravelers()
+        }
+        else {
+            this.getOrgTravelers()
+            this.getTrips()
+        }
+        this.getStripeAccount()
     }
 
+    closeChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: false }))
+    openChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: true }))
+    closeCommunicateModal = () => (this.setState({ isCommunicateModalOpen: false }))
+    openCommunicateModal = () => (this.setState({ isCommunicateModalOpen: true }))
+    closeAddNewTravelerOrgModal = () => (this.setState({ isAddNewTravelerOrgModalOpen: false }))
+    openAddNewTravelerOrgModal = () => (this.setState({ isAddNewTravelerOrgModalOpen: true }))
+    closeAddModal = () => (this.setState({ isAddModalOpen: false }))
+    openAddModal = () => (this.setState({ isAddModalOpen: true }))
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
+    toggleAddTravelerModal = () => (this.setState(prevState => ({ isAddTravelerOpen: !prevState.isAddTravelerOpen })))
+    toggleCollectMoneyModal = () => {
+        if (!this.state.canRequestPayments) {
+            this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen }))
+        }
+        else {
+            this.setState(prevState => ({ isCollectMoneyModalOpen: !prevState.isCollectMoneyModalOpen }))
+        }
+    }
+    toggleRegisterAccontModal = () => (this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen })))
+
 
     getTravelers = async () => {
-        const travelers = await apiCall('get', `/api/trips/${this.currentTripId}/travelers`)
-        const travelersInOrg = await apiCall('get', '/api/organization/travelers')
+        if (!this.props.currentTrip) {
+            this.getOrgTravelers()
+        } else {
+            const travelers = await apiCall('get', `/api/trips/${this.currentTripId}/travelers`)
+            const travelersInOrg = await apiCall('get', '/api/organization/travelers')
+            const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
 
-        const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
-
-        this.setState({ travelers, selectedTraveler: travelers[0], travelersNotOnTrip })
+            this.setState({
+                travelers,
+                selectedTraveler: travelers[0],
+                travelersNotOnTrip,
+                allSelected: false,
+                statusFiltersChecked: []
+            })
+        }
     }
 
-    addTraveler = async travelers => {
+    getOrgTravelers = async () => {
+        const travelers = await apiCall('get', '/api/organization/travelers')
+        this.setState({
+            travelers,
+            selectedTraveler: travelers[0],
+            allSelected: false,
+            statusFiltersChecked: []
+        })
+    }
+
+    getTrips = async () => {
+        const trips = await apiCall('get', '/api/organization/trips')
+        trips.push('none')
+        this.setState({ tripFilters: trips, tripFiltersChecked: [] })
+    }
+
+    getStripeAccount = async () => {
+        const account = await apiCall('GET', '/api/stripe/connect')
+        if (account.id === 'acct_1F9D9wISOcFp9WE7') {
+            this.setState({ canRequestPayments: false })
+        } else {
+            this.setState({ canRequestPayments: account.charges_enabled })
+        }
+    }
+
+    addTravelerToOrg = async traveler => {
+        try {
+            await apiCall(
+                'post',
+                '/api/organization/travelers',
+                traveler
+            )
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+    }
+
+    addTravelersCSV = async newTravelers => {
+        try {
+            await apiCall(
+                'post',
+                `/api/organization/travelers/csv`,
+                newTravelers,
+            )
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+    }
+
+    handleStatusFilterChange = statusFiltersChecked => {
+        statusFiltersChecked = statusFiltersChecked.target.value
+
+        this.setState(prevState => {
+            return {
+                statusFiltersChecked,
+                travelers: prevState.travelers.map(t =>
+                    statusFiltersChecked.includes(t.status) ?
+                        { ...t, filtered: true }
+                        : { ...t, filtered: false }
+                ),
+            }
+        })
+    }
+
+    handleTripFilterChange = tripFiltersChecked => {
+        tripFiltersChecked = tripFiltersChecked.target.value
+
+        this.setState(prevState => {
+            return {
+                tripFiltersChecked,
+                travelers: prevState.travelers.map(t =>
+                    tripFiltersChecked.includes(t.trip) ?
+                        { ...t, filtered: true }
+                        : { ...t, filtered: false }
+                ),
+            }
+        })
+    }
+
+    addTraveler = async data => {
         try {
             await apiCall(
                 'post',
                 `/api/trips/${this.currentTripId}/travelers`,
-                travelers,
-                true
+                data.selectedTravelers
             )
             this.setState({
                 snack: {
@@ -124,41 +244,15 @@ class Travelers extends Component {
             })
         }
 
-    }
-
-    addTravelersCSV = async travelers => {
-        try {
-            await apiCall(
-                'post',
-                `/api/trips/${this.currentTripId}/travelers/csv`,
-                travelers,
-                true
-            )
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            this.getTravelers()
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
     }
 
     updateTraveler = async (travelerId, updateObject) => {
         try {
             await apiCall(
                 'put',
-                `/api/trips/${this.currentTripId}/travelers/${travelerId}`,
-                updateObject, true
+                `/api/travelers/${travelerId}`,
+                // `/api/trips/${this.currentTripId}/travelers/${travelerId}`,
+                updateObject
             )
             this.setState({
                 snack: {
@@ -204,84 +298,78 @@ class Travelers extends Component {
         }
     }
 
-    toggle = travelerId => {
+    removeTravelerFromOrg = async travelerId => {
+        try {
+            await apiCall('delete', `/api/travelers/${travelerId}/org`, true)
+            this.getTravelers()
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+    }
+
+    toggle = clickedTravelerId => {
         this.setState(prevState => {
-            const { selected } = prevState
-            selected[travelerId] = !selected[travelerId]
-            return {
-                ...prevState,
-                allSelected: false,
-                selected
-            }
+            this.setState({
+                travelers: prevState.travelers.map(t =>
+                    t._id == clickedTravelerId ?
+                        { ...t, selected: t.selected ? false : true }
+                        : t
+                ),
+                allSelected: false
+            })
         })
     }
 
     toggleAll = () => {
         this.setState(prevState => {
-            const { travelers } = prevState
-            const newAllSelected = !prevState.allSelected
-            let selected = {}
-            if (newAllSelected) {
-                for (const { _id } of travelers) {
-                    selected[_id] = newAllSelected
+            const isSelectingAll = !prevState.allSelected
+
+            if (isSelectingAll) {//if user is trying to select all
+                return {
+                    travelers: prevState.travelers.map(t => ({ ...t, selected: true })),
+                    allSelected: true
                 }
-            }
-            return {
-                ...prevState,
-                allSelected: newAllSelected,
-                selected
+            } else {//if user is trying to deselect all
+                return {
+                    travelers: prevState.travelers.map(t => ({ ...t, selected: false })),
+                    allSelected: false
+                }
             }
         })
     }
 
-    textSelectedTravelers = async text => {
-        const { travelers, selected } = this.state
-        let travelersPhones = []
-        for (const { _id, phone } of travelers) {
-            if (selected[_id]) {
-                travelersPhones.push(phone)
+    communicateWithSelectedTravelers = async data => {
+        const travelerContacts = data.messageType === "email" ?
+            data.selectedTravelers.map(t => t.email) :
+            data.selectedTravelers.map(t => t.phone)
+
+        const communicationTypeEndpoint = data.messageType
+        const requestBody = communicationTypeEndpoint === 'email' ?
+            {
+                subject: data.subject,
+                body: data.message,
+                emails: travelerContacts
+            } :
+            {
+                body: data.message,
+                phones: travelerContacts
             }
-        }
 
         try {
-            await apiCall('post', '/api/communicate/text', {
-                body: text.body,
-                phones: travelersPhones
-            }, true)
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Success!'
-                }
-            })
-            this.getTravelers()
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred.'
-                }
-            })
-        }
-    }
-
-    emailSelectedTravelers = async email => {
-        const { selected, travelers } = this.state
-        let travelersEmails = []
-        for (const { _id, email } of travelers) {
-            if (selected[_id]) {
-                travelersEmails.push(email)
-            }
-        }
-
-        try {
-            await apiCall('post', '/api/communicate/email', {
-                subject: email.subject,
-                body: email.body,
-                emails: travelersEmails
-            }, true)
+            await apiCall('post', `/api/communicate/${communicationTypeEndpoint}`, requestBody)
             this.setState({
                 snack: {
                     show: true,
@@ -302,21 +390,12 @@ class Travelers extends Component {
     }
 
 
-    changeStatusOfSelectedTravelers = async ({ status }) => {
-        const { selected, travelers } = this.state
-        let travelerStatuses = []
-
-        for (const traveler of travelers) {
-            if (selected[traveler._id]) {
-                travelerStatuses.push({ _id: traveler._id, update: { status } })
-            }
-        }
-
+    changeStatusOfSelectedTravelers = async data => {
         try {
             await apiCall(
                 'put',
-                `/api/trips/${this.currentTripId}/travelers`,
-                travelerStatuses, true
+                '/api/travelers',
+                data.selectedTravelers.map(t => ({ _id: t._id, update: { status: data.status } }))
             )
             this.setState({
                 snack: {
@@ -337,15 +416,66 @@ class Travelers extends Component {
         }
     }
 
-    handleFilterChange = selectedFilters => {
-        if (!Array.isArray(selectedFilters) || !selectedFilters.length) {
-            //handles filters being cleared by clicking on the x, component returns empty array instead of null in this scenario
-            selectedFilters = null
+    registerAccount = async () => {
+        let link = await apiCall('POST', '/api/stripe/connect')
+        var win = window.open(link.url, '_blank');
+        win.focus()
+    }
+
+    collectMoneyFromTravelers = async data => {
+        console.log(data)
+        const { selectedTravelers, amount, message, messageType } = data
+        //create form, if form created successfully
+        let form
+        try {
+            form = await apiCall('post', '/api/coordinators/paymentForm', {
+                travelers: selectedTravelers.map(t => t._id),
+                amount,
+                message,
+                sendAs: messageType
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'There was an error creating your form.'
+                }
+            })
         }
-        let filters = selectedFilters
-            ? selectedFilters.map(f => f.value)
-            : this.allFilters
-        this.setState({ filters })
+
+
+        let travelersPhones = []
+        let travelersEmails = []
+
+        for (const { phone, email } of selectedTravelers) {
+            travelersPhones.push(phone)
+            travelersEmails.push(email)
+        }
+
+        try {
+            let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
+                emails: travelersEmails,
+                phones: travelersPhones,
+                sendAs: messageType
+            })
+
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Your payment requests have been sent!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred sending your payment requests'
+                }
+            })
+        }
     }
 
     setSelectedTraveler = travelerId => {
@@ -364,124 +494,182 @@ class Travelers extends Component {
     }
 
     render() {
-        let { selected, allSelected, filters, selectedTraveler, travelers } = this.state
-        const { classes } = this.props
-        const filteredTravelers = travelers.filter(traveler =>
-            filters.includes(traveler.status)
+        const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
+        const csvUpload = (<>
+            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginBottom: 16 }} onClick={this.toggleImportCsvModal}>
+                IMPORT FROM CSV
+            </Button>
+            {this.state.isImportCsvOpen && <LeftModal
+                isOpen={this.state.isImportCsvOpen}
+                toggleModal={this.toggleImportCsvModal}
+                title='Import travelers from CSV file'
+                submit={this.addTravelersCSV}
+                form={ImportCsvForm}
+            />}
+        </>
         )
 
-        let travelerInfo = selectedTraveler ? (
-            <TravelerInfo
-                traveler={selectedTraveler}
-                update={this.updateTraveler}
-                remove={this.removeTraveler}
-            />
-        ) : null
-
+        const newTravelerInOrg = (
+            <>
+                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right' }} onClick={this.openAddNewTravelerOrgModal}>
+                    NEW TRAVELER
+                </Button>
+                {
+                    this.state.isAddNewTravelerOrgModalOpen &&
+                    <LeftModal
+                        isOpen={this.state.isAddNewTravelerOrgModalOpen}
+                        toggleModal={this.closeAddNewTravelerOrgModal}
+                        title='Add new traveler'
+                        submit={this.addTravelerToOrg}
+                        form={TravelerForm}
+                    />
+                }
+            </>
+        )
         return (
-            <div className="col-md-12">
-                <div className="row">
-                    <div className="col-md-8 pl-3">
-                        <h4 className={classes.title} >Travelers on This Trip</h4>
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="row mx-0">
-                                    <div className="col-md-12">
-                                        <div className="row justify-content-between">
-                                            <Select
-                                                isMulti
-                                                name="colors"
-                                                options={stati}
-                                                className="basic-multi-select"
-                                                classNamePrefix="select"
-                                                styles={customStyles}
-                                                placeholder="All Status"
-                                                onChange={
-                                                    this.handleFilterChange
-                                                }
+            <div className="d-flex row" style={{ paddingLeft: 24, paddingRight: 16, marginTop: 16 }}>
+                <div className="col-12 col-lg-8 p-0">
+                    <Grid item xs={12} style={{ marginRight: 16 }}>
+                        <Typography variant="h2">{this.props.currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
+                        <div className="d-flex justify-content-between row mx-0" style={{ marginTop: 16 }}>
+                            <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
+                            {!this.props.currentTrip && <LeftMultipleSelect allValues={tripFilters} selectedValues={tripFiltersChecked} onChange={this.handleTripFilterChange} label='All Trips'></LeftMultipleSelect>}
+                            <div className="d-flex flex-row" style={{ marginBottom: 16 }}>
+                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
+                                    <IconButton onClick={this.openChangeStatusModal}>
+                                        <CreateOutlinedIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                                {
+                                    this.state.isChangeStatusModalOpen && <LeftModal
+                                        isOpen={this.state.isChangeStatusModalOpen}
+                                        toggleModal={this.closeChangeStatusModal}
+                                        title='Change traveler status'
+                                        submit={this.changeStatusOfSelectedTravelers}
+                                        travelers={this.state.travelers}
+                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                                        form={ChangeTravelerStatusForm}
+                                    />
+                                }
+                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
+                                    <IconButton onClick={this.openCommunicateModal}>
+                                        <MessageOutlinedIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                                {
+                                    this.state.isCommunicateModalOpen && <LeftModal
+                                        isOpen={this.state.isCommunicateModalOpen}
+                                        toggleModal={this.closeCommunicateModal}
+                                        title='Communicate with your travelers'
+                                        submit={this.communicateWithSelectedTravelers}
+                                        travelers={this.state.travelers}
+                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                                        form={CommunicateWithTravelersForm}
+                                    />
+                                }
+                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
+                                    <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
+                                        <AttachMoneyIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                                {this.state.isCollectMoneyModalOpen && <LeftModal
+                                    title="Collect money from travelers"
+                                    isOpen={this.state.isCollectMoneyModalOpen}
+                                    toggleModal={this.toggleCollectMoneyModal}
+                                    submit={this.collectMoneyFromTravelers}
+                                    travelers={this.state.travelers}
+                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                                    form={CollectMoneyForm}
+                                >
+                                </LeftModal>}
+                                {this.state.isRegisterAccountModalOpen && <LeftModal
+                                    isOpen={this.state.isRegisterAccountModalOpen}
+                                    toggleModal={this.toggleRegisterAccontModal}
+                                    title="Register your account to collect payments"
+                                    submit={this.registerAccount}
+                                    form={RegisterAccountModalForm}
+                                >
+                                </LeftModal>}
+                            </div>
+                            <div className="d-flex flex-column">
+                                {!this.props.currentTrip && csvUpload}
+                                {this.props.currentTrip ? (
+                                    <>
+                                        <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', }} onClick={this.openAddModal}>
+                                            ADD TRAVELER
+                                        </Button>
+                                        {this.state.isAddModalOpen &&
+                                            <LeftModal
+                                                isOpen={this.state.isAddModalOpen}
+                                                toggleModal={this.closeAddModal}
+                                                title='Add travelers to this trip'
+                                                submit={this.addTraveler}
+                                                travelers={this.state.travelersNotOnTrip}
+                                                form={AddTravelerToTripFromOrgForm}
                                             />
-                                            <div className="d-flex flex-row">
-                                                <ChangeStatusForm
-                                                    submit={
-                                                        this
-                                                            .changeStatusOfSelectedTravelers
-                                                    }
-                                                    travelers={filteredTravelers}
-                                                    selected={selected}
-                                                />
-                                                <CreateTextForm
-                                                    key={1}
-                                                    submit={
-                                                        this.textSelectedTravelers
-                                                    }
-                                                    travelers={filteredTravelers}
-                                                    selected={selected}
-                                                />
-                                                <CreateEmailForm
-                                                    key={2}
-                                                    submit={
-                                                        this.emailSelectedTravelers
-                                                    }
-                                                    travelers={filteredTravelers}
-                                                    selected={selected}
-                                                />
-                                            </div>
-                                            <button className="btn btn-primary btn-lg" onClick={this.toggleAddModal}>Add Traveler</button>
-                                            {this.state.addModalIsOpen &&
-                                                <AddFromOrg
-                                                    submit={this.addTraveler}
-                                                    toggleModal={this.toggleAddModal}
-                                                    isOpen={this.state.addModalIsOpen}
-                                                    travelers={this.state.travelersNotOnTrip}
-                                                />
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row mx-0 my-4">
-                                    <div className="col-md-12">
-                                        <div className="row justify-content-around left-shadow-sharp py-3 align-items-center">
-                                            <div className="col-md-1 Travelers-filter">
-                                                <Checkbox
-                                                    onChange={this.toggleAll}
-                                                    className=""
-                                                    checked={allSelected}
-                                                    label="noshow"
-                                                    color="primary"
-                                                />
-                                            </div>
-                                            <div className="col-md-1"></div>
-                                            <div className="col-md-3 Travelers-filter">NAME</div>
-                                            <div className="col-md-4 Travelers-filter">CONTACT</div>
-                                            <div className="col-md-3 Travelers-filter pr-0" style={{ paddingLeft: '32px' }}>STATUS</div>
-                                        </div>
-                                        <div className="row left-shadow-sharp mt-4" style={{ borderRadius: '3px' }}>
-                                            <TravelerList
-                                                items={filteredTravelers}
-                                                selected={selected}
-                                                toggle={this.toggle}
-                                                doubleClick={this.setSelectedTraveler}
-                                                showTrip={false}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
+                                        }
+                                    </>) : newTravelerInOrg}
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-4 px-0 mr-0" style={{ minHeight: '120vh' }}>
-                        <Card className={classes.sideColumn}>
-                            {this.state.selectedTraveler && this.state.selectedTraveler.name && travelerInfo}
-                        </Card>
-                    </div>
+                        <Paper style={{ marginTop: 16 }}>
+                            <div className="d-flex flex-row justify-content-around align-items-center TripsListHeader">
+                                <Grid item xs={1} >
+                                    <Checkbox
+                                        onChange={this.toggleAll}
+                                        className=""
+                                        checked={allSelected}
+                                        label="noshow"
+                                        color="primary"
+                                    />
+                                </Grid>
+                                <Grid item xs={2} className="d-none d-xl-flex"></Grid>
+                                <Grid item xs={2}>
+                                    <Typography variant="h6">
+                                        NAME
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={!this.props.currentTrip ? 2 : 3} className="d-none d-xl-flex">
+                                    <Typography variant="h6">
+                                        CONTACT
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={!this.props.currentTrip ? 2 : 3}>
+                                    <Typography variant="h6">
+                                        STATUS
+                                    </Typography>
+                                </Grid>
+                                {!this.props.currentTrip &&
+                                    <Grid item xs={2}>
+                                        <Typography variant="h6">TRIP NAME</Typography>
+                                    </Grid>
+                                }<Grid item xs={1}></Grid>
+                            </div>
+                        </Paper>
+
+                        <TravelerList
+                            items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
+                            toggle={this.toggle}
+                            doubleClick={this.setSelectedTraveler}
+                            showTrip={this.props.currentTrip ? false : true}
+                        />
+                    </Grid >
+
                 </div>
+                <div className="col-12 col-lg-4 px-0">
+                    {this.state.selectedTraveler && <TravelerInfo
+                        traveler={selectedTraveler}
+                        update={this.updateTraveler}
+                        remove={this.removeTraveler}
+                    />}
+                </div>
+
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            </div >
         )
     }
 }
 
-export default withStyles(styles)(Travelers)
+export default Travelers
 
 const travelersInOrgNotOnTrip = (travelersOnTrip, traverlersInOrg) => {
     travelersOnTrip = travelersOnTrip.map(t => t._id)

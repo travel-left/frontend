@@ -3,57 +3,82 @@ import { withRouter, NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../redux/actions/auth'
 import './Navbar.css'
+import Fab from '@material-ui/core/Fab'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import IconButton from '@material-ui/core/IconButton'
 
 class Navbar extends Component {
+    state = {
+        anchorEl: null
+    }
+
+    constructor(props) {
+        super(props)
+    }
     signout = () => {
         this.props.history.push(`/signin`)
         this.props.logout()
     }
 
     account = () => {
-        this.props.history.push(`/editprofile`)
+        this.props.history.push(`/account/personal`)
+        this.handleClose()
     }
 
     trips = () => {
         this.props.history.push(`/`)
+        this.handleClose()
     }
 
     support = () => {
         this.props.history.push(`/support`)
+        this.handleClose()
+    }
+
+    handleClick = (event) => {
+        this.setState({ anchorEl: event.currentTarget })
+    }
+
+    handleClose = () => {
+        this.setState({ anchorEl: null })
     }
 
     render() {
-        let { currentUser } = this.props
-        let accountController = null
+        const { currentUser } = this.props
+        let accountController
         let loggedInLinks
         let linkTo = '#'
 
         const { pathname } = this.props.history.location
-
-        const badgePill = ' px-4'
-
-
+        const tripsColor = pathname === '/trips' ? 'primary' : 'secondary'
+        const travelersColor = pathname === '/travelers' ? 'primary' : 'secondary'
 
         if (currentUser.isAuthenticated) {
             loggedInLinks = (
                 <div class="collapse navbar-collapse " id="navbarNav">
-                    <ul class="navbar-nav d-none d-md-flex align-items-center ml-4">
-                        <NavLink
-                            activeClassName="active"
-                            className='Navbar main-nav-link mr-3'
-                            to="/trips"
-                            name="/trips"
-                        >
-                            Trips
+                    <ul class="navbar-nav d-none d-md-flex align-items-center" style={{ marginLeft: 32 }}>
+                        <Fab color={tripsColor} variant="extended" disableTouchRipple>
+                            <NavLink
+                                activeClassName="active"
+                                className='Navbar main-nav-link'
+                                to="/trips"
+                                name="/trips"
+                            >
+                                Trips
                         </NavLink>
-                        <NavLink
-                            activeClassName="active"
-                            className='Navbar main-nav-link ml-3'
-                            to="/travelers"
-                            name="/travelers"
-                        >
-                            Travelers
+                        </Fab>
+                        <Fab color={travelersColor} variant="extended" disableTouchRipple style={{ marginLeft: 24 }}>
+                            <NavLink
+                                activeClassName="active"
+                                className='Navbar main-nav-link'
+                                to="/travelers"
+                                name="/travelers"
+                            >
+                                Travelers
                             </NavLink>
+                        </Fab>
                     </ul>
                 </div>
             )
@@ -61,42 +86,20 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse justify-content-end">
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <li className="nav-item dropdown d-flex align-items-center justify-content-center">
-                                <li
-                                    className="Navbar user-name"
-                                >
-                                    {currentUser.name}
-                                </li>
-                                <i class="material-icons md-18 bg-secondary nav-link dropdown-toggle ml-3 hover"
-                                    id="navbarDropdown"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                    style={{ borderRadius: '50%', padding: '0px', color: 'white' }}>
-                                    expand_more
-                                </i>
-                                <div className="dropdown-menu">
-                                    <button
-                                        className="dropdown-item btn-link"
-                                        onClick={this.account}
-                                    >
-                                        Account
-                                    </button>
-                                    <button
-                                        className="dropdown-item btn-link"
-                                        onClick={this.support}
-                                    >
-                                        Support
-                                    </button>
-
-                                    <div className="dropdown-divider" />
-                                    <button
-                                        className="dropdown-item btn-link"
-                                        onClick={this.signout}
-                                    >
-                                        Logout
-                                    </button>
-                                </div>
-                            </li>
+                            <li className="Navbar user-name">{currentUser.name}</li>
+                            <IconButton style={{ color: 'white', backgroundColor: '#83C9F4', padding: 0, marginLeft: '16px' }} onClick={this.handleClick}>
+                                <ExpandMoreIcon />
+                            </IconButton>
+                            <Menu
+                                id="simple-menu"
+                                anchorEl={this.state.anchorEl}
+                                open={Boolean(this.state.anchorEl)}
+                                onClose={this.handleClose}
+                            >
+                                <MenuItem onClick={this.account}>Account</MenuItem>
+                                <MenuItem onClick={this.support}>Support</MenuItem>
+                                <MenuItem onClick={this.signout}>Logout</MenuItem>
+                            </Menu>
                         </ul>
                     </div>
                 </div>
@@ -105,10 +108,9 @@ class Navbar extends Component {
         }
 
         return (
-            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid px-5 bg-primary" style={{ zIndex: 2 }} >
+            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid bg-primary" style={{ zIndex: 2, paddingLeft: 32, paddingRight: 32 }} >
                 <div className="navbar-brand">
-
-                    <Link to={linkTo} class="navbar-brand ml-2">
+                    <Link to={linkTo} class="navbar-brand ">
                         <img src="/left.png" alt="" style={{ height: '40px' }}></img>
                     </Link>
                 </div>

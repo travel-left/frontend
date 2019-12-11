@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
-import TripImageForm from './TripImageForm'
-import TripDatesForm from './TripDatesForm'
 import { apiCall } from '../../util/api'
-import TripStatusForm from './TripStatusForm'
 import Fab from '@material-ui/core/Fab'
 import NewShareTrip from '../../util/otherComponents/NewShareTrip'
 import SendIcon from '@material-ui/icons/Send'
 import './Cover.css'
-import Snack from '../../util/Snack'
+import TripStatus from '../../util/otherComponents/TripStatus'
+import LeftModal from '../../util/otherComponents/LeftModal'
+import ChangeTripStatusForm from '../../Forms/ChangeTripStatusForm'
+import ChangeTripDatesForm from '../../Forms/ChangeTripDatesForm'
+import ChangeCoverPhotoForm from '../../Forms/ChangeCoverPhotoForm'
+import Moment from 'react-moment'
+import moment from 'moment'
+import Typography from '@material-ui/core/Typography'
+import Snack from '../../util/otherComponents/Snack'
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -18,26 +23,20 @@ class Cover extends Component {
             variant: '',
             message: ''
         },
-        isShareTripOpen: false
+        isShareTripOpen: false,
+        isTripStatusOpen: false,
+        isTripDatesOpen: false,
+        isChangeCoverOpen: false
     }
 
     constructor(props) {
         super(props)
-
         this.getAndSetTravelers()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
-    toggleSharetTripModal = () => (this.setState(prevState => ({
-        isShareTripOpen: !prevState.isShareTripOpen
-    })))
-    closeSharetTripModal = () => (this.setState(prevState => ({
-        isShareTripOpen: !prevState.isShareTripOpen, snack: {
-            show: true,
-            variant: 'success',
-            message: 'Copied!'
-        }
-    })))
+    closeModal = modal => (this.setState({ [modal]: false }))
+    openModal = modal => (this.setState({ [modal]: true }))
 
     updateTrip = async updateObject => {
         try {
@@ -53,7 +52,7 @@ class Cover extends Component {
                     message: 'Success!'
                 }
             })
-            return this.props.setCurrentTrip(data)
+            this.props.setCurrentTrip(data)
         } catch (err) {
             this.setState({
                 snack: {
@@ -65,6 +64,16 @@ class Cover extends Component {
         }
     }
 
+    copiedLink = () => {
+        this.setState({
+            snack: {
+                show: true,
+                variant: 'success',
+                message: 'Copied!'
+            }
+        })
+    }
+
     getAndSetTravelers = async () => {
         const travelers = await apiCall(
             'get',
@@ -74,8 +83,6 @@ class Cover extends Component {
             travelers
         })
     }
-
-
 
     textSelectedTravelers = async (text, phones) => {
         try {
@@ -132,56 +139,79 @@ class Cover extends Component {
         let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
 
         return (
-            <div className="row">
+            <>
                 <div
-                    className="col-12 d-flex flex-column justify-content-end px-5 py-2 Cover-image"
+                    className="d-flex flex-column justify-content-end Cover-image"
                     style={{
                         backgroundImage: `url(${currentTrip.image})`,
                         height: '183px',
                         backgroundPosition: 'center',
                         backgroundSize: 'cover',
-                        borderRadius: '3px'
+                        borderRadius: '3px',
+                        padding: 16
                     }}
                 >
-                    <div className="row justify-content-between">
-                        <TripStatusForm
+                    <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: 32 }}>
+                        <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>
+                        {this.state.isTripStatusOpen && <LeftModal
+                            isOpen={this.state.isTripStatusOpen}
+                            toggleModal={() => this.closeModal('isTripStatusOpen')}
+                            title='Change trip status'
+                            form={ChangeTripStatusForm}
                             submit={this.updateTrip}
                             status={currentTrip.status}
-                        />
-                        <div className="pr-2">
-                            <Fab onClick={this.toggleSharetTripModal} color="primary">
+                        />}
+                        <div className="">
+                            <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary">
                                 <SendIcon style={{ color: 'white' }} fontSize="large" />
                             </Fab>
-                            {this.state.isShareTripOpen && <NewShareTrip
+                            {this.state.isShareTripOpen && <LeftModal
                                 isOpen={this.state.isShareTripOpen}
-                                toggleModal={this.closeSharetTripModal}
+                                toggleModal={() => this.closeModal('isShareTripOpen')}
+                                title='Change trip cover photo'
                                 tripId={currentTrip._id}
+                                submit={this.copiedLink}
+                                form={NewShareTrip}
                             />}
                         </div>
                     </div>
-                    <div className="row justify-content-between">
-                        <div className="btn">
-                            <h5 className="d-inline Cover-bottom-row">
-                                {invited} Invited
-                            </h5>
-                            <h5 className="d-inline ml-5 Cover-bottom-row">
-                                {confirmed} Confirmed
-                            </h5>
+                    <div className="d-flex justify-content-between align-items-center" >
+                        <div className="" >
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{invited} Invited</Typography>{' '}
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{confirmed} Confirmed</Typography>
                         </div>
-                        <TripDatesForm
-                            dateStart={currentTrip.dateStart}
-                            dateEnd={currentTrip.dateEnd}
+                        <div className="hover" onClick={() => this.openModal('isTripDatesOpen')}>
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                                <Moment date={currentTrip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
+                            </Typography>
+                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                                <Moment date={currentTrip.dateEnd.split('T')[0]} format="MMMM DD" />
+                            </Typography>
+                        </div>
+                        {this.state.isTripDatesOpen && <LeftModal
+                            isOpen={this.state.isTripDatesOpen}
+                            toggleModal={() => this.closeModal('isTripDatesOpen')}
+                            title='Change trip dates'
+                            form={ChangeTripDatesForm}
                             submit={this.updateTrip}
-                        />
-                        <TripImageForm
-                            image={currentTrip.image}
+                            dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
+                            dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
+                        />}
+                        <Typography variant="h1" className='hover' style={{ color: 'white', display: 'inline' }} onClick={() => this.openModal('isChangeCoverOpen')}>
+                            Change Cover Photo
+                        </Typography>
+
+                        {this.state.isChangeCoverOpen && <LeftModal
+                            isOpen={this.state.isChangeCoverOpen}
+                            toggleModal={() => this.closeModal('isChangeCoverOpen')}
+                            title='Change cover photo'
+                            form={ChangeCoverPhotoForm}
                             submit={this.updateTrip}
-                        />
+                        />}
                     </div>
                 </div>
-                <div className="col-3" />
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            </>
         )
     }
 }

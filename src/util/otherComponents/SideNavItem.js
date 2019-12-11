@@ -1,18 +1,18 @@
 import React from 'react'
-import './SideNavItem.css'
+import Typography from '@material-ui/core/Typography'
+import Chip from '@material-ui/core/Chip'
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem'
+import Card from '@material-ui/core/Card';
 
-export default ({ text, total, active, handleClick }) => {
-    let classes =
-        'list-group-item d-flex justify-content-between align-items-center border-right-0 border-left-0 SideNavItem-text'
-    if (active) {
-        classes += ' active'
-    } else {
-        classes += ' text-dark'
-    }
+export default ({ text, total, active, handleClick, divider }) => {
     return (
-        <a href="/" className={classes} onClick={handleClick} name={text}>
-            {text}
-            <span className="badge badge-primary badge-pill SideNavItem-bubble d-flex align-items-center justify-content-center"><span>{total}</span></span>
-        </a>
+        <Card>
+            {divider && <Divider />}
+            <ListItem button className='d-flex justify-content-between align-items-center' onClick={() => handleClick(text)} name={text} style={{ background: active && '#0A58CE', padding: '12px 16px' }}>
+                <Typography variant="h6" style={{ color: active ? 'white' : '#666666' }}>{text}</Typography>
+                {(total == 0 || total) && <Chip color="primary" size="small" label={total} style={{ fontSize: 12, fontWeight: 600, }} />}
+            </ListItem>
+        </Card>
     )
 }
