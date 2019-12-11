@@ -35,6 +35,7 @@ const form = props => {
                     variant="inline"
                     ampm
                     format="MM/DD/YYYY hh:mmA"
+                    minutesStep={5}
                     label="Date"
                     value={values.date}
                     onChange={value => {
