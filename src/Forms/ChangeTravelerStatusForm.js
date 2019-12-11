@@ -72,7 +72,7 @@ const form = props => {
                     // renderValue={value => value.label}
                     fullWidth
                 >
-                    {travelerStatus.map(status => <MenuItem value={status}>{status.toLowerCase()}</MenuItem>)}
+                    {travelerStatus.map(status => <MenuItem value={status}>{status.toUpperCase()}</MenuItem>)}
                 </Select>
                 <Divider style={{ marginTop: 40 }} />
                 <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>

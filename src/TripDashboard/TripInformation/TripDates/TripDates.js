@@ -135,7 +135,7 @@ export default class TripDates extends Component {
             ></TripDate>)
         return (
             <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16 }}>Trip Dates</Typography>
+                <Typography variant="h2" style={{ marginBottom: 16, marginTop: 16 }}>Trip Dates</Typography>
                 <Grid container spacing={2}>
                     <LeftCardNew>
                         <div className="d-flex flex-column flex-grow-1">

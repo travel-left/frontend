@@ -91,7 +91,7 @@ class _CardForm extends Component {
                 }}>Update card</label>
                 <CardElement />
                 <Button onClick={this.submit} size="large" type="submit" variant="contained" color="primary" id="signup" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }}>
-                    Save
+                    UPDATE
             </Button>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
