@@ -103,9 +103,7 @@ class events extends Component {
     }
 
     createEvent = async event => {
-        console.log(event)
         event = formatEventForBackend(event)
-        console.log(event)
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
             this.setState({
@@ -132,6 +130,8 @@ class events extends Component {
         let date = moment(event.date).toDate()
         event.start = new Date(date)
         event.end = new Date(date.setHours(event.start.getHours() + 1))
+        event.start = formatDateTime(date, event.start)
+        event.end = formatDateTime(date, event.end)
         event.timezone = this.localTimezone
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
@@ -292,22 +292,12 @@ class events extends Component {
 export default events
 
 function formatEventForBackend(event) {
-    //get date from event.date
-    let date = moment(event.date).toDate()
-    //get start and end time
-    let startTimeHours = new Date(event.start.valueOf()).getHours()
-    let endTimeHours = new Date(event.end.valueOf()).getHours()
-    let startTimeMinutes = new Date(event.start.valueOf()).getMinutes()
-    let endTimeMinutes = new Date(event.end.valueOf()).getMinutes()
-    //set the hours of start and end
-    event.start = new Date(date.setHours(startTimeHours))
-    event.start = new Date(date.setMinutes(startTimeMinutes))
-    event.end = new Date(date.setHours(endTimeHours))
-    event.end = new Date(event.end.setMinutes(endTimeMinutes))
-
+    event.start = formatDateTime(event.date, event.start)
+    event.end = formatDateTime(event.date, event.end)
+    console.log(event.start)
+    console.log(event.end)
     event.type = event.type.toUpperCase()
     event.documents = event.selectedDocuments
-    console.log(event.links)
     event.links = event.links.length ? event.links.split(' ').map(link => link) : []
     event.airline = event.airline.value
 
@@ -321,4 +311,17 @@ function formatDateToLocalTimezone(date) {
     let localTimezone = moment.tz.guess(true)
     date = moment(date).tz(localTimezone)
     return date
+}
+
+function formatDateTime(date, dateTime) {
+    let minutes = moment(dateTime).minutes()
+    if (minutes.toString().length === 1) {
+        minutes = `0${minutes}`
+    }
+
+    return {
+        date: moment(date).format("YYYY-MM-DD"),
+        hours: moment(dateTime).hours(),
+        minutes: minutes
+    }
 }
