@@ -8,7 +8,8 @@ export default class Map extends Component {
             width: '100%',
             height: '200px',
             zoom: 11
-        }
+        },
+        allowScrollZoom: false
     }
 
     handleViewportChange = viewport => this.setState({ viewport })
@@ -23,7 +24,9 @@ export default class Map extends Component {
                     longitude={long}
                     mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
                     onViewportChange={this.handleViewportChange}
+                    scrollZoom={this.state.allowScrollZoom}
                     mapStyle="mapbox://styles/mapbox/streets-v9"
+                    onClick={() => this.setState({ allowScrollZoom: !this.state.allowScrollZoom })}
                 >
                     <Marker
                         latitude={lat}
