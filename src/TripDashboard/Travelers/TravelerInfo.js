@@ -13,7 +13,6 @@ import TravelerForm from '../../Forms/TravelerForm'
 export default class TravelerInfo extends Component {
     state = {
         messages: [],
-        showMessages: false,
         isEditModalOpen: false
     }
 
@@ -26,8 +25,7 @@ export default class TravelerInfo extends Component {
     openEditModal = () => this.setState({ isEditModalOpen: true })
 
     componentDidUpdate(prevProps) {
-        if (this.props.traveler._id !== prevProps.traveler._id) {
-            this.setState({ showMessages: false })
+        if (this.props.traveler.messages !== prevProps.traveler.messages) {
             this.getMessages()
         }
     }
@@ -60,11 +58,9 @@ export default class TravelerInfo extends Component {
             personalNotes
         } = this.props.traveler
 
-        const { showMessages, messages } = this.state
+        const { messages } = this.state
 
-        const messageList = showMessages ? (
-            <MessageList messages={messages} />
-        ) : null
+        const messageList = <MessageList messages={messages} />
 
         return (
             <Card style={{ padding: 16 }}>
