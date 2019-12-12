@@ -171,12 +171,14 @@ const form = props => {
                                         date.setHours(hours, minutes)
                                         setFieldValue("start", date)
                                     }}
+                                    variant="inline"
                                     minutesStep={5}
                                     name="start"
                                     style={{ width: 120 }}
                                 />
                                 <KeyboardTimePicker
                                     label="End time"
+                                    variant="inline"
                                     value={values.end}
                                     onChange={(e, value) => {
                                         let time = moment(value, "hh:mm A").format("HH:mm").split(":")
