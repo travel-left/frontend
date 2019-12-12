@@ -14,7 +14,7 @@ const CommCard = ({ text, body, createdAt }) => {
                 <Typography varaint="caption" className="TripInfo-description">{text}</Typography>
             </div>
             <div className="d-flex">
-                <Typography varaint="caption" >{body.split('here</a> to')[1]}</Typography>
+                <Typography varaint="caption" >{body.split('here</a> to')[1] || body}</Typography>
             </div>
         </div>)
         : (<div className="d-flex">
