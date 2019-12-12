@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import Image from '../../util/otherComponents/Image'
 import TravelerStatus from '../../util/otherComponents/TravelerStatus'
 import { apiCall } from '../../util/api'
-import Text from './Text'
-import Email from './Email'
+import CommCard from './CommCard'
 import Button from '@material-ui/core/Button'
 import './TravelerInfo.css'
 import LeftModal from '../../util/otherComponents/LeftModal'
@@ -119,7 +118,7 @@ export default class TravelerInfo extends Component {
 
 const MessageList = ({ messages }) =>
     messages.map(m => (
-        m.__t === 'Text' ? <Text key={m._id} message={m.message} createdAt={m.createdAt} />
-            : <Email key={m._id} subject={m.subject} body={m.body} createdAt={m.createdAt} />
+        m.__t === 'Text' ? <CommCard key={m._id} text={m.message} createdAt={m.createdAt} />
+            : <CommCard key={m._id} text={m.subject} body={m.body} createdAt={m.createdAt} />
     ))
 
