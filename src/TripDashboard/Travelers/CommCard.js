@@ -32,7 +32,7 @@ const CommCard = ({ text, body, createdAt }) => {
                     <span className="TravelerInfo-text-date">{body ? ' - Email' : ' - Text\xa0\xa0'}</span>
                 </div>
                 <span style={{ textAlign: 'left', paddingLeft: 16 }} className="flex-grow-1">{text.substring(0, 30)}...</span>
-                <Fab color="primary" variant="extended" style={{ fontSize: 12, height: 32, width: 64 }} onClick={() => setIsModalOpen(true)}>
+                <Fab color="primary" variant="extended" style={{ fontSize: 12, height: 32, width: 64 }} onClick={() => setIsModalOpen(!isModalOpen)}>
                     VIEW
                 </Fab>
             </div>
