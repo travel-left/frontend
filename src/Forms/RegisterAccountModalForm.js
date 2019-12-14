@@ -13,7 +13,7 @@ export default ({ submit }) => {
                 lineHeight: '24px',
                 paddingTop: '10px',
                 paddingBottom: '15px'
-            }}>In order to collect payments, you need to register your account. The process takes about 15 minutes. <br></br>Click the button below when you're ready to register.</p>
+            }}>In order to collect payments, you need to register your account. Once you complete the form it will take about 10 minutes to verify your account. Click the button below when you're ready to register.</p>
             <div className="d-flex justify-content-center align-items-center mb-4">
                 <Fab variant="extended" aria-label="delete" className="linky-boi-button" type="submit" onClick={submit}>I'm ready to register my account!</Fab>
             </div>

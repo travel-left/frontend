@@ -140,7 +140,7 @@ export default class TripDates extends Component {
                     <LeftCardNew>
                         <div className="d-flex flex-column flex-grow-1">
                             {tripDatesList}
-                            <div className='d-flex justify-content-center' style={{ paddingBottom: 16 }}>
+                            <div className='d-flex justify-content-center' style={{ paddingBottom: 16, paddingTop: 16 }}>
                                 <Fab onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
                                     Add New
                                 </Fab>
