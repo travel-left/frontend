@@ -1,22 +1,14 @@
 import React from 'react'
-import Fab from '@material-ui/core/Fab'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
-
-export default ({ submit }) => {
-
-    return (
-        <div>
-            <p style={{
-                fontFamily: 'Roboto',
-                fontSize: '18px',
-                color: '#666666',
-                lineHeight: '24px',
-                paddingTop: '10px',
-                paddingBottom: '15px'
-            }}>In order to collect payments, you need to register your account. Once you complete the form it will take about 10 minutes to verify your account. Click the button below when you're ready to register.</p>
-            <div className="d-flex justify-content-center align-items-center mb-4">
-                <Fab variant="extended" aria-label="delete" className="linky-boi-button" type="submit" onClick={submit}>I'm ready to register my account!</Fab>
-            </div>
-        </div>
-    )
-}
+export default () => (
+    <div>
+        <Typography variant="subtitle2">
+            Your account is not yet verified, please head over to your account page to verify.
+                </Typography>
+        <Button size="large" type="submit" variant="contained" color="secondary" id="signup" style={{ width: '180px', height: '50px', color: 'white', marginTop: '25px' }} onClick={() => window.location.href = `https://app.travel-left.com/account/travelerPayments`}>
+            Go to account
+                </Button>
+    </div>
+)

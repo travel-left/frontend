@@ -3,6 +3,7 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 import Payment from './Payment'
 import Personal from './Personal';
 import Organization from './Organization';
+import TravelerPayments from './TravelerPayments';
 
 const Router = ({ currentUser, setCurrentUser }) => {
     return (
@@ -16,7 +17,7 @@ const Router = ({ currentUser, setCurrentUser }) => {
             />
             <Route
                 exact
-                path="/account/payment"
+                path="/account/billing"
                 render={routeProps => (
                     <Payment currentUser={currentUser} setCurrentUser={setCurrentUser} />
                 )}
@@ -26,6 +27,12 @@ const Router = ({ currentUser, setCurrentUser }) => {
                 path="/account/organization"
                 render={routeProps => (
                     <Organization currentUser={currentUser} setCurrentUser={setCurrentUser} />
+                )}
+            />
+            <Route
+                path="/account/travelerPayments"
+                render={routeProps => (
+                    <TravelerPayments {...routeProps} currentUser={currentUser} setCurrentUser={setCurrentUser} />
                 )}
             />
         </Switch>
