@@ -69,6 +69,7 @@ class Travelers extends Component {
             this.getOrgTravelers()
             this.getTrips()
         }
+
         this.getStripeAccount()
     }
 
@@ -130,11 +131,8 @@ class Travelers extends Component {
 
     getStripeAccount = async () => {
         const account = await apiCall('GET', '/api/stripe/connect')
-        if (account.id === 'acct_1F9D9wISOcFp9WE7') {
-            this.setState({ canRequestPayments: false })
-        } else {
-            this.setState({ canRequestPayments: account.charges_enabled })
-        }
+
+        this.setState({ canRequestPayments: account.charges_enabled })
     }
 
     addTravelerToOrg = async traveler => {
@@ -423,7 +421,6 @@ class Travelers extends Component {
     }
 
     collectMoneyFromTravelers = async data => {
-        console.log(data)
         const { selectedTravelers, amount, message, messageType } = data
         //create form, if form created successfully
         let form

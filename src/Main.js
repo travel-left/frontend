@@ -92,7 +92,6 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 )}
             />
             <Route
-                exact
                 path="/travelers"
                 render={props => (
                     <WithAuth {...props} currentUser={currentUser}>

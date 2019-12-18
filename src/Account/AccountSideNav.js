@@ -15,16 +15,22 @@ export default withRouter(function AccountSideNav({ ctId, location }) {
             active: location.pathname.includes('personal')
         },
         {
-            name: 'payment',
-            text: 'Payment Settings',
+            name: 'billing',
+            text: 'Billing',
             divider: true,
-            active: location.pathname.includes('payment')
+            active: location.pathname.includes('billing')
         },
         {
             name: 'organization',
             text: 'Organization',
             divider: true,
             active: location.pathname.includes('organization')
+        },
+        {
+            name: 'travelerPayments',
+            text: 'Traveler Payments',
+            divider: true,
+            active: location.pathname.includes('travelerPayments')
         }
     ]
     const sideNavList = sideNavComponents.map(({ name, text, divider, active }) => (
