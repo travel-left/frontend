@@ -21,7 +21,7 @@ const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt }
     return (
         <Card className='col-12 ' style={{ padding: 16, marginTop: 8, marginBottom: 8 }}>
             <div className="d-flex justify-content-between align-items-center">
-                <div>
+                <div style={{ minWidth: 140 }}>
                     <Moment
                         date={createdAt}
                         format="MMMM DD"
@@ -29,7 +29,9 @@ const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt }
                     />
                     <span className="TravelerInfo-text-date">{' - '}{amount}</span>
                 </div>
-                <span>{stripeChargeId ? <CheckCircleIcon style={{ color: '#29CB97', height: 32, width: 32, fontSize: 24 }} /> : <CancelIcon style={{ color: '#E24C4C', height: 32, width: 32, fontSize: 24 }} />}</span>
+                <div>
+                    <span>{stripeChargeId ? <CheckCircleIcon style={{ color: '#29CB97', height: 32, width: 32, fontSize: 24 }} /> : <CancelIcon style={{ color: '#E24C4C', height: 32, width: 32, fontSize: 24 }} />}</span>
+                </div>
                 <Fab color={!isModalOpen ? 'primary' : 'secondary'} variant="extended" style={{ fontSize: 12, height: 32, width: 64, color: 'white' }} onClick={() => setIsModalOpen(!isModalOpen)}>
                     {!isModalOpen ? 'VIEW' : 'CLOSE'}
                 </Fab>
