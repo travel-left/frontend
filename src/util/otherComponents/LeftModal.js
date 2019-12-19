@@ -38,14 +38,14 @@ export default class LeftModal extends Component {
                 >
                     <div className={`Modal--overlay animated fadeIn ${this.state.overlayAnimation}`} onClick={this.handleToggleModal} />
                     <div className="modal-dialog" role="document" >
-                        <div className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF' }}>
+                        <div className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF', borderRadius: 8 }}>
                             <div className="modal-header Modal-Form-header d-flex align-items-center bg-primary" style={{ padding: 16 }}>
                                 <h5 className="modal-title Modal-Form-header"> {this.props.title}</h5>
                                 <IconButton onClick={this.handleToggleModal} color='primary'>
                                     <CloseIcon style={{ color: 'white' }} fontSize="large" />
                                 </IconButton>
                             </div>
-                            <div className="modal-body" style={{ paddingLeft: 16, paddingRight: 16, backgroundColor: 'white' }}>
+                            <div className="modal-body" style={{ paddingLeft: 16, paddingRight: 16, backgroundColor: 'white', borderRadius: 8 }}>
                                 <Form  {...this.props} submit={this.handleSubmit} />
                             </div>
                         </div>

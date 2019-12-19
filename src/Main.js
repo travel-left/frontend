@@ -40,11 +40,13 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                 path="/account"
                 render={props => (
                     <WithAuth {...props}>
-                        <Account
-                            {...props}
-                            currentUser={currentUser}
-                            setCurrentUser={setCurrentUser}
-                        />
+                        <Container maxWidth='xl' style={{ padding: 0 }}>
+                            <Account
+                                {...props}
+                                currentUser={currentUser}
+                                setCurrentUser={setCurrentUser}
+                            />
+                        </Container>
                     </WithAuth>
                 )}
             />

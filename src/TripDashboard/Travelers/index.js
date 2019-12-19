@@ -429,7 +429,7 @@ class Travelers extends Component {
                 travelers: selectedTravelers.map(t => t._id),
                 amount,
                 message,
-                sendAs: messageType
+                messageType
             })
         } catch (err) {
             this.setState({
@@ -442,37 +442,37 @@ class Travelers extends Component {
         }
 
 
-        let travelersPhones = []
-        let travelersEmails = []
+        // let travelersPhones = []
+        // let travelersEmails = []
 
-        for (const { phone, email } of selectedTravelers) {
-            travelersPhones.push(phone)
-            travelersEmails.push(email)
-        }
+        // for (const { phone, email } of selectedTravelers) {
+        //     travelersPhones.push(phone)
+        //     travelersEmails.push(email)
+        // }
 
-        try {
-            let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
-                emails: travelersEmails,
-                phones: travelersPhones,
-                sendAs: messageType
-            })
+        // try {
+        //     let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
+        //         emails: travelersEmails,
+        //         phones: travelersPhones,
+        //         sendAs: messageType
+        //     })
 
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Your payment requests have been sent!'
-                }
-            })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'An error occurred sending your payment requests'
-                }
-            })
-        }
+        //     this.setState({
+        //         snack: {
+        //             show: true,
+        //             variant: 'success',
+        //             message: 'Your payment requests have been sent!'
+        //         }
+        //     })
+        // } catch (err) {
+        //     this.setState({
+        //         snack: {
+        //             show: true,
+        //             variant: 'error',
+        //             message: 'An error occurred sending your payment requests'
+        //         }
+        //     })
+        // }
     }
 
     setSelectedTraveler = travelerId => {
