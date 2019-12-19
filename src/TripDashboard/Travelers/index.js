@@ -422,14 +422,20 @@ class Travelers extends Component {
 
     collectMoneyFromTravelers = async data => {
         const { selectedTravelers, amount, message, messageType } = data
-        //create form, if form created successfully
-        let form
         try {
-            form = await apiCall('post', '/api/coordinators/paymentForm', {
+            await apiCall('post', '/api/coordinators/paymentForm', {
                 travelers: selectedTravelers.map(t => t._id),
                 amount,
                 message,
                 messageType
+            })
+
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Your payment requests have been sent!'
+                }
             })
         } catch (err) {
             this.setState({
