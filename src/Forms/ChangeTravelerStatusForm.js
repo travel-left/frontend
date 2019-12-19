@@ -5,9 +5,9 @@ import Divider from '@material-ui/core/Divider'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
-import Chip from '@material-ui/core/Chip'
 import Input from '@material-ui/core/Input'
 import { travelerStatus } from '../util/globals'
+import LeftChip from '../util/otherComponents/LeftChip'
 
 const form = props => {
     const {
@@ -39,9 +39,9 @@ const form = props => {
                 placeholder="No travelers selected"
                 renderValue={selectedTravelers => (
                     selectedTravelers.length === 0 ? <em>No travelers selected</em>
-                        : (<div>
+                        : (<div className="d-flex flex-wrap">
                             {selectedTravelers.map(t => (
-                                <Chip key={t._id} label={t.name} />
+                                <LeftChip key={t._id} label={t.name} />
                             ))}
                         </div>)
                 )}

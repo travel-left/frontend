@@ -9,10 +9,10 @@ import Select from '@material-ui/core/Select'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Radio from '@material-ui/core/Radio'
-import Chip from '@material-ui/core/Chip'
 import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import FormLabel from '@material-ui/core/FormLabel'
+import LeftChip from '../util/otherComponents/LeftChip'
 
 const form = props => {
     const {
@@ -44,14 +44,15 @@ const form = props => {
                 input={<Input id="select-multiple-chip" />}
                 placeholder="No travelers selected"
                 renderValue={selectedTravelers => (
-                    selectedTravelers.length === 0 ? <em>No travelers selected</em>
-                        : (<div>
+                    selectedTravelers.length === 0 ? 'No travelers selected'
+                        : (<div className="d-flex flex-wrap">
                             {selectedTravelers.map(t => (
-                                <Chip key={t._id} label={t.name} />
+                                <LeftChip key={t._id} label={t.name} />
                             ))}
                         </div>)
                 )}
                 fullWidth
+            // style={{ paddingLeft: 4, paddingRight: 4, paddingTop: 4, paddingBottom: 4 }}
             >
                 {values.travelers.map(c => (
                     <MenuItem key={c._id} value={c}>
@@ -63,7 +64,6 @@ const form = props => {
                 required
                 onChange={handleChange}
                 onBlur={handleBlur}
-                id="standard-required"
                 label="Amount"
                 value={values.amount}
                 placeholder="20.00"
@@ -77,13 +77,10 @@ const form = props => {
                 required
                 onChange={handleChange}
                 onBlur={handleBlur}
-                id="standard-required"
                 label="Message"
                 value={values.message}
                 placeholder="Message your traveler will see"
                 name="message"
-                error={touched.name && Boolean(errors.name)}
-                helperText={touched.name ? errors.name : ""}
                 fullWidth
             />
             <div style={{ marginTop: 40 }}>

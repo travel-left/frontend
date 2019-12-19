@@ -8,7 +8,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
-import Chip from '@material-ui/core/Chip'
+import LeftChip from '../util/otherComponents/LeftChip'
 
 const form = props => {
     const {
@@ -39,9 +39,9 @@ const form = props => {
                         onBlur={handleBlur}
                         input={<Input id="select-multiple-chip" />}
                         renderValue={selected => (
-                            <div>
+                            <div className="d-flex flex-wrap">
                                 {selected.map(c => (
-                                    <Chip key={c._id} label={c.name} />
+                                    <LeftChip key={c._id} label={c.name} />
                                 ))}
                             </div>
                         )}

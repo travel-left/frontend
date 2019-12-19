@@ -11,10 +11,12 @@ import LeftModal from '../../util/otherComponents/LeftModal'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import TravelerForm from '../../Forms/TravelerForm'
+import PaymentCard from './PaymentCard'
 
 export default class TravelerInfo extends Component {
     state = {
         messages: [],
+        payments: [],
         isEditModalOpen: false,
         tab: 0
     }
@@ -22,14 +24,16 @@ export default class TravelerInfo extends Component {
     constructor(props) {
         super(props)
         this.getMessages()
+        this.getPayments()
     }
 
     closeEditModal = () => this.setState({ isEditModalOpen: false })
     openEditModal = () => this.setState({ isEditModalOpen: true })
 
     componentDidUpdate(prevProps) {
-        if (this.props.traveler.messages !== prevProps.traveler.messages) {
+        if (this.props.traveler._id !== prevProps.traveler._id) {
             this.getMessages()
+            this.getPayments()
         }
     }
 
@@ -38,7 +42,18 @@ export default class TravelerInfo extends Component {
         if (_id) {
             let messages = await apiCall('get', `/api/travelers/${_id}/messages`)
             messages = messages.sort((f, s) => f.createdAt < s.createdAt)
-            this.setState({ messages, showMessages: messages.length > 0 })
+            this.setState({ messages })
+        }
+    }
+
+    getPayments = async () => {
+        const { _id } = this.props.traveler
+        console.log(this.props.traveler)
+        if (_id) {
+            let payments = await apiCall('get', `/api/travelers/${_id}/payments`)
+            console.log(payments)
+            payments = payments.sort((f, s) => f.createdAt < s.createdAt)
+            this.setState({ payments })
         }
     }
 
@@ -65,9 +80,10 @@ export default class TravelerInfo extends Component {
             personalNotes
         } = this.props.traveler
 
-        const { messages } = this.state
+        const { messages, payments } = this.state
 
         const messageList = <MessageList messages={messages} />
+        const paymentList = payments.map(p => <PaymentCard key={p._id} {...p} />)
 
         return (
             <Card style={{ padding: 16 }}>
@@ -107,6 +123,10 @@ export default class TravelerInfo extends Component {
                             {/* <Tab label={<Typography variant="h6">Forms</Typography>} style={{ textTransform: 'none' }} /> */}
                         </Tabs>
                         {this.state.tab === 0 && messageList}
+                        {this.state.tab === 1 && paymentList}
+                        {/* get all payments from Traveler
+                        create a payment Component
+                        display payment and mark completed or not based off of stripeChargeid */}
                     </div>
                 </div>
                 <Button size="large" variant="contained" color="secondary" style={{ width: '180px', height: '50px', float: 'right' }} onClick={this.openEditModal}>
