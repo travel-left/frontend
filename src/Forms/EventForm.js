@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
-import Chip from '@material-ui/core/Chip'
+import LeftChip from '../util/otherComponents/LeftChip'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -53,9 +53,9 @@ const form = props => {
                 placeholder="No travelers selected"
                 renderValue={selectedDocuments => (
                     !selectedDocuments ? <em>No documents selected</em>
-                        : (<div>
+                        : (<div className="d-flex flex-wrap">
                             {selectedDocuments.map(t => (
-                                <Chip key={t._id} label={t.name} />
+                                <LeftChip key={t._id} label={t.name} />
                             ))}
                         </div>)
                 )}
