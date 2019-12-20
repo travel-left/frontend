@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
-import { apiCall } from '../../util/api'
+import { apiCall } from '../util/api'
 import Moment from 'react-moment'
 import Typography from '@material-ui/core/Typography'
-import { Switch, Route, withRouter, NavLink } from 'react-router-dom'
-import { shadows } from '@material-ui/system'
-import './Share.css'
 import ReactGA from 'react-ga'
-import TripDates from '../TripInformation/TripDates/TripDates'
-import Resources from '../TripInformation/Documents/Resources'
-import Contacts from '../TripInformation/Contacts/Contacts'
-import Coordinators from '../TripInformation/Coordinators/Coordinators'
-import Itinerary from '../Itinerary/index'
+import TripDates from '../TripDashboard/TripInformation/TripDates/TripDates'
+import Resources from '../TripDashboard/TripInformation/Documents/Resources'
+import Contacts from '../TripDashboard/TripInformation/Contacts/Contacts'
+import Coordinators from '../TripDashboard/TripInformation/Coordinators/Coordinators'
+import Itinerary from '../TripDashboard/Itinerary/index'
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday'
 import InfoIcon from '@material-ui/icons/Info'
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
@@ -65,7 +62,7 @@ class Share extends Component {
                             backgroundColor: '#0A58CE', borderRadius: 8, color: "white", width: 480,
                             boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.4), 0px 2px 2px 0px rgba(0,0,0,0.2), 0px 1px 5px 0px rgba(0,0,0,0.22)',
                             zIndex: 10,
-                            marginTop: -36
+                            marginTop: 16
                         }}
                     >
                         <Tab icon={<CalendarTodayIcon fontSize="large" />} label="ITINERARY" style={{ fontSize: 10, fontWeight: 600 }} />
@@ -98,7 +95,7 @@ class Share extends Component {
     }
 }
 
-export default withRouter(Share)
+export default Share
 
 
 const ShareCover = ({ trip, source, route, handleRouteChange }) => {
@@ -115,18 +112,18 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
             }}
         >
             <div className="d-flex justify-content-between align-items-center" >
-                <Typography variant="h5" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
+                <Typography variant="h6" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
                 <div >
-                    <Typography variant="h5" style={{ color: 'white', display: 'inline' }}>
+                    <Typography variant="h6" style={{ color: 'white', display: 'inline' }}>
                         <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
                     </Typography>
-                    <Typography variant="h5" style={{ color: 'white', display: 'inline' }}>
+                    <Typography variant="h6" style={{ color: 'white', display: 'inline' }}>
                         <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMMM DD" />
                     </Typography>
                 </div>
             </div>
             <div className="d-flex justify-content-between align-items-end" >
-                <Typography variant="h5" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
+                <Typography variant="h6" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
 
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
                     <span
@@ -137,7 +134,8 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
                             fontSize: '12px',
                             padding: '.5rem .8rem',
                             width: '118px',
-                            color: '#FFFFFF'
+                            color: '#FFFFFF',
+                            marginTop: 16
                         }}
                     >
                         EXIT PREVIEW
