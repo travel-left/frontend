@@ -101,7 +101,7 @@ export default Share
 const ShareCover = ({ trip, source, route, handleRouteChange }) => {
     return (
         <div
-            className="d-flex flex-column justify-content-start Cover-image"
+            className="d-flex flex-column justify-content-end Cover-image"
             style={{
                 backgroundImage: `url(${trip.image})`,
                 height: '183px',
@@ -124,8 +124,6 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
                 </div>
             </div>
             <div className="d-flex justify-content-between align-items-end" >
-                <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
-
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
                     <span
                         className={`badge badge-secondary badge-pill text-uppercase hover d-flex align-items-center justify-content-center`}
@@ -142,6 +140,7 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
                         EXIT PREVIEW
                     <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}> cancel</i>
                     </span></a >}
+                <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
             </div>
         </div >
     )
