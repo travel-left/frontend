@@ -8,7 +8,7 @@ import WithoutAuth from './Auth/withoutAuth'
 import Auth from './Account'
 import TripDashboard from './TripDashboard'
 import NewPassword from './Account/NewPassword'
-import SharePreview from './TripDashboard/Share/SharePreview'
+import Share from './TripDashboard/Share/index'
 import Container from '@material-ui/core/Container'
 import Account from './Account/Account'
 import Travelers from './TripDashboard/Travelers/index'
@@ -106,7 +106,7 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
             <Route
                 path="/trips/:tripId/preview"
                 render={routeProps => (
-                    <SharePreview currentTrip={currentTrip} {...routeProps} />
+                    <Share currentTrip={currentTrip} {...routeProps} />
                 )}
             />
             <Route

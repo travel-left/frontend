@@ -134,6 +134,7 @@ export default class Contacts extends Component {
                 _id={contact._id}
                 remove={this.deleteContact}
                 update={this.updateContact}
+                share={this.props.share}
             ></Contact>
         )
 
@@ -143,7 +144,7 @@ export default class Contacts extends Component {
                     </Fab>
         </LeftItem>
 
-        contactList.splice(1, 0, newContactButton)
+        !this.props.share && contactList.splice(1, 0, newContactButton)
 
         return (
             <div style={{ marginTop: 64 }}>

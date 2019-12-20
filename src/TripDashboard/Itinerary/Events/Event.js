@@ -86,9 +86,10 @@ class Event extends Component {
                         <Typography variant="h2">
                             {name} {airports}</Typography>
                     </div>
-                    <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                        Edit
-                        </Fab>
+                    {!this.props.share &&
+                        <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                            Edit
+                    </Fab>}
                     {
                         this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}

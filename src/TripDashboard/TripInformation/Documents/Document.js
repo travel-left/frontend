@@ -36,9 +36,9 @@ class Document extends Component {
                 <Card style={{ padding: 16 }} className="animated fadeIn d-flex justify-content-between flex-column">
                     <div className="d-flex justify-content-between">
                         <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
-                        <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                        {!this.props.share && <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
                             Edit
-                        </Fab>
+                        </Fab>}
                         {
                             this.state.isEditModalOpen && <LeftModal
                                 isOpen={this.state.isEditModalOpen}

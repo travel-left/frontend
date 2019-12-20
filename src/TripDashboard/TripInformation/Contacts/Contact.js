@@ -35,9 +35,9 @@ class Contact extends Component {
                     {email && <span className="Coordinator-info">{email}</span>}
                 </div>
                 <>
-                    <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                    {!this.props.share ? <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
                         Edit
-                    </Fab>
+                    </Fab> : <span style={{ width: '54px', }}></span>}
                     {
                         this.state.isEditContactModalOpen && <LeftModal
                             isOpen={this.state.isEditContactModalOpen}

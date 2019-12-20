@@ -100,7 +100,7 @@ class Travelers extends Component {
             this.getOrgTravelers()
         } else {
             const travelers = await apiCall('get', `/api/trips/${this.currentTripId}/travelers`)
-            const travelersInOrg = await apiCall('get', '/api/organization/travelers')
+            const travelersInOrg = await apiCall('get', `/api/organization/${this.props.currentUser.organization}/travelers`)
             const travelersNotOnTrip = travelersInOrgNotOnTrip(travelers, travelersInOrg)
 
             this.setState({
@@ -114,7 +114,7 @@ class Travelers extends Component {
     }
 
     getOrgTravelers = async () => {
-        const travelers = await apiCall('get', '/api/organization/travelers')
+        const travelers = await apiCall('get', `/api/organization/${this.props.currentUser.organization}/travelers`)
         this.setState({
             travelers,
             selectedTraveler: travelers[0],
@@ -124,7 +124,8 @@ class Travelers extends Component {
     }
 
     getTrips = async () => {
-        const trips = await apiCall('get', '/api/organization/trips')
+        let trips = await apiCall('get', '/api/trips')
+        trips = trips.map(trip => trip.name)
         trips.push('none')
         this.setState({ tripFilters: trips, tripFiltersChecked: [] })
     }
