@@ -114,14 +114,6 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
         >
             <div className="d-flex justify-content-between align-items-center" >
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
-                <div >
-                    <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
-                        <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
-                    </Typography>
-                    <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
-                        <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMMM DD" />
-                    </Typography>
-                </div>
             </div>
             <div className="d-flex justify-content-between align-items-end" >
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
@@ -141,6 +133,14 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
                     <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}> cancel</i>
                     </span></a >}
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
+                <div >
+                    <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                        <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
+                    </Typography>
+                    <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                        <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMMM DD" />
+                    </Typography>
+                </div>
             </div>
         </div >
     )
