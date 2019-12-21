@@ -235,12 +235,13 @@ class events extends Component {
                 removeEvent={this.removeEvent}
                 trip={this.props.currentTrip}
                 documents={this.state.documents}
+                share={this.props.share}
             />
         ) : <h4 className="text-info" />
 
         return (
-            <div className="d-flex row" style={{ paddingLeft: 24, paddingRight: 16, marginTop: 16 }}>
-                <div className="col-12 col-lg-8">
+            <div className="d-flex" style={{ paddingRight: 16, marginTop: 16 }}>
+                <div className={this.props.share ? 'col-12' : 'col-12 col-lg-8'}>
                     <Grid item xs={12} style={{ marginRight: 16 }}>
                         <div className="row justify-content-between">
                             <Typography variant="h2">Trip Itinerary</Typography>
@@ -250,7 +251,7 @@ class events extends Component {
                         </div>
                     </Grid>
                 </div>
-                <div className="col-12 col-lg-4 px-0">
+                {!this.props.share && <div className="col-12 col-lg-4 px-0">
                     <div style={{ padding: 16 }}>
                         <div className="row flex-column align-items-center" style={{ marginBottom: 16 }}>
                             <Button size="large" onClick={this.toggleModal} variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 25, marginBottom: 25, marginLeft: 16, marginRight: 16 }} >
@@ -282,7 +283,7 @@ class events extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>}
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )

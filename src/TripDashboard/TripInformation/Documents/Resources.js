@@ -99,10 +99,11 @@ export default class Resources extends Component {
                 description={doc.description}
                 link={doc.link}
                 update={this.updateDocument}
-                remove={this.deleteDocument} />
+                remove={this.deleteDocument}
+                share={this.props.share} />
         )
 
-        documents.splice(1, 0, uploadZone)
+        !this.props.share && documents.splice(1, 0, uploadZone)
 
         return (
             <div style={{ marginTop: 64 }}>

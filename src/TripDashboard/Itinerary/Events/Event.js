@@ -43,7 +43,7 @@ class Event extends Component {
         const address = <p className="card-text text-muted text-center">{event.address}</p>
 
         const documents = event.documents.map((d, i) => (
-            <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16 }}>
+            <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16, marginBottom: 16 }}>
                 <div className="Document-icon d-flex justify-content-center align-items-center" style={{ width: 80, height: 80 }}>
                     <a
                         className="hover"
@@ -86,9 +86,10 @@ class Event extends Component {
                         <Typography variant="h2">
                             {name} {airports}</Typography>
                     </div>
-                    <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                        Edit
-                        </Fab>
+                    {!this.props.share &&
+                        <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                            Edit
+                    </Fab>}
                     {
                         this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
@@ -104,7 +105,7 @@ class Event extends Component {
                     }
                 </div>
                 <Typography variant="subtitle2" style={{ color: icon.color, paddingTop: 16 }}> {time}</Typography>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex flex-wrap justify-content-between">
                     <Grid item xs={12} sm={6} md={6}>
                         <Typography variant="subtitle1" style={{ paddingTop: 16 }}> {event.description}</Typography>
                         <div style={{ marginTop: 16, marginBottom: 16 }}>
@@ -112,7 +113,7 @@ class Event extends Component {
                         </div>
                         {documents}
                     </Grid>
-                    <Grid item xs={0} sm={5} gitmd={5} className="d-none d-md-block">
+                    <Grid item xs={0} sm={5} gitmd={5} className="">
                         {map}
                         <Typography variant="subtitle1"> {address} </Typography>
                     </Grid>

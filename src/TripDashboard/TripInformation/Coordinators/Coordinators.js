@@ -27,7 +27,7 @@ export default class Coordinators extends Component {
         super(props)
 
         this.getCoordinators()
-        this.getCoordinatorsFromOrg()
+        !this.props.share && this.getCoordinatorsFromOrg()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -43,7 +43,7 @@ export default class Coordinators extends Component {
     }
 
     getCoordinatorsFromOrg = async () => {
-        let coordinatorsFromOrg = await apiCall('get', `/api/trips/${this.TRIP_ID}/coordinators/org`)
+        let coordinatorsFromOrg = await apiCall('get', `/api/organization/${this.props.currentUser.organization}/coordinators`)
         this.setState({ coordinatorsFromOrg })
     }
 
@@ -171,12 +171,13 @@ export default class Coordinators extends Component {
                 image={c.image}
                 phone={c.phone}
                 title={c.title}
-                currentUserId={this.props.currentUser._id}
+                currentUserId={this.props.currentUser && this.props.currentUser._id}
                 remove={this.deleteCoordinator}
+                share={this.props.share}
             />
         )
 
-        coordinatorList.splice(1, 0, newCoordinatorButton)
+        !this.props.share && coordinatorList.splice(1, 0, newCoordinatorButton)
 
         return (
             <div style={{ marginTop: 64 }}>
