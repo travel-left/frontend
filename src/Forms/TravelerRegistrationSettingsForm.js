@@ -27,31 +27,35 @@ const form = props => {
             <FormGroup>
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Name</span>
-                    <Switch checked={values.name} onChange={handleChange('name')} value="name" />
+                    <Switch checked={values.hasName} onChange={handleChange('hasName')} value="hasName" />
+                </div>
+                <div className="d-flex justify-content-between align-items-center">
+                    <span htmlFor="">Picture</span>
+                    <Switch checked={values.hasImage} onChange={handleChange('hasImage')} value="hasImage" />
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Email</span>
-                    <Switch checked={values.email} onChange={handleChange('email')} value="email" />
+                    <Switch checked={values.hasEmail} onChange={handleChange('hasEmail')} value="hasEmail" />
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Phone</span>
-                    <Switch checked={values.phone} onChange={handleChange('phone')} value="phone" />
+                    <Switch checked={values.hasPhone} onChange={handleChange('hasPhone')} value="hasPhone" />
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Personal Notes</span>
-                    <Switch checked={values.personalNotes} onChange={handleChange('personalNotes')} value="personalNotes" />
+                    <Switch checked={values.hasPersonalNotes} onChange={handleChange('hasPersonalNotes')} value="hasPersonalNotes" />
                 </div>
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Payment</span>
-                    <Switch checked={values.payment} onChange={handleChange('payment')} value="payment" />
+                    <Switch checked={values.hasPaymentAmount} onChange={handleChange('hasPaymentAmount')} value="hasPaymentAmount" />
                 </div>
-                {values.payment && <TextField
+                {values.hasPaymentAmount && <TextField
                     onChange={handleChange}
                     onBlur={handleBlur}
                     label="Amount"
-                    value={values.amount}
+                    value={values.paymentAmount}
                     placeholder="20.00"
-                    name="amount"
+                    name="paymentAmount"
                     fullWidth
                     InputProps={{
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -60,9 +64,9 @@ const form = props => {
                 />}
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Registration Due Date</span>
-                    <Switch checked={values.dueDate} onChange={handleChange('dueDate')} value="dueDate" />
+                    <Switch checked={values.hasDueDate} onChange={handleChange('hasDueDate')} value="hasDueDate" />
                 </div>
-                {values.dueDate && <MuiPickersUtilsProvider utils={MomentUtils}>
+                {values.hasDueDate && <MuiPickersUtilsProvider utils={MomentUtils}>
                     <KeyboardDatePicker
                         autoOk
                         disableToolbar
@@ -70,24 +74,21 @@ const form = props => {
                         format="MM-DD-YYYY"
                         id="date"
                         label="Date"
-                        value={values.date}
+                        value={values.dueDate}
                         onChange={value => {
-                            setFieldValue("date", value)
+                            setFieldValue("dueDate", value)
                         }}
                         onBlur={handleBlur}
-                        name="dateStart"
+                        name="dueDate"
                         style={{ marginTop: 8, marginBottom: 16, width: 180, marginLeft: 16 }}
                     />
                 </MuiPickersUtilsProvider>}
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Publish</span>
-                    <Switch checked={values.publish} onChange={handleChange('publish')} value="publish" color="primary" />
+                    <Switch checked={values.hasPublish} onChange={handleChange('hasPublish')} value="hasPublish" color="primary" />
                 </div>
             </FormGroup>
             <Divider style={{ marginTop: 40 }} />
-            {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
-                Remove
-            </Button>}
             <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Submit
             </Button>
@@ -100,14 +101,16 @@ const Form = withFormik({
         settings
     }) => {
         return {
-            name: settings ? settings.name : false,
-            email: settings ? settings.email : false,
-            phone: settings ? settings.phone : false,
-            personalNotes: settings ? settings.personalNotes : false,
-            payment: settings ? settings.payment : false,
-            dueDate: settings ? settings.dueDate : false,
-            publish: settings ? settings.publish : false,
-            date: settings ? settings.date : new Date(),
+            hasName: settings ? settings.hasName : false,
+            hasEmail: settings ? settings.hasEmail : false,
+            hasPhone: settings ? settings.hasPhone : false,
+            hasImage: settings ? settings.hasImage : false,
+            hasPersonalNotes: settings ? settings.hasPersonalNotes : false,
+            hasPaymentAmount: settings ? settings.hasPaymentAmount : false,
+            hasDueDate: settings ? settings.hasDueDate : false,
+            hasPublish: settings ? settings.hasPublish : false,
+            dueDate: settings ? settings.dueDate : new Date(),
+            paymentAmount: settings ? settings.paymentAmount : ''
         };
     },
 

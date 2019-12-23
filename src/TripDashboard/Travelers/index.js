@@ -390,6 +390,39 @@ class Travelers extends Component {
         }
     }
 
+    updateTripRegistrationForm = async data => {
+        const updateObject = {
+            travelerRegistrationForm: {
+                ...data
+            }
+        }
+
+        console.log(updateObject)
+
+        try {
+            const updatedTrip = await apiCall(
+                'put',
+                `/api/trips/${this.currentTripId}`,
+                updateObject
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            this.props.setCurrentTrip(updatedTrip)
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+    }
 
     changeStatusOfSelectedTravelers = async data => {
         try {
@@ -466,11 +499,6 @@ class Travelers extends Component {
         }))
     }
 
-    setRegistrationFormSettings = data => {
-        console.log('registration form info ')
-        console.log(data)
-    }
-
     render() {
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = (<>
@@ -496,8 +524,9 @@ class Travelers extends Component {
                     isOpen={this.state.isRegistrationModalOpen}
                     toggleModal={this.toggleRegistrationModal}
                     title='Customize your traveler registration'
-                    submit={this.setRegistrationFormSettings}
+                    submit={this.updateTripRegistrationForm}
                     form={TravelerRegistrationSettingsForm}
+                    settings={this.props.currentTrip.travelerRegistrationForm}
                 />}
             </>
         )
