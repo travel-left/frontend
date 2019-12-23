@@ -24,6 +24,7 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import RegisterAccountModalForm from '../../Forms/RegisterAccountModalForm'
 import CollectMoneyForm from '../../Forms/CollectMoneyForm'
 import TravelerForm from '../../Forms/TravelerForm'
+import TravelerRegistrationSettingsForm from '../../Forms/TravelerRegistrationSettingsForm'
 
 
 function initializeReactGA() {
@@ -49,6 +50,7 @@ class Travelers extends Component {
         isAddModalOpen: false,
         isCollectMoneyModalOpen: false,
         isRegisterAccountModalOpen: false,
+        isRegistrationModalOpen: false,
         canRequestPayments: false,
         snack: {
             show: false,
@@ -93,7 +95,7 @@ class Travelers extends Component {
         }
     }
     toggleRegisterAccontModal = () => (this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen })))
-
+    toggleRegistrationModal = () => (this.setState(prevState => ({ isRegistrationModalOpen: !prevState.isRegistrationModalOpen })))
 
     getTravelers = async () => {
         if (!this.props.currentTrip) {
@@ -447,39 +449,6 @@ class Travelers extends Component {
                 }
             })
         }
-
-
-        // let travelersPhones = []
-        // let travelersEmails = []
-
-        // for (const { phone, email } of selectedTravelers) {
-        //     travelersPhones.push(phone)
-        //     travelersEmails.push(email)
-        // }
-
-        // try {
-        //     let data = await apiCall('post', `/api/paymentForms/${form.paymentFormId}`, {
-        //         emails: travelersEmails,
-        //         phones: travelersPhones,
-        //         sendAs: messageType
-        //     })
-
-        //     this.setState({
-        //         snack: {
-        //             show: true,
-        //             variant: 'success',
-        //             message: 'Your payment requests have been sent!'
-        //         }
-        //     })
-        // } catch (err) {
-        //     this.setState({
-        //         snack: {
-        //             show: true,
-        //             variant: 'error',
-        //             message: 'An error occurred sending your payment requests'
-        //         }
-        //     })
-        // }
     }
 
     setSelectedTraveler = travelerId => {
@@ -497,6 +466,11 @@ class Travelers extends Component {
         }))
     }
 
+    setRegistrationFormSettings = data => {
+        console.log('registration form info ')
+        console.log(data)
+    }
+
     render() {
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = (<>
@@ -511,6 +485,21 @@ class Travelers extends Component {
                 form={ImportCsvForm}
             />}
         </>
+        )
+
+        const registrationForm = (
+            <>
+                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16 }} onClick={this.toggleRegistrationModal}>
+                    registration form
+            </Button>
+                {this.state.isRegistrationModalOpen && <LeftModal
+                    isOpen={this.state.isRegistrationModalOpen}
+                    toggleModal={this.toggleRegistrationModal}
+                    title='Customize your traveler registration'
+                    submit={this.setRegistrationFormSettings}
+                    form={TravelerRegistrationSettingsForm}
+                />}
+            </>
         )
 
         const newTravelerInOrg = (
@@ -613,6 +602,7 @@ class Travelers extends Component {
                                             />
                                         }
                                     </>) : newTravelerInOrg}
+                                {this.props.currentTrip && registrationForm}
                             </div>
                         </div>
                         <Paper style={{ marginTop: 16 }}>
