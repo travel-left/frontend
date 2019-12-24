@@ -66,7 +66,7 @@ const form = props => {
                 type="text"
                 fullWidth
             />}
-            {fields.hasPaymentAmount && <TextField
+            {/* {fields.hasPaymentAmount && <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Payment"
@@ -85,7 +85,7 @@ const form = props => {
                 name="imate"
                 type="text"
                 fullWidth
-            />}
+            />} */}
             <Divider style={{ marginTop: 40 }} />
             <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Submit
