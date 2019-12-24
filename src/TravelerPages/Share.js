@@ -120,7 +120,7 @@ const ShareCover = ({ trip, source }) => {
                     var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
                     win.focus()
                 }}>
-                    Register
+                    Register By{'\xa0'}<Moment date={trip.travelerRegistrationForm && trip.travelerRegistrationForm.dueDate.split('T')[0]} format="MMM DD" />
                 </Button>
             </div>
             <div className="d-flex justify-content-between align-items-end" >
