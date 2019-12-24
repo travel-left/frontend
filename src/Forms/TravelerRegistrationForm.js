@@ -14,12 +14,12 @@ const form = props => {
         handleBlur,
         handleSubmit,
         setFieldValue,
-        remove
+        fields
     } = props
 
     return (
         <form onSubmit={handleSubmit}>
-            {values.hasName && <TextField
+            {fields.hasName && <TextField
                 required
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -32,7 +32,7 @@ const form = props => {
                 helperText={touched.name ? errors.name : ""}
                 fullWidth
             />}
-            {values.hasEmail && <TextField
+            {fields.hasEmail && <TextField
                 required
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -46,7 +46,7 @@ const form = props => {
                 helperText={touched.email ? errors.email : ""}
                 fullWidth
             />}
-            {values.hasPhone && <TextField
+            {fields.hasPhone && <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Phone number"
@@ -56,7 +56,7 @@ const form = props => {
                 type="text"
                 fullWidth
             />}
-            {values.hasPersonalNotes && <TextField
+            {fields.hasPersonalNotes && <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Personal Notes"
@@ -66,7 +66,7 @@ const form = props => {
                 type="text"
                 fullWidth
             />}
-            {values.hasPaymentAmount && <TextField
+            {fields.hasPaymentAmount && <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Payment"
@@ -76,7 +76,7 @@ const form = props => {
                 type="text"
                 fullWidth
             />}
-            {values.hasImage && <TextField
+            {fields.hasImage && <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Image"
@@ -95,11 +95,8 @@ const form = props => {
 }
 
 const Form = withFormik({
-    mapPropsToValues: ({
-        fields
-    }) => {
+    mapPropsToValues: ({ fields }) => {
         return {
-            ...fields,
             name: '',
             phone: '',
             email: '',
@@ -107,7 +104,6 @@ const Form = withFormik({
             image: ''
         }
     },
-
     handleSubmit: (values, { setSubmitting, props }) => {
         props.submit(values).then(() => setSubmitting(false))
     }

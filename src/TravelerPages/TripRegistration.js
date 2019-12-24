@@ -9,7 +9,7 @@ export default class TripRegistration extends Component {
     tripId = this.props.match.params.tripId
 
     state = {
-        trip: {}
+        trip: null
     }
     constructor(props) {
         super(props)
@@ -28,6 +28,7 @@ export default class TripRegistration extends Component {
 
     render() {
         return (
+            this.state.trip &&
             <div className="d-flex justify-content-center">
                 <Card style={{ padding: 16, maxWidth: 600, marginTop: 32 }}>
                     <Typography variant="h4">Register for {this.state.trip.name}</Typography>
