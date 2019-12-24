@@ -116,12 +116,12 @@ const ShareCover = ({ trip, source }) => {
         >
             <div className="d-flex justify-content-between align-items-start" >
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
-                <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
+                {trip.travelerRegistrationForm && trip.travelerRegistrationForm.hasPublish && <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
                     var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
                     win.focus()
                 }}>
                     Register By{'\xa0'}<Moment date={trip.travelerRegistrationForm && trip.travelerRegistrationForm.dueDate.split('T')[0]} format="MMM DD" />
-                </Button>
+                </Button>}
             </div>
             <div className="d-flex justify-content-between align-items-end" >
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
