@@ -29,10 +29,10 @@ const form = props => {
                     <span htmlFor="">Name</span>
                     <Switch checked={values.hasName} onChange={handleChange('hasName')} value="hasName" />
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
+                {/* <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Picture</span>
                     <Switch checked={values.hasImage} onChange={handleChange('hasImage')} value="hasImage" />
-                </div>
+                </div> */}
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Email</span>
                     <Switch checked={values.hasEmail} onChange={handleChange('hasEmail')} value="hasEmail" />
@@ -45,7 +45,7 @@ const form = props => {
                     <span htmlFor="">Personal Notes</span>
                     <Switch checked={values.hasPersonalNotes} onChange={handleChange('hasPersonalNotes')} value="hasPersonalNotes" />
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
+                {/* <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Payment</span>
                     <Switch checked={values.hasPaymentAmount} onChange={handleChange('hasPaymentAmount')} value="hasPaymentAmount" />
                 </div>
@@ -61,7 +61,7 @@ const form = props => {
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
                     }}
                     style={{ marginTop: 8, marginBottom: 16, width: 180, marginLeft: 16 }}
-                />}
+                />} */}
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Registration Due Date</span>
                     <Switch checked={values.hasDueDate} onChange={handleChange('hasDueDate')} value="hasDueDate" />
