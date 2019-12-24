@@ -13,6 +13,8 @@ import InfoIcon from '@material-ui/icons/Info'
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import Button from '@material-ui/core/Button'
+import { withRouter } from 'react-router-dom';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -98,10 +100,10 @@ class Share extends Component {
 export default Share
 
 
-const ShareCover = ({ trip, source, route, handleRouteChange }) => {
+const ShareCover = ({ trip, source }) => {
     return (
         <div
-            className="d-flex flex-column justify-content-end Cover-image"
+            className="d-flex flex-column justify-content-between Cover-image"
             style={{
                 backgroundImage: `url(${trip.image})`,
                 height: '183px',
@@ -112,8 +114,14 @@ const ShareCover = ({ trip, source, route, handleRouteChange }) => {
                 marginTop: 16
             }}
         >
-            <div className="d-flex justify-content-between align-items-center" >
+            <div className="d-flex justify-content-between align-items-start" >
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
+                <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
+                    var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
+                    win.focus()
+                }}>
+                    Register
+                </Button>
             </div>
             <div className="d-flex justify-content-between align-items-end" >
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>

@@ -10,7 +10,7 @@ import HttpsRedirect from 'react-https-redirect'
 import ErrorBoundary from './util/otherComponents/ErrorBoundary'
 import { ThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core/styles'
-import CollectPayment from './TravelerPages/CollectPayment';
+import CollectPayment from './TravelerPages/CollectPayment'
 import Share from './TravelerPages/Share'
 
 const store = configureStore()
