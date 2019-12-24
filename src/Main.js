@@ -14,6 +14,7 @@ import Travelers from './TripDashboard/Travelers/index'
 import ErrorPage from './OtherPages/ErrorPage'
 import Support from './OtherPages/Support'
 import Share from './TravelerPages/Share'
+import TripRegistration from './TravelerPages/TripRegistration'
 
 const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
     return (
@@ -70,6 +71,10 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
                         />
                     </WithAuth>
                 )}
+            />
+            <Route
+                path="/trips/:tripId/register"
+                render={routeProps => <TripRegistration {...routeProps} />}
             />
             <Route
                 exact
