@@ -27,7 +27,8 @@ class Share extends Component {
 
     state = {
         trip: {},
-        route: 0
+        route: 0,
+        token: null
     }
 
     constructor(props) {
@@ -36,6 +37,7 @@ class Share extends Component {
             initializeReactGA()
         }
         this.getTripInfo()
+        this.checkForRegistrationToken()
     }
 
     getTripInfo = async () => {
@@ -48,12 +50,19 @@ class Share extends Component {
         })
     }
 
+    checkForRegistrationToken = async () => {
+        //strange behavior where local storage returns null if not await'd 
+        let token = await localStorage.getItem('travelerRegistrationId')
+        this.setState({ token })
+    }
+
+
     render() {
         let { trip, route } = this.state
 
         return (
             <div className="container-fluid">
-                <ShareCover trip={trip} source={this.source} />
+                <ShareCover trip={trip} source={this.source} token={this.state.token} />
                 <div className="d-flex justify-content-center">
                     <Tabs
                         value={route}
@@ -100,7 +109,26 @@ class Share extends Component {
 export default Share
 
 
-const ShareCover = ({ trip, source }) => {
+const ShareCover = ({ trip, source, token }) => {
+    let registrationButton = null
+
+    if (trip.travelerRegistrationForm && trip.travelerRegistrationForm.hasPublish && !token) {
+        registrationButton = (
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
+                var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
+                win.focus()
+            }}>
+                Register By{'\xa0'}<Moment date={trip.travelerRegistrationForm && trip.travelerRegistrationForm.dueDate.split('T')[0]} format="MMM DD" />
+            </Button>
+        )
+    }
+    if (token) {
+        registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Thanks for registering</Typography>
+    }
+    if (trip.travelerRegistrationForm && (Date.parse(trip.travelerRegistrationForm.dueDate) < Date.now())) {
+        registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Registration is over</Typography>
+    }
+
     return (
         <div
             className="d-flex flex-column justify-content-between Cover-image"
@@ -116,12 +144,7 @@ const ShareCover = ({ trip, source }) => {
         >
             <div className="d-flex justify-content-between align-items-start" >
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
-                {trip.travelerRegistrationForm && trip.travelerRegistrationForm.hasPublish && <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
-                    var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
-                    win.focus()
-                }}>
-                    Register By{'\xa0'}<Moment date={trip.travelerRegistrationForm && trip.travelerRegistrationForm.dueDate.split('T')[0]} format="MMM DD" />
-                </Button>}
+                {registrationButton}
             </div>
             <div className="d-flex justify-content-between align-items-end" >
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
@@ -142,10 +165,10 @@ const ShareCover = ({ trip, source }) => {
                     </span></a >}
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
                 <div >
-                    <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                    <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
                         <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
                     </Typography>
-                    <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
+                    <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
                         <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMMM DD" />
                     </Typography>
                 </div>
