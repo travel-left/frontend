@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch'
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import FormGroup from '@material-ui/core/FormGroup'
 import MomentUtils from '@date-io/moment'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const form = props => {
     const {
@@ -45,11 +46,18 @@ const form = props => {
                     <span htmlFor="">Personal Notes</span>
                     <Switch checked={values.hasPersonalNotes} onChange={handleChange('hasPersonalNotes')} value="hasPersonalNotes" />
                 </div>
-                {/* <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Payment</span>
-                    <Switch checked={values.hasPaymentAmount} onChange={handleChange('hasPaymentAmount')} value="hasPaymentAmount" />
+                    {!values.canRequestPayments ?
+                        <Tooltip title="Account must be verified before requesting payments." disableFocusListener arrow>
+                            <div>
+                                <Switch checked={false} onChange={handleChange('hasPaymentAmount')} value="hasPaymentAmount" disabled />
+                            </div>
+                        </Tooltip> :
+                        <Switch checked={values.hasPaymentAmount} onChange={handleChange('hasPaymentAmount')} value="hasPaymentAmount" />
+                    }
                 </div>
-                {values.hasPaymentAmount && <TextField
+                {values.hasPaymentAmount && values.canRequestPayments && <TextField
                     onChange={handleChange}
                     onBlur={handleBlur}
                     label="Amount"
@@ -61,7 +69,7 @@ const form = props => {
                         startAdornment: <InputAdornment position="start">$</InputAdornment>,
                     }}
                     style={{ marginTop: 8, marginBottom: 16, width: 180, marginLeft: 16 }}
-                />} */}
+                />}
                 <div className="d-flex justify-content-between align-items-center">
                     <span htmlFor="">Registration Due Date</span>
                     <Switch checked={values.hasDueDate} onChange={handleChange('hasDueDate')} value="hasDueDate" />
@@ -98,7 +106,8 @@ const form = props => {
 
 const Form = withFormik({
     mapPropsToValues: ({
-        settings
+        settings,
+        canRequestPayments
     }) => {
         return {
             hasName: settings ? settings.hasName : false,
@@ -110,7 +119,8 @@ const Form = withFormik({
             hasDueDate: settings ? settings.hasDueDate : false,
             hasPublish: settings ? settings.hasPublish : false,
             dueDate: settings ? settings.dueDate : new Date(),
-            paymentAmount: settings ? settings.paymentAmount : ''
+            paymentAmount: settings ? settings.paymentAmount : '',
+            canRequestPayments
         };
     },
 

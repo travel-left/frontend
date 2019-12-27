@@ -527,6 +527,7 @@ class Travelers extends Component {
                     submit={this.updateTripRegistrationForm}
                     form={TravelerRegistrationSettingsForm}
                     settings={this.props.currentTrip.travelerRegistrationForm}
+                    canRequestPayments={this.props.currentUser.stripeConnectAccountId !== 'no_connect_account'}
                 />}
             </>
         )
