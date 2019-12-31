@@ -4,14 +4,19 @@ import Typography from '@material-ui/core/Typography'
 import TravelerRegistrationForm from '../Forms/TravelerRegistrationForm'
 import { apiCall } from '../util/api'
 import Snack from '../util/otherComponents/Snack'
+import CollectTripPaymentForm from '../Forms/CollectTripPaymentForm';
 
 export default class TripRegistration extends Component {
 
     tripId = this.props.match.params.tripId
 
     state = {
-        trip: null,
+        trip: {},
+        traveler: {},
+        org: {},
+        formSettings: {},
         token: null,
+        page: 'register',
         snack: {
             show: false,
             variant: '',
@@ -27,26 +32,37 @@ export default class TripRegistration extends Component {
     getTripInfo = async () => {
         let trip = await apiCall('get', `/api/trips/${this.tripId}/share`)
 
-        let org = await apiCall('get', `/api/organization/${trip.coordinators[0].organization}/name`)
-        trip.orgName = org.name
+        let org = await apiCall('get', `/api/organization/${trip.coordinators[0].organization}`)
+
         this.setState({
-            trip
+            trip,
+            formSettings: trip.travelerRegistrationFormSettings,
+            org
         })
     }
 
     registerTraveler = async formData => {
+        const { org, trip, formSettings } = this.state
         const traveler = {
             ...formData,
             tripId: this.tripId,
-            trip: this.state.trip.name,
+            trip: trip.name,
             status: 'CONFIRMED',
-            organizationId: this.state.trip.coordinators[0].organization
+            organizationId: org._id
         }
         // create traveler
         try {
             const createdTraveler = await apiCall('post', `/api/travelers/register`, traveler)
-            localStorage.setItem('travelerRegistrationId', createdTraveler._id)
-            this.checkForRegistrationToken()
+            this.setState({ traveler: createdTraveler })
+            if (formSettings.hasPaymentAmount) {
+                localStorage.setItem('travelerRegistrationId', 'needPayment')
+                localStorage.setItem('travelerEmail', createdTraveler.email)
+                this.setState({ page: 'payment' })
+            }
+            else {
+                localStorage.setItem('travelerRegistrationId', createdTraveler._id)
+                this.checkForRegistrationToken()
+            }
         } catch (err) {
             this.setState({
                 snack: {
@@ -64,28 +80,42 @@ export default class TripRegistration extends Component {
     checkForRegistrationToken = async () => {
         //strange behavior where local storage returns null if not await'd 
         let token = await localStorage.getItem('travelerRegistrationId')
-        this.setState({ token })
+        let travelerEmail = await localStorage.getItem('travelerEmail')
+        if (token === 'needPayment') {
+            this.setState({
+                token, page: 'payment', traveler: {
+                    email: travelerEmail
+                }
+            })
+        }
+        else if (token) {
+            this.setState({ token, page: 'success' })
+        }
+    }
+
+    handleSuccessfulRegistrationPayment = async () => {
+        localStorage.setItem('travelerRegistrationId', this.state.traveler._id)
+        this.checkForRegistrationToken()
     }
 
     render() {
+        const { trip, org, traveler, formSettings, token, page } = this.state
 
         return (
             <>
-                {this.state.trip && !this.state.token &&
-                    <div className="d-flex justify-content-center">
-                        <Card style={{ padding: 16, maxWidth: 600, marginTop: 32 }}>
-                            <Typography variant="h4">Register for {this.state.trip.name}</Typography>
-                            <TravelerRegistrationForm fields={this.state.trip.travelerRegistrationForm} submit={this.registerTraveler}></TravelerRegistrationForm>
-                        </Card>
-                    </div>}
-                {this.state.trip && this.state.token &&
-                    <div className="d-flex justify-content-center">
-                        <Card style={{ padding: 16, maxWidth: 600, marginTop: 32, marginBottom: 32 }} className="d-flex flex-column align-items-center justify-content-center">
-                            <Typography variant="h4" style={{ textAlign: 'center', marginTop: 16 }}>You have been succesfully registered for {this.state.trip.name}!</Typography>
-                            <Typography variant="h6" style={{ textAlign: 'center', marginTop: 16 }}>Your confirmation number is <b>{this.state.token}</b></Typography>
-                            <Typography variant="subtitle1" style={{ textAlign: 'center', marginTop: 16 }}>Please screenshot or save this page for your record.</Typography>
-                        </Card>
-                    </div>}
+                <div className="d-flex justify-content-center">
+                    <Card style={{ padding: 16, maxWidth: 600, marginTop: 32 }}>
+                        {page !== 'success' && <Typography variant="h4">Register for {trip.name}</Typography>}
+                        {page === 'register' && <TravelerRegistrationForm fields={formSettings} submit={this.registerTraveler}></TravelerRegistrationForm>}
+                        {page === 'payment' && <CollectTripPaymentForm connectAccountId={org.stripeConnectAccountId} amount={formSettings.paymentAmount} travelerEmail={traveler.email} onSubmit={this.handleSuccessfulRegistrationPayment}></CollectTripPaymentForm>}
+                        {page === 'success' &&
+                            <>
+                                <Typography variant="h4" style={{ textAlign: 'center', marginTop: 16 }}>You have been succesfully registered for {trip.name}!</Typography>
+                                <Typography variant="h6" style={{ textAlign: 'center', marginTop: 16 }}>Your confirmation number is <b>{token}</b></Typography>
+                                <Typography variant="subtitle1" style={{ textAlign: 'center', marginTop: 16 }}>Please screenshot or save this page for your record.</Typography>
+                            </>}
+                    </Card>
+                </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </>
         )

@@ -94,7 +94,7 @@ class events extends Component {
             end: formatDateToLocalTimezone(event.end)
         }))
 
-        this.setState({ events, days, selectedDay: days[0].day })
+        this.setState({ events, days, selectedDay: days[0] ? days[0].day : {} })
     }
 
     getDocuments = async () => {
@@ -240,9 +240,9 @@ class events extends Component {
         ) : <h4 className="text-info" />
 
         return (
-            <div className="d-flex" style={{ paddingRight: 16, marginTop: 16 }}>
+            <div className="d-flex row" style={{ paddingRight: 16, paddingLeft: 16, marginTop: 16 }}>
                 <div className={this.props.share ? 'col-12' : 'col-12 col-lg-8'}>
-                    <Grid item xs={12} style={{ marginRight: 16 }}>
+                    <Grid item xs={12} style={{ marginRight: this.props.share ? null : 16 }}>
                         <div className="row justify-content-between">
                             <Typography variant="h2">Trip Itinerary</Typography>
                         </div>

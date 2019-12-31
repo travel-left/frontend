@@ -47,6 +47,7 @@ const form = props => {
                 fullWidth
             />}
             {fields.hasPhone && <TextField
+                required
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Phone number"
@@ -57,6 +58,7 @@ const form = props => {
                 fullWidth
             />}
             {fields.hasPersonalNotes && <TextField
+                required
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Personal Notes"
@@ -67,6 +69,7 @@ const form = props => {
                 fullWidth
             />}
             {/* {fields.hasPaymentAmount && <TextField
+                required
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Payment"
@@ -75,8 +78,9 @@ const form = props => {
                 name="paymentAmount"
                 type="text"
                 fullWidth
-            />}
-            {fields.hasImage && <TextField
+            />} */}
+            {/* {fields.hasImage && <TextField
+                required
                 onChange={handleChange}
                 onBlur={handleBlur}
                 label="Image"

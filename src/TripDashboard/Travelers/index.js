@@ -392,7 +392,7 @@ class Travelers extends Component {
 
     updateTripRegistrationForm = async data => {
         const updateObject = {
-            travelerRegistrationForm: {
+            travelerRegistrationFormSettings: {
                 ...data
             }
         }
@@ -526,7 +526,8 @@ class Travelers extends Component {
                     title='Customize your traveler registration'
                     submit={this.updateTripRegistrationForm}
                     form={TravelerRegistrationSettingsForm}
-                    settings={this.props.currentTrip.travelerRegistrationForm}
+                    settings={this.props.currentTrip.travelerRegistrationFormSettings}
+                    canRequestPayments={this.props.currentUser.stripeConnectAccountId !== 'no_connect_account'}
                 />}
             </>
         )
