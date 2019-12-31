@@ -111,7 +111,7 @@ export default class CreateChargeForm extends Component {
     }
     render() {
         return (
-            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY_TEST}>
+            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
                 <Checkout onSubmit={this.props.onSubmit} orgId={this.props.orgId} amount={this.props.amount} formId={this.props.formId} />
             </StripeProvider>
         )

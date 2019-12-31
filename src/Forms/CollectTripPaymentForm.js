@@ -111,7 +111,7 @@ export default class CollectTripPaymentForm extends Component {
     }
     render() {
         return (
-            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY_TEST}>
+            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
                 <Checkout onSubmit={this.props.onSubmit} account={this.props.connectAccountId} amount={this.props.amount} travelerEmail={this.props.travelerEmail} />
             </StripeProvider>
         )
