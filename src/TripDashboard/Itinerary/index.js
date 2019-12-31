@@ -94,7 +94,7 @@ class events extends Component {
             end: formatDateToLocalTimezone(event.end)
         }))
 
-        this.setState({ events, days, selectedDay: days[0].day })
+        this.setState({ events, days, selectedDay: days[0] ? days[0].day : {} })
     }
 
     getDocuments = async () => {

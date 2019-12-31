@@ -112,20 +112,30 @@ export default Share
 const ShareCover = ({ trip, source, token }) => {
     let registrationButton = null
 
-    if (trip.travelerRegistrationForm && trip.travelerRegistrationForm.hasPublish && !token) {
+    if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasPublish && !token) {
         registrationButton = (
             <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
                 var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
                 win.focus()
             }}>
-                Register By{'\xa0'}<Moment date={trip.travelerRegistrationForm && trip.travelerRegistrationForm.dueDate.split('T')[0]} format="MMM DD" />
+                Register By{'\xa0'}<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
             </Button>
         )
     }
-    if (token) {
+    else if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasPublish && token === 'needPayment') {
+        registrationButton = (
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
+                var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
+                win.focus()
+            }}>
+                PAY BY{'\xa0'}<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
+            </Button>
+        )
+    }
+    else if (token) {
         registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Thanks for registering</Typography>
     }
-    if (trip.travelerRegistrationForm && (Date.parse(trip.travelerRegistrationForm.dueDate) < Date.now())) {
+    if (trip.travelerRegistrationFormSettings && (Date.parse(trip.travelerRegistrationFormSettings.dueDate) < Date.now())) {
         registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Registration is over</Typography>
     }
 

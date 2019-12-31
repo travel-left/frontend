@@ -6,7 +6,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import CancelIcon from '@material-ui/icons/Cancel'
 import Typography from '@material-ui/core/Typography'
 
-const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt }) => {
+const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt, registrationPayment }) => {
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const commModalText = (<div>
@@ -27,7 +27,8 @@ const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt }
                         format="MMMM DD"
                         className="TravelerInfo-text-date"
                     />
-                    <span className="TravelerInfo-text-date">{' - '}{amount}</span>
+                    <span className="TravelerInfo-text-date">{' - '}{amount} </span>
+                    <span className="TravelerInfo-text-date">{' - '}{registrationPayment ? 'Registration' : null}</span>
                 </div>
                 <div>
                     <span>{stripeChargeId ? <CheckCircleIcon style={{ color: '#29CB97', height: 32, width: 32, fontSize: 24 }} /> : <CancelIcon style={{ color: '#E24C4C', height: 32, width: 32, fontSize: 24 }} />}</span>

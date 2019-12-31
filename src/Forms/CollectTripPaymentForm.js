@@ -13,17 +13,18 @@ class _CardForm extends Component {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+        isSubmitting: false
     }
 
     constructor(props) {
         super(props)
-        console.log(props.formId)
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     submit = async ev => {
+        this.setState({ isSubmitting: true })
         let token = await this.props.stripe.createToken({ name: "traveler_card" })
 
         if (token.error) {
@@ -37,12 +38,11 @@ class _CardForm extends Component {
         }
 
         try {
-            console.log(this.props.formId)
-            let response = await apiCall('POST', "/api/left/stripe/connect/charge", {
+            await apiCall('POST', "/api/left/stripe/connect/travelerRegistrationPayment", {
                 token: token.token.id,
-                coordinatorId: this.props.coordinatorId,
+                account: this.props.account,
                 amount: this.props.amount,
-                formId: this.props.formId
+                travelerEmail: this.props.travelerEmail
             })
             this.setState({
                 snack: {
@@ -51,10 +51,8 @@ class _CardForm extends Component {
                     message: 'Success!'
                 }
             })
-            if (response.message === 'Success') {
-
-            }
-            console.log(response)
+            this.setState(prevState => ({ isSubmitting: false }))
+            this.props.onSubmit()
         } catch (err) {
             this.setState({
                 snack: {
@@ -64,22 +62,21 @@ class _CardForm extends Component {
                 }
             })
         }
+
+
     }
 
     render() {
-        if (this.state.complete) return <h1>Purchase Complete</h1>;
-
+        const { isSubmitting } = this.state
         return (
             <div className="">
-                <p style={{ color: '#FF605F' }}>{this.state.error}</p>
-                <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
                 <span><strong>Card details</strong></span>
-                <div className='mt-3 mb-4'>
+                <div style={{ marginTop: 16, marginBottom: 16 }}>
                     <CardElement />
                 </div>
-                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit}>
+                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit} disabled={isSubmitting}>
                     Send
-                                </Button>
+                </Button>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
@@ -95,21 +92,21 @@ class Checkout extends Component {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CardForm coordinatorId={this.props.coordinatorId} amount={this.props.amount} formId={this.props.formId} />
+                    <CardForm account={this.props.account} amount={this.props.amount} travelerEmail={this.props.travelerEmail} onSubmit={this.props.onSubmit} />
                 </Elements>
             </div>
         )
     }
 }
 
-export default class CreateChargeForm extends Component {
+export default class CollectTripPaymentForm extends Component {
     constructor(props) {
         super(props)
     }
     render() {
         return (
-            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
-                <Checkout coordinatorId={this.props.coordinatorId} amount={this.props.amount} formId={this.props.formId} />
+            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY_TEST}>
+                <Checkout onSubmit={this.props.onSubmit} account={this.props.connectAccountId} amount={this.props.amount} travelerEmail={this.props.travelerEmail} />
             </StripeProvider>
         )
 
