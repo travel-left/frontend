@@ -13,7 +13,8 @@ class _CardForm extends Component {
             show: false,
             variant: '',
             message: ''
-        }
+        },
+        isSubmitting: false
     }
 
     constructor(props) {
@@ -24,6 +25,7 @@ class _CardForm extends Component {
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     submit = async ev => {
+        this.setState({ isSubmitting: true })
         let token = await this.props.stripe.createToken({ name: "traveler_card" })
 
         if (token.error) {
@@ -40,7 +42,7 @@ class _CardForm extends Component {
             console.log(this.props.formId)
             let response = await apiCall('POST', "/api/left/stripe/connect/charge", {
                 token: token.token.id,
-                coordinatorId: this.props.coordinatorId,
+                orgId: this.props.orgId,
                 amount: this.props.amount,
                 formId: this.props.formId
             })
@@ -54,7 +56,8 @@ class _CardForm extends Component {
             if (response.message === 'Success') {
 
             }
-            console.log(response)
+            this.setState(prevState => ({ isSubmitting: false }))
+            this.props.onSubmit()
         } catch (err) {
             this.setState({
                 snack: {
@@ -67,7 +70,7 @@ class _CardForm extends Component {
     }
 
     render() {
-        if (this.state.complete) return <h1>Purchase Complete</h1>;
+        const { isSubmitting } = this.state
 
         return (
             <div className="">
@@ -77,7 +80,7 @@ class _CardForm extends Component {
                 <div className='mt-3 mb-4'>
                     <CardElement />
                 </div>
-                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit}>
+                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit} disabled={isSubmitting}>
                     Send
                                 </Button>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
@@ -95,7 +98,7 @@ class Checkout extends Component {
         return (
             <div className="Checkout">
                 <Elements>
-                    <CardForm coordinatorId={this.props.coordinatorId} amount={this.props.amount} formId={this.props.formId} />
+                    <CardForm onSubmit={this.props.onSubmit} orgId={this.props.orgId} amount={this.props.amount} formId={this.props.formId} />
                 </Elements>
             </div>
         )
@@ -108,8 +111,8 @@ export default class CreateChargeForm extends Component {
     }
     render() {
         return (
-            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
-                <Checkout coordinatorId={this.props.coordinatorId} amount={this.props.amount} formId={this.props.formId} />
+            <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY_TEST}>
+                <Checkout onSubmit={this.props.onSubmit} orgId={this.props.orgId} amount={this.props.amount} formId={this.props.formId} />
             </StripeProvider>
         )
 
