@@ -69,14 +69,20 @@ class _CardForm extends Component {
     render() {
         const { isSubmitting } = this.state
         return (
-            <div className="">
-                <span><strong>Card details</strong></span>
-                <div style={{ marginTop: 16, marginBottom: 16 }}>
-                    <CardElement />
+            <div className="d-flex flex-column">
+                <span style={{ paddingTop: 16, paddingBottom: 16 }}> ${this.props.amount} is being requested to register for your trip.</span>
+                <div>
+                    <span><strong>Card details</strong></span>
+                    <div style={{ paddingTop: 16, paddingBottom: 16 }}>
+                        <CardElement />
+                    </div>
                 </div>
-                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit} disabled={isSubmitting}>
-                    Send
+                <div>
+                    <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit} disabled={isSubmitting}>
+                        submit
                 </Button>
+
+                </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
