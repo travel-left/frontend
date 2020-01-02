@@ -59,26 +59,30 @@ class Navbar extends Component {
             loggedInLinks = (
                 <div class="collapse navbar-collapse " id="navbarNav">
                     <ul class="navbar-nav d-none d-md-flex align-items-center" style={{ marginLeft: 32 }}>
-                        <Fab color={tripsColor} variant="extended" disableTouchRipple>
-                            <NavLink
-                                activeClassName="active"
-                                className='Navbar main-nav-link'
-                                to="/trips"
-                                name="/trips"
-                            >
+                        <NavLink
+                            activeClassName="active"
+                            className='Navbar main-nav-link'
+                            to="/trips"
+                            name="/trips"
+                        >
+                            <Fab color={tripsColor} className='Navbar main-nav-link' variant="extended" disableTouchRipple>
+
                                 Trips
+
+                        </Fab>
                         </NavLink>
-                        </Fab>
-                        <Fab color={travelersColor} variant="extended" disableTouchRipple style={{ marginLeft: 24 }}>
-                            <NavLink
-                                activeClassName="active"
-                                className='Navbar main-nav-link'
-                                to="/travelers"
-                                name="/travelers"
-                            >
+                        <NavLink
+                            activeClassName="active"
+                            className='Navbar main-nav-link'
+                            to="/travelers"
+                            name="/travelers"
+                        >
+                            <Fab color={travelersColor} variant="extended" className='Navbar main-nav-link' disableTouchRipple style={{ marginLeft: 24 }}>
+
                                 Travelers
-                            </NavLink>
+
                         </Fab>
+                        </NavLink>
                     </ul>
                 </div>
             )
