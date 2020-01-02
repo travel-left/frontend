@@ -33,7 +33,7 @@ class Document extends Component {
 
         return (
             <LeftItem>
-                <Card style={{ padding: 16 }} className="animated fadeIn d-flex justify-content-between flex-column">
+                <Card style={{ padding: 16 }} className="animated fadeIn d-flex justify-content-between flex-column left-resource">
                     <div className="d-flex justify-content-between">
                         <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
                         {!this.props.share && <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>

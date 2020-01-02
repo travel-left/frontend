@@ -232,7 +232,7 @@ class Trips extends Component {
             <Grid container spacing={2} style={{ marginTop: 8 }}>
                 <Grid item xs={12} md={2}>
                     <div className="px-0 py-5 d-flex justify-content-center">
-                        <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
+                        <Button size="large" name="new-trip-button" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
                             ADD NEW TRIP
                         </Button>
                         {this.state.isOpen && <LeftModal

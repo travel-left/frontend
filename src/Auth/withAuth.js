@@ -6,31 +6,15 @@ class WithAuth extends Component {
 
     constructor(props) {
         super(props)
-        if (!props.isAuthenticated) this.createAnonUser()
-        this.redirectBecauseYouHaveToPay()
-    }
-
-    redirectBecauseYouHaveToPay() {
-        let hasPayed = this.props.cc ? this.props.cc.length === 4 : false
-        let daysLeft = 10
-
-        if (this.props.user.createdAt) {
-            let startDate = this.props.user.createdAt.split('T')[0]
-            let date = new Date()
-            let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-            var a = moment([...today.split('-')])
-            var b = moment([...startDate.split('-')])
-            daysLeft = 10 - a.diff(b, 'days')
-        }
-
-        if (!hasPayed && this.props.history.location.pathname !== "/editprofile" && daysLeft <= 0) {
-            this.props.history.push('/editprofile')
+        if (!props.isAuthenticated) {
+            props.history.push('/signup')
         }
     }
 
-    createAnonUser = async () => {
-        // await this.props.onAuth('signup', { coordinator: { needsPasswordChanged: true, needsEmailChanged: true }, organization: {} }, this.props.history)
-        this.props.history.push('/signup')
+    componentDidUpdate() {
+        if (!this.props.isAuthenticated) {
+            this.props.history.push('/signup')
+        }
     }
 
     render() {

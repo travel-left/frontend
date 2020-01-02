@@ -58,7 +58,7 @@ export default class TripDate extends Component {
                         <Typography variant="caption">{moment(dateWithoutTimeorTZ).format('MMMM DD')}</Typography>
                     </div>
                 </div>
-                {!this.props.share && <IconButton onClick={this.openModal} style={{ color: '#475561' }}>
+                {!this.props.share && <IconButton className='edit-trip-date-button' onClick={this.openModal} style={{ color: '#475561' }}>
                     <MoreHorizIcon />
                 </IconButton>}
                 {

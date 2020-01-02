@@ -136,13 +136,13 @@ export default class TripDates extends Component {
             ></TripDate>)
         return (
             <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16, marginTop: 16 }}>Trip Dates</Typography>
+                <Typography variant="h2" style={{ marginBottom: 16, marginTop: 16 }}>Important Dates</Typography>
                 <Grid container spacing={2}>
                     <LeftCardNew>
                         <div className="d-flex flex-column flex-grow-1">
                             {tripDatesList}
                             {!this.props.share && <div className='d-flex justify-content-center' style={{ paddingBottom: 16, paddingTop: 16 }}>
-                                <Fab onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+                                <Fab onClick={this.openModal} className="add-new-trip-date-button" color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
                                     Add New
                                 </Fab>
                                 {

@@ -180,7 +180,7 @@ class Cover extends Component {
                             <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{invited} Invited</Typography>{' '}
                             <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{confirmed} Confirmed</Typography>
                         </div>
-                        <div className="hover" onClick={() => this.openModal('isTripDatesOpen')}>
+                        <div className="hover" id="tripDates" onClick={() => this.openModal('isTripDatesOpen')}>
                             <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
                                 <Moment date={currentTrip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
                             </Typography>
