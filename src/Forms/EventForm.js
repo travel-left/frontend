@@ -40,7 +40,7 @@ const form = props => {
             <InputLabel id="demo-mutiple-chip-label"> Selected Documents</InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
-                id="demo-mutiple-chip"
+                id="documents-multiple-select"
                 multiple
                 value={values.selectedDocuments || []}
                 name="selectedDocuments"
@@ -253,7 +253,7 @@ const form = props => {
                 {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
                     Remove
                 </Button>}
-                <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                <Button className="event-submit-button" size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                     submit
                 </Button>
             </form>

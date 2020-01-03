@@ -26,7 +26,7 @@ class events extends Component {
     localTimezone = moment.tz.guess(true)
 
     state = {
-        documents: [],
+        documents: null,
         days: [],
         selectedDay: {},
         events: [],
@@ -104,6 +104,7 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
+        console.log(event)
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
             this.setState({
@@ -156,9 +157,9 @@ class events extends Component {
 
     updateEvent = async (eventId, event) => {
         event = formatEventForBackend(event)
-
+        console.log(event)
         try {
-            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event, true)
+            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event)
             this.setState({
                 snack: {
                     show: true,
@@ -220,7 +221,7 @@ class events extends Component {
     }
 
     render() {
-        const { days, events, selectedDay } = this.state
+        const { days, events, selectedDay, documents } = this.state
         const dayList = days.length ? (
             <DayList
                 selectedDay={selectedDay}
@@ -254,9 +255,9 @@ class events extends Component {
                 {!this.props.share && <div className="col-12 col-lg-4 px-0">
                     <div style={{ padding: 16 }}>
                         <div className="row flex-column align-items-center" style={{ marginBottom: 16 }}>
-                            <Button size="large" onClick={this.toggleModal} variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 25, marginBottom: 25, marginLeft: 16, marginRight: 16 }} >
+                            {documents && <Button size="large" onClick={this.toggleModal} variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 25, marginBottom: 25, marginLeft: 16, marginRight: 16 }} >
                                 NEW EVENT
-                            </Button>
+                            </Button>}
                             {this.state.isOpen &&
                                 <LeftModal
                                     submit={this.createEvent}
@@ -319,10 +320,14 @@ function formatDateTime(date, dateTime) {
     if (minutes.toString().length === 1) {
         minutes = `0${minutes}`
     }
+    let hours = moment(dateTime).hours()
+    if (hours.toString().length === 1) {
+        hours = `0${hours}`
+    }
 
     return {
         date: moment(date).format("YYYY-MM-DD"),
-        hours: moment(dateTime).hours(),
+        hours: hours,
         minutes: minutes
     }
 }

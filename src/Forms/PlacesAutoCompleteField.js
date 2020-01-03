@@ -127,7 +127,7 @@ export default function GoogleMaps(props) {
                         </Grid>
                         <Grid item xs>
                             {parts.map((part, index) => (
-                                <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                                <span id="location-tab" key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                                     {part.text}
                                 </span>
                             ))}
