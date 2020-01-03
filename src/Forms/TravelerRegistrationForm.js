@@ -68,7 +68,7 @@ const form = props => {
                 type="text"
                 fullWidth
             />}
-            {/* {fields.hasPaymentAmount && <TextField
+            {fields.hasPaymentAmount && <TextField
                 required
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -78,7 +78,7 @@ const form = props => {
                 name="paymentAmount"
                 type="text"
                 fullWidth
-            />} */}
+            />}
             {/* {fields.hasImage && <TextField
                 required
                 onChange={handleChange}

@@ -78,7 +78,7 @@ const form = props => {
                         required
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        id="standard-required"
+                        id="event-name"
                         label="Name"
                         value={values.name}
                         placeholder="Event name"
