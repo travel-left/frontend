@@ -89,6 +89,7 @@ export default class Auth extends Component {
                                 {text.header}
                             </Typography>
                             <h2 className="Auth-side-message">{text.body}</h2>
+                            {/* material ui wont register click on label when text is switched so putting a transparent native element on top of it */}
                             <Button variant="contained" color="secondary" className="p-0" disableRipple style={{ height: 50, width: 180, marginTop: 16 }}>
                                 <button onClick={this.handleSwitch} name={type} style={{
                                     backgroundColor: 'transparent', border: 'none', height: 50, width: 180, fontFamily: "Roboto",
