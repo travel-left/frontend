@@ -107,7 +107,7 @@ export default class Resources extends Component {
 
         return (
             <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16 }}>Trip Resources</Typography>
+                <Typography variant="h2" style={{ marginBottom: 16 }}>Resources</Typography>
                 <Grid container>
                     {documents}
                 </Grid>

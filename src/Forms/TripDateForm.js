@@ -62,14 +62,14 @@ const form = props => {
                     autoOk
                     variant="inline"
                     format="MM-DD-YYYY"
-                    id="Start"
-                    label="Start"
+                    id="Date"
+                    label="Date"
                     value={values.date}
                     onChange={value => {
                         setFieldValue("date", value)
                     }}
                     onBlur={handleBlur}
-                    name="dateStart"
+                    name="date"
                     fullWidth
                     error={touched.status && Boolean(errors.status)}
                     helperText={touched.status ? errors.status : ""}

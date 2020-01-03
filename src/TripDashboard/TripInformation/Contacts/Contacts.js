@@ -139,7 +139,7 @@ export default class Contacts extends Component {
         )
 
         const newContactButton = <LeftItem height={100}>
-            <Fab onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+            <Fab className="add-new-contact-button" onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
                 Add New
                     </Fab>
         </LeftItem>
@@ -148,7 +148,7 @@ export default class Contacts extends Component {
 
         return (
             <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16 }}>Trip Contacts</Typography>
+                <Typography variant="h2" style={{ marginBottom: 16 }}>Contacts</Typography>
                 <Grid container>
                     {contactList}
                     {this.state.isNewContactModalOpen && <LeftModal

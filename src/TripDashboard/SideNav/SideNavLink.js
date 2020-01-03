@@ -9,14 +9,16 @@ export default function SideNavLink({ text, tripId, name, active, divider, route
     return (
         <Card>
             {divider && <Divider />}
-            <ListItem button className='d-flex justify-content-between align-items-center' style={{ background: active && '#0A58CE', padding: '13px 16px' }}>
-                <NavLink
-                    to={route}
-                    name={route}
-                >
+            <NavLink
+                to={route}
+                name={route}
+            >
+                <ListItem button className='d-flex justify-content-between align-items-center' style={{ background: active && '#0A58CE', padding: '13px 16px' }}>
+
                     <Typography variant="h6" style={{ color: active ? 'white' : '#666666' }}>{text}</Typography>
-                </NavLink>
-            </ListItem>
+
+                </ListItem>
+            </NavLink>
         </Card>
     )
 }

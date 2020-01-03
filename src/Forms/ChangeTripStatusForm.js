@@ -1,7 +1,8 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@material-ui/core/MenuItem'
+import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import { withFormik } from "formik"
 import { tripStatus } from '../util/globals'
@@ -22,19 +23,16 @@ const form = props => {
         <MenuItem value={status}>{status}</MenuItem>
     ))
     return (
-        <form onSubmit={handleSubmit} style={{ marginTop: 41 }}>
+        <form onSubmit={handleSubmit} >
+            <InputLabel style={{ marginTop: 41 }}>Status</InputLabel>
             <Select
                 required
-                id="standard-required"
-                label="Status"
+                displayEmpty
                 value={values.status}
                 placeholder="New status"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="status"
-                type="text"
-                error={touched.status && Boolean(errors.status)}
-                helperText={touched.status ? errors.status : ""}
                 fullWidth
             >
                 {options}
