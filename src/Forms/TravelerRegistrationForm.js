@@ -68,28 +68,6 @@ const form = props => {
                 type="text"
                 fullWidth
             />}
-            {fields.hasPaymentAmount && <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Payment"
-                value={values.paymentAmount}
-                placeholder="Payment placeholder"
-                name="paymentAmount"
-                type="text"
-                fullWidth
-            />}
-            {/* {fields.hasImage && <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Image"
-                value={values.paymentAmount}
-                placeholder="Image placeholder"
-                name="imate"
-                type="text"
-                fullWidth
-            />} */}
             <Divider style={{ marginTop: 40 }} />
             <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Submit
