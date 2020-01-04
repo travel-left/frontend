@@ -44,8 +44,6 @@ describe('Add, edit, and delete a event', () => {
             .type(e.location).type('{downarrow}').type('{enter}')
         cy.get('div[id="documents-multiple-select"]').click()
         cy.get('li').contains(e.documents[0]).click().type('{esc}')
-        cy.get('div[id="documents-multiple-select"]').click()
-        cy.get('li').contains(e.documents[1]).click().type('{esc}')
         cy.get('input[name="links"]')
             .type(e.links)
         cy.get('.event-submit-button')
@@ -57,8 +55,7 @@ describe('Add, edit, and delete a event', () => {
         cy.get('.MuiCard-root').should('contain', e.description)
         cy.get('.MuiCard-root').should('contain', e.links.split(' ')[0])
         cy.get('.MuiCard-root').should('contain', e.links.split(' ')[1])
-        cy.get('.MuiCard-root').should('contain', e.documents[1])
-        cy.get('.MuiCard-root').should('contain', e.documents[1])
+        cy.get('.MuiCard-root').should('contain', e.documents[0])
         cy.get('.MuiCard-root').should('contain', e.location)
 
     })

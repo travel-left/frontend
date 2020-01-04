@@ -47,7 +47,7 @@ export default class TripRegistration extends Component {
             ...formData,
             tripId: this.tripId,
             trip: trip.name,
-            status: 'CONFIRMED',
+            status: formSettings.hasPaymentAmount ? 'MONEY DUE' : 'CONFIRMED',
             organizationId: org._id
         }
         // create traveler
@@ -95,6 +95,12 @@ export default class TripRegistration extends Component {
 
     handleSuccessfulRegistrationPayment = async () => {
         localStorage.setItem('travelerRegistrationId', this.state.traveler._id)
+        try {
+            await apiCall('put', `/api/travelers/${this.state.traveler._id}`, { status: 'CONFIRMED' })
+        } catch (err) {
+            console.log(err)
+        }
+
         this.checkForRegistrationToken()
     }
 

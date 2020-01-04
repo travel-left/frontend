@@ -69,8 +69,8 @@ const form = props => {
                 fullWidth
             />}
             <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                Submit
+            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px', lineHeight: 1.4 }} disabled={isSubmitting}>
+                {fields.hasPaymentAmount ? 'Continue to Payment' : 'submit'}
             </Button>
         </form>
     )

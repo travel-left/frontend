@@ -52,6 +52,7 @@ class Travelers extends Component {
         isRegisterAccountModalOpen: false,
         isRegistrationModalOpen: false,
         canRequestPayments: false,
+        madeStripeAccountRequest: false,
         snack: {
             show: false,
             variant: '',
@@ -135,7 +136,10 @@ class Travelers extends Component {
     getStripeAccount = async () => {
         const account = await apiCall('GET', '/api/stripe/connect')
 
-        this.setState({ canRequestPayments: account.charges_enabled })
+        this.setState({
+            canRequestPayments: account.charges_enabled,
+            madeStripeAccountRequest: true
+        })
     }
 
     addTravelerToOrg = async traveler => {
@@ -517,9 +521,9 @@ class Travelers extends Component {
 
         const registrationForm = (
             <>
-                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16 }} onClick={this.toggleRegistrationModal}>
+                {this.state.madeStripeAccountRequest && <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16 }} onClick={this.toggleRegistrationModal}>
                     registration form
-            </Button>
+                </Button>}
                 {this.state.isRegistrationModalOpen && <LeftModal
                     isOpen={this.state.isRegistrationModalOpen}
                     toggleModal={this.toggleRegistrationModal}
@@ -527,7 +531,7 @@ class Travelers extends Component {
                     submit={this.updateTripRegistrationForm}
                     form={TravelerRegistrationSettingsForm}
                     settings={this.props.currentTrip.travelerRegistrationFormSettings}
-                    canRequestPayments={this.props.currentUser.stripeConnectAccountId !== 'no_connect_account'}
+                    canRequestPayments={this.state.canRequestPayments}
                 />}
             </>
         )
