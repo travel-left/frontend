@@ -24,7 +24,7 @@ const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt, 
                 <div style={{ minWidth: 140 }}>
                     <Moment
                         date={createdAt}
-                        format="MMMM DD"
+                        format="MMMM D"
                         className="TravelerInfo-text-date"
                     />
                     <span className="TravelerInfo-text-date">{' - '}{amount} </span>

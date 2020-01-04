@@ -20,8 +20,7 @@ describe('change dates of trip', () => {
             .type(endDate)
         cy.get('button[type="submit"]')
             .click()
-
-        cy.get('input[name="dateStart"]').should('have.attr', 'value', startDate)
-        cy.get('input[name="dateEnd"]').should('have.attr', 'value', endDate)
+        cy.get('time').should('contain', 'January 02')
+        cy.get('time').should('contain', 'December 30')
     })
 })
