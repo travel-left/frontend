@@ -4,9 +4,11 @@ import Typography from '@material-ui/core/Typography'
 import TravelerRegistrationForm from '../Forms/TravelerRegistrationForm'
 import { apiCall } from '../util/api'
 import Snack from '../util/otherComponents/Snack'
-import CollectTripPaymentForm from '../Forms/CollectTripPaymentForm';
+import CollectTripPaymentForm from '../Forms/CollectTripPaymentForm'
+import { withRouter, NavLink } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
-export default class TripRegistration extends Component {
+export default withRouter(class TripRegistration extends Component {
 
     tripId = this.props.match.params.tripId
 
@@ -114,16 +116,23 @@ export default class TripRegistration extends Component {
                         {page !== 'success' && <Typography variant="h4">Register for {trip.name}</Typography>}
                         {page === 'register' && <TravelerRegistrationForm fields={formSettings} submit={this.registerTraveler}></TravelerRegistrationForm>}
                         {page === 'payment' && <CollectTripPaymentForm connectAccountId={org.stripeConnectAccountId} amount={formSettings.paymentAmount} travelerEmail={traveler.email} onSubmit={this.handleSuccessfulRegistrationPayment}></CollectTripPaymentForm>}
-                        {page === 'success' &&
-                            <>
-                                <Typography variant="h4" style={{ textAlign: 'center', marginTop: 16 }}>You have been succesfully registered for {trip.name}!</Typography>
-                                <Typography variant="h6" style={{ textAlign: 'center', marginTop: 16 }}>Your confirmation number is <b>{token}</b></Typography>
-                                <Typography variant="subtitle1" style={{ textAlign: 'center', marginTop: 16 }}>Please screenshot or save this page for your record.</Typography>
-                            </>}
+                        {page === 'success' && <>
+                            <Typography variant="h4" style={{ textAlign: 'center', marginTop: 16, marginBottom: 16 }}>You have been succesfully registered for {trip.name}!</Typography>
+                            <div className="d-flex justify-content-center">
+                                <NavLink
+                                    to={`/trips/${trip._id}/share`}
+                                    name={`/trips/${trip._id}/share`}
+                                >
+                                    <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
+                                        BACK TO TRIP
+                                    </Button>
+                                </NavLink>
+                            </div>
+                        </>}
                     </Card>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </>
         )
     }
-}
+})

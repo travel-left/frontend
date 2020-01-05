@@ -10,8 +10,10 @@ import Typography from '@material-ui/core/Typography';
 
 class TripInfo extends Component {
     state = {
-        travelers: []
+        travelers: [],
+        copying: false
     }
+
     constructor(props) {
         super(props)
         this.getAndSetTravelers()
@@ -27,7 +29,7 @@ class TripInfo extends Component {
         })
     }
 
-    // This is used because the component isn't reconstructed each time the trip is changed
+    // This is used because the component isn't re-rendered each time the trip is changed
     componentDidUpdate(prevProps) {
         if (this.props.trip._id !== prevProps.trip._id) {
             this.getAndSetTravelers()
@@ -40,9 +42,9 @@ class TripInfo extends Component {
 
     handleDuplicate = async () => {
         const { trip, duplicateTrip } = this.props
-        const newTrip = { ...trip, name: trip.name + ' Copy' }
-        delete newTrip._id
-        duplicateTrip(newTrip)
+        this.setState({ copying: true })
+        await duplicateTrip(trip._id)
+        this.setState({ copying: false })
     }
 
     handleArchive = async () => {
@@ -60,13 +62,12 @@ class TripInfo extends Component {
             status
         } = this.props.trip
 
-        dateStart = dateStart.split('T')[0]
-        dateEnd = dateEnd.split('T')[0]
+        dateStart = dateStart ? dateStart.split('T')[0] : null
+        dateEnd = dateEnd ? dateEnd.split('T')[0] : null
 
         let invited = this.state.travelers.length
         let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
 
-        console.log(confirmed)
         return (
             <Paper style={{ padding: 16 }}>
                 <div className="" style={{ position: 'relative', marginBottom: 32 }}>
@@ -104,7 +105,7 @@ class TripInfo extends Component {
                         </div>
                     </div>
                     <div className='d-flex justify-content-between'>
-                        <Button size="large" variant="contained" color="secondary" onClick={this.handleDuplicate} className="float-right" style={{ width: 120, height: 50 }}>DUPLICATE</Button>
+                        <Button size="large" variant="contained" color="secondary" onClick={this.handleDuplicate} className="float-right" style={{ width: 120, height: 50 }} disabled={this.state.copying}>DUPLICATE</Button>
                         <Button size="large" variant="contained" color="secondary" onClick={this.handleArchive} className="float-right" style={{ width: 120, height: 50 }}>ARCHIVE</Button>
                     </div>
                 </div>

@@ -119,7 +119,9 @@ const ShareCover = withRouter(({ trip, source, token }) => {
                 name={`/trips/${trip._id}/register`}
             >
                 <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
-                    Register By{'\xa0'}<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
+                    {trip.travelerRegistrationFormSettings.hasDueDate ?
+                        `Register By{'\xa0'}${<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />}`
+                        : 'REGISTER'}
                 </Button>
             </NavLink>
         )
@@ -139,9 +141,11 @@ const ShareCover = withRouter(({ trip, source, token }) => {
     else if (token) {
         registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Thanks for registering</Typography>
     }
-    if (trip.travelerRegistrationFormSettings && (Date.parse(trip.travelerRegistrationFormSettings.dueDate) < Date.now())) {
+    if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasDueDate && (Date.parse(trip.travelerRegistrationFormSettings.dueDate) < Date.now())) {
         registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Registration is over</Typography>
     }
+
+
 
     return (
         <div
