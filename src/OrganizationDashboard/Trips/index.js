@@ -119,7 +119,7 @@ class Trips extends Component {
                 snack: {
                     show: true,
                     variant: 'success',
-                    message: 'Success!'
+                    message: 'Duplicated Trip!'
                 }
             })
             trips.push(createdTrip)
