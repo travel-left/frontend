@@ -1,4 +1,4 @@
-import loginAfterSeed from '../Util/loginAfterSeed'
+import loginAfterSeed from './Util/loginAfterSeed'
 
 describe('create a trip registration, a traveler completes it', () => {
     loginAfterSeed()
