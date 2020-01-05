@@ -6,19 +6,19 @@ const TripStatus = ({ status, fab, onClick }) => {
     let statusColor = 'primary'
     switch (status) {
         case 'PLANNING':
-            statusColor = '#83C9F4'
+            statusColor = '#96DC4F'
             break
         case 'PLANNED':
-            statusColor = '#1B998B'
+            statusColor = '#83C9F4'
             break
         case 'LEFT':
             statusColor = '#0A58CE'
             break
         case 'RETURNED':
-            statusColor = '#403F4C'
+            statusColor = '#475561'
             break
         case 'ARCHIVED':
-            statusColor = '#CC444B'
+            statusColor = '#FF5555'
             break
         default:
             break

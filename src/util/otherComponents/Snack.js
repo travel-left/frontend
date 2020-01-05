@@ -66,13 +66,13 @@ const variantIcon = {
 
 const useStyles1 = makeStyles(theme => ({
     success: {
-        backgroundColor: '#1B998B',
+        backgroundColor: theme.palette.primary.main,
     },
     error: {
         backgroundColor: theme.palette.error.main,
     },
     info: {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.secondary.main,
     },
     warning: {
         backgroundColor: amber[700],
