@@ -15,6 +15,6 @@ describe('change trip status', () => {
             .click()
         cy.contains(newStatus).click()
         cy.get('button[type="submit"]').click()
-        cy.get('span').should('be', newStatus)
+        cy.get('span').should('contain', newStatus)
     })
 })

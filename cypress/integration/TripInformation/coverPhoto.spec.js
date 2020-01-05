@@ -2,7 +2,7 @@ import loginAfterSeed from "../Util/loginAfterSeed"
 
 const url = 'https://images.unsplash.com/photo-1513377888081-794d8e958972?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80'
 
-describe('change dates of trip', () => {
+describe('change cover photo of trip', () => {
     loginAfterSeed()
 
     it('should go into trip', () => {

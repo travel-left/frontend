@@ -83,11 +83,11 @@ class Event extends Component {
                         }}>
                             <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                         </span>
-                        <Typography variant="h2">
+                        <Typography variant="h2" className="event-title">
                             {name} {airports}</Typography>
                     </div>
                     {!this.props.share &&
-                        <Fab onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
+                        <Fab className="edit-event-button" onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
                             Edit
                     </Fab>}
                     {

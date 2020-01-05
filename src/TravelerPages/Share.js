@@ -14,7 +14,7 @@ import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Button from '@material-ui/core/Button'
-import { withRouter } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -109,27 +109,31 @@ class Share extends Component {
 export default Share
 
 
-const ShareCover = ({ trip, source, token }) => {
+const ShareCover = withRouter(({ trip, source, token }) => {
     let registrationButton = null
 
     if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasPublish && !token) {
         registrationButton = (
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
-                var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
-                win.focus()
-            }}>
-                Register By{'\xa0'}<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
-            </Button>
+            <NavLink
+                to={`/trips/${trip._id}/register`}
+                name={`/trips/${trip._id}/register`}
+            >
+                <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
+                    Register By{'\xa0'}<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
+                </Button>
+            </NavLink>
         )
     }
     else if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasPublish && token === 'needPayment') {
         registrationButton = (
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => {
-                var win = window.open(`${process.env.REACT_APP_BASE_URL}/trips/${trip._id}/register`, '_blank');
-                win.focus()
-            }}>
-                PAY BY{'\xa0'}<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
-            </Button>
+            <NavLink
+                to={`/trips/${trip._id}/register`}
+                name={`/trips/${trip._id}/register`}
+            >
+                <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
+                    PAY BY{'\xa0'} <Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
+                </Button >
+            </NavLink>
         )
     }
     else if (token) {
@@ -185,4 +189,4 @@ const ShareCover = ({ trip, source, token }) => {
             </div>
         </div >
     )
-}
+})

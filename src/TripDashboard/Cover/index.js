@@ -162,7 +162,7 @@ class Cover extends Component {
                             status={currentTrip.status}
                         />}
                         <div className="">
-                            <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary">
+                            <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary" className="share-trip-button">
                                 <SendIcon style={{ color: 'white' }} fontSize="large" />
                             </Fab>
                             {this.state.isShareTripOpen && <LeftModal
