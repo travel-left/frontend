@@ -1,20 +1,19 @@
 const travelerStatus = [
     'INVITED',
     'CONFIRMED',
-    'ON-TRIP',
-    'POST-TRIP',
-    'DOCS DUE',
+    'LEFT',
+    'RETURNED',
+    'NOT GOING',
     'MONEY DUE',
-    'OTHER',
-    'PAPERWORK NEEDED',
-    'PAYMENT NEEDED',
-    'NOT-GOING'
+    'DOCS DUE',
+    'OTHER'
 ]
 
 const tripStatus = [
-    'LEFT',
     'PLANNING',
-    'PAST',
+    'PLANNED',
+    'LEFT',
+    'RETURNED',
     'ARCHIVED'
 ]
 
