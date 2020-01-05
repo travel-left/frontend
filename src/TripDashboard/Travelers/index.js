@@ -687,7 +687,7 @@ class Travelers extends Component {
                     {this.state.selectedTraveler && <TravelerInfo
                         traveler={selectedTraveler}
                         update={this.updateTraveler}
-                        remove={this.removeTraveler}
+                        remove={this.props.currentTrip ? this.removeTraveler : this.removeTravelerFromOrg}
                     />}
                 </div>
 

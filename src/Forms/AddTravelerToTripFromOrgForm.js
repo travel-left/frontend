@@ -26,7 +26,7 @@ const form = props => {
             <InputLabel id="demo-mutiple-chip-label"> Selected Travelers</InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
-                id="demo-mutiple-chip"
+                id="add-traveler-to-trip"
                 multiple
                 value={values.selectedTravelers}
                 name="coordinatorsToAdd"
@@ -35,7 +35,7 @@ const form = props => {
                 }}
                 displayEmpty
                 onBlur={handleBlur}
-                input={<Input id="select-multiple-chip" />}
+                input={<Input id="add-traveler-to-trip" />}
                 placeholder="No travelers selected"
                 renderValue={selectedTravelers => (
                     selectedTravelers.length === 0 ? <em>No travelers selected</em>
