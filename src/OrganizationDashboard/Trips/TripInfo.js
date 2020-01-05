@@ -27,7 +27,7 @@ class TripInfo extends Component {
         })
     }
 
-    // This is used because the component isn't reconstructed each time the trip is changed
+    // This is used because the component isn't re-rendered each time the trip is changed
     componentDidUpdate(prevProps) {
         if (this.props.trip._id !== prevProps.trip._id) {
             this.getAndSetTravelers()
@@ -39,10 +39,8 @@ class TripInfo extends Component {
     }
 
     handleDuplicate = async () => {
-        const { trip, duplicateTrip } = this.props
-        const newTrip = { ...trip, name: trip.name + ' Copy' }
-        delete newTrip._id
-        duplicateTrip(newTrip)
+        const { trip, archiveTrip } = this.props
+        archiveTrip(trip._id)
     }
 
     handleArchive = async () => {

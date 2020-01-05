@@ -110,11 +110,11 @@ class Trips extends Component {
         }
     }
 
-    copyTrip = async trip => {
+    copyTrip = async tripId => {
         const { trips, tripStatusCounts } = this.state
 
         try {
-            const createdTrip = await apiCall('post', '/api/trips', trip, true)
+            const createdTrip = await apiCall('post', `/api/trips/${tripId}/copy`)
             this.setState({
                 snack: {
                     show: true,
