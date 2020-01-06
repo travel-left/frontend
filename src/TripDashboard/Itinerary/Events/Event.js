@@ -38,9 +38,15 @@ class Event extends Component {
 
         const icon = setIcon(event.type)
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
-        const map = event.coordinates && <Map coordinates={event.coordinates} />
-        const name = event.name
         const address = <p className="card-text text-muted text-center">{event.address}</p>
+        const map = event.coordinates && <>
+            <Map coordinates={event.coordinates} />
+            <Typography variant="subtitle1">
+                <a href={`https://maps.google.com/?q=${event.coordinates.lat},${event.coordinates.long}`} target="_blank">                        {address} </a>
+            </Typography>
+        </>
+        const name = event.name
+
 
         const documents = event.documents.map((d, i) => (
             <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16, marginBottom: 16 }}>
@@ -115,9 +121,6 @@ class Event extends Component {
                     </Grid>
                     <Grid item xs={0} sm={5} gitmd={5} className="">
                         {map}
-                        <Typography variant="subtitle1">
-                            <a href={`https://maps.google.com/?q=${event.coordinates.lat},${event.coordinates.long}`} target="_blank">                        {address} </a>
-                        </Typography>
                     </Grid>
                 </div>
             </Card >
