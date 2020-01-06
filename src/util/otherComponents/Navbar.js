@@ -58,7 +58,7 @@ class Navbar extends Component {
         const tripsColor = pathname === '/trips' ? 'primary' : 'secondary'
         const travelersColor = pathname === '/travelers' ? 'primary' : 'secondary'
 
-        if (pathname !== '/trips' && pathname !== '/travelers' && currentTrip.name) {
+        if (pathname !== '/trips' && pathname !== '/travelers' && !pathname.includes('/account') && currentTrip.name) {
             tripName = currentTrip.name
         }
 
