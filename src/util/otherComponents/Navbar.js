@@ -8,6 +8,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 
 class Navbar extends Component {
     state = {
@@ -46,14 +48,19 @@ class Navbar extends Component {
     }
 
     render() {
-        const { currentUser } = this.props
+        const { currentUser, currentTrip } = this.props
         let accountController
         let loggedInLinks
         let linkTo = '#'
+        let tripName = null
 
         const { pathname } = this.props.history.location
         const tripsColor = pathname === '/trips' ? 'primary' : 'secondary'
         const travelersColor = pathname === '/travelers' ? 'primary' : 'secondary'
+
+        if (pathname !== '/trips' && pathname !== '/travelers' && currentTrip.name) {
+            tripName = currentTrip.name
+        }
 
         if (currentUser.isAuthenticated) {
             loggedInLinks = (
@@ -113,12 +120,34 @@ class Navbar extends Component {
 
         return (
             <nav className="Left-Navbar navbar navbar navbar-expand container-fluid bg-primary" style={{ zIndex: 2, paddingLeft: 32, paddingRight: 32 }} >
-                <div className="navbar-brand">
+                {!tripName ? <div className="navbar-brand">
                     <Link to={linkTo} class="navbar-brand ">
                         <img src="/left.png" alt="" style={{ height: '40px' }}></img>
                     </Link>
+                </div> : <>
+                        <NavLink
+                            className='Navbar main-nav-link'
+                            to="/trips"
+                            name="/trips"
+                        >
+
+                            <ArrowBackIosIcon style={{ color: 'white', marginLeft: 24 }} />
+
+
+                            <span style={{
+                                fontFamily: 'Poppins',
+                                fontWeight: 700,
+                                fontSize: 22,
+                                color: 'white',
+                                letterSpacing: 1,
+                                paddingLeft: 24
+                            }}>Trips</span>
+                        </NavLink>
+                    </>}
+                {!tripName && loggedInLinks}
+                <div className="d-flex align-items-center">
+                    <Typography variant="h4" style={{ color: 'white', paddingLeft: 80 }}>{tripName}</Typography>
                 </div>
-                {loggedInLinks}
                 {accountController}
             </nav>
         )
@@ -127,7 +156,8 @@ class Navbar extends Component {
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        currentUser: state.currentUser,
+        currentTrip: state.currentTrip
     }
 }
 
