@@ -20,7 +20,7 @@ export default class Traveler extends Component {
 
         return (
             <Grid container
-                className="d-flex animated fadeIn justify-content-around align-items-center hover flex-grow-1"
+                className="d-flex animated fadeIn justify-content-between align-items-center hover flex-grow-1"
                 style={{
                     backgroundColor: bgColor,
                     paddingTop: 8,
@@ -28,11 +28,12 @@ export default class Traveler extends Component {
                 }}
                 onDoubleClick={this.handleDoubleClick}
             >
-                <Grid item xs={1} >
+                <Grid item xs={1} style={{ paddingLeft: 16 }}>
                     <Checkbox
                         onChange={this.handleToggle}
                         checked={selected}
                         color='primary'
+                        style={{ padding: 0 }}
                     />
                 </Grid>
                 <Grid item xs={2} className="d-none d-xl-flex">
@@ -58,8 +59,8 @@ export default class Traveler extends Component {
                         {trip}
                     </Grid>
                 }
-                <Grid item xs={1}>
-                    <i class="material-icons hover" style={{ color: '#AAB5C0', fontSize: '24px' }}
+                <Grid item xs={1} className='d-flex justify-content-end'>
+                    <i class="material-icons hover" style={{ color: '#AAB5C0', fontSize: '24px', paddingRight: 16 }}
                         onClick={this.handleDoubleClick}>more_vert</i>
                 </Grid>
             </Grid>
