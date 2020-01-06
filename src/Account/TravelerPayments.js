@@ -8,7 +8,7 @@ import uuid from 'react-uuid'
 export default class TravelerPayments extends Component {
 
     state = {
-        canRequestPayments: true
+        canRequestPayments: false
     }
 
     constructor(props) {
