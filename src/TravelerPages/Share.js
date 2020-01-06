@@ -119,8 +119,10 @@ const ShareCover = withRouter(({ trip, source, token }) => {
                 name={`/trips/${trip._id}/register`}
             >
                 <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
-                    {trip.travelerRegistrationFormSettings.hasDueDate ?
-                        `Register By{'\xa0'}${<Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />}`
+                    {trip.travelerRegistrationFormSettings.hasDueDate ? (<>
+                        {'Register By\xa0'}
+                        <Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
+                    </>)
                         : 'REGISTER'}
                 </Button>
             </NavLink>
