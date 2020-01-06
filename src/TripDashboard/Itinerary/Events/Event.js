@@ -115,7 +115,9 @@ class Event extends Component {
                     </Grid>
                     <Grid item xs={0} sm={5} gitmd={5} className="">
                         {map}
-                        <Typography variant="subtitle1"> {address} </Typography>
+                        <Typography variant="subtitle1">
+                            <a href={`https://maps.google.com/?q=${event.coordinates.lat},${event.coordinates.long}`} target="_blank">                        {address} </a>
+                        </Typography>
                     </Grid>
                 </div>
             </Card >
