@@ -646,14 +646,15 @@ class Travelers extends Component {
                             </div>
                         </div>
                         <Paper style={{ marginTop: 16 }}>
-                            <div className="d-flex flex-row justify-content-around align-items-center TripsListHeader">
-                                <Grid item xs={1} >
+                            <div className="d-flex flex-row justify-content-between align-items-center TripsListHeader">
+                                <Grid item xs={1} style={{ paddingLeft: 16 }}>
                                     <Checkbox
                                         onChange={this.toggleAll}
                                         className=""
                                         checked={allSelected}
                                         label="noshow"
                                         color="primary"
+                                        style={{ padding: 0 }}
                                     />
                                 </Grid>
                                 <Grid item xs={2} className="d-none d-xl-flex"></Grid>
