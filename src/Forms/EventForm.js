@@ -116,7 +116,7 @@ const form = props => {
                         <FormControlLabel value="FLIGHT" control={<Radio color="primary" />} label="Flight" />
                     </RadioGroup>
                 </div>
-                {values.type === 'FLIGHT' && (
+                {/* {values.type === 'FLIGHT' && (
                     <div className="d-flex justify-content-between">
                         <Autocomplete
                             name="airline"
@@ -155,78 +155,78 @@ const form = props => {
                             style={{ width: 199 }}
                         />
                     </div>
-                )}
-                {values.type !== 'FLIGHT' && (
-                    <>
-                        <MuiPickersUtilsProvider utils={MomentUtils}>
-                            <div className="d-flex">
-                                <KeyboardTimePicker
-                                    label="Start time"
-                                    value={values.start}
-                                    onChange={(e, value) => {
-                                        let time = moment(value, "hh:mm A").format("HH:mm").split(":")
-                                        let hours = time[0]
-                                        let minutes = time[1]
-                                        let date = new Date()
-                                        date.setHours(hours, minutes)
-                                        setFieldValue("start", date)
-                                    }}
-                                    variant="inline"
-                                    minutesStep={5}
-                                    name="start"
-                                    style={{ width: 120 }}
-                                />
-                                <KeyboardTimePicker
-                                    label="End time"
-                                    variant="inline"
-                                    value={values.end}
-                                    onChange={(e, value) => {
-                                        let time = moment(value, "hh:mm A").format("HH:mm").split(":")
-                                        let hours = time[0]
-                                        let minutes = time[1]
-                                        let date = new Date()
-                                        date.setHours(hours, minutes)
-                                        setFieldValue("end", date)
-                                    }}
-                                    minutesStep={5}
-                                    name="end"
-                                    style={{ width: 120 }}
-                                />
-                                <Autocomplete
-                                    name="timezone"
-                                    id="timezone"
-                                    autoHighlight
-                                    options={timezones}
-                                    value={values.timezone}
-                                    getOptionLabel={option => option}
-                                    fullWidth
-                                    onChange={(e, value) => {
-                                        console.log(value);
-                                        setFieldValue(
-                                            "timezone",
-                                            value !== null
-                                                ? value
-                                                : initialValues.timezone
-                                        );
-                                    }}
-                                    renderInput={params => (
-                                        <TextField
-                                            label="Timezone"
-                                            margin="normal"
-                                            name="timezone"
-                                            fullWidth
-                                            {...params}
-                                        />
-                                    )}
-                                    style={{
-                                        marginLeft: 16, width: 212
-                                    }}
-                                />
-                            </div>
-                        </MuiPickersUtilsProvider>
+                )} */}
+                {/* {values.type !== 'FLIGHT' && ( */}
+                <>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <div className="d-flex">
+                            <KeyboardTimePicker
+                                label="Start time"
+                                value={values.start}
+                                onChange={(e, value) => {
+                                    let time = moment(value, "hh:mm A").format("HH:mm").split(":")
+                                    let hours = time[0]
+                                    let minutes = time[1]
+                                    let date = new Date()
+                                    date.setHours(hours, minutes)
+                                    setFieldValue("start", date)
+                                }}
+                                variant="inline"
+                                minutesStep={5}
+                                name="start"
+                                style={{ width: 120 }}
+                            />
+                            <KeyboardTimePicker
+                                label="End time"
+                                variant="inline"
+                                value={values.end}
+                                onChange={(e, value) => {
+                                    let time = moment(value, "hh:mm A").format("HH:mm").split(":")
+                                    let hours = time[0]
+                                    let minutes = time[1]
+                                    let date = new Date()
+                                    date.setHours(hours, minutes)
+                                    setFieldValue("end", date)
+                                }}
+                                minutesStep={5}
+                                name="end"
+                                style={{ width: 120 }}
+                            />
+                            <Autocomplete
+                                name="timezone"
+                                id="timezone"
+                                autoHighlight
+                                options={timezones}
+                                value={values.timezone}
+                                getOptionLabel={option => option}
+                                fullWidth
+                                onChange={(e, value) => {
+                                    console.log(value);
+                                    setFieldValue(
+                                        "timezone",
+                                        value !== null
+                                            ? value
+                                            : initialValues.timezone
+                                    );
+                                }}
+                                renderInput={params => (
+                                    <TextField
+                                        label="Timezone"
+                                        margin="normal"
+                                        name="timezone"
+                                        fullWidth
+                                        {...params}
+                                    />
+                                )}
+                                style={{
+                                    marginLeft: 16, width: 212
+                                }}
+                            />
+                        </div>
+                    </MuiPickersUtilsProvider>
 
-                    </>
-                )}
+                </>
+                {/* )} */}
                 <TextField
                     onChange={handleChange}
                     onBlur={handleBlur}
