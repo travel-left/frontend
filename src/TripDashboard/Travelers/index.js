@@ -134,12 +134,18 @@ class Travelers extends Component {
     }
 
     getStripeAccount = async () => {
-        const account = await apiCall('GET', '/api/stripe/connect')
-
-        this.setState({
-            canRequestPayments: account.charges_enabled,
-            madeStripeAccountRequest: true
-        })
+        try {
+            const account = await apiCall('GET', '/api/stripe/connect')
+            this.setState({
+                canRequestPayments: account.charges_enabled,
+                madeStripeAccountRequest: true
+            })
+        } catch (err) {
+            this.setState({
+                canRequestPayments: false,
+                madeStripeAccountRequest: true
+            })
+        }
     }
 
     addTravelerToOrg = async traveler => {

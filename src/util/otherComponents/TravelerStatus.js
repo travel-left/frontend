@@ -4,22 +4,28 @@ const TravelerStatus = ({ status }) => {
     let statusColor = 'primary'
     switch (status) {
         case 'INVITED':
-            statusColor = '#A2E247'
+            statusColor = '#96DC4F'
             break
         case 'CONFIRMED':
-            statusColor = '#92CFF8'
+            statusColor = '#83C9F4'
             break
-        case 'ON-TRIP':
-            statusColor = '#1F5FD9'
+        case 'LEFT':
+            statusColor = '#0A58CE'
             break
-        case 'POST-TRIP':
-            statusColor = '#FCB511'
+        case 'RETURNED':
+            statusColor = '#475561'
             break
-        case 'NOT-GOING':
-            statusColor = '#FB605B'
+        case 'NOT GOING':
+            statusColor = '#FF5555'
+            break
+        case 'DOCS DUE':
+            statusColor = '#FFAA31'
+            break
+        case 'MONEY DUE':
+            statusColor = '#FFAA31'
             break
         default:
-            statusColor = '#B4BDC8'
+            statusColor = '#AAB5C0'
             break
     }
 
@@ -33,6 +39,7 @@ const TravelerStatus = ({ status }) => {
                 padding: '.5rem .8rem',
                 minWidth: '88px',
                 color: '#FFFFFF',
+                width: 104,
                 backgroundColor: statusColor
             }}
             label={status} />

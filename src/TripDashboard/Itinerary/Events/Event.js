@@ -133,35 +133,19 @@ function setIcon(eventType) {
     switch (eventType) {
         case 'LODGING':
             icon.string = 'fa-bed'
-            icon.color = '#ED6A5A'
+            icon.color = '#475561'
             break
         case 'TRANSPORTATION':
             icon.string = 'fa-car'
-            icon.color = '#7C7287'
+            icon.color = '#83C9F4'
             break
         case 'EVENT':
             icon.string = 'fa-calendar-check'
-            icon.color = '#36393B'
+            icon.color = '#0A58CE'
             break
         case 'FLIGHT':
             icon.string = 'fa-plane'
-            icon.color = '#71B48D'
-            break
-        case 'TRAVEL':
-            icon.string = 'fas fa-suitcase'
-            icon.color = '#29CB97'
-            break
-        case 'PAPERWORK':
-            icon.string = 'fas fa-sticky-note'
-            icon.color = '#FEC400'
-            break
-        case 'MONEY':
-            icon.string = 'fas fa-money-bill-alt'
-            icon.color = '#B558F6'
-            break
-        case 'OTHER':
-            icon.string = 'fas fa-calendar-minus'
-            icon.color = '#FFABAA'
+            icon.color = '#FFAA31'
             break
         default:
             break

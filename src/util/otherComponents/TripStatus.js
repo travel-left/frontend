@@ -5,17 +5,20 @@ import Fab from '@material-ui/core/Fab'
 const TripStatus = ({ status, fab, onClick }) => {
     let statusColor = 'primary'
     switch (status) {
-        case 'LEFT':
-            statusColor = '#1F5FD9'
-            break
         case 'PLANNING':
+            statusColor = '#96DC4F'
+            break
+        case 'PLANNED':
             statusColor = '#83C9F4'
             break
-        case 'PAST':
-            statusColor = '#FCB511'
+        case 'LEFT':
+            statusColor = '#0A58CE'
+            break
+        case 'RETURNED':
+            statusColor = '#475561'
             break
         case 'ARCHIVED':
-            statusColor = '#B4BDC8'
+            statusColor = '#FF5555'
             break
         default:
             break
