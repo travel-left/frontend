@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { authUser, setCurrentUser } from './util/redux/actions/auth'
 import Trips from './OrganizationDashboard/Trips/'
@@ -79,14 +79,8 @@ const Main = ({ authUser, currentTrip, currentUser, setCurrentUser }) => {
             <Route
                 exact
                 path="/"
-                render={props => (
-                    <WithAuth onAuth={authUser} {...props} currentUser={currentUser}>
-                        <Container maxWidth='xl' style={{ padding: 0 }}>
-                            <Trips {...props} />
-                        </Container>
-                    </WithAuth>
-                )}
-            />
+
+            ><Redirect to="/trips" /></Route>
             <Route
                 exact
                 path="/trips"
