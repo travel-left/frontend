@@ -5,6 +5,7 @@ import LeftModal from '../../../util/otherComponents/LeftModal'
 import Fab from '@material-ui/core/Fab'
 import ContactForm from '../../../Forms/ContactForm'
 import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
+import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
 
 class Contact extends Component {
     state = {
@@ -31,13 +32,16 @@ class Contact extends Component {
                 <Image src={image} name={name} />
                 <div className="d-flex flex-column justify-content-center">
                     {name && <span className="Coordinator-name">{name}</span>}
-                    {phone && <span className="Coordinator-info">{phone}</span>}
+                    {phone && <a className="Coordinator-info" href={`tel:${phone}`}>{phone}</a>}
                     {email && <span className="Coordinator-info">{email}</span>}
                 </div>
                 <>
                     {!this.props.share ? <Fab className="contact-edit-button" onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
                         Edit
-                    </Fab> : <span style={{ width: '54px', }}></span>}
+                    </Fab> : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
+                            {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
+                        </a>
+                    }
                     {
                         this.state.isEditContactModalOpen && <LeftModal
                             isOpen={this.state.isEditContactModalOpen}

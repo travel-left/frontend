@@ -5,7 +5,7 @@ import './Coordinator.css'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
 import RemoveCoordinatorForm from '../../../Forms/RemoveCoordinatorForm'
-
+import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
 
 class Coordinator extends Component {
 
@@ -50,7 +50,9 @@ class Coordinator extends Component {
                         />
                     }
                 </>
-            ) : <span style={{ width: '54px', }}></span>
+            ) : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
+                    {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
+                </a>
 
         return (
             <LeftCardNew height={100}>
