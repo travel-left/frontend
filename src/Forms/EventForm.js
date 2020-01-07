@@ -277,12 +277,16 @@ const Form = withFormik({
         documents,
         selectedDocuments
     }) => {
+        let startTime = new Date(date).setHours(13)
+        startTime = new Date(startTime).setMinutes(0)
+        let endTime = new Date(date).setHours(14)
+        endTime = new Date(endTime).setMinutes(0)
         return {
             name: name || '',
             timezone: moment.tz.guess(),
-            date: start || new Date(date).setHours(13),
-            start: start || new Date(date).setHours(13),
-            end: end || new Date(date).setHours(14),
+            date: start || startTime,
+            start: start || startTime,
+            end: end || endTime,
             type: type || 'Event',
             description: description || '',
             airline: airline || '',
