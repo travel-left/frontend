@@ -66,7 +66,7 @@ export default class TravelerPayments extends Component {
                 {this.state.hasVerifiedConnectAccount &&
                     <>
                         <Typography variant="subtitle2">{!this.state.hasConnectAccount ?
-                            'Your organization\'s payment is not yet verified, please verify your account to request payments from travelers. After you complete the form it may take up to 15 minutes to verify your account.'
+                            'Your organization\'s payment is not yet verified, please verify your account to request payments from travelers. After you complete the form you will be redirected back to this page.'
                             : 'You have verified your account. You can now request payments from you travelers. Go to your Payment Dashboard by clicking the button below. You can modify your payment settings and view your payouts there.'}</Typography>
                         {!this.state.hasConnectAccount && <Button size="large" type="submit" variant="contained" color="secondary" id="signup" style={{ width: '180px', height: '50px', color: 'white', marginTop: '25px' }} onClick={() => {
                             var win = window.open(`https://connect.stripe.com/express/oauth/authorize?redirect_uri=${process.env.REACT_APP_BASE_URL}/account/travelerPayments&client_id=${process.env.REACT_APP_STRIPE_CONNECT_CLIENT_ID}&state=${uuid()}`, '_blank');
