@@ -27,13 +27,13 @@ class Document extends Component {
     openModal = () => (this.setState({ isEditModalOpen: true }))
 
     render() {
-        let { name, description, link } = this.props
+        let { name, description, link, type } = this.props
 
         const linkImg = getIcon(link)
 
         return (
             <LeftItem>
-                <Card style={{ padding: 16 }} className="animated fadeIn d-flex justify-content-between flex-column left-resource">
+                <Card style={{ padding: 16, minWidth: 350 }} className="animated fadeIn d-flex justify-content-between flex-column left-resource">
                     <div className="d-flex justify-content-between">
                         <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
                         {!this.props.share && <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
@@ -47,12 +47,15 @@ class Document extends Component {
                                 name={name}
                                 description={description}
                                 submit={this.handleEdit}
+                                type={type}
+                                link={link}
                                 remove={this.handleDelete}
                                 form={DocumentForm}
                             />
                         }
                     </div>
                     <Typography variant="caption">{description}</Typography>
+                    {type === 'LINK' && <Typography variant="caption">{link}</Typography>}
                     <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16 }}>
                         <div className="Document-icon d-flex justify-content-center align-items-center">
                             <a
@@ -76,8 +79,8 @@ class Document extends Component {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Download
-                        </a>
+                                {type === 'LINK' ? 'Open link' : 'Download'}
+                            </a>
                         </div>
                     </Card>
                 </Card>

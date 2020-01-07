@@ -26,14 +26,13 @@
 }
 
 .Document-icon {
-    height: 110px;
-    width: 130px;
     background: #83C9F5;
     border-radius: 3px;
 }
 
 .Document-image {
     filter: drop-shadow(2px 2px 5px #333);
+    padding: 16px
 }
 
 .Document-open-text {
