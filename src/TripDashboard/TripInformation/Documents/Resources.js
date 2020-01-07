@@ -5,7 +5,10 @@ import { apiCall } from '../../../util/api'
 import Snack from '../../../util/otherComponents/Snack'
 import Document from './Document'
 import LeftItem from '../../../util/otherComponents/LeftItem'
+import DocumentForm from '../../../Forms/DocumentForm'
 import ContainedUploader from '../../../Forms/ContainedUploader'
+import Fab from '@material-ui/core/Fab'
+import LeftModal from '../../../util/otherComponents/LeftModal'
 
 export default class Resources extends Component {
 
@@ -18,6 +21,7 @@ export default class Resources extends Component {
             variant: '',
             message: ''
         },
+        isNewLinkModalOpen: false
     }
 
     constructor(props) {
@@ -26,6 +30,8 @@ export default class Resources extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
+    closeModal = () => (this.setState({ isNewLinkModalOpen: false }))
+    openModal = () => (this.setState({ isNewLinkModalOpen: true }))
 
     getDocuments = async () => {
         let docs = await apiCall('get', `/api/trips/${this.TRIP_ID}/documents`)
@@ -59,6 +65,32 @@ export default class Resources extends Component {
         }
     }
 
+    createDocument = async doc => {
+        doc.type = 'LINK'
+        try {
+            await apiCall(
+                'post',
+                `/api/trips/${this.TRIP_ID}/documents`,
+                doc
+            )
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+            this.getDocuments()
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+    }
     deleteDocument = async docId => {
         try {
             await apiCall(
@@ -98,6 +130,7 @@ export default class Resources extends Component {
                 name={doc.name}
                 description={doc.description}
                 link={doc.link}
+                type={doc.type}
                 update={this.updateDocument}
                 remove={this.deleteDocument}
                 share={this.props.share} />
@@ -107,7 +140,22 @@ export default class Resources extends Component {
 
         return (
             <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16 }}>Resources</Typography>
+                <div className="d-flex align-items-center" style={{ marginBottom: 16 }}>
+                    <Typography variant="h2" >Resources</Typography>
+                    {!this.props.share && <Fab onClick={this.openModal} className="add-new-trip-link-button" color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white', marginLeft: 32 }}>
+                        Add Link
+                    </Fab>}
+                    {
+                        this.state.isNewLinkModalOpen && <LeftModal
+                            isOpen={this.state.isNewLinkModalOpen}
+                            toggleModal={this.closeModal}
+                            title='Create a link'
+                            type='LINK'
+                            submit={this.createDocument}
+                            form={DocumentForm}
+                        />
+                    }
+                </div>
                 <Grid container>
                     {documents}
                 </Grid>

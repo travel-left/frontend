@@ -13,7 +13,8 @@ const form = props => {
         handleChange,
         handleBlur,
         handleSubmit,
-        remove
+        remove,
+        type
     } = props
 
     return (
@@ -30,6 +31,18 @@ const form = props => {
                 helperText={touched.name ? errors.name : ""}
                 fullWidth
             />
+            {type === 'LINK' && <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                label="Link"
+                value={values.link}
+                placeholder="www.resourcelink.com"
+                name="link"
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name ? errors.name : ""}
+                fullWidth
+            />}
             <TextField
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -42,9 +55,10 @@ const form = props => {
                 fullWidth
             />
             <Divider style={{ marginTop: 40 }} />
-            <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
-                Remove
-            </Button>
+            {remove &&
+                <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+                    Remove
+            </Button>}
             <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Submit
             </Button>
@@ -55,12 +69,14 @@ const form = props => {
 const Form = withFormik({
     mapPropsToValues: ({
         name,
-        description
+        description,
+        link
     }) => {
         return {
             name,
-            description
-        };
+            description,
+            link: link || ''
+        }
     },
 
     handleSubmit: (values, { setSubmitting, props }) => {
@@ -68,10 +84,10 @@ const Form = withFormik({
     }
 })(form)
 
-export default ({ submit, remove, name, description }) => {
+export default ({ submit, remove, name, description, link, type }) => {
 
     return (
-        <Form submit={submit} name={name} description={description} remove={remove} />
+        <Form submit={submit} name={name} description={description} link={link} type={type} remove={remove} />
     )
 }
 
