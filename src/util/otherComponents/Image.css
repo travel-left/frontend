@@ -1,15 +1,23 @@
-[data-letters]:before {
-    content:attr(data-letters);
-    display:inline-block;
-    font-family: Roboto;
-    font-weight: 400;
-    color: #F6FAFF;
-    width:64px;
-    height:64px;
-    padding-top: 18px;
-    text-align:center;
-    font-size: 20px;
-    border-radius:50%;
-    background:#83C9F5;
+.img-box {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    
 }
-
+.img-box .image{
+    border-radius: 50%;
+    width: 100%;
+}
+.img-content {
+    padding: 8px;
+    background: rgb(71, 85, 97);
+    position: absolute;
+    bottom: -120px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+.img-box:hover .img-content{
+  bottom: 0px;
+  transition: all 0.2s ease-in-out;
+}

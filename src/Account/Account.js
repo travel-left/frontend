@@ -9,7 +9,7 @@ const Account = props => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} style={{ paddingTop: 16 }}>
-                <AccountCover user={props.currentUser}></AccountCover>
+                <AccountCover user={props.currentUser} setCurrentUser={props.setCurrentUser}></AccountCover>
             </Grid>
             <Grid item xs={12} md={2}>
                 <AccountSideNav />
