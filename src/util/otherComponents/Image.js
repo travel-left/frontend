@@ -22,17 +22,18 @@ export default class Image extends Component {
         const avatar = <Avatar style={{
             height: diameter,
             width: diameter,
-            backgroundColor: '#83C9F4'
+            backgroundColor: '#83C9F4',
+            fontSize: 24
         }}>{initials}</Avatar>
 
         const withUpload = <div className='img-box hover' onClick={handleUpload} style={{
             height: diameter,
             width: diameter,
         }} >
-            <img src={src} class="image" style={{
+            {src ? <img src={src} class="image" style={{
                 height: diameter,
                 width: diameter,
-            }} />
+            }} /> : avatar}
             <div class="img-content d-flex justify-content-center align-items-center">
                 <span style={{ fontSize: 12, fontWeight: 600, color: 'white' }}>UPDATE</span>
             </div>
@@ -44,9 +45,9 @@ export default class Image extends Component {
 
         if (src) {
             image = pic
-        } if (src && upload) {
+        } else if (upload) {
             image = withUpload
-        } if (!src) {
+        } else {
             image = avatar
         }
 
