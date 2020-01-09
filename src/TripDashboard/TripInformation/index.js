@@ -68,25 +68,27 @@ export default class TripInformation extends Component {
     }
 
     render() {
-        let { name, dateStart } = this.props.currentTrip
+        let { name, dateStart, description } = this.props.currentTrip
 
         return (
             <div style={{ paddingLeft: 8, paddingRight: 8 }}>
                 <div className="" style={{ marginTop: 16 }}>
                     <Typography variant="h2">
-                        Trip Name
+                        Trip Profile
                     </Typography>
                     <div style={{ marginLeft: 16 }}>
                         <h3 className="text-primary TripInfo-name hover" onClick={this.openModal} style={{ marginTop: 24 }}> {name} </h3>
                         {this.state.isEditTripNameModalOpen && <LeftModal
                             isOpen={this.state.isEditTripNameModalOpen}
                             toggleModal={this.closeModal}
-                            title='Change trip name'
+                            title='Edit trip profile'
                             submit={this.updateTrip}
                             form={TripNameForm}
                             name={name}
+                            description={description}
                         />}
                         <Divider style={{ width: '30vw', backgroundColor: '#475561', height: 2 }}></Divider>
+                        <Typography variant="subtitle1" style={{ paddingRight: 128, marginTop: 16 }} >{description} </Typography>
                     </div>
                 </div>
                 <Coordinators tripId={this.currentTripId} currentUser={this.props.currentUser}></Coordinators>
