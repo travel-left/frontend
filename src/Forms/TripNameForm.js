@@ -33,6 +33,18 @@ const form = props => {
                 fullWidth
                 initialValues={{ name: values.name }}
             />
+            <TextField
+                required
+                id="standard-required"
+                label="Trip description"
+                value={values.description}
+                placeholder="A name for trip"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="description"
+                type="text"
+                fullWidth
+            />
             <Divider style={{ marginTop: 40 }} />
             <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
                 Submit
@@ -44,9 +56,11 @@ const form = props => {
 const Form = withFormik({
     mapPropsToValues: ({
         name,
+        description
     }) => {
         return {
-            name
+            name,
+            description
         };
     },
     validationSchema: Yup.object().shape({
@@ -58,6 +72,6 @@ const Form = withFormik({
     }
 })(form)
 
-export default ({ submit, name }) => {
-    return <Form submit={submit} name={name} />
+export default ({ submit, name, description }) => {
+    return <Form submit={submit} name={name} description={description} />
 }
