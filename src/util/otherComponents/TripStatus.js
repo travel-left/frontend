@@ -31,7 +31,7 @@ const TripStatus = ({ status, fab, onClick }) => {
             fontSize: '12px',
             color: '#FFFFFF',
             backgroundColor: statusColor,
-            minWidth: '88px',
+            minWidth: 88,
             height: 32
         }}>{status}</Fab> :
         <Chip

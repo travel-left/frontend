@@ -13,6 +13,8 @@ import Moment from 'react-moment'
 import moment from 'moment'
 import Typography from '@material-ui/core/Typography'
 import Snack from '../../util/otherComponents/Snack'
+import LeftFab from '../../util/otherComponents/LeftFab'
+import Chip from '@material-ui/core/Chip';
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -176,18 +178,22 @@ class Cover extends Component {
                         </div>
                     </div>
                     <div className="d-flex justify-content-between align-items-center" >
-                        <div className="" >
-                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{invited} Invited</Typography>{' '}
-                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{confirmed} Confirmed</Typography>
-                        </div>
-                        <div className="hover" id="tripDates" onClick={() => this.openModal('isTripDatesOpen')}>
-                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
-                                <Moment date={currentTrip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
-                            </Typography>
-                            <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>
-                                <Moment date={currentTrip.dateEnd.split('T')[0]} format="MMMM DD" />
-                            </Typography>
-                        </div>
+                        <LeftFab label={`${invited} Invited
+                            ${confirmed} Confirmed`}></LeftFab>
+                        <LeftFab onClick={() => this.openModal('isTripDatesOpen')} label={`${moment(currentTrip.dateStart.split('T')[0]).format('MMMM DD')} - 
+                            ${moment(currentTrip.dateEnd.split('T')[0]).format('MMMM DD')}`}
+                            className="hover"
+                            id="tripDates"
+                            style={{
+                                color: "white",
+                                fontSize: 14,
+                                backgroundColor: '#475561',
+                                height: 32,
+                                paddingLeft: 4,
+                                paddingRight: 4
+                            }}
+                            fab>
+                        </LeftFab>
                         {this.state.isTripDatesOpen && <LeftModal
                             isOpen={this.state.isTripDatesOpen}
                             toggleModal={() => this.closeModal('isTripDatesOpen')}
@@ -197,9 +203,17 @@ class Cover extends Component {
                             dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
                             dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
                         />}
-                        <Typography variant="h1" className='hover' style={{ color: 'white', display: 'inline' }} onClick={() => this.openModal('isChangeCoverOpen')}>
-                            Change Cover Photo
-                        </Typography>
+
+                        <LeftFab onClick={() => this.openModal('isChangeCoverOpen')} label="Change Cover Photo"
+                            style={{
+                                color: "white",
+                                fontSize: 14,
+                                backgroundColor: '#475561',
+                                height: 32,
+                                paddingLeft: 4,
+                                paddingRight: 4
+                            }} fab
+                        ></LeftFab>
 
                         {this.state.isChangeCoverOpen && <LeftModal
                             isOpen={this.state.isChangeCoverOpen}

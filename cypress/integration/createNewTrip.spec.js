@@ -33,7 +33,7 @@ describe('create new trip', () => {
         cy.contains(tripName).dblclick()
         cy.get('.TripInfo-name').should('contain', tripName)
         cy.get('.Coordinator-info').should('contain', email)
-        cy.get('div[id="tripDates"]').click()
+        cy.get('button[id="tripDates"]').click()
         cy.get('input[name="dateStart"]').should('have.attr', 'value', startDate)
         cy.get('input[name="dateEnd"]').should('have.attr', 'value', endDate)
         cy.get('.modal-close-button').click()
