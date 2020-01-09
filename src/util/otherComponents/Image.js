@@ -42,11 +42,11 @@ export default class Image extends Component {
 
 
         let image = null
-
-        if (src) {
-            image = pic
-        } else if (upload) {
+        if (upload) {
             image = withUpload
+        }
+        else if (src) {
+            image = pic
         } else {
             image = avatar
         }
