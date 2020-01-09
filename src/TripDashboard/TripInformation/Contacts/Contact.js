@@ -29,7 +29,7 @@ class Contact extends Component {
 
         return (
             <LeftCardNew height={100}>
-                <Image src={image} name={name} />
+                <Image diameter={64} src={image} name={name} />
                 <div className="d-flex flex-column justify-content-center">
                     {name && <span className="Coordinator-name">{name}</span>}
                     {phone && <a className="Coordinator-info" href={`tel:${phone}`}>{phone}</a>}

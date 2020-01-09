@@ -56,7 +56,7 @@ class Coordinator extends Component {
 
         return (
             <LeftCardNew height={100}>
-                <Image diameter="64px" src={image} name={name} />
+                <Image diameter={64} src={image} name={name} />
                 <div className="d-flex flex-column justify-content-center">
                     {name && <span className="Coordinator-name">{name}</span>}
                     {title && <span className="Coordinator-info">{title}</span>}
