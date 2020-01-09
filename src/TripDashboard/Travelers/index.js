@@ -675,7 +675,7 @@ class Travelers extends Component {
                                 </Grid>
                                 {!this.props.currentTrip &&
                                     <Grid item xs={2}>
-                                        <Typography variant="h6">TRIP NAME</Typography>
+                                        <Typography variant="h6">TRIP</Typography>
                                     </Grid>
                                 }<Grid item xs={1}></Grid>
                             </div>
