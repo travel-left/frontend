@@ -2,7 +2,7 @@ import React from 'react'
 import Chip from '@material-ui/core/Chip'
 import Fab from '@material-ui/core/Fab'
 
-const LeftFab = ({ label, fab, onClick, backgroundColor }) => {
+const LeftFab = ({ label, fab, onClick, backgroundColor, id }) => {
     const styles = {
         fontWeight: '500',
         fontFamily: 'roboto',
@@ -13,15 +13,15 @@ const LeftFab = ({ label, fab, onClick, backgroundColor }) => {
         height: 32,
         textTransform: 'none',
     }
-    return fab ? <Fab variant="extended" onClick={onClick}
+    return fab ? <Fab variant="extended" id={id} onClick={onClick}
         style={styles}>{label}</Fab> :
         <Chip
+            id={id}
             style={{
                 ...styles,
                 paddingLeft: 4,
                 paddingRight: 4
-            }
-            }
+            }}
             label={label}
         />
 }

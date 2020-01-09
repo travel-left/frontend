@@ -11,7 +11,7 @@ describe('change dates of trip', () => {
     })
 
     it('should change trip dates', function () {
-        cy.get('div[id="tripDates"]').click()
+        cy.get('button[id="tripDates"]').click()
         cy.get('input[name="dateStart"]')
             .clear()
             .type(startDate)
@@ -20,7 +20,7 @@ describe('change dates of trip', () => {
             .type(endDate)
         cy.get('button[type="submit"]')
             .click()
-        cy.get('time').should('contain', 'January 02')
-        cy.get('time').should('contain', 'December 30')
+        cy.get('span').should('contain', 'January 02')
+        cy.get('span').should('contain', 'December 30')
     })
 })

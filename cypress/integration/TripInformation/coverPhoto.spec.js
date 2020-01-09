@@ -10,7 +10,7 @@ describe('change cover photo of trip', () => {
     })
 
     it('should change cover photo', function () {
-        cy.get('h1').contains('Change Cover Photo').click()
+        cy.get('button').contains('Change Cover Photo').click()
         cy.get('input[name="link"]')
             .type(url)
         cy.get('button[type="submit"]').click()
