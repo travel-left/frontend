@@ -88,7 +88,7 @@ export default class TripInformation extends Component {
                             description={description}
                         />}
                         <Divider style={{ width: '30vw', backgroundColor: '#475561', height: 2 }}></Divider>
-                        <Typography variant="subtitle1" style={{ paddingRight: 128, marginTop: 16 }} >{description} </Typography>
+                        <Typography variant="subtitle1" className="TripInfo-descript" style={{ paddingRight: 128, marginTop: 16 }} >{description} </Typography>
                     </div>
                 </div>
                 <Coordinators tripId={this.currentTripId} currentUser={this.props.currentUser}></Coordinators>
