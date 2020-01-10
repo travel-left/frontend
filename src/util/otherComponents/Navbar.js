@@ -25,25 +25,6 @@ class Navbar extends Component {
     constructor(props) {
         super(props)
     }
-    signout = () => {
-        this.props.history.push(`/signin`)
-        this.props.logout()
-    }
-
-    account = () => {
-        this.props.history.push(`/account/personal`)
-        this.handleClose()
-    }
-
-    trips = () => {
-        this.props.history.push(`/`)
-        this.handleClose()
-    }
-
-    support = () => {
-        this.props.history.push(`/support`)
-        this.handleClose()
-    }
 
     handleClick = (event) => {
         this.setState({ open: true })
@@ -51,6 +32,11 @@ class Navbar extends Component {
 
     handleClose = () => {
         this.setState({ open: false })
+    }
+
+    trips = () => {
+        this.props.history.push(`/`)
+        this.handleClose()
     }
 
     handleListKeyDown = event => {
@@ -86,9 +72,7 @@ class Navbar extends Component {
                             name="/trips"
                         >
                             <Fab color={tripsColor} className='Navbar main-nav-link' variant="extended" disableTouchRipple>
-
                                 Trips
-
                         </Fab>
                         </NavLink>
                         <NavLink
@@ -98,9 +82,7 @@ class Navbar extends Component {
                             name="/travelers"
                         >
                             <Fab color={travelersColor} variant="extended" className='Navbar main-nav-link' disableTouchRipple style={{ marginLeft: 24 }}>
-
                                 Travelers
-
                         </Fab>
                         </NavLink>
                     </ul>
@@ -111,7 +93,7 @@ class Navbar extends Component {
                     <div className="navbar-nav">
                         <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
                             <li className="Navbar user-name">{currentUser.name}</li>
-                            <MenuListComposition account={this.account} support={this.support} signout={this.signout}></MenuListComposition>
+                            <MenuListComposition logout={this.props.logout} history={this.props.history}></MenuListComposition>
                         </ul>
                     </div>
                 </div>
@@ -131,10 +113,7 @@ class Navbar extends Component {
                             to="/trips"
                             name="/trips"
                         >
-
                             <ArrowBackIosIcon style={{ color: 'white', marginLeft: 24 }} />
-
-
                             <span style={{
                                 fontFamily: 'Poppins',
                                 fontWeight: 700,
@@ -171,14 +150,29 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function MenuListComposition({ account, signout, support }) {
+function MenuListComposition({ logout, history }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
+    const signout = () => {
+        history.push(`/signin`)
+        logout()
+    }
+
+    const account = event => {
+        history.push(`/account/personal`)
+        handleClose(event)
+    }
+
+    const support = event => {
+        history.push(`/support`)
+        handleClose(event)
+    }
+
     const handleToggle = () => {
         setOpen(prevOpen => !prevOpen);
-    };
+    }
 
     const handleClose = event => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -186,7 +180,7 @@ function MenuListComposition({ account, signout, support }) {
         }
 
         setOpen(false);
-    };
+    }
 
     function handleListKeyDown(event) {
         if (event.key === 'Tab') {
