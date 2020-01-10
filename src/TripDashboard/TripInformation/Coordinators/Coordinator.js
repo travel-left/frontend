@@ -35,7 +35,7 @@ class Coordinator extends Component {
         } = this.props
 
         const removeButton =
-            (currentUserId !== _id && !this.props.share) ? (
+            (currentUserId != _id && !this.props.share) ? (
                 <>
                     <Fab className='coordinator-edit-button' onClick={() => this.openModal('editCoordinator')} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
                         Edit
