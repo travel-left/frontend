@@ -3,9 +3,17 @@ import Grid from '@material-ui/core/Grid'
 import AccountCover from './AccountCover'
 import AccountSideNav from './AccountSideNav'
 import AccountRouter from './AccountRouter'
+import ReactGA from 'react-ga'
 
+function initializeReactGA() {
+    ReactGA.initialize('UA-145382520-1')
+    ReactGA.pageview('/account')
+}
 
 const Account = props => {
+    if (process.env.NODE_ENV === 'production') {
+        initializeReactGA()
+    }
     return (
         <Grid container spacing={2}>
             <Grid item xs={12} style={{ paddingTop: 16 }}>
