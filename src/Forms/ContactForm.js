@@ -32,7 +32,6 @@ const form = props => {
                 fullWidth
             />
             <TextField
-                required
                 onChange={handleChange}
                 onBlur={handleBlur}
                 id="standard-required"
@@ -46,7 +45,6 @@ const form = props => {
                 fullWidth
             />
             <TextField
-                required
                 onChange={handleChange}
                 onBlur={handleBlur}
                 id="standard-required"

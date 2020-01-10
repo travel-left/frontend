@@ -186,10 +186,10 @@ const ShareCover = withRouter(({ trip, source, token }) => {
                 <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
                 <div >
                     <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
-                        <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMMM DD" />{' - '}
+                        <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMM DD" />{' - '}
                     </Typography>
                     <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
-                        <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMMM DD" />
+                        <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMM DD" />
                     </Typography>
                 </div>
             </div>
