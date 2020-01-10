@@ -163,10 +163,11 @@ const ShareCover = withRouter(({ trip, source, token }) => {
             }}
         >
             <div className="d-flex justify-content-between align-items-start" >
-                <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.orgName}</Typography>
+                <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
+                <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>{trip.orgName}</Typography>
                 {registrationButton}
             </div>
-            <div className="d-flex justify-content-between align-items-end" >
+            <div className="d-flex justify-content-center align-items-end" >
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
                     <span
                         className={`badge badge-secondary badge-pill text-uppercase hover d-flex align-items-center justify-content-center`}
@@ -183,7 +184,7 @@ const ShareCover = withRouter(({ trip, source, token }) => {
                         EXIT PREVIEW
                     <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}> cancel</i>
                     </span></a >}
-                <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
+
                 <div >
                     <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
                         <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMM DD" />{' - '}
