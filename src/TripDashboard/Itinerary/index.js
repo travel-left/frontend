@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import DayList from './Days/DaysList'
 import EventList from './Events/EventList'
-import { apiCall, flightApi } from '../../util/api'
+import { apiCall } from '../../util/api'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
 import './Events.css'
@@ -15,6 +15,7 @@ import LeftModal from '../../util/otherComponents/LeftModal';
 import EventForm from '../../Forms/EventForm'
 import Card from '@material-ui/core/Card'
 import ContainedUploader from '../../Forms/ContainedUploader'
+import { airports } from '../../util/airlines'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -53,7 +54,6 @@ class events extends Component {
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
-        let flightEvents = []
         let newevents = await Promise.all(events.map(async event => {
             if (!days.map(day => day.day).includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
                 days.push({
@@ -61,29 +61,39 @@ class events extends Component {
                     name: event.name
                 })
             }
-            // if (event.type === 'FLIGHT') {
-            //     try {
-            //         let flightStats = await apiCall('post', '/api/flightstats', {
-            //             date: event.start,
-            //             airline: event.airline,
-            //             flightNumber: event.flightNumber
-            //         })
-            //         event = {
-            //             ...event,
-            //             flightNumber: flightStats.flightNumber,
-            //             departureTerminal: flightStats.departureTerminal,
-            //             departureGate: flightStats.departureGate,
-            //             departureAirportCode: flightStats.departureAirportCode,
-            //             arrivalAirportCode: flightStats.arrivalAirportCode,
-            //             start: flightStats.startDate,
-            //             end: flightStats.endDate
-            //         }
-            //         console.log(event)
-            //         flightEvents.push(event)
-            //     } catch (err) {
-            //         console.log(err)
-            //     }
-            // }
+            if (event.type === 'FLIGHT') {
+                try {
+                    let flightStats = await apiCall('post', '/api/flightstats', {
+                        date: event.start,
+                        airline: event.airline,
+                        flightNumber: event.flightNumber
+                    })
+
+                    console.log(flightStats)
+                    let geo = airports.filter(airport => airport.airport === flightStats.departureIata)[0]
+                    console.log(geo)
+                    event = {
+                        ...event,
+                        start: moment(event.start.split('T')[0] + ' ' + flightStats.departureTime),
+                        end: moment(event.end.split('T')[0] + ' ' + flightStats.arrivalTime),
+                        coordinates: {
+                            long: geo.longitude,
+                            lat: geo.latitude
+                        },
+                        address: flightStats.departureIata,
+                        airline: flightStats.airlineIata,
+                        flightNumber: flightStats.flightNumber,
+                        arrivalTerminal: flightStats.arrivalTerminal,
+                        departureTerminal: flightStats.departureTerminal,
+                        departureAirportCode: flightStats.departureIata,
+                        arrivalAirportCode: flightStats.arrivalIata,
+                        startTime: flightStats.departureTime,
+                        endTime: flightStats.arrivalTime
+                    }
+                } catch (err) {
+                    console.log(err)
+                }
+            }
 
             return event
         }))
