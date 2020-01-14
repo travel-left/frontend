@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
@@ -21,7 +21,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import PlacesAutoCompleteField from "../Forms/PlacesAutoCompleteField"
 
 const form = props => {
-    console.log(moment.tz.guess())
+    const [isStartTimeOpen, setIsStartTimeOpen] = useState(false)
+    const [isEndTimeOpen, setIsEndTimeOpen] = useState(false)
+    const [isCalOpen, setIsCalOpen] = useState(false)
     const {
         values,
         touched,
@@ -96,6 +98,10 @@ const form = props => {
                             onChange={value => {
                                 setFieldValue("date", value)
                             }}
+                            open={isCalOpen}
+                            onClick={() => setIsCalOpen(true)}
+                            onOpen={() => setIsCalOpen(true)}
+                            onClose={() => setIsCalOpen(false)}
                             onBlur={handleBlur}
                             name="dateStart"
                             error={touched.status && Boolean(errors.status)}
@@ -171,6 +177,10 @@ const form = props => {
                                         date.setHours(hours, minutes)
                                         setFieldValue("start", date)
                                     }}
+                                    open={isStartTimeOpen}
+                                    onClick={() => setIsStartTimeOpen(true)}
+                                    onOpen={() => setIsStartTimeOpen(true)}
+                                    onClose={() => setIsStartTimeOpen(false)}
                                     variant="inline"
                                     minutesStep={5}
                                     name="start"
@@ -188,6 +198,10 @@ const form = props => {
                                         date.setHours(hours, minutes)
                                         setFieldValue("end", date)
                                     }}
+                                    open={isEndTimeOpen}
+                                    onClick={() => setIsEndTimeOpen(true)}
+                                    onOpen={() => setIsEndTimeOpen(true)}
+                                    onClose={() => setIsEndTimeOpen(false)}
                                     minutesStep={5}
                                     name="end"
                                     style={{ width: 120 }}
