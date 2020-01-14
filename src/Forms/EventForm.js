@@ -50,7 +50,7 @@ const form = props => {
                 displayEmpty
                 onBlur={handleBlur}
                 input={<Input id="select-multiple-chip" />}
-                placeholder="No travelers selected"
+                placeholder="No documents selected"
                 renderValue={selectedDocuments => (
                     !selectedDocuments ? <em>No documents selected</em>
                         : (<div className="d-flex flex-wrap">
@@ -75,7 +75,6 @@ const form = props => {
             <form onSubmit={handleSubmit}>
                 <div className="d-flex justify-content-between">
                     <TextField
-                        required
                         onChange={handleChange}
                         onBlur={handleBlur}
                         id="event-name"
@@ -122,6 +121,7 @@ const form = props => {
                             name="airline"
                             id="airline"
                             autoHighlight
+                            value={values.airline}
                             options={airlines}
                             getOptionLabel={option => option.label}
                             onChange={(e, value) => {
@@ -130,7 +130,7 @@ const form = props => {
                                     "airline",
                                     value !== null
                                         ? value
-                                        : initialValues.airline
+                                        : values.airline
                                 );
                             }}
                             renderInput={params => (
@@ -150,7 +150,7 @@ const form = props => {
                             id="standard-required"
                             label="Flight number"
                             value={values.flightNumber}
-                            placeholder="ex. UA32"
+                            placeholder="ex. 32"
                             name="flightNumber"
                             style={{ width: 199 }}
                         />
@@ -289,7 +289,14 @@ const Form = withFormik({
             end: end || endTime,
             type: type || 'Event',
             description: description || '',
-            airline: airline || '',
+            airline: airlines.filter(al => {
+                console.log(al)
+                console.log(airline)
+                if (al.value == airline) {
+                    console.log('returning label ' + al.label)
+                    return al.label
+                }
+            })[0] || '',
             flightNumber: flightNumber || '',
             address: address || '',
             links: links ? links.join(' ') : [],
