@@ -79,7 +79,7 @@ class Event extends Component {
         ))
 
         let links = event.links.map(link => <a href={link} target="_blank" className="d-block" style={{ padding: 4 }}>{link}</a>)
-        let airports = event.arrivalAirportCode ? `${event.arrivalAirportCode} - ${event.departureAirportCode} Terminal ${event.departureTerminal} Gate ${event.departureGate} Flight ${event.flightNumber}` : null
+        let flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
         return (
             <Card style={{ padding: 16, marginTop: 16, marginBottom: 16 }}>
                 <div className="d-flex justify-content-between">
@@ -90,7 +90,8 @@ class Event extends Component {
                             <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                         </span>
                         <Typography variant="h2" className="event-title">
-                            {name} {airports}</Typography>
+                            {event.type === 'FLIGHT' && event.airline ? flight : name}
+                        </Typography>
                     </div>
                     {!this.props.share &&
                         <Fab className="edit-event-button" onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
@@ -113,7 +114,9 @@ class Event extends Component {
                 <Typography variant="subtitle2" style={{ color: icon.color, paddingTop: 16 }}> {time}</Typography>
                 <div className="d-flex flex-wrap justify-content-between">
                     <Grid item xs={12} sm={6} md={6}>
-                        <Typography variant="subtitle1" style={{ paddingTop: 16 }}> {event.description}</Typography>
+                        <Typography variant="subtitle1" style={{ paddingTop: 16 }}>
+                            {event.description}
+                        </Typography>
                         <div style={{ marginTop: 16, marginBottom: 16 }}>
                             {links}
                         </div>
