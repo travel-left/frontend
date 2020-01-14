@@ -90,7 +90,7 @@ class Event extends Component {
                             <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                         </span>
                         <Typography variant="h2" className="event-title">
-                            {event.type === 'FLIGHT' ? flight : name}
+                            {event.type === 'FLIGHT' && event.airline ? flight : name}
                         </Typography>
                     </div>
                     {!this.props.share &&
