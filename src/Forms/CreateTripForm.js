@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
@@ -9,6 +9,8 @@ import moment from 'moment'
 import 'react-dates/lib/css/_datepicker.css'
 
 const form = props => {
+    const [isStartDateOpen, setIsStartDateOpen] = useState(false)
+    const [isEndDateOpen, setIsEndDateOpen] = useState(false)
     const {
         values,
         touched,
@@ -61,6 +63,10 @@ const form = props => {
                         onChange={value => {
                             setFieldValue("dateStart", value)
                         }}
+                        open={isStartDateOpen}
+                        onClick={() => setIsStartDateOpen(true)}
+                        onOpen={() => setIsStartDateOpen(true)}
+                        onClose={() => setIsStartDateOpen(false)}
                         onBlur={handleBlur}
                         name="dateStart"
                         error={touched.status && Boolean(errors.status)}
@@ -80,6 +86,10 @@ const form = props => {
                         onChange={value => {
                             setFieldValue("dateEnd", value)
                         }}
+                        open={isEndDateOpen}
+                        onClick={() => setIsEndDateOpen(true)}
+                        onOpen={() => setIsEndDateOpen(true)}
+                        onClose={() => setIsEndDateOpen(false)}
                         onBlur={handleBlur}
                         name="dateEnd"
                         error={touched.status && Boolean(errors.status)}

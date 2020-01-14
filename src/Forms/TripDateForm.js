@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
@@ -29,6 +29,7 @@ const categories = [
 ]
 
 const form = props => {
+    const [isCalOpen, setIsCalOpen] = useState(false)
     const {
         values,
         touched,
@@ -68,6 +69,10 @@ const form = props => {
                     onChange={value => {
                         setFieldValue("date", value)
                     }}
+                    open={isCalOpen}
+                    onClick={() => setIsCalOpen(true)}
+                    onOpen={() => setIsCalOpen(true)}
+                    onClose={() => setIsCalOpen(false)}
                     onBlur={handleBlur}
                     name="date"
                     fullWidth

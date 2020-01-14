@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
@@ -11,6 +11,7 @@ import MomentUtils from '@date-io/moment'
 import Tooltip from '@material-ui/core/Tooltip'
 
 const form = props => {
+    const [isCalOpen, setIsCalOpen] = useState(false)
     const {
         values,
         touched,
@@ -86,6 +87,10 @@ const form = props => {
                         onChange={value => {
                             setFieldValue("dueDate", value)
                         }}
+                        open={isCalOpen}
+                        onClick={() => setIsCalOpen(true)}
+                        onOpen={() => setIsCalOpen(true)}
+                        onClose={() => setIsCalOpen(false)}
                         onBlur={handleBlur}
                         name="dueDate"
                         style={{ marginTop: 8, marginBottom: 16, width: 180, marginLeft: 16 }}
