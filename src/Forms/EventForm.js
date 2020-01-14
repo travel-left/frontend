@@ -147,7 +147,7 @@ const form = props => {
                         <TextField
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            id="standard-required"
+                            id="flight-number"
                             label="Flight number"
                             value={values.flightNumber}
                             placeholder="ex. 32"
