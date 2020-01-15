@@ -1,7 +1,12 @@
 import loginAfterSeed from "../Util/loginAfterSeed"
 
-const startDate = '01-02-2020'
-const endDate = '12-30-2021'
+let month = (new Date()).getMonth() + 1
+month = month.toString().length === 1 ? `0${month}` : month
+const year = (new Date()).getFullYear()
+const startDay = 11
+const endDay = 15
+const start = `${month}-${startDay}-${year}`
+const end = `${month}-${endDay}-${year}`
 
 describe('change dates of trip', () => {
     loginAfterSeed()
@@ -14,13 +19,18 @@ describe('change dates of trip', () => {
         cy.get('button[id="tripDates"]').click()
         cy.get('input[name="dateStart"]')
             .clear()
-            .type(startDate)
+        cy.get('p').contains(startDay).click()
         cy.get('input[name="dateEnd"]')
             .clear()
-            .type(endDate)
+        cy.get('p').contains(endDay).click()
         cy.get('button[type="submit"]')
             .click()
-        cy.get('span').should('contain', 'January 02')
-        cy.get('span').should('contain', 'December 30')
+        cy.get('button[type="submit"]')
+            .click()
+
+        cy.wait(500)
+        cy.get('button[id="tripDates"]').click()
+        cy.get('input[name="dateStart"]').should('have.attr', 'value', start)
+        cy.get('input[name="dateEnd"]').should('have.attr', 'value', end)
     })
 })

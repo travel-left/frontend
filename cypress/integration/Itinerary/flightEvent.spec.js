@@ -2,7 +2,14 @@ import loginAfterSeed from '../Util/loginAfterSeed'
 
 describe('creates a flight event', () => {
     loginAfterSeed()
-
+    let month = (new Date()).getMonth() + 1
+    month = month.toString().length === 1 ? `0${month}` : month
+    const year = (new Date()).getFullYear()
+    const startDay = 11
+    const endDay = 15
+    const start = `${month}-${startDay}-${year}`
+    const editedDay = 15
+    const editedDate = `${month}-${editedDay}-${year}`
     it('go into trip', () => {
         cy.contains('South Africa').dblclick()
     })
@@ -22,7 +29,7 @@ describe('creates a flight event', () => {
         cy.contains('NEW EVENT').click()
         cy.get('input[name="dateStart"]')
             .clear()
-            .type(e.date)
+        cy.get('p').contains(startDay).click()
         cy.contains('Flight').click()
         cy.get('input[id="airline"]').type(e.airline).type('{enter}')
         cy.get('input[name="flightNumber"]').click().type(e.flightNumber)

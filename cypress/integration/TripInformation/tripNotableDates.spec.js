@@ -1,15 +1,22 @@
 import loginAfterSeed from "../Util/loginAfterSeed"
 
-describe('create new trip', () => {
+describe('create new important trip date', () => {
     loginAfterSeed()
+    let month = (new Date()).getMonth() + 1
+    month = month.toString().length === 1 ? `0${month}` : month
+    const year = (new Date()).getFullYear()
+    const day = 11
+    const editedDay = 15
+    const date = `${month}-${day}-${year}`
+    const editedDate = `${month}-${editedDay}-${year}`
+
     const tripDate = {
         name: 'New trip date test',
-        date: '01-02-2020',
-        dateLong: 'January 02',
+        date: date,
+        dateLong: `${(new Date(date)).toLocaleString('default', { month: 'long' })} ${day}`,
         nameEdited: 'New trip date test edited',
-        editedDate: '02-02-2020',
-        editedDateLong: 'February 02',
-
+        editedDate: editedDate,
+        editedDateLong: `${(new Date(editedDate)).toLocaleString('default', { month: 'long' })} ${editedDay}`,
     }
 
     it('go into trip', () => {
@@ -22,7 +29,7 @@ describe('create new trip', () => {
             .type(tripDate.name)
         cy.get('input[name="date"]')
             .clear()
-            .type(tripDate.date)
+        cy.get('p').contains(day).click()
         cy.get('input[name="category"]').parent()
             .click()
         cy.contains('Paperwork Date').click()
@@ -40,7 +47,7 @@ describe('create new trip', () => {
             .type(tripDate.nameEdited)
         cy.get('input[name="date"]')
             .clear()
-            .type(tripDate.editedDate)
+        cy.get('p').contains(editedDay).click()
         cy.get('input[name="category"]').parent()
             .click()
         cy.contains('Money Date').click()
