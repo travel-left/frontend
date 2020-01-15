@@ -81,7 +81,7 @@ class TripInfo extends Component {
                 <div className="">
                     <div className="d-flex justify-content-between" style={{ marginBottom: 32 }}>
                         <Typography variant="h2">{name}</Typography>
-                        <Button size="large" variant="contained" color="primary" onClick={this.handleEditClick} className="float-right" style={{ width: 120, height: 50 }}>VIEW</Button>
+                        <Button size="large" variant="contained" color="primary" onClick={this.handleEditClick} className="float-right" style={{ width: 120, height: 50 }}>open trip</Button>
                     </div>
                     <div style={{ marginBottom: 24 }}>
                         <p className="TripInfo-description">{description}</p>

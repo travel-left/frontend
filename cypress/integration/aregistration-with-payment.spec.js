@@ -21,6 +21,11 @@ describe('create a trip registration, a traveler completes it', () => {
     })
 
     it('should create a trip registration, traveler registers, traveler appears in dashboard', function () {
+        let month = (new Date()).getMonth() + 1
+        month = month.toString().length === 1 ? `0${month}` : month
+        const year = (new Date()).getFullYear()
+        const day = 27
+        const date = `${month}-${day}-${year}`
 
         cy.contains('Manage Travelers').children().first().click()
         cy.contains('registration form').click()
@@ -29,10 +34,12 @@ describe('create a trip registration, a traveler completes it', () => {
         cy.get('input[value="hasPhone"]').click()
         cy.get('input[value="hasPersonalNotes"]').click()
         cy.get('input[value="hasDueDate"]').click()
+        cy.get('input[name="dueDate"]').click()
+        cy.get('p').contains(day).click()
         cy.get('input[value="hasPublish"]').click()
         cy.get('input[value="hasPaymentAmount"]').click()
         cy.get('input[name="paymentAmount"]').type('2.00')
-        cy.get('input[name="dueDate"]').clear().type('10-01-2020')
+
         cy.get('button[type="submit"]').click()
         cy.get('.share-trip-button').click()
         let path

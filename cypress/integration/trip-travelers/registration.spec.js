@@ -2,6 +2,7 @@ import loginAfterSeed from '../Util/loginAfterSeed'
 
 describe('create a trip registration, a traveler completes it', () => {
     loginAfterSeed()
+    const day = 27
     const t = {
         name: 'New Traveler',
         email: 'new@traveler.com',
@@ -25,7 +26,8 @@ describe('create a trip registration, a traveler completes it', () => {
         cy.get('input[value="hasPublish"]').click()
         // cy.get('input[value="hasPaymentAmount"]').click()
         // cy.get('input[name="paymentAmount"]').type('4.00')
-        cy.get('input[name="dueDate"]').clear().type('10-01-2020')
+        cy.get('input[name="dueDate"]').clear()
+        cy.get('p').contains(day).click()
         cy.get('button[type="submit"]').click()
         cy.get('.share-trip-button').click()
         let path

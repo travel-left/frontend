@@ -3,6 +3,14 @@ import loginAfterSeed from '../Util/loginAfterSeed'
 
 describe('Add, edit, and delete a event', () => {
     loginAfterSeed()
+    let month = (new Date()).getMonth() + 1
+    month = month.toString().length === 1 ? `0${month}` : month
+    const year = (new Date()).getFullYear()
+    const startDay = 11
+    const endDay = 15
+    const start = `${month}-${startDay}-${year}`
+    const editedDay = 15
+    const editedDate = `${month}-${editedDay}-${year}`
 
     it('go into trip', () => {
         cy.contains('South Africa').dblclick()
@@ -11,11 +19,11 @@ describe('Add, edit, and delete a event', () => {
     it('should add an event', function () {
         const e = {
             name: 'Fly to Lisbon',
-            date: '01-10-2020',
+            date: start,
             start: '7',
             end: '8',
-            startTime: '7:00 am',
-            endTime: '8:00 am',
+            startTime: '1:00 pm',
+            endTime: '2:00 pm',
             description:
                 'You will meet at LAX and fly to lisbon',
             type: 'EVENT',
@@ -32,12 +40,8 @@ describe('Add, edit, and delete a event', () => {
             .type(e.name)
         cy.get('input[name="dateStart"]')
             .clear()
-            .type(e.date)
+        cy.get('p').contains(startDay).click()
         cy.get(`input[value="${e.type}"]`).click()
-        cy.get('input[name="start"]')
-            .clear().type(e.startTime)
-        cy.get('input[name="end"]')
-            .clear().type(e.endTime)
         cy.get('input[name="description"]')
             .type(e.description)
         cy.get('input[id="google-map-places"]').click()
@@ -53,7 +57,7 @@ describe('Add, edit, and delete a event', () => {
             .click()
 
         cy.get('.MuiCard-root').should('contain', e.name)
-        cy.get('h6').should('contain', "Jan 10 - Fly to Lisbon")
+        cy.get('h6').should('contain', "Fly to Lisbon")
         cy.get('.MuiCard-root').should('contain', e.startTime + ' - ' + e.endTime)
         cy.get('.MuiCard-root').should('contain', e.description)
         cy.get('.MuiCard-root').should('contain', e.links.split(' ')[0])
@@ -69,8 +73,8 @@ describe('Add, edit, and delete a event', () => {
             date: '02-11-2020',
             start: '7',
             end: '8',
-            startTime: '7:00 am',
-            endTime: '8:00 am',
+            startTime: '1:00 pm',
+            endTime: '2:00 pm',
             description:
                 'You will meet at ur mums and fly to lisbon',
             type: 'EVENT',
@@ -88,12 +92,8 @@ describe('Add, edit, and delete a event', () => {
             .type(e.name)
         cy.get('input[name="dateStart"]')
             .clear()
-            .type(e.date)
+        cy.get('p').contains(editedDay).click()
         cy.get(`input[value="${e.type}"]`).click()
-        cy.get('input[name="start"]')
-            .clear().type(e.startTime)
-        cy.get('input[name="end"]')
-            .clear().type(e.endTime)
         cy.get('input[id="timezone"]').type('US/ALASKA').type('{enter}').type('{esc}')
         cy.get('input[name="description"]')
             .clear()
@@ -112,8 +112,8 @@ describe('Add, edit, and delete a event', () => {
             .click()
 
         cy.get('.MuiCard-root').should('contain', e.name)
-        cy.get('h6').should('contain', "Feb 11 - " + e.name)
-        cy.get('.MuiCard-root').should('contain', '8:00 am - 9:00 am')
+        cy.get('h6').should('contain', e.name)
+        cy.get('.MuiCard-root').should('contain', e.startTime + ' - ' + e.endTime)
         cy.get('.MuiCard-root').should('contain', e.description)
         cy.get('.MuiCard-root').should('contain', e.links.split(' ')[0])
         cy.get('.MuiCard-root').should('contain', e.links.split(' ')[1])
