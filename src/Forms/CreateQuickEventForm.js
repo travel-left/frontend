@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers'
@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import MomentUtils from '@date-io/moment'
 
 const form = props => {
+    const [isCalOpen, setIsCalOpen] = useState(false)
     const {
         values,
         touched,
@@ -41,6 +42,10 @@ const form = props => {
                     onChange={value => {
                         setFieldValue("date", value)
                     }}
+                    open={isCalOpen}
+                    onClick={() => setIsCalOpen(true)}
+                    onOpen={() => setIsCalOpen(true)}
+                    onClose={() => setIsCalOpen(false)}
                     onBlur={handleBlur}
                     name="date"
                     error={touched.status && Boolean(errors.status)}
@@ -64,7 +69,7 @@ const Form = withFormik({
     }) => {
         return {
             name: "New Quick Event",
-            date: new Date(date).setHours(13) || new Date()
+            date: new Date(new Date(date).setHours(13)).setMinutes(0) || new Date()
         }
     },
 
