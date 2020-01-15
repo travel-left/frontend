@@ -219,15 +219,6 @@ class Trips extends Component {
             />
         ) : null
 
-        let tripInfo = selectedTrip ? (
-            <TripInfo
-                trip={selectedTrip}
-                edit={this.editTrip}
-                duplicateTrip={this.copyTrip}
-                archiveTrip={this.archiveTrip}
-            />
-        ) : null
-
         return (
             <Grid container spacing={2} style={{ marginTop: 8 }}>
                 <Grid item xs={12} md={2}>
@@ -293,7 +284,12 @@ class Trips extends Component {
                         {tripList}
                     </Grid>
                     <Grid item xs={12} md={4} style={{ paddingRight: 0 }}>
-                        {tripInfo}
+                        {selectedTrip && <TripInfo
+                            trip={selectedTrip}
+                            edit={this.editTrip}
+                            duplicateTrip={this.copyTrip}
+                            archiveTrip={this.archiveTrip}
+                        />}
                     </Grid>
                 </Grid>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
