@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
 import Moment from 'react-moment'
+import moment from 'moment'
 import Typography from '@material-ui/core/Typography'
 import ReactGA from 'react-ga'
 import TripDates from '../TripDashboard/TripInformation/TripDates/TripDates'
@@ -15,6 +16,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Button from '@material-ui/core/Button'
 import { withRouter, NavLink } from 'react-router-dom';
+import LeftFab from '../util/otherComponents/LeftFab';
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -163,11 +165,7 @@ const ShareCover = withRouter(({ trip, source, token }) => {
             }}
         >
             <div className="d-flex justify-content-between align-items-start" >
-                <Typography variant="h1" style={{ color: 'white', display: 'inline' }}>{trip.name}</Typography>
-                <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>{trip.orgName}</Typography>
-                {registrationButton}
-            </div>
-            <div className="d-flex justify-content-center align-items-end" >
+                <LeftFab label={trip.name} />
                 {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
                     <span
                         className={`badge badge-secondary badge-pill text-uppercase hover d-flex align-items-center justify-content-center`}
@@ -184,15 +182,11 @@ const ShareCover = withRouter(({ trip, source, token }) => {
                         EXIT PREVIEW
                     <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}> cancel</i>
                     </span></a >}
-
-                <div >
-                    <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
-                        <Moment date={trip.dateStart && trip.dateStart.split('T')[0]} format="MMM DD" />{' - '}
-                    </Typography>
-                    <Typography variant="h1" style={{ color: 'white', display: 'inline', textAlign: 'end' }}>
-                        <Moment date={trip.dateEnd && trip.dateEnd.split('T')[0]} format="MMM DD" />
-                    </Typography>
-                </div>
+                <LeftFab label={trip.orgName} />
+                {registrationButton}
+            </div>
+            <div className="d-flex justify-content-center align-items-end" >
+                <LeftFab label={trip.dateStart && moment(trip.dateStart.split('T')[0]).format('MMM DD') + ' - ' + moment(trip.dateEnd.split('T')[0]).format('MMM DD')}></LeftFab>
             </div>
         </div >
     )
