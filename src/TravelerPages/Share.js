@@ -164,12 +164,12 @@ const ShareCover = withRouter(({ trip, source, token }) => {
             }}
         >
             <div className="d-flex justify-content-between align-items-start" >
-                <LeftFab label={trip.name} />
+                <LeftFab text={trip.name} />
                 {registrationButton}
             </div>
             <div className="d-flex justify-content-between align-items-end" >
-                <LeftFab label={trip.orgName} />
-                <LeftFab label={trip.dateStart && moment(trip.dateStart.split('T')[0]).format('MMM DD') + ' - ' + moment(trip.dateEnd.split('T')[0]).format('MMM DD')}></LeftFab>
+                <LeftFab text={trip.orgName} />
+                <LeftFab text={trip.dateStart && moment(trip.dateStart.split('T')[0]).format('MMM DD') + ' - ' + moment(trip.dateEnd.split('T')[0]).format('MMM DD')}></LeftFab>
             </div>
         </div >
     )

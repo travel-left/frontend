@@ -178,9 +178,9 @@ class Cover extends Component {
                         </div>
                     </div>
                     <div className="d-flex justify-content-between align-items-center" >
-                        <LeftFab label={`${invited} Invited
+                        <LeftFab text={`${invited} Invited
                             ${confirmed} Confirmed`}></LeftFab>
-                        <LeftFab onClick={() => this.openModal('isTripDatesOpen')} label={`${moment(currentTrip.dateStart.split('T')[0]).format('MMMM DD')} - 
+                        <LeftFab onClick={() => this.openModal('isTripDatesOpen')} text={`${moment(currentTrip.dateStart.split('T')[0]).format('MMMM DD')} - 
                             ${moment(currentTrip.dateEnd.split('T')[0]).format('MMMM DD')}`}
                             className="hover"
                             id="tripDates"
@@ -204,7 +204,7 @@ class Cover extends Component {
                             dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
                         />}
 
-                        <LeftFab onClick={() => this.openModal('isChangeCoverOpen')} label="Change Cover Photo"
+                        <LeftFab onClick={() => this.openModal('isChangeCoverOpen')} text="Change Cover Photo"
                             style={{
                                 color: "white",
                                 fontSize: 14,

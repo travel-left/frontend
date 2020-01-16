@@ -29,7 +29,7 @@ const theme = createMuiTheme({
         },
         error: {
             main: '#FF5555'
-        }
+        },
     },
     typography: {
         h1: {
