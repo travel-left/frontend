@@ -161,31 +161,14 @@ const ShareCover = withRouter(({ trip, source, token }) => {
                 backgroundSize: 'cover',
                 borderRadius: '3px',
                 padding: 16,
-                marginTop: 16
             }}
         >
             <div className="d-flex justify-content-between align-items-start" >
                 <LeftFab label={trip.name} />
-                {source === 'preview' && <a href={`/trips/${trip._id}/edit`}>
-                    <span
-                        className={`badge badge-secondary badge-pill text-uppercase hover d-flex align-items-center justify-content-center`}
-                        style={{
-                            fontWeight: '500',
-                            fontFamily: 'roboto',
-                            fontSize: '12px',
-                            padding: '.5rem .8rem',
-                            width: '118px',
-                            color: '#FFFFFF',
-                            marginTop: 16
-                        }}
-                    >
-                        EXIT PREVIEW
-                    <i class="material-icons pl-2" style={{ color: '#FFFFFF', fontSize: '16px' }}> cancel</i>
-                    </span></a >}
-                <LeftFab label={trip.orgName} />
                 {registrationButton}
             </div>
-            <div className="d-flex justify-content-center align-items-end" >
+            <div className="d-flex justify-content-between align-items-end" >
+                <LeftFab label={trip.orgName} />
                 <LeftFab label={trip.dateStart && moment(trip.dateStart.split('T')[0]).format('MMM DD') + ' - ' + moment(trip.dateEnd.split('T')[0]).format('MMM DD')}></LeftFab>
             </div>
         </div >

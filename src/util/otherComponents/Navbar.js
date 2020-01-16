@@ -52,13 +52,20 @@ class Navbar extends Component {
         let loggedInLinks
         let linkTo = '#'
         let tripName = null
-
+        let backText = 'Trips'
+        let backPath = '/trips'
         const { pathname } = this.props.history.location
         const tripsColor = pathname === '/trips' ? 'primary' : 'secondary'
         const travelersColor = pathname === '/travelers' ? 'primary' : 'secondary'
 
         if (pathname !== '/trips' && pathname !== '/travelers' && !pathname.includes('/account') && currentTrip.name) {
             tripName = currentTrip.name
+        }
+
+        if (pathname.includes('/preview')) {
+            tripName = `${currentTrip.name} Preview`
+            backText = 'Back to trip'
+            backPath = `/trips/${currentTrip._id}/edit`
         }
 
         if (currentUser.isAuthenticated) {
@@ -110,7 +117,7 @@ class Navbar extends Component {
                 </div> : <>
                         <NavLink
                             className='Navbar main-nav-link'
-                            to="/trips"
+                            to={backPath}
                             name="/trips"
                         >
                             <ArrowBackIosIcon style={{ color: 'white', marginLeft: 24 }} />
@@ -121,7 +128,7 @@ class Navbar extends Component {
                                 color: 'white',
                                 letterSpacing: 1,
                                 paddingLeft: 24
-                            }}>Trips</span>
+                            }}>{backText}</span>
                         </NavLink>
                     </>}
                 {!tripName && loggedInLinks}
