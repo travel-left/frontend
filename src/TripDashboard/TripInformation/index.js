@@ -10,7 +10,8 @@ import Contacts from './Contacts/Contacts'
 import TripDates from './TripDates/TripDates'
 import Coordinators from './Coordinators/Coordinators'
 import TripNameForm from '../../Forms/TripNameForm'
-import Snack from '../../util/otherComponents/Snack';
+import Snack from '../../util/otherComponents/Snack'
+import Fab from '@material-ui/core/Fab'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -73,11 +74,20 @@ export default class TripInformation extends Component {
         return (
             <div style={{ paddingLeft: 8, paddingRight: 8 }}>
                 <div className="" style={{ marginTop: 16 }}>
-                    <Typography variant="h2">
-                        Trip Profile
+                    <div className="d-flex align-items-center">
+                        <Typography variant="h2">
+                            Trip Profile
+
                     </Typography>
+                        <Fab className='coordinator-edit-button'
+                            onClick={this.openModal}
+                            variant="extended"
+                            style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white', marginLeft: 32 }}>
+                            Edit
+                        </Fab>
+                    </div>
                     <div style={{ marginLeft: 16 }}>
-                        <h3 className="text-primary TripInfo-name hover" onClick={this.openModal} style={{ marginTop: 24 }}> {name} </h3>
+                        <h3 className="text-primary TripInfo-name" style={{ marginTop: 24 }}> {name} </h3>
                         {this.state.isEditTripNameModalOpen && <LeftModal
                             isOpen={this.state.isEditTripNameModalOpen}
                             toggleModal={this.closeModal}
