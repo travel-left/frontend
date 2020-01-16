@@ -255,7 +255,7 @@ class events extends Component {
                 <div className={this.props.share ? 'col-12' : 'col-12 col-lg-8'}>
                     <Grid item xs={12} style={{ marginRight: this.props.share ? null : 16 }}>
                         <div className="row justify-content-between">
-                            <Typography variant="h2">Trip Itinerary</Typography>
+                            <Typography variant="h2">Itinerary</Typography>
                         </div>
                         <div className="row d-flex flex-column">
                             {eventList}
