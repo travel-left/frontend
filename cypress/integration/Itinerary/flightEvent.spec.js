@@ -33,7 +33,7 @@ describe('creates a flight event', () => {
         cy.contains('Flight').click()
         cy.get('input[id="airline"]').type(e.airline).type('{enter}')
         cy.get('input[name="flightNumber"]').click().type(e.flightNumber)
-        cy.get('.event-submit-button')
+        cy.get('button[id="event-submit-button"]')
             .click()
 
         cy.get('.MuiCard-root').should('contain', e.name)

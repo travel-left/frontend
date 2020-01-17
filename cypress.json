@@ -1,3 +1,3 @@
 {
-    "baseUrl": "https://left-develop-frontend.herokuapp.com/"
+    "baseUrl": "http://localhost:3000"
 }

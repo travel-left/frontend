@@ -77,7 +77,7 @@ export default class TripInformation extends Component {
                     <div className="d-flex align-items-center">
                         <Typography variant="h2">Trip Profile</Typography>
                         <div className="editContainer" style={{ marginLeft: 32 }}>
-                            <LeftFab id='coordinator-edit-button'
+                            <LeftFab id="tripInfo-name-button"
                                 onClick={this.openModal}
                             >Edit
                             </LeftFab>

@@ -22,7 +22,7 @@ describe('create new trip', () => {
     const end = `${month}-${endDay}-${year}`
 
     it('check trip name, coordinator email and trip dates', function () {
-        cy.get('button[name="new-trip-button"]').click()
+        cy.get('button[id="new-trip-button"]').click()
         cy.get('input[name="name"]')
             .type(tripName)
         cy.get('input[name="description"]')

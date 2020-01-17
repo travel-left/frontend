@@ -24,7 +24,7 @@ describe('create new important trip date', () => {
     })
 
     it('new trip date', function () {
-        cy.get('.add-new-trip-date-button').click()
+        cy.get('button[id="add-new-trip-date-button"]').click()
         cy.get('input[name="name"]')
             .type(tripDate.name)
         cy.get('input[name="date"]')

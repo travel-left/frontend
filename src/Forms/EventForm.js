@@ -267,7 +267,7 @@ const form = props => {
                 {remove && <LeftButton onClick={remove} color="error" disabled={isSubmitting}>
                     Remove
             </LeftButton>}
-                <LeftButton float type="submit" disabled={isSubmitting}>
+                <LeftButton float type="submit" id="event-submit-button" disabled={isSubmitting}>
                     Submit
             </LeftButton>
             </form>
