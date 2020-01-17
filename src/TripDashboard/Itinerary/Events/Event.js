@@ -5,9 +5,9 @@ import moment from 'moment'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import { Grid } from '@material-ui/core'
-import Fab from '@material-ui/core/Fab'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import EventForm from '../../../Forms/EventForm'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 class Event extends Component {
     state = {
@@ -94,9 +94,7 @@ class Event extends Component {
                         </Typography>
                     </div>
                     {!this.props.share &&
-                        <Fab className="edit-event-button" onClick={this.toggleModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                            Edit
-                    </Fab>}
+                        <LeftFab id="edit-event-button" text="EDIT" onClick={this.toggleModal} fab />}
                     {
                         this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}

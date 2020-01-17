@@ -182,16 +182,7 @@ class Cover extends Component {
                             ${confirmed} Confirmed`}></LeftFab>
                         <LeftFab onClick={() => this.openModal('isTripDatesOpen')} text={`${moment(currentTrip.dateStart.split('T')[0]).format('MMMM DD')} - 
                             ${moment(currentTrip.dateEnd.split('T')[0]).format('MMMM DD')}`}
-                            className="hover"
                             id="tripDates"
-                            style={{
-                                color: "white",
-                                fontSize: 14,
-                                backgroundColor: '#475561',
-                                height: 32,
-                                paddingLeft: 4,
-                                paddingRight: 4
-                            }}
                             fab>
                         </LeftFab>
                         {this.state.isTripDatesOpen && <LeftModal

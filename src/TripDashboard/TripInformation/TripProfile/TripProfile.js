@@ -173,7 +173,7 @@ class TripProfile extends Component {
                                 <Typography variant="h1" color="secondary" style={{ display: 'inline', marginLeft: 16 }}>{confirmed} Confirmed</Typography>
                             </div>
                             <Fab className='tripProfile-edit-button' onClick={() => this.openModal('')} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                                Edit
+                                EDIT
                         </Fab>
                         </div>
                     </Card>

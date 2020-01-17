@@ -4,9 +4,9 @@ import './Document.css'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import Fab from '@material-ui/core/Fab'
 import LeftItem from '../../../util/otherComponents/LeftItem'
 import DocumentForm from '../../../Forms/DocumentForm'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 class Document extends Component {
     state = {
@@ -36,9 +36,11 @@ class Document extends Component {
                 <Card style={{ padding: 16, minWidth: 350 }} className="animated fadeIn d-flex justify-content-between flex-column left-resource">
                     <div className="d-flex justify-content-between">
                         <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
-                        {!this.props.share && <Fab onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                            Edit
-                        </Fab>}
+                        {!this.props.share && <LeftFab id="contact-edit-button"
+                            onClick={this.openModal}
+                            fab
+                            text='EDIT'>
+                        </LeftFab>}
                         {
                             this.state.isEditModalOpen && <LeftModal
                                 isOpen={this.state.isEditModalOpen}

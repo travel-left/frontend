@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
 import './Contact.css'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import Fab from '@material-ui/core/Fab'
 import ContactForm from '../../../Forms/ContactForm'
 import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 class Contact extends Component {
     state = {
@@ -36,9 +36,11 @@ class Contact extends Component {
                     {email && <span className="Coordinator-info">{email}</span>}
                 </div>
                 <>
-                    {!this.props.share ? <Fab className="contact-edit-button" onClick={this.openModal} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                        Edit
-                    </Fab> : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
+                    {!this.props.share ? <LeftFab id="contact-edit-button"
+                        onClick={this.openModal}
+                        fab
+                        text='EDIT'>
+                    </LeftFab> : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
                             {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
                         </a>
                     }
