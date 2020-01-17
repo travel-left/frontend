@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
@@ -13,6 +12,7 @@ import Input from '@material-ui/core/Input'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import FormLabel from '@material-ui/core/FormLabel'
 import LeftChip from '../util/otherComponents/LeftChip'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -90,12 +90,10 @@ const form = props => {
                     <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
                 </RadioGroup>
             </div>
-
-
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
-            </Button>
+            </LeftButton>
         </form>
     )
 }

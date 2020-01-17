@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
 import { connect } from 'react-redux'
-import Button from '@material-ui/core/Button'
 import Snack from '../util/otherComponents/Snack'
 import { apiCall } from '../util/api'
 import { setCurrentUser } from '../util/redux/actions/auth'
+import LeftButton from '../util/otherComponents/LeftButton'
+import Divider from '@material-ui/core/Divider'
 
 class _CardForm extends Component {
     state = {
@@ -90,9 +91,10 @@ class _CardForm extends Component {
                     letterSpacing: '0.00938em',
                 }}>Update card</label>
                 <CardElement />
-                <Button onClick={this.submit} size="large" type="submit" variant="contained" color="primary" id="signup" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }}>
+                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <LeftButton float type="submit" onClick={this.submit}>
                     UPDATE
-            </Button>
+            </LeftButton>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )

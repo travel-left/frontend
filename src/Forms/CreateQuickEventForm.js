@@ -4,6 +4,7 @@ import { withFormik } from "formik";
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers'
 import TextField from '@material-ui/core/TextField'
 import MomentUtils from '@date-io/moment'
+import LeftButton from '../util/otherComponents/LeftButton';
 
 const form = props => {
     const [isCalOpen, setIsCalOpen] = useState(false)
@@ -56,9 +57,11 @@ const form = props => {
                     fullWidth
                 />
             </MuiPickersUtilsProvider>
-            <Button size="large" type="submit" variant="contained" color="secondary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 16 }} disabled={isSubmitting}>
-                QUICK EVENT
-            </Button>
+            <div style={{ marginTop: 16 }}>
+                <LeftButton type="submit" color="secondary" float disabled={isSubmitting}>
+                    QUICK EVENT
+            </LeftButton>
+            </div>
         </form>
     )
 }

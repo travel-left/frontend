@@ -1,7 +1,5 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
-import { withFormik } from "formik";
-import * as Yup from 'yup'
+import { withFormik } from "formik"
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import Input from '@material-ui/core/Input'
@@ -9,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import LeftChip from '../util/otherComponents/LeftChip'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -115,15 +114,15 @@ const form = props => {
                     </>
                 )
             }
-            <Divider style={{ marginTop: 40 }} />
-            {!values.fromOrg && <Button onClick={() => {
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            {!values.fromOrg && <LeftButton onClick={() => {
                 setFieldValue("fromOrg", true)
-            }} size="large" variant="contained" color="secondary" style={{ width: '180px', height: '50px', marginTop: '25px' }}>
+            }} color="secondary">
                 Add from org
-            </Button>}
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            </LeftButton>}
+            <LeftButton type="submit" float disabled={isSubmitting}>
                 Submit
-            </Button>
+            </LeftButton>
         </form>
     )
 }

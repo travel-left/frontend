@@ -9,6 +9,7 @@ import DocumentForm from '../../../Forms/DocumentForm'
 import ContainedUploader from '../../../Forms/ContainedUploader'
 import Fab from '@material-ui/core/Fab'
 import LeftModal from '../../../util/otherComponents/LeftModal'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 export default class Resources extends Component {
 
@@ -142,9 +143,12 @@ export default class Resources extends Component {
             <div style={{ marginTop: 64 }}>
                 <div className="d-flex align-items-center" style={{ marginBottom: 16 }}>
                     <Typography variant="h2" >Resources</Typography>
-                    {!this.props.share && <Fab onClick={this.openModal} className="add-new-trip-link-button" color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white', marginLeft: 32 }}>
-                        Add Link
-                    </Fab>}
+                    {!this.props.share && <div style={{ marginLeft: 32 }}>
+                        <LeftFab onClick={this.openModal} id="add-new-trip-link-button" color="secondary" fab>
+                            Add Link
+                    </LeftFab>
+                    </div>
+                    }
                     {
                         this.state.isNewLinkModalOpen && <LeftModal
                             isOpen={this.state.isNewLinkModalOpen}

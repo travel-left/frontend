@@ -38,8 +38,7 @@ class Contact extends Component {
                 <>
                     {!this.props.share ? <LeftFab id="contact-edit-button"
                         onClick={this.openModal}
-                        fab
-                        text='EDIT'>
+                    >Edit
                     </LeftFab> : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
                             {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
                         </a>

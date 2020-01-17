@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { withFormik } from "formik";
 import * as Yup from 'yup'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const useStyles = makeStyles({
     card: {
@@ -62,9 +63,11 @@ const form = props => {
                 helperText={touched.password ? errors.password : ""}
                 fullWidth
             />
-            <Button size="large" type="submit" id="signin" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                Sign in
-            </Button>
+            <div style={{ marginTop: 25, float: 'right' }}>
+                <LeftButton type="submit" id="signin" disabled={isSubmitting}>
+                    Sign in
+                </LeftButton>
+            </div>
         </form>
     )
 }

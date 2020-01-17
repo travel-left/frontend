@@ -25,6 +25,7 @@ import RegisterAccountModalForm from '../../Forms/RegisterAccountModalForm'
 import CollectMoneyForm from '../../Forms/CollectMoneyForm'
 import TravelerForm from '../../Forms/TravelerForm'
 import TravelerRegistrationSettingsForm from '../../Forms/TravelerRegistrationSettingsForm'
+import LeftButton from '../../util/otherComponents/LeftButton'
 
 
 function initializeReactGA() {
@@ -512,9 +513,9 @@ class Travelers extends Component {
     render() {
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = (<>
-            <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginBottom: 16 }} onClick={this.toggleImportCsvModal}>
+            <LeftButton onClick={this.toggleImportCsvModal} color="secondary">
                 IMPORT FROM CSV
-            </Button>
+            </LeftButton>
             {this.state.isImportCsvOpen && <LeftModal
                 isOpen={this.state.isImportCsvOpen}
                 toggleModal={this.toggleImportCsvModal}
@@ -527,9 +528,13 @@ class Travelers extends Component {
 
         const registrationForm = (
             <>
-                {this.state.madeStripeAccountRequest && <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', marginTop: 16 }} onClick={this.toggleRegistrationModal}>
-                    registration form
-                </Button>}
+                {this.state.madeStripeAccountRequest &&
+                    <div style={{ marginTop: 16 }}>
+                        <LeftButton onClick={this.toggleRegistrationModal}>
+                            registration form
+                </LeftButton>
+                    </div>
+                }
                 {this.state.isRegistrationModalOpen && <LeftModal
                     isOpen={this.state.isRegistrationModalOpen}
                     toggleModal={this.toggleRegistrationModal}
@@ -544,9 +549,11 @@ class Travelers extends Component {
 
         const newTravelerInOrg = (
             <>
-                <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right' }} onClick={this.openAddNewTravelerOrgModal}>
-                    NEW TRAVELER
-                </Button>
+                <div style={{ marginTop: 16 }}>
+                    <LeftButton onClick={this.openAddNewTravelerOrgModal}>
+                        NEW TRAVELER
+                </LeftButton>
+                </div>
                 {
                     this.state.isAddNewTravelerOrgModalOpen &&
                     <LeftModal

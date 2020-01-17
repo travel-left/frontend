@@ -7,6 +7,7 @@ import { apiCall } from '../../../util/api'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import LeftItem from '../../../util/otherComponents/LeftItem'
 import AddCoordinatorToTripForm from '../../../Forms/AddCoordinatorToTripForm'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 export default class Coordinators extends Component {
 
@@ -158,9 +159,9 @@ export default class Coordinators extends Component {
     render() {
         const newCoordinatorButton =
             <LeftItem height={100}>
-                <Fab className="add-new-coordinator-button" onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+                <LeftFab id="add-new-coordinator-button" onClick={this.openModal} color="secondary" fab>
                     Add New
-                    </Fab>
+                    </LeftFab>
             </LeftItem>
 
         const coordinatorList = this.state.coordinators.map(c =>

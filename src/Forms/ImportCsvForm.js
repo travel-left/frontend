@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import FileUploader from './FileUploader'
 import { withFormik } from "formik"
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Fab from '@material-ui/core/Fab'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -39,10 +39,10 @@ const form = props => {
             <div className="d-flex justify-content-center align-items-center">
                 <Fab variant="extended" color='primary' href="https://travel-left-public.s3.amazonaws.com/UploadTravelers.csv" style={{ color: 'white', marginTop: 16 }}>Download a Template CSV File</Fab>
             </div>
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isUploading || isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton float type="submit" disabled={isUploading || isSubmitting}>
                 {buttonContent}
-            </Button>
+            </LeftButton>
         </form>
     )
 }

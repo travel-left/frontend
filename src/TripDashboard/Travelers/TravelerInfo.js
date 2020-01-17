@@ -3,7 +3,6 @@ import Image from '../../util/otherComponents/Image'
 import TravelerStatus from '../../util/otherComponents/TravelerStatus'
 import { apiCall } from '../../util/api'
 import CommCard from './CommCard'
-import Button from '@material-ui/core/Button'
 import './TravelerInfo.css'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -12,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import TravelerForm from '../../Forms/TravelerForm'
 import PaymentCard from './PaymentCard'
+import LeftButton from '../../util/otherComponents/LeftButton'
 
 export default class TravelerInfo extends Component {
     state = {
@@ -129,9 +129,9 @@ export default class TravelerInfo extends Component {
                         display payment and mark completed or not based off of stripeChargeid */}
                     </div>
                 </div>
-                <Button size="large" variant="contained" color="secondary" style={{ width: '180px', height: '50px', float: 'right' }} onClick={this.openEditModal}>
+                <LeftButton color="secondary" onClick={this.openEditModal}>
                     EDIT TRAVELER
-                            </Button>
+                            </LeftButton>
                 {
                     this.state.isEditModalOpen &&
                     <LeftModal

@@ -94,7 +94,9 @@ class Event extends Component {
                         </Typography>
                     </div>
                     {!this.props.share &&
-                        <LeftFab id="edit-event-button" text="EDIT" onClick={this.toggleModal} fab />}
+                        <LeftFab id="edit-event-button" onClick={this.toggleModal}>
+                            Edit
+                            </LeftFab>}
                     {
                         this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}

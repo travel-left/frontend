@@ -38,8 +38,8 @@ class Document extends Component {
                         <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
                         {!this.props.share && <LeftFab id="contact-edit-button"
                             onClick={this.openModal}
-                            fab
-                            text='EDIT'>
+                        >
+                            Edit
                         </LeftFab>}
                         {
                             this.state.isEditModalOpen && <LeftModal

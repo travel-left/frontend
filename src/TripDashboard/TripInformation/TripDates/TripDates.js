@@ -9,6 +9,7 @@ import Fab from '@material-ui/core/Fab'
 import moment from 'moment'
 import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
 import TripDateForm from '../../../Forms/TripDateForm'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 export default class TripDates extends Component {
     TRIP_ID = this.props.tripId
@@ -142,9 +143,9 @@ export default class TripDates extends Component {
                         <div className="d-flex flex-column flex-grow-1">
                             {tripDatesList}
                             {!this.props.share && <div className='d-flex justify-content-center' style={{ paddingBottom: 16, paddingTop: 16 }}>
-                                <Fab onClick={this.openModal} className="add-new-trip-date-button" color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
+                                <LeftFab onClick={this.openModal} id="add-new-trip-date-button" color="secondary" fab>
                                     Add New
-                                </Fab>
+                                </LeftFab>
                                 {
                                     this.state.isNewTripDateModalOpen && <LeftModal
                                         isOpen={this.state.isNewTripDateModalOpen}

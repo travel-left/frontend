@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField'
 import { withFormik } from "formik"
 import CircularProgress from '@material-ui/core/CircularProgress'
 import FileUploader from './FileUploader'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -46,10 +47,10 @@ const form = props => {
                 type="link"
                 fullWidth
             />
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isUploading}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton type="submit" id="status" float disabled={isUploading}>
                 {buttonContent}
-            </Button>
+            </LeftButton>
         </form>
     )
 }

@@ -41,8 +41,7 @@ class Coordinator extends Component {
                     <LeftFab
                         id='coordinator-edit-button'
                         onClick={() => this.openModal('editCoordinator')}
-                        text="EDIT"
-                        fab>
+                    >Edit
                     </LeftFab>
                     {
                         this.state.editCoordinator && <LeftModal

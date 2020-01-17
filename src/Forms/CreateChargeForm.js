@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
 import { apiCall } from '../util/api'
-import Button from '@material-ui/core/Button'
 import Snack from '../util/otherComponents/Snack'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 class _CardForm extends Component {
     state = {
@@ -80,9 +80,9 @@ class _CardForm extends Component {
                 <div className='mt-3 mb-4'>
                     <CardElement />
                 </div>
-                <Button type="submit" className="float-right" size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={this.submit} disabled={isSubmitting}>
+                <LeftButton type="submit" float onClick={this.submit} disabled={isSubmitting}>
                     Send
-                                </Button>
+                </LeftButton>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )

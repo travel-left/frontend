@@ -79,8 +79,7 @@ export default class TripInformation extends Component {
                         <div className="editContainer" style={{ marginLeft: 32 }}>
                             <LeftFab id='coordinator-edit-button'
                                 onClick={this.openModal}
-                                fab
-                                text='EDIT'>
+                            >Edit
                             </LeftFab>
                         </div>
                     </div>
