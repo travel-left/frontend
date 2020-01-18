@@ -1,9 +1,9 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
 import { withFormik } from "formik"
 import * as Yup from 'yup'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -46,9 +46,9 @@ const form = props => {
                 fullWidth
             />
             <Divider style={{ marginTop: 40, marginBottom: 25 }} />
-            <Button type="submit" disabled={isSubmitting}>
+            <LeftButton type="submit" disabled={isSubmitting}>
                 Submit
-            </Button>
+            </LeftButton>
         </form>
     )
 }
