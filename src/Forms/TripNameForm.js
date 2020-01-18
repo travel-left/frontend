@@ -46,7 +46,7 @@ const form = props => {
                 fullWidth
             />
             <Divider style={{ marginTop: 40, marginBottom: 25 }} />
-            <LeftButton type="submit" disabled={isSubmitting}>
+            <LeftButton type="submit" float disabled={isSubmitting}>
                 Submit
             </LeftButton>
         </form>
