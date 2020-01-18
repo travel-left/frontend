@@ -14,6 +14,7 @@ import { withRouter } from 'react-router-dom'
 import LeftModal from '../../util/otherComponents/LeftModal'
 import CreateTripForm from '../../Forms/CreateTripForm'
 import Snack from '../../util/otherComponents/Snack'
+import LeftButton from '../../util/otherComponents/LeftButton'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -223,9 +224,9 @@ class Trips extends Component {
             <Grid container spacing={2} style={{ marginTop: 8 }}>
                 <Grid item xs={12} md={2}>
                     <div className="px-0 py-5 d-flex justify-content-center">
-                        <Button size="large" name="new-trip-button" variant="contained" color="primary" style={{ width: '180px', height: '50px' }} onClick={() => this.setState({ isOpen: true })}>
+                        <LeftButton id="new-trip-button" onClick={() => this.setState({ isOpen: true })}>
                             ADD NEW TRIP
-                        </Button>
+                        </LeftButton>
                         {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
                             title='Add New Trip'

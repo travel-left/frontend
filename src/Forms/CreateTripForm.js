@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
@@ -7,6 +6,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import MomentUtils from '@date-io/moment'
 import moment from 'moment'
 import 'react-dates/lib/css/_datepicker.css'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const [isStartDateOpen, setIsStartDateOpen] = useState(false)
@@ -100,10 +100,10 @@ const form = props => {
                     />
                 </div>
             </MuiPickersUtilsProvider>
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
-            </Button>
+            </LeftButton>
         </form>
     )
 }

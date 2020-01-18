@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import FileUploader from './FileUploader'
 import { apiCall } from '../util/api'
-import LeftItem from '../util/otherComponents/LeftItem'
 import Snack from '../util/otherComponents/Snack'
 
 export default class Resources extends Component {

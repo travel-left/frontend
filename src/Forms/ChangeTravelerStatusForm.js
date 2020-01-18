@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import Divider from '@material-ui/core/Divider'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -8,6 +7,7 @@ import Select from '@material-ui/core/Select'
 import Input from '@material-ui/core/Input'
 import { travelerStatus } from '../util/globals'
 import LeftChip from '../util/otherComponents/LeftChip'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -74,10 +74,10 @@ const form = props => {
                 >
                     {travelerStatus.map(status => <MenuItem value={status}>{status.toUpperCase()}</MenuItem>)}
                 </Select>
-                <Divider style={{ marginTop: 40 }} />
-                <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <LeftButton float type="submit" disabled={isSubmitting}>
                     Submit
-            </Button>
+                </LeftButton>
             </form>
         </>
     )

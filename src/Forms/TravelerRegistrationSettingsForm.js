@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import { withFormik } from "formik";
+import { withFormik } from "formik"
 import Divider from '@material-ui/core/Divider'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
@@ -9,6 +8,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import FormGroup from '@material-ui/core/FormGroup'
 import MomentUtils from '@date-io/moment'
 import Tooltip from '@material-ui/core/Tooltip'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const [isCalOpen, setIsCalOpen] = useState(false)
@@ -101,10 +101,10 @@ const form = props => {
                     <Switch checked={values.hasPublish} onChange={handleChange('hasPublish')} value="hasPublish" color="primary" />
                 </div>
             </FormGroup>
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton type="submit" disabled={isSubmitting}>
                 Submit
-            </Button>
+            </LeftButton>
         </form>
     )
 }

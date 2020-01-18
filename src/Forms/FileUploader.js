@@ -5,13 +5,11 @@ import { apiCall } from '../util/api'
 export default class FileUploader extends Component {
 
     handleChange = async file => {
-        console.log('trying to upload: ' + file)
         this.props.handleUploading(true)
         let formData = new FormData()
         formData.append('file', file)
         try {
             let s3 = await apiCall('post', '/api/fileUploads', formData)
-            console.log(s3)
             this.props.handleUploading(false)
             this.props.handleChange(s3)
         } catch (err) {

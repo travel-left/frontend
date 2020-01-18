@@ -16,7 +16,7 @@ describe('Add and remove coordinator from trip', () => {
     })
 
     it('add a coordinator to a trip', function () {
-        cy.get('.add-new-coordinator-button').click()
+        cy.get('button[id="add-new-coordinator-button"]').click()
         cy.get('input[name="name"]')
             .type(c.name)
         cy.get('input[name="email"]')
@@ -30,7 +30,7 @@ describe('Add and remove coordinator from trip', () => {
     })
 
     it('remove a coordinator from a trip', function () {
-        cy.get('.coordinator-edit-button').parent().contains(c.email).parent().next().click()
+        cy.get('button[id="coordinator-edit-button"]').parent().contains(c.email).parent().next().click()
         cy.get('button[type="submit"]').click()
         cy.get('.Coordinator-info').should('not.contain', c.email)
     })

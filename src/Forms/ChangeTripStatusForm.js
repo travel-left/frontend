@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -7,6 +6,7 @@ import Select from '@material-ui/core/Select'
 import { withFormik } from "formik"
 import { tripStatus } from '../util/globals'
 import * as Yup from 'yup'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -37,10 +37,10 @@ const form = props => {
             >
                 {options}
             </Select>
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" id="status" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
-            </Button>
+                </LeftButton>
         </form>
     )
 }

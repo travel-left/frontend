@@ -14,7 +14,7 @@ describe('update coordinators photo', () => {
 
         cy.get('input[name="link"]')
             .type(c.image)
-        cy.get('button[type="submit"]').contains('Submit').click()
+        cy.get('button[id="submit-cover-photo"]').click()
         cy.get('.img-box').children().first().should('have.attr', 'src', c.image)
 
     })

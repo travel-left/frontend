@@ -8,6 +8,7 @@ import Fab from '@material-ui/core/Fab'
 import ContactForm from '../../../Forms/ContactForm'
 import LeftItem from '../../../util/otherComponents/LeftItem'
 import Snack from '../../../util/otherComponents/Snack'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 export default class Contacts extends Component {
     TRIP_ID = this.props.tripId
@@ -139,9 +140,12 @@ export default class Contacts extends Component {
         )
 
         const newContactButton = <LeftItem height={100}>
-            <Fab className="add-new-contact-button" onClick={this.openModal} color="secondary" variant="extended" style={{ width: 96, height: 32, fontSize: 12, fontWeight: 600, color: 'white' }}>
-                Add New
-                    </Fab>
+            <LeftFab
+                id="add-new-contact-button"
+                onClick={this.openModal}
+                color="secondary">
+                ADD NEW
+            </LeftFab>
         </LeftItem>
 
         !this.props.share && contactList.splice(1, 0, newContactButton)

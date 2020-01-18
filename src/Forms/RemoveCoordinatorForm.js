@@ -1,9 +1,7 @@
 import React from 'react'
-import Button from '@material-ui/core/Button'
 import Divider from '@material-ui/core/Divider'
-import TextField from '@material-ui/core/TextField'
 import { withFormik } from "formik"
-import * as Yup from 'yup'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const form = props => {
     const {
@@ -19,10 +17,10 @@ const form = props => {
     return (
         <form onSubmit={handleSubmit}>
             <p className='TripInfo-description'>Are you sure you want to remove this coordinator? Press submit to remove.</p>
-            <Divider style={{ marginTop: 40 }} />
-            <Button size="large" type="submit" id="status" variant="contained" color="error" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton type="submit" color="error" disabled={isSubmitting}>
                 Remove
-            </Button>
+            </LeftButton>
         </form>
     )
 }

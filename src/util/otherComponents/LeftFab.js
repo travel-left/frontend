@@ -1,30 +1,33 @@
 import React from 'react'
-import Chip from '@material-ui/core/Chip'
 import Fab from '@material-ui/core/Fab'
+import { withStyles } from '@material-ui/core'
 
-const LeftFab = ({ label, fab, onClick, backgroundColor, id }) => {
-    const styles = {
+const styles = {
+    fab: {
         fontWeight: '500',
         fontFamily: 'roboto',
-        fontSize: 16,
+        fontSize: 12,
         color: '#FFFFFF',
-        backgroundColor: '#475561',
-        minWidth: 88,
-        height: 32,
-        textTransform: 'none',
+        minWidth: 48,
+        backgroundColor: props => props.color ? null : '#475561',
+        height: 28,
+        textTransform: 'uppercase',
+        "&:hover": {
+            backgroundColor: props => props.color ? '#5A8DAA' : '#313b43'
+        }
     }
-    return fab ? <Fab variant="extended" id={id} onClick={onClick}
-        style={styles}>{label}</Fab> :
-        <Chip
-            id={id}
-            style={{
-                ...styles,
-                paddingLeft: 4,
-                paddingRight: 4
-            }}
-            label={label}
-        />
 }
 
-export default LeftFab
+const LeftFab = ({ onClick, classes, id, color, children }) => (
+    <Fab
+        variant="extended"
+        color={color}
+        id={id}
+        onClick={onClick}
+        className={classes.fab}
+    >
+        {children}
+    </Fab>
+)
 
+export default withStyles(styles)(LeftFab)

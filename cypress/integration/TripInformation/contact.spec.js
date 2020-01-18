@@ -19,7 +19,7 @@ describe('Add, edit and remove a contact from a trip', () => {
     })
 
     it('add a contact', function () {
-        cy.get('.add-new-contact-button').click()
+        cy.get('button[id="add-new-contact-button"]').click()
         cy.get('input[name="name"]')
             .type(c.name)
         cy.get('input[name="email"]')
@@ -31,7 +31,7 @@ describe('Add, edit and remove a contact from a trip', () => {
     })
 
     it('should edit a contact', function () {
-        cy.get('.contact-edit-button').parent().contains(c.email).parent().next().click()
+        cy.get('button[id="contact-edit-button"]').parent().contains(c.email).parent().next().click()
         cy.get('input[name="name"]')
             .clear()
             .type(c.nameEdited)
@@ -47,7 +47,7 @@ describe('Add, edit and remove a contact from a trip', () => {
     })
 
     it('remove a contact', function () {
-        cy.get('.contact-edit-button').parent().contains(c.email).parent().next().click()
+        cy.get('button[id="contact-edit-button"]').parent().contains(c.email).parent().next().click()
         cy.get('button[type="button"]').contains('Remove').click()
         cy.get('.Coordinator-info').should('not.contain', c.email)
     })

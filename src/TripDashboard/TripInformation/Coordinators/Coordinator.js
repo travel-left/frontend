@@ -6,6 +6,7 @@ import LeftModal from '../../../util/otherComponents/LeftModal'
 import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
 import RemoveCoordinatorForm from '../../../Forms/RemoveCoordinatorForm'
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
+import LeftFab from '../../../util/otherComponents/LeftFab'
 
 class Coordinator extends Component {
 
@@ -37,9 +38,11 @@ class Coordinator extends Component {
         const removeButton =
             (currentUserId != _id && !this.props.share) ? (
                 <>
-                    <Fab className='coordinator-edit-button' onClick={() => this.openModal('editCoordinator')} variant="extended" style={{ width: 54, height: 25, backgroundColor: '#475561', fontSize: 12, fontWeight: 600, color: 'white' }}>
-                        Edit
-                    </Fab>
+                    <LeftFab
+                        id='coordinator-edit-button'
+                        onClick={() => this.openModal('editCoordinator')}
+                    >Edit
+                    </LeftFab>
                     {
                         this.state.editCoordinator && <LeftModal
                             isOpen={this.state.editCoordinator}

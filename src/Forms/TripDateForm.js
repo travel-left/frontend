@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
 import { withFormik } from "formik";
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 import Divider from '@material-ui/core/Divider'
@@ -8,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import MomentUtils from '@date-io/moment'
+import LeftButton from '../util/otherComponents/LeftButton'
 
 const categories = [
     {
@@ -97,13 +97,13 @@ const form = props => {
             >
                 {categories.map(category => <MenuItem value={category}>{category.label}</MenuItem>)}
             </Select>
-            <Divider style={{ marginTop: 40 }} />
-            {remove && <Button size="large" onClick={remove} variant="contained" color="error" style={{ width: '180px', height: '50px', marginTop: '25px' }} disabled={isSubmitting}>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            {remove && <LeftButton onClick={remove} color="error" disabled={isSubmitting}>
                 Remove
-            </Button>}
-            <Button size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
+            </LeftButton>}
+            <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
-            </Button>
+            </LeftButton>
         </form>
     )
 }

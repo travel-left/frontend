@@ -178,21 +178,25 @@ class Cover extends Component {
                         </div>
                     </div>
                     <div className="d-flex justify-content-between align-items-center" >
-                        <LeftFab label={`${invited} Invited
-                            ${confirmed} Confirmed`}></LeftFab>
-                        <LeftFab onClick={() => this.openModal('isTripDatesOpen')} label={`${moment(currentTrip.dateStart.split('T')[0]).format('MMMM DD')} - 
-                            ${moment(currentTrip.dateEnd.split('T')[0]).format('MMMM DD')}`}
-                            className="hover"
-                            id="tripDates"
+                        <Chip label={`${invited} Invited
+                            ${confirmed} Confirmed`}
                             style={{
-                                color: "white",
-                                fontSize: 14,
+                                fontWeight: '500',
+                                fontFamily: 'roboto',
+                                fontSize: 12,
+                                color: '#FFFFFF',
+                                minWidth: 48,
                                 backgroundColor: '#475561',
-                                height: 32,
-                                paddingLeft: 4,
-                                paddingRight: 4
-                            }}
+                                height: 28,
+                                textTransform: 'uppercase'
+                            }}>
+
+                        </Chip>
+                        <LeftFab onClick={() => this.openModal('isTripDatesOpen')}
+                            id="tripDates"
                             fab>
+                            {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
+                            ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
                         </LeftFab>
                         {this.state.isTripDatesOpen && <LeftModal
                             isOpen={this.state.isTripDatesOpen}
@@ -204,16 +208,9 @@ class Cover extends Component {
                             dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
                         />}
 
-                        <LeftFab onClick={() => this.openModal('isChangeCoverOpen')} label="Change Cover Photo"
-                            style={{
-                                color: "white",
-                                fontSize: 14,
-                                backgroundColor: '#475561',
-                                height: 32,
-                                paddingLeft: 4,
-                                paddingRight: 4
-                            }} fab
-                        ></LeftFab>
+                        <LeftFab onClick={() => this.openModal('isChangeCoverOpen')} fab>
+                            Change Cover Photo
+                        </LeftFab>
 
                         {this.state.isChangeCoverOpen && <LeftModal
                             isOpen={this.state.isChangeCoverOpen}

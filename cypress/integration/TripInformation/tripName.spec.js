@@ -10,7 +10,7 @@ describe('Change name of trip', () => {
     })
 
     it('change trip name', function () {
-        cy.get('.TripInfo-name').click()
+        cy.get('button[id="tripInfo-name-button"]').click()
         cy.get('input[name="name"]').clear()
         cy.get('input[name="name"]').type(tripName + ' edited')
         cy.get('input[name="description"]').clear()

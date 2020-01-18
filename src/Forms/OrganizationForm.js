@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
+import React from 'react'
 import { withFormik } from "formik";
 import * as Yup from 'yup'
 import TextField from '@material-ui/core/TextField'
+import LeftButton from '../util/otherComponents/LeftButton'
+import Divider from '@material-ui/core/Divider'
 
 const form = props => {
     const {
@@ -25,20 +26,10 @@ const form = props => {
                 name="name"
                 fullWidth
             />
-            {/* <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Organization ID"
-                value={values._id}
-                name="_id"
-                type="text"
-                fullWidth
-                disabled
-            /> */}
-            <Button size="large" type="submit" variant="contained" color="primary" id="signup" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                Update
-            </Button>
+            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <LeftButton float type="submit" disabled={isSubmitting}>
+                Submit
+            </LeftButton>
         </form>
     )
 }

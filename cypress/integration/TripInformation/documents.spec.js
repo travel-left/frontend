@@ -54,7 +54,7 @@ describe('add, edit, and remove a link', () => {
     })
 
     it('should add a link to a trip', function () {
-        cy.get('.add-new-trip-link-button').click()
+        cy.get('button[id="add-new-trip-link-button"]').click()
         cy.get('input[name="name"]')
             .type(l.name)
         cy.get('input[name="description"]')
