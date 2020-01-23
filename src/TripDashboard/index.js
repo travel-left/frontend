@@ -9,17 +9,19 @@ import Grid from '@material-ui/core/Grid'
 const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
     return (
         <Grid container>
-            <Grid item xs={12} style={{ paddingBottom: 0 }}>
+            <Grid item xs={12}>
                 <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             </Grid>
-            <Grid item xs={12} md={2} style={{ paddingTop: 0 }}>
+            <Grid item xs={12} md={2}>
                 <SideNav ctId={currentTrip._id} />
             </Grid>
-            <TripRouter
-                currentTrip={currentTrip}
-                currentUser={currentUser}
-                setCurrentTrip={setCurrentTrip}
-            />
+            <div style={{ padding: 8 }} >
+                <TripRouter
+                    currentTrip={currentTrip}
+                    currentUser={currentUser}
+                    setCurrentTrip={setCurrentTrip}
+                />
+            </div>
         </Grid>
     )
 }
