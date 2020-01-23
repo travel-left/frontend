@@ -84,7 +84,6 @@ const theme = createMuiTheme({
         }
     },
     overrides: {
-        // Style sheet name ⚛️
         MuiTextField: {
             root: {
                 marginTop: 25
@@ -123,7 +122,6 @@ const App = () => (
                                 <div>
                                     <Navbar />
                                     <div
-                                        className="container-fluid content"
                                         id="app-root"
                                         style={{ minHeight: '90vh' }}
                                     >

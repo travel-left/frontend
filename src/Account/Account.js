@@ -15,7 +15,7 @@ const Account = props => {
         initializeReactGA()
     }
     return (
-        <Grid container spacing={2}>
+        <Grid container>
             <Grid item xs={12} style={{ paddingTop: 16 }}>
                 <AccountCover user={props.currentUser} setCurrentUser={props.setCurrentUser}></AccountCover>
             </Grid>

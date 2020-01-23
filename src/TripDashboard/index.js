@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 
 const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
     return (
-        <Grid container spacing={2}>
+        <Grid container>
             <Grid item xs={12} style={{ paddingBottom: 0 }}>
                 <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
             </Grid>
