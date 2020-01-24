@@ -14,7 +14,7 @@ const styles = theme => ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        margin: theme.spacing(2),
+        margin: props => theme.spacing(2, props.tinyDoc ? 0 : 2),
         padding: theme.spacing(2),
         maxWidth: theme.spacing(68),
     },
@@ -89,16 +89,16 @@ class Document extends Component {
     openModal = () => (this.setState({ isEditModalOpen: true }))
 
     render() {
-        let { name, description, link, type, classes } = this.props
+        let { name, description, link, type, classes, tinyDoc, share } = this.props
 
         const linkImg = getIcon(link)
 
         return (
-            <Grid item xs={12} sm={8} md={6} >
+            <Grid item xs={12} sm={tinyDoc ? 12 : 8} md={tinyDoc ? 12 : 6} >
                 <Card className={classes.resource} >
                     <div className={classes.nameAndEditContainer}>
                         <Typography variant="subtitle2">{name}</Typography>
-                        {!this.props.share &&
+                        {!share && !tinyDoc &&
                             <LeftFab
                                 id="contact-edit-button"
                                 onClick={this.openModal}

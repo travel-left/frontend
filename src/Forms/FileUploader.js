@@ -13,10 +13,11 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: theme.spacing(.5)
+        borderRadius: theme.spacing(.5),
     },
     paragraph: {
         ...theme.typography.subtitle2,
+        padding: theme.spacing(0, 2)
     }
 })
 

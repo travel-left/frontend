@@ -17,10 +17,9 @@ const styles = theme => ({
     },
     icon: {
         color: "#FFFFFF",
-        height: "40px",
-        width: "40px",
-        borderRadius: "5px",
-        fontSize: "18px",
+        height: theme.spacing(8),
+        width: theme.spacing(8),
+        borderRadius: theme.spacing(.5),
         backgroundColor: props => getColor(props.type),
         height: theme.spacing(7),
         width: theme.spacing(7),

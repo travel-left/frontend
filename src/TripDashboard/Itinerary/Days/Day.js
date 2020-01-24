@@ -4,22 +4,47 @@ import Card from '@material-ui/core/Card'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core'
 
-export default class Day extends Component {
+const styles = theme => ({
+    listItem: {
+        display: 'flex',
+        justifyContent: 'between',
+        alignItems: 'center',
+        backgroundColor: props => props.active && theme.palette.primary.main,
+        padding: theme.spacing(2),
+        "&:hover": {
+            backgroundColor: props => props.active && theme.palette.primary.main,
+        }
+    },
+    name: {
+        color: props => props.active ? 'white' : '#666666'
+    }
+})
+
+class Day extends Component {
+
     handleClick = e => {
         this.props.handleClick(this.props.day.day)
     }
 
     render() {
+        const { divider, classes, day } = this.props
         return (
             <Card>
-                {this.props.divider && <Divider />}
-                <ListItem onClick={this.handleClick} button className='d-flex justify-content-between align-items-center' style={{ background: this.props.active && '#0A58CE', padding: '13px 16px' }}>
-                    <Typography variant="h6" style={{ color: this.props.active ? 'white' : '#666666' }}>
-                        {moment(this.props.day.day).format('MMM DD')}{' - '}{this.props.day.name}
+                {divider && <Divider />}
+                <ListItem
+                    onClick={this.handleClick}
+                    button
+                    className={classes.listItem}
+                >
+                    <Typography variant="h6" className={classes.name}>
+                        {moment(day.day).format('MMM DD')}{' - '}{day.name}
                     </Typography>
                 </ListItem>
             </Card>
         )
     }
 }
+
+export default withStyles(styles)(Day)

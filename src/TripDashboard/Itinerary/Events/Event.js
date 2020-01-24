@@ -4,10 +4,28 @@ import { getIcon } from '../../../util/file-icons'
 import moment from 'moment'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import { Grid } from '@material-ui/core'
+import { Grid, withStyles } from '@material-ui/core'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import EventForm from '../../../Forms/EventForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import Document from '../../TripInformation/Documents/Document'
+
+const styles = theme => ({
+    event: {
+        padding: theme.spacing(2),
+        margin: theme.spacing(2, 0)
+    },
+    iconContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: props => setIcon(props.event.type).color,
+        borderRadius: '50%',
+        height: theme.spacing(6),
+        width: theme.spacing(6),
+        marginRight: theme.spacing(2)
+    }
+})
 
 class Event extends Component {
     state = {
@@ -34,8 +52,7 @@ class Event extends Component {
     }
 
     render() {
-        const { event } = this.props
-
+        const { event, classes } = this.props
         const icon = setIcon(event.type)
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
         const address = <p className="card-text text-muted text-center">{event.address}</p>
@@ -47,46 +64,26 @@ class Event extends Component {
         </>
         const name = event.name
 
-
-        const documents = event.documents.map((d, i) => (
-            <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16, marginBottom: 16 }}>
-                <div className="Document-icon d-flex justify-content-center align-items-center" style={{ width: 80, height: 80 }}>
-                    <a
-                        className="hover"
-                        href={d.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        download>
-                        <img
-                            src={getIcon(d.link)}
-                            alt=""
-                            className='Document-image'
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </a>
-                </div>
-                <div className="card-body d-flex flex-column justify-content-end">
-                    <a
-                        className="hover Document-open-text"
-                        href={d.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <Typography variant="caption">{d.name.substring(0, 25)}</Typography>
-                    </a>
-                </div>
-            </Card>
-        ))
+        const documents = event.documents.map(doc =>
+            <Document
+                _id={doc._id}
+                name={doc.name}
+                description={doc.description}
+                link={doc.link}
+                type={doc.type}
+                update={this.updateDocument}
+                remove={this.deleteDocument}
+                tinyDoc
+            />
+        )
 
         let links = event.links.map(link => <a href={link} target="_blank" className="d-block" style={{ padding: 4 }}>{link}</a>)
         let flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
         return (
-            <Card style={{ padding: 16, marginTop: 16, marginBottom: 16 }}>
+            <Card className={classes.event}>
                 <div className="d-flex justify-content-between">
                     <div className='d-flex align-items-center'>
-                        <span className='d-flex justify-content-center align-items-center' style={{
-                            backgroundColor: icon.color, borderRadius: '50%', height: 40, width: 40, marginRight: 16
-                        }}>
+                        <span className={classes.iconContainer}>
                             <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
                         </span>
                         <Typography variant="h2" className="event-title">
@@ -131,7 +128,7 @@ class Event extends Component {
     }
 }
 
-export default Event
+export default withStyles(styles)(Event)
 
 function setIcon(eventType) {
     let icon = {
