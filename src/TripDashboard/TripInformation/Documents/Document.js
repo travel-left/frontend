@@ -1,12 +1,74 @@
 import React, { Component } from 'react'
 import { getIcon } from '../../../util/file-icons'
-import './Document.css'
+import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import LeftItem from '../../../util/otherComponents/LeftItem'
 import DocumentForm from '../../../Forms/DocumentForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
+
+const styles = theme => ({
+    resource: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+        maxWidth: theme.spacing(68),
+    },
+    nameAndEditContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '100%'
+    },
+    descriptionContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%'
+    },
+    miniResource: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        borderRadius: theme.spacing(.5),
+        marginTop: theme.spacing(2)
+    },
+    icon: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: theme.palette.secondary.main,
+        borderRadius: theme.spacing(.5)
+    },
+    iconImage: {
+        padding: theme.spacing(2),
+        "&:hover": {
+            cursor: "pointer",
+        }
+    },
+    openLinkContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: theme.palette.grey["A700"],
+        width: '100%'
+    },
+    link: {
+        letterSpacing: 0,
+        fontSize: '16px',
+        fontFamily: 'Roboto',
+        borderBottom: `2px solid ${theme.palette.grey["A700"]}`,
+        color: theme.palette.grey["A700"],
+        "&:hover": {
+            cursor: "pointer",
+            color: theme.palette.primary,
+        }
+    }
+})
+
 
 class Document extends Component {
     state = {
@@ -27,20 +89,23 @@ class Document extends Component {
     openModal = () => (this.setState({ isEditModalOpen: true }))
 
     render() {
-        let { name, description, link, type } = this.props
+        let { name, description, link, type, classes } = this.props
 
         const linkImg = getIcon(link)
 
         return (
-            <LeftItem>
-                <Card style={{ padding: 16, minWidth: 350 }} className="animated fadeIn d-flex justify-content-between flex-column left-resource">
-                    <div className="d-flex justify-content-between">
-                        <Typography variant="subtitle2" style={{ marginBottom: 16 }}>{name}</Typography>
-                        {!this.props.share && <LeftFab id="contact-edit-button"
-                            onClick={this.openModal}
-                        >
-                            Edit
-                        </LeftFab>}
+            <Grid item xs={12} sm={8} md={6} >
+                <Card className={classes.resource} >
+                    <div className={classes.nameAndEditContainer}>
+                        <Typography variant="subtitle2">{name}</Typography>
+                        {!this.props.share &&
+                            <LeftFab
+                                id="contact-edit-button"
+                                onClick={this.openModal}
+                            >
+                                Edit
+                            </LeftFab>
+                        }
                         {
                             this.state.isEditModalOpen && <LeftModal
                                 isOpen={this.state.isEditModalOpen}
@@ -56,12 +121,13 @@ class Document extends Component {
                             />
                         }
                     </div>
-                    <Typography variant="caption">{description}</Typography>
-                    {type === 'LINK' && <Typography variant="caption">{link}</Typography>}
-                    <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16 }}>
-                        <div className="Document-icon d-flex justify-content-center align-items-center">
+                    <div className={classes.descriptionContainer}>
+                        <Typography variant="caption">{description}</Typography>
+                        {type === 'LINK' && <Typography variant="caption">{link}</Typography>}
+                    </div>
+                    <Card className={classes.miniResource}>
+                        <div className={classes.icon}>
                             <a
-                                className="hover"
                                 href={link}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -69,14 +135,14 @@ class Document extends Component {
                                 <img
                                     src={linkImg}
                                     alt=""
-                                    className='Document-image'
+                                    className={classes.iconImage}
                                     style={{ objectFit: 'cover' }}
                                 />
                             </a>
                         </div>
-                        <div className="card-body d-flex flex-column justify-content-center align-items-center">
+                        <div className={classes.openLinkContainer}>
                             <a
-                                className="hover Document-open-text"
+                                className={classes.link}
                                 href={link}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -86,9 +152,9 @@ class Document extends Component {
                         </div>
                     </Card>
                 </Card>
-            </LeftItem>
+            </Grid>
         )
     }
 }
 
-export default Document
+export default withStyles(styles)(Document)

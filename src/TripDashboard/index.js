@@ -5,8 +5,14 @@ import Cover from './Cover'
 import TripRouter from './TripRouter'
 import SideNav from './SideNav'
 import Grid from '@material-ui/core/Grid'
+import { withStyles } from '@material-ui/core'
 
-const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
+const styles = theme => ({
+    main: {
+        padding: theme.spacing(2)
+    }
+})
+const Dashboard = withStyles(styles)(({ currentTrip, currentUser, setCurrentTrip, classes }) => {
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -15,16 +21,18 @@ const Dashboard = ({ currentTrip, currentUser, setCurrentTrip }) => {
             <Grid item xs={12} md={2}>
                 <SideNav ctId={currentTrip._id} />
             </Grid>
-            <div style={{ padding: 8 }} >
-                <TripRouter
-                    currentTrip={currentTrip}
-                    currentUser={currentUser}
-                    setCurrentTrip={setCurrentTrip}
-                />
-            </div>
+            <Grid item xs={12} md={10} lg={10}>
+                <div className={classes.main} >
+                    <TripRouter
+                        currentTrip={currentTrip}
+                        currentUser={currentUser}
+                        setCurrentTrip={setCurrentTrip}
+                    />
+                </div>
+            </Grid>
         </Grid>
     )
-}
+})
 
 const mapStateToProps = state => {
     return {

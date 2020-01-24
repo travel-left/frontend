@@ -5,13 +5,31 @@ import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Snack from '../../../util/otherComponents/Snack'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import Fab from '@material-ui/core/Fab'
 import moment from 'moment'
-import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
+import Card from '@material-ui/core/Card'
 import TripDateForm from '../../../Forms/TripDateForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
 
-export default class TripDates extends Component {
+const styles = theme => ({
+    tripDates: {
+        marginTop: theme.spacing(4)
+    },
+    tripDateList: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: theme.spacing(4, 2, 2, 2),
+        maxWidth: theme.spacing(68)
+    },
+    addNew: {
+        display: 'flex',
+        justifcontent: 'center',
+        padding: theme.spacing(2)
+    }
+})
+
+class TripDates extends Component {
     TRIP_ID = this.props.tripId
 
     state = {
@@ -124,8 +142,11 @@ export default class TripDates extends Component {
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     render() {
-        const tripDates = this.state.tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
-        const tripDatesList = tripDates.map(date =>
+        const { classes, share, dateStart } = this.props
+        const { tripDates, isNewTripDateModalOpen, snack } = this.state
+
+        const sortedTripDates = tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
+        const tripDatesList = sortedTripDates.map(date =>
             <TripDate
                 date={date.date}
                 name={date.name}
@@ -133,35 +154,40 @@ export default class TripDates extends Component {
                 update={this.updateTripDate}
                 remove={this.deleteTripDate}
                 _id={date._id}
-                share={this.props.share}
+                share={share}
             ></TripDate>)
         return (
-            <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16, marginTop: 16 }}>Important Dates</Typography>
-                <Grid container>
-                    <LeftCardNew>
-                        <div className="d-flex flex-column flex-grow-1">
-                            {tripDatesList}
-                            {!this.props.share && <div className='d-flex justify-content-center' style={{ paddingBottom: 16, paddingTop: 16 }}>
-                                <LeftFab onClick={this.openModal} id="add-new-trip-date-button" color="secondary" fab>
+            <div className={classes.tripDates}>
+                <Typography variant="h2">Important Dates</Typography>
+                <Grid item xs={12} sm={8} md={6} >
+                    <Card className={classes.tripDateList}>
+                        {tripDatesList}
+                        {!share &&
+                            <div className={classes.addNew}>
+                                <LeftFab
+                                    onClick={this.openModal}
+                                    id="add-new-trip-date-button"
+                                    color="secondary"
+                                >
                                     Add New
                                 </LeftFab>
                                 {
-                                    this.state.isNewTripDateModalOpen && <LeftModal
-                                        isOpen={this.state.isNewTripDateModalOpen}
+                                    isNewTripDateModalOpen && <LeftModal
+                                        isOpen={isNewTripDateModalOpen}
                                         toggleModal={this.closeModal}
                                         title='Add a trip date'
                                         submit={this.createTripDate}
-                                        date={moment(this.props.dateStart).format('MM-DD-YYYY')}
+                                        date={moment(dateStart).format('MM-DD-YYYY')}
                                         form={TripDateForm}
                                     />
                                 }
                             </div>}
-                        </div>
-                    </LeftCardNew>
+                    </Card>
                 </Grid>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
+                {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
 }
+
+export default withStyles(styles)(TripDates)

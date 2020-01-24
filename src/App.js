@@ -30,6 +30,10 @@ const theme = createMuiTheme({
         error: {
             main: '#FF5555'
         },
+        grey: {
+            A600: '#79828B',
+            A700: '#475561'
+        }
     },
     typography: {
         h1: {
