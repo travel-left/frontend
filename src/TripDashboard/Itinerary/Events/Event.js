@@ -12,7 +12,7 @@ import Document from '../../TripInformation/Documents/Document'
 
 const styles = theme => ({
     event: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(2, 2, 0, 2),
         margin: theme.spacing(2, 0)
     },
     iconContainer: {
@@ -24,6 +24,36 @@ const styles = theme => ({
         height: theme.spacing(6),
         width: theme.spacing(6),
         marginRight: theme.spacing(2)
+    },
+    icon: {
+        color: '#FFFFFF',
+        fontSize: '18px'
+    },
+    time: {
+        color: props => setIcon(props.event.type).color,
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(1)
+    },
+    titleContainer: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    editButtonContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    contentContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    link: {
+        margin: theme.spacing(1, 0),
+        display: 'block'
+    },
+    address: {
+        textAlign: 'center',
+        margin: theme.spacing(2, 0)
     }
 })
 
@@ -52,10 +82,10 @@ class Event extends Component {
     }
 
     render() {
-        const { event, classes } = this.props
+        const { event, classes, share } = this.props
         const icon = setIcon(event.type)
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
-        const address = <p className="card-text text-muted text-center">{event.address}</p>
+        const address = <Typography variant="subtitle2" className={classes.address}>{event.address}</Typography>
         const map = event.coordinates && <>
             <Map coordinates={event.coordinates} />
             <Typography variant="subtitle1">
@@ -77,52 +107,65 @@ class Event extends Component {
             />
         )
 
-        let links = event.links.map(link => <a href={link} target="_blank" className="d-block" style={{ padding: 4 }}>{link}</a>)
+        let links = event.links.map(link => <a href={link} target="_blank" className={classes.link}>{link}</a>)
         let flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
+
         return (
             <Card className={classes.event}>
-                <div className="d-flex justify-content-between">
-                    <div className='d-flex align-items-center'>
+                <div className={classes.editButtonContainer}>
+                    <div className={classes.titleContainer}>
                         <span className={classes.iconContainer}>
-                            <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
+                            <i className={`fa ${icon.string} ${classes.icon}`} />
                         </span>
-                        <Typography variant="h2" className="event-title">
-                            {event.type === 'FLIGHT' && event.airline ? flight : name}
+                        <Typography variant="h2">
+                            {event.type === 'FLIGHT' && event.airline ?
+                                flight :
+                                name
+                            }
                         </Typography>
                     </div>
-                    {!this.props.share &&
-                        <LeftFab id="edit-event-button" onClick={this.toggleModal}>
+                    {!share &&
+                        <LeftFab
+                            id="edit-event-button"
+                            onClick={this.toggleModal}
+                        >
                             Edit
-                            </LeftFab>}
-                    {
-                        this.state.isOpen && <LeftModal
-                            isOpen={this.state.isOpen}
-                            toggleModal={this.toggleModal}
-                            title='Edit event'
-                            {...event}
-                            submit={this.update}
-                            remove={this.remove}
-                            form={EventForm}
-                            selectedDocuments={event.documents.map(doc => doc._id)}
-                            documents={this.props.documents}
-                        />
+                        </LeftFab>
                     }
                 </div>
-                <Typography variant="subtitle2" style={{ color: icon.color, paddingTop: 16 }}> {time}</Typography>
-                <div className="d-flex flex-wrap justify-content-between">
+                <Typography
+                    variant="subtitle2"
+                    className={classes.time}
+                >
+                    {time}
+                </Typography>
+                <div className={classes.contentContainer}>
                     <Grid item xs={12} sm={6} md={6}>
-                        <Typography variant="subtitle1" style={{ paddingTop: 16 }}>
+                        <Typography variant="subtitle1" >
                             {event.description}
                         </Typography>
-                        <div style={{ marginTop: 16, marginBottom: 16 }}>
+                        <div className={classes.linksContainer}>
                             {links}
                         </div>
                         {documents}
                     </Grid>
-                    <Grid item xs={0} sm={5} gitmd={5} className="">
+                    <Grid item xs={12} sm={6} md={5} >
                         {map}
                     </Grid>
                 </div>
+                {
+                    this.state.isOpen && <LeftModal
+                        isOpen={this.state.isOpen}
+                        toggleModal={this.toggleModal}
+                        title='Edit event'
+                        {...event}
+                        submit={this.update}
+                        remove={this.remove}
+                        form={EventForm}
+                        selectedDocuments={event.documents.map(doc => doc._id)}
+                        documents={this.props.documents}
+                    />
+                }
             </Card >
         )
     }

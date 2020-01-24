@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactMapGL, { Marker } from 'react-map-gl'
 import Card from '@material-ui/core/Card'
 
-export default class Map extends Component {
+class Map extends Component {
     state = {
         viewport: {
             width: '100%',
@@ -17,7 +17,7 @@ export default class Map extends Component {
     render() {
         const { lat, long } = this.props.coordinates
         return (
-            <Card style={{ marginBottom: 16 }}>
+            <Card>
                 <ReactMapGL
                     {...this.state.viewport}
                     latitude={lat}
@@ -42,3 +42,5 @@ export default class Map extends Component {
         )
     }
 }
+
+export default Map
