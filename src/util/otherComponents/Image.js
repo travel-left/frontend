@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import './Image.css'
-import Typography from '@material-ui/core/Typography'
 
 export default class Image extends Component {
 
