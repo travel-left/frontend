@@ -39,8 +39,11 @@ const styles = theme => ({
         width: '100%'
     },
     travelersSection: {
-        padding: theme.spacing(0, 2),
-        margin: theme.spacing(2, 0)
+        padding: props => !props.currentTrip ? theme.spacing(0, 2) : theme.spacing(0, 2, 0, 0),
+        margin: props => !props.currentTrip && theme.spacing(2, 0),
+        [sizes.down("md")]: {
+            paddingRight: props => props.currentTrip && "0 !important"
+        }
     },
     buttonsContainer: {
         display: 'flex',
@@ -81,11 +84,19 @@ const styles = theme => ({
             marginTop: theme.spacing(0)
         }
     },
+    regButton: {
+        marginTop: theme.spacing(2),
+        [sizes.down("md")]: {
+            marginTop: theme.spacing(0)
+        }
+    },
     filters: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'start',
+        marginBottom: theme.spacing(2),
         [sizes.down("md")]: {
+            marginBottom: theme.spacing(0),
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -592,7 +603,7 @@ class Travelers extends Component {
 
         const registrationForm = <>
             {this.state.madeStripeAccountRequest &&
-                <div style={{ marginTop: 16 }}>
+                <div className={classes.regButton}>
                     <LeftButton onClick={this.toggleRegistrationModal}>
                         registration form
             </LeftButton>

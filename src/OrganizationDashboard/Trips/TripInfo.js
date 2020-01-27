@@ -93,7 +93,7 @@ class TripInfo extends Component {
                             <Chip color="primary" size="small" label={confirmed} style={{ fontSize: 12, fontWeight: 600 }} />
                         </div>
                     </div>
-                    <div className='d-flex justify-content-between'>
+                    <div className={classes.buttons}>
                         <Button size="large" variant="contained" color="secondary" onClick={this.handleDuplicate} className="float-right" style={{ width: 120, height: 50 }} disabled={this.state.copying}>DUPLICATE</Button>
                         <Button size="large" variant="contained" color="secondary" onClick={this.handleArchive} className="float-right" style={{ width: 120, height: 50 }}>ARCHIVE</Button>
                     </div>
