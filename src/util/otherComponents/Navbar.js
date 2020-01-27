@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter, NavLink, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../redux/actions/auth'
-import './Navbar.css'
 import Fab from '@material-ui/core/Fab'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -14,8 +13,82 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles'
+import sizes from '../../styles/sizes'
+
+const styles = theme => ({
+    navbar: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: theme.palette.primary.main,
+        height: theme.spacing(10),
+        padding: theme.spacing(2, 4),
+        zIndex: 2
+    },
+    navbarLeft: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    navbarRight: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    logo: {
+        height: theme.spacing(6)
+    },
+    buttons: {
+        margin: theme.spacing(0, 4),
+        [sizes.down("md")]: {
+            display: 'none'
+        }
+    },
+    backText: {
+        fontFamily: 'Poppins',
+        fontWeight: 700,
+        fontSize: 22,
+        color: 'white',
+        letterSpacing: 1,
+        paddingLeft: theme.spacing(1)
+    },
+    navButton: {
+        fontFamily: "Roboto",
+        fontWeight: "500",
+        fontSize: "22px",
+        color: "#FFFFFF",
+        letterSpacing: "1.51px",
+        lineHeight: "1",
+        textTransform: 'none'
+    },
+    backArrow: {
+        color: 'white',
+        marginLeft: theme.spacing(3)
+    },
+    tripName: {
+        color: 'white',
+        [sizes.down("md")]: {
+            display: 'none'
+        },
+        marginRight: theme.spacing(4)
+    },
+    userName: {
+        opacity: ".9",
+        fontFamily: "Poppins",
+        fontWeight: "400",
+        fontSize: "18px",
+        color: "#FFFFFF",
+        letterSpacing: "0.25px",
+        "&:hover": {
+            cursor: "default"
+        }
+    },
+    backButtonContainer: {
+        display: 'flex',
+        alignItems: 'center'
+    }
+})
 
 class Navbar extends Component {
     state = {
@@ -47,8 +120,7 @@ class Navbar extends Component {
     }
 
     render() {
-        const { currentUser, currentTrip } = this.props
-        let accountController
+        const { currentUser, currentTrip, classes } = this.props
         let loggedInLinks
         let linkTo = '#'
         let tripName = null
@@ -70,72 +142,69 @@ class Navbar extends Component {
 
         if (currentUser.isAuthenticated) {
             loggedInLinks = (
-                <div class="collapse navbar-collapse " id="navbarNav">
-                    <ul class="navbar-nav d-none d-md-flex align-items-center" style={{ marginLeft: 32 }}>
-                        <NavLink
-                            activeClassName="active"
-                            className='Navbar main-nav-link'
-                            to="/trips"
-                            name="/trips"
-                        >
-                            <Fab color={tripsColor} className='Navbar main-nav-link' variant="extended" disableTouchRipple>
-                                Trips
+                <div className={classes.buttons}>
+                    <NavLink
+                        activeClassName="active"
+                        to="/trips"
+                        name="/trips"
+                    >
+                        <Fab
+                            color={tripsColor}
+                            className={classes.navButton}
+                            variant="extended"
+                            disableTouchRipple>
+                            Trips
                         </Fab>
-                        </NavLink>
-                        <NavLink
-                            activeClassName="active"
-                            className='Navbar main-nav-link'
-                            to="/travelers"
-                            name="/travelers"
-                        >
-                            <Fab color={travelersColor} variant="extended" className='Navbar main-nav-link' disableTouchRipple style={{ marginLeft: 24 }}>
-                                Travelers
+                    </NavLink>
+                    <NavLink
+                        activeClassName="active"
+                        to="/travelers"
+                        name="/travelers"
+                    >
+                        <Fab
+                            color={travelersColor}
+                            className={classes.navButton}
+                            variant="extended"
+                            disableTouchRipple
+                            style={{ marginLeft: 24 }}>
+                            Travelers
                         </Fab>
-                        </NavLink>
-                    </ul>
-                </div>
-            )
-            accountController = (
-                <div className="collapse navbar-collapse justify-content-end">
-                    <div className="navbar-nav">
-                        <ul className="nav navbar-nav navbar-right d-flex d-row align-items-center">
-                            <li className="Navbar user-name">{currentUser.name}</li>
-                            <MenuListComposition logout={this.props.logout} history={this.props.history}></MenuListComposition>
-                        </ul>
-                    </div>
+                    </NavLink>
                 </div>
             )
             linkTo = '/trips'
         }
 
         return (
-            <nav className="Left-Navbar navbar navbar navbar-expand container-fluid bg-primary" style={{ zIndex: 2, paddingLeft: 64, paddingRight: 64 }} >
-                {!tripName ? <div className="navbar-brand">
-                    <Link to={linkTo} class="navbar-brand ">
-                        <img src="/left.png" alt="" style={{ height: '40px' }}></img>
-                    </Link>
-                </div> : <>
+            <nav className={classes.navbar} >
+                {!tripName ?
+                    <div className={classes.navbarLeft}>
+                        <Link to={linkTo} >
+                            <img
+                                src="/left.png"
+                                className={classes.logo}>
+                            </img>
+                        </Link>
+                        {!tripName && loggedInLinks}
+                    </div> :
+                    <>
                         <NavLink
-                            className='Navbar main-nav-link'
                             to={backPath}
                             name="/trips"
+                            className={classes.backButtonContainer}
                         >
-                            <ArrowBackIosIcon style={{ color: 'white', marginLeft: 24 }} />
-                            <span style={{
-                                fontFamily: 'Poppins',
-                                fontWeight: 700,
-                                fontSize: 22,
-                                color: 'white',
-                                letterSpacing: 1,
-                                paddingLeft: 24
-                            }}>{backText}</span>
+                            <ArrowBackIosIcon className={classes.backArrow} />
+                            <span className={classes.backText}>{backText}</span>
                         </NavLink>
                     </>}
-                {!tripName && loggedInLinks}
-                <div className="d-flex align-items-center">
-                    <Typography variant="h4" style={{ color: 'white', paddingLeft: 80 }}>{tripName}</Typography>
-                </div>
-                {accountController}
+
+                <Typography variant="h5" className={classes.tripName}>{tripName}</Typography>
+                {currentUser.isAuthenticated &&
+                    <div className={classes.navbarRight}>
+                        <span className={classes.userName}>{currentUser.name}</span>
+                        <MenuListComposition logout={this.props.logout} history={this.props.history}></MenuListComposition>
+                    </div>
+                }
             </nav>
         )
     }
@@ -155,7 +224,13 @@ const useStyles = makeStyles(theme => ({
     paper: {
         marginRight: theme.spacing(2),
     },
-}));
+    icon: {
+        color: 'white',
+        backgroundColor: theme.palette.secondary.main,
+        padding: 0,
+        marginLeft: theme.spacing(2)
+    }
+}))
 
 function MenuListComposition({ logout, history }) {
     const classes = useStyles();
@@ -169,6 +244,14 @@ function MenuListComposition({ logout, history }) {
 
     const account = event => {
         history.push(`/account/personal`)
+        handleClose(event)
+    }
+    const trips = event => {
+        history.push(`/trips`)
+        handleClose(event)
+    }
+    const travelers = event => {
+        history.push(`/travelers`)
         handleClose(event)
     }
 
@@ -209,7 +292,7 @@ function MenuListComposition({ logout, history }) {
     return (
         <div className={classes.root}>
             <div>
-                <IconButton style={{ color: 'white', backgroundColor: '#83C9F4', padding: 0, marginLeft: '16px' }} onClick={handleToggle} ref={anchorRef}>
+                <IconButton className={classes.icon} onClick={handleToggle} ref={anchorRef}>
                     <ExpandMoreIcon />
                 </IconButton>
                 <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal placement='bottom'>
@@ -220,6 +303,8 @@ function MenuListComposition({ logout, history }) {
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                        <MenuItem onClick={trips}>Trips</MenuItem>
+                                        <MenuItem onClick={travelers}>Travelers</MenuItem>
                                         <MenuItem onClick={account}>Account</MenuItem>
                                         <MenuItem onClick={support}>Support</MenuItem>
                                         <MenuItem onClick={signout}>Logout</MenuItem>
@@ -238,23 +323,5 @@ export default withRouter(
     connect(
         mapStateToProps,
         { logout }
-    )(Navbar)
+    )(withStyles(styles)(Navbar))
 )
-
-    // < Popper open = { this.state.open } anchorEl = { anchorRef.current } role = { undefined } transition disablePortal >
-    //     {({ TransitionProps, placement }) => (
-    //         <Grow
-    //             {...TransitionProps}
-    //         >
-    //             <Paper>
-    //                 <ClickAwayListener onClickAway={handleClose}>
-    //                     <MenuList autoFocusItem={this.state.open} id="menu-list-grow" onKeyDown={this.handleListKeyDown}>
-    //                         <MenuItem onClick={this.account}>Account</MenuItem>
-    //                         <MenuItem onClick={this.support}>Support</MenuItem>
-    //                         <MenuItem onClick={this.signout}>Logout</MenuItem>
-    //                     </MenuList>
-    //                 </ClickAwayListener>
-    //             </Paper>
-    //         </Grow>
-    //     )}
-    //                         </Popper >
