@@ -11,10 +11,12 @@ export default class Image extends Component {
         const pic = <div className='img-box' style={{
             height: diameter,
             width: diameter,
+            boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
         }} >
             <img src={src} class="image" style={{
                 height: diameter,
                 width: diameter,
+                boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
             }} />
         </div>
 
@@ -22,7 +24,8 @@ export default class Image extends Component {
             height: diameter,
             width: diameter,
             backgroundColor: '#83C9F4',
-            fontSize: 24
+            fontSize: 24,
+            boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
         }}>{initials}</Avatar>
 
         const withUpload = <div className='img-box hover' onClick={handleUpload} style={{

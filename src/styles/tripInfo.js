@@ -23,5 +23,9 @@ export default theme => ({
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: theme.spacing(3)
+    },
+    buttons: {
+        display: "flex",
+        justifyContent: "space-between",
     }
 })

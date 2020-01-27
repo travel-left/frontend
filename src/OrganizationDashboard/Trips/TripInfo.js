@@ -75,10 +75,10 @@ class TripInfo extends Component {
                     <div className={classes.tripInfoDescription}>
                         {description}
                     </div>
-                    <div className='TripInfo-details' style={{ marginBottom: 24 }}>
+                    <div >
                         <div className={classes.tripInfoData}>
                             <Typography variant="h6">Date</Typography>
-                            <span className='TripInfo-details-date'><Moment date={dateStart ? dateStart.split('T')[0] : null} format="MMM DD" /></span>
+                            <span ><Moment date={dateStart ? dateStart.split('T')[0] : null} format="MMM DD" /></span>
                         </div>
                         <div className={classes.tripInfoData}>
                             <Typography variant="h6">Status</Typography>

@@ -12,8 +12,44 @@ import Card from '@material-ui/core/Card'
 import TravelerForm from '../../Forms/TravelerForm'
 import PaymentCard from './PaymentCard'
 import LeftButton from '../../util/otherComponents/LeftButton'
+import Fade from '@material-ui/core/Fade'
+import { withStyles } from '@material-ui/core'
 
-export default class TravelerInfo extends Component {
+const styles = theme => ({
+    travelerInfo: {
+        padding: theme.spacing(2),
+        marginBottom: theme.spacing(4)
+    },
+    travelerInfoImage: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: theme.spacing(3),
+    },
+    traverInfoName: {
+        display: "flex",
+        justifyContent: "center",
+        marginBottom: theme.spacing(3),
+    },
+    travelerInfoData: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: theme.spacing(3)
+    },
+    notes: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        marginBottom: theme.spacing(3)
+    },
+    tabs: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginBottom: theme.spacing(3)
+    }
+})
+
+class TravelerInfo extends Component {
     state = {
         messages: [],
         payments: [],
@@ -71,7 +107,7 @@ export default class TravelerInfo extends Component {
     }
 
     render() {
-        let {
+        const {
             name,
             image,
             email,
@@ -79,72 +115,70 @@ export default class TravelerInfo extends Component {
             phone,
             personalNotes
         } = this.props.traveler
-
+        const { classes } = this.props
         const { messages, payments } = this.state
 
         const messageList = <MessageList messages={messages} />
         const paymentList = payments.map(p => <PaymentCard key={p._id} {...p} />)
 
         return (
-            <Card style={{ padding: 16 }}>
-                <div className="row d-flex flex-column justify-content-center align-items-center" style={{ paddingTop: 16, marginBottom: 24 }}>
-                    <Image src={image} diameter="65px" name={name} />
-                </div>
-                <div className="d-flex justify-content-center" style={{ marginBottom: 24 }}>
-                    <Typography variant="h2">{name}</Typography>
-                </div>
-                <div className='TripInfo-details' style={{ marginBottom: 24 }}>
-                    <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
-                        <Typography variant="h6">Email</Typography>
-                        <span className='TripInfo-details-date'>{email}</span>
+            <Fade in={true} timeout={700}>
+                <Card className={classes.travelerInfo}>
+                    <div className={classes.travelerInfoImage}>
+                        <Image src={image} diameter="65px" name={name} />
                     </div>
-                    <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
-                        <Typography variant="h6">Phone</Typography>
-                        <span className='TripInfo-details-date'>{phone}</span>
+                    <div className={classes.traverInfoName} >
+                        <Typography variant="h2">{name}</Typography>
                     </div>
-                    <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
-                        <Typography variant="h6">Status</Typography>
-                        <span><TravelerStatus status={status} /></span>
+                    <div>
+                        <div className={classes.travelerInfoData}>
+                            <Typography variant="h6">Email</Typography>
+                            <span>{email}</span>
+                        </div>
+                        <div className={classes.travelerInfoData}>
+                            <Typography variant="h6">Phone</Typography>
+                            <span>{phone}</span>
+                        </div>
+                        <div className={classes.travelerInfoData}>
+                            <Typography variant="h6">Status</Typography>
+                            <span><TravelerStatus status={status} /></span>
+                        </div>
+                        <div className={classes.notes}>
+                            <Typography variant="h6">Notes</Typography>
+                            <span>{personalNotes}</span>
+                        </div>
+                        <div className={classes.tabs}>
+                            <Tabs
+                                variant="fullWidth"
+                                value={this.state.tab}
+                                onChange={this.handleChangeTab}
+                                aria-label="nav tabs example"
+                            >
+                                <Tab label={<Typography variant="h6">Conversations</Typography>} style={{ textTransform: 'none' }}>
+                                </Tab>
+                                <Tab label={<Typography variant="h6">Payments</Typography>} style={{ textTransform: 'none' }} />
+                            </Tabs>
+                            {this.state.tab === 0 && messageList}
+                            {this.state.tab === 1 && paymentList}
+                        </div>
                     </div>
-                    <div className='d-flex flex-column align-items-start' style={{ marginBottom: 24 }}>
-                        <Typography variant="h6">Notes</Typography>
-                        <span className='TripInfo-description'>{personalNotes}</span>
-                    </div>
-                    <div className='d-flex flex-column' style={{ marginBottom: 24 }}>
-                        <Tabs
-                            variant="fullWidth"
-                            value={this.state.tab}
-                            onChange={this.handleChangeTab}
-                            aria-label="nav tabs example"
-                        >
-                            <Tab label={<Typography variant="h6">Conversations</Typography>} style={{ textTransform: 'none' }}>
-                            </Tab>
-                            <Tab label={<Typography variant="h6">Payments</Typography>} style={{ textTransform: 'none' }} />
-                            {/* <Tab label={<Typography variant="h6">Forms</Typography>} style={{ textTransform: 'none' }} /> */}
-                        </Tabs>
-                        {this.state.tab === 0 && messageList}
-                        {this.state.tab === 1 && paymentList}
-                        {/* get all payments from Traveler
-                        create a payment Component
-                        display payment and mark completed or not based off of stripeChargeid */}
-                    </div>
-                </div>
-                <LeftButton color="secondary" onClick={this.openEditModal}>
-                    EDIT TRAVELER
+                    <LeftButton color="secondary" float onClick={this.openEditModal}>
+                        EDIT TRAVELER
                             </LeftButton>
-                {
-                    this.state.isEditModalOpen &&
-                    <LeftModal
-                        isOpen={this.state.isEditModalOpen}
-                        toggleModal={this.closeEditModal}
-                        title='Edit traveler'
-                        submit={this.handleUpdate}
-                        remove={this.handleRemove}
-                        traveler={this.props.traveler}
-                        form={TravelerForm}
-                    />
-                }
-            </Card >
+                    {
+                        this.state.isEditModalOpen &&
+                        <LeftModal
+                            isOpen={this.state.isEditModalOpen}
+                            toggleModal={this.closeEditModal}
+                            title='Edit traveler'
+                            submit={this.handleUpdate}
+                            remove={this.handleRemove}
+                            traveler={this.props.traveler}
+                            form={TravelerForm}
+                        />
+                    }
+                </Card >
+            </Fade>
         )
     }
 }
@@ -155,3 +189,4 @@ const MessageList = ({ messages }) =>
             : <CommCard key={m._id} text={m.subject} body={m.body} createdAt={m.createdAt} />
     ))
 
+export default withStyles(styles)(TravelerInfo)
