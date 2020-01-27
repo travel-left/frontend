@@ -13,14 +13,15 @@ import { withStyles } from '@material-ui/core'
 
 const styles = theme => ({
     tripDates: {
-        marginTop: theme.spacing(4)
+        marginTop: theme.spacing(4),
     },
     tripDateList: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         margin: theme.spacing(4, 2, 2, 2),
-        maxWidth: theme.spacing(68)
+        maxWidth: theme.spacing(68),
+        paddingBottom: props => props.share && theme.spacing(2)
     },
     addNew: {
         display: 'flex',

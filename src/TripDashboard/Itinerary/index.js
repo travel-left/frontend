@@ -36,10 +36,10 @@ const styles = theme => ({
         paddingLeft: theme.spacing(2)
     },
     newEventContainer: {
-        display: "flex",
+        display: 'flex',
         alignItems: "center",
         justifyContent: "center",
-        height: theme.spacing(16)
+        height: theme.spacing(16),
     },
     quickEventForm: {
         padding: theme.spacing(2),
@@ -48,6 +48,9 @@ const styles = theme => ({
     uploadContainer: {
         height: theme.spacing(16),
         margin: theme.spacing(2, 0)
+    },
+    sidebar: {
+        display: props => props.share && 'none'
     }
 })
 
@@ -279,13 +282,13 @@ class Events extends Component {
 
         return (
             <Grid container className={classes.container}>
-                <Grid item xs={12} md={8} className={classes.eventsSection}>
+                <Grid item xs={12} md={!share ? 8 : 12} className={classes.eventsSection}>
                     <Typography variant="h2">Itinerary</Typography>
                     <div className={classes.eventList}>
                         {eventList}
                     </div>
                 </Grid>
-                <Grid item xs={12} md={4} >
+                <Grid item xs={12} md={4} className={classes.sidebar}>
                     <div className={classes.newEventContainer}>
                         {documents &&
                             <LeftButton
