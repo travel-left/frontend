@@ -38,7 +38,15 @@ const styles = theme => ({
         fontSize: '14px',
         color: '#333333',
         fontWeight: '600',
-        textAlign: 'left',
+        textAlign: 'center',
+        [sizes.down("md")]: {
+            display: 'none'
+        },
+    },
+    travelerImage: {
+        [sizes.down("md")]: {
+            display: 'none'
+        },
     },
     icon: {
         color: theme.palette.grey["A700"],
@@ -75,11 +83,13 @@ class Traveler extends Component {
                     color='primary'
                     className={classes.checkbox}
                 />
-                <Image
-                    diameter="64px"
-                    src={image}
-                    name={name}
-                />
+                <div className={classes.travelerImage}>
+                    <Image
+                        diameter="64px"
+                        src={image}
+                        name={name}
+                    />
+                </div>
                 <Typography
                     variant="h6"
                     className={classes.travelerName}

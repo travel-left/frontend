@@ -16,6 +16,13 @@ const styles = theme => ({
     },
     travelerName: {
         width: theme.spacing(16),
+        textAlign: 'left'
+    },
+    travelerImage: {
+        width: 64,
+        [sizes.down("md")]: {
+            display: 'none'
+        },
     },
     travelerEmail: {
         width: theme.spacing(16),
@@ -30,6 +37,10 @@ const styles = theme => ({
     },
     travelerTrip: {
         width: theme.spacing(16),
+        textAlign: 'center',
+        [sizes.down("md")]: {
+            display: 'none'
+        },
     },
     checkbox: {
         padding: 0
@@ -45,7 +56,7 @@ export default withStyles(styles)(({ classes, toggleAll, allSelected, showTrip }
             label="noshow"
             color="primary"
         />
-        <div style={{ width: 64 }}></div>
+        <div className={classes.travelerImage}></div>
         <Typography
             variant="h6"
             className={classes.travelerName}
