@@ -10,31 +10,29 @@ import Card from '@material-ui/core/Card'
 
 export default ({ selectedValues, allValues, onChange, label }) => {
     return (
-        <Card style={{ height: 80, padding: 16, marginBottom: 16 }}>
-            <FormControl style={{ width: 180 }} >
-                <InputLabel htmlFor="select-multiple-checkbox">{label}</InputLabel>
-                <Select
-                    multiple
-                    value={selectedValues}
-                    onChange={onChange}
-                    input={<Input id="select-multiple-checkbox" />}
-                    renderValue={selected => selected.join(', ')}
-                    MenuProps={{
-                        PaperProps: {
-                            style: {
-                                maxHeight: 320
-                            }
+        <FormControl style={{ width: 180 }} >
+            <InputLabel htmlFor="select-multiple-checkbox">{label}</InputLabel>
+            <Select
+                multiple
+                value={selectedValues}
+                onChange={onChange}
+                input={<Input id="select-multiple-checkbox" />}
+                renderValue={selected => selected.join(', ')}
+                MenuProps={{
+                    PaperProps: {
+                        style: {
+                            maxHeight: 320
                         }
-                    }}
-                >
-                    {allValues.map((filter, i) => (
-                        <MenuItem key={i} value={filter}>
-                            <Checkbox color='primary' checked={selectedValues.indexOf(filter) > -1} />
-                            <ListItemText primary={filter} />
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </Card>
+                    }
+                }}
+            >
+                {allValues.map((filter, i) => (
+                    <MenuItem key={i} value={filter}>
+                        <Checkbox color='primary' checked={selectedValues.indexOf(filter) > -1} />
+                        <ListItemText primary={filter} />
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     )
 }

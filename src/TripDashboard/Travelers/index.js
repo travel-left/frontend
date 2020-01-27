@@ -3,7 +3,6 @@ import { apiCall } from '../../util/api'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './TravelerList'
 import TravelerInfo from './TravelerInfo'
-import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
 import AddTravelerToTripFromOrgForm from '../../Forms/AddTravelerToTripFromOrgForm'
@@ -18,7 +17,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CommunicateWithTravelersForm from '../../Forms/CommunicateWithTravelersForm'
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
-import Button from '@material-ui/core/Button'
 import ImportCsvForm from '../../Forms/ImportCsvForm'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import RegisterAccountModalForm from '../../Forms/RegisterAccountModalForm'
@@ -41,19 +39,23 @@ const styles = theme => ({
         width: '100%'
     },
     travelersSection: {
-        paddingRight: theme.spacing(2),
-        [sizes.down("md")]: {
-            paddingRight: 0
-        },
+        padding: theme.spacing(0, 2),
+        margin: theme.spacing(2, 0)
     },
     buttonsContainer: {
         display: 'flex',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
         width: '100%',
-        margin: theme.spacing(2, 0)
+        padding: theme.spacing(2, 0)
     },
     tinyButtonsContainer: {
         display: 'flex',
+        [sizes.down("md")]: {
+            width: '100%',
+            justifyContent: 'center',
+            margin: theme.spacing(2, 0)
+        },
     },
     paperButton: {
         height: theme.spacing(6),
@@ -65,8 +67,36 @@ const styles = theme => ({
     },
     orgButtons: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        [sizes.down("md")]: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%'
+        }
     },
+    newTraveler: {
+        marginTop: theme.spacing(2),
+        [sizes.down("md")]: {
+            marginTop: theme.spacing(0)
+        }
+    },
+    filters: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        [sizes.down("md")]: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            flexWrap: 'wrap'
+        }
+    },
+    filterText: {
+        display: 'block',
+        width: '100%'
+    }
 })
 
 class Travelers extends Component {
@@ -580,7 +610,7 @@ class Travelers extends Component {
         </>
 
         const newTravelerInOrg = <>
-            <div style={{ marginTop: 16 }}>
+            <div className={classes.newTraveler}>
                 <LeftButton onClick={this.openAddNewTravelerOrgModal}>
                     NEW TRAVELER
             </LeftButton>
@@ -600,22 +630,26 @@ class Travelers extends Component {
         return (
             <Grid container className={classes.container}>
                 <Grid item xs={12} md={8} className={classes.travelersSection}>
-                    <Typography variant="h2">{currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
+                    <Typography className={classes.title} variant="h2">{currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
                     <div className={classes.buttonsContainer}>
-                        <LeftMultipleSelect
-                            allValues={travelerStatus}
-                            selectedValues={statusFiltersChecked}
-                            onChange={this.handleStatusFilterChange}
-                            label='All Status'
-                        ></LeftMultipleSelect>
-                        {!currentTrip &&
+                        <div className={classes.filters}>
+                            <Typography variant="h6" className={classes.filterText}>Filter by</Typography>
                             <LeftMultipleSelect
-                                allValues={tripFilters}
-                                selectedValues={tripFiltersChecked}
-                                onChange={this.handleTripFilterChange}
-                                label='All Trips'
+                                allValues={travelerStatus}
+                                selectedValues={statusFiltersChecked}
+                                onChange={this.handleStatusFilterChange}
+                                label='Status'
                             ></LeftMultipleSelect>
-                        }
+                            {!currentTrip &&
+                                <LeftMultipleSelect
+                                    allValues={tripFilters}
+                                    selectedValues={tripFiltersChecked}
+                                    onChange={this.handleTripFilterChange}
+                                    label='Trip'
+                                ></LeftMultipleSelect>
+                            }
+                        </div>
+
                         <div className={classes.tinyButtonsContainer}>
                             <Paper className={classes.paperButton}>
                                 <IconButton onClick={this.openChangeStatusModal}>
