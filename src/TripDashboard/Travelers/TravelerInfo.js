@@ -133,11 +133,11 @@ class TravelerInfo extends Component {
                     <div>
                         <div className={classes.travelerInfoData}>
                             <Typography variant="h6">Email</Typography>
-                            <span>{email}</span>
+                            <Typography variant="subtitle2">{email}</Typography>
                         </div>
                         <div className={classes.travelerInfoData}>
                             <Typography variant="h6">Phone</Typography>
-                            <span>{phone}</span>
+                            <Typography variant="subtitle2">{phone}</Typography>
                         </div>
                         <div className={classes.travelerInfoData}>
                             <Typography variant="h6">Status</Typography>
@@ -145,7 +145,7 @@ class TravelerInfo extends Component {
                         </div>
                         <div className={classes.notes}>
                             <Typography variant="h6">Notes</Typography>
-                            <span>{personalNotes}</span>
+                            <Typography variant="subtitle2">{personalNotes}</Typography>
                         </div>
                         <div className={classes.tabs}>
                             <Tabs

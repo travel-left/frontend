@@ -6,6 +6,7 @@ import RemoveCoordinatorForm from '../../../Forms/RemoveCoordinatorForm'
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
 import LeftFab from '../../../util/otherComponents/LeftFab'
 import { withStyles } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     coordinator: {
@@ -93,9 +94,9 @@ class Coordinator extends Component {
                 <Image diameter={64} src={image} name={name} />
                 <div className={classes.coordinator}>
                     {name && <span className={classes.coordinatorName}>{name}</span>}
-                    {title && <span className={classes.coordinatorInfo}>{title}</span>}
-                    {phone && <span className={classes.coordinatorInfo}>{phone}</span>}
-                    {email && <span className={classes.coordinatorInfo}>{email}</span>}
+                    {title && <Typography variant="caption">{title}</Typography>}
+                    {phone && <Typography variant="caption">{phone}</Typography>}
+                    {email && <Typography variant="caption">{email}</Typography>}
                 </div>
                 {removeButton}
             </LeftCard>

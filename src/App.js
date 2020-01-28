@@ -77,11 +77,12 @@ const theme = createMuiTheme({
             fontSize: 16,
             color: '#42505C',
             letterSpacing: 0,
-            fontWeight: 400
+            fontWeight: 400,
+            lineSpacing: 0
         },
         caption: {
             fontFamily: 'Roboto',
-            fontSize: 12,
+            fontSize: 14,
             color: '#79828B',
             letterSpacing: 0,
             fontWeight: 400

@@ -16,7 +16,7 @@ export default theme => ({
         marginBottom: theme.spacing(3),
     },
     tripInfoDescription: {
-        marginBottom: theme.spacing(3)
+        marginBottom: theme.spacing(3),
     },
     tripInfoData: {
         display: "flex",

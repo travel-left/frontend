@@ -33,7 +33,9 @@ class Trip extends Component {
                     <Typography variant="h2">{name}</Typography>
                 </div>
                 <div className={classes.tripDate}>
-                    <Moment date={dateStart} format="MMM DD" />
+                    <Typography variant="subtitle1">
+                        <Moment date={dateStart} format="MMM DD" />
+                    </Typography>
                 </div>
                 <div className={classes.tripStatus}>
                     <TripStatus status={status} />

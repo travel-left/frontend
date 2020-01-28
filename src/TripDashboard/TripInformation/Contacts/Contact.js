@@ -6,6 +6,7 @@ import LeftCard from '../../../util/otherComponents/LeftCard'
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
 import LeftFab from '../../../util/otherComponents/LeftFab'
 import { withStyles } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
     contact: {
@@ -60,8 +61,8 @@ class Contact extends Component {
                 <Image diameter={64} src={image} name={name} />
                 <div className={classes.contact}>
                     {name && <span className={classes.contactName}>{name}</span>}
-                    {phone && <a className={classes.contactInfo} href={`tel:${phone}`}>{phone}</a>}
-                    {email && <span className={classes.contactInfo} >{email}</span>}
+                    {phone && <a className={classes.contactInfo} href={`tel:${phone}`}><Typography variant="caption">{phone}</Typography></a>}
+                    {email && <Typography variant="caption">{email}</Typography>}
                 </div>
                 <>
                     {!share ?

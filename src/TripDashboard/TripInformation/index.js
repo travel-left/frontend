@@ -23,7 +23,8 @@ const styles = theme => ({
         marginLeft: theme.spacing(4)
     },
     tripNameDescription: {
-        marginLeft: theme.spacing(2)
+        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(2),
     },
     tripDescription: {
         paddingRight: theme.spacing(50),
@@ -32,14 +33,17 @@ const styles = theme => ({
             paddingRight: theme.spacing(2)
         },
     },
-    tripName: {
-        marginTop: theme.spacing(3),
-        color: theme.palette.primary.main
-    },
     divider: {
         width: '30vw',
         backgroundColor: theme.palette.grey["A700"],
         height: 2
+    },
+    tripName: {
+        fontFamily: 'Roboto',
+        fontWeight: '500',
+        fontSize: '30px',
+        color: theme.palette.primary.main,
+        letterSpacing: 0,
     }
 })
 
@@ -116,7 +120,7 @@ class TripInformation extends Component {
                         </div>
                     </div>
                     <div className={classes.tripNameDescription}>
-                        <h3 className={classes.tripName}> {name} </h3>
+                        <span className={classes.tripName}> {name} </span>
                         {isEditTripNameModalOpen && <LeftModal
                             isOpen={isEditTripNameModalOpen}
                             toggleModal={this.closeModal}

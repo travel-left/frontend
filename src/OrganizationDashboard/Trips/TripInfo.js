@@ -73,12 +73,16 @@ class TripInfo extends Component {
                         <Typography variant="h2">{name}</Typography>
                     </div>
                     <div className={classes.tripInfoDescription}>
-                        {description}
+                        <Typography variant="subtitle1">
+                            {description}
+                        </Typography>
                     </div>
                     <div >
                         <div className={classes.tripInfoData}>
                             <Typography variant="h6">Date</Typography>
-                            <span ><Moment date={dateStart ? dateStart.split('T')[0] : null} format="MMM DD" /></span>
+                            <Typography variant="subtitle2">
+                                <Moment date={dateStart ? dateStart.split('T')[0] : null} format="MMM DD" />
+                            </Typography>
                         </div>
                         <div className={classes.tripInfoData}>
                             <Typography variant="h6">Status</Typography>
@@ -103,4 +107,4 @@ class TripInfo extends Component {
     }
 }
 
-export default withStyles(styles)(TripInfo)
+export default withStyles(styles)(TripInfo) 
