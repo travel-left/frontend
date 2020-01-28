@@ -67,7 +67,7 @@ export default class Support extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div style={{ width: '100%' }}>
                 <div style={{ display: 'flex', justifyContent: 'center', }}>
                     <Card style={{ padding: 16, maxWidth: 482, marginTop: 128 }}>
                         <Typography variant="h5">Feature request? Need assistance? Found a bug?</Typography>

@@ -20,7 +20,7 @@ const CommCard = ({ text, body, createdAt }) => {
             <Typography varaint="caption">{text.split('Please')[0]}</Typography>
         </div>)
     return (
-        <Card className='col-12 ' style={{ padding: 16, marginTop: 8, marginBottom: 8 }}>
+        <Card style={{ padding: 16, marginTop: 8, marginBottom: 8, width: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <Moment
