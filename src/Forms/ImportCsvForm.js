@@ -36,7 +36,7 @@ const form = props => {
                     setFieldValue("file", value.url)
                 }}
                 handleUploading={uploadState => setIsUploading(uploadState)}></FileUploader>
-            <div className="d-flex justify-content-center align-items-center">
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Fab variant="extended" color='primary' href="https://travel-left-public.s3.amazonaws.com/UploadTravelers.csv" style={{ color: 'white', marginTop: 16 }}>Download a Template CSV File</Fab>
             </div>
             <Divider style={{ marginTop: 40, marginBottom: 25 }} />

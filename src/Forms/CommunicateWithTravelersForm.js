@@ -43,7 +43,7 @@ const form = props => {
                 placeholder="No travelers selected"
                 renderValue={selectedTravelers => (
                     selectedTravelers.length === 0 ? <em>No travelers selected</em>
-                        : (<div className="d-flex flex-wrap">
+                        : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedTravelers.map(t => (
                                 <LeftChip key={t._id} label={t.name} />
                             ))}
@@ -66,7 +66,7 @@ const form = props => {
             <form onSubmit={handleSubmit}>
                 <div style={{ marginTop: 40 }}>
                     <FormLabel component="legend" >Send As</FormLabel>
-                    <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} className="d-flex flex-row">
+                    <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
                         <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />
                         <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
                     </RadioGroup>

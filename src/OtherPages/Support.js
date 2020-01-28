@@ -68,7 +68,7 @@ export default class Support extends Component {
     render() {
         return (
             <div className="container">
-                <div className="d-flex justify-content-center">
+                <div style={{ display: 'flex', justifyContent: 'center', }}>
                     <Card style={{ padding: 16, maxWidth: 482, marginTop: 128 }}>
                         <Typography variant="h5">Feature request? Need assistance? Found a bug?</Typography>
                         <Typography variant="h6">Fill out the form below and we will respond asap.</Typography>

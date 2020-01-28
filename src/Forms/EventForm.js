@@ -55,7 +55,7 @@ const form = props => {
                 placeholder="No documents selected"
                 renderValue={selectedDocuments => (
                     !selectedDocuments ? <em>No documents selected</em>
-                        : (<div className="d-flex flex-wrap">
+                        : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedDocuments.map(t => (
                                 <LeftChip key={t._id} label={t.name} />
                             ))}
@@ -75,7 +75,7 @@ const form = props => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <div className="d-flex justify-content-between">
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <TextField
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -114,7 +114,7 @@ const form = props => {
                 </div>
                 <div style={{ marginTop: 41 }}>
                     <FormLabel component="legend" >Event type</FormLabel>
-                    <RadioGroup aria-label="Event type" name="type" value={values.type} onChange={handleChange} className="d-flex flex-row justify-content-around">
+                    <RadioGroup aria-label="Event type" name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'around' }}>
                         <FormControlLabel value="LODGING" control={<Radio color="primary" />} label="Lodging" />
                         <FormControlLabel value="EVENT" control={<Radio color="primary" />} label="Event" />
                         <FormControlLabel value="TRANSPORTATION" control={<Radio color="primary" />} label="Transportation" />
@@ -122,7 +122,7 @@ const form = props => {
                     </RadioGroup>
                 </div>
                 {values.type === 'FLIGHT' && (
-                    <div className="d-flex justify-content-between">
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Autocomplete
                             name="airline"
                             id="airline"
@@ -165,7 +165,7 @@ const form = props => {
                 {values.type !== 'FLIGHT' && (
                     <>
                         <MuiPickersUtilsProvider utils={MomentUtils}>
-                            <div className="d-flex">
+                            <div style={{ display: 'flex' }}>
                                 <KeyboardTimePicker
                                     label="Start time"
                                     value={values.start}

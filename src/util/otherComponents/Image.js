@@ -36,7 +36,7 @@ export default class Image extends Component {
                 height: diameter,
                 width: diameter,
             }} /> : avatar}
-            <div class="img-content d-flex justify-content-center align-items-center">
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <span style={{ fontSize: 12, fontWeight: 600, color: 'white' }}>UPDATE</span>
             </div>
         </div>

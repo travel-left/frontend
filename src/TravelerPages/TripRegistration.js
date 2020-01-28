@@ -111,14 +111,14 @@ export default withRouter(class TripRegistration extends Component {
 
         return (
             <>
-                <div className="d-flex justify-content-center">
+                <div style={{ display: 'flex', justifyContent: 'center', }}>
                     <Card style={{ padding: 16, maxWidth: 600, marginTop: 32 }}>
                         {page !== 'success' && <Typography variant="h4">Register for {trip.name}</Typography>}
                         {page === 'register' && <TravelerRegistrationForm fields={formSettings} submit={this.registerTraveler}></TravelerRegistrationForm>}
                         {page === 'payment' && <CollectTripPaymentForm connectAccountId={org.stripeConnectAccountId} amount={formSettings.paymentAmount} travelerEmail={traveler.email} onSubmit={this.handleSuccessfulRegistrationPayment}></CollectTripPaymentForm>}
                         {page === 'success' && <>
                             <Typography variant="h4" style={{ textAlign: 'center', marginTop: 16, marginBottom: 16 }}>You have been succesfully registered for {trip.name}!</Typography>
-                            <div className="d-flex justify-content-center">
+                            <div style={{ display: 'flex', justifyContent: 'center', }}>
                                 <NavLink
                                     to={`/trips/${trip._id}/share`}
                                     name={`/trips/${trip._id}/share`}
