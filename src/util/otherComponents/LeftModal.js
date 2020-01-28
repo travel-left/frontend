@@ -31,15 +31,16 @@ export default class LeftModal extends Component {
         const Form = this.props.form ? this.props.form : null
         return (
             <Portal >
-                <div className="modal d-block" style={{
+                <div className="modal" style={{
                     maxHeight: 'calc(100vh - 48px)',
-                    overflowY: 'auto'
+                    overflowY: 'auto',
+                    display: 'block'
                 }}
                 >
                     <div className={`Modal--overlay animated fadeIn ${this.state.overlayAnimation}`} onClick={this.handleToggleModal} />
                     <div className="modal-dialog" role="document" >
                         <div className={`modal-content Modal-Form animated zoomIn ${this.state.modalAnimation}`} style={{ backgroundColor: '#FFFFFF', borderRadius: 8 }}>
-                            <div className="modal-header Modal-Form-header d-flex align-items-center bg-primary" style={{ padding: 16, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+                            <div className="modal-header Modal-Form-header d-flex align-items-center" style={{ padding: 16, borderTopLeftRadius: 8, borderTopRightRadius: 8, backgroundColor: 'blue' }}>
                                 <h5 className="modal-title Modal-Form-header"> {this.props.title}</h5>
                                 <IconButton onClick={this.handleToggleModal} color='primary' className='modal-close-button'>
                                     <CloseIcon style={{ color: 'white' }} fontSize="large" />
