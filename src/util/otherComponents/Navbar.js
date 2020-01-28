@@ -220,6 +220,7 @@ const mapStateToProps = state => {
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
+        zIndex: 15
     },
     paper: {
         marginRight: theme.spacing(2),
@@ -228,7 +229,10 @@ const useStyles = makeStyles(theme => ({
         color: 'white',
         backgroundColor: theme.palette.secondary.main,
         padding: 0,
-        marginLeft: theme.spacing(2)
+        marginLeft: theme.spacing(2),
+        '&:hover': {
+            backgroundColor: '#5A8DAA'
+        }
     }
 }))
 

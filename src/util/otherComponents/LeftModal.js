@@ -17,7 +17,7 @@ const styles = theme => ({
     modalContent: {
         position: 'relative',
         borderRadius: theme.spacing(1),
-        width: theme.spacing(62),
+        maxWidth: theme.spacing(62),
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.palette.background.paper,

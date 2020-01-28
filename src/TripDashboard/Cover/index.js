@@ -13,6 +13,7 @@ import Snack from '../../util/otherComponents/Snack'
 import LeftFab from '../../util/otherComponents/LeftFab'
 import Chip from '@material-ui/core/Chip'
 import { withStyles } from '@material-ui/core'
+import sizes from '../../styles/sizes'
 
 const styles = theme => ({
     coverPhoto: {
@@ -25,7 +26,10 @@ const styles = theme => ({
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         borderRadius: '0px 0px 4px 4px',
-        padding: 16
+        padding: 16,
+        [sizes.down("md")]: {
+            height: theme.spacing(28),
+        }
     },
     topRow: {
         display: 'flex',
@@ -37,6 +41,11 @@ const styles = theme => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        [sizes.down("md")]: {
+            flexDirection: 'column',
+            alignItems: 'start'
+        }
+
     },
     travelerCount: {
         fontWeight: '500',
@@ -47,6 +56,11 @@ const styles = theme => ({
         backgroundColor: '#475561',
         height: 28,
         textTransform: 'uppercase'
+    },
+    dates: {
+        [sizes.down("md")]: {
+            margin: theme.spacing(1, 0)
+        }
     }
 })
 
@@ -211,13 +225,15 @@ class Cover extends Component {
                         className={classes.travelerCount}
                     >
                     </Chip>
-                    <LeftFab
-                        onClick={() => this.openModal('isTripDatesOpen')}
-                        id="tripDates"
-                    >
-                        {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
+                    <div className={classes.dates}>
+                        <LeftFab
+                            onClick={() => this.openModal('isTripDatesOpen')}
+                            id="tripDates"
+                        >
+                            {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
                         ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
-                    </LeftFab>
+                        </LeftFab>
+                    </div>
                     {this.state.isTripDatesOpen && <LeftModal
                         isOpen={this.state.isTripDatesOpen}
                         toggleModal={() => this.closeModal('isTripDatesOpen')}
