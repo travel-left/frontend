@@ -5,7 +5,6 @@ import ChangeCoverPhotoForm from '../Forms/ChangeCoverPhotoForm'
 import LeftModal from '../util/otherComponents/LeftModal'
 import Snack from '../util/otherComponents/Snack'
 import { apiCall } from '../util/api'
-import { setCurrentUser } from '../util/redux/actions/auth'
 
 export default class AccountCover extends Component {
     state = {
@@ -50,7 +49,8 @@ export default class AccountCover extends Component {
     render() {
         const { image, name } = this.props.user
         return (
-            <div className="d-flex flex-column align-items-center">
+            <div
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <div style={{ marginTop: 16, marginBottom: 16 }}>
                     <Image src={image} diameter="128px" name={name} upload handleUpload={this.openModal} />
 

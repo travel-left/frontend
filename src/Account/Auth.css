@@ -1,48 +1,24 @@
-.bg-image {
-    background: linear-gradient(
+.content:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: -1;
+   background-position: 'center';
+    background-size: 'cover';
+  display: block;
+  filter: blur(3px);
+      background: linear-gradient(
         rgba(20,20,20, .2), 
         rgba(20,20,20, .2)),
         url('https://i2.wp.com/www.turguabrewing.com/wp-content/uploads/2016/03/photo-1428535172630-fb1c050ac3e0-1.jpg?zoom=2&fit=1200%2C837&ssl=1');
-    height: 100%;
+    height: calc(100vh - 84px);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-     display: block;
-  left: -5px;
-  top:-5px;
-  bottom:-5px;
-  position: fixed;
-  right: -5px;
-  margin:-5px;
-  transform: scale(1.1);
-filter: blur(6px);
-}
-
-.right {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    width: 80%;
-    padding: 20px;
-    text-align: center;
-}
-
-.Auth-side-message {
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 400;
-    color: #F6FAFF;
-    letter-spacing: 0;
-}
-
-.Auth-side-sub {
-    font-family: Roboto;
-    font-weight: 500px;
-    font-size: 40px;
-    color: #83C9F5;
-    letter-spacing: 0;
+    transform: scale(1.1);
+    filter: blur(3px);
+    margin: -20px;
 }
 
 .footer-text {

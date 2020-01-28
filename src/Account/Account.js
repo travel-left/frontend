@@ -22,7 +22,7 @@ const Account = props => {
             <Grid item xs={12} md={2}>
                 <AccountSideNav />
             </Grid>
-            <Grid item xs={12} md={8} lg={8} justify='center' className='d-flex'>
+            <Grid item xs={12} md={8} lg={8} justify='center' style={{ display: 'flex' }}>
                 <Grid item xs={12} md={8} lg={6} >
                     <AccountRouter
                         currentUser={props.currentUser}
