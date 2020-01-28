@@ -15,7 +15,7 @@ export default class ErrorBoundary extends React.Component {
         if (this.state.hasError) {
             // You can render any custom fallback UI
             return (
-                <div className="container">
+                <div style={{ width: '100%' }}>
                     <h1>Something went wrong.</h1>
                     <a href="javascript:window.location.href=window.location.href">
                         Click here to go back.
