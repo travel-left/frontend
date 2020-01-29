@@ -46,7 +46,7 @@
         "start": "per-env",
         "start:development": "npx react-scripts start",
         "start:production": "serve -s build",
-        "cypress:open": "cypress open",
+        "cypress:open": "cypress open"
     },
     "eslintConfig": {
         "extends": "react-app"
