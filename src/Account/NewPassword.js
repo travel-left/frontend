@@ -33,8 +33,8 @@ export default class NewPassword extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="d-flex justify-content-center">
+            <div style={{ width: '100%' }}>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Card style={{ padding: 16, maxWidth: 482, marginTop: 128 }}>
                         {this.state.error ? (
                             <p style={{ color: 'red' }}>{this.state.error.message}</p>

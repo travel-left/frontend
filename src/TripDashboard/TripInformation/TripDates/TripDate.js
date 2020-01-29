@@ -1,13 +1,74 @@
 import React, { Component } from 'react'
 import moment from 'moment'
-import './TripDate.css'
 import IconButton from '@material-ui/core/IconButton'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import Typography from '@material-ui/core/Typography'
 import TripDateForm from '../../../Forms/TripDateForm'
+import { withStyles } from '@material-ui/core'
 
-export default class TripDate extends Component {
+const styles = theme => ({
+    tripDate: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: theme.spacing(2, 2, 0, 2),
+        width: "100%"
+    },
+    icon: {
+        color: "#FFFFFF",
+        height: theme.spacing(8),
+        width: theme.spacing(8),
+        borderRadius: theme.spacing(.5),
+        backgroundColor: props => getColor(props.type),
+        height: theme.spacing(7),
+        width: theme.spacing(7),
+        fontSize: 24,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    container: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    content: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "start",
+        marginLeft: theme.spacing(2)
+    },
+    editButton: {
+        color: theme.palette.grey["A700"]
+    }
+})
+
+const getColor = tripDateType => {
+    let backgroundColor
+    switch (tripDateType) {
+        case 'TRAVEL':
+            backgroundColor = "#29CB97"
+            break
+        case 'PAPERWORK':
+            backgroundColor = "#FEC400"
+            break
+        case 'MONEY':
+            backgroundColor = "#B558F6"
+            break
+        case 'OTHER':
+            backgroundColor = "#FFABAA"
+            break
+        default:
+            backgroundColor = "#FFABAA"
+            break
+    }
+
+    return backgroundColor
+}
+
+class TripDate extends Component {
 
     state = {
         isModalOpen: false
@@ -26,44 +87,51 @@ export default class TripDate extends Component {
     openModal = () => this.setState({ isModalOpen: true })
 
     render() {
-        let { name, date, type } = this.props
-        let icon
+        const { name, date, type, share, classes } = this.props
+        const { isModalOpen } = this.state
+        let iconString
 
         switch (type) {
             case 'TRAVEL':
-                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#29CB97', height: 56, width: 56, fontSize: 24 }}>card_travel</i>
+                iconString = "card_travel"
                 break
             case 'PAPERWORK':
-                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FEC400', height: 56, width: 56, fontSize: 24 }}>folder_open</i>
+                iconString = "folder_open"
                 break
             case 'MONEY':
-                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#B558F6', height: 56, width: 56, fontSize: 24 }}>attach_money</i>
+                iconString = "attach_money"
                 break
             case 'OTHER':
-                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA', height: 56, width: 56, fontSize: 24 }}>calendar_today</i>
+                iconString = "calendar_today"
                 break
             default:
-                icon = <i class="material-icons d-flex justify-content-center align-items-center TripDate-Icon" style={{ backgroundColor: '#FFABAA', height: 56, width: 56, fontSize: 24 }}>calendar_today</i>
+                iconString = "calendar_today"
                 break
         }
 
         const dateWithoutTimeorTZ = date.split('T')[0]
 
         return (
-            <div className="row align-items-center justify-content-between" style={{ padding: '16px 32px' }}>
-                <div className="d-flex align-items-center justify-content-between">
-                    {icon}
-                    <div className="d-flex flex-column justify-content-center align-items-start ml-4">
-                        <Typography variant="subtitle2">{name}</Typography>
-                        <Typography variant="caption">{moment(dateWithoutTimeorTZ).format('MMMM DD')}</Typography>
+            <div className={classes.tripDate}>
+                <div className={classes.container}>
+                    <i className={`${classes.icon} material-icons`}>{iconString}</i>
+                    <div className={classes.content}>
+                        <Typography variant="subtitle2">
+                            {name}
+                        </Typography>
+                        <Typography variant="caption">
+                            {moment(dateWithoutTimeorTZ).format('MMMM DD')}
+                        </Typography>
                     </div>
                 </div>
-                {!this.props.share && <IconButton className='edit-trip-date-button' onClick={this.openModal} style={{ color: '#475561' }}>
-                    <MoreHorizIcon />
-                </IconButton>}
+                {!share &&
+                    <IconButton className={classes.editButton} onClick={this.openModal} >
+                        <MoreHorizIcon />
+                    </IconButton>
+                }
                 {
-                    this.state.isModalOpen && <LeftModal
-                        isOpen={this.state.isModalOpen}
+                    isModalOpen && <LeftModal
+                        isOpen={isModalOpen}
                         toggleModal={this.closeModal}
                         title='Update trip date'
                         submit={this.handleUpdate}
@@ -78,3 +146,5 @@ export default class TripDate extends Component {
         )
     }
 }
+
+export default withStyles(styles)(TripDate)

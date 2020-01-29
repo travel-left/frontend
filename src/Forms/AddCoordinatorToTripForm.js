@@ -38,7 +38,7 @@ const form = props => {
                         onBlur={handleBlur}
                         input={<Input id="select-multiple-chip" />}
                         renderValue={selected => (
-                            <div className="d-flex flex-wrap">
+                            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                                 {selected.map(c => (
                                     <LeftChip key={c._id} label={c.name} />
                                 ))}

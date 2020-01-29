@@ -30,6 +30,10 @@ const theme = createMuiTheme({
         error: {
             main: '#FF5555'
         },
+        grey: {
+            A600: '#79828B',
+            A700: '#475561'
+        }
     },
     typography: {
         h1: {
@@ -73,18 +77,18 @@ const theme = createMuiTheme({
             fontSize: 16,
             color: '#42505C',
             letterSpacing: 0,
-            fontWeight: 400
+            fontWeight: 400,
+            lineSpacing: 0
         },
         caption: {
             fontFamily: 'Roboto',
-            fontSize: 12,
+            fontSize: 14,
             color: '#79828B',
             letterSpacing: 0,
             fontWeight: 400
         }
     },
     overrides: {
-        // Style sheet name ⚛️
         MuiTextField: {
             root: {
                 marginTop: 25
@@ -123,7 +127,6 @@ const App = () => (
                                 <div>
                                     <Navbar />
                                     <div
-                                        className="container-fluid content"
                                         id="app-root"
                                         style={{ minHeight: '90vh' }}
                                     >

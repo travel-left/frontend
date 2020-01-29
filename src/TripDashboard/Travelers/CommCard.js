@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Moment from 'react-moment'
 import Card from '@material-ui/core/Card'
 import Fab from '@material-ui/core/Fab'
-import LeftModal from '../../util/otherComponents/LeftModal'
 import Typography from '@material-ui/core/Typography'
 
 const CommCard = ({ text, body, createdAt }) => {
@@ -10,19 +9,19 @@ const CommCard = ({ text, body, createdAt }) => {
 
     const commModalText = body ? (
         <div>
-            <div className="d-flex">
+            <div style={{ display: 'flex' }}>
                 <Typography varaint="caption" className="TripInfo-description">{text}</Typography>
             </div>
-            <div className="d-flex">
+            <div style={{ display: 'flex' }}>
                 <Typography varaint="caption" >{body.split('here</a> to')[1] || body}</Typography>
             </div>
         </div>)
-        : (<div className="d-flex">
+        : (<div style={{ display: 'flex' }}>
             <Typography varaint="caption">{text.split('Please')[0]}</Typography>
         </div>)
     return (
-        <Card className='col-12 ' style={{ padding: 16, marginTop: 8, marginBottom: 8 }}>
-            <div className="d-flex justify-content-between align-items-center">
+        <Card style={{ padding: 16, marginTop: 8, marginBottom: 8, width: '100%' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                     <Moment
                         date={createdAt}
@@ -36,7 +35,7 @@ const CommCard = ({ text, body, createdAt }) => {
                     {!isModalOpen ? 'VIEW' : 'CLOSE'}
                 </Fab>
             </div>
-            <div className="d-flex align-items-center">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 {isModalOpen && commModalText}
             </div>
         </Card>

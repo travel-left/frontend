@@ -6,8 +6,21 @@ import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import Typography from '@material-ui/core/Typography'
 import { withRouter } from 'react-router-dom'
+import { withStyles } from '@material-ui/core'
 
-export default withRouter(function SideNav({ ctId, location }) {
+const styles = theme => ({
+    listItem: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: theme.spacing(2, 2)
+    },
+    list: {
+        padding: 0
+    }
+})
+
+export default withRouter(withStyles(styles)(function SideNav({ ctId, location, classes }) {
     const sideNavComponents = [
         {
             name: 'edit',
@@ -27,18 +40,31 @@ export default withRouter(function SideNav({ ctId, location }) {
             active: location.pathname.includes('travelers')
         }
     ]
+
     const sideNavList = sideNavComponents.map(({ name, text, divider, active }) => (
-        <SideNavLink key={name} text={text} name={name} divider={divider} active={active} route={`/trips/${ctId}/${name}`} />
+        <SideNavLink
+            key={name}
+            text={text}
+            name={name}
+            divider={divider}
+            active={active}
+            route={`/trips/${ctId}/${name}`}
+        />
     ))
+
     return (
-        <List component="div" style={{ paddingTop: 0, paddingBottom: 0 }}>
+        <List component="div" className={classes.list}>
             {sideNavList}
             <Card>
                 <Divider />
-                <ListItem onClick={() => window.open(`/trips/${ctId}/preview`)} button className='d-flex justify-content-between align-items-center' style={{ padding: '12px 16px' }}>
+                <ListItem
+                    onClick={() => window.open(`/trips/${ctId}/preview`)}
+                    button
+                    className={classes.listItem}
+                >
                     <Typography variant="h6" >Trip Preview</Typography>
                 </ListItem>
             </Card>
         </List>
     )
-})
+}))

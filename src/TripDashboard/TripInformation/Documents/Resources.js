@@ -4,14 +4,40 @@ import Typography from '@material-ui/core/Typography'
 import { apiCall } from '../../../util/api'
 import Snack from '../../../util/otherComponents/Snack'
 import Document from './Document'
-import LeftItem from '../../../util/otherComponents/LeftItem'
+import Card from '@material-ui/core/Card'
 import DocumentForm from '../../../Forms/DocumentForm'
 import ContainedUploader from '../../../Forms/ContainedUploader'
-import Fab from '@material-ui/core/Fab'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
 
-export default class Resources extends Component {
+const styles = theme => ({
+    resourcesSection: {
+        marginTop: theme.spacing(6)
+    },
+    resourcesHeader: {
+        display: "flex",
+        alignItems: "center"
+    },
+    linkBtn: {
+        marginLeft: theme.spacing(4)
+    },
+    resourceList: {
+        marginTop: theme.spacing(2)
+    },
+    resource: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: theme.spacing(2),
+        padding: theme.spacing(2),
+        maxWidth: theme.spacing(68),
+        height: theme.spacing(23)
+    },
+})
+
+class Resources extends Component {
 
     TRIP_ID = this.props.tripId
 
@@ -118,11 +144,14 @@ export default class Resources extends Component {
     }
 
     render() {
+        const { classes, share } = this.props
         const { docs } = this.state
         const uploadZone = (
-            <LeftItem>
-                <ContainedUploader tripId={this.TRIP_ID} onUploadFinish={this.getDocuments}></ContainedUploader>
-            </LeftItem>
+            <Grid item xs={12} sm={8} md={6} >
+                <Card className={classes.resource} >
+                    <ContainedUploader tripId={this.TRIP_ID} onUploadFinish={this.getDocuments}></ContainedUploader>
+                </Card>
+            </Grid>
         )
 
         let documents = docs.map(doc =>
@@ -134,20 +163,25 @@ export default class Resources extends Component {
                 type={doc.type}
                 update={this.updateDocument}
                 remove={this.deleteDocument}
-                share={this.props.share} />
+                share={share} />
         )
 
-        !this.props.share && documents.splice(1, 0, uploadZone)
+        !share && documents.splice(1, 0, uploadZone)
 
         return (
-            <div style={{ marginTop: 64 }}>
-                <div className="d-flex align-items-center" style={{ marginBottom: 16 }}>
+            <div className={classes.resourcesSection}>
+                <div className={classes.resourcesHeader}>
                     <Typography variant="h2" >Resources</Typography>
-                    {!this.props.share && <div style={{ marginLeft: 32 }}>
-                        <LeftFab onClick={this.openModal} id="add-new-trip-link-button" color="secondary" fab>
-                            Add Link
-                    </LeftFab>
-                    </div>
+                    {!share &&
+                        <div className={classes.linkBtn}>
+                            <LeftFab
+                                onClick={this.openModal}
+                                id="add-new-trip-link-button"
+                                color="secondary"
+                            >
+                                Add Link
+                            </LeftFab>
+                        </div>
                     }
                     {
                         this.state.isNewLinkModalOpen && <LeftModal
@@ -160,7 +194,7 @@ export default class Resources extends Component {
                         />
                     }
                 </div>
-                <Grid container>
+                <Grid container className={classes.resourceList}>
                     {documents}
                 </Grid>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
@@ -168,3 +202,5 @@ export default class Resources extends Component {
         )
     }
 }
+
+export default withStyles(styles)(Resources)

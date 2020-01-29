@@ -10,17 +10,17 @@ const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt, 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const commModalText = (<div>
-        <div className="d-flex">
+        <div style={{ display: 'flex' }}>
             <Typography varaint="caption" className="TripInfo-description">{message}</Typography>
         </div>
-        <div className="d-flex">
+        <div style={{ display: 'flex' }}>
             <Typography varaint="caption" >{amount}</Typography>
         </div>
     </div>)
 
     return (
-        <Card className='col-12 ' style={{ padding: 16, marginTop: 8, marginBottom: 8, borderBottom: stripeChargeId ? '3px solid green' : '3px solid #E24C4C' }}>
-            <div className="d-flex justify-content-between align-items-center">
+        <Card style={{ width: '100%', padding: 16, marginTop: 8, marginBottom: 8, borderBottom: stripeChargeId ? '3px solid green' : '3px solid #E24C4C' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ minWidth: 140 }}>
                     <Moment
                         date={createdAt}
@@ -34,7 +34,7 @@ const PaymentCard = ({ amount, message, messageType, stripeChargeId, createdAt, 
                     {!isModalOpen ? 'VIEW' : 'CLOSE'}
                 </Fab>
             </div>
-            <div className="d-flex align-items-center">
+            <div style={{ display: 'flex', alignItems: 'center' }}>
                 {isModalOpen && commModalText}
             </div>
         </Card>

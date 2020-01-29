@@ -4,10 +4,58 @@ import { getIcon } from '../../../util/file-icons'
 import moment from 'moment'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
-import { Grid } from '@material-ui/core'
+import { Grid, withStyles } from '@material-ui/core'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import EventForm from '../../../Forms/EventForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import Document from '../../TripInformation/Documents/Document'
+
+const styles = theme => ({
+    event: {
+        padding: theme.spacing(2, 2, 0, 2),
+        margin: theme.spacing(2, 0)
+    },
+    iconContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: props => setIcon(props.event.type).color,
+        borderRadius: '50%',
+        height: theme.spacing(6),
+        width: theme.spacing(6),
+        marginRight: theme.spacing(2)
+    },
+    icon: {
+        color: '#FFFFFF',
+        fontSize: '18px'
+    },
+    time: {
+        color: props => setIcon(props.event.type).color,
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(1)
+    },
+    titleContainer: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    editButtonContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    contentContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+    link: {
+        margin: theme.spacing(1, 0),
+        display: 'block'
+    },
+    address: {
+        textAlign: 'center',
+        margin: theme.spacing(2, 0)
+    }
+})
 
 class Event extends Component {
     state = {
@@ -34,11 +82,10 @@ class Event extends Component {
     }
 
     render() {
-        const { event } = this.props
-
+        const { event, classes, share } = this.props
         const icon = setIcon(event.type)
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
-        const address = <p className="card-text text-muted text-center">{event.address}</p>
+        const address = <Typography variant="subtitle2" className={classes.address}>{event.address}</Typography>
         const map = event.coordinates && <>
             <Map coordinates={event.coordinates} />
             <Typography variant="subtitle1">
@@ -47,91 +94,84 @@ class Event extends Component {
         </>
         const name = event.name
 
+        const documents = event.documents.map(doc =>
+            <Document
+                _id={doc._id}
+                name={doc.name}
+                description={doc.description}
+                link={doc.link}
+                type={doc.type}
+                update={this.updateDocument}
+                remove={this.deleteDocument}
+                tinyDoc
+            />
+        )
 
-        const documents = event.documents.map((d, i) => (
-            <Card className='d-flex flex-row justify-content-between' style={{ borderRadius: 3, marginTop: 16, marginBottom: 16 }}>
-                <div className="Document-icon d-flex justify-content-center align-items-center" style={{ width: 80, height: 80 }}>
-                    <a
-                        className="hover"
-                        href={d.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        download>
-                        <img
-                            src={getIcon(d.link)}
-                            alt=""
-                            className='Document-image'
-                            style={{ objectFit: 'cover' }}
-                        />
-                    </a>
-                </div>
-                <div className="card-body d-flex flex-column justify-content-end">
-                    <a
-                        className="hover Document-open-text"
-                        href={d.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <Typography variant="caption">{d.name.substring(0, 25)}</Typography>
-                    </a>
-                </div>
-            </Card>
-        ))
-
-        let links = event.links.map(link => <a href={link} target="_blank" className="d-block" style={{ padding: 4 }}>{link}</a>)
+        let links = event.links.map(link => <a href={link} target="_blank" className={classes.link}>{link}</a>)
         let flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
+
         return (
-            <Card style={{ padding: 16, marginTop: 16, marginBottom: 16 }}>
-                <div className="d-flex justify-content-between">
-                    <div className='d-flex align-items-center'>
-                        <span className='d-flex justify-content-center align-items-center' style={{
-                            backgroundColor: icon.color, borderRadius: '50%', height: 40, width: 40, marginRight: 16
-                        }}>
-                            <i className={`fa ${icon.string}`} style={{ color: '#FFFFFF', fontSize: '16px' }} />
+            <Card className={classes.event}>
+                <div className={classes.editButtonContainer}>
+                    <div className={classes.titleContainer}>
+                        <span className={classes.iconContainer}>
+                            <i className={`fa ${icon.string} ${classes.icon}`} />
                         </span>
-                        <Typography variant="h2" className="event-title">
-                            {event.type === 'FLIGHT' && event.airline ? flight : name}
+                        <Typography variant="h2">
+                            {event.type === 'FLIGHT' && event.airline ?
+                                flight :
+                                name
+                            }
                         </Typography>
                     </div>
-                    {!this.props.share &&
-                        <LeftFab id="edit-event-button" onClick={this.toggleModal}>
+                    {!share &&
+                        <LeftFab
+                            id="edit-event-button"
+                            onClick={this.toggleModal}
+                        >
                             Edit
-                            </LeftFab>}
-                    {
-                        this.state.isOpen && <LeftModal
-                            isOpen={this.state.isOpen}
-                            toggleModal={this.toggleModal}
-                            title='Edit event'
-                            {...event}
-                            submit={this.update}
-                            remove={this.remove}
-                            form={EventForm}
-                            selectedDocuments={event.documents.map(doc => doc._id)}
-                            documents={this.props.documents}
-                        />
+                        </LeftFab>
                     }
                 </div>
-                <Typography variant="subtitle2" style={{ color: icon.color, paddingTop: 16 }}> {time}</Typography>
-                <div className="d-flex flex-wrap justify-content-between">
+                <Typography
+                    variant="subtitle2"
+                    className={classes.time}
+                >
+                    {time}
+                </Typography>
+                <div className={classes.contentContainer}>
                     <Grid item xs={12} sm={6} md={6}>
-                        <Typography variant="subtitle1" style={{ paddingTop: 16 }}>
+                        <Typography variant="subtitle1" >
                             {event.description}
                         </Typography>
-                        <div style={{ marginTop: 16, marginBottom: 16 }}>
+                        <div className={classes.linksContainer}>
                             {links}
                         </div>
                         {documents}
                     </Grid>
-                    <Grid item xs={0} sm={5} gitmd={5} className="">
+                    <Grid item xs={12} sm={6} md={5} >
                         {map}
                     </Grid>
                 </div>
+                {
+                    this.state.isOpen && <LeftModal
+                        isOpen={this.state.isOpen}
+                        toggleModal={this.toggleModal}
+                        title='Edit event'
+                        {...event}
+                        submit={this.update}
+                        remove={this.remove}
+                        form={EventForm}
+                        selectedDocuments={event.documents.map(doc => doc._id)}
+                        documents={this.props.documents}
+                    />
+                }
             </Card >
         )
     }
 }
 
-export default Event
+export default withStyles(styles)(Event)
 
 function setIcon(eventType) {
     let icon = {

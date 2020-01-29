@@ -1,12 +1,39 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import Fab from '@material-ui/core/Fab'
-import './Coordinator.css'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
+import LeftCard from '../../../util/otherComponents/LeftCard'
 import RemoveCoordinatorForm from '../../../Forms/RemoveCoordinatorForm'
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography';
+
+const styles = theme => ({
+    coordinator: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
+    coordinatorName: {
+        fontFamily: "Roboto",
+        fontSize: "16px",
+        color: theme.palette.grey["A700"],
+        letterSpacing: "0",
+    },
+    coordinatorInfo: {
+        fontFamily: "Roboto",
+        fontSize: "12px",
+        color: theme.palette.grey["A600"],
+        letterSpacing: "0",
+    },
+    tele: {
+        fontFamily: "Roboto",
+        fontSize: "12px",
+        color: theme.palette.grey["A600"],
+        letterSpacing: "0",
+        width: theme.spacing(7)
+    }
+})
 
 class Coordinator extends Component {
 
@@ -25,27 +52,32 @@ class Coordinator extends Component {
     openModal = modal => (this.setState({ [modal]: true }))
 
     render() {
-        let {
+        const {
             email,
             image,
             name,
             phone,
             title,
             currentUserId,
-            _id
+            _id,
+            classes,
+            share
         } = this.props
 
+        const { editCoordinator } = this.state
+
         const removeButton =
-            (currentUserId != _id && !this.props.share) ? (
+            (currentUserId != _id && !share) ? (
                 <>
                     <LeftFab
                         id='coordinator-edit-button'
                         onClick={() => this.openModal('editCoordinator')}
-                    >Edit
+                    >
+                        Edit
                     </LeftFab>
                     {
-                        this.state.editCoordinator && <LeftModal
-                            isOpen={this.state.editCoordinator}
+                        editCoordinator && <LeftModal
+                            isOpen={editCoordinator}
                             toggleModal={() => this.closeModal('editCoordinator')}
                             title='Remove coordinator from trip'
                             submit={this.handleDelete}
@@ -53,23 +85,23 @@ class Coordinator extends Component {
                         />
                     }
                 </>
-            ) : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
+            ) : <a className={classes.tele} href={`tel:${phone}`}>
                     {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
                 </a>
 
         return (
-            <LeftCardNew height={100}>
+            <LeftCard>
                 <Image diameter={64} src={image} name={name} />
-                <div className="d-flex flex-column justify-content-center">
-                    {name && <span className="Coordinator-name">{name}</span>}
-                    {title && <span className="Coordinator-info">{title}</span>}
-                    {phone && <span className="Coordinator-info">{phone}</span>}
-                    {email && <span className="Coordinator-info">{email}</span>}
+                <div className={classes.coordinator}>
+                    {name && <span className={classes.coordinatorName}>{name}</span>}
+                    {title && <Typography variant="caption">{title}</Typography>}
+                    {phone && <Typography variant="caption">{phone}</Typography>}
+                    {email && <Typography variant="caption">{email}</Typography>}
                 </div>
                 {removeButton}
-            </LeftCardNew>
+            </LeftCard>
         )
     }
 }
 
-export default Coordinator
+export default withStyles(styles)(Coordinator)

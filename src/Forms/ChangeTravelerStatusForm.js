@@ -39,7 +39,7 @@ const form = props => {
                 placeholder="No travelers selected"
                 renderValue={selectedTravelers => (
                     selectedTravelers.length === 0 ? <em>No travelers selected</em>
-                        : (<div className="d-flex flex-wrap">
+                        : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedTravelers.map(t => (
                                 <LeftChip key={t._id} label={t.name} />
                             ))}

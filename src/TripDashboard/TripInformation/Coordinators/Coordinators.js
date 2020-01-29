@@ -8,8 +8,18 @@ import LeftModal from '../../../util/otherComponents/LeftModal'
 import LeftItem from '../../../util/otherComponents/LeftItem'
 import AddCoordinatorToTripForm from '../../../Forms/AddCoordinatorToTripForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
 
-export default class Coordinators extends Component {
+const styles = theme => ({
+    coordinatorsSection: {
+        marginTop: theme.spacing(4)
+    },
+    coordinatorList: {
+        marginTop: theme.spacing(2)
+    }
+})
+
+class Coordinators extends Component {
 
     TRIP_ID = this.props.tripId
 
@@ -156,15 +166,19 @@ export default class Coordinators extends Component {
             })
         }
     }
+
     render() {
+        const { classes, share, currentUser } = this.props
+        const { coordinators } = this.state
+
         const newCoordinatorButton =
-            <LeftItem height={100}>
+            <LeftItem >
                 <LeftFab id="add-new-coordinator-button" onClick={this.openModal} color="secondary" fab>
                     Add New
-                    </LeftFab>
+                </LeftFab>
             </LeftItem>
 
-        const coordinatorList = this.state.coordinators.map(c =>
+        const coordinatorList = coordinators.map(c =>
             <Coordinator
                 _id={c._id}
                 name={c.name}
@@ -172,18 +186,18 @@ export default class Coordinators extends Component {
                 image={c.image}
                 phone={c.phone}
                 title={c.title}
-                currentUserId={this.props.currentUser && this.props.currentUser._id}
+                currentUserId={this.props.currentUser && currentUser._id}
                 remove={this.deleteCoordinator}
                 share={this.props.share}
             />
         )
 
-        !this.props.share && coordinatorList.splice(1, 0, newCoordinatorButton)
+        !share && coordinatorList.splice(1, 0, newCoordinatorButton)
 
         return (
-            <div style={{ marginTop: 64 }}>
-                <Typography variant="h2" style={{ marginBottom: 16 }}> Coordinators </Typography>
-                <Grid container>
+            <div className={classes.coordinatorsSection}>
+                <Typography variant="h2"> Coordinators </Typography>
+                <Grid container className={classes.coordinatorList}>
                     {coordinatorList}
                     {
                         this.state.isNewCoordinatorModalOpen && <LeftModal
@@ -201,3 +215,5 @@ export default class Coordinators extends Component {
         )
     }
 }
+
+export default withStyles(styles)(Coordinators)

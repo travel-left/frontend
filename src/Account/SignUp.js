@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { withFormik } from "formik";
 import * as Yup from 'yup'
-import Card from '@material-ui/core/Card'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
+import LeftButton from '../util/otherComponents/LeftButton'
+import Button from '@material-ui/core/Button'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     card: {
         minHeight: 425,
         width: 358,
@@ -17,9 +17,26 @@ const useStyles = makeStyles({
         fontFamily: 'OpenSans-SemiBold',
         fontSize: '14px',
         color: '#A1A1A1',
-        letterSpacing: '0.3px'
+        letterSpacing: '0.3px',
+        textAlign: 'center'
+    },
+    title: {
+        textAlign: 'center'
+    },
+    button: {
+        backgroundColor: 'transparent',
+        width: '180px',
+        height: '50px',
+        '&:hover': {
+            color: theme.palette.primary.main,
+            backgroundColor: 'transparent',
+        },
+        '&:active': {
+            color: theme.palette.primary.main,
+            backgroundColor: 'transparent',
+        }
     }
-})
+}))
 
 const form = props => {
     const {
@@ -30,7 +47,10 @@ const form = props => {
         handleChange,
         handleBlur,
         handleSubmit,
+        handleSwitch
     } = props
+
+    const classes = useStyles()
 
     return (
         <form onSubmit={handleSubmit}>
@@ -75,9 +95,14 @@ const form = props => {
                 helperText={touched.password ? errors.password : ""}
                 fullWidth
             />
-            <Button size="large" type="submit" variant="contained" color="primary" id="signup" style={{ width: '180px', height: '50px', float: 'right', marginTop: '25px' }} disabled={isSubmitting}>
-                Sign up
-            </Button>
+            <div style={{ marginTop: 56, display: 'flex', justifyContent: 'space-between' }}>
+                <Button color="secondary" onClick={() => handleSwitch('signin')} className={classes.button} disableRipple>
+                    Sign in
+                </Button>
+                <LeftButton type="submit" id="signin" disabled={isSubmitting}>
+                    Sign up
+                </LeftButton>
+            </div>
         </form>
     )
 }
@@ -110,16 +135,16 @@ const Form = withFormik({
     }
 })(form)
 
-export default ({ submit }) => {
+export default ({ submit, handleSwitch }) => {
     const classes = useStyles()
 
     return (
-        <Card className={classes.card} >
-            <Typography variant="h5" >
+        <>
+            <Typography variant="h5" className={classes.title}>
                 Start your free trial.
             </Typography>
             <span className={classes.leftSubHeader}>Create your account by filling out the form below.</span>
-            <Form submit={submit} />
-        </Card>
+            <Form submit={submit} handleSwitch={handleSwitch} />
+        </>
     )
 }

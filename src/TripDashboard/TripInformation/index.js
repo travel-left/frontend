@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { apiCall } from '../../util/api'
-import './TripInfo.css'
 import ReactGA from 'react-ga'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
@@ -12,13 +11,48 @@ import Coordinators from './Coordinators/Coordinators'
 import TripNameForm from '../../Forms/TripNameForm'
 import Snack from '../../util/otherComponents/Snack'
 import LeftFab from '../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
+import sizes from '../../styles/sizes'
+
+const styles = theme => ({
+    tripProfile: {
+        display: "flex",
+        alignItems: "center"
+    },
+    editTripProfileBtn: {
+        marginLeft: theme.spacing(4)
+    },
+    tripNameDescription: {
+        marginLeft: theme.spacing(2),
+        marginTop: theme.spacing(2),
+    },
+    tripDescription: {
+        paddingRight: theme.spacing(50),
+        marginTop: theme.spacing(2),
+        [sizes.down("md")]: {
+            paddingRight: theme.spacing(2)
+        },
+    },
+    divider: {
+        width: '30vw',
+        backgroundColor: theme.palette.grey["A700"],
+        height: 2
+    },
+    tripName: {
+        fontFamily: 'Roboto',
+        fontWeight: '500',
+        fontSize: '30px',
+        color: theme.palette.primary.main,
+        letterSpacing: 0,
+    }
+})
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripinformation')
 }
 
-export default class TripInformation extends Component {
+class TripInformation extends Component {
     currentTripId = this.props.currentTrip._id
     currentUserId = this.props.currentUser._id
 
@@ -69,24 +103,26 @@ export default class TripInformation extends Component {
     }
 
     render() {
-        let { name, dateStart, description } = this.props.currentTrip
+        const { name, dateStart, description } = this.props.currentTrip
+        const { classes, currentUser } = this.props
+        const { isEditTripNameModalOpen, snack } = this.state
 
         return (
-            <div style={{ paddingLeft: 8, paddingRight: 8 }}>
-                <div className="" style={{ marginTop: 16 }}>
-                    <div className="d-flex align-items-center">
+            <div >
+                <div>
+                    <div className={classes.tripProfile}>
                         <Typography variant="h2">Trip Profile</Typography>
-                        <div className="editContainer" style={{ marginLeft: 32 }}>
+                        <div className={classes.editTripProfileBtn}>
                             <LeftFab id="tripInfo-name-button"
                                 onClick={this.openModal}
                             >Edit
                             </LeftFab>
                         </div>
                     </div>
-                    <div style={{ marginLeft: 16 }}>
-                        <h3 className="text-primary TripInfo-name" style={{ marginTop: 24 }}> {name} </h3>
-                        {this.state.isEditTripNameModalOpen && <LeftModal
-                            isOpen={this.state.isEditTripNameModalOpen}
+                    <div className={classes.tripNameDescription}>
+                        <span className={classes.tripName}> {name} </span>
+                        {isEditTripNameModalOpen && <LeftModal
+                            isOpen={isEditTripNameModalOpen}
                             toggleModal={this.closeModal}
                             title='Edit trip profile'
                             submit={this.updateTrip}
@@ -94,16 +130,18 @@ export default class TripInformation extends Component {
                             name={name}
                             description={description}
                         />}
-                        <Divider style={{ width: '30vw', backgroundColor: '#475561', height: 2 }}></Divider>
-                        <Typography variant="subtitle1" className="TripInfo-descript" style={{ paddingRight: 128, marginTop: 16 }} >{description} </Typography>
+                        <Divider className={classes.divider}></Divider>
+                        <Typography variant="subtitle1" className={classes.tripDescription} >{description} </Typography>
                     </div>
                 </div>
-                <Coordinators tripId={this.currentTripId} currentUser={this.props.currentUser}></Coordinators>
+                <Coordinators tripId={this.currentTripId} currentUser={currentUser}></Coordinators>
                 <TripDates tripId={this.currentTripId} dateStart={dateStart}></TripDates>
                 <Resources tripId={this.currentTripId}></Resources>
                 <Contacts tripId={this.currentTripId}></Contacts>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
+                {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )
     }
 }
+
+export default withStyles(styles)(TripInformation)

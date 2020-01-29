@@ -51,7 +51,7 @@ const form = props => {
                 fullWidth
             />
             <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div className="d-flex justify-content-between">
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <KeyboardDatePicker
                         disableToolbar
                         autoOk

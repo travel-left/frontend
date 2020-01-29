@@ -5,7 +5,7 @@ import List from '@material-ui/core/List'
 export default ({ days, handleClick, selectedDay }) => {
     days.sort(date_sort_asc)
     return (
-        <List component="div" style={{ paddingTop: 0, paddingBottom: 0 }}>
+        <List component="div" >
             {days.map((day, index) => (
                 <Day
                     handleClick={handleClick}

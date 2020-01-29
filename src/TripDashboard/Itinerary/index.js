@@ -4,26 +4,57 @@ import EventList from './Events/EventList'
 import { apiCall } from '../../util/api'
 import moment from 'moment-timezone'
 import { scroller } from 'react-scroll'
-import './Events.css'
 import ReactGA from 'react-ga'
 import Snack from '../../util/otherComponents/Snack'
 import Grid from '@material-ui/core/Grid'
 import CreateQuickEventForm from '../../Forms/CreateQuickEventForm'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import LeftModal from '../../util/otherComponents/LeftModal';
 import EventForm from '../../Forms/EventForm'
 import Card from '@material-ui/core/Card'
 import ContainedUploader from '../../Forms/ContainedUploader'
 import { airports } from '../../util/airlines'
+import { withStyles } from '@material-ui/core'
+import LeftButton from '../../util/otherComponents/LeftButton'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/events')
 }
 
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        width: '100%'
+    },
+    eventsSection: {
+        paddingRight: theme.spacing(2)
+    },
+    eventList: {
+        display: "flex",
+        flexDirection: "column",
+        paddingLeft: theme.spacing(2)
+    },
+    newEventContainer: {
+        display: 'flex',
+        alignItems: "center",
+        justifyContent: "center",
+        height: theme.spacing(16),
+    },
+    quickEventForm: {
+        padding: theme.spacing(2),
+        margin: theme.spacing(1, 0),
+    },
+    uploadContainer: {
+        height: theme.spacing(16),
+        margin: theme.spacing(2, 0)
+    },
+    sidebar: {
+        display: props => props.share && 'none'
+    }
+})
 
-class events extends Component {
+class Events extends Component {
     localTimezone = moment.tz.guess(true)
 
     state = {
@@ -69,9 +100,8 @@ class events extends Component {
                         flightNumber: event.flightNumber
                     })
 
-                    console.log(flightStats)
                     let geo = airports.filter(airport => airport.airport === flightStats.departureIata)[0]
-                    console.log(geo)
+
                     event = {
                         ...event,
                         start: moment(event.start.split('T')[0] + ' ' + flightStats.departureTime),
@@ -91,7 +121,6 @@ class events extends Component {
                         endTime: flightStats.arrivalTime
                     }
                 } catch (err) {
-                    console.log(err)
                 }
             }
 
@@ -114,7 +143,7 @@ class events extends Component {
 
     createEvent = async event => {
         event = formatEventForBackend(event)
-        console.log(event)
+
         try {
             await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events`, event)
             this.setState({
@@ -167,7 +196,7 @@ class events extends Component {
 
     updateEvent = async (eventId, event) => {
         event = formatEventForBackend(event)
-        console.log(event)
+
         try {
             await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, event)
             this.setState({
@@ -231,6 +260,7 @@ class events extends Component {
     }
 
     render() {
+        const { classes, share } = this.props
         const { days, events, selectedDay, documents } = this.state
         const dayList = days.length ? (
             <DayList
@@ -248,66 +278,62 @@ class events extends Component {
                 documents={this.state.documents}
                 share={this.props.share}
             />
-        ) : <h4 className="text-info" />
+        ) : <h4 />
 
         return (
-            <div className="d-flex row" style={{ paddingRight: 16, paddingLeft: 16, marginTop: 16 }}>
-                <div className={this.props.share ? 'col-12' : 'col-12 col-lg-8'}>
-                    <Grid item xs={12} style={{ marginRight: this.props.share ? null : 16 }}>
-                        <div className="row justify-content-between">
-                            <Typography variant="h2">Itinerary</Typography>
-                        </div>
-                        <div className="row d-flex flex-column">
-                            {eventList}
-                        </div>
-                    </Grid>
-                </div>
-                {!this.props.share && <div className="col-12 col-lg-4 px-0">
-                    <div style={{ padding: 16 }}>
-                        <div className="row flex-column align-items-center" style={{ marginBottom: 16 }}>
-                            {documents && <Button size="large" onClick={this.toggleModal} variant="contained" color="primary" style={{ width: '180px', height: '50px', float: 'right', marginTop: 25, marginBottom: 25, marginLeft: 16, marginRight: 16 }} >
+            <Grid container className={classes.container}>
+                <Grid item xs={12} md={!share ? 8 : 12} className={classes.eventsSection}>
+                    <Typography variant="h2">Itinerary</Typography>
+                    <div className={classes.eventList}>
+                        {eventList}
+                    </div>
+                </Grid>
+                <Grid item xs={12} md={4} className={classes.sidebar}>
+                    <div className={classes.newEventContainer}>
+                        {documents &&
+                            <LeftButton
+                                onClick={this.toggleModal}
+                            >
                                 NEW EVENT
-                            </Button>}
-                            {this.state.isOpen &&
-                                <LeftModal
-                                    submit={this.createEvent}
-                                    date={this.props.currentTrip.dateStart}
-                                    documents={this.state.documents}
-                                    trip={this.props.currentTrip}
-                                    toggleModal={this.toggleModal}
-                                    isOpen={this.state.isOpen}
-                                    title='Create a new event'
-                                    form={EventForm}
-                                />
-                            }
-                        </div>
-                        <div className="row flex-column">
-                            {dayList}
-                            <Card style={{ padding: 16, marginTop: 16 }}>
-                                <CreateQuickEventForm
-                                    submit={this.createQuickEvent}
-                                    date={this.props.currentTrip.dateStart}
-                                ></CreateQuickEventForm>
-                            </Card>
-                            <div style={{ marginTop: 16 }}>
-                                <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
-                            </div>
+                            </LeftButton>
+                        }
+                        {this.state.isOpen &&
+                            <LeftModal
+                                submit={this.createEvent}
+                                date={this.props.currentTrip.dateStart}
+                                documents={this.state.documents}
+                                trip={this.props.currentTrip}
+                                toggleModal={this.toggleModal}
+                                isOpen={this.state.isOpen}
+                                title='Create a new event'
+                                form={EventForm}
+                            />
+                        }
+                    </div>
+                    <div>
+                        {dayList}
+                        <Card className={classes.quickEventForm}>
+                            <CreateQuickEventForm
+                                submit={this.createQuickEvent}
+                                date={this.props.currentTrip.dateStart}
+                            ></CreateQuickEventForm>
+                        </Card>
+                        <div className={classes.uploadContainer}>
+                            <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
                         </div>
                     </div>
-                </div>}
+                </Grid>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            </Grid>
         )
     }
 }
 
-export default events
+export default withStyles(styles)(Events)
 
 function formatEventForBackend(event) {
     event.start = formatDateTime(event.date, event.start)
     event.end = formatDateTime(event.date, event.end)
-    console.log(event.start)
-    console.log(event.end)
     event.type = event.type.toUpperCase()
     event.documents = event.selectedDocuments
     event.links = event.links.length ? event.links.split(' ').map(link => link) : []

@@ -4,13 +4,22 @@ import { apiCall } from '../../../util/api'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import LeftModal from '../../../util/otherComponents/LeftModal'
-import Fab from '@material-ui/core/Fab'
 import ContactForm from '../../../Forms/ContactForm'
 import LeftItem from '../../../util/otherComponents/LeftItem'
 import Snack from '../../../util/otherComponents/Snack'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
 
-export default class Contacts extends Component {
+const styles = theme => ({
+    contactSection: {
+        marginTop: theme.spacing(4)
+    },
+    contactList: {
+        marginTop: theme.spacing(2)
+    }
+})
+
+class Contacts extends Component {
     TRIP_ID = this.props.tripId
 
     state = {
@@ -124,6 +133,7 @@ export default class Contacts extends Component {
 
 
     render() {
+        const { classes } = this.props
         const { contacts } = this.state
 
         let contactList = contacts.map(contact =>
@@ -151,9 +161,9 @@ export default class Contacts extends Component {
         !this.props.share && contactList.splice(1, 0, newContactButton)
 
         return (
-            <div style={{ marginTop: 64 }}>
+            <div className={classes.contactSection}>
                 <Typography variant="h2" style={{ marginBottom: 16 }}>Contacts</Typography>
-                <Grid container>
+                <Grid container className={classes.contactList}>
                     {contactList}
                     {this.state.isNewContactModalOpen && <LeftModal
                         isOpen={this.state.isNewContactModalOpen}
@@ -169,3 +179,5 @@ export default class Contacts extends Component {
         )
     }
 }
+
+export default withStyles(styles)(Contacts)

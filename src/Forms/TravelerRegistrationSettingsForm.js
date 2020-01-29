@@ -27,27 +27,27 @@ const form = props => {
     return (
         <form onSubmit={handleSubmit}>
             <FormGroup>
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Name</span>
                     <Switch checked={values.hasName} onChange={handleChange('hasName')} value="hasName" />
                 </div>
-                {/* <div className="d-flex justify-content-between align-items-center">
+                {/* <div >
                     <span htmlFor="">Picture</span>
                     <Switch checked={values.hasImage} onChange={handleChange('hasImage')} value="hasImage" />
                 </div> */}
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Email</span>
                     <Switch checked={values.hasEmail} onChange={handleChange('hasEmail')} value="hasEmail" />
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Phone</span>
                     <Switch checked={values.hasPhone} onChange={handleChange('hasPhone')} value="hasPhone" />
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Personal Notes</span>
                     <Switch checked={values.hasPersonalNotes} onChange={handleChange('hasPersonalNotes')} value="hasPersonalNotes" />
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Payment</span>
                     {!values.canRequestPayments ?
                         <Tooltip title="Account must be verified before requesting payments." disableFocusListener arrow>
@@ -71,7 +71,7 @@ const form = props => {
                     }}
                     style={{ marginTop: 8, marginBottom: 16, width: 180, marginLeft: 16 }}
                 />}
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Registration Due Date</span>
                     <Switch checked={values.hasDueDate} onChange={handleChange('hasDueDate')} value="hasDueDate" />
                 </div>
@@ -96,7 +96,7 @@ const form = props => {
                         style={{ marginTop: 8, marginBottom: 16, width: 180, marginLeft: 16 }}
                     />
                 </MuiPickersUtilsProvider>}
-                <div className="d-flex justify-content-between align-items-center">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span htmlFor="">Publish</span>
                     <Switch checked={values.hasPublish} onChange={handleChange('hasPublish')} value="hasPublish" color="primary" />
                 </div>

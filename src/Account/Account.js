@@ -15,14 +15,14 @@ const Account = props => {
         initializeReactGA()
     }
     return (
-        <Grid container spacing={2}>
+        <Grid container>
             <Grid item xs={12} style={{ paddingTop: 16 }}>
                 <AccountCover user={props.currentUser} setCurrentUser={props.setCurrentUser}></AccountCover>
             </Grid>
             <Grid item xs={12} md={2}>
                 <AccountSideNav />
             </Grid>
-            <Grid item xs={12} md={8} lg={8} justify='center' className='d-flex'>
+            <Grid item xs={12} md={8} lg={8} justify='center' style={{ display: 'flex' }}>
                 <Grid item xs={12} md={8} lg={6} >
                     <AccountRouter
                         currentUser={props.currentUser}

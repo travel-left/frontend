@@ -3,7 +3,6 @@ import { apiCall } from '../../util/api'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './TravelerList'
 import TravelerInfo from './TravelerInfo'
-import Checkbox from '@material-ui/core/Checkbox'
 import './Travelers.css'
 import ReactGA from 'react-ga'
 import AddTravelerToTripFromOrgForm from '../../Forms/AddTravelerToTripFromOrgForm'
@@ -18,7 +17,6 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import CommunicateWithTravelersForm from '../../Forms/CommunicateWithTravelersForm'
 import MessageOutlinedIcon from '@material-ui/icons/MessageOutlined'
-import Button from '@material-ui/core/Button'
 import ImportCsvForm from '../../Forms/ImportCsvForm'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import RegisterAccountModalForm from '../../Forms/RegisterAccountModalForm'
@@ -26,12 +24,91 @@ import CollectMoneyForm from '../../Forms/CollectMoneyForm'
 import TravelerForm from '../../Forms/TravelerForm'
 import TravelerRegistrationSettingsForm from '../../Forms/TravelerRegistrationSettingsForm'
 import LeftButton from '../../util/otherComponents/LeftButton'
-
+import { withStyles } from '@material-ui/core'
+import TravelerListHeader from './TravelerListHeader'
+import sizes from '../../styles/sizes'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/managetravelers')
 }
+
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        width: '100%'
+    },
+    travelersSection: {
+        padding: props => !props.currentTrip ? theme.spacing(0, 2) : theme.spacing(0, 2, 0, 0),
+        margin: props => !props.currentTrip && theme.spacing(2, 0),
+        [sizes.down("md")]: {
+            paddingRight: props => props.currentTrip && "0 !important"
+        }
+    },
+    buttonsContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        width: '100%',
+        padding: theme.spacing(2, 0)
+    },
+    tinyButtonsContainer: {
+        display: 'flex',
+        [sizes.down("md")]: {
+            width: '100%',
+            justifyContent: 'center',
+            margin: theme.spacing(2, 0)
+        },
+    },
+    paperButton: {
+        height: theme.spacing(6),
+        width: theme.spacing(9),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: theme.spacing(0, 1)
+    },
+    orgButtons: {
+        display: 'flex',
+        flexDirection: 'column',
+        [sizes.down("md")]: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%'
+        }
+    },
+    newTraveler: {
+        marginTop: theme.spacing(2),
+        [sizes.down("md")]: {
+            marginTop: theme.spacing(0)
+        }
+    },
+    regButton: {
+        marginTop: theme.spacing(2),
+        [sizes.down("md")]: {
+            marginTop: theme.spacing(0)
+        }
+    },
+    filters: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        marginBottom: theme.spacing(2),
+        [sizes.down("md")]: {
+            marginBottom: theme.spacing(0),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            flexWrap: 'wrap'
+        }
+    },
+    filterText: {
+        display: 'block',
+        width: '100%'
+    }
+})
 
 class Travelers extends Component {
     currentTripId = this.props.currentTrip ? this.props.currentTrip._id : null
@@ -408,8 +485,6 @@ class Travelers extends Component {
             }
         }
 
-        console.log(updateObject)
-
         try {
             const updatedTrip = await apiCall(
                 'put',
@@ -511,8 +586,9 @@ class Travelers extends Component {
     }
 
     render() {
+        const { classes, currentTrip } = this.props
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
-        const csvUpload = (<>
+        const csvUpload = <>
             <LeftButton onClick={this.toggleImportCsvModal} color="secondary">
                 IMPORT FROM CSV
             </LeftButton>
@@ -524,194 +600,171 @@ class Travelers extends Component {
                 form={ImportCsvForm}
             />}
         </>
-        )
 
-        const registrationForm = (
-            <>
-                {this.state.madeStripeAccountRequest &&
-                    <div style={{ marginTop: 16 }}>
-                        <LeftButton onClick={this.toggleRegistrationModal}>
-                            registration form
-                </LeftButton>
-                    </div>
-                }
-                {this.state.isRegistrationModalOpen && <LeftModal
-                    isOpen={this.state.isRegistrationModalOpen}
-                    toggleModal={this.toggleRegistrationModal}
-                    title='Customize your traveler registration'
-                    submit={this.updateTripRegistrationForm}
-                    form={TravelerRegistrationSettingsForm}
-                    settings={this.props.currentTrip.travelerRegistrationFormSettings}
-                    canRequestPayments={this.state.canRequestPayments}
-                />}
-            </>
-        )
-
-        const newTravelerInOrg = (
-            <>
-                <div style={{ marginTop: 16 }}>
-                    <LeftButton onClick={this.openAddNewTravelerOrgModal}>
-                        NEW TRAVELER
-                </LeftButton>
+        const registrationForm = <>
+            {this.state.madeStripeAccountRequest &&
+                <div className={classes.regButton}>
+                    <LeftButton onClick={this.toggleRegistrationModal}>
+                        registration form
+            </LeftButton>
                 </div>
-                {
-                    this.state.isAddNewTravelerOrgModalOpen &&
-                    <LeftModal
-                        isOpen={this.state.isAddNewTravelerOrgModalOpen}
-                        toggleModal={this.closeAddNewTravelerOrgModal}
-                        title='Add new traveler'
-                        submit={this.addTravelerToOrg}
-                        form={TravelerForm}
-                    />
-                }
-            </>
-        )
+            }
+            {this.state.isRegistrationModalOpen && <LeftModal
+                isOpen={this.state.isRegistrationModalOpen}
+                toggleModal={this.toggleRegistrationModal}
+                title='Customize your traveler registration'
+                submit={this.updateTripRegistrationForm}
+                form={TravelerRegistrationSettingsForm}
+                settings={this.props.currentTrip.travelerRegistrationFormSettings}
+                canRequestPayments={this.state.canRequestPayments}
+            />}
+        </>
+
+        const newTravelerInOrg = <>
+            <div className={classes.newTraveler}>
+                <LeftButton onClick={this.openAddNewTravelerOrgModal}>
+                    NEW TRAVELER
+            </LeftButton>
+            </div>
+            {
+                this.state.isAddNewTravelerOrgModalOpen &&
+                <LeftModal
+                    isOpen={this.state.isAddNewTravelerOrgModalOpen}
+                    toggleModal={this.closeAddNewTravelerOrgModal}
+                    title='Add new traveler'
+                    submit={this.addTravelerToOrg}
+                    form={TravelerForm}
+                />
+            }
+        </>
+
         return (
-            <div className="d-flex row" style={{ paddingLeft: 24, paddingRight: 16, marginTop: 16 }}>
-                <div className="col-12 col-lg-8 p-0">
-                    <Grid item xs={12} style={{ marginRight: 16 }}>
-                        <Typography variant="h2">{this.props.currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
-                        <div className="d-flex justify-content-between row mx-0" style={{ marginTop: 16 }}>
-                            <LeftMultipleSelect allValues={travelerStatus} selectedValues={statusFiltersChecked} onChange={this.handleStatusFilterChange} label='All Status'></LeftMultipleSelect>
-                            {!this.props.currentTrip && <LeftMultipleSelect allValues={tripFilters} selectedValues={tripFiltersChecked} onChange={this.handleTripFilterChange} label='All Trips'></LeftMultipleSelect>}
-                            <div className="d-flex flex-row" style={{ marginBottom: 16 }}>
-                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
-                                    <IconButton onClick={this.openChangeStatusModal}>
-                                        <CreateOutlinedIcon fontSize="large" />
-                                    </IconButton>
-                                </Paper>
-                                {
-                                    this.state.isChangeStatusModalOpen && <LeftModal
-                                        isOpen={this.state.isChangeStatusModalOpen}
-                                        toggleModal={this.closeChangeStatusModal}
-                                        title='Change traveler status'
-                                        submit={this.changeStatusOfSelectedTravelers}
-                                        travelers={this.state.travelers}
-                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
-                                        form={ChangeTravelerStatusForm}
-                                    />
-                                }
-                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
-                                    <IconButton onClick={this.openCommunicateModal}>
-                                        <MessageOutlinedIcon fontSize="large" />
-                                    </IconButton>
-                                </Paper>
-                                {
-                                    this.state.isCommunicateModalOpen && <LeftModal
-                                        isOpen={this.state.isCommunicateModalOpen}
-                                        toggleModal={this.closeCommunicateModal}
-                                        title='Communicate with your travelers'
-                                        submit={this.communicateWithSelectedTravelers}
-                                        travelers={this.state.travelers}
-                                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
-                                        form={CommunicateWithTravelersForm}
-                                    />
-                                }
-                                <Paper style={{ height: '50px', width: '72px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 8, marginRight: 8 }}>
-                                    <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
-                                        <AttachMoneyIcon fontSize="large" />
-                                    </IconButton>
-                                </Paper>
-                                {this.state.isCollectMoneyModalOpen && <LeftModal
-                                    title="Collect money from travelers"
-                                    isOpen={this.state.isCollectMoneyModalOpen}
-                                    toggleModal={this.toggleCollectMoneyModal}
-                                    submit={this.collectMoneyFromTravelers}
+            <Grid container className={classes.container}>
+                <Grid item xs={12} md={8} className={classes.travelersSection}>
+                    <Typography className={classes.title} variant="h2">{currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
+                    <div className={classes.buttonsContainer}>
+                        <div className={classes.filters}>
+                            <Typography variant="h6" className={classes.filterText}>Filter by</Typography>
+                            <LeftMultipleSelect
+                                allValues={travelerStatus}
+                                selectedValues={statusFiltersChecked}
+                                onChange={this.handleStatusFilterChange}
+                                label='Status'
+                            ></LeftMultipleSelect>
+                            {!currentTrip &&
+                                <LeftMultipleSelect
+                                    allValues={tripFilters}
+                                    selectedValues={tripFiltersChecked}
+                                    onChange={this.handleTripFilterChange}
+                                    label='Trip'
+                                ></LeftMultipleSelect>
+                            }
+                        </div>
+
+                        <div className={classes.tinyButtonsContainer}>
+                            <Paper className={classes.paperButton}>
+                                <IconButton onClick={this.openChangeStatusModal}>
+                                    <CreateOutlinedIcon fontSize="large" />
+                                </IconButton>
+                            </Paper>
+                            {
+                                this.state.isChangeStatusModalOpen && <LeftModal
+                                    isOpen={this.state.isChangeStatusModalOpen}
+                                    toggleModal={this.closeChangeStatusModal}
+                                    title='Change traveler status'
+                                    submit={this.changeStatusOfSelectedTravelers}
                                     travelers={this.state.travelers}
                                     selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
-                                    form={CollectMoneyForm}
-                                >
-                                </LeftModal>}
-                                {this.state.isRegisterAccountModalOpen && <LeftModal
-                                    isOpen={this.state.isRegisterAccountModalOpen}
-                                    toggleModal={this.toggleRegisterAccontModal}
-                                    title="Register your account to collect payments"
-                                    submit={this.registerAccount}
-                                    form={RegisterAccountModalForm}
-                                >
-                                </LeftModal>}
-                            </div>
-                            <div className="d-flex flex-column">
-                                {!this.props.currentTrip && csvUpload}
-                                {this.props.currentTrip ? (
-                                    <>
-                                        <Button size="large" variant="contained" color="primary" style={{ width: '180px', height: '50px', }} onClick={this.openAddModal}>
-                                            ADD TRAVELER
-                                        </Button>
-                                        {this.state.isAddModalOpen &&
-                                            <LeftModal
-                                                isOpen={this.state.isAddModalOpen}
-                                                toggleModal={this.closeAddModal}
-                                                title='Add travelers to this trip'
-                                                submit={this.addTraveler}
-                                                travelers={this.state.travelersNotOnTrip}
-                                                form={AddTravelerToTripFromOrgForm}
-                                            />
-                                        }
-                                    </>) : newTravelerInOrg}
-                                {this.props.currentTrip && registrationForm}
-                            </div>
+                                    form={ChangeTravelerStatusForm}
+                                />
+                            }
+                            <Paper className={classes.paperButton}>
+                                <IconButton onClick={this.openCommunicateModal}>
+                                    <MessageOutlinedIcon fontSize="large" />
+                                </IconButton>
+                            </Paper>
+                            {
+                                this.state.isCommunicateModalOpen && <LeftModal
+                                    isOpen={this.state.isCommunicateModalOpen}
+                                    toggleModal={this.closeCommunicateModal}
+                                    title='Communicate with your travelers'
+                                    submit={this.communicateWithSelectedTravelers}
+                                    travelers={this.state.travelers}
+                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                                    form={CommunicateWithTravelersForm}
+                                />
+                            }
+                            <Paper className={classes.paperButton}>
+                                <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
+                                    <AttachMoneyIcon fontSize="large" />
+                                </IconButton>
+                            </Paper>
+                            {this.state.isCollectMoneyModalOpen && <LeftModal
+                                title="Collect money from travelers"
+                                isOpen={this.state.isCollectMoneyModalOpen}
+                                toggleModal={this.toggleCollectMoneyModal}
+                                submit={this.collectMoneyFromTravelers}
+                                travelers={this.state.travelers}
+                                selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                                form={CollectMoneyForm}
+                            >
+                            </LeftModal>}
+                            {this.state.isRegisterAccountModalOpen && <LeftModal
+                                isOpen={this.state.isRegisterAccountModalOpen}
+                                toggleModal={this.toggleRegisterAccontModal}
+                                title="Register your account to collect payments"
+                                submit={this.registerAccount}
+                                form={RegisterAccountModalForm}
+                            >
+                            </LeftModal>}
                         </div>
-                        <Paper style={{ marginTop: 16 }}>
-                            <div className="d-flex flex-row justify-content-between align-items-center TripsListHeader">
-                                <Grid item xs={1} style={{ paddingLeft: 16 }}>
-                                    <Checkbox
-                                        onChange={this.toggleAll}
-                                        className=""
-                                        checked={allSelected}
-                                        label="noshow"
-                                        color="primary"
-                                        style={{ padding: 0 }}
+                        <div className={classes.orgButtons}>
+                            {!currentTrip && csvUpload}
+                            {currentTrip ? <>
+                                <LeftButton onClick={this.openAddModal}>
+                                    ADD TRAVELER
+                                </LeftButton>
+                                {this.state.isAddModalOpen &&
+                                    <LeftModal
+                                        isOpen={this.state.isAddModalOpen}
+                                        toggleModal={this.closeAddModal}
+                                        title='Add travelers to this trip'
+                                        submit={this.addTraveler}
+                                        travelers={this.state.travelersNotOnTrip}
+                                        form={AddTravelerToTripFromOrgForm}
                                     />
-                                </Grid>
-                                <Grid item xs={2} className="d-none d-xl-flex"></Grid>
-                                <Grid item xs={2}>
-                                    <Typography variant="h6">
-                                        NAME
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={!this.props.currentTrip ? 2 : 3} className="d-none d-xl-flex">
-                                    <Typography variant="h6">
-                                        CONTACT
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={!this.props.currentTrip ? 2 : 3}>
-                                    <Typography variant="h6">
-                                        STATUS
-                                    </Typography>
-                                </Grid>
-                                {!this.props.currentTrip &&
-                                    <Grid item xs={2}>
-                                        <Typography variant="h6">TRIP</Typography>
-                                    </Grid>
-                                }<Grid item xs={1}></Grid>
-                            </div>
-                        </Paper>
-
-                        <TravelerList
-                            items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
-                            toggle={this.toggle}
-                            doubleClick={this.setSelectedTraveler}
-                            showTrip={this.props.currentTrip ? false : true}
-                        />
-                    </Grid >
-
-                </div>
-                <div className="col-12 col-lg-4 px-0">
+                                }
+                            </> : newTravelerInOrg}
+                            {this.props.currentTrip && registrationForm}
+                        </div>
+                    </div>
+                    <TravelerListHeader
+                        toggleAll={this.toggleAll}
+                        allSelectd={allSelected}
+                        showTrip={this.props.currentTrip}
+                    ></TravelerListHeader>
+                    <TravelerList
+                        items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
+                        toggle={this.toggle}
+                        doubleClick={this.setSelectedTraveler}
+                        showTrip={this.props.currentTrip ? false : true}
+                    />
+                </Grid >
+                <Grid item xs={12} md={4} >
                     {this.state.selectedTraveler && <TravelerInfo
                         traveler={selectedTraveler}
                         update={this.updateTraveler}
                         remove={this.props.currentTrip ? this.removeTraveler : this.removeTravelerFromOrg}
                     />}
-                </div>
+                </Grid>
 
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div >
+            </Grid >
         )
     }
 }
 
-export default Travelers
+export default withStyles(styles)(Travelers)
 
 const travelersInOrgNotOnTrip = (travelersOnTrip, traverlersInOrg) => {
     travelersOnTrip = travelersOnTrip.map(t => t._id)

@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import Moment from 'react-moment'
 import { apiCall } from '../../util/api'
 import TripStatus from '../../util/otherComponents/TripStatus'
-import './TripInfo.css'
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 import Chip from '@material-ui/core/Chip'
-import Typography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
+import styles from '../../styles/tripInfo'
 
 class TripInfo extends Component {
     state = {
@@ -53,65 +55,56 @@ class TripInfo extends Component {
     }
 
     render() {
-        let {
-            name,
-            dateStart,
-            dateEnd,
-            image,
-            description,
-            status
-        } = this.props.trip
-
-        dateStart = dateStart ? dateStart.split('T')[0] : null
-        dateEnd = dateEnd ? dateEnd.split('T')[0] : null
-
-        let invited = this.state.travelers.length
-        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
+        const { name, dateStart, image, description, status } = this.props.trip
+        const { classes } = this.props
+        const { travelers } = this.state
+        const invited = travelers.length
+        const confirmed = travelers.filter(t => t.status !== 'INVITED').length
 
         return (
-            <Paper style={{ padding: 16 }}>
-                <div className="" style={{ position: 'relative', marginBottom: 32 }}>
+            <Fade in={true} timeout={700}>
+                <Paper className={classes.tripInfo}>
                     <img
                         src={image}
-                        className="card-img-top TripInfo-image"
+                        className={classes.tripInfoImage}
                         alt="..."
                     />
-                </div>
-
-                <div className="">
-                    <div className="d-flex justify-content-between" style={{ marginBottom: 32 }}>
+                    <div className={classes.tripInfoName}>
                         <Typography variant="h2">{name}</Typography>
-                        <Button size="large" variant="contained" color="primary" onClick={this.handleEditClick} className="float-right" style={{ width: 120, height: 50 }}>open trip</Button>
                     </div>
-                    <div style={{ marginBottom: 24 }}>
-                        <p className="TripInfo-description">{description}</p>
+                    <div className={classes.tripInfoDescription}>
+                        <Typography variant="subtitle1">
+                            {description}
+                        </Typography>
                     </div>
-                    <div className='TripInfo-details' style={{ marginBottom: 24 }}>
-                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                    <div >
+                        <div className={classes.tripInfoData}>
                             <Typography variant="h6">Date</Typography>
-                            <span className='TripInfo-details-date'><Moment date={dateStart} format="MMM DD" /></span>
+                            <Typography variant="subtitle2">
+                                <Moment date={dateStart ? dateStart.split('T')[0] : null} format="MMM DD" />
+                            </Typography>
                         </div>
-                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                        <div className={classes.tripInfoData}>
                             <Typography variant="h6">Status</Typography>
                             <span><TripStatus status={status} /></span>
                         </div>
-                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                        <div className={classes.tripInfoData}>
                             <Typography variant="h6">Total Invited</Typography>
                             <Chip color="primary" size="small" label={invited} style={{ fontSize: 12, fontWeight: 600 }} />
                         </div>
-                        <div className='d-flex justify-content-between align-items-center' style={{ marginBottom: 24 }}>
+                        <div className={classes.tripInfoData}>
                             <Typography variant="h6">Total Confirmed</Typography>
                             <Chip color="primary" size="small" label={confirmed} style={{ fontSize: 12, fontWeight: 600 }} />
                         </div>
                     </div>
-                    <div className='d-flex justify-content-between'>
+                    <div className={classes.buttons}>
                         <Button size="large" variant="contained" color="secondary" onClick={this.handleDuplicate} className="float-right" style={{ width: 120, height: 50 }} disabled={this.state.copying}>DUPLICATE</Button>
                         <Button size="large" variant="contained" color="secondary" onClick={this.handleArchive} className="float-right" style={{ width: 120, height: 50 }}>ARCHIVE</Button>
                     </div>
-                </div>
-            </Paper>
+                </Paper>
+            </Fade>
         )
     }
 }
 
-export default TripInfo
+export default withStyles(styles)(TripInfo) 

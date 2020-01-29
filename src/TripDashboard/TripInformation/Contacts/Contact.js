@@ -1,11 +1,39 @@
 import React, { Component } from 'react'
 import Image from '../../../util/otherComponents/Image'
-import './Contact.css'
 import LeftModal from '../../../util/otherComponents/LeftModal'
 import ContactForm from '../../../Forms/ContactForm'
-import LeftCardNew from '../../../util/otherComponents/LeftCardNew'
+import LeftCard from '../../../util/otherComponents/LeftCard'
 import PhoneInTalkIcon from '@material-ui/icons/PhoneInTalk'
 import LeftFab from '../../../util/otherComponents/LeftFab'
+import { withStyles } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+
+const styles = theme => ({
+    contact: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
+    contactName: {
+        fontFamily: "Roboto",
+        fontSize: "16px",
+        color: theme.palette.grey["A700"],
+        letterSpacing: "0",
+    },
+    contactInfo: {
+        fontFamily: "Roboto",
+        fontSize: "12px",
+        color: theme.palette.grey["A600"],
+        letterSpacing: "0",
+    },
+    tele: {
+        fontFamily: "Roboto",
+        fontSize: "12px",
+        color: theme.palette.grey["A600"],
+        letterSpacing: "0",
+        width: theme.spacing(7)
+    }
+})
 
 class Contact extends Component {
     state = {
@@ -25,27 +53,32 @@ class Contact extends Component {
     }
 
     render() {
-        let { name, phone, email, image } = this.props
+        const { name, phone, email, image, share, classes } = this.props
+        const { isEditContactModalOpen } = this.state
 
         return (
-            <LeftCardNew height={100}>
+            <LeftCard>
                 <Image diameter={64} src={image} name={name} />
-                <div className="d-flex flex-column justify-content-center">
-                    {name && <span className="Coordinator-name">{name}</span>}
-                    {phone && <a className="Coordinator-info" href={`tel:${phone}`}>{phone}</a>}
-                    {email && <span className="Coordinator-info">{email}</span>}
+                <div className={classes.contact}>
+                    {name && <span className={classes.contactName}>{name}</span>}
+                    {phone && <a className={classes.contactInfo} href={`tel:${phone}`}><Typography variant="caption">{phone}</Typography></a>}
+                    {email && <Typography variant="caption">{email}</Typography>}
                 </div>
                 <>
-                    {!this.props.share ? <LeftFab id="contact-edit-button"
-                        onClick={this.openModal}
-                    >Edit
-                    </LeftFab> : <a className="Coordinator-info" href={`tel:${phone}`} style={{ width: '54px', }}>
+                    {!share ?
+                        <LeftFab
+                            id="contact-edit-button"
+                            onClick={this.openModal}
+                        >
+                            Edit
+                    </LeftFab> :
+                        <a className={classes.tele} href={`tel:${phone}`}>
                             {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
                         </a>
                     }
                     {
-                        this.state.isEditContactModalOpen && <LeftModal
-                            isOpen={this.state.isEditContactModalOpen}
+                        isEditContactModalOpen && <LeftModal
+                            isOpen={isEditContactModalOpen}
                             toggleModal={this.closeModal}
                             title='Remove contact from trip'
                             form={ContactForm}
@@ -57,9 +90,9 @@ class Contact extends Component {
                         />
                     }
                 </>
-            </LeftCardNew>
+            </LeftCard>
         )
     }
 }
 
-export default Contact
+export default withStyles(styles)(Contact)

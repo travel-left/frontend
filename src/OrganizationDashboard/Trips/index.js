@@ -14,13 +14,13 @@ import { withRouter } from 'react-router-dom'
 import LeftModal from '../../util/otherComponents/LeftModal'
 import CreateTripForm from '../../Forms/CreateTripForm'
 import Snack from '../../util/otherComponents/Snack'
-import LeftButton from '../../util/otherComponents/LeftButton'
+import { withStyles } from '@material-ui/core'
+import styles from '../../styles/tripsHome'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/tripsdashboard')
 }
-
 
 class Trips extends Component {
     state = {
@@ -202,7 +202,7 @@ class Trips extends Component {
     }
 
     render() {
-        let {
+        const {
             filteredTrips,
             selectedTrip,
             trips,
@@ -210,9 +210,11 @@ class Trips extends Component {
             filter
         } = this.state
 
+        const { classes } = this.props
+
         const showTrips = filteredTrips.length > 0
 
-        let tripList = showTrips ? (
+        const tripList = showTrips ? (
             <TripList
                 trips={filteredTrips}
                 setSelectedTrip={this.setSelectedTrip}
@@ -221,12 +223,18 @@ class Trips extends Component {
         ) : null
 
         return (
-            <Grid container spacing={2} style={{ marginTop: 8 }}>
+            <Grid container>
                 <Grid item xs={12} md={2}>
-                    <div className="px-0 py-5 d-flex justify-content-center">
-                        <LeftButton id="new-trip-button" onClick={() => this.setState({ isOpen: true })}>
+                    <div className={classes.leftGutter} >
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            id="new-trip-button"
+                            onClick={() => this.setState({ isOpen: true })}
+                            className={classes.buttonBox}
+                        >
                             ADD NEW TRIP
-                        </LeftButton>
+                            </Button>
                         {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
                             title='Add New Trip'
@@ -235,7 +243,7 @@ class Trips extends Component {
                             submit={this.addTrip}
                         />}
                     </div>
-                    <List component="div" style={{ paddingTop: 0, paddingBottom: 0 }}>
+                    <List component="div" className={classes.tripFilters}>
                         <SideNavItem
                             text="All Trips"
                             total={trips.length - tripStatusCounts.ARCHIVED}
@@ -279,12 +287,14 @@ class Trips extends Component {
                         />
                     </List>
                 </Grid>
-                <Grid container spacing={2} xs={12} md={10} style={{ paddingLeft: 8 }}>
+                <Grid container xs={12} md={10}>
                     <Grid item xs={12} md={8}>
-                        <TripsListHeader />
-                        {tripList}
+                        <div className={classes.main}>
+                            <TripsListHeader />
+                            {tripList}
+                        </div>
                     </Grid>
-                    <Grid item xs={12} md={4} style={{ paddingRight: 0 }}>
+                    <Grid item xs={12} md={4}>
                         {selectedTrip && <TripInfo
                             trip={selectedTrip}
                             edit={this.editTrip}
@@ -308,4 +318,4 @@ const mapStatetoProps = state => {
 export default withRouter(connect(
     mapStatetoProps,
     { setCurrentTrip }
-)(Trips))
+)(withStyles(styles, { withTheme: true })(Trips)))

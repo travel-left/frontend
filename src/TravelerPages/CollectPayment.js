@@ -45,16 +45,16 @@ export default class CollectPayment extends Component {
         return (
             <>
                 <Navbar></Navbar>
-                <div className="d-flex justify-content-center">
+                <div style={{ display: 'flex', justifyContent: 'center', }}>
                     <Card style={{ padding: 16, maxWidth: 600, marginTop: 32, }}>
                         {showSuccess ? <>
                             <Typography variant="h5" style={{ textAlign: 'center', }}>Your payment has been completed!</Typography>
                         </> :
-                            <div className='d-flex'>
+                            <div style={{ display: 'flex' }}>
                                 <Image src={coordinator.image} style={{ maxWidth: '20vw', marginRight: 16 }} diameter='64px'></Image>
-                                <div className="d-flex flex-column" style={{ marginLeft: 16 }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 16 }}>
                                     <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for your trip.</span>
-                                    <span className='text-muted'>{formInfo.message}</span>
+                                    <span >{formInfo.message}</span>
                                     <CreateChargeForm orgId={this.state.org._id} formId={this.formId} amount={formInfo.amount} onSubmit={this.handleSubmit}></CreateChargeForm>
                                 </div>
                             </div>

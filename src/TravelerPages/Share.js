@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
-import Moment from 'react-moment'
-import moment from 'moment'
-import Typography from '@material-ui/core/Typography'
 import ReactGA from 'react-ga'
 import TripDates from '../TripDashboard/TripInformation/TripDates/TripDates'
 import Resources from '../TripDashboard/TripInformation/Documents/Resources'
@@ -14,14 +11,38 @@ import InfoIcon from '@material-ui/icons/Info'
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Button from '@material-ui/core/Button'
-import { withRouter, NavLink } from 'react-router-dom';
-import LeftFab from '../util/otherComponents/LeftFab';
+import ShareCover from './ShareCover'
+import { withStyles } from '@material-ui/core'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
     ReactGA.pageview('/share')
 }
+
+const styles = theme => ({
+    tabsContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    tabs: {
+        backgroundColor: theme.palette.primary.main,
+        borderRadius: theme.spacing(1),
+        color: "white", width: theme.spacing(60),
+        boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.4), 0px 2px 2px 0px rgba(0,0,0,0.2), 0px 1px 5px 0px rgba(0,0,0,0.22)',
+        zIndex: 10,
+        marginTop: theme.spacing(2)
+    },
+    tab: {
+        fontSize: 10,
+        fontWeight: 600
+    },
+    main: {
+        padding: theme.spacing(2)
+    },
+    itinerary: {
+        marginTop: theme.spacing(4)
+    }
+})
 
 class Share extends Component {
     tripId = this.props.match.params.tripId
@@ -60,119 +81,51 @@ class Share extends Component {
 
 
     render() {
-        let { trip, route } = this.state
+        const { trip, route } = this.state
+        const { classes } = this.props
 
         return (
-            <div className="container-fluid">
+            <div >
                 <ShareCover trip={trip} source={this.source} token={this.state.token} />
-                <div className="d-flex justify-content-center">
+                <div className={classes.tabsContainer}>
                     <Tabs
                         value={route}
                         onChange={(e, route) => this.setState({ route })}
                         variant="fullWidth"
                         indicatorColor="secondary"
-                        style={{
-                            backgroundColor: '#0A58CE', borderRadius: 8, color: "white", width: 480,
-                            boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.4), 0px 2px 2px 0px rgba(0,0,0,0.2), 0px 1px 5px 0px rgba(0,0,0,0.22)',
-                            zIndex: 10,
-                            marginTop: 16
-                        }}
+                        className={classes.tabs}
                     >
-                        <Tab icon={<CalendarTodayIcon fontSize="large" />} label="ITINERARY" style={{ fontSize: 10, fontWeight: 600 }} />
-                        <Tab icon={<InfoIcon fontSize="large" />} label="INFO" style={{ fontSize: 10, fontWeight: 600 }} />
-                        <Tab icon={<PermContactCalendarIcon fontSize="large" />} label="CONTACTS" style={{ fontSize: 10, fontWeight: 600 }} />
+                        <Tab icon={<CalendarTodayIcon fontSize="large" />} label="ITINERARY" className={classes.tab} />
+                        <Tab icon={<InfoIcon fontSize="large" />} label="INFO" className={classes.tab} />
+                        <Tab icon={<PermContactCalendarIcon fontSize="large" />} label="CONTACTS" className={classes.tab} />
                     </Tabs>
                 </div>
-                {route === 0 &&
-                    <div className="container" style={{ marginTop: 64 }}>
-                        {trip._id && <Itinerary
-                            currentTrip={trip}
-                            share={true}
-                        />}
-                    </div>
-                }
-                {route === 1 &&
-                    <div className="container">
-                        <TripDates tripId={this.tripId} dateStart={trip.dateStart} share={true} />
-                        <Resources tripId={this.tripId} share={true} ></Resources>
-                    </div>
-                }
-                {route === 2 &&
-                    <div className="container">
-                        <Coordinators tripId={this.tripId} share={true}></Coordinators>
-                        <Contacts tripId={this.tripId} share={true}></Contacts>
-                    </div>
-                }
+                <div className={classes.main}>
+                    {route === 0 && (
+                        <div className={classes.itinerary}>
+                            {trip._id && <Itinerary
+                                currentTrip={trip}
+                                share={true}
+                            />}
+                        </div>
+                    )
+                    }
+                    {route === 1 &&
+                        <>
+                            <TripDates tripId={this.tripId} dateStart={trip.dateStart} share={true} />
+                            <Resources tripId={this.tripId} share={true} ></Resources>
+                        </>
+                    }
+                    {route === 2 &&
+                        <>
+                            <Coordinators tripId={this.tripId} share={true}></Coordinators>
+                            <Contacts tripId={this.tripId} share={true}></Contacts>
+                        </>
+                    }
+                </div>
             </div>
         )
     }
 }
 
-export default Share
-
-
-const ShareCover = withRouter(({ trip, source, token }) => {
-    let registrationButton = null
-
-    if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasPublish && !token) {
-        registrationButton = (
-            <NavLink
-                to={`/trips/${trip._id}/register`}
-                name={`/trips/${trip._id}/register`}
-            >
-                <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
-                    {trip.travelerRegistrationFormSettings.hasDueDate ? (<>
-                        {'Register By\xa0'}
-                        <Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
-                    </>)
-                        : 'REGISTER'}
-                </Button>
-            </NavLink>
-        )
-    }
-    else if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasPublish && token === 'needPayment') {
-        registrationButton = (
-            <NavLink
-                to={`/trips/${trip._id}/register`}
-                name={`/trips/${trip._id}/register`}
-            >
-                <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
-                    PAY BY{'\xa0'} <Moment date={trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.dueDate.split('T')[0]} format="MMM DD" />
-                </Button >
-            </NavLink>
-        )
-    }
-    else if (token) {
-        registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Thanks for registering</Typography>
-    }
-    if (trip.travelerRegistrationFormSettings && trip.travelerRegistrationFormSettings.hasDueDate && (Date.parse(trip.travelerRegistrationFormSettings.dueDate) < Date.now())) {
-        registrationButton = <Typography variant="h1" color="primary" style={{ display: 'inline', textAlign: 'end' }}>Registration is over</Typography>
-    }
-
-
-
-    return (
-        <div
-            className="d-flex flex-column justify-content-between Cover-image"
-            style={{
-                backgroundImage: `url(${trip.image})`,
-                height: '183px',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                borderRadius: '3px',
-                padding: 16,
-            }}
-        >
-            <div className="d-flex justify-content-between align-items-start" >
-                <LeftFab>{trip.name}</LeftFab>
-                {registrationButton}
-            </div>
-            <div className="d-flex justify-content-between align-items-end" >
-                <LeftFab>{trip.orgName}</LeftFab>
-                <LeftFab>
-                    {trip.dateStart && moment(trip.dateStart.split('T')[0]).format('MMM DD') + ' - ' + moment(trip.dateEnd.split('T')[0]).format('MMM DD')}
-                </LeftFab>
-            </div>
-        </div >
-    )
-})
+export default withStyles(styles)(Share)

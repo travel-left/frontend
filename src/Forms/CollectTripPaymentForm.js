@@ -70,7 +70,7 @@ class _CardForm extends Component {
     render() {
         const { isSubmitting } = this.state
         return (
-            <div className="d-flex flex-column">
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ paddingTop: 16, paddingBottom: 16 }}> ${this.props.amount} is being requested to register for your trip.</span>
                 <div>
                     <span><strong>Card details</strong></span>

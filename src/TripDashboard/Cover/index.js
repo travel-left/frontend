@@ -3,18 +3,66 @@ import { apiCall } from '../../util/api'
 import Fab from '@material-ui/core/Fab'
 import NewShareTrip from '../../util/otherComponents/NewShareTrip'
 import SendIcon from '@material-ui/icons/Send'
-import './Cover.css'
 import TripStatus from '../../util/otherComponents/TripStatus'
 import LeftModal from '../../util/otherComponents/LeftModal'
 import ChangeTripStatusForm from '../../Forms/ChangeTripStatusForm'
 import ChangeTripDatesForm from '../../Forms/ChangeTripDatesForm'
 import ChangeCoverPhotoForm from '../../Forms/ChangeCoverPhotoForm'
-import Moment from 'react-moment'
 import moment from 'moment'
-import Typography from '@material-ui/core/Typography'
 import Snack from '../../util/otherComponents/Snack'
 import LeftFab from '../../util/otherComponents/LeftFab'
-import Chip from '@material-ui/core/Chip';
+import Chip from '@material-ui/core/Chip'
+import { withStyles } from '@material-ui/core'
+import sizes from '../../styles/sizes'
+
+const styles = theme => ({
+    coverPhoto: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        boxShadow: "0px 2px 1px - 1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+        backgroundImage: props => `url(${props.currentTrip.image})`,
+        height: theme.spacing(24),
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        borderRadius: '0px 0px 4px 4px',
+        padding: 16,
+        [sizes.down("md")]: {
+            height: theme.spacing(28),
+        }
+    },
+    topRow: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: theme.spacing(4)
+    },
+    bottomRow: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        [sizes.down("md")]: {
+            flexDirection: 'column',
+            alignItems: 'start'
+        }
+
+    },
+    travelerCount: {
+        fontWeight: '500',
+        fontFamily: 'roboto',
+        fontSize: 12,
+        color: '#FFFFFF',
+        minWidth: 48,
+        backgroundColor: '#475561',
+        height: 28,
+        textTransform: 'uppercase'
+    },
+    dates: {
+        [sizes.down("md")]: {
+            margin: theme.spacing(1, 0)
+        }
+    }
+})
 
 class Cover extends Component {
     tripId = this.props.currentTrip._id
@@ -136,95 +184,84 @@ class Cover extends Component {
     }
 
     render() {
-        let currentTrip = this.props.currentTrip
-        let invited = this.state.travelers.length
-        let confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
-
+        const currentTrip = this.props.currentTrip
+        const invited = this.state.travelers.length
+        const confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
+        const { classes } = this.props
         return (
-            <>
-                <div
-                    className="d-flex flex-column justify-content-end Cover-image"
-                    style={{
-                        backgroundImage: `url(${currentTrip.image})`,
-                        height: '183px',
-                        backgroundPosition: 'center',
-                        backgroundSize: 'cover',
-                        borderRadius: '3px',
-                        padding: 16
-                    }}
-                >
-                    <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: 32 }}>
-                        <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>
-                        {this.state.isTripStatusOpen && <LeftModal
-                            isOpen={this.state.isTripStatusOpen}
-                            toggleModal={() => this.closeModal('isTripStatusOpen')}
-                            title='Change trip status'
-                            form={ChangeTripStatusForm}
-                            submit={this.updateTrip}
-                            status={currentTrip.status}
-                        />}
-                        <div className="">
-                            <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary" className="share-trip-button">
-                                <SendIcon style={{ color: 'white' }} fontSize="large" />
-                            </Fab>
-                            {this.state.isShareTripOpen && <LeftModal
-                                isOpen={this.state.isShareTripOpen}
-                                toggleModal={() => this.closeModal('isShareTripOpen')}
-                                title='Share trip'
-                                tripId={currentTrip._id}
-                                submit={this.copiedLink}
-                                form={NewShareTrip}
-                            />}
-                        </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center" >
-                        <Chip label={`${invited} Invited
-                            ${confirmed} Confirmed`}
-                            style={{
-                                fontWeight: '500',
-                                fontFamily: 'roboto',
-                                fontSize: 12,
-                                color: '#FFFFFF',
-                                minWidth: 48,
-                                backgroundColor: '#475561',
-                                height: 28,
-                                textTransform: 'uppercase'
-                            }}>
-
-                        </Chip>
-                        <LeftFab onClick={() => this.openModal('isTripDatesOpen')}
-                            id="tripDates"
-                            fab>
-                            {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
-                            ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
-                        </LeftFab>
-                        {this.state.isTripDatesOpen && <LeftModal
-                            isOpen={this.state.isTripDatesOpen}
-                            toggleModal={() => this.closeModal('isTripDatesOpen')}
-                            title='Change trip dates'
-                            form={ChangeTripDatesForm}
-                            submit={this.updateTrip}
-                            dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
-                            dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
-                        />}
-
-                        <LeftFab onClick={() => this.openModal('isChangeCoverOpen')} fab>
-                            Change Cover Photo
-                        </LeftFab>
-
-                        {this.state.isChangeCoverOpen && <LeftModal
-                            isOpen={this.state.isChangeCoverOpen}
-                            toggleModal={() => this.closeModal('isChangeCoverOpen')}
-                            title='Change cover photo'
-                            form={ChangeCoverPhotoForm}
-                            submit={this.updateTrip}
+            <div
+                className={classes.coverPhoto}
+            >
+                <div className={classes.topRow}>
+                    <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>
+                    {this.state.isTripStatusOpen && <LeftModal
+                        isOpen={this.state.isTripStatusOpen}
+                        toggleModal={() => this.closeModal('isTripStatusOpen')}
+                        title='Change trip status'
+                        form={ChangeTripStatusForm}
+                        submit={this.updateTrip}
+                        status={currentTrip.status}
+                    />}
+                    <div className="">
+                        <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary" >
+                            <SendIcon style={{ color: 'white' }} fontSize="large" />
+                        </Fab>
+                        {this.state.isShareTripOpen && <LeftModal
+                            isOpen={this.state.isShareTripOpen}
+                            toggleModal={() => this.closeModal('isShareTripOpen')}
+                            title='Share trip'
+                            tripId={currentTrip._id}
+                            submit={this.copiedLink}
+                            form={NewShareTrip}
                         />}
                     </div>
                 </div>
+                <div className={classes.bottomRow} >
+                    <Chip
+                        label={
+                            `${invited} Invited
+                                ${confirmed} Confirmed`
+                        }
+                        className={classes.travelerCount}
+                    >
+                    </Chip>
+                    <div className={classes.dates}>
+                        <LeftFab
+                            onClick={() => this.openModal('isTripDatesOpen')}
+                            id="tripDates"
+                        >
+                            {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
+                        ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
+                        </LeftFab>
+                    </div>
+                    {this.state.isTripDatesOpen && <LeftModal
+                        isOpen={this.state.isTripDatesOpen}
+                        toggleModal={() => this.closeModal('isTripDatesOpen')}
+                        title='Change trip dates'
+                        form={ChangeTripDatesForm}
+                        submit={this.updateTrip}
+                        dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
+                        dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
+                    />}
+
+                    <LeftFab
+                        onClick={() => this.openModal('isChangeCoverOpen')}
+                    >
+                        Change Cover Photo
+                    </LeftFab>
+
+                    {this.state.isChangeCoverOpen && <LeftModal
+                        isOpen={this.state.isChangeCoverOpen}
+                        toggleModal={() => this.closeModal('isChangeCoverOpen')}
+                        title='Change cover photo'
+                        form={ChangeCoverPhotoForm}
+                        submit={this.updateTrip}
+                    />}
+                </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </>
+            </div>
         )
     }
 }
 
-export default Cover
+export default withStyles(styles)(Cover)

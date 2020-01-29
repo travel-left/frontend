@@ -2,10 +2,65 @@ import React, { Component } from 'react'
 import Image from '../../util/otherComponents/Image'
 import Checkbox from '@material-ui/core/Checkbox'
 import TravelerStatus from '../../util/otherComponents/TravelerStatus'
-import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core'
+import sizes from '../../styles/sizes'
 
-export default class Traveler extends Component {
+const styles = theme => ({
+    traveler: {
+        height: theme.spacing(12),
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: theme.spacing(2),
+        backgroundColor: props => props.index % 2 !== 0 ? '#F6FAFF' : '#FFFFFF',
+    },
+    travelerName: {
+        display: 'flex',
+        justifyContent: 'start',
+        width: theme.spacing(16),
+        color: '#333333'
+    },
+    travelerEmail: {
+        width: theme.spacing(16),
+        textAlign: 'left'
+    },
+    travelerStatus: {
+        width: theme.spacing(13),
+        textAlign: 'center',
+        [sizes.down("md")]: {
+            display: 'none'
+        },
+    },
+    travelerTrip: {
+        width: theme.spacing(16),
+        fontFamily: 'Roboto',
+        fontSize: '14px',
+        color: '#333333',
+        fontWeight: '600',
+        textAlign: 'center',
+        [sizes.down("md")]: {
+            display: 'none'
+        },
+    },
+    travelerImage: {
+        [sizes.down("md")]: {
+            display: 'none'
+        },
+    },
+    icon: {
+        color: theme.palette.grey["A700"],
+        fontSize: '24px',
+        '&:hover': {
+            cursor: 'pointer'
+        }
+    },
+    checkbox: {
+        padding: 0
+    }
+})
+
+class Traveler extends Component {
     handleToggle = () => {
         this.props.toggle(this.props._id)
     }
@@ -15,55 +70,56 @@ export default class Traveler extends Component {
     }
 
     render() {
-        let { name, email, status, image, selected, index, trip, showTrip } = this.props
-        let bgColor = index % 2 !== 0 ? '#F6FAFF' : '#FFFFFF'
+        let { name, email, status, image, selected, trip, showTrip, classes } = this.props
 
         return (
-            <Grid container
-                className="d-flex animated fadeIn justify-content-between align-items-center hover flex-grow-1"
-                style={{
-                    backgroundColor: bgColor,
-                    paddingTop: 8,
-                    paddingBottom: 8
-                }}
+            <div
+                className={classes.traveler}
                 onDoubleClick={this.handleDoubleClick}
             >
-                <Grid item xs={1} style={{ paddingLeft: 16 }}>
-                    <Checkbox
-                        onChange={this.handleToggle}
-                        checked={selected}
-                        color='primary'
-                        style={{ padding: 0 }}
+                <Checkbox
+                    onChange={this.handleToggle}
+                    checked={selected}
+                    color='primary'
+                    className={classes.checkbox}
+                />
+                <div className={classes.travelerImage}>
+                    <Image
+                        diameter="64px"
+                        src={image}
+                        name={name}
                     />
-                </Grid>
-                <Grid item xs={2} className="d-none d-xl-flex">
-                    <Image diameter="64px" src={image} name={name} />
-                </Grid>
-                <Grid item xs={2}>
-                    <Typography variant="h6" style={{ color: '#333333', }}>{name}</Typography>
-                </Grid>
-                <Grid item xs={showTrip ? 2 : 3} className="d-none d-xl-flex">
-                    <Typography variant="caption">{email}</Typography>
-                </Grid>
-                <Grid item xs={showTrip ? 2 : 3}>
-                    <TravelerStatus status={status} />
-                </Grid>
+                </div>
+                <Typography
+                    variant="h6"
+                    className={classes.travelerName}
+                >
+                    {name}
+                </Typography>
+                <Typography
+                    variant="caption"
+                    className={classes.travelerEmail}
+                >
+                    {email}
+                </Typography>
+                <TravelerStatus
+                    status={status}
+                    className={classes.travelerStatus}
+                />
                 {showTrip &&
-                    <Grid item xs={2} style={{
-                        fontFamily: 'Roboto',
-                        fontSize: '14px',
-                        color: '#333333',
-                        fontWeight: '600',
-                        textAlign: 'left',
-                    }}>
+                    <span className={classes.travelerTrip}>
                         {trip}
-                    </Grid>
+                    </span>
                 }
-                <Grid item xs={1} className='d-flex justify-content-end'>
-                    <i class="material-icons hover" style={{ color: '#AAB5C0', fontSize: '24px', paddingRight: 16 }}
-                        onClick={this.handleDoubleClick}>more_vert</i>
-                </Grid>
-            </Grid>
+                <i
+                    className={`material-icons ${classes.icon}`}
+                    onClick={this.handleDoubleClick}
+                >
+                    more_vert
+                </i>
+            </div>
         )
     }
 }
+
+export default withStyles(styles)(Traveler)

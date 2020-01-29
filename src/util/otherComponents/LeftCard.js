@@ -1,5 +1,6 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
 import { withStyles } from '@material-ui/core'
 
 const styles = theme => ({
@@ -14,12 +15,12 @@ const styles = theme => ({
     }
 })
 
-const LeftItem = ({ children, classes }) => (
+const LeftCardNew = ({ children, classes }) => (
     <Grid item xs={12} sm={8} md={6} >
-        <div className={classes.leftItem}>
+        <Card className={classes.leftItem}>
             {children}
-        </div>
+        </Card>
     </Grid>
 )
 
-export default withStyles(styles)(LeftItem)
+export default withStyles(styles)(LeftCardNew)

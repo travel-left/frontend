@@ -1,6 +1,6 @@
 import React from 'react'
 import Chip from '@material-ui/core/Chip'
-const TravelerStatus = ({ status }) => {
+const TravelerStatus = ({ status, className }) => {
     let statusColor = 'primary'
     switch (status) {
         case 'INVITED':
@@ -31,7 +31,7 @@ const TravelerStatus = ({ status }) => {
 
     return (
         <Chip
-            className={`text-uppercase`}
+            className={className}
             style={{
                 fontWeight: '500',
                 fontFamily: 'roboto',
@@ -40,7 +40,8 @@ const TravelerStatus = ({ status }) => {
                 minWidth: '88px',
                 color: '#FFFFFF',
                 width: 104,
-                backgroundColor: statusColor
+                backgroundColor: statusColor,
+                textTransform: 'uppercase'
             }}
             label={status} />
     )
