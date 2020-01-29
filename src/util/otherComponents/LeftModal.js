@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import { withStyles } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
+import sizes from '../../styles/sizes'
 
 const styles = theme => ({
     modalHeader: {
@@ -17,11 +18,15 @@ const styles = theme => ({
     modalContent: {
         position: 'relative',
         borderRadius: theme.spacing(1),
+        minWidth: theme.spacing(62),
         maxWidth: theme.spacing(62),
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[3],
+        [sizes.down('sm')]: {
+            minWidth: theme.spacing(30),
+        }
     },
     modalBody: {
         padding: theme.spacing(2),
@@ -55,7 +60,7 @@ class LeftModal extends Component {
         const Form = this.props.form ? this.props.form : null
         const { classes, isOpen, title } = this.props
         return (
-            <Dialog onClose={this.handleToggleModal} open={isOpen} >
+            <Dialog onClose={this.handleToggleModal} open={isOpen}>
                 <div className={classes.modalContent}>
                     <div className={classes.modalHeader}>
                         <span className={classes.modalTitle}>{title}</span>
