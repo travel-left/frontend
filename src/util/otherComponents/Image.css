@@ -2,8 +2,12 @@
     position: relative;
     overflow: hidden;
     border-radius: 50%;
-    
 }
+
+.img-box:hover {
+      cursor: pointer;
+}
+
 .img-box .image{
     border-radius: 50%;
     width: 100%;
@@ -20,4 +24,5 @@
 .img-box:hover .img-content{
   bottom: 0px;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }

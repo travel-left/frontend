@@ -28,18 +28,22 @@ export default class Image extends Component {
             boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
         }}>{initials}</Avatar>
 
-        const withUpload = <div className='img-box hover' onClick={handleUpload} style={{
-            height: diameter,
-            width: diameter,
-        }} >
-            {src ? <img src={src} class="image" style={{
-                height: diameter,
-                width: diameter,
-            }} /> : avatar}
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <span style={{ fontSize: 12, fontWeight: 600, color: 'white' }}>UPDATE</span>
+        const withUpload =
+            <div
+                className='img-box hover'
+                onClick={handleUpload}
+                style={{
+                    height: diameter,
+                    width: diameter,
+                }} >
+                {src ? <img src={src} class="image" style={{
+                    height: diameter,
+                    width: diameter,
+                }} /> : avatar}
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} className="img-content">
+                    <span style={{ fontSize: 12, fontWeight: 600, color: 'white' }}>UPDATE</span>
+                </div>
             </div>
-        </div>
 
 
 
