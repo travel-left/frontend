@@ -1,6 +1,29 @@
 import React from 'react'
 import Chip from '@material-ui/core/Chip'
-const TravelerStatus = ({ status, className }) => {
+import { withStyles } from '@material-ui/core'
+
+const styles = theme => ({
+    chip: {
+        fontWeight: '500',
+        fontFamily: 'roboto',
+        fontSize: '12px',
+        padding: theme.spacing(.5),
+        color: '#FFFFFF',
+        width: 112,
+        backgroundColor: props => getStatusColor(props.status),
+        textTransform: 'uppercase'
+    }
+})
+
+const TravelerStatus = ({ status, className, classes }) => (
+    <Chip
+        className={`${className} ${classes.chip}`}
+        label={status} />
+)
+
+export default withStyles(styles)(TravelerStatus)
+
+function getStatusColor(status) {
     let statusColor = 'primary'
     switch (status) {
         case 'INVITED':
@@ -29,22 +52,5 @@ const TravelerStatus = ({ status, className }) => {
             break
     }
 
-    return (
-        <Chip
-            className={className}
-            style={{
-                fontWeight: '500',
-                fontFamily: 'roboto',
-                fontSize: '12px',
-                padding: '.5rem .8rem',
-                minWidth: '88px',
-                color: '#FFFFFF',
-                width: 104,
-                backgroundColor: statusColor,
-                textTransform: 'uppercase'
-            }}
-            label={status} />
-    )
+    return statusColor
 }
-
-export default TravelerStatus
