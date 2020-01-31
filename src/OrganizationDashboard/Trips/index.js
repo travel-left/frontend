@@ -248,7 +248,7 @@ class Trips extends Component {
                         <SideNavItem
                             text={`All ${currentUser.words ? currentUser.words.whatPlural : 'Trips'}`}
                             total={trips.length - tripStatusCounts.ARCHIVED}
-                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`}
+                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`}
                             handleClick={this.onSideNavClick}
                         />
                         <SideNavItem
