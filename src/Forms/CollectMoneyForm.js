@@ -29,7 +29,7 @@ const form = props => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <InputLabel id="demo-mutiple-chip-label" style={{ marginTop: 40 }}> Selected </InputLabel>
+            <InputLabel id="demo-mutiple-chip-label" style={{ marginTop: 40 }}> Selected Travelers</InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
                 id="demo-mutiple-chip"
@@ -42,9 +42,9 @@ const form = props => {
                 displayEmpty
                 onBlur={handleBlur}
                 input={<Input id="select-multiple-chip" />}
-                placeholder="None selected"
+                placeholder="No travelers selected"
                 renderValue={selectedTravelers => (
-                    selectedTravelers.length === 0 ? 'None selected'
+                    selectedTravelers.length === 0 ? 'No travelers selected'
                         : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedTravelers.map(t => (
                                 <LeftChip key={t._id} label={t.name} />

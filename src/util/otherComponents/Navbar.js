@@ -124,7 +124,7 @@ class Navbar extends Component {
         let loggedInLinks
         let linkTo = '#'
         let tripName = null
-        let backText
+        let backText = 'Trips'
         let backPath = '/trips'
         const { pathname } = this.props.history.location
         const tripsColor = pathname === '/trips' ? 'primary' : 'secondary'
@@ -141,7 +141,6 @@ class Navbar extends Component {
         }
 
         if (currentUser.isAuthenticated) {
-            backText = currentUser.words.whatPlural
             loggedInLinks = (
                 <div className={classes.buttons}>
                     <NavLink
@@ -154,7 +153,7 @@ class Navbar extends Component {
                             className={classes.navButton}
                             variant="extended"
                             disableTouchRipple>
-                            {currentUser.words.whatPlural}
+                            Trips
                         </Fab>
                     </NavLink>
                     <NavLink
@@ -168,7 +167,7 @@ class Navbar extends Component {
                             variant="extended"
                             disableTouchRipple
                             style={{ marginLeft: 24 }}>
-                            {currentUser.words.whoPlural}
+                            Travelers
                         </Fab>
                     </NavLink>
                 </div>
@@ -203,12 +202,7 @@ class Navbar extends Component {
                 {currentUser.isAuthenticated &&
                     <div className={classes.navbarRight}>
                         <span className={classes.userName}>{currentUser.name}</span>
-                        <MenuListComposition
-                            logout={this.props.logout}
-                            history={this.props.history}
-                            words={currentUser.words}
-                        >
-                        </MenuListComposition>
+                        <MenuListComposition logout={this.props.logout} history={this.props.history}></MenuListComposition>
                     </div>
                 }
             </nav>
@@ -242,7 +236,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function MenuListComposition({ logout, history, words }) {
+function MenuListComposition({ logout, history }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -313,8 +307,8 @@ function MenuListComposition({ logout, history, words }) {
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                        <MenuItem onClick={trips}>{words.whatPlural}</MenuItem>
-                                        <MenuItem onClick={travelers}>{words.whoPlural}</MenuItem>
+                                        <MenuItem onClick={trips}>Trips</MenuItem>
+                                        <MenuItem onClick={travelers}>Travelers</MenuItem>
                                         <MenuItem onClick={account}>Account</MenuItem>
                                         <MenuItem onClick={support}>Support</MenuItem>
                                         <MenuItem onClick={signout}>Logout</MenuItem>

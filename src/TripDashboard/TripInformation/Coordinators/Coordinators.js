@@ -203,7 +203,7 @@ class Coordinators extends Component {
                         this.state.isNewCoordinatorModalOpen && <LeftModal
                             isOpen={this.state.isNewCoordinatorModalOpen}
                             toggleModal={this.closeModal}
-                            title='Add a coordinator'
+                            title='Add a coordinator to this trip'
                             coordinators={this.state.coordinators}
                             coordinatorsFromOrg={this.state.coordinatorsFromOrg.filter(c => !this.state.coordinators.map(d => d._id).includes(c._id))}
                             submit={this.createCoordinator}
