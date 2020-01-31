@@ -82,7 +82,7 @@ const form = props => {
                         id="event-name"
                         label="Name"
                         value={values.name}
-                        placeholder="Event name"
+                        placeholder="Activity name"
                         name="name"
                         style={{ width: 199 }}
                     />
@@ -113,8 +113,8 @@ const form = props => {
                     </MuiPickersUtilsProvider>
                 </div>
                 <div style={{ marginTop: 41 }}>
-                    <FormLabel component="legend" >Event type</FormLabel>
-                    <RadioGroup aria-label="Event type" name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'around' }}>
+                    <FormLabel component="legend" >Activity type</FormLabel>
+                    <RadioGroup name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'around' }}>
                         <FormControlLabel value="LODGING" control={<Radio color="primary" />} label="Lodging" />
                         <FormControlLabel value="EVENT" control={<Radio color="primary" />} label="Event" />
                         <FormControlLabel value="TRANSPORTATION" control={<Radio color="primary" />} label="Transportation" />

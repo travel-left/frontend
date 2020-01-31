@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Fab from '@material-ui/core/Fab'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import Typography from '@material-ui/core/Typography'

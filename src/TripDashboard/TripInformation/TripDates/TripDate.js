@@ -133,7 +133,7 @@ class TripDate extends Component {
                     isModalOpen && <LeftModal
                         isOpen={isModalOpen}
                         toggleModal={this.closeModal}
-                        title='Update trip date'
+                        title='Update important date'
                         submit={this.handleUpdate}
                         remove={this.handleDelete}
                         date={moment(date).format('MM-DD-YYYY')}

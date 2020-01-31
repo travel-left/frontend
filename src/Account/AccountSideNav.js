@@ -28,7 +28,7 @@ export default withRouter(function AccountSideNav({ ctId, location }) {
         },
         {
             name: 'travelerPayments',
-            text: 'Traveler Payments',
+            text: 'Customer Payments',
             divider: true,
             active: location.pathname.includes('travelerPayments')
         }

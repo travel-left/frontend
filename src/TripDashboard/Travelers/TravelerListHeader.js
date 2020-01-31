@@ -67,7 +67,7 @@ export default withStyles(styles)(({ classes, toggleAll, allSelected, showTrip }
             variant="h6"
             className={classes.travelerEmail}
         >
-            CONTACT
+            EMAIL
         </Typography>
         <Typography
             variant="h6"
