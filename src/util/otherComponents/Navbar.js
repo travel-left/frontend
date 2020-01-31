@@ -141,6 +141,7 @@ class Navbar extends Component {
         }
 
         if (currentUser.isAuthenticated) {
+            backText = currentUser.words ? currentUser.words.whatPlural : 'Trips'
             loggedInLinks = (
                 <div className={classes.buttons}>
                     <NavLink
@@ -153,7 +154,7 @@ class Navbar extends Component {
                             className={classes.navButton}
                             variant="extended"
                             disableTouchRipple>
-                            Trips
+                            {currentUser.words ? currentUser.words.whatPlural : 'Trips'}
                         </Fab>
                     </NavLink>
                     <NavLink
@@ -167,7 +168,7 @@ class Navbar extends Component {
                             variant="extended"
                             disableTouchRipple
                             style={{ marginLeft: 24 }}>
-                            Travelers
+                            {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
                         </Fab>
                     </NavLink>
                 </div>
@@ -202,7 +203,12 @@ class Navbar extends Component {
                 {currentUser.isAuthenticated &&
                     <div className={classes.navbarRight}>
                         <span className={classes.userName}>{currentUser.name}</span>
-                        <MenuListComposition logout={this.props.logout} history={this.props.history}></MenuListComposition>
+                        <MenuListComposition
+                            logout={this.props.logout}
+                            history={this.props.history}
+                            words={currentUser.words ? currentUser.words : { whatPlural: 'Trips', whoPlural: 'Travelers' }}
+                        >
+                        </MenuListComposition>
                     </div>
                 }
             </nav>

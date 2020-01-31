@@ -209,7 +209,7 @@ class Cover extends Component {
                         {this.state.isShareTripOpen && <LeftModal
                             isOpen={this.state.isShareTripOpen}
                             toggleModal={() => this.closeModal('isShareTripOpen')}
-                            title='Share trip'
+                            title={`Share ${currentUser.words ? currentUser.words.what.toLowerCase() : 'Trip'}`}
                             tripId={currentTrip._id}
                             submit={this.copiedLink}
                             form={NewShareTrip}

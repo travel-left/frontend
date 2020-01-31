@@ -595,7 +595,7 @@ class Travelers extends Component {
             {this.state.isImportCsvOpen && <LeftModal
                 isOpen={this.state.isImportCsvOpen}
                 toggleModal={this.toggleImportCsvModal}
-                title='Import travelers from CSV file'
+                title={`Import ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'Travelers'} from CSV file`}
                 submit={this.addTravelersCSV}
                 form={ImportCsvForm}
             />}
@@ -641,7 +641,14 @@ class Travelers extends Component {
         return (
             <Grid container className={classes.container}>
                 <Grid item xs={12} md={8} className={classes.travelersSection}>
-                    <Typography className={classes.title} variant="h2">{currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
+                    <Typography
+                        className={classes.title}
+                        variant="h2">
+                        {currentTrip ?
+                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} on this ${currentUser.words ? currentUser.words.what : 'Trip'}` :
+                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} in your Organization`
+                        }
+                    </Typography>
                     <div className={classes.buttonsContainer}>
                         <div className={classes.filters}>
                             <Typography variant="h6" className={classes.filterText}>Filter by</Typography>
@@ -722,13 +729,13 @@ class Travelers extends Component {
                             {!currentTrip && csvUpload}
                             {currentTrip ? <>
                                 <LeftButton onClick={this.openAddModal}>
-                                    ADD TRAVELER
+                                    ADD {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
                                 </LeftButton>
                                 {this.state.isAddModalOpen &&
                                     <LeftModal
                                         isOpen={this.state.isAddModalOpen}
                                         toggleModal={this.closeAddModal}
-                                        title='Add travelers to this trip'
+                                        title={`Add ${currentUser.words ? currentUser.words.whoPlural : 'Travelers'}`}
                                         submit={this.addTraveler}
                                         travelers={this.state.travelersNotOnTrip}
                                         form={AddTravelerToTripFromOrgForm}

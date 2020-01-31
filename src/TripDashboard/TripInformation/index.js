@@ -111,7 +111,7 @@ class TripInformation extends Component {
             <div >
                 <div>
                     <div className={classes.tripProfile}>
-                        <Typography variant="h2">Trip Profile</Typography>
+                        <Typography variant="h2">{currentUser.words ? currentUser.words.what : 'Trip'} Profile</Typography>
                         <div className={classes.editTripProfileBtn}>
                             <LeftFab id="tripInfo-name-button"
                                 onClick={this.openModal}
