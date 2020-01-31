@@ -80,7 +80,7 @@ class Contact extends Component {
                         isEditContactModalOpen && <LeftModal
                             isOpen={isEditContactModalOpen}
                             toggleModal={this.closeModal}
-                            title='Update contact'
+                            title='Remove contact from trip'
                             form={ContactForm}
                             submit={this.handleEdit}
                             name={name}

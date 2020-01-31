@@ -10,7 +10,7 @@ export default withStyles(styles, { withTheme: true })((props) => {
         <Paper className={classes.tripListHeader}>
             <div className={classes.tripImage}></div>
             <div className={classes.tripName}>
-                <Typography variant="h6"> NAME</Typography>
+                <Typography variant="h6">TRIP NAME</Typography>
             </div>
             <div className={classes.tripDate}>
                 <Typography variant="h6">DATE</Typography>

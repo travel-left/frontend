@@ -3,6 +3,7 @@ import Image from '../../util/otherComponents/Image'
 import TravelerStatus from '../../util/otherComponents/TravelerStatus'
 import { apiCall } from '../../util/api'
 import CommCard from './CommCard'
+import './TravelerInfo.css'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import LeftModal from '../../util/otherComponents/LeftModal'
@@ -162,14 +163,14 @@ class TravelerInfo extends Component {
                         </div>
                     </div>
                     <LeftButton color="secondary" float onClick={this.openEditModal}>
-                        EDIT Info
-                    </LeftButton>
+                        EDIT TRAVELER
+                            </LeftButton>
                     {
                         this.state.isEditModalOpen &&
                         <LeftModal
                             isOpen={this.state.isEditModalOpen}
                             toggleModal={this.closeEditModal}
-                            title='Edit info'
+                            title='Edit traveler'
                             submit={this.handleUpdate}
                             remove={this.handleRemove}
                             traveler={this.props.traveler}

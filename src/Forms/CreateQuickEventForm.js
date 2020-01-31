@@ -27,7 +27,7 @@ const form = props => {
                 id="standard-required"
                 label="Name"
                 value={values.name}
-                placeholder="Activity name"
+                placeholder="Event name"
                 name="name"
                 fullWidth
             />
@@ -59,7 +59,7 @@ const form = props => {
             </MuiPickersUtilsProvider>
             <div style={{ marginTop: 16 }}>
                 <LeftButton type="submit" color="secondary" float disabled={isSubmitting}>
-                    QUICK activity
+                    QUICK EVENT
             </LeftButton>
             </div>
         </form>
@@ -71,7 +71,7 @@ const Form = withFormik({
         date,
     }) => {
         return {
-            name: "New Quick Activity",
+            name: "New Quick Event",
             date: new Date(new Date(date).setHours(13)).setMinutes(0) || new Date()
         }
     },

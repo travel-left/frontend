@@ -20,11 +20,11 @@ const styles = theme => ({
     }
 })
 
-export default withRouter(withStyles(styles)(function SideNav({ ctId, location, classes, words }) {
+export default withRouter(withStyles(styles)(function SideNav({ ctId, location, classes }) {
     const sideNavComponents = [
         {
             name: 'edit',
-            text: `${words.what} Information`,
+            text: 'Trip Information',
             active: location.pathname.includes('edit')
         },
         {
@@ -35,7 +35,7 @@ export default withRouter(withStyles(styles)(function SideNav({ ctId, location, 
         },
         {
             name: 'travelers',
-            text: `Manage ${words.whoPlural}`,
+            text: 'Manage Travelers',
             divider: true,
             active: location.pathname.includes('travelers')
         }
@@ -62,7 +62,7 @@ export default withRouter(withStyles(styles)(function SideNav({ ctId, location, 
                     button
                     className={classes.listItem}
                 >
-                    <Typography variant="h6" >{words.what} Preview</Typography>
+                    <Typography variant="h6" >Trip Preview</Typography>
                 </ListItem>
             </Card>
         </List>

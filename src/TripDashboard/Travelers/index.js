@@ -3,6 +3,7 @@ import { apiCall } from '../../util/api'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './TravelerList'
 import TravelerInfo from './TravelerInfo'
+import './Travelers.css'
 import ReactGA from 'react-ga'
 import AddTravelerToTripFromOrgForm from '../../Forms/AddTravelerToTripFromOrgForm'
 import Snack from '../../util/otherComponents/Snack'
@@ -585,7 +586,7 @@ class Travelers extends Component {
     }
 
     render() {
-        const { classes, currentTrip, currentUser } = this.props
+        const { classes, currentTrip } = this.props
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = <>
             <LeftButton onClick={this.toggleImportCsvModal} color="secondary">
@@ -677,7 +678,7 @@ class Travelers extends Component {
                                 this.state.isChangeStatusModalOpen && <LeftModal
                                     isOpen={this.state.isChangeStatusModalOpen}
                                     toggleModal={this.closeChangeStatusModal}
-                                    title='Change status'
+                                    title='Change traveler status'
                                     submit={this.changeStatusOfSelectedTravelers}
                                     travelers={this.state.travelers}
                                     selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
@@ -693,7 +694,7 @@ class Travelers extends Component {
                                 this.state.isCommunicateModalOpen && <LeftModal
                                     isOpen={this.state.isCommunicateModalOpen}
                                     toggleModal={this.closeCommunicateModal}
-                                    title='Communicate'
+                                    title='Communicate with your travelers'
                                     submit={this.communicateWithSelectedTravelers}
                                     travelers={this.state.travelers}
                                     selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
@@ -706,7 +707,7 @@ class Travelers extends Component {
                                 </IconButton>
                             </Paper>
                             {this.state.isCollectMoneyModalOpen && <LeftModal
-                                title="Collect money"
+                                title="Collect money from travelers"
                                 isOpen={this.state.isCollectMoneyModalOpen}
                                 toggleModal={this.toggleCollectMoneyModal}
                                 submit={this.collectMoneyFromTravelers}
