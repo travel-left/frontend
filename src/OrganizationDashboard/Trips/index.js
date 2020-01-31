@@ -26,7 +26,7 @@ class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
-        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'Trips'}`,
+        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`,
         selectedTrip: null,
         tripStatusCounts: {
             LEFT: 0,
@@ -96,7 +96,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
+            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -126,7 +126,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
+            this.filterTripsAndSetState(trips, `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -188,7 +188,7 @@ class Trips extends Component {
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
         const filteredTrips =
-            filter === `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`
+            filter === `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
         this.setState({
@@ -246,9 +246,9 @@ class Trips extends Component {
                     </div>
                     <List component="div" className={classes.tripFilters}>
                         <SideNavItem
-                            text={`All ${currentUser.words ? currentUser.words.whatPlural : 'Trips'}`}
+                            text={`All ${currentUser.words ? currentUser.words.whatPlural : 'ALL Trips'}`}
                             total={trips.length - tripStatusCounts.ARCHIVED}
-                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`}
+                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`}
                             handleClick={this.onSideNavClick}
                         />
                         <SideNavItem
