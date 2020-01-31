@@ -594,7 +594,7 @@ class Travelers extends Component {
             {this.state.isImportCsvOpen && <LeftModal
                 isOpen={this.state.isImportCsvOpen}
                 toggleModal={this.toggleImportCsvModal}
-                title={`Import ${currentUser.words.whoPlural.toLowerCase()} from CSV file`}
+                title={`Import ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'Travelers'} from CSV file`}
                 submit={this.addTravelersCSV}
                 form={ImportCsvForm}
             />}
@@ -644,8 +644,8 @@ class Travelers extends Component {
                         className={classes.title}
                         variant="h2">
                         {currentTrip ?
-                            `${currentUser.words.whoPlural} on this ${currentUser.words.what}` :
-                            `${currentUser.words.whoPlural} in your Organization`
+                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} on this ${currentUser.words ? currentUser.words.what : 'Trip'}` :
+                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} in your Organization`
                         }
                     </Typography>
                     <div className={classes.buttonsContainer}>
@@ -728,13 +728,13 @@ class Travelers extends Component {
                             {!currentTrip && csvUpload}
                             {currentTrip ? <>
                                 <LeftButton onClick={this.openAddModal}>
-                                    ADD {currentUser.words.whoPlural}
+                                    ADD {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
                                 </LeftButton>
                                 {this.state.isAddModalOpen &&
                                     <LeftModal
                                         isOpen={this.state.isAddModalOpen}
                                         toggleModal={this.closeAddModal}
-                                        title={`Add ${currentUser.words.whoPlural}`}
+                                        title={`Add ${currentUser.words ? currentUser.words.whoPlural : 'Travelers'}`}
                                         submit={this.addTraveler}
                                         travelers={this.state.travelersNotOnTrip}
                                         form={AddTravelerToTripFromOrgForm}

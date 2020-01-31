@@ -18,9 +18,9 @@ const ShareTrip = ({ tripId, submit, classes, words }) => (
         <Typography
             variant="subtitle2"
         >
-            Use this link to share the {words.what.toLowerCase()}.
-            Anyone with the link can view the {words.what.toLowerCase()} information, itinerary, and
-            register for the {words.what.toLowerCase()}.
+            Use this link to share the {words.what ? words.what.toLowerCase() : 'trip'}.
+            Anyone with the link can view the {words.what ? words.what.toLowerCase() : 'trip'} information, itinerary, and
+            register for the {words.what ? words.what.toLowerCase() : 'trip'}.
         </Typography>
         <div className={classes.button}>
             <CopyToClipboard

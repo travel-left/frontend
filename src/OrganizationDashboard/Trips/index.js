@@ -26,7 +26,7 @@ class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
-        filter: `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`,
+        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'Trips'}`,
         selectedTrip: null,
         tripStatusCounts: {
             LEFT: 0,
@@ -70,7 +70,7 @@ class Trips extends Component {
             }
         }
 
-        this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`, {
+        this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIP'}`, {
             tripStatusCounts
         })
     }
@@ -96,7 +96,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`, {
+            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -121,12 +121,12 @@ class Trips extends Component {
                 snack: {
                     show: true,
                     variant: 'success',
-                    message: `Duplicated ${currentUser.words.what}!`
+                    message: `Duplicated ${currentUser.words ? currentUser.words.what : 'Trip'}!`
                 }
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${currentUser.words.whatPlural.toUpperCase()}`, {
+            this.filterTripsAndSetState(trips, `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -188,7 +188,7 @@ class Trips extends Component {
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
         const filteredTrips =
-            filter === `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`
+            filter === `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
         this.setState({
@@ -234,11 +234,11 @@ class Trips extends Component {
                             onClick={() => this.setState({ isOpen: true })}
                             className={classes.buttonBox}
                         >
-                            ADD NEW {currentUser.words.what.toUpperCase()}
+                            ADD NEW {currentUser.words ? currentUser.words.what.toUpperCase() : 'TRIP'}
                         </Button>
                         {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
-                            title={`Add new ${currentUser.words.toLowerCase()}`}
+                            title={`Add new ${currentUser.words ? currentUser.words.toLowerCase() : 'trip'}`}
                             toggleModal={this.toggleModal}
                             form={CreateTripForm}
                             submit={this.addTrip}
@@ -246,9 +246,9 @@ class Trips extends Component {
                     </div>
                     <List component="div" className={classes.tripFilters}>
                         <SideNavItem
-                            text={`All ${currentUser.words.whatPlural}`}
+                            text={`All ${currentUser.words ? currentUser.words.whatPlural : 'Trips'}`}
                             total={trips.length - tripStatusCounts.ARCHIVED}
-                            active={filter === `ALL ${currentUser.words.whatPlural.toUpperCase()}`}
+                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`}
                             handleClick={this.onSideNavClick}
                         />
                         <SideNavItem
