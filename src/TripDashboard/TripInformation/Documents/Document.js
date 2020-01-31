@@ -110,7 +110,7 @@ class Document extends Component {
                             this.state.isEditModalOpen && <LeftModal
                                 isOpen={this.state.isEditModalOpen}
                                 toggleModal={this.closeModal}
-                                title='Edit resource'
+                                title='Edit a trip resource'
                                 name={name}
                                 description={description}
                                 submit={this.handleEdit}

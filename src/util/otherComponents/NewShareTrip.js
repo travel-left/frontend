@@ -1,40 +1,19 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Fab from '@material-ui/core/Fab'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import Typography from '@material-ui/core/Typography'
-import { withStyles } from '@material-ui/core'
 
-const styles = theme => ({
-    button: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: theme.spacing(2, 0)
+
+export default class ShareTrip extends Component {
+    render() {
+        return (
+            <>
+                <p className='TripInfo-description'>Use this link to share the trip. Anyone with the link can view only trip itinerary, info and coordinator details.</p>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 24 }}>
+                    <CopyToClipboard text={`${process.env.REACT_APP_BASE_URL}/trips/${this.props.tripId}/share`} onCopy={this.props.submit}>
+                        <Fab variant="extended" color='primary' aria-label="delete" className="linky-boi-button">Copy link to clipboard</Fab>
+                    </CopyToClipboard>
+                </div>
+            </>
+        )
     }
-})
-
-const ShareTrip = ({ tripId, submit, classes, words }) => (
-    <>
-        <Typography
-            variant="subtitle2"
-        >
-            Use this link to share the {words.what.toLowerCase()}.
-            Anyone with the link can view the {words.what.toLowerCase()} information, itinerary, and
-            register for the {words.what.toLowerCase()}.
-        </Typography>
-        <div className={classes.button}>
-            <CopyToClipboard
-                text={`${process.env.REACT_APP_BASE_URL}/trips/${tripId}/share`}
-                onCopy={submit}>
-                <Fab
-                    variant="extended"
-                    color='primary'
-                >
-                    Copy link to clipboard
-                </Fab>
-            </CopyToClipboard>
-        </div>
-    </>
-)
-
-export default withStyles(styles)(ShareTrip)
+}

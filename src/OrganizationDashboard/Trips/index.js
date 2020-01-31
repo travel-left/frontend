@@ -26,7 +26,7 @@ class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
-        filter: `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`,
+        filter: 'All Trips',
         selectedTrip: null,
         tripStatusCounts: {
             LEFT: 0,
@@ -70,7 +70,7 @@ class Trips extends Component {
             }
         }
 
-        this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`, {
+        this.filterTripsAndSetState(trips, 'ALL TRIPS', {
             tripStatusCounts
         })
     }
@@ -96,7 +96,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`, {
+            this.filterTripsAndSetState(trips, 'ALL TRIPS', {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -113,7 +113,6 @@ class Trips extends Component {
 
     copyTrip = async tripId => {
         const { trips, tripStatusCounts } = this.state
-        const { currentUser } = this.props
 
         try {
             const createdTrip = await apiCall('post', `/api/trips/${tripId}/copy`)
@@ -121,12 +120,12 @@ class Trips extends Component {
                 snack: {
                     show: true,
                     variant: 'success',
-                    message: `Duplicated ${currentUser.words.what}!`
+                    message: 'Duplicated Trip!'
                 }
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${currentUser.words.whatPlural.toUpperCase()}`, {
+            this.filterTripsAndSetState(trips, 'ALL TRIPS', {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -188,7 +187,7 @@ class Trips extends Component {
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
         const filteredTrips =
-            filter === `ALL ${this.props.currentUser.words.whatPlural.toUpperCase()}`
+            filter === 'ALL TRIPS'
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
         this.setState({
@@ -211,7 +210,7 @@ class Trips extends Component {
             filter
         } = this.state
 
-        const { classes, currentUser } = this.props
+        const { classes } = this.props
 
         const showTrips = filteredTrips.length > 0
 
@@ -234,11 +233,11 @@ class Trips extends Component {
                             onClick={() => this.setState({ isOpen: true })}
                             className={classes.buttonBox}
                         >
-                            ADD NEW {currentUser.words.what.toUpperCase()}
-                        </Button>
+                            ADD NEW TRIP
+                            </Button>
                         {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
-                            title={`Add new ${currentUser.words.toLowerCase()}`}
+                            title='Add New Trip'
                             toggleModal={this.toggleModal}
                             form={CreateTripForm}
                             submit={this.addTrip}
@@ -246,9 +245,9 @@ class Trips extends Component {
                     </div>
                     <List component="div" className={classes.tripFilters}>
                         <SideNavItem
-                            text={`All ${currentUser.words.whatPlural}`}
+                            text="All Trips"
                             total={trips.length - tripStatusCounts.ARCHIVED}
-                            active={filter === `ALL ${currentUser.words.whatPlural.toUpperCase()}`}
+                            active={filter === 'ALL TRIPS'}
                             handleClick={this.onSideNavClick}
                         />
                         <SideNavItem

@@ -176,7 +176,7 @@ class TripDates extends Component {
                                     isNewTripDateModalOpen && <LeftModal
                                         isOpen={isNewTripDateModalOpen}
                                         toggleModal={this.closeModal}
-                                        title='Add an important date'
+                                        title='Add a trip date'
                                         submit={this.createTripDate}
                                         date={moment(dateStart).format('MM-DD-YYYY')}
                                         form={TripDateForm}

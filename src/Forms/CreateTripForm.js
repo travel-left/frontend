@@ -28,7 +28,7 @@ const form = props => {
             <TextField
                 required
                 id="standard-required"
-                label="Name"
+                label="Trip name"
                 value={values.name}
                 placeholder="Austrailia"
                 margin="normal"

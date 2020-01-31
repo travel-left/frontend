@@ -168,7 +168,7 @@ class Contacts extends Component {
                     {this.state.isNewContactModalOpen && <LeftModal
                         isOpen={this.state.isNewContactModalOpen}
                         toggleModal={this.closeModal}
-                        title='Add a contact'
+                        title='Add a contact to this trip'
                         submit={this.createContact}
                         form={ContactForm}
                     />

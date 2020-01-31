@@ -111,7 +111,7 @@ class TripInformation extends Component {
             <div >
                 <div>
                     <div className={classes.tripProfile}>
-                        <Typography variant="h2">{currentUser.words.what} Profile</Typography>
+                        <Typography variant="h2">Trip Profile</Typography>
                         <div className={classes.editTripProfileBtn}>
                             <LeftFab id="tripInfo-name-button"
                                 onClick={this.openModal}
@@ -124,7 +124,7 @@ class TripInformation extends Component {
                         {isEditTripNameModalOpen && <LeftModal
                             isOpen={isEditTripNameModalOpen}
                             toggleModal={this.closeModal}
-                            title='Edit profile'
+                            title='Edit trip profile'
                             submit={this.updateTrip}
                             form={TripNameForm}
                             name={name}
