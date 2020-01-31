@@ -1,3 +1,5 @@
+import pluralize from 'pluralize'
+
 const travelerStatus = [
     'INVITED',
     'CONFIRMED',

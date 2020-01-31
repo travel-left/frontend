@@ -33,7 +33,7 @@ class Trip extends Component {
                     <Typography variant="h2">{name}</Typography>
                 </div>
                 <div className={classes.tripDate}>
-                    <Typography variant="subtitle1">
+                    <Typography variant="subtitle2">
                         <Moment date={dateStart} format="MMM DD" />
                     </Typography>
                 </div>
@@ -41,9 +41,9 @@ class Trip extends Component {
                     <TripStatus status={status} />
                 </div>
                 <Button size="large" variant="contained" color="primary" onClick={this.handleDoubleClick} className="float-right" style={{
-                    width: 128,
-                    height: 56,
-                }}>open trip</Button>
+                    width: 112,
+                    height: 48,
+                }}>open </Button>
             </Paper>
         )
     }

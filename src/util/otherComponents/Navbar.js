@@ -124,7 +124,7 @@ class Navbar extends Component {
         let loggedInLinks
         let linkTo = '#'
         let tripName = null
-        let backText = 'Trips'
+        let backText
         let backPath = '/trips'
         const { pathname } = this.props.history.location
         const tripsColor = pathname === '/trips' ? 'primary' : 'secondary'
@@ -242,7 +242,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function MenuListComposition({ logout, history }) {
+function MenuListComposition({ logout, history, words }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
@@ -313,8 +313,8 @@ function MenuListComposition({ logout, history }) {
                             <Paper>
                                 <ClickAwayListener onClickAway={handleClose}>
                                     <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                        <MenuItem onClick={trips}>Trips</MenuItem>
-                                        <MenuItem onClick={travelers}>Travelers</MenuItem>
+                                        <MenuItem onClick={trips}>{words.whatPlural}</MenuItem>
+                                        <MenuItem onClick={travelers}>{words.whoPlural}</MenuItem>
                                         <MenuItem onClick={account}>Account</MenuItem>
                                         <MenuItem onClick={support}>Support</MenuItem>
                                         <MenuItem onClick={signout}>Logout</MenuItem>

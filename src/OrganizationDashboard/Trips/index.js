@@ -26,7 +26,7 @@ class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
-        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`,
+        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'Trips'}`,
         selectedTrip: null,
         tripStatusCounts: {
             LEFT: 0,
@@ -96,7 +96,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`, {
+            this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -114,6 +114,7 @@ class Trips extends Component {
     copyTrip = async tripId => {
         const { trips, tripStatusCounts } = this.state
         const { currentUser } = this.props
+
         try {
             const createdTrip = await apiCall('post', `/api/trips/${tripId}/copy`)
             this.setState({
@@ -125,8 +126,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-          
-            this.filterTripsAndSetState(trips, `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`, {
+            this.filterTripsAndSetState(trips, `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
             })
@@ -188,7 +188,7 @@ class Trips extends Component {
 
     filterTripsAndSetState = (trips, filter, state = {}) => {
         const filteredTrips =
-            filter === `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`
+            filter === `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`
                 ? trips.filter(t => t.status !== 'ARCHIVED')
                 : trips.filter(t => t.status === filter)
         this.setState({
@@ -246,9 +246,9 @@ class Trips extends Component {
                     </div>
                     <List component="div" className={classes.tripFilters}>
                         <SideNavItem
-                            text={`All ${currentUser.words ? currentUser.words.whatPlural : 'ALL Trips'}`}
+                            text={`All ${currentUser.words ? currentUser.words.whatPlural : 'Trips'}`}
                             total={trips.length - tripStatusCounts.ARCHIVED}
-                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'ALL TRIPS'}`}
+                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`}
                             handleClick={this.onSideNavClick}
                         />
                         <SideNavItem

@@ -184,11 +184,9 @@ class Cover extends Component {
     }
 
     render() {
-        const currentTrip = this.props.currentTrip
         const invited = this.state.travelers.length
         const confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
-        const { classes, currentUser } = this.props
-
+        const { classes, currentTrip, currentUser } = this.props
         return (
             <div
                 className={classes.coverPhoto}
@@ -198,7 +196,7 @@ class Cover extends Component {
                     {this.state.isTripStatusOpen && <LeftModal
                         isOpen={this.state.isTripStatusOpen}
                         toggleModal={() => this.closeModal('isTripStatusOpen')}
-                        title='Change trip status'
+                        title='Change status'
                         form={ChangeTripStatusForm}
                         submit={this.updateTrip}
                         status={currentTrip.status}
@@ -213,6 +211,7 @@ class Cover extends Component {
                             title={`Share ${currentUser.words ? currentUser.words.what.toLowerCase() : 'Trip'}`}
                             tripId={currentTrip._id}
                             submit={this.copiedLink}
+                            words={currentUser.words}
                             form={NewShareTrip}
                         />}
                     </div>
@@ -238,7 +237,7 @@ class Cover extends Component {
                     {this.state.isTripDatesOpen && <LeftModal
                         isOpen={this.state.isTripDatesOpen}
                         toggleModal={() => this.closeModal('isTripDatesOpen')}
-                        title='Change trip dates'
+                        title='Change dates'
                         form={ChangeTripDatesForm}
                         submit={this.updateTrip}
                         dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
