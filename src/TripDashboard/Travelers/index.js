@@ -586,7 +586,7 @@ class Travelers extends Component {
     }
 
     render() {
-        const { classes, currentTrip } = this.props
+        const { classes, currentTrip, currentUser } = this.props
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = <>
             <LeftButton onClick={this.toggleImportCsvModal} color="secondary">
