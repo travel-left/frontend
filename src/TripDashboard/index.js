@@ -19,7 +19,7 @@ const Dashboard = withStyles(styles)(({ currentTrip, currentUser, setCurrentTrip
                 <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} currentUser={currentUser} />
             </Grid>
             <Grid item xs={12} md={2}>
-                <SideNav ctId={currentTrip._id} words={currentUser.words} />
+                <SideNav ctId={currentTrip._id} words={currentUser.words ? currentUser.words : { what: 'Trip', whatPlural: 'Trips', who: 'Traveler', whoPlural: 'Travelers' }} />
             </Grid>
             <Grid item xs={12} md={10} lg={10}>
                 <div className={classes.main} >
