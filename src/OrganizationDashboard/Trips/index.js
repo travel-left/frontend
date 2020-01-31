@@ -96,7 +96,7 @@ class Trips extends Component {
             })
             trips.push(createdTrip)
             tripStatusCounts[createdTrip.status]++
-          
+
             this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
                 selectedTrip: createdTrip,
                 tripStatusCounts
@@ -114,7 +114,7 @@ class Trips extends Component {
 
     copyTrip = async tripId => {
         const { trips, tripStatusCounts } = this.state
-
+        const { currentUser } = this.props
         try {
             const createdTrip = await apiCall('post', `/api/trips/${tripId}/copy`)
             this.setState({
@@ -212,7 +212,7 @@ class Trips extends Component {
             filter
         } = this.state
 
-        const { classes } = this.props
+        const { classes, currentUser } = this.props
 
         const showTrips = filteredTrips.length > 0
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Fab from '@material-ui/core/Fab'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core'
 
 const styles = theme => ({
     button: {
@@ -34,3 +36,5 @@ const ShareTrip = ({ tripId, submit, classes, words }) => (
         </div>
     </>
 )
+
+export default withStyles(styles)(ShareTrip)

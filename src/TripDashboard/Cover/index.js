@@ -187,7 +187,8 @@ class Cover extends Component {
         const currentTrip = this.props.currentTrip
         const invited = this.state.travelers.length
         const confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
-        const { classes } = this.props
+        const { classes, currentUser } = this.props
+
         return (
             <div
                 className={classes.coverPhoto}
