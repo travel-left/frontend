@@ -157,7 +157,7 @@ class Event extends Component {
                     this.state.isOpen && <LeftModal
                         isOpen={this.state.isOpen}
                         toggleModal={this.toggleModal}
-                        title='Edit event'
+                        title='Edit activity'
                         {...event}
                         submit={this.update}
                         remove={this.remove}

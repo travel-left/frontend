@@ -16,10 +16,10 @@ const Dashboard = withStyles(styles)(({ currentTrip, currentUser, setCurrentTrip
     return (
         <Grid container>
             <Grid item xs={12}>
-                <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} />
+                <Cover setCurrentTrip={setCurrentTrip} currentTrip={currentTrip} currentUser={currentUser} />
             </Grid>
             <Grid item xs={12} md={2}>
-                <SideNav ctId={currentTrip._id} />
+                <SideNav ctId={currentTrip._id} words={currentUser.words} />
             </Grid>
             <Grid item xs={12} md={10} lg={10}>
                 <div className={classes.main} >

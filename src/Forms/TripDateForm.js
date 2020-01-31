@@ -51,7 +51,7 @@ const form = props => {
                 id="standard-required"
                 label="Name"
                 value={values.name}
-                placeholder="Trip date name"
+                placeholder="Name"
                 name="name"
                 error={touched.name && Boolean(errors.name)}
                 helperText={touched.name ? errors.name : ""}

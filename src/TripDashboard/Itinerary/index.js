@@ -294,7 +294,7 @@ class Events extends Component {
                             <LeftButton
                                 onClick={this.toggleModal}
                             >
-                                NEW EVENT
+                                NEW activity
                             </LeftButton>
                         }
                         {this.state.isOpen &&
@@ -305,7 +305,7 @@ class Events extends Component {
                                 trip={this.props.currentTrip}
                                 toggleModal={this.toggleModal}
                                 isOpen={this.state.isOpen}
-                                title='Create a new event'
+                                title='Create a new activity'
                                 form={EventForm}
                             />
                         }

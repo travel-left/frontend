@@ -27,7 +27,7 @@ const form = props => {
 
     let travelerList = (
         <div style={{ marginTop: 25 }}>
-            <InputLabel id="demo-mutiple-chip-label"> Selected Travelers</InputLabel>
+            <InputLabel id="demo-mutiple-chip-label"> Selected </InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
                 id="demo-mutiple-chip"
@@ -40,9 +40,9 @@ const form = props => {
                 displayEmpty
                 onBlur={handleBlur}
                 input={<Input id="select-multiple-chip" />}
-                placeholder="No travelers selected"
+                placeholder="None selected"
                 renderValue={selectedTravelers => (
-                    selectedTravelers.length === 0 ? <em>No travelers selected</em>
+                    selectedTravelers.length === 0 ? 'None selected'
                         : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedTravelers.map(t => (
                                 <LeftChip key={t._id} label={t.name} />

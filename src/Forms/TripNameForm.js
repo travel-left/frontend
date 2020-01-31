@@ -21,9 +21,9 @@ const form = props => {
             <TextField
                 required
                 id="standard-required"
-                label="Trip name"
+                label="Name"
                 value={values.name}
-                placeholder="A name for trip"
+                placeholder="A name"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="name"
@@ -36,9 +36,9 @@ const form = props => {
             <TextField
                 required
                 id="standard-required"
-                label="Trip description"
+                label="Description"
                 value={values.description}
-                placeholder="A name for trip"
+                placeholder="A description"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 name="description"
@@ -65,7 +65,7 @@ const Form = withFormik({
     },
     validationSchema: Yup.object().shape({
         name: Yup.string()
-            .required("Enter a trip name")
+            .required("Enter a name")
     }),
     handleSubmit: (values, { setSubmitting, props }) => {
         props.submit(values).then(() => setSubmitting(false))

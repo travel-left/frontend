@@ -3,7 +3,6 @@ import { apiCall } from '../../util/api'
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined'
 import TravelerList from './TravelerList'
 import TravelerInfo from './TravelerInfo'
-import './Travelers.css'
 import ReactGA from 'react-ga'
 import AddTravelerToTripFromOrgForm from '../../Forms/AddTravelerToTripFromOrgForm'
 import Snack from '../../util/otherComponents/Snack'
@@ -586,7 +585,7 @@ class Travelers extends Component {
     }
 
     render() {
-        const { classes, currentTrip } = this.props
+        const { classes, currentTrip, currentUser } = this.props
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
         const csvUpload = <>
             <LeftButton onClick={this.toggleImportCsvModal} color="secondary">
@@ -595,7 +594,7 @@ class Travelers extends Component {
             {this.state.isImportCsvOpen && <LeftModal
                 isOpen={this.state.isImportCsvOpen}
                 toggleModal={this.toggleImportCsvModal}
-                title='Import travelers from CSV file'
+                title={`Import ${currentUser.words.whoPlural.toLowerCase()} from CSV file`}
                 submit={this.addTravelersCSV}
                 form={ImportCsvForm}
             />}
@@ -641,7 +640,14 @@ class Travelers extends Component {
         return (
             <Grid container className={classes.container}>
                 <Grid item xs={12} md={8} className={classes.travelersSection}>
-                    <Typography className={classes.title} variant="h2">{currentTrip ? 'Travelers on this Trip' : 'Travelers in your Organization'}</Typography>
+                    <Typography
+                        className={classes.title}
+                        variant="h2">
+                        {currentTrip ?
+                            `${currentUser.words.whoPlural} on this ${currentUser.words.what}` :
+                            `${currentUser.words.whoPlural} in your Organization`
+                        }
+                    </Typography>
                     <div className={classes.buttonsContainer}>
                         <div className={classes.filters}>
                             <Typography variant="h6" className={classes.filterText}>Filter by</Typography>
@@ -671,7 +677,7 @@ class Travelers extends Component {
                                 this.state.isChangeStatusModalOpen && <LeftModal
                                     isOpen={this.state.isChangeStatusModalOpen}
                                     toggleModal={this.closeChangeStatusModal}
-                                    title='Change traveler status'
+                                    title='Change status'
                                     submit={this.changeStatusOfSelectedTravelers}
                                     travelers={this.state.travelers}
                                     selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
@@ -687,7 +693,7 @@ class Travelers extends Component {
                                 this.state.isCommunicateModalOpen && <LeftModal
                                     isOpen={this.state.isCommunicateModalOpen}
                                     toggleModal={this.closeCommunicateModal}
-                                    title='Communicate with your travelers'
+                                    title='Communicate'
                                     submit={this.communicateWithSelectedTravelers}
                                     travelers={this.state.travelers}
                                     selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
@@ -700,7 +706,7 @@ class Travelers extends Component {
                                 </IconButton>
                             </Paper>
                             {this.state.isCollectMoneyModalOpen && <LeftModal
-                                title="Collect money from travelers"
+                                title="Collect money"
                                 isOpen={this.state.isCollectMoneyModalOpen}
                                 toggleModal={this.toggleCollectMoneyModal}
                                 submit={this.collectMoneyFromTravelers}
@@ -722,13 +728,13 @@ class Travelers extends Component {
                             {!currentTrip && csvUpload}
                             {currentTrip ? <>
                                 <LeftButton onClick={this.openAddModal}>
-                                    ADD TRAVELER
+                                    ADD {currentUser.words.whoPlural}
                                 </LeftButton>
                                 {this.state.isAddModalOpen &&
                                     <LeftModal
                                         isOpen={this.state.isAddModalOpen}
                                         toggleModal={this.closeAddModal}
-                                        title='Add travelers to this trip'
+                                        title={`Add ${currentUser.words.whoPlural}`}
                                         submit={this.addTraveler}
                                         travelers={this.state.travelersNotOnTrip}
                                         form={AddTravelerToTripFromOrgForm}
