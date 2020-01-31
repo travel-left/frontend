@@ -18,7 +18,6 @@
         "moment": "^2.24.0",
         "moment-timezone": "^0.5.25",
         "per-env": "^1.0.2",
-        "pluralize": "^8.0.0",
         "prop-types": "^15.7.2",
         "react": "^16.10.2",
         "react-copy-to-clipboard": "^5.0.1",
@@ -38,7 +37,6 @@
         "redux": "^4.0.1",
         "redux-thunk": "^2.3.0",
         "serve": "^11.1.0",
-        "source-map-explorer": "^2.2.2",
         "typeface-roboto": "0.0.75",
         "yup": "^0.27.0"
     },
@@ -48,8 +46,7 @@
         "start": "per-env",
         "start:development": "npx react-scripts start",
         "start:production": "serve -s build",
-        "cypress:open": "cypress open",
-        "analyze": "source-map-explorer \"build/static/js/*.js\""
+        "cypress:open": "cypress open"
     },
     "eslintConfig": {
         "extends": "react-app"

@@ -124,7 +124,7 @@ class TripInformation extends Component {
                         {isEditTripNameModalOpen && <LeftModal
                             isOpen={isEditTripNameModalOpen}
                             toggleModal={this.closeModal}
-                            title='Edit profile'
+                            title='Edit trip profile'
                             submit={this.updateTrip}
                             form={TripNameForm}
                             name={name}
