@@ -70,7 +70,7 @@ class Trips extends Component {
             }
         }
 
-        this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIP'}`, {
+        this.filterTripsAndSetState(trips, `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`, {
             tripStatusCounts
         })
     }
