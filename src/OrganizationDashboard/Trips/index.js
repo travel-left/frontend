@@ -26,7 +26,7 @@ class Trips extends Component {
     state = {
         trips: [],
         filteredTrips: [],
-        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'Trips'}`,
+        filter: `ALL ${this.props.currentUser.words ? this.props.currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`,
         selectedTrip: null,
         tripStatusCounts: {
             LEFT: 0,
