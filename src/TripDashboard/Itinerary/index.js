@@ -293,6 +293,7 @@ class Events extends Component {
                         {documents &&
                             <LeftButton
                                 onClick={this.toggleModal}
+                                id="new-activity"
                             >
                                 NEW activity
                             </LeftButton>

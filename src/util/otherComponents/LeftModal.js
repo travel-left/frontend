@@ -64,7 +64,7 @@ class LeftModal extends Component {
                 <div className={classes.modalContent}>
                     <div className={classes.modalHeader}>
                         <span className={classes.modalTitle}>{title}</span>
-                        <IconButton onClick={this.handleToggleModal} color='primary' className={classes.closeButton} >
+                        <IconButton onClick={this.handleToggleModal} color='primary' className={classes.closeButton} id="modal-close-button">
                             <CloseIcon style={{ color: 'white' }} fontSize="large" />
                         </IconButton>
                     </div>

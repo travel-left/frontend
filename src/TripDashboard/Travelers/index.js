@@ -622,8 +622,8 @@ class Travelers extends Component {
         const newTravelerInOrg = <>
             <div className={classes.newTraveler}>
                 <LeftButton onClick={this.openAddNewTravelerOrgModal}>
-                    NEW TRAVELER
-            </LeftButton>
+                    NEW {currentUser.words ? currentUser.words.who.toUpperCase() : 'TRAVELER'}
+                </LeftButton>
             </div>
             {
                 this.state.isAddNewTravelerOrgModalOpen &&

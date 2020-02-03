@@ -94,9 +94,9 @@ class Coordinator extends Component {
                 <Image diameter={64} src={image} name={name} />
                 <div className={classes.coordinator}>
                     {name && <span className={classes.coordinatorName}>{name}</span>}
-                    {title && <Typography variant="caption">{title}</Typography>}
-                    {phone && <Typography variant="caption">{phone}</Typography>}
-                    {email && <Typography variant="caption">{email}</Typography>}
+                    {title && <Typography variant="caption" id="coordinator-name">{title}</Typography>}
+                    {phone && <Typography variant="caption" id="coordinator-phone">{phone}</Typography>}
+                    {email && <Typography variant="caption" id="coordinator-email">{email}</Typography>}
                 </div>
                 {removeButton}
             </LeftCard>

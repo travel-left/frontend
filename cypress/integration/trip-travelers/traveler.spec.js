@@ -16,7 +16,7 @@ describe('create, edit, and delete a traveler', () => {
     }
 
     it('create a traveler', function () {
-        cy.contains('Travelers').click()
+        cy.get('button[id="travelers-nav"]').click()
         cy.contains('NEW TRAVELER').click()
         cy.get('input[name="name"]')
             .type(t.name)

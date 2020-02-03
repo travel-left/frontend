@@ -54,7 +54,7 @@ const ShareCover = withRouter(({ trip, classes, token }) => {
                 to={`/trips/${trip._id}/register`}
                 name={`/trips/${trip._id}/register`}
             >
-                <LeftButton type="submit">
+                <LeftButton type="submit" id="traveler-register-button">
                     {trip.travelerRegistrationFormSettings.hasDueDate ?
                         (<>
                             {'Register By\xa0'}

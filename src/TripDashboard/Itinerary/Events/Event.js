@@ -117,7 +117,7 @@ class Event extends Component {
                         <span className={classes.iconContainer}>
                             <i className={`fa ${icon.string} ${classes.icon}`} />
                         </span>
-                        <Typography variant="h2">
+                        <Typography variant="h2" id="activity-name">
                             {event.type === 'FLIGHT' && event.airline ?
                                 flight :
                                 name

@@ -167,6 +167,7 @@ class Navbar extends Component {
                             className={classes.navButton}
                             variant="extended"
                             disableTouchRipple
+                            id="travelers-nav"
                             style={{ marginLeft: 24 }}>
                             {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
                         </Fab>

@@ -144,7 +144,7 @@ class TravelerInfo extends Component {
                         </div>
                         <div className={classes.notes}>
                             <Typography variant="h6">Notes</Typography>
-                            <Typography variant="subtitle2">{personalNotes}</Typography>
+                            <Typography variant="subtitle2" id="notes">{personalNotes}</Typography>
                         </div>
                         <div className={classes.tabs}>
                             <Tabs

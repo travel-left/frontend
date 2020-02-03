@@ -120,7 +120,7 @@ class TripInformation extends Component {
                         </div>
                     </div>
                     <div className={classes.tripNameDescription}>
-                        <span className={classes.tripName}> {name} </span>
+                        <span className={classes.tripName} id="trip-name"> {name} </span>
                         {isEditTripNameModalOpen && <LeftModal
                             isOpen={isEditTripNameModalOpen}
                             toggleModal={this.closeModal}

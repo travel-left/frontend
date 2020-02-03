@@ -34,8 +34,8 @@ describe('Add, edit, and delete a event', () => {
             ],
             links: 'www.reddit.com www.google.com'
         }
-        cy.contains('Manage Itinerary').children().first().click()
-        cy.contains('NEW EVENT').click()
+        cy.get('div[id="itinerary-section"]').click()
+        cy.get('button[id="new-activity"]').click()
         cy.get('input[id="event-name"]')
             .type(e.name)
         cy.get('input[name="dateStart"]')
@@ -55,8 +55,7 @@ describe('Add, edit, and delete a event', () => {
             .type(e.links)
         cy.get('button[id="event-submit-button"]')
             .click()
-
-        cy.get('.MuiCard-root').should('contain', e.name)
+        cy.get('h2[id="activity-name"]', { timeout: 5000 }).should('contain', e.name)
         cy.get('h6').should('contain', "Fly to Lisbon")
         cy.get('.MuiCard-root').should('contain', e.startTime + ' - ' + e.endTime)
         cy.get('.MuiCard-root').should('contain', e.description)
@@ -85,8 +84,7 @@ describe('Add, edit, and delete a event', () => {
             links: 'www.reddit.com www.google.com'
         }
 
-        cy.get('.event-title').contains('Fly to London').parent().next().click()
-
+        cy.get('h2[id="activity-name"]').contains('Fly to London').parent().next().click()
         cy.get('input[id="event-name"]')
             .clear()
             .type(e.name)
@@ -94,7 +92,7 @@ describe('Add, edit, and delete a event', () => {
             .clear()
         cy.get('p').contains(editedDay).click()
         cy.get(`input[value="${e.type}"]`).click()
-        cy.get('input[id="timezone"]').type('US/ALASKA').type('{enter}').type('{esc}')
+        cy.get('input[id="timezone"]').type('US/ALASKA').type('{enter}')//.type('{esc}')
         cy.get('input[name="description"]')
             .clear()
             .type(e.description)
@@ -122,7 +120,7 @@ describe('Add, edit, and delete a event', () => {
     })
 
     it('should remove an event', function () {
-        cy.get('.event-title').contains('Fly to ur mums').parent().next().click()
+        cy.get('h2[id="activity-name"]').contains('Fly to ur mums').parent().next().click()
         cy.get('button[type="button"]').contains('Remove').click()
         cy.get('.MuiCard-root').should('not.contain', 'Fly to ur mums')
     })
