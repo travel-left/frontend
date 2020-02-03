@@ -24,8 +24,8 @@ const form = props => {
     let buttonContent = isUploading ? <CircularProgress color='primary' /> : 'Submit'
 
     return (
-        <form onSubmit={handleSubmit} style={{ marginTop: 41 }}>
-            <div >
+        <form onSubmit={handleSubmit} >
+            <div style={{ marginTop: 0 }}>
                 <FileUploader
                     value={values.file}
                     showPreviews={true}
@@ -47,7 +47,7 @@ const form = props => {
                 type="link"
                 fullWidth
             />
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton type="submit" id="submit-cover-photo" float disabled={isUploading}>
                 {buttonContent}
             </LeftButton>

@@ -8,7 +8,7 @@ export default () => (
         <Typography variant="subtitle2">
             Your account is not yet verified, please head over to your account page to verify.
                 </Typography>
-        <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+        <Divider style={{ marginTop: 48, marginBottom: 16 }} />
         <LeftButton type="submit" color="secondary" id="signup" onClick={() => window.location.href = `https://app.travel-left.com/account/travelerPayments`}>
             Go to account
                 </LeftButton>

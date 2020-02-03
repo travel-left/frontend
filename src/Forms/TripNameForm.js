@@ -32,6 +32,7 @@ const form = props => {
                 helperText={touched.name ? errors.name : ""}
                 fullWidth
                 initialValues={{ name: values.name }}
+                style={{ marginTop: 0 }}
             />
             <TextField
                 required
@@ -45,7 +46,7 @@ const form = props => {
                 type="text"
                 fullWidth
             />
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton type="submit" float disabled={isSubmitting}>
                 Submit
             </LeftButton>

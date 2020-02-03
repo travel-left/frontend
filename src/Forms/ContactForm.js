@@ -30,6 +30,7 @@ const form = props => {
                 error={touched.name && Boolean(errors.name)}
                 helperText={touched.name ? errors.name : ""}
                 fullWidth
+                style={{ marginTop: 0 }}
             />
             <TextField
                 onChange={handleChange}
@@ -57,7 +58,7 @@ const form = props => {
                 helperText={touched.phone ? errors.phone : ""}
                 fullWidth
             />
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             {remove && <LeftButton onClick={remove} color="error" disabled={isSubmitting}>
                 Remove
             </LeftButton>}

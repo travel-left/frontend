@@ -23,7 +23,7 @@ const form = props => {
     return (
         <form onSubmit={handleSubmit}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 0 }}>
                     <KeyboardDatePicker
                         disableToolbar
                         autoOk
@@ -46,6 +46,7 @@ const form = props => {
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
                         }}
+                        style={{ marginTop: 0 }}
                     />
                     <KeyboardDatePicker
                         disableToolbar
@@ -69,10 +70,11 @@ const form = props => {
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
                         }}
+                        style={{ marginTop: 0 }}
                     />
                 </div>
             </MuiPickersUtilsProvider>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
                 </LeftButton>

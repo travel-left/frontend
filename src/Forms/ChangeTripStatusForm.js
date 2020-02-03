@@ -24,7 +24,7 @@ const form = props => {
     ))
     return (
         <form onSubmit={handleSubmit} >
-            <InputLabel style={{ marginTop: 41 }}>Status</InputLabel>
+            <InputLabel style={{ marginTop: 0 }}>Status</InputLabel>
             <Select
                 required
                 displayEmpty
@@ -37,7 +37,7 @@ const form = props => {
             >
                 {options}
             </Select>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
                 </LeftButton>

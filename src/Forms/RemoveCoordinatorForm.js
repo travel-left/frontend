@@ -2,6 +2,7 @@ import React from 'react'
 import Divider from '@material-ui/core/Divider'
 import { withFormik } from "formik"
 import LeftButton from '../util/otherComponents/LeftButton'
+import Typography from '@material-ui/core/Typography'
 
 const form = props => {
     const {
@@ -16,9 +17,8 @@ const form = props => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <p className='TripInfo-description'>Are you sure you want to remove this coordinator? Press submit to remove.</p>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
-            <LeftButton type="submit" color="error" disabled={isSubmitting}>
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
+            <LeftButton type="submit" color="error" float disabled={isSubmitting}>
                 Remove
             </LeftButton>
         </form>

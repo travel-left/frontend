@@ -22,7 +22,7 @@ const form = props => {
     } = props
 
     let travelerList = (
-        <div style={{ marginTop: 25 }}>
+        <div >
             <InputLabel id="demo-mutiple-chip-label"> Selected </InputLabel>
             <Select
                 multiple
@@ -58,7 +58,7 @@ const form = props => {
         <>
             {travelerList}
             <form onSubmit={handleSubmit}>
-                <InputLabel style={{ marginTop: 16 }}>Status</InputLabel>
+                <InputLabel style={{ marginTop: 0 }}>Status</InputLabel>
                 <Select
                     required
                     displayEmpty
@@ -72,7 +72,7 @@ const form = props => {
                 >
                     {travelerStatus.map(status => <MenuItem value={status}>{status.toUpperCase()}</MenuItem>)}
                 </Select>
-                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <Divider style={{ marginTop: 48, marginBottom: 16 }} />
                 <LeftButton float type="submit" disabled={isSubmitting}>
                     Submit
                 </LeftButton>

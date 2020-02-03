@@ -36,6 +36,7 @@ const form = props => {
                 onBlur={handleBlur}
                 name="name"
                 fullWidth
+                style={{ marginTop: 0 }}
             />
             <TextField
                 id="standard-multiline-static"
@@ -100,7 +101,7 @@ const form = props => {
                     />
                 </div>
             </MuiPickersUtilsProvider>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
             </LeftButton>

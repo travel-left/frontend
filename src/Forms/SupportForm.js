@@ -28,6 +28,7 @@ const form = props => {
                 placeholder="Email subject"
                 name="subject"
                 fullWidth
+                style={{ marginTop: 0 }}
             />
             <TextField
                 required
@@ -40,7 +41,7 @@ const form = props => {
                 name="message"
                 fullWidth
             />
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 SEND
             </LeftButton>

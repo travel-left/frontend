@@ -24,8 +24,8 @@ const form = props => {
     return (
         <form onSubmit={handleSubmit}>
             {values.fromOrg ? (
-                <div style={{ marginTop: 41 }}>
-                    <InputLabel id="demo-mutiple-chip-label">Select coordinators already in your organization</InputLabel>
+                <div >
+                    <InputLabel style={{ marginTop: 0 }}>Select coordinators already in your organization</InputLabel>
                     <Select
                         labelId="demo-mutiple-chip-label"
                         id="demo-mutiple-chip"
@@ -68,6 +68,7 @@ const form = props => {
                             error={touched.name && Boolean(errors.name)}
                             helperText={touched.name ? errors.name : ""}
                             fullWidth
+                            style={{ marginTop: 0 }}
                         />
                         <TextField
                             required
@@ -114,7 +115,7 @@ const form = props => {
                     </>
                 )
             }
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             {!values.fromOrg && <LeftButton onClick={() => {
                 setFieldValue("fromOrg", true)
             }} color="secondary">

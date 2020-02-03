@@ -85,6 +85,7 @@ const form = props => {
                         placeholder="Activity name"
                         name="name"
                         style={{ width: 199 }}
+                        style={{ marginTop: 0 }}
                     />
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <KeyboardDatePicker
@@ -263,7 +264,7 @@ const form = props => {
                     name="links"
                     fullWidth
                 />
-                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <Divider style={{ marginTop: 48, marginBottom: 16 }} />
                 {remove && <LeftButton onClick={remove} color="error" disabled={isSubmitting}>
                     Remove
             </LeftButton>}

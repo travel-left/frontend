@@ -238,7 +238,7 @@ class Trips extends Component {
                         </Button>
                         {this.state.isOpen && <LeftModal
                             isOpen={this.state.isOpen}
-                            title={`Add new ${currentUser.words ? currentUser.words.toLowerCase() : 'trip'}`}
+                            title={`Add new ${currentUser.words ? currentUser.words.what.toLowerCase() : 'trip'}`}
                             toggleModal={this.toggleModal}
                             form={CreateTripForm}
                             submit={this.addTrip}
