@@ -58,7 +58,7 @@ const form = props => {
         <>
             {travelerList}
             <form onSubmit={handleSubmit}>
-                <InputLabel style={{ marginTop: 0 }}>Status</InputLabel>
+                <InputLabel style={{ marginTop: 24 }}>Status</InputLabel>
                 <Select
                     required
                     displayEmpty

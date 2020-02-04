@@ -64,7 +64,7 @@ const form = props => {
         <>
             {travelerList}
             <form onSubmit={handleSubmit}>
-                <div >
+                <div style={{ marginTop: 24 }}>
                     <FormLabel component="legend" >Send As</FormLabel>
                     <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
                         <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />

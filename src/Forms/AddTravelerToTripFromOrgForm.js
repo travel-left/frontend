@@ -60,7 +60,7 @@ const form = props => {
             <form onSubmit={handleSubmit}>
                 <Divider style={{ marginTop: 48, marginBottom: 16 }} />
                 <LeftButton type="submit" disabled={isSubmitting} float>
-                    ADD TO TRIP
+                    ADD
                 </LeftButton>
             </form>
         </>

@@ -102,7 +102,7 @@ const form = props => {
                 </div>
             </FormGroup>
             <Divider style={{ marginTop: 48, marginBottom: 16 }} />
-            <LeftButton type="submit" disabled={isSubmitting}>
+            <LeftButton type="submit" float disabled={isSubmitting}>
                 Submit
             </LeftButton>
         </form>

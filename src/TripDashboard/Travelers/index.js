@@ -611,7 +611,7 @@ class Travelers extends Component {
             {this.state.isRegistrationModalOpen && <LeftModal
                 isOpen={this.state.isRegistrationModalOpen}
                 toggleModal={this.toggleRegistrationModal}
-                title='Customize your traveler registration'
+                title={`Customize your ${currentUser.words ? currentUser.words.who.toLowerCase() : 'traveler'} registration`}
                 submit={this.updateTripRegistrationForm}
                 form={TravelerRegistrationSettingsForm}
                 settings={this.props.currentTrip.travelerRegistrationFormSettings}
@@ -644,7 +644,7 @@ class Travelers extends Component {
                         className={classes.title}
                         variant="h2">
                         {currentTrip ?
-                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} on this ${currentUser.words ? currentUser.words.what : 'Trip'}` :
+                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} of this ${currentUser.words ? currentUser.words.what : 'Trip'}` :
                             `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} in your Organization`
                         }
                     </Typography>
@@ -734,7 +734,7 @@ class Travelers extends Component {
                                     <LeftModal
                                         isOpen={this.state.isAddModalOpen}
                                         toggleModal={this.closeAddModal}
-                                        title={`Add ${currentUser.words ? currentUser.words.whoPlural : 'Travelers'}`}
+                                        title={`Add ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'travelers'}`}
                                         submit={this.addTraveler}
                                         travelers={this.state.travelersNotOnTrip}
                                         form={AddTravelerToTripFromOrgForm}
