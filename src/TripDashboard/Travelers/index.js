@@ -630,7 +630,7 @@ class Travelers extends Component {
                 <LeftModal
                     isOpen={this.state.isAddNewTravelerOrgModalOpen}
                     toggleModal={this.closeAddNewTravelerOrgModal}
-                    title='Add new traveler'
+                    title={`Add new ${currentUser.words ? currentUser.words.who.toLowerCase() : 'traveler'} `}
                     submit={this.addTravelerToOrg}
                     form={TravelerForm}
                 />
