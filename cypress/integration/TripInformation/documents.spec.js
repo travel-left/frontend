@@ -13,11 +13,11 @@ describe('add, edit, and remove a document', () => {
 
     it('should add a document to a trip', function () {
         cy.fixture('left.png', 'base64').then(fileContent => {
-            cy.get('.FileUploader').children().first().upload(
+            cy.get('div[id=file-uploader]').children().first().upload(
                 { fileContent, fileName: 'left.png', mimeType: 'image/png' },
                 { subjectType: 'drag-n-drop', events: ['dragenter', 'drop'] },
             )
-            cy.get('.left-resource').should('contain', 'left.png')
+            cy.get('div[id="resource"]').should('contain', 'left.png')
         });
     })
 
@@ -26,13 +26,13 @@ describe('add, edit, and remove a document', () => {
         cy.get('input[name="description"]')
             .type(d.description)
         cy.get('button[type="submit"]').click()
-        cy.get('.left-resource').should('contain', d.description)
+        cy.get('div[id="resource"]').should('contain', d.description)
     })
 
     it('should remove a document from a trip', () => {
         cy.contains('left.png').next().click()
         cy.get('button[type="button"]').contains('Remove').click()
-        cy.get('.left-resource').should('not.contain', d.description)
+        cy.get('div[id="resource"]').should('not.contain', d.description)
     })
 
 })
@@ -62,9 +62,9 @@ describe('add, edit, and remove a link', () => {
         cy.get('input[name="link"]')
             .type(l.link)
         cy.get('button[type="submit"]').click()
-        cy.get('.left-resource').should('contain', l.name)
-        cy.get('.left-resource').should('contain', l.description)
-        cy.get('.left-resource').should('contain', l.link)
+        cy.get('div[id="resource"]').should('contain', l.name)
+        cy.get('div[id="resource"]').should('contain', l.description)
+        cy.get('div[id="resource"]').should('contain', l.link)
     })
 
     it('should edit a link on a trip', () => {
@@ -76,15 +76,15 @@ describe('add, edit, and remove a link', () => {
         cy.get('input[name="link"]').clear()
             .type(l.linkEdited)
         cy.get('button[type="submit"]').click()
-        cy.get('.left-resource').should('contain', l.nameEdited)
-        cy.get('.left-resource').should('contain', l.descriptionEdited)
-        cy.get('.left-resource').should('contain', l.linkEdited)
+        cy.get('div[id="resource"]').should('contain', l.nameEdited)
+        cy.get('div[id="resource"]').should('contain', l.descriptionEdited)
+        cy.get('div[id="resource"]').should('contain', l.linkEdited)
     })
 
     it('should remove a link from a trip', () => {
         cy.contains(l.nameEdited).next().click()
         cy.get('button[type="button"]').contains('Remove').click()
-        cy.get('.left-resource').should('not.contain', l.nameEdited)
+        cy.get('div[id="resource"]').should('not.contain', l.nameEdited)
     })
 
 })

@@ -131,7 +131,7 @@ class TripInformation extends Component {
                             description={description}
                         />}
                         <Divider className={classes.divider}></Divider>
-                        <Typography variant="subtitle1" className={classes.tripDescription} >{description} </Typography>
+                        <Typography variant="subtitle1" id="trip-description" className={classes.tripDescription} >{description} </Typography>
                     </div>
                 </div>
                 <Coordinators tripId={this.currentTripId} currentUser={currentUser}></Coordinators>

@@ -62,7 +62,7 @@ class Contact extends Component {
                 <div className={classes.contact}>
                     {name && <span className={classes.contactName}>{name}</span>}
                     {phone && <a className={classes.contactInfo} href={`tel:${phone}`}><Typography variant="caption">{phone}</Typography></a>}
-                    {email && <Typography variant="caption">{email}</Typography>}
+                    {email && <Typography variant="caption" id="contact-email">{email}</Typography>}
                 </div>
                 <>
                     {!share ?

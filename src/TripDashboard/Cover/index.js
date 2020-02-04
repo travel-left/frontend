@@ -190,6 +190,7 @@ class Cover extends Component {
         return (
             <div
                 className={classes.coverPhoto}
+                id="cover-photo"
             >
                 <div className={classes.topRow}>
                     <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>

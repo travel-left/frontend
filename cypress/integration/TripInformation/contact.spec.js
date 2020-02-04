@@ -27,7 +27,7 @@ describe('Add, edit and remove a contact from a trip', () => {
         cy.get('input[name="phone"]')
             .type(c.phone)
         cy.get('button[type="submit"]').click()
-        cy.get('.Coordinator-info').should('contain', c.email)
+        cy.get('span[id="contact-email"]').should('contain', c.email)
     })
 
     it('should edit a contact', function () {
@@ -42,13 +42,13 @@ describe('Add, edit and remove a contact from a trip', () => {
             .clear()
             .type(c.phoneEdited)
         cy.get('button[type="submit"]').click()
-        cy.get('.Coordinator-info').should('contain', c.emailEdited)
+        cy.get('span[id="contact-email"]').should('contain', c.emailEdited)
 
     })
 
     it('remove a contact', function () {
         cy.get('button[id="contact-edit-button"]').parent().contains(c.email).parent().next().click()
         cy.get('button[type="button"]').contains('Remove').click()
-        cy.get('.Coordinator-info').should('not.contain', c.email)
+        cy.get('span[id="contact-email"]').should('not.contain', c.email)
     })
 })

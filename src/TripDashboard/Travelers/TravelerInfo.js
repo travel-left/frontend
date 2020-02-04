@@ -161,7 +161,7 @@ class TravelerInfo extends Component {
                             {this.state.tab === 1 && paymentList}
                         </div>
                     </div>
-                    <LeftButton color="secondary" float onClick={this.openEditModal}>
+                    <LeftButton color="secondary" float id="edit-info-button" onClick={this.openEditModal}>
                         EDIT Info
                     </LeftButton>
                     {

@@ -17,9 +17,8 @@ describe('Change name of trip', () => {
         cy.get('input[name="description"]').type(tripDescription)
         cy.get('button[type="submit"]')
             .click()
-        cy.get('.TripInfo-name').should('contain', tripName + ' edited')
-        cy.get('.TripInfo-descript').should('contain', tripDescription)
-
+        cy.get('span[id="trip-name"]').should('contain', tripName + ' edited')
+        cy.get('h6[id="trip-description"]').should('contain', tripDescription)
     })
 
 })

@@ -37,11 +37,10 @@ describe('create new important trip date', () => {
             .click()
         cy.contains(tripDate.name).should('be.visible')
         cy.contains(tripDate.dateLong).should('be.visible')
-        cy.get('.TripDate-Icon').contains('folder_open').should('be.visible')
     })
 
     it('edit trip date', () => {
-        cy.get('.edit-trip-date-button').parent().contains(tripDate.name).parent().parent().next().click()
+        cy.get('button[id="edit-trip-date-button"]').parent().contains(tripDate.name).parent().parent().next().click()
         cy.get('input[name="name"]')
             .clear()
             .type(tripDate.nameEdited)
@@ -55,11 +54,10 @@ describe('create new important trip date', () => {
             .click()
         cy.contains(tripDate.nameEdited).should('be.visible')
         cy.contains(tripDate.editedDateLong).should('be.visible')
-        cy.get('.TripDate-Icon').contains('attach_money').should('be.visible')
     })
 
     it('delete trip date', () => {
-        cy.get('.edit-trip-date-button').parent().contains(tripDate.nameEdited).parent().parent().next().click()
+        cy.get('button[id="edit-trip-date-button"]').parent().contains(tripDate.nameEdited).parent().parent().next().click()
         cy.get('button[type="button"]').contains('Remove').click()
         cy.contains(tripDate.nameEdited).should('not.be.visible')
     })

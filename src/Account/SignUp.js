@@ -96,10 +96,10 @@ const form = props => {
                 fullWidth
             />
             <div style={{ marginTop: 56, display: 'flex', justifyContent: 'space-between' }}>
-                <Button color="secondary" onClick={() => handleSwitch('signin')} className={classes.button} disableRipple>
+                <Button color="secondary" id="signin" onClick={() => handleSwitch('signin')} className={classes.button} disableRipple>
                     Sign in
                 </Button>
-                <LeftButton type="submit" id="signin" disabled={isSubmitting}>
+                <LeftButton type="submit" id="signup" disabled={isSubmitting}>
                     Sign up
                 </LeftButton>
             </div>

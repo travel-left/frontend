@@ -17,7 +17,7 @@ describe('create, edit, and delete a traveler', () => {
 
     it('create a traveler', function () {
         cy.get('button[id="travelers-nav"]').click()
-        cy.contains('NEW TRAVELER').click()
+        cy.get('button[id="new-traveler-button"]').click()
         cy.get('input[name="name"]')
             .type(t.name)
         cy.get('input[name="email"]')
@@ -31,11 +31,11 @@ describe('create, edit, and delete a traveler', () => {
         cy.contains('Email').next().should('contain', t.email)
         cy.contains('Phone').next().should('contain', t.phone)
         cy.get(':nth-child(2) > .MuiChip-root > .MuiChip-label').should('contain', t.status)
-        cy.get('.TripInfo-description').should('contain', t.personalNotes)
+        cy.get('h6[id="notes"]').should('contain', t.personalNotes)
     })
 
     it('edit a traveler', function () {
-        cy.contains('EDIT TRAVELER').click()
+        cy.get('button[id="edit-info-button"]').click()
         cy.get('input[name="name"]').clear()
             .type(t.nameEdited)
         cy.get('input[name="email"]').clear()
@@ -52,18 +52,18 @@ describe('create, edit, and delete a traveler', () => {
         cy.contains('Email').next().should('contain', t.emailEdited)
         cy.contains('Phone').next().should('contain', t.phoneEdited)
         cy.get(':nth-child(2) > .MuiChip-root > .MuiChip-label').should('contain', t.statusEdited)
-        cy.get('.TripInfo-description').should('contain', t.personalNotesEdited)
+        cy.get('h6[id="notes"]').should('contain', t.personalNotes)
     })
 
     it('should remove a traveler', function () {
-        cy.contains('EDIT TRAVELER').click()
+        cy.get('button[id="edit-info-button"]').click()
         cy.contains('Remove').click()
         cy.get('h6').contains(t.nameEdited).should('not.exist')
     })
 
     it('create a traveler', function () {
-        cy.contains('Travelers').click()
-        cy.contains('NEW TRAVELER').click()
+        cy.get('button[id="travelers-nav"]').click()
+        cy.get('button[id="new-traveler-button"]').click()
         cy.get('input[name="name"]')
             .type(t.name)
         cy.get('input[name="email"]')
@@ -77,25 +77,25 @@ describe('create, edit, and delete a traveler', () => {
         cy.contains('Email').next().should('contain', t.email)
         cy.contains('Phone').next().should('contain', t.phone)
         cy.get(':nth-child(2) > .MuiChip-root > .MuiChip-label').should('contain', t.status)
-        cy.get('.TripInfo-description').should('contain', t.personalNotes)
+        cy.get('h6[id="notes"]').should('contain', t.personalNotes)
     })
 
     it('go into trip', () => {
-        cy.contains('Trips').click()
+        cy.get('button[id="trips-nav"]').click()
         cy.contains('South Africa').dblclick()
-        cy.contains('Manage Travelers').children().first().click()
+        cy.get('div[id="travelers-section"]').click()
     })
 
     it('edit a traveler', function () {
         cy.get('h6').should('contain', 'Example User')
-        cy.contains('ADD TRAVELER').click()
+        cy.get('button[id="add-traveler-button"]').click()
         cy.get('div[id="add-traveler-to-trip"]').click()
         cy.get('li').contains(t.name).click().type('{esc}')
         cy.contains('ADD TO TRIP').click()
 
         cy.get('h6').should('contain', t.name)
 
-        cy.contains('EDIT TRAVELER').click()
+        cy.get('button[id="edit-info-button"]').click()
         cy.get('input[name="name"]').clear()
             .type(t.nameEdited)
         cy.get('input[name="email"]').clear()
@@ -112,11 +112,11 @@ describe('create, edit, and delete a traveler', () => {
         cy.contains('Email').next().should('contain', t.emailEdited)
         cy.contains('Phone').next().should('contain', t.phoneEdited)
         cy.get(':nth-child(2) > .MuiChip-root > .MuiChip-label').should('contain', t.statusEdited)
-        cy.get('.TripInfo-description').should('contain', t.personalNotesEdited)
+        cy.get('h6[id="notes"]').should('contain', t.personalNotes)
     })
 
     it('should remove a traveler', function () {
-        cy.contains('EDIT TRAVELER').click()
+        cy.get('button[id="edit-info-button"]').click()
         cy.contains('Remove').click()
         cy.get('h6').contains(t.nameEdited).should('not.exist')
     })

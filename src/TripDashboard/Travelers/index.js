@@ -621,7 +621,7 @@ class Travelers extends Component {
 
         const newTravelerInOrg = <>
             <div className={classes.newTraveler}>
-                <LeftButton onClick={this.openAddNewTravelerOrgModal}>
+                <LeftButton onClick={this.openAddNewTravelerOrgModal} id="new-traveler-button">
                     NEW {currentUser.words ? currentUser.words.who.toUpperCase() : 'TRAVELER'}
                 </LeftButton>
             </div>
@@ -727,7 +727,7 @@ class Travelers extends Component {
                         <div className={classes.orgButtons}>
                             {!currentTrip && csvUpload}
                             {currentTrip ? <>
-                                <LeftButton onClick={this.openAddModal}>
+                                <LeftButton onClick={this.openAddModal} id="add-traveler-button">
                                     ADD {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
                                 </LeftButton>
                                 {this.state.isAddModalOpen &&

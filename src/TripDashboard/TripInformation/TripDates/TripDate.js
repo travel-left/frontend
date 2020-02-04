@@ -125,7 +125,7 @@ class TripDate extends Component {
                     </div>
                 </div>
                 {!share &&
-                    <IconButton className={classes.editButton} onClick={this.openModal} >
+                    <IconButton className={classes.editButton} onClick={this.openModal} id="edit-trip-date-button">
                         <MoreHorizIcon />
                     </IconButton>
                 }

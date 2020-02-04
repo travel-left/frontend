@@ -110,6 +110,7 @@ const form = props => {
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            style={{ marginTop: 0 }}
                         />
                     </MuiPickersUtilsProvider>
                 </div>

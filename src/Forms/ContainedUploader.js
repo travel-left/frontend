@@ -58,7 +58,7 @@ export default class Resources extends Component {
 
     render() {
         return (
-            <>
+            <div id="file-uploader" style={{ width: '100%', height: '100%' }}>
                 <FileUploader
                     handleChange={this.createDocument}
                     handleUploading={this.uploadInProgress}
@@ -66,9 +66,10 @@ export default class Resources extends Component {
                     showPreviewsInDropzone={false}
                     class='docDropzone'
                     filesLimit={100}
+
                 ></FileUploader>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </>
+            </div>
         )
     }
 }

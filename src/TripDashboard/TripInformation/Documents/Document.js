@@ -95,7 +95,7 @@ class Document extends Component {
 
         return (
             <Grid item xs={12} sm={tinyDoc ? 12 : 8} md={tinyDoc ? 12 : 6} >
-                <Card className={classes.resource} >
+                <Card className={classes.resource} id="resource">
                     <div className={classes.nameAndEditContainer}>
                         <Typography variant="subtitle2">{name}</Typography>
                         {!share && !tinyDoc &&

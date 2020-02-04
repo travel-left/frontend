@@ -153,7 +153,8 @@ class Navbar extends Component {
                             color={tripsColor}
                             className={classes.navButton}
                             variant="extended"
-                            disableTouchRipple>
+                            disableTouchRipple
+                            id="trips-nav">
                             {currentUser.words ? currentUser.words.whatPlural : 'Trips'}
                         </Fab>
                     </NavLink>
