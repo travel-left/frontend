@@ -68,6 +68,7 @@ class Cover extends Component {
     tripId = this.props.currentTrip._id
     state = {
         travelers: [],
+        images: [],
         snack: {
             show: false,
             variant: '',
@@ -82,6 +83,7 @@ class Cover extends Component {
     constructor(props) {
         super(props)
         this.getAndSetTravelers()
+        this.getOrgPhotos()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -89,11 +91,12 @@ class Cover extends Component {
     openModal = modal => (this.setState({ [modal]: true }))
 
     updateTrip = async updateObject => {
+        console.log(updateObject)
         try {
             const data = await apiCall(
                 'put',
                 `/api/trips/${this.tripId}`,
-                updateObject, true
+                updateObject
             )
             this.setState({
                 snack: {
@@ -183,10 +186,21 @@ class Cover extends Component {
         }
     }
 
+    getOrgPhotos = async () => {
+        const images = await apiCall(
+            'get',
+            `/api/organization/${this.props.currentUser.organization}/images`
+        )
+        this.setState({
+            images
+        })
+    }
+
     render() {
         const invited = this.state.travelers.length
         const confirmed = this.state.travelers.filter(t => t.status !== 'INVITED').length
         const { classes, currentTrip, currentUser } = this.props
+        const { images } = this.state
         return (
             <div
                 className={classes.coverPhoto}
@@ -235,6 +249,7 @@ class Cover extends Component {
                         ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
                         </LeftFab>
                     </div>
+
                     {this.state.isTripDatesOpen && <LeftModal
                         isOpen={this.state.isTripDatesOpen}
                         toggleModal={() => this.closeModal('isTripDatesOpen')}
@@ -255,6 +270,7 @@ class Cover extends Component {
                         isOpen={this.state.isChangeCoverOpen}
                         toggleModal={() => this.closeModal('isChangeCoverOpen')}
                         title='Change cover photo'
+                        images={images}
                         form={ChangeCoverPhotoForm}
                         submit={this.updateTrip}
                     />}
