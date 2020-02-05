@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Image from '../util/otherComponents/Image'
 import Typography from '@material-ui/core/Typography'
-import ChangeCoverPhotoForm from '../Forms/ChangeCoverPhotoForm'
+import ChangeAccountPhotoForm from '../Forms/ChangeAccountPhotoForm'
 import LeftModal from '../util/otherComponents/LeftModal'
 import Snack from '../util/otherComponents/Snack'
 import { apiCall } from '../util/api'
@@ -58,7 +58,7 @@ export default class AccountCover extends Component {
                         isOpen={this.state.isChangeImageOpen}
                         toggleModal={() => this.closeModal('isChangeImageOpen')}
                         title='Change photo'
-                        form={ChangeCoverPhotoForm}
+                        form={ChangeAccountPhotoForm}
                         submit={this.updateCoordinator}
                     />}
                 </div>

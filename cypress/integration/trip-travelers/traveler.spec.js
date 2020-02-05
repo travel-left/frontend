@@ -91,7 +91,7 @@ describe('create, edit, and delete a traveler', () => {
         cy.get('button[id="add-traveler-button"]').click()
         cy.get('div[id="add-traveler-to-trip"]').click()
         cy.get('li').contains(t.name).click().type('{esc}')
-        cy.contains('ADD TO TRIP').click()
+        cy.get('button[id="add-to-trip"]').click()
 
         cy.get('h6').should('contain', t.name)
 

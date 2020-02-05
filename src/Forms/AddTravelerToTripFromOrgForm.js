@@ -59,7 +59,7 @@ const form = props => {
             {travelerList}
             <form onSubmit={handleSubmit}>
                 <Divider style={{ marginTop: 48, marginBottom: 16 }} />
-                <LeftButton type="submit" disabled={isSubmitting} float>
+                <LeftButton type="submit" id="add-to-trip" disabled={isSubmitting} float>
                     ADD
                 </LeftButton>
             </form>

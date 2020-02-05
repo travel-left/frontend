@@ -2,7 +2,7 @@ import loginAfterSeed from '../Util/loginAfterSeed'
 
 describe('create a trip registration, a traveler completes it', () => {
     loginAfterSeed()
-    const day = 4
+    const day = 22
     const t = {
         name: 'New Traveler',
         email: 'new@traveler.com',

@@ -24,7 +24,7 @@ describe('create a trip registration, a traveler completes it', () => {
         let month = (new Date()).getMonth() + 1
         month = month.toString().length === 1 ? `0${month}` : month
         const year = (new Date()).getFullYear()
-        const day = 4
+        const day = 22
         const date = `${month}-${day}-${year}`
 
         cy.get('div[id="travelers-section"]').click()
@@ -35,7 +35,7 @@ describe('create a trip registration, a traveler completes it', () => {
         cy.get('input[value="hasPersonalNotes"]').click()
         cy.get('input[value="hasDueDate"]').click()
         cy.get('input[name="dueDate"]').click()
-        cy.get('p').contains(`${day}`).should('have.text', '4').click()
+        cy.get('p').contains(day).should('have.text', day.toString()).click()
         cy.get('input[value="hasPublish"]').click()
         cy.get('input[value="hasPaymentAmount"]').click()
         cy.get('input[name="paymentAmount"]').type('2.00')
