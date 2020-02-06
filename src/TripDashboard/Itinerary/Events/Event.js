@@ -108,7 +108,15 @@ class Event extends Component {
         )
 
         let links = event.links.map(link => <a href={link} target="_blank" className={classes.link}>{link}</a>)
-        let flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
+
+        let flight
+
+        if (event.departureAirportCode) {
+            flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
+        } else {
+            flight = `Flight:  from to `
+        }
+
 
         return (
             <Card className={classes.event}>

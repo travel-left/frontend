@@ -76,6 +76,7 @@ class Events extends Component {
             initializeReactGA()
         }
         this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
         this.getDocuments()
     }
 
@@ -89,9 +90,26 @@ class Events extends Component {
             if (!days.map(day => day.day).includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
                 days.push({
                     day: moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'),
-                    name: event.name
+                    name: event.name ? event.name : 'Flight'
                 })
             }
+            return event
+        }))
+
+        events = newevents.map(event => ({
+            ...event,
+            start: formatDateToLocalTimezone(event.start),
+            end: formatDateToLocalTimezone(event.end)
+        }))
+
+        this.setState({ events, days, selectedDay: days[0] ? days[0].day : {} })
+    }
+
+    getDaysAndEventsFlights = async () => {
+        let days = []
+        let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
+
+        let newevents = await Promise.all(events.map(async event => {
             if (event.type === 'FLIGHT') {
                 try {
                     let flightStats = await apiCall('post', '/api/flightstats', {
