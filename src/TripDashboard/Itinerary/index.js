@@ -291,6 +291,7 @@ class Events extends Component {
             />
         ) : null
         const eventList = events.length ? (
+
             <EventList
                 events={events}
                 updateEvent={this.updateEvent}

@@ -3,6 +3,7 @@ import Event from './Event'
 import moment from 'moment'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
 
 const styles = theme => ({
     day: {
@@ -27,8 +28,16 @@ export default withStyles(styles)(({ events, removeEvent, updateEvent, documents
 
         return (
             <div key={event._id}>
-                {dayHeader}
-                <Event event={event} removeEvent={removeEvent} updateEvent={updateEvent} documents={documents} share={share} />
+                <Fade in={true} timeout={300}>
+                    <div>
+                        {dayHeader}
+                    </div>
+                </Fade>
+                <Fade in={true} timeout={1200}>
+                    <div>
+                        <Event event={event} removeEvent={removeEvent} updateEvent={updateEvent} documents={documents} share={share} />
+                    </div>
+                </Fade>
             </div>
         )
     })

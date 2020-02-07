@@ -10,6 +10,7 @@ import Card from '@material-ui/core/Card'
 import TripDateForm from '../../../Forms/TripDateForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
 import { withStyles } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
 
 const styles = theme => ({
     tripDates: {
@@ -160,31 +161,33 @@ class TripDates extends Component {
         return (
             <div className={classes.tripDates}>
                 <Typography variant="h2">Important Dates</Typography>
-                <Grid item xs={12} sm={8} md={6} >
-                    <Card className={classes.tripDateList}>
-                        {tripDatesList}
-                        {!share &&
-                            <div className={classes.addNew}>
-                                <LeftFab
-                                    onClick={this.openModal}
-                                    id="add-new-trip-date-button"
-                                    color="secondary"
-                                >
-                                    Add New
+                <Fade in={true} timeout={1500}>
+                    <Grid item xs={12} sm={8} md={6} >
+                        <Card className={classes.tripDateList}>
+                            {tripDatesList}
+                            {!share &&
+                                <div className={classes.addNew}>
+                                    <LeftFab
+                                        onClick={this.openModal}
+                                        id="add-new-trip-date-button"
+                                        color="secondary"
+                                    >
+                                        Add New
                                 </LeftFab>
-                                {
-                                    isNewTripDateModalOpen && <LeftModal
-                                        isOpen={isNewTripDateModalOpen}
-                                        toggleModal={this.closeModal}
-                                        title='Add an important date'
-                                        submit={this.createTripDate}
-                                        date={moment(dateStart).format('MM-DD-YYYY')}
-                                        form={TripDateForm}
-                                    />
-                                }
-                            </div>}
-                    </Card>
-                </Grid>
+                                    {
+                                        isNewTripDateModalOpen && <LeftModal
+                                            isOpen={isNewTripDateModalOpen}
+                                            toggleModal={this.closeModal}
+                                            title='Add an important date'
+                                            submit={this.createTripDate}
+                                            date={moment(dateStart).format('MM-DD-YYYY')}
+                                            form={TripDateForm}
+                                        />
+                                    }
+                                </div>}
+                        </Card>
+                    </Grid>
+                </Fade>
                 {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
             </div>
         )

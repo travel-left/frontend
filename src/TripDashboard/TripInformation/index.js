@@ -13,6 +13,7 @@ import Snack from '../../util/otherComponents/Snack'
 import LeftFab from '../../util/otherComponents/LeftFab'
 import { withStyles } from '@material-ui/core'
 import sizes from '../../styles/sizes'
+import Fade from '@material-ui/core/Fade'
 
 const styles = theme => ({
     tripProfile: {
@@ -112,6 +113,7 @@ class TripInformation extends Component {
                 <div>
                     <div className={classes.tripProfile}>
                         <Typography variant="h2">{currentUser.words ? currentUser.words.what : 'Trip'} Profile</Typography>
+
                         <div className={classes.editTripProfileBtn}>
                             <LeftFab id="tripInfo-name-button"
                                 onClick={this.openModal}
@@ -119,21 +121,24 @@ class TripInformation extends Component {
                             </LeftFab>
                         </div>
                     </div>
-                    <div className={classes.tripNameDescription}>
-                        <span className={classes.tripName} id="trip-name"> {name} </span>
-                        {isEditTripNameModalOpen && <LeftModal
-                            isOpen={isEditTripNameModalOpen}
-                            toggleModal={this.closeModal}
-                            title='Edit profile'
-                            submit={this.updateTrip}
-                            form={TripNameForm}
-                            name={name}
-                            description={description}
-                        />}
-                        <Divider className={classes.divider}></Divider>
-                        <Typography variant="subtitle1" id="trip-description" className={classes.tripDescription} >{description} </Typography>
-                    </div>
+                    <Fade in={true} timeout={800}>
+                        <div className={classes.tripNameDescription}>
+                            <span className={classes.tripName} id="trip-name"> {name} </span>
+                            {isEditTripNameModalOpen && <LeftModal
+                                isOpen={isEditTripNameModalOpen}
+                                toggleModal={this.closeModal}
+                                title='Edit profile'
+                                submit={this.updateTrip}
+                                form={TripNameForm}
+                                name={name}
+                                description={description}
+                            />}
+                            <Divider className={classes.divider}></Divider>
+                            <Typography variant="subtitle1" id="trip-description" className={classes.tripDescription} >{description} </Typography>
+                        </div>
+                    </Fade>
                 </div>
+
                 <Coordinators tripId={this.currentTripId} currentUser={currentUser}></Coordinators>
                 <TripDates tripId={this.currentTripId} dateStart={dateStart}></TripDates>
                 <Resources tripId={this.currentTripId}></Resources>

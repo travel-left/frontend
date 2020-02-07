@@ -9,6 +9,7 @@ import LeftItem from '../../../util/otherComponents/LeftItem'
 import AddCoordinatorToTripForm from '../../../Forms/AddCoordinatorToTripForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
 import { withStyles } from '@material-ui/core'
+import Fade from '@material-ui/core/Fade'
 
 const styles = theme => ({
     coordinatorsSection: {
@@ -197,20 +198,22 @@ class Coordinators extends Component {
         return (
             <div className={classes.coordinatorsSection}>
                 <Typography variant="h2"> Coordinators </Typography>
-                <Grid container className={classes.coordinatorList}>
-                    {coordinatorList}
-                    {
-                        this.state.isNewCoordinatorModalOpen && <LeftModal
-                            isOpen={this.state.isNewCoordinatorModalOpen}
-                            toggleModal={this.closeModal}
-                            title='Add a coordinator'
-                            coordinators={this.state.coordinators}
-                            coordinatorsFromOrg={this.state.coordinatorsFromOrg.filter(c => !this.state.coordinators.map(d => d._id).includes(c._id))}
-                            submit={this.createCoordinator}
-                            form={AddCoordinatorToTripForm}
-                        />
-                    }
-                </Grid>
+                <Fade in={true} timeout={1000}>
+                    <Grid container className={classes.coordinatorList}>
+                        {coordinatorList}
+                        {
+                            this.state.isNewCoordinatorModalOpen && <LeftModal
+                                isOpen={this.state.isNewCoordinatorModalOpen}
+                                toggleModal={this.closeModal}
+                                title='Add a coordinator'
+                                coordinators={this.state.coordinators}
+                                coordinatorsFromOrg={this.state.coordinatorsFromOrg.filter(c => !this.state.coordinators.map(d => d._id).includes(c._id))}
+                                submit={this.createCoordinator}
+                                form={AddCoordinatorToTripForm}
+                            />
+                        }
+                    </Grid>
+                </Fade>
             </div>
         )
     }
