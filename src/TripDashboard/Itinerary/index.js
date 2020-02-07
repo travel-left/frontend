@@ -225,7 +225,6 @@ class Events extends Component {
                     message: 'Success!'
                 }
             })
-            this.getDaysAndEvents()
         } catch (err) {
             this.setState({
                 snack: {
@@ -235,7 +234,10 @@ class Events extends Component {
                 }
             })
         }
-
+        this.getDaysAndEvents()
+        if (event.type === 'FLIGHT') {
+            this.getDaysAndEventsFlights()
+        }
     }
 
     removeEvent = async eventId => {
@@ -248,7 +250,6 @@ class Events extends Component {
                     message: 'Success!'
                 }
             })
-            this.getDaysAndEvents()
         } catch (err) {
             this.setState({
                 snack: {
@@ -258,7 +259,8 @@ class Events extends Component {
                 }
             })
         }
-
+        this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
     }
 
     onDayClick = day => {
