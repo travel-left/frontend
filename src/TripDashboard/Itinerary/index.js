@@ -182,6 +182,7 @@ class Events extends Component {
             })
         }
         this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
     }
 
     createQuickEvent = async event => {
