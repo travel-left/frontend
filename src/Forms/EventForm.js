@@ -116,7 +116,7 @@ const form = props => {
                 </div>
                 <div style={{ marginTop: 41 }}>
                     <FormLabel component="legend" >Activity type</FormLabel>
-                    <RadioGroup name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'around' }}>
+                    <RadioGroup name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                         <FormControlLabel value="LODGING" control={<Radio color="primary" />} label="Lodging" />
                         <FormControlLabel value="EVENT" control={<Radio color="primary" />} label="Event" />
                         <FormControlLabel value="TRANSPORTATION" control={<Radio color="primary" />} label="Transportation" />

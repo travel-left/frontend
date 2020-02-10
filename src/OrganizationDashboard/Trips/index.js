@@ -302,7 +302,7 @@ class Trips extends Component {
 
                 </Grid >
 
-                // MODALS
+                {/* MODALS */}
                 <>
                     {this.state.isOpen && <LeftModal
                         title={`Add new ${currentUser.words ? currentUser.words.what.toLowerCase() : 'trip'}`}
