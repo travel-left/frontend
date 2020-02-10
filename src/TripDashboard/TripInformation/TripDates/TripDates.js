@@ -36,7 +36,7 @@ class TripDates extends Component {
 
     state = {
         tripDates: [],
-        isNewTripDateModalOpen: false,
+        showModal: false,
         snack: {
             show: false,
             variant: '',
@@ -139,13 +139,12 @@ class TripDates extends Component {
 
     }
 
-    closeModal = () => (this.setState({ isNewTripDateModalOpen: false }))
-    openModal = () => (this.setState({ isNewTripDateModalOpen: true }))
+    toggleModal = () => this.setState({ showModal: !this.state.showModal })
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     render() {
         const { classes, share, dateStart } = this.props
-        const { tripDates, isNewTripDateModalOpen, snack } = this.state
+        const { tripDates, snack } = this.state
 
         const sortedTripDates = tripDates.sort((f, s) => (f.date > s.date ? 1 : -1))
         const tripDatesList = sortedTripDates.map(date =>
@@ -159,37 +158,41 @@ class TripDates extends Component {
                 share={share}
             ></TripDate>)
         return (
-            <div className={classes.tripDates}>
-                <Typography variant="h2">Important Dates</Typography>
-                <Fade in={true} timeout={1500}>
-                    <Grid item xs={12} sm={8} md={6} >
-                        <Card className={classes.tripDateList}>
-                            {tripDatesList}
-                            {!share &&
-                                <div className={classes.addNew}>
-                                    <LeftFab
-                                        onClick={this.openModal}
-                                        id="add-new-trip-date-button"
-                                        color="secondary"
-                                    >
-                                        Add New
+            <>
+                <div className={classes.tripDates}>
+                    <Typography variant="h2">Important Dates</Typography>
+                    <Fade in={true} timeout={1500}>
+                        <Grid item xs={12} sm={8} md={6} >
+                            <Card className={classes.tripDateList}>
+                                {tripDatesList}
+                                {!share &&
+                                    <div className={classes.addNew}>
+                                        <LeftFab
+                                            onClick={this.toggleModal}
+                                            id="add-new-trip-date-button"
+                                            color="secondary"
+                                        >
+                                            Add New
                                 </LeftFab>
-                                    {
-                                        isNewTripDateModalOpen && <LeftModal
-                                            isOpen={isNewTripDateModalOpen}
-                                            toggleModal={this.closeModal}
-                                            title='Add an important date'
-                                            submit={this.createTripDate}
-                                            date={moment(dateStart).format('MM-DD-YYYY')}
-                                            form={TripDateForm}
-                                        />
-                                    }
-                                </div>}
-                        </Card>
-                    </Grid>
-                </Fade>
-                {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+
+                                    </div>}
+                            </Card>
+                        </Grid>
+                    </Fade>
+
+                </div>
+                <>
+                    {this.state.showModal && <LeftModal
+                        closeModal={this.toggleModal}
+                        title='Add an important date'
+                        submit={this.createTripDate}
+                        date={moment(dateStart).format('MM-DD-YYYY')}
+                        form={TripDateForm}
+                    />
+                    }
+                    {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
+                </>
+            </>
         )
     }
 }

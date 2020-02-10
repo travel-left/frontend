@@ -303,51 +303,64 @@ class Events extends Component {
         ) : <h4 />
 
         return (
-            <Grid container className={classes.container}>
-                <Grid item xs={12} md={!share ? 8 : 12} className={classes.eventsSection}>
-                    <Typography variant="h2">Itinerary</Typography>
-                    <div className={classes.eventList}>
-                        {eventList}
-                    </div>
-                </Grid>
-                <Grid item xs={12} md={4} className={classes.sidebar}>
-                    <div className={classes.newEventContainer}>
-                        {documents &&
-                            <LeftButton
-                                onClick={this.toggleModal}
-                                id="new-activity"
-                            >
-                                NEW activity
-                            </LeftButton>
-                        }
-                        {this.state.isOpen &&
-                            <LeftModal
-                                submit={this.createEvent}
-                                date={this.props.currentTrip.dateStart}
-                                documents={this.state.documents}
-                                trip={this.props.currentTrip}
-                                toggleModal={this.toggleModal}
-                                isOpen={this.state.isOpen}
-                                title='Create a new activity'
-                                form={EventForm}
-                            />
-                        }
-                    </div>
-                    <div>
-                        {dayList}
-                        <Card className={classes.quickEventForm}>
-                            <CreateQuickEventForm
-                                submit={this.createQuickEvent}
-                                date={this.props.currentTrip.dateStart}
-                            ></CreateQuickEventForm>
-                        </Card>
-                        <div className={classes.uploadContainer}>
-                            <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
+            <>
+                <Grid container className={classes.container}>
+                    <Grid item xs={12} md={!share ? 8 : 12} className={classes.eventsSection}>
+                        <Typography variant="h2">Itinerary</Typography>
+                        <div className={classes.eventList}>
+                            {eventList}
                         </div>
-                    </div>
+                    </Grid>
+                    <Grid item xs={12} md={4} className={classes.sidebar}>
+                        <div className={classes.newEventContainer}>
+                            {documents &&
+                                <LeftButton
+                                    onClick={this.toggleModal}
+                                    id="new-activity"
+                                >
+                                    NEW activity
+                            </LeftButton>
+                            }
+                        </div>
+                        <div>
+                            {dayList}
+                            <Card className={classes.quickEventForm}>
+                                <CreateQuickEventForm
+                                    submit={this.createQuickEvent}
+                                    date={this.props.currentTrip.dateStart}
+                                ></CreateQuickEventForm>
+                            </Card>
+                            <div className={classes.uploadContainer}>
+                                <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
+                            </div>
+                        </div>
+                    </Grid>
+
                 </Grid>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </Grid>
+
+                {/* MODALS */}
+
+                <>
+                    {this.state.isOpen &&
+                        <LeftModal
+                            submit={this.createEvent}
+                            date={this.props.currentTrip.dateStart}
+                            documents={this.state.documents}
+                            trip={this.props.currentTrip}
+                            closeModal={this.toggleModal}
+                            title='Create a new activity'
+                            form={EventForm}
+                        />
+                    }
+                    {this.state.snack.show && <Snack
+                        open={this.state.snack.show}
+                        message={this.state.snack.message}
+                        variant={this.state.snack.variant}
+                        onClose={this.closeSnack}>
+                    </Snack>
+                    }
+                </>
+            </>
         )
     }
 }

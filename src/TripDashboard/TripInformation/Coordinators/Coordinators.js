@@ -27,7 +27,7 @@ class Coordinators extends Component {
     state = {
         coordinators: [],
         coordinatorsFromOrg: [],
-        isNewCoordinatorModalOpen: false,
+        showModal: false,
         snack: {
             show: false,
             variant: '',
@@ -42,9 +42,8 @@ class Coordinators extends Component {
         !this.props.share && this.getCoordinatorsFromOrg()
     }
 
+    toggleModal = () => this.setState({ showModal: !this.state.showModal })
     closeSnack = () => (this.setState({ snack: { show: false } }))
-    closeModal = () => this.setState({ isNewCoordinatorModalOpen: false })
-    openModal = () => this.setState({ isNewCoordinatorModalOpen: true })
 
     getCoordinators = async () => {
         let coordinators = await apiCall(
@@ -174,7 +173,7 @@ class Coordinators extends Component {
 
         const newCoordinatorButton =
             <LeftItem >
-                <LeftFab id="add-new-coordinator-button" onClick={this.openModal} color="secondary" fab>
+                <LeftFab id="add-new-coordinator-button" onClick={this.toggleModal} color="secondary" fab>
                     Add New
                 </LeftFab>
             </LeftItem>
@@ -196,25 +195,26 @@ class Coordinators extends Component {
         !share && coordinatorList.splice(1, 0, newCoordinatorButton)
 
         return (
-            <div className={classes.coordinatorsSection}>
-                <Typography variant="h2"> Coordinators </Typography>
-                <Fade in={true} timeout={1000}>
-                    <Grid container className={classes.coordinatorList}>
-                        {coordinatorList}
-                        {
-                            this.state.isNewCoordinatorModalOpen && <LeftModal
-                                isOpen={this.state.isNewCoordinatorModalOpen}
-                                toggleModal={this.closeModal}
-                                title='Add a coordinator'
-                                coordinators={this.state.coordinators}
-                                coordinatorsFromOrg={this.state.coordinatorsFromOrg.filter(c => !this.state.coordinators.map(d => d._id).includes(c._id))}
-                                submit={this.createCoordinator}
-                                form={AddCoordinatorToTripForm}
-                            />
-                        }
-                    </Grid>
-                </Fade>
-            </div>
+            <>
+                <div className={classes.coordinatorsSection}>
+                    <Typography variant="h2"> Coordinators </Typography>
+                    <Fade in={true} timeout={1000}>
+                        <Grid container className={classes.coordinatorList}>
+                            {coordinatorList}
+                        </Grid>
+                    </Fade>
+                </div>
+                <>
+                    {this.state.showModal && <LeftModal
+                        closeModal={this.toggleModal}
+                        title='Add a coordinator'
+                        coordinators={this.state.coordinators}
+                        coordinatorsFromOrg={this.state.coordinatorsFromOrg.filter(c => !this.state.coordinators.map(d => d._id).includes(c._id))}
+                        submit={this.createCoordinator}
+                        form={AddCoordinatorToTripForm}
+                    />}
+                </>
+            </>
         )
     }
 }

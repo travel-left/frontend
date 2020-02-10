@@ -62,8 +62,7 @@ class TravelerInfo extends Component {
         this.getPayments()
     }
 
-    closeEditModal = () => this.setState({ isEditModalOpen: false })
-    openEditModal = () => this.setState({ isEditModalOpen: true })
+    toggleModal = () => this.setState({ isEditModalOpen: !this.state.isEditModalOpen })
 
     componentDidUpdate(prevProps) {
         if (this.props.traveler._id !== prevProps.traveler._id) {
@@ -121,54 +120,57 @@ class TravelerInfo extends Component {
         const paymentList = payments.map(p => <PaymentCard key={p._id} {...p} />)
 
         return (
-            <Fade in={true} timeout={700}>
-                <Card className={classes.travelerInfo}>
-                    <div className={classes.travelerInfoImage}>
-                        <Image src={image} diameter="65px" name={name} />
-                    </div>
-                    <div className={classes.traverInfoName} >
-                        <Typography variant="h2">{name}</Typography>
-                    </div>
-                    <div>
-                        <div className={classes.travelerInfoData}>
-                            <Typography variant="h6">Email</Typography>
-                            <Typography variant="subtitle2">{email}</Typography>
+            <>
+                <Fade in={true} timeout={700}>
+                    <Card className={classes.travelerInfo}>
+                        <div className={classes.travelerInfoImage}>
+                            <Image src={image} diameter="65px" name={name} />
                         </div>
-                        <div className={classes.travelerInfoData}>
-                            <Typography variant="h6">Phone</Typography>
-                            <Typography variant="subtitle2">{phone}</Typography>
+                        <div className={classes.traverInfoName} >
+                            <Typography variant="h2">{name}</Typography>
                         </div>
-                        <div className={classes.travelerInfoData}>
-                            <Typography variant="h6">Status</Typography>
-                            <span><TravelerStatus status={status} /></span>
+                        <div>
+                            <div className={classes.travelerInfoData}>
+                                <Typography variant="h6">Email</Typography>
+                                <Typography variant="subtitle2">{email}</Typography>
+                            </div>
+                            <div className={classes.travelerInfoData}>
+                                <Typography variant="h6">Phone</Typography>
+                                <Typography variant="subtitle2">{phone}</Typography>
+                            </div>
+                            <div className={classes.travelerInfoData}>
+                                <Typography variant="h6">Status</Typography>
+                                <span><TravelerStatus status={status} /></span>
+                            </div>
+                            <div className={classes.notes}>
+                                <Typography variant="h6">Notes</Typography>
+                                <Typography variant="subtitle2" id="notes">{personalNotes}</Typography>
+                            </div>
+                            <div className={classes.tabs}>
+                                <Tabs
+                                    variant="fullWidth"
+                                    value={this.state.tab}
+                                    onChange={this.handleChangeTab}
+                                    aria-label="nav tabs example"
+                                >
+                                    <Tab label={<Typography variant="h6">Conversations</Typography>} style={{ textTransform: 'none' }}>
+                                    </Tab>
+                                    <Tab label={<Typography variant="h6">Payments</Typography>} style={{ textTransform: 'none' }} />
+                                </Tabs>
+                                {this.state.tab === 0 && messageList}
+                                {this.state.tab === 1 && paymentList}
+                            </div>
                         </div>
-                        <div className={classes.notes}>
-                            <Typography variant="h6">Notes</Typography>
-                            <Typography variant="subtitle2" id="notes">{personalNotes}</Typography>
-                        </div>
-                        <div className={classes.tabs}>
-                            <Tabs
-                                variant="fullWidth"
-                                value={this.state.tab}
-                                onChange={this.handleChangeTab}
-                                aria-label="nav tabs example"
-                            >
-                                <Tab label={<Typography variant="h6">Conversations</Typography>} style={{ textTransform: 'none' }}>
-                                </Tab>
-                                <Tab label={<Typography variant="h6">Payments</Typography>} style={{ textTransform: 'none' }} />
-                            </Tabs>
-                            {this.state.tab === 0 && messageList}
-                            {this.state.tab === 1 && paymentList}
-                        </div>
-                    </div>
-                    <LeftButton color="secondary" float id="edit-info-button" onClick={this.openEditModal}>
-                        EDIT Info
+                        <LeftButton color="secondary" float id="edit-info-button" onClick={this.toggleModal}>
+                            EDIT Info
                     </LeftButton>
+                    </Card >
+                </Fade>
+                <>
                     {
                         this.state.isEditModalOpen &&
                         <LeftModal
-                            isOpen={this.state.isEditModalOpen}
-                            toggleModal={this.closeEditModal}
+                            closeModal={this.toggleModal}
                             title='Edit info'
                             submit={this.handleUpdate}
                             remove={this.handleRemove}
@@ -176,8 +178,8 @@ class TravelerInfo extends Component {
                             form={TravelerForm}
                         />
                     }
-                </Card >
-            </Fade>
+                </>
+            </>
         )
     }
 }

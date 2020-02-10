@@ -40,8 +40,7 @@ class Contact extends Component {
         isEditContactModalOpen: false
     }
 
-    closeModal = () => (this.setState({ isEditContactModalOpen: false }))
-    openModal = () => (this.setState({ isEditContactModalOpen: true }))
+    toggleModal = () => (this.setState({ isEditContactModalOpen: !this.state.isEditContactModalOpen }))
 
     handleEdit = updateObject => {
         this.props.update(this.props._id, updateObject)
@@ -57,29 +56,32 @@ class Contact extends Component {
         const { isEditContactModalOpen } = this.state
 
         return (
-            <LeftCard>
-                <Image diameter={64} src={image} name={name} />
-                <div className={classes.contact}>
-                    {name && <span className={classes.contactName}>{name}</span>}
-                    {phone && <a className={classes.contactInfo} href={`tel:${phone}`}><Typography variant="caption">{phone}</Typography></a>}
-                    {email && <Typography variant="caption" id="contact-email">{email}</Typography>}
-                </div>
-                <>
-                    {!share ?
-                        <LeftFab
-                            id="contact-edit-button"
-                            onClick={this.openModal}
-                        >
-                            Edit
+            <>
+                <LeftCard>
+                    <Image diameter={64} src={image} name={name} />
+                    <div className={classes.contact}>
+                        {name && <span className={classes.contactName}>{name}</span>}
+                        {phone && <a className={classes.contactInfo} href={`tel:${phone}`}><Typography variant="caption">{phone}</Typography></a>}
+                        {email && <Typography variant="caption" id="contact-email">{email}</Typography>}
+                    </div>
+                    <>
+                        {!share ?
+                            <LeftFab
+                                id="contact-edit-button"
+                                onClick={this.toggleModal}
+                            >
+                                Edit
                     </LeftFab> :
-                        <a className={classes.tele} href={`tel:${phone}`}>
-                            {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
-                        </a>
-                    }
+                            <a className={classes.tele} href={`tel:${phone}`}>
+                                {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
+                            </a>
+                        }
+                    </>
+                </LeftCard>
+                <>
                     {
                         isEditContactModalOpen && <LeftModal
-                            isOpen={isEditContactModalOpen}
-                            toggleModal={this.closeModal}
+                            closeModal={this.toggleModal}
                             title='Update contact'
                             form={ContactForm}
                             submit={this.handleEdit}
@@ -90,7 +92,7 @@ class Contact extends Component {
                         />
                     }
                 </>
-            </LeftCard>
+            </>
         )
     }
 }

@@ -48,7 +48,7 @@ class Resources extends Component {
             variant: '',
             message: ''
         },
-        isNewLinkModalOpen: false
+        showModal: false
     }
 
     constructor(props) {
@@ -57,8 +57,7 @@ class Resources extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
-    closeModal = () => (this.setState({ isNewLinkModalOpen: false }))
-    openModal = () => (this.setState({ isNewLinkModalOpen: true }))
+    toggleModal = () => (this.setState({ showModal: !this.state.showModal }))
 
     getDocuments = async () => {
         let docs = await apiCall('get', `/api/trips/${this.TRIP_ID}/documents`)
@@ -169,36 +168,40 @@ class Resources extends Component {
         !share && documents.splice(1, 0, uploadZone)
 
         return (
-            <div className={classes.resourcesSection}>
-                <div className={classes.resourcesHeader}>
-                    <Typography variant="h2" >Resources</Typography>
-                    {!share &&
-                        <div className={classes.linkBtn}>
-                            <LeftFab
-                                onClick={this.openModal}
-                                id="add-new-trip-link-button"
-                                color="secondary"
-                            >
-                                Add Link
+            <>
+                <div className={classes.resourcesSection}>
+                    <div className={classes.resourcesHeader}>
+                        <Typography variant="h2" >Resources</Typography>
+                        {!share &&
+                            <div className={classes.linkBtn}>
+                                <LeftFab
+                                    onClick={this.toggleModal}
+                                    id="add-new-trip-link-button"
+                                    color="secondary"
+                                >
+                                    Add Link
                             </LeftFab>
-                        </div>
-                    }
+                            </div>
+                        }
+
+                    </div>
+                    <Grid container className={classes.resourceList}>
+                        {documents}
+                    </Grid>
+                    {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
+                </div>
+                <>
                     {
-                        this.state.isNewLinkModalOpen && <LeftModal
-                            isOpen={this.state.isNewLinkModalOpen}
-                            toggleModal={this.closeModal}
+                        this.state.showModal && <LeftModal
+                            closeModal={this.toggleModal}
                             title='Create a link'
                             type='LINK'
                             submit={this.createDocument}
                             form={DocumentForm}
                         />
                     }
-                </div>
-                <Grid container className={classes.resourceList}>
-                    {documents}
-                </Grid>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+                </>
+            </>
         )
     }
 }

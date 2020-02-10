@@ -13,12 +13,11 @@ export default class AccountCover extends Component {
             variant: '',
             message: ''
         },
-        isChangeImageOpen: false
+        showModal: false
     }
 
-    closeSnack = () => (this.setState({ snack: { show: false } }))
-    closeModal = () => (this.setState({ isChangeImageOpen: false }))
-    openModal = () => (this.setState({ isChangeImageOpen: true }))
+    closeSnack = () => this.setState({ snack: { show: false } })
+    toggleModal = () => this.setState({ showModal: !this.state.showModal })
 
     updateCoordinator = async updateObject => {
         try {
@@ -49,23 +48,33 @@ export default class AccountCover extends Component {
     render() {
         const { image, name } = this.props.user
         return (
-            <div
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ marginTop: 16, marginBottom: 16 }}>
-                    <Image src={image} diameter="128px" name={name} upload handleUpload={this.openModal} />
+            <>
+                <div
+                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ marginTop: 16, marginBottom: 16 }}>
+                        <Image src={image} diameter="128px" name={name} upload handleUpload={this.toggleModal} />
+                    </div>
+                    <Typography variant="h3">Welcome, {name}</Typography>
+                    <Typography variant="subtitle1" style={{ marginTop: 16 }}>Manage your info, payment settings, and organization.</Typography>
 
-                    {this.state.isChangeImageOpen && <LeftModal
-                        isOpen={this.state.isChangeImageOpen}
-                        toggleModal={() => this.closeModal('isChangeImageOpen')}
+                </div>
+
+                {/* MODALS */}
+                <>
+                    {this.state.showModal && <LeftModal
+                        closeModal={this.toggleModal}
                         title='Change photo'
                         form={ChangeAccountPhotoForm}
                         submit={this.updateCoordinator}
                     />}
-                </div>
-                <Typography variant="h3">Welcome, {name}</Typography>
-                <Typography variant="subtitle1" style={{ marginTop: 16 }}>Manage your info, payment settings, and organization.</Typography>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+                    {this.state.snack.show && <Snack
+                        open={this.state.snack.show}
+                        message={this.state.snack.message}
+                        variant={this.state.snack.variant}
+                        onClose={this.closeSnack}></Snack>
+                    }
+                </>
+            </>
         )
     }
 }

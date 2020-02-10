@@ -72,7 +72,7 @@ const styles = theme => ({
 
 class Document extends Component {
     state = {
-        isEditModalOpen: false
+        showModal: false
     }
 
     handleEdit = putObject => {
@@ -85,8 +85,7 @@ class Document extends Component {
         this.closeModal()
     }
 
-    closeModal = () => (this.setState({ isEditModalOpen: false }))
-    openModal = () => (this.setState({ isEditModalOpen: true }))
+    toggleModal = () => this.setState(prevState => ({ showModal: !prevState.showModal }))
 
     render() {
         let { name, description, link, type, classes, tinyDoc, share } = this.props
@@ -94,65 +93,68 @@ class Document extends Component {
         const linkImg = getIcon(link)
 
         return (
-            <Grid item xs={12} sm={tinyDoc ? 12 : 8} md={tinyDoc ? 12 : 6} >
-                <Card className={classes.resource} id="resource">
-                    <div className={classes.nameAndEditContainer}>
-                        <Typography variant="subtitle2">{name}</Typography>
-                        {!share && !tinyDoc &&
-                            <LeftFab
-                                id="contact-edit-button"
-                                onClick={this.openModal}
-                            >
-                                Edit
+            <>
+                <Grid item xs={12} sm={tinyDoc ? 12 : 8} md={tinyDoc ? 12 : 6} >
+                    <Card className={classes.resource} id="resource">
+                        <div className={classes.nameAndEditContainer}>
+                            <Typography variant="subtitle2">{name}</Typography>
+                            {!share && !tinyDoc &&
+                                <LeftFab
+                                    id="contact-edit-button"
+                                    onClick={this.toggleModal}
+                                >
+                                    Edit
                             </LeftFab>
-                        }
-                        {
-                            this.state.isEditModalOpen && <LeftModal
-                                isOpen={this.state.isEditModalOpen}
-                                toggleModal={this.closeModal}
-                                title='Edit resource'
-                                name={name}
-                                description={description}
-                                submit={this.handleEdit}
-                                type={type}
-                                link={link}
-                                remove={this.handleDelete}
-                                form={DocumentForm}
-                            />
-                        }
-                    </div>
-                    <div className={classes.descriptionContainer}>
-                        <Typography variant="caption">{description}</Typography>
-                        {type === 'LINK' && <Typography variant="caption">{link}</Typography>}
-                    </div>
-                    <Card className={classes.miniResource}>
-                        <div className={classes.icon}>
-                            <a
-                                href={link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                download>
-                                <img
-                                    src={linkImg}
-                                    alt=""
-                                    className={classes.iconImage}
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </a>
+                            }
                         </div>
-                        <div className={classes.openLinkContainer}>
-                            <a
-                                className={classes.link}
-                                href={link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {type === 'LINK' ? 'Open link' : 'Download'}
-                            </a>
+                        <div className={classes.descriptionContainer}>
+                            <Typography variant="caption">{description}</Typography>
+                            {type === 'LINK' && <Typography variant="caption">{link}</Typography>}
                         </div>
+                        <Card className={classes.miniResource}>
+                            <div className={classes.icon}>
+                                <a
+                                    href={link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download>
+                                    <img
+                                        src={linkImg}
+                                        alt=""
+                                        className={classes.iconImage}
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                </a>
+                            </div>
+                            <div className={classes.openLinkContainer}>
+                                <a
+                                    className={classes.link}
+                                    href={link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {type === 'LINK' ? 'Open link' : 'Download'}
+                                </a>
+                            </div>
+                        </Card>
                     </Card>
-                </Card>
-            </Grid>
+                </Grid>
+                <>
+                    {
+                        this.state.showModal && <LeftModal
+                            closeModal={this.toggleModal}
+                            title='Edit resource'
+                            name={name}
+                            description={description}
+                            submit={this.handleEdit}
+                            type={type}
+                            link={link}
+                            remove={this.handleDelete}
+                            form={DocumentForm}
+                        />
+                    }
+                </>
+            </>
         )
     }
 }

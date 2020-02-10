@@ -119,62 +119,67 @@ class Event extends Component {
 
 
         return (
-            <Card className={classes.event}>
-                <div className={classes.editButtonContainer}>
-                    <div className={classes.titleContainer}>
-                        <span className={classes.iconContainer}>
-                            <i className={`fa ${icon.string} ${classes.icon}`} />
-                        </span>
-                        <Typography variant="h2" id="activity-name">
-                            {event.type === 'FLIGHT' && event.airline ?
-                                flight :
-                                name
-                            }
-                        </Typography>
-                    </div>
-                    {!share &&
-                        <LeftFab
-                            id="edit-event-button"
-                            onClick={this.toggleModal}
-                        >
-                            Edit
-                        </LeftFab>
-                    }
-                </div>
-                <Typography
-                    variant="subtitle2"
-                    className={classes.time}
-                >
-                    {time}
-                </Typography>
-                <div className={classes.contentContainer}>
-                    <Grid item xs={12} sm={6} md={6}>
-                        <Typography variant="subtitle1" >
-                            {event.description}
-                        </Typography>
-                        <div className={classes.linksContainer}>
-                            {links}
+            <>
+                <Card className={classes.event}>
+                    <div className={classes.editButtonContainer}>
+                        <div className={classes.titleContainer}>
+                            <span className={classes.iconContainer}>
+                                <i className={`fa ${icon.string} ${classes.icon}`} />
+                            </span>
+                            <Typography variant="h2" id="activity-name">
+                                {event.type === 'FLIGHT' && event.airline ?
+                                    flight :
+                                    name
+                                }
+                            </Typography>
                         </div>
-                        {documents}
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={5} >
-                        {map}
-                    </Grid>
-                </div>
-                {
-                    this.state.isOpen && <LeftModal
-                        isOpen={this.state.isOpen}
-                        toggleModal={this.toggleModal}
-                        title='Edit activity'
-                        {...event}
-                        submit={this.update}
-                        remove={this.remove}
-                        form={EventForm}
-                        selectedDocuments={event.documents.map(doc => doc._id)}
-                        documents={this.props.documents}
-                    />
-                }
-            </Card >
+                        {!share &&
+                            <LeftFab
+                                id="edit-event-button"
+                                onClick={this.toggleModal}
+                            >
+                                Edit
+                        </LeftFab>
+                        }
+                    </div>
+                    <Typography
+                        variant="subtitle2"
+                        className={classes.time}
+                    >
+                        {time}
+                    </Typography>
+                    <div className={classes.contentContainer}>
+                        <Grid item xs={12} sm={6} md={6}>
+                            <Typography variant="subtitle1" >
+                                {event.description}
+                            </Typography>
+                            <div className={classes.linksContainer}>
+                                {links}
+                            </div>
+                            {documents}
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={5} >
+                            {map}
+                        </Grid>
+                    </div>
+                </Card >
+
+                {/* MODALS */}
+                <>
+                    {
+                        this.state.isOpen && <LeftModal
+                            closeModal={this.toggleModal}
+                            title='Edit activity'
+                            {...event}
+                            submit={this.update}
+                            remove={this.remove}
+                            form={EventForm}
+                            selectedDocuments={event.documents.map(doc => doc._id)}
+                            documents={this.props.documents}
+                        />
+                    }
+                </>
+            </>
         )
     }
 }

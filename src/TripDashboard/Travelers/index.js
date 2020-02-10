@@ -120,16 +120,9 @@ class Travelers extends Component {
         tripFiltersChecked: [],
         travelers: [],
         travelersNotOnTrip: [],
-        addModalIsOpen: false,
-        isChangeStatusModalOpen: false,
-        isCommunicateModalOpen: false,
-        isAddNewTravelerOrgModalOpen: false,
-        isAddModalOpen: false,
-        isCollectMoneyModalOpen: false,
-        isRegisterAccountModalOpen: false,
-        isRegistrationModalOpen: false,
         canRequestPayments: false,
         madeStripeAccountRequest: false,
+        modalOpen: '',
         snack: {
             show: false,
             variant: '',
@@ -153,27 +146,16 @@ class Travelers extends Component {
         this.getStripeAccount()
     }
 
-    closeChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: false }))
-    openChangeStatusModal = () => (this.setState({ isChangeStatusModalOpen: true }))
-    closeCommunicateModal = () => (this.setState({ isCommunicateModalOpen: false }))
-    openCommunicateModal = () => (this.setState({ isCommunicateModalOpen: true }))
-    closeAddNewTravelerOrgModal = () => (this.setState({ isAddNewTravelerOrgModalOpen: false }))
-    openAddNewTravelerOrgModal = () => (this.setState({ isAddNewTravelerOrgModalOpen: true }))
-    closeAddModal = () => (this.setState({ isAddModalOpen: false }))
-    openAddModal = () => (this.setState({ isAddModalOpen: true }))
-    closeSnack = () => (this.setState({ snack: { show: false } }))
-    toggleImportCsvModal = () => (this.setState(prevState => ({ isImportCsvOpen: !prevState.isImportCsvOpen })))
-    toggleAddTravelerModal = () => (this.setState(prevState => ({ isAddTravelerOpen: !prevState.isAddTravelerOpen })))
-    toggleCollectMoneyModal = () => {
-        if (!this.state.canRequestPayments) {
-            this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen }))
+    openModal = modal => {
+        if (modal === 'money') {
+            modal = this.state.canRequestPayments ? 'money' : 'register'
         }
-        else {
-            this.setState(prevState => ({ isCollectMoneyModalOpen: !prevState.isCollectMoneyModalOpen }))
-        }
+
+        this.setState({ modalOpen: modal })
     }
-    toggleRegisterAccontModal = () => (this.setState(prevState => ({ isRegisterAccountModalOpen: !prevState.isRegisterAccountModalOpen })))
-    toggleRegistrationModal = () => (this.setState(prevState => ({ isRegistrationModalOpen: !prevState.isRegistrationModalOpen })))
+    closeModal = () => this.setState({ modalOpen: '' })
+    closeSnack = () => (this.setState({ snack: { show: false } }))
+
 
     getTravelers = async () => {
         if (!this.props.currentTrip) {
@@ -587,185 +569,177 @@ class Travelers extends Component {
     render() {
         const { classes, currentTrip, currentUser } = this.props
         const { allSelected, statusFiltersChecked, selectedTraveler, travelers, tripFiltersChecked, tripFilters } = this.state
-        const csvUpload = <>
-            <LeftButton onClick={this.toggleImportCsvModal} color="secondary">
-                IMPORT FROM CSV
-            </LeftButton>
-            {this.state.isImportCsvOpen && <LeftModal
-                isOpen={this.state.isImportCsvOpen}
-                toggleModal={this.toggleImportCsvModal}
-                title={`Import ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'Travelers'} from CSV file`}
-                submit={this.addTravelersCSV}
-                form={ImportCsvForm}
-            />}
-        </>
 
-        const registrationForm = <>
-            {this.state.madeStripeAccountRequest &&
-                <div className={classes.regButton}>
-                    <LeftButton onClick={this.toggleRegistrationModal}>
-                        registration form
-            </LeftButton>
-                </div>
-            }
-            {this.state.isRegistrationModalOpen && <LeftModal
-                isOpen={this.state.isRegistrationModalOpen}
-                toggleModal={this.toggleRegistrationModal}
-                title={`Customize your ${currentUser.words ? currentUser.words.who.toLowerCase() : 'traveler'} registration`}
-                submit={this.updateTripRegistrationForm}
-                form={TravelerRegistrationSettingsForm}
-                settings={this.props.currentTrip.travelerRegistrationFormSettings}
-                canRequestPayments={this.state.canRequestPayments}
-            />}
-        </>
+        const csvUpload = <LeftButton onClick={() => this.openModal('csv')} color="secondary">
+            IMPORT FROM CSV
+        </LeftButton>
 
-        const newTravelerInOrg = <>
-            <div className={classes.newTraveler}>
-                <LeftButton onClick={this.openAddNewTravelerOrgModal} id="new-traveler-button">
-                    NEW {currentUser.words ? currentUser.words.who.toUpperCase() : 'TRAVELER'}
+        const registrationForm = this.state.madeStripeAccountRequest &&
+            <div className={classes.regButton}>
+                <LeftButton onClick={() => this.openModal('regFormSettings')}>
+                    registration form
                 </LeftButton>
             </div>
-            {
-                this.state.isAddNewTravelerOrgModalOpen &&
-                <LeftModal
-                    isOpen={this.state.isAddNewTravelerOrgModalOpen}
-                    toggleModal={this.closeAddNewTravelerOrgModal}
-                    title={`Add new ${currentUser.words ? currentUser.words.who.toLowerCase() : 'traveler'} `}
-                    submit={this.addTravelerToOrg}
-                    form={TravelerForm}
-                />
-            }
-        </>
+
+        const newTravelerInOrg = <div className={classes.newTraveler}>
+            <LeftButton onClick={() => this.openModal('newTraveler')} id="new-traveler-button">
+                NEW {currentUser.words ? currentUser.words.who.toUpperCase() : 'TRAVELER'}
+            </LeftButton>
+        </div>
 
         return (
-            <Grid container className={classes.container}>
-                <Grid item xs={12} md={8} className={classes.travelersSection}>
-                    <Typography
-                        className={classes.title}
-                        variant="h2">
-                        {currentTrip ?
-                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} of this ${currentUser.words ? currentUser.words.what : 'Trip'}` :
-                            `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} in your Organization`
-                        }
-                    </Typography>
-                    <div className={classes.buttonsContainer}>
-                        <div className={classes.filters}>
-                            <Typography variant="h6" className={classes.filterText}>Filter by</Typography>
-                            <LeftMultipleSelect
-                                allValues={travelerStatus}
-                                selectedValues={statusFiltersChecked}
-                                onChange={this.handleStatusFilterChange}
-                                label='Status'
-                            ></LeftMultipleSelect>
-                            {!currentTrip &&
+            <>
+                <Grid container className={classes.container}>
+                    <Grid item xs={12} md={8} className={classes.travelersSection}>
+                        <Typography
+                            className={classes.title}
+                            variant="h2">
+                            {currentTrip ?
+                                `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} of this ${currentUser.words ? currentUser.words.what : 'Trip'}` :
+                                `${currentUser.words ? currentUser.words.whoPlural : 'Travelers'} in your Organization`
+                            }
+                        </Typography>
+                        <div className={classes.buttonsContainer}>
+                            <div className={classes.filters}>
+                                <Typography variant="h6" className={classes.filterText}>Filter by</Typography>
                                 <LeftMultipleSelect
-                                    allValues={tripFilters}
-                                    selectedValues={tripFiltersChecked}
-                                    onChange={this.handleTripFilterChange}
-                                    label='Trip'
+                                    allValues={travelerStatus}
+                                    selectedValues={statusFiltersChecked}
+                                    onChange={this.handleStatusFilterChange}
+                                    label='Status'
                                 ></LeftMultipleSelect>
-                            }
-                        </div>
-
-                        <div className={classes.tinyButtonsContainer}>
-                            <Paper className={classes.paperButton}>
-                                <IconButton onClick={this.openChangeStatusModal}>
-                                    <CreateOutlinedIcon fontSize="large" />
-                                </IconButton>
-                            </Paper>
-                            {
-                                this.state.isChangeStatusModalOpen && <LeftModal
-                                    isOpen={this.state.isChangeStatusModalOpen}
-                                    toggleModal={this.closeChangeStatusModal}
-                                    title='Change status'
-                                    submit={this.changeStatusOfSelectedTravelers}
-                                    travelers={this.state.travelers}
-                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
-                                    form={ChangeTravelerStatusForm}
-                                />
-                            }
-                            <Paper className={classes.paperButton}>
-                                <IconButton onClick={this.openCommunicateModal}>
-                                    <MessageOutlinedIcon fontSize="large" />
-                                </IconButton>
-                            </Paper>
-                            {
-                                this.state.isCommunicateModalOpen && <LeftModal
-                                    isOpen={this.state.isCommunicateModalOpen}
-                                    toggleModal={this.closeCommunicateModal}
-                                    title='Communicate'
-                                    submit={this.communicateWithSelectedTravelers}
-                                    travelers={this.state.travelers}
-                                    selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
-                                    form={CommunicateWithTravelersForm}
-                                />
-                            }
-                            <Paper className={classes.paperButton}>
-                                <IconButton aria-label="delete" onClick={this.toggleCollectMoneyModal}>
-                                    <AttachMoneyIcon fontSize="large" />
-                                </IconButton>
-                            </Paper>
-                            {this.state.isCollectMoneyModalOpen && <LeftModal
-                                title="Collect money"
-                                isOpen={this.state.isCollectMoneyModalOpen}
-                                toggleModal={this.toggleCollectMoneyModal}
-                                submit={this.collectMoneyFromTravelers}
-                                travelers={this.state.travelers}
-                                selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
-                                form={CollectMoneyForm}
-                            >
-                            </LeftModal>}
-                            {this.state.isRegisterAccountModalOpen && <LeftModal
-                                isOpen={this.state.isRegisterAccountModalOpen}
-                                toggleModal={this.toggleRegisterAccontModal}
-                                title="Register your account to collect payments"
-                                submit={this.registerAccount}
-                                form={RegisterAccountModalForm}
-                            >
-                            </LeftModal>}
-                        </div>
-                        <div className={classes.orgButtons}>
-                            {!currentTrip && csvUpload}
-                            {currentTrip ? <>
-                                <LeftButton onClick={this.openAddModal} id="add-traveler-button">
-                                    ADD {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
-                                </LeftButton>
-                                {this.state.isAddModalOpen &&
-                                    <LeftModal
-                                        isOpen={this.state.isAddModalOpen}
-                                        toggleModal={this.closeAddModal}
-                                        title={`Add ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'travelers'}`}
-                                        submit={this.addTraveler}
-                                        travelers={this.state.travelersNotOnTrip}
-                                        form={AddTravelerToTripFromOrgForm}
-                                    />
+                                {!currentTrip &&
+                                    <LeftMultipleSelect
+                                        allValues={tripFilters}
+                                        selectedValues={tripFiltersChecked}
+                                        onChange={this.handleTripFilterChange}
+                                        label='Trip'
+                                    ></LeftMultipleSelect>
                                 }
-                            </> : newTravelerInOrg}
-                            {this.props.currentTrip && registrationForm}
-                        </div>
-                    </div>
-                    <TravelerListHeader
-                        toggleAll={this.toggleAll}
-                        allSelectd={allSelected}
-                        showTrip={this.props.currentTrip}
-                    ></TravelerListHeader>
-                    <TravelerList
-                        items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
-                        toggle={this.toggle}
-                        doubleClick={this.setSelectedTraveler}
-                        showTrip={this.props.currentTrip ? false : true}
-                    />
-                </Grid >
-                <Grid item xs={12} md={4} >
-                    {this.state.selectedTraveler && <TravelerInfo
-                        traveler={selectedTraveler}
-                        update={this.updateTraveler}
-                        remove={this.props.currentTrip ? this.removeTraveler : this.removeTravelerFromOrg}
-                    />}
-                </Grid>
+                            </div>
 
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </Grid >
+                            <div className={classes.tinyButtonsContainer}>
+                                <Paper className={classes.paperButton}>
+                                    <IconButton onClick={() => this.openModal('travelerStatus')}>
+                                        <CreateOutlinedIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+
+                                <Paper className={classes.paperButton}>
+                                    <IconButton onClick={() => this.openModal('comm')}>
+                                        <MessageOutlinedIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+
+                                <Paper className={classes.paperButton}>
+                                    <IconButton onClick={() => this.openModal('money')}>
+                                        <AttachMoneyIcon fontSize="large" />
+                                    </IconButton>
+                                </Paper>
+                            </div>
+                            <div className={classes.orgButtons}>
+                                {!currentTrip && csvUpload}
+                                {currentTrip ?
+                                    <LeftButton onClick={() => this.openModal('addToTrip')} id="add-traveler-button">
+                                        ADD {currentUser.words ? currentUser.words.whoPlural : 'Travelers'}
+                                    </LeftButton>
+                                    : newTravelerInOrg}
+                                {this.props.currentTrip && registrationForm}
+                            </div>
+                        </div>
+                        <TravelerListHeader
+                            toggleAll={this.toggleAll}
+                            allSelectd={allSelected}
+                            showTrip={this.props.currentTrip}
+                        ></TravelerListHeader>
+                        <TravelerList
+                            items={statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? travelers.filter(t => t.filtered === true) : travelers}
+                            toggle={this.toggle}
+                            doubleClick={this.setSelectedTraveler}
+                            showTrip={this.props.currentTrip ? false : true}
+                        />
+                    </Grid >
+                    <Grid item xs={12} md={4} >
+                        {this.state.selectedTraveler && <TravelerInfo
+                            traveler={selectedTraveler}
+                            update={this.updateTraveler}
+                            remove={this.props.currentTrip ? this.removeTraveler : this.removeTravelerFromOrg}
+                        />}
+                    </Grid>
+                </Grid >
+
+                <>
+                    {this.state.modalOpen === 'csv' && <LeftModal
+                        closeModal={this.closeModal}
+                        title={`Import ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'Travelers'} from CSV file`}
+                        submit={this.addTravelersCSV}
+                        form={ImportCsvForm}
+                    />}
+                    {this.state.modalOpen === 'newTraveler' && <LeftModal
+                        closeModal={this.closeModal}
+                        title={`Add new ${currentUser.words ? currentUser.words.who.toLowerCase() : 'traveler'} `}
+                        submit={this.addTravelerToOrg}
+                        form={TravelerForm}
+                    />
+                    }
+                    {this.state.modalOpen === 'regFormSettings' && <LeftModal
+                        closeModal={this.closeModal}
+                        title={`Customize your ${currentUser.words ? currentUser.words.who.toLowerCase() : 'traveler'} registration`}
+                        submit={this.updateTripRegistrationForm}
+                        form={TravelerRegistrationSettingsForm}
+                        settings={this.props.currentTrip.travelerRegistrationFormSettings}
+                        canRequestPayments={this.state.canRequestPayments}
+                    />}
+                    {this.state.modalOpen === 'travelerStatus' && <LeftModal
+                        closeModal={this.closeModal}
+                        title='Change status'
+                        submit={this.changeStatusOfSelectedTravelers}
+                        travelers={this.state.travelers}
+                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                        form={ChangeTravelerStatusForm}
+                    />
+                    }
+                    {this.state.modalOpen === 'comm' && <LeftModal
+                        closeModal={this.closeModal}
+                        title='Communicate'
+                        submit={this.communicateWithSelectedTravelers}
+                        travelers={this.state.travelers}
+                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                        form={CommunicateWithTravelersForm}
+                    />
+                    }
+                    {this.state.modalOpen === 'money' && <LeftModal
+                        title="Collect money"
+                        closeModal={this.closeModal}
+                        submit={this.collectMoneyFromTravelers}
+                        travelers={this.state.travelers}
+                        selectedTravelers={travelers.filter(t => t.selected && (statusFiltersChecked.length > 0 || tripFiltersChecked.length > 0 ? t.filtered : true))}
+                        form={CollectMoneyForm}
+                    >
+                    </LeftModal>}
+                    {this.state.modalOpen === 'register' && <LeftModal
+                        closeModal={this.closeModal}
+                        title="Register your account to collect payments"
+                        submit={this.registerAccount}
+                        form={RegisterAccountModalForm}
+                    >
+                    </LeftModal>}
+                    {this.state.modalOpen === 'addToTrip' && <LeftModal
+                        closeModal={this.closeModal}
+                        title={`Add ${currentUser.words ? currentUser.words.whoPlural.toLowerCase() : 'travelers'}`}
+                        submit={this.addTraveler}
+                        travelers={this.state.travelersNotOnTrip}
+                        form={AddTravelerToTripFromOrgForm}
+                    />
+                    }
+                    {this.state.snack.show && <Snack
+                        open={this.state.snack.show}
+                        message={this.state.snack.message}
+                        variant={this.state.snack.variant}
+                        onClose={this.closeSnack}>
+                    </Snack>}
+                </>
+            </>
         )
     }
 }

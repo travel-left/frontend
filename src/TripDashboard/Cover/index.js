@@ -74,10 +74,7 @@ class Cover extends Component {
             variant: '',
             message: ''
         },
-        isShareTripOpen: false,
-        isTripStatusOpen: false,
-        isTripDatesOpen: false,
-        isChangeCoverOpen: false
+        modalOpen: ''
     }
 
     constructor(props) {
@@ -87,8 +84,8 @@ class Cover extends Component {
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
-    closeModal = modal => (this.setState({ [modal]: false }))
-    openModal = modal => (this.setState({ [modal]: true }))
+    closeModal = () => this.setState({ modalOpen: '' })
+    openModal = modal => this.setState({ modalOpen: modal })
 
     updateTrip = async updateObject => {
         console.log(updateObject)
@@ -202,81 +199,84 @@ class Cover extends Component {
         const { classes, currentTrip, currentUser } = this.props
         const { images } = this.state
         return (
-            <div
-                className={classes.coverPhoto}
-                id="cover-photo"
-            >
-                <div className={classes.topRow}>
-                    <TripStatus onClick={() => this.openModal('isTripStatusOpen')} status={currentTrip.status} fab></TripStatus>
-                    {this.state.isTripStatusOpen && <LeftModal
-                        isOpen={this.state.isTripStatusOpen}
-                        toggleModal={() => this.closeModal('isTripStatusOpen')}
+            <>
+                <div
+                    className={classes.coverPhoto}
+                    id="cover-photo"
+                >
+                    <div className={classes.topRow}>
+                        <TripStatus onClick={() => this.openModal('tripStatus')} status={currentTrip.status} fab></TripStatus>
+                        <div className="">
+                            <Fab onClick={() => this.openModal('shareTrip')} color="primary" id="share-trip-button">
+                                <SendIcon style={{ color: 'white' }} fontSize="large" />
+                            </Fab>
+                        </div>
+                    </div>
+                    <div className={classes.bottomRow} >
+                        <Chip label={`${invited} Invited ${confirmed} Confirmed`}
+                            className={classes.travelerCount}
+                        >
+                        </Chip>
+                        <div className={classes.dates}>
+                            <LeftFab
+                                onClick={() => this.openModal('tripDates')}
+                                id="tripDates"
+                            >
+                                {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
+                            ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
+                            </LeftFab>
+                        </div>
+                        <LeftFab
+                            onClick={() => this.openModal('coverPhoto')}
+                        >
+                            Change Cover Photo
+                    </LeftFab>
+                    </div>
+                </div>
+
+                {/* MODALS */}
+                <>
+                    {this.state.modalOpen === 'tripStatus' && <LeftModal
+                        closeModal={this.closeModal}
                         title='Change status'
                         form={ChangeTripStatusForm}
                         submit={this.updateTrip}
                         status={currentTrip.status}
                     />}
-                    <div className="">
-                        <Fab onClick={() => this.openModal('isShareTripOpen')} color="primary" id="share-trip-button">
-                            <SendIcon style={{ color: 'white' }} fontSize="large" />
-                        </Fab>
-                        {this.state.isShareTripOpen && <LeftModal
-                            isOpen={this.state.isShareTripOpen}
-                            toggleModal={() => this.closeModal('isShareTripOpen')}
-                            title={`Share ${currentUser.words ? currentUser.words.what.toLowerCase() : 'Trip'}`}
-                            tripId={currentTrip._id}
-                            submit={this.copiedLink}
-                            words={currentUser.words}
-                            form={NewShareTrip}
-                        />}
-                    </div>
-                </div>
-                <div className={classes.bottomRow} >
-                    <Chip
-                        label={
-                            `${invited} Invited
-                                ${confirmed} Confirmed`
-                        }
-                        className={classes.travelerCount}
-                    >
-                    </Chip>
-                    <div className={classes.dates}>
-                        <LeftFab
-                            onClick={() => this.openModal('isTripDatesOpen')}
-                            id="tripDates"
-                        >
-                            {`${moment(currentTrip.dateStart.split('T')[0]).format('MMM DD')} - 
-                        ${moment(currentTrip.dateEnd.split('T')[0]).format('MMM DD')}`}
-                        </LeftFab>
-                    </div>
-
-                    {this.state.isTripDatesOpen && <LeftModal
-                        isOpen={this.state.isTripDatesOpen}
-                        toggleModal={() => this.closeModal('isTripDatesOpen')}
+                    {this.state.modalOpen === 'shareTrip' && <LeftModal
+                        closeModal={this.closeModal}
+                        title={`Share ${currentUser.words ? currentUser.words.what.toLowerCase() : 'Trip'}`}
+                        tripId={currentTrip._id}
+                        submit={this.copiedLink}
+                        words={currentUser.words}
+                        form={NewShareTrip}
+                    />}
+                    {this.state.modalOpen === 'coverPhoto' && <LeftModal
+                        closeModal={this.closeModal}
+                        title='Change cover photo'
+                        images={images}
+                        form={ChangeCoverPhotoForm}
+                        submit={this.updateTrip}
+                    />}
+                    {this.state.modalOpen === 'tripDates' && <LeftModal
+                        closeModal={this.closeModal}
                         title='Change dates'
                         form={ChangeTripDatesForm}
                         submit={this.updateTrip}
                         dateStart={moment(currentTrip.dateStart).format('MM-DD-YYYY')}
                         dateEnd={moment(currentTrip.dateEnd).format('MM-DD-YYYY')}
                     />}
-
-                    <LeftFab
-                        onClick={() => this.openModal('isChangeCoverOpen')}
-                    >
-                        Change Cover Photo
-                    </LeftFab>
-
-                    {this.state.isChangeCoverOpen && <LeftModal
-                        isOpen={this.state.isChangeCoverOpen}
-                        toggleModal={() => this.closeModal('isChangeCoverOpen')}
-                        title='Change cover photo'
-                        images={images}
-                        form={ChangeCoverPhotoForm}
-                        submit={this.updateTrip}
-                    />}
-                </div>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+                    {this.state.snack.show &&
+                        <Snack
+                            open={this.state.snack.show}
+                            message={this.state.snack.message}
+                            variant={this.state.snack.variant}
+                            onClose={this.closeSnack}
+                        >
+                        </Snack>
+                    }
+                </>
+            </>
         )
     }
 }

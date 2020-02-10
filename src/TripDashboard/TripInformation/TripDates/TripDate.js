@@ -71,7 +71,7 @@ const getColor = tripDateType => {
 class TripDate extends Component {
 
     state = {
-        isModalOpen: false
+        showModal: false
     }
 
     handleUpdate = putObject => {
@@ -83,12 +83,11 @@ class TripDate extends Component {
         this.closeModal()
     }
 
-    closeModal = () => this.setState({ isModalOpen: false })
-    openModal = () => this.setState({ isModalOpen: true })
+    toggleModal = () => this.setState({ showModal: !this.state.showModal })
 
     render() {
         const { name, date, type, share, classes } = this.props
-        const { isModalOpen } = this.state
+        const { showModal } = this.state
         let iconString
 
         switch (type) {
@@ -112,37 +111,40 @@ class TripDate extends Component {
         const dateWithoutTimeorTZ = date.split('T')[0]
 
         return (
-            <div className={classes.tripDate}>
-                <div className={classes.container}>
-                    <i className={`${classes.icon} material-icons`}>{iconString}</i>
-                    <div className={classes.content}>
-                        <Typography variant="subtitle2">
-                            {name}
-                        </Typography>
-                        <Typography variant="caption">
-                            {moment(dateWithoutTimeorTZ).format('MMMM DD')}
-                        </Typography>
+            <>
+                <div className={classes.tripDate}>
+                    <div className={classes.container}>
+                        <i className={`${classes.icon} material-icons`}>{iconString}</i>
+                        <div className={classes.content}>
+                            <Typography variant="subtitle2">
+                                {name}
+                            </Typography>
+                            <Typography variant="caption">
+                                {moment(dateWithoutTimeorTZ).format('MMMM DD')}
+                            </Typography>
+                        </div>
                     </div>
+                    {!share &&
+                        <IconButton className={classes.editButton} onClick={this.toggleModal} id="edit-trip-date-button">
+                            <MoreHorizIcon />
+                        </IconButton>
+                    }
                 </div>
-                {!share &&
-                    <IconButton className={classes.editButton} onClick={this.openModal} id="edit-trip-date-button">
-                        <MoreHorizIcon />
-                    </IconButton>
-                }
-                {
-                    isModalOpen && <LeftModal
-                        isOpen={isModalOpen}
-                        toggleModal={this.closeModal}
-                        title='Update important date'
-                        submit={this.handleUpdate}
-                        remove={this.handleDelete}
-                        date={moment(date).format('MM-DD-YYYY')}
-                        category={type}
-                        name={name}
-                        form={TripDateForm}
-                    />
-                }
-            </div>
+                <>
+                    {
+                        showModal && <LeftModal
+                            closeModal={this.toggleModal}
+                            title='Update important date'
+                            submit={this.handleUpdate}
+                            remove={this.handleDelete}
+                            date={moment(date).format('MM-DD-YYYY')}
+                            category={type}
+                            name={name}
+                            form={TripDateForm}
+                        />
+                    }
+                </>
+            </>
         )
     }
 }

@@ -224,88 +224,100 @@ class Trips extends Component {
         ) : null
 
         return (
-            <Grid container>
-                <Grid item xs={12} md={2}>
-                    <div className={classes.leftGutter} >
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            id="new-trip-button"
-                            onClick={() => this.setState({ isOpen: true })}
-                            className={classes.buttonBox}
-                        >
-                            ADD NEW {currentUser.words ? currentUser.words.what.toUpperCase() : 'TRIP'}
-                        </Button>
-                        {this.state.isOpen && <LeftModal
-                            isOpen={this.state.isOpen}
-                            title={`Add new ${currentUser.words ? currentUser.words.what.toLowerCase() : 'trip'}`}
-                            toggleModal={this.toggleModal}
-                            form={CreateTripForm}
-                            submit={this.addTrip}
-                        />}
-                    </div>
-                    <List component="div" className={classes.tripFilters}>
-                        <SideNavItem
-                            text={`All ${currentUser.words ? currentUser.words.whatPlural : 'Trips'}`}
-                            total={trips.length - tripStatusCounts.ARCHIVED}
-                            active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`}
-                            handleClick={this.onSideNavClick}
-                        />
-                        <SideNavItem
-                            text="Planning"
-                            total={tripStatusCounts.PLANNING}
-                            active={filter === 'PLANNING'}
-                            handleClick={this.onSideNavClick}
-                            divider
-                        />
-                        <SideNavItem
-                            text="Completed"
-                            total={tripStatusCounts.COMPLETED}
-                            active={filter === 'COMPLETED'}
-                            handleClick={this.onSideNavClick}
-                            divider
-                        />
-                        <SideNavItem
-                            text="LEFT"
-                            total={tripStatusCounts.LEFT}
-                            active={filter === 'LEFT'}
-                            handleClick={this.onSideNavClick}
-                            divider
-                        />
-                        <SideNavItem
-                            text="Past"
-                            total={tripStatusCounts.PAST}
-                            active={filter === 'PAST'}
-                            handleClick={this.onSideNavClick}
-                            divider
-                        />
-                        <SideNavItem
-                            text="Archived"
-                            total={tripStatusCounts.ARCHIVED}
-                            active={filter === 'ARCHIVED'}
-                            handleClick={this.onSideNavClick}
-                            divider
-                        />
-                    </List>
-                </Grid>
-                <Grid container xs={12} md={10}>
-                    <Grid item xs={12} md={8}>
-                        <div className={classes.main}>
-                            <TripsListHeader />
-                            {tripList}
+            <>
+                <Grid container>
+                    <Grid item xs={12} md={2}>
+                        <div className={classes.leftGutter} >
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                id="new-trip-button"
+                                onClick={() => this.setState({ isOpen: true })}
+                                className={classes.buttonBox}
+                            >
+                                ADD NEW {currentUser.words ? currentUser.words.what.toUpperCase() : 'TRIP'}
+                            </Button>
+
                         </div>
+                        <List component="div" className={classes.tripFilters}>
+                            <SideNavItem
+                                text={`All ${currentUser.words ? currentUser.words.whatPlural : 'Trips'}`}
+                                total={trips.length - tripStatusCounts.ARCHIVED}
+                                active={filter === `ALL ${currentUser.words ? currentUser.words.whatPlural.toUpperCase() : 'TRIPS'}`}
+                                handleClick={this.onSideNavClick}
+                            />
+                            <SideNavItem
+                                text="Planning"
+                                total={tripStatusCounts.PLANNING}
+                                active={filter === 'PLANNING'}
+                                handleClick={this.onSideNavClick}
+                                divider
+                            />
+                            <SideNavItem
+                                text="Completed"
+                                total={tripStatusCounts.COMPLETED}
+                                active={filter === 'COMPLETED'}
+                                handleClick={this.onSideNavClick}
+                                divider
+                            />
+                            <SideNavItem
+                                text="LEFT"
+                                total={tripStatusCounts.LEFT}
+                                active={filter === 'LEFT'}
+                                handleClick={this.onSideNavClick}
+                                divider
+                            />
+                            <SideNavItem
+                                text="Past"
+                                total={tripStatusCounts.PAST}
+                                active={filter === 'PAST'}
+                                handleClick={this.onSideNavClick}
+                                divider
+                            />
+                            <SideNavItem
+                                text="Archived"
+                                total={tripStatusCounts.ARCHIVED}
+                                active={filter === 'ARCHIVED'}
+                                handleClick={this.onSideNavClick}
+                                divider
+                            />
+                        </List>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                        {selectedTrip && <TripInfo
-                            trip={selectedTrip}
-                            edit={this.editTrip}
-                            duplicateTrip={this.copyTrip}
-                            archiveTrip={this.archiveTrip}
-                        />}
+                    <Grid container xs={12} md={10}>
+                        <Grid item xs={12} md={8}>
+                            <div className={classes.main}>
+                                <TripsListHeader />
+                                {tripList}
+                            </div>
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            {selectedTrip && <TripInfo
+                                trip={selectedTrip}
+                                edit={this.editTrip}
+                                duplicateTrip={this.copyTrip}
+                                archiveTrip={this.archiveTrip}
+                            />}
+                        </Grid>
                     </Grid>
-                </Grid>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </Grid >
+
+                </Grid >
+
+                // MODALS
+                <>
+                    {this.state.isOpen && <LeftModal
+                        title={`Add new ${currentUser.words ? currentUser.words.what.toLowerCase() : 'trip'}`}
+                        closeModal={this.toggleModal}
+                        form={CreateTripForm}
+                        submit={this.addTrip}
+                    />}
+                    {this.state.snack.show && <Snack
+                        open={this.state.snack.show}
+                        message={this.state.snack.message}
+                        variant={this.state.snack.variant}
+                        onClose={this.closeSnack}></Snack>
+                    }
+                </>
+            </>
         )
     }
 }

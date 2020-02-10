@@ -38,8 +38,7 @@ class Contacts extends Component {
         this.getContacts()
     }
 
-    closeModal = () => (this.setState({ isNewContactModalOpen: false }))
-    openModal = () => (this.setState({ isNewContactModalOpen: true }))
+    toggleModal = () => (this.setState({ isNewContactModalOpen: !this.state.isNewContactModalOpen }))
     closeSnack = () => (this.setState({ snack: { show: false } }))
 
     getContacts = async () => {
@@ -162,23 +161,31 @@ class Contacts extends Component {
         !this.props.share && contactList.splice(1, 0, newContactButton)
 
         return (
-            <div className={classes.contactSection}>
-                <Typography variant="h2" style={{ marginBottom: 16 }}>Contacts</Typography>
-                <Fade in={true} timeout={700}>
-                    <Grid container className={classes.contactList}>
-                        {contactList}
-                        {this.state.isNewContactModalOpen && <LeftModal
-                            isOpen={this.state.isNewContactModalOpen}
-                            toggleModal={this.closeModal}
-                            title='Add a contact'
-                            submit={this.createContact}
-                            form={ContactForm}
-                        />
-                        }
-                    </Grid>
-                </Fade>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+            <>
+                <div className={classes.contactSection}>
+                    <Typography variant="h2" style={{ marginBottom: 16 }}>Contacts</Typography>
+                    <Fade in={true} timeout={700}>
+                        <Grid container className={classes.contactList}>
+                            {contactList}
+
+                        </Grid>
+                    </Fade>
+                </div>
+                <>
+                    {this.state.isNewContactModalOpen && <LeftModal
+                        closeModal={this.toggleModal}
+                        title='Add a contact'
+                        submit={this.createContact}
+                        form={ContactForm}
+                    />}
+                    {this.state.snack.show && <Snack
+                        open={this.state.snack.show}
+                        message={this.state.snack.message}
+                        variant={this.state.snack.variant}
+                        onClose={this.closeSnack}>
+                    </Snack>}
+                </>
+            </>
         )
     }
 }
