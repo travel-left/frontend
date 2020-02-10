@@ -80,7 +80,6 @@ class TripDate extends Component {
 
     handleDelete = () => {
         this.props.remove(this.props._id)
-        this.closeModal()
     }
 
     toggleModal = () => this.setState({ showModal: !this.state.showModal })

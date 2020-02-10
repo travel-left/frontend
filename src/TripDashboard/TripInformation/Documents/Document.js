@@ -77,12 +77,11 @@ class Document extends Component {
 
     handleEdit = putObject => {
         this.props.update(this.props._id, putObject)
-        this.closeModal()
     }
 
     handleDelete = () => {
         this.props.remove(this.props._id)
-        this.closeModal()
+        this.toggleModal()
     }
 
     toggleModal = () => this.setState(prevState => ({ showModal: !prevState.showModal }))

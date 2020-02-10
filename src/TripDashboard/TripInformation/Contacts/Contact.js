@@ -48,7 +48,6 @@ class Contact extends Component {
 
     handleDelete = () => {
         this.props.remove(this.props._id)
-        this.closeModal()
     }
 
     render() {

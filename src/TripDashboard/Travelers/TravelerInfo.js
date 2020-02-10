@@ -93,7 +93,7 @@ class TravelerInfo extends Component {
 
     handleRemove = () => {
         this.props.remove(this.props.traveler._id)
-        this.closeEditModal()
+        this.toggleModal()
     }
 
     handleUpdate = updateObject => {

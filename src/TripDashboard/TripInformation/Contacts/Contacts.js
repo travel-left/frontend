@@ -152,7 +152,7 @@ class Contacts extends Component {
         const newContactButton = <LeftItem height={100}>
             <LeftFab
                 id="add-new-contact-button"
-                onClick={this.openModal}
+                onClick={this.toggleModal}
                 color="secondary">
                 ADD NEW
             </LeftFab>
