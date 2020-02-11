@@ -179,8 +179,8 @@ class Event extends Component {
                         </Grid>
                     </div>
                     <div className={classes.bottomRight}>
-                        {event.isSaved ? <StarIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id)}></StarIcon> :
-                            <StarBorderIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id)}>
+                        {event.isSaved ? <StarIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id, false)}></StarIcon> :
+                            <StarBorderIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id, true)}>
                             </StarBorderIcon>
                         }
                     </div>

@@ -240,10 +240,19 @@ class Events extends Component {
         }
     }
 
-    toggleSaveEvent = async eventId => {
+    toggleSaveEvent = async (eventId, isSaved) => {
         try {
-            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, { isSaved: true })
+            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}/isSaved`, { isSaved })
+
+            const { events } = this.state
+            const updatedEvents = events.map(e => {
+                if (e._id == eventId) {
+                    e.isSaved = isSaved
+                }
+                return e
+            })
             this.setState({
+                events: updatedEvents,
                 snack: {
                     show: true,
                     variant: 'success',
@@ -259,14 +268,6 @@ class Events extends Component {
                 }
             })
         }
-        const { events } = this.state
-        const updatedEvents = events.map(e => {
-            if (e._id == eventId) {
-                e.isSaved = !e.isSaved
-            }
-            return e
-        })
-        this.setState({ events: updatedEvents })
     }
 
     removeEvent = async eventId => {
