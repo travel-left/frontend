@@ -64,7 +64,7 @@ class Events extends Component {
         days: [],
         selectedDay: {},
         events: [],
-        savedEvents: this.props.currentUser.savedEvents,
+        savedEvents: [],
         isOpen: false,
         snack: {
             show: false,
@@ -81,7 +81,7 @@ class Events extends Component {
         this.getDaysAndEvents()
         this.getDaysAndEventsFlights()
         this.getDocuments()
-        // this.setSavedEvents()
+        this.getSavedEvents()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -90,7 +90,7 @@ class Events extends Component {
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
-        let newevents = await Promise.all(events.map(async event => {
+        let newevents = events.map(event => {
             if (!days.map(day => day.day).includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
                 days.push({
                     day: moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'),
@@ -98,7 +98,7 @@ class Events extends Component {
                 })
             }
             return event
-        }))
+        })
 
         events = newevents.map(event => ({
             ...event,
@@ -110,11 +110,11 @@ class Events extends Component {
     }
 
     getDaysAndEventsFlights = async () => {
-        let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
         let newevents = await Promise.all(events.map(async event => {
             if (event.type === 'FLIGHT') {
+
                 try {
                     let flightStats = await apiCall('post', '/api/flightstats', {
                         date: event.start,
@@ -155,7 +155,7 @@ class Events extends Component {
             end: formatDateToLocalTimezone(event.end)
         }))
 
-        this.setState({ events, days, selectedDay: days[0] ? days[0].day : {} })
+        this.setState({ events })
     }
 
     getDocuments = async () => {
@@ -248,15 +248,35 @@ class Events extends Component {
         try {
             await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}/isSaved`, { isSaved })
 
-            const { events } = this.state
+            const { events, savedEvents } = this.state
+            let days = [...this.state.days]
+
             const updatedEvents = events.map(e => {
                 if (e._id == eventId) {
                     e.isSaved = isSaved
                 }
+
+                if (!days.map(day => day.day).includes(moment(e.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
+                    days.push({
+                        day: moment(e.start).tz(this.localTimezone).format('YYYY-MM-DD'),
+                        name: e.name ? e.name : 'Flight'
+                    })
+                }
+
                 return e
             })
+
+            let updatedSavedEvents
+            if (isSaved) {
+                updatedSavedEvents = [...savedEvents, { ...events.filter(e => e._id == eventId)[0], isSaved: true }]
+            } else {
+                updatedSavedEvents = savedEvents.filter(event => event._id != eventId)
+            }
+
             this.setState({
+                days,
                 events: updatedEvents,
+                savedEvents: updatedSavedEvents,
                 snack: {
                     show: true,
                     variant: 'success',
@@ -314,13 +334,17 @@ class Events extends Component {
         this.setState(prevState => ({ isOpen: !prevState.isOpen }))
     }
 
-    setSavedEvents = () => {
+    getSavedEvents = async () => {
         const { currentUser } = this.props
-        const { events } = this.state
-        console.log(currentUser.savedEvents)
-        //remove events that are already in the itinerary
-        // const savedEvents = currentUser.savedEvents.filter(savedEvent => !events.includes(savedEvent))
-        this.setState({ savedEvents: currentUser.savedEvents })
+        let savedEvents = await apiCall('get', `/api/coordinators/${currentUser._id}/savedEvents`)
+
+        savedEvents = savedEvents.map(event => ({
+            ...event,
+            start: formatDateToLocalTimezone(event.start),
+            end: formatDateToLocalTimezone(event.end)
+        }))
+
+        this.setState({ savedEvents })
     }
 
     addToItinerary = async eventToAddId => {
@@ -401,7 +425,7 @@ class Events extends Component {
                             <div className={classes.uploadContainer}>
                                 <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
                             </div>
-                            <SavedEvents currentUser={this.props.currentUser} addToItinerary={this.addToItinerary}>
+                            <SavedEvents savedEvents={this.state.savedEvents} addToItinerary={this.addToItinerary}>
 
                             </SavedEvents>
                         </div>

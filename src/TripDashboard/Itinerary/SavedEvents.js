@@ -73,28 +73,6 @@ const styles = theme => ({
 })
 
 class SavedEvents extends Component {
-    state = {
-        savedEvents: []
-    }
-
-    constructor(props) {
-        super(props)
-
-        this.getSavedEvents()
-    }
-
-    getSavedEvents = async () => {
-        let savedEvents = await apiCall('get', `/api/coordinators/${this.props.currentUser._id}/savedEvents`)
-
-        savedEvents = savedEvents.map(event => ({
-            ...event,
-            start: formatDateToLocalTimezone(event.start),
-            end: formatDateToLocalTimezone(event.end)
-        }))
-
-        this.setState({ savedEvents })
-    }
-
     addToItinerary = async event => {
         this.props.addToItinerary(event._id)
     }
@@ -105,7 +83,7 @@ class SavedEvents extends Component {
         return (
             <div>
                 <Typography variant="h2">Saved Events</Typography>
-                {this.state.savedEvents.map(event => {
+                {this.props.savedEvents.map(event => {
                     const icon = setIcon(event.type)
                     const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
                     let flight
