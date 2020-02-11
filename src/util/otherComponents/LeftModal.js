@@ -44,7 +44,7 @@ const styles = theme => ({
 class LeftModal extends Component {
 
     handleSubmit = async formData => {
-        this.props.submit(formData)
+        await this.props.submit(formData)
         this.props.closeModal()
     }
 
