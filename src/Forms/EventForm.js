@@ -41,10 +41,9 @@ const form = props => {
         <div style={{ marginTop: 41 }}>
             <InputLabel id="demo-mutiple-chip-label"> Selected Documents</InputLabel>
             <Select
-                labelId="demo-mutiple-chip-label"
                 id="documents-multiple-select"
                 multiple
-                value={values.selectedDocuments || []}
+                value={values.selectedDocuments}
                 name="selectedDocuments"
                 onChange={event => {
                     setFieldValue("selectedDocuments", event.target.value)
@@ -52,9 +51,9 @@ const form = props => {
                 displayEmpty
                 onBlur={handleBlur}
                 input={<Input id="select-multiple-chip" />}
-                placeholder="No documents selected"
+                placeholder="None selected"
                 renderValue={selectedDocuments => (
-                    !selectedDocuments ? <em>No documents selected</em>
+                    selectedDocuments.length === 0 ? 'None selected'
                         : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedDocuments.map(t => (
                                 <LeftChip key={t._id} label={t.name} />
