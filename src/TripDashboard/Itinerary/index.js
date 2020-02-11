@@ -16,6 +16,8 @@ import ContainedUploader from '../../Forms/ContainedUploader'
 import { airports } from '../../util/airlines'
 import { withStyles } from '@material-ui/core'
 import LeftButton from '../../util/otherComponents/LeftButton'
+import SavedEvents from './SavedEvents';
+import { formatEventForBackend, formatDateToLocalTimezone, formatDateTime } from './eventHelpers'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -62,6 +64,7 @@ class Events extends Component {
         days: [],
         selectedDay: {},
         events: [],
+        savedEvents: this.props.currentUser.savedEvents,
         isOpen: false,
         snack: {
             show: false,
@@ -78,6 +81,7 @@ class Events extends Component {
         this.getDaysAndEvents()
         this.getDaysAndEventsFlights()
         this.getDocuments()
+        // this.setSavedEvents()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -310,6 +314,39 @@ class Events extends Component {
         this.setState(prevState => ({ isOpen: !prevState.isOpen }))
     }
 
+    setSavedEvents = () => {
+        const { currentUser } = this.props
+        const { events } = this.state
+        console.log(currentUser.savedEvents)
+        //remove events that are already in the itinerary
+        // const savedEvents = currentUser.savedEvents.filter(savedEvent => !events.includes(savedEvent))
+        this.setState({ savedEvents: currentUser.savedEvents })
+    }
+
+    addToItinerary = async eventToAddId => {
+        try {
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events/${eventToAddId}/addFromSaved`)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+        this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
+    }
+
     render() {
         const { classes, share } = this.props
         const { days, events, selectedDay, documents } = this.state
@@ -364,9 +401,11 @@ class Events extends Component {
                             <div className={classes.uploadContainer}>
                                 <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
                             </div>
+                            <SavedEvents currentUser={this.props.currentUser} addToItinerary={this.addToItinerary}>
+
+                            </SavedEvents>
                         </div>
                     </Grid>
-
                 </Grid>
 
                 {/* MODALS */}
@@ -397,40 +436,3 @@ class Events extends Component {
 }
 
 export default withStyles(styles)(Events)
-
-function formatEventForBackend(event) {
-    event.start = formatDateTime(event.date, event.start)
-    event.end = formatDateTime(event.date, event.end)
-    event.type = event.type.toUpperCase()
-    event.documents = event.selectedDocuments
-    event.links = event.links.length ? event.links.split(' ').map(link => link) : []
-    event.airline = event.airline ? event.airline.value : ''
-
-    delete event.selectedDocuments
-    delete event.date
-    return event
-}
-
-//takes the UTC date and converts it to the user's timezone
-function formatDateToLocalTimezone(date) {
-    let localTimezone = moment.tz.guess(true)
-    date = moment(date).tz(localTimezone)
-    return date
-}
-
-function formatDateTime(date, dateTime) {
-    let minutes = moment(dateTime).minutes()
-    if (minutes.toString().length === 1) {
-        minutes = `0${minutes}`
-    }
-    let hours = moment(dateTime).hours()
-    if (hours.toString().length === 1) {
-        hours = `0${hours}`
-    }
-
-    return {
-        date: moment(date).format("YYYY-MM-DD"),
-        hours: hours,
-        minutes: minutes
-    }
-}
