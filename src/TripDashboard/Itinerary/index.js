@@ -240,6 +240,35 @@ class Events extends Component {
         }
     }
 
+    toggleSaveEvent = async eventId => {
+        try {
+            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, { isSaved: true })
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+        const { events } = this.state
+        const updatedEvents = events.map(e => {
+            if (e._id == eventId) {
+                e.isSaved = !e.isSaved
+            }
+            return e
+        })
+        this.setState({ events: updatedEvents })
+    }
+
     removeEvent = async eventId => {
         try {
             await apiCall('delete', `/api/trips/${this.props.currentTrip._id}/events/${eventId}`, true)
@@ -295,6 +324,7 @@ class Events extends Component {
             <EventList
                 events={events}
                 updateEvent={this.updateEvent}
+                toggleSaveEvent={this.toggleSaveEvent}
                 removeEvent={this.removeEvent}
                 trip={this.props.currentTrip}
                 documents={this.state.documents}
@@ -373,7 +403,7 @@ function formatEventForBackend(event) {
     event.type = event.type.toUpperCase()
     event.documents = event.selectedDocuments
     event.links = event.links.length ? event.links.split(' ').map(link => link) : []
-    event.airline = event.airline.value
+    event.airline = event.airline ? event.airline.value : ''
 
     delete event.selectedDocuments
     delete event.date

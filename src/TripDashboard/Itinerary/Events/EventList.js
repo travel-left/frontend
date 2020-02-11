@@ -11,7 +11,7 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(({ events, removeEvent, updateEvent, documents, share, classes }) => {
+export default withStyles(styles)(({ events, removeEvent, updateEvent, toggleSaveEvent, documents, share, classes }) => {
     let daysList = []
 
     return events.map(event => {
@@ -35,7 +35,7 @@ export default withStyles(styles)(({ events, removeEvent, updateEvent, documents
                 </Fade>
                 <Fade in={true} timeout={1200}>
                     <div>
-                        <Event event={event} removeEvent={removeEvent} updateEvent={updateEvent} documents={documents} share={share} />
+                        <Event event={event} removeEvent={removeEvent} updateEvent={updateEvent} toggleSaveEvent={toggleSaveEvent} documents={documents} share={share} />
                     </div>
                 </Fade>
             </div>

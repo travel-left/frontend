@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Map from './Map'
-import { getIcon } from '../../../util/file-icons'
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import moment from 'moment'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
@@ -9,11 +9,18 @@ import LeftModal from '../../../util/otherComponents/LeftModal'
 import EventForm from '../../../Forms/EventForm'
 import LeftFab from '../../../util/otherComponents/LeftFab'
 import Document from '../../TripInformation/Documents/Document'
+import StarIcon from '@material-ui/icons/Star'
 
 const styles = theme => ({
     event: {
-        padding: theme.spacing(2, 2, 0, 2),
+        padding: theme.spacing(2, 2, 2, 2),
         margin: theme.spacing(2, 0)
+    },
+    bottomRight: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
     },
     iconContainer: {
         display: 'flex',
@@ -28,6 +35,14 @@ const styles = theme => ({
     icon: {
         color: '#FFFFFF',
         fontSize: '18px'
+    },
+    starIcon: {
+        color: '#FEC400',
+        "&:hover": {
+            transform: "scale(1.5)",
+            cursor: "pointer"
+        },
+        transition: "all 0.3s ease-in-out",
     },
     time: {
         color: props => setIcon(props.event.type).color,
@@ -70,6 +85,7 @@ class Event extends Component {
     }
 
     update = updateObject => {
+        console.log(updateObject)
         this.props.updateEvent(this.props.event._id, updateObject)
     }
 
@@ -139,7 +155,7 @@ class Event extends Component {
                                 onClick={this.toggleModal}
                             >
                                 Edit
-                        </LeftFab>
+                            </LeftFab>
                         }
                     </div>
                     <Typography
@@ -161,6 +177,12 @@ class Event extends Component {
                         <Grid item xs={12} sm={6} md={5} >
                             {map}
                         </Grid>
+                    </div>
+                    <div className={classes.bottomRight}>
+                        {event.isSaved ? <StarIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id)}></StarIcon> :
+                            <StarBorderIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id)}>
+                            </StarBorderIcon>
+                        }
                     </div>
                 </Card >
 
