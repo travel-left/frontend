@@ -43,7 +43,7 @@ const form = props => {
             <Select
                 id="documents-multiple-select"
                 multiple
-                value={values.selectedDocuments}
+                value={values.selectedDocuments || []}
                 name="selectedDocuments"
                 onChange={event => {
                     setFieldValue("selectedDocuments", event.target.value)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Fab from '@material-ui/core/Fab'
+import Checkbox from '@material-ui/core/Checkbox'
 import AddIcon from '@material-ui/icons/Add'
 import moment from 'moment'
 import Card from '@material-ui/core/Card'
@@ -9,19 +10,47 @@ import { withStyles } from '@material-ui/core'
 const styles = theme => ({
     event: {
         padding: theme.spacing(2, 2, 2, 2),
-        margin: theme.spacing(2, 0),
-
-    },
-    eventContainer: {
+        margin: theme.spacing(1, 0),
+        width: '100%',
         "&:hover button": {
             height: theme.spacing(4),
             width: theme.spacing(4),
             minHeight: theme.spacing(4),
             minWidth: theme.spacing(4),
         },
+        transition: "all 0.8s ease-in-out",
+    },
+    eventContainer: {
+
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        alignItems: 'center'
+    },
+    eventsContainer: {
+        boxShadow: 'none',
+        height: 480,
+        overflow: 'auto',
+        margin: theme.spacing(2, 0),
+        padding: theme.spacing(2),
+        backgroundColor: '#F0F0F0'
+    },
+    header: {
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        marginRight: theme.spacing(4)
+    },
+    multipleSelectText: {
+        lineHeight: 1,
+        // "&:hover": {
+        //     cursor: "pointer",
+        //     color: "#0F3D90"
+        // }
     },
     fab: {
-        transition: "all 0.2s ease-in-out",
+        transition: "all 0.1s ease-in-out",
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -102,6 +131,10 @@ const styles = theme => ({
 })
 
 class SavedEvents extends Component {
+    state = {
+        multipleSelect: false
+    }
+
     addToItinerary = async event => {
         this.props.addToItinerary(event._id)
     }
@@ -110,62 +143,81 @@ class SavedEvents extends Component {
         const { classes } = this.props
 
         return (
-            <div>
-                <Typography variant="h2">Saved Events</Typography>
-                {this.props.savedEvents.map(event => {
-                    const icon = setIcon(event.type)
-                    const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
-                    let flight
+            <div >
+                <div className={classes.header}>
+                    <Typography variant="h2">Saved Events</Typography>
+                    <Typography
+                        variant="h6"
+                        color="primary"
+                        className={classes.multipleSelectText}
+                    // onClick={() => this.setState({ multipleSelect: !this.state.multipleSelect })}
+                    >
+                        hover over activity to add
+                    </Typography>
+                </div>
+                <Card className={classes.eventsContainer}>
 
-                    if (event.departureAirportCode) {
-                        flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
-                    } else {
-                        flight = `Flight:  from to `
-                    }
-                    const name = event.name
-                    return (
-                        <div className={classes.eventContainer}>
 
-                            <Card className={classes.event} >
-                                <div className={classes.editButtonContainer}>
-                                    <div className={classes.titleContainer}>
-                                        <div className={classes.leftSideTitle}>
-                                            <span className={classes.iconContainer}>
-                                                <i className={`fa ${icon.string} ${classes.icon}`} style={{ color: setIcon(event.type).color }} />
-                                            </span>
-                                            <Typography variant="h6" className={classes.name}>
-                                                {moment(event.start).format('MMM DD')}
-                                            </Typography>
-                                        </div>
-                                        <div className={classes.rightSideTitle}>
-                                            <Typography
-                                                variant="subtitle2"
-                                                className={classes.time}
-                                                style={{ color: setIcon(event.type).color }}
-                                            >
-                                                {time}
-                                            </Typography>
-                                        </div>
+                    {this.props.savedEvents.map(event => {
+                        const icon = setIcon(event.type)
+                        const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
+                        let flight
 
-                                    </div>
-                                    <div className={classes.name}>
-                                        <Typography variant="subtitle2" id="activity-name">
-                                            {event.type === 'FLIGHT' && event.airline ?
-                                                flight :
-                                                name
-                                            }
-                                        </Typography>
-                                        <Fab color="primary" variant="extended" className={classes.fab} onClick={() => this.addToItinerary(event)}>
-                                            <AddIcon />
-                                        </Fab>
-                                    </div>
+                        if (event.departureAirportCode) {
+                            flight = `Flight: ${event.airline}${event.flightNumber} from ${event.departureAirportCode} to ${event.arrivalAirportCode}`
+                        } else {
+                            flight = `Flight:  from to `
+                        }
+                        const name = event.name
+                        return (
+                            <div className={classes.eventContainer}>
+                                <div style={{ display: this.state.multipleSelect ? 'flex' : 'none', marginRight: 8, }}>
+                                    <Checkbox
+                                        checked={false}
+                                        color="primary"
+                                    />
                                 </div>
+                                <Card className={classes.event} >
+                                    <div className={classes.editButtonContainer}>
+                                        <div className={classes.titleContainer}>
+                                            <div className={classes.leftSideTitle}>
+                                                <span className={classes.iconContainer}>
+                                                    <i className={`fa ${icon.string} ${classes.icon}`} style={{ color: setIcon(event.type).color }} />
+                                                </span>
+                                                <Typography variant="h6" className={classes.name}>
+                                                    {moment(event.start).format('MMM DD')}
+                                                </Typography>
+                                            </div>
+                                            <div className={classes.rightSideTitle}>
+                                                <Typography
+                                                    variant="subtitle2"
+                                                    className={classes.time}
+                                                    style={{ color: setIcon(event.type).color }}
+                                                >
+                                                    {time}
+                                                </Typography>
+                                            </div>
 
-                            </Card >
-                        </div>
+                                        </div>
+                                        <div className={classes.name}>
+                                            <Typography variant="subtitle2" id="activity-name">
+                                                {event.type === 'FLIGHT' && event.airline ?
+                                                    flight :
+                                                    name
+                                                }
+                                            </Typography>
+                                            <Fab color="primary" variant="extended" className={classes.fab} onClick={() => this.addToItinerary(event)}>
+                                                <AddIcon />
+                                            </Fab>
+                                        </div>
+                                    </div>
 
-                    )
-                })}
+                                </Card >
+                            </div>
+
+                        )
+                    })}
+                </Card>
             </div>
         )
     }
