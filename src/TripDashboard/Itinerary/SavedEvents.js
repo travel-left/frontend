@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Typography from '@material-ui/core/Typography'
-import { formatDateToLocalTimezone } from './eventHelpers'
-import { apiCall } from '../../util/api'
+import Fab from '@material-ui/core/Fab'
+import AddIcon from '@material-ui/icons/Add'
 import moment from 'moment'
 import Card from '@material-ui/core/Card'
 import { withStyles } from '@material-ui/core'
@@ -9,7 +9,28 @@ import { withStyles } from '@material-ui/core'
 const styles = theme => ({
     event: {
         padding: theme.spacing(2, 2, 2, 2),
-        margin: theme.spacing(2, 0)
+        margin: theme.spacing(2, 0),
+
+    },
+    eventContainer: {
+        "&:hover button": {
+            height: theme.spacing(4),
+            width: theme.spacing(4),
+            minHeight: theme.spacing(4),
+            minWidth: theme.spacing(4),
+        },
+    },
+    fab: {
+        transition: "all 0.2s ease-in-out",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 0,
+        width: 0,
+        minHeight: 0,
+        minWidth: 0,
+        padding: 0,
+        margin: 0,
     },
     bottomRight: {
         width: '100%',
@@ -43,7 +64,14 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: "space-between",
-        width: "100%"
+        width: "100%",
+    },
+    name: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: "space-between",
+        width: "100%",
+        height: theme.spacing(4)
     },
     leftSideTitle: {
         display: 'flex',
@@ -56,6 +84,7 @@ const styles = theme => ({
     editButtonContainer: {
         display: 'flex',
         justifyContent: 'space-between',
+        flexDirection: 'column',
     },
     contentContainer: {
         display: 'flex',
@@ -95,33 +124,45 @@ class SavedEvents extends Component {
                     }
                     const name = event.name
                     return (
-                        <Card className={classes.event} onDoubleClick={() => this.addToItinerary(event)}>
-                            <div className={classes.editButtonContainer}>
-                                <div className={classes.titleContainer}>
-                                    <div className={classes.leftSideTitle}>
-                                        <span className={classes.iconContainer}>
-                                            <i className={`fa ${icon.string} ${classes.icon}`} style={{ color: setIcon(event.type).color }} />
-                                        </span>
+                        <div className={classes.eventContainer}>
+
+                            <Card className={classes.event} >
+                                <div className={classes.editButtonContainer}>
+                                    <div className={classes.titleContainer}>
+                                        <div className={classes.leftSideTitle}>
+                                            <span className={classes.iconContainer}>
+                                                <i className={`fa ${icon.string} ${classes.icon}`} style={{ color: setIcon(event.type).color }} />
+                                            </span>
+                                            <Typography variant="h6" className={classes.name}>
+                                                {moment(event.start).format('MMM DD')}
+                                            </Typography>
+                                        </div>
+                                        <div className={classes.rightSideTitle}>
+                                            <Typography
+                                                variant="subtitle2"
+                                                className={classes.time}
+                                                style={{ color: setIcon(event.type).color }}
+                                            >
+                                                {time}
+                                            </Typography>
+                                        </div>
+
+                                    </div>
+                                    <div className={classes.name}>
                                         <Typography variant="subtitle2" id="activity-name">
                                             {event.type === 'FLIGHT' && event.airline ?
                                                 flight :
                                                 name
                                             }
                                         </Typography>
+                                        <Fab color="primary" variant="extended" className={classes.fab} onClick={() => this.addToItinerary(event)}>
+                                            <AddIcon />
+                                        </Fab>
                                     </div>
-                                    <div className={classes.rightSideTitle}>
-                                        <Typography
-                                            variant="subtitle2"
-                                            className={classes.time}
-                                            style={{ color: setIcon(event.type).color }}
-                                        >
-                                            {time}
-                                        </Typography>
-                                    </div>
-
                                 </div>
-                            </div>
-                        </Card >
+
+                            </Card >
+                        </div>
 
                     )
                 })}
