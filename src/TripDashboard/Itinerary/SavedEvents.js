@@ -21,7 +21,6 @@ const styles = theme => ({
         transition: "all 0.8s ease-in-out",
     },
     eventContainer: {
-
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
@@ -29,7 +28,7 @@ const styles = theme => ({
     },
     eventsContainer: {
         boxShadow: 'none',
-        height: 480,
+        maxHeight: 480,
         overflow: 'auto',
         margin: theme.spacing(2, 0),
         padding: theme.spacing(2),
