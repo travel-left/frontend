@@ -144,7 +144,7 @@ class SavedEvents extends Component {
         return (
             <div >
                 <div className={classes.header}>
-                    <Typography variant="h2">Saved Events</Typography>
+                    <Typography variant="h2">Saved Activities</Typography>
                     <Typography
                         variant="h6"
                         color="primary"
