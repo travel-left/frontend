@@ -151,7 +151,7 @@ class SavedEvents extends Component {
                         className={classes.multipleSelectText}
                     // onClick={() => this.setState({ multipleSelect: !this.state.multipleSelect })}
                     >
-                        hover over activity to add
+                        {this.props.savedEvents.length > 0 ? 'hover over activity to add' : 'click a star to save an activity'}
                     </Typography>
                 </div>
                 <Card className={classes.eventsContainer}>
