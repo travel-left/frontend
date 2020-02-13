@@ -81,7 +81,7 @@ class Events extends Component {
         this.getDaysAndEvents()
         this.getDaysAndEventsFlights()
         this.getDocuments()
-        this.getSavedEvents()
+        !props.share && this.getSavedEvents()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -425,9 +425,13 @@ class Events extends Component {
                             <div className={classes.uploadContainer}>
                                 <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
                             </div>
-                            <SavedEvents savedEvents={this.state.savedEvents} addToItinerary={this.addToItinerary}>
-
-                            </SavedEvents>
+                            {!share &&
+                                <SavedEvents
+                                    savedEvents={this.state.savedEvents}
+                                    addToItinerary={this.addToItinerary}
+                                >
+                                </SavedEvents>
+                            }
                         </div>
                     </Grid>
                 </Grid>
