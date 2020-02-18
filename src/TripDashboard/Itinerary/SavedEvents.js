@@ -199,7 +199,7 @@ class SavedEvents extends Component {
 
                                         </div>
                                         <div className={classes.name}>
-                                            <Typography variant="subtitle2" id="activity-name">
+                                            <Typography variant="subtitle2" id="saved-activity-name">
                                                 {event.type === 'FLIGHT' && event.airline ?
                                                     flight :
                                                     name
