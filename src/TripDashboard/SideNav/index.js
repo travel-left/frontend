@@ -62,7 +62,7 @@ export default withRouter(withStyles(styles)(function SideNav({ ctId, location, 
                     button
                     className={classes.listItem}
                 >
-                    <Typography variant="h6" >{words.what} Preview</Typography>
+                    <Typography variant="h6" >Preview</Typography>
                 </ListItem>
             </Card>
         </List>
