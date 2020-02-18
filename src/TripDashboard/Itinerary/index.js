@@ -373,7 +373,7 @@ class Events extends Component {
 
     render() {
         const { classes, share } = this.props
-        const { days, events, selectedDay, documents } = this.state
+        const { days, events, selectedDay, documents, savedEvents } = this.state
         const dayList = days.length ? (
             <DayList
                 selectedDay={selectedDay}
@@ -391,6 +391,7 @@ class Events extends Component {
                 trip={this.props.currentTrip}
                 documents={this.state.documents}
                 share={this.props.share}
+                savedEvents={savedEvents.map(e => e._id)}
             />
         ) : <h4 />
 

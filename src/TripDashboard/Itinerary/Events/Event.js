@@ -98,7 +98,7 @@ class Event extends Component {
     }
 
     render() {
-        const { event, classes, share } = this.props
+        const { event, classes, share, savedEvents } = this.props
         const icon = setIcon(event.type)
         const time = `${moment(event.start).format('h:mm a')} - ${moment(event.end).format('h:mm a')}`
         const address = <Typography variant="subtitle2" className={classes.address}>{event.address}</Typography>
@@ -179,7 +179,7 @@ class Event extends Component {
                         </Grid>
                     </div>
                     <div className={classes.bottomRight}>
-                        {event.isSaved ? <StarIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id, false)}></StarIcon> :
+                        {event.isSaved && savedEvents.includes(event._id) ? <StarIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id, false)}></StarIcon> :
                             <StarBorderIcon fontSize='large' className={classes.starIcon} onClick={() => this.props.toggleSaveEvent(event._id, true)}>
                             </StarBorderIcon>
                         }
