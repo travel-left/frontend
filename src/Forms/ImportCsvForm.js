@@ -23,7 +23,7 @@ const form = props => {
     let buttonContent = isUploading ? <CircularProgress color='primary' /> : 'Submit'
 
     return (
-        <form onSubmit={handleSubmit} style={{ marginTop: 41 }}>
+        <form onSubmit={handleSubmit} >
             <FileUploader
                 value={values.file}
                 showPreviews={true}
@@ -39,7 +39,7 @@ const form = props => {
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Fab variant="extended" color='primary' href="https://travel-left-public.s3.amazonaws.com/UploadTravelers.csv" style={{ color: 'white', marginTop: 16 }}>Download a Template CSV File</Fab>
             </div>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isUploading || isSubmitting}>
                 {buttonContent}
             </LeftButton>

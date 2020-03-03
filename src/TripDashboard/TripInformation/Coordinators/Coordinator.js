@@ -38,7 +38,8 @@ const styles = theme => ({
 class Coordinator extends Component {
 
     state = {
-        editCoordinator: false
+        editCoordinator: false,
+        showModal: false
     }
     handleEdit = updateObject => {
         this.props.update(this.props._id, updateObject)
@@ -48,8 +49,7 @@ class Coordinator extends Component {
         this.props.remove(this.props._id)
     }
 
-    closeModal = modal => (this.setState({ [modal]: false }))
-    openModal = modal => (this.setState({ [modal]: true }))
+    toggleModal = () => (this.setState({ showModal: !this.state.showModal }))
 
     render() {
         const {
@@ -68,38 +68,39 @@ class Coordinator extends Component {
 
         const removeButton =
             (currentUserId != _id && !share) ? (
-                <>
-                    <LeftFab
-                        id='coordinator-edit-button'
-                        onClick={() => this.openModal('editCoordinator')}
-                    >
-                        Edit
+                <LeftFab
+                    id='coordinator-edit-button'
+                    onClick={this.toggleModal}
+                >
+                    Edit
                     </LeftFab>
+            ) : <a className={classes.tele} href={`tel:${phone}`}>
+                    {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
+                </a>
+
+        return (
+            <>
+                <LeftCard>
+                    <Image diameter={64} src={image} name={name} />
+                    <div className={classes.coordinator}>
+                        {name && <span className={classes.coordinatorName}>{name}</span>}
+                        {title && <Typography variant="caption" id="coordinator-name">{title}</Typography>}
+                        {phone && <Typography variant="caption" id="coordinator-phone">{phone}</Typography>}
+                        {email && <Typography variant="caption" id="coordinator-email">{email}</Typography>}
+                    </div>
+                    {removeButton}
+                </LeftCard>
+                <>
                     {
-                        editCoordinator && <LeftModal
-                            isOpen={editCoordinator}
-                            toggleModal={() => this.closeModal('editCoordinator')}
+                        this.state.showModal && <LeftModal
+                            closeModal={this.toggleModal}
                             title='Remove coordinator from trip'
                             submit={this.handleDelete}
                             form={RemoveCoordinatorForm}
                         />
                     }
                 </>
-            ) : <a className={classes.tele} href={`tel:${phone}`}>
-                    {phone && <PhoneInTalkIcon fontSize="large" color="primary" />}
-                </a>
-
-        return (
-            <LeftCard>
-                <Image diameter={64} src={image} name={name} />
-                <div className={classes.coordinator}>
-                    {name && <span className={classes.coordinatorName}>{name}</span>}
-                    {title && <Typography variant="caption">{title}</Typography>}
-                    {phone && <Typography variant="caption">{phone}</Typography>}
-                    {email && <Typography variant="caption">{email}</Typography>}
-                </div>
-                {removeButton}
-            </LeftCard>
+            </>
         )
     }
 }

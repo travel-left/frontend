@@ -56,6 +56,7 @@ const form = props => {
                 error={touched.name && Boolean(errors.name)}
                 helperText={touched.name ? errors.name : ""}
                 fullWidth
+                style={{ marginTop: 0 }}
             />
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDatePicker
@@ -97,7 +98,7 @@ const form = props => {
             >
                 {categories.map(category => <MenuItem value={category}>{category.label}</MenuItem>)}
             </Select>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             {remove && <LeftButton onClick={remove} color="error" disabled={isSubmitting}>
                 Remove
             </LeftButton>}

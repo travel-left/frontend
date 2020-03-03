@@ -42,29 +42,22 @@ const styles = theme => ({
 })
 
 class LeftModal extends Component {
-    state = {
-        modalAnimation: '',
-        overlayAnimation: '',
-    }
-
-    handleToggleModal = async () => {
-        this.props.toggleModal()
-    }
 
     handleSubmit = async formData => {
         await this.props.submit(formData)
-        this.handleToggleModal()
+        this.props.closeModal()
     }
 
     render() {
         const Form = this.props.form ? this.props.form : null
-        const { classes, isOpen, title } = this.props
+        const { classes, closeModal, title } = this.props
+
         return (
-            <Dialog onClose={this.handleToggleModal} open={isOpen}>
+            <Dialog open onClose={closeModal}>
                 <div className={classes.modalContent}>
                     <div className={classes.modalHeader}>
                         <span className={classes.modalTitle}>{title}</span>
-                        <IconButton onClick={this.handleToggleModal} color='primary' className={classes.closeButton} >
+                        <IconButton onClick={closeModal} color='primary' className={classes.closeButton} id="modal-close-button">
                             <CloseIcon style={{ color: 'white' }} fontSize="large" />
                         </IconButton>
                     </div>
@@ -72,7 +65,7 @@ class LeftModal extends Component {
                         <Form  {...this.props} submit={this.handleSubmit} />
                     </div>
                 </div>
-            </Dialog >
+            </Dialog>
         )
     }
 }

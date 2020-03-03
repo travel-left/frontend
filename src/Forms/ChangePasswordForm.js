@@ -29,6 +29,7 @@ const form = props => {
                 name="password"
                 type="password"
                 fullWidth
+                style={{ marginTop: 0 }}
             />
             <TextField
                 required
@@ -42,7 +43,7 @@ const form = props => {
                 type="password"
                 fullWidth
             />
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton type="submit" disabled={isSubmitting} float>
                 CHANGE PASSWORD
             </LeftButton>

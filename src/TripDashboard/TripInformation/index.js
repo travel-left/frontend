@@ -13,6 +13,7 @@ import Snack from '../../util/otherComponents/Snack'
 import LeftFab from '../../util/otherComponents/LeftFab'
 import { withStyles } from '@material-ui/core'
 import sizes from '../../styles/sizes'
+import Fade from '@material-ui/core/Fade'
 
 const styles = theme => ({
     tripProfile: {
@@ -73,8 +74,7 @@ class TripInformation extends Component {
     }
 
     closeSnack = () => this.setState({ snack: { show: false } })
-    closeModal = () => this.setState({ isEditTripNameModalOpen: false })
-    openModal = () => this.setState({ isEditTripNameModalOpen: true })
+    toggleModal = () => this.setState({ isEditTripNameModalOpen: !this.state.isEditTripNameModalOpen })
 
     updateTrip = async updateObject => {
         try {
@@ -108,38 +108,44 @@ class TripInformation extends Component {
         const { isEditTripNameModalOpen, snack } = this.state
 
         return (
-            <div >
+            <>
                 <div>
-                    <div className={classes.tripProfile}>
-                        <Typography variant="h2">{currentUser.words ? currentUser.words.what : 'Trip'} Profile</Typography>
-                        <div className={classes.editTripProfileBtn}>
-                            <LeftFab id="tripInfo-name-button"
-                                onClick={this.openModal}
-                            >Edit
+                    <div>
+                        <div className={classes.tripProfile}>
+                            <Typography variant="h2">{currentUser.words ? currentUser.words.what : 'Trip'} Profile</Typography>
+                            <div className={classes.editTripProfileBtn}>
+                                <LeftFab id="tripInfo-name-button"
+                                    onClick={this.toggleModal}
+                                >Edit
                             </LeftFab>
+                            </div>
                         </div>
+                        <Fade in={true} timeout={800}>
+                            <div className={classes.tripNameDescription}>
+                                <span className={classes.tripName} id="trip-name"> {name} </span>
+                                <Divider className={classes.divider}></Divider>
+                                <Typography variant="subtitle1" id="trip-description" className={classes.tripDescription} >{description} </Typography>
+                            </div>
+                        </Fade>
                     </div>
-                    <div className={classes.tripNameDescription}>
-                        <span className={classes.tripName}> {name} </span>
-                        {isEditTripNameModalOpen && <LeftModal
-                            isOpen={isEditTripNameModalOpen}
-                            toggleModal={this.closeModal}
-                            title='Edit profile'
-                            submit={this.updateTrip}
-                            form={TripNameForm}
-                            name={name}
-                            description={description}
-                        />}
-                        <Divider className={classes.divider}></Divider>
-                        <Typography variant="subtitle1" className={classes.tripDescription} >{description} </Typography>
-                    </div>
+                    <Coordinators tripId={this.currentTripId} currentUser={currentUser}></Coordinators>
+                    <TripDates tripId={this.currentTripId} dateStart={dateStart}></TripDates>
+                    <Resources tripId={this.currentTripId}></Resources>
+                    <Contacts tripId={this.currentTripId}></Contacts>
                 </div>
-                <Coordinators tripId={this.currentTripId} currentUser={currentUser}></Coordinators>
-                <TripDates tripId={this.currentTripId} dateStart={dateStart}></TripDates>
-                <Resources tripId={this.currentTripId}></Resources>
-                <Contacts tripId={this.currentTripId}></Contacts>
-                {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
-            </div>
+
+                <>
+                    {isEditTripNameModalOpen && <LeftModal
+                        closeModal={this.toggleModal}
+                        title='Edit profile'
+                        submit={this.updateTrip}
+                        form={TripNameForm}
+                        name={name}
+                        description={description}
+                    />}
+                    {snack.show && <Snack open={snack.show} message={snack.message} variant={snack.variant} onClose={this.closeSnack}></Snack>}
+                </>
+            </>
         )
     }
 }

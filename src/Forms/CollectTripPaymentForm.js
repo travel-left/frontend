@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { CardElement, injectStripe, Elements, StripeProvider } from 'react-stripe-elements'
 import { apiCall } from '../util/api'
-import Button from '@material-ui/core/Button'
 import Snack from '../util/otherComponents/Snack'
 import LeftButton from '../util/otherComponents/LeftButton'
 
@@ -63,15 +62,12 @@ class _CardForm extends Component {
                 }
             })
         }
-
-
     }
 
     render() {
         const { isSubmitting } = this.state
         return (
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ paddingTop: 16, paddingBottom: 16 }}> ${this.props.amount} is being requested to register for your trip.</span>
                 <div>
                     <span><strong>Card details</strong></span>
                     <div style={{ paddingTop: 16, paddingBottom: 16 }}>
@@ -81,8 +77,7 @@ class _CardForm extends Component {
                 <div>
                     <LeftButton type="submit" float onClick={this.submit} disabled={isSubmitting}>
                         submit
-                </LeftButton>
-
+                    </LeftButton>
                 </div>
                 {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
             </div>

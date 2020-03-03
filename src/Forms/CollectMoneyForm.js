@@ -29,7 +29,7 @@ const form = props => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <InputLabel id="demo-mutiple-chip-label" style={{ marginTop: 40 }}> Selected </InputLabel>
+            <InputLabel style={{ marginTop: 0 }} > Selected </InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
                 id="demo-mutiple-chip"
@@ -90,7 +90,7 @@ const form = props => {
                     <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
                 </RadioGroup>
             </div>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
             </LeftButton>

@@ -16,6 +16,8 @@ import ContainedUploader from '../../Forms/ContainedUploader'
 import { airports } from '../../util/airlines'
 import { withStyles } from '@material-ui/core'
 import LeftButton from '../../util/otherComponents/LeftButton'
+import SavedEvents from './SavedEvents';
+import { formatEventForBackend, formatDateToLocalTimezone, formatDateTime } from './eventHelpers'
 
 function initializeReactGA() {
     ReactGA.initialize('UA-145382520-1')
@@ -62,6 +64,7 @@ class Events extends Component {
         days: [],
         selectedDay: {},
         events: [],
+        savedEvents: [],
         isOpen: false,
         snack: {
             show: false,
@@ -76,7 +79,9 @@ class Events extends Component {
             initializeReactGA()
         }
         this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
         this.getDocuments()
+        !props.share && this.getSavedEvents()
     }
 
     closeSnack = () => (this.setState({ snack: { show: false } }))
@@ -85,14 +90,31 @@ class Events extends Component {
         let days = []
         let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
 
-        let newevents = await Promise.all(events.map(async event => {
+        let newevents = events.map(event => {
             if (!days.map(day => day.day).includes(moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
                 days.push({
                     day: moment(event.start).tz(this.localTimezone).format('YYYY-MM-DD'),
-                    name: event.name
+                    name: event.name ? event.name : 'Flight'
                 })
             }
+            return event
+        })
+
+        events = newevents.map(event => ({
+            ...event,
+            start: formatDateToLocalTimezone(event.start),
+            end: formatDateToLocalTimezone(event.end)
+        }))
+
+        this.setState({ events, days, selectedDay: days[0] ? days[0].day : {} })
+    }
+
+    getDaysAndEventsFlights = async () => {
+        let events = await apiCall('get', `/api/trips/${this.props.currentTrip._id}/events`)
+
+        let newevents = await Promise.all(events.map(async event => {
             if (event.type === 'FLIGHT') {
+
                 try {
                     let flightStats = await apiCall('post', '/api/flightstats', {
                         date: event.start,
@@ -133,7 +155,7 @@ class Events extends Component {
             end: formatDateToLocalTimezone(event.end)
         }))
 
-        this.setState({ events, days, selectedDay: days[0] ? days[0].day : {} })
+        this.setState({ events })
     }
 
     getDocuments = async () => {
@@ -164,6 +186,7 @@ class Events extends Component {
             })
         }
         this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
     }
 
     createQuickEvent = async event => {
@@ -206,7 +229,6 @@ class Events extends Component {
                     message: 'Success!'
                 }
             })
-            this.getDaysAndEvents()
         } catch (err) {
             this.setState({
                 snack: {
@@ -216,7 +238,60 @@ class Events extends Component {
                 }
             })
         }
+        this.getDaysAndEvents()
+        if (event.type === 'FLIGHT') {
+            this.getDaysAndEventsFlights()
+        }
+    }
 
+    toggleSaveEvent = async (eventId, isSaved) => {
+        try {
+            await apiCall('PUT', `/api/trips/${this.props.currentTrip._id}/events/${eventId}/isSaved`, { isSaved })
+
+            const { events, savedEvents } = this.state
+            let days = [...this.state.days]
+
+            const updatedEvents = events.map(e => {
+                if (e._id == eventId) {
+                    e.isSaved = isSaved
+                }
+
+                if (!days.map(day => day.day).includes(moment(e.start).tz(this.localTimezone).format('YYYY-MM-DD'))) {
+                    days.push({
+                        day: moment(e.start).tz(this.localTimezone).format('YYYY-MM-DD'),
+                        name: e.name ? e.name : 'Flight'
+                    })
+                }
+
+                return e
+            })
+
+            let updatedSavedEvents
+            if (isSaved) {
+                updatedSavedEvents = [...savedEvents, { ...events.filter(e => e._id == eventId)[0], isSaved: true }]
+            } else {
+                updatedSavedEvents = savedEvents.filter(event => event._id != eventId)
+            }
+
+            this.setState({
+                days,
+                events: updatedEvents,
+                savedEvents: updatedSavedEvents,
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
     }
 
     removeEvent = async eventId => {
@@ -229,7 +304,6 @@ class Events extends Component {
                     message: 'Success!'
                 }
             })
-            this.getDaysAndEvents()
         } catch (err) {
             this.setState({
                 snack: {
@@ -239,7 +313,8 @@ class Events extends Component {
                 }
             })
         }
-
+        this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
     }
 
     onDayClick = day => {
@@ -259,9 +334,46 @@ class Events extends Component {
         this.setState(prevState => ({ isOpen: !prevState.isOpen }))
     }
 
+    getSavedEvents = async () => {
+        const { currentUser } = this.props
+        let savedEvents = await apiCall('get', `/api/coordinators/${currentUser._id}/savedEvents`)
+
+        savedEvents = savedEvents.map(event => ({
+            ...event,
+            start: formatDateToLocalTimezone(event.start),
+            end: formatDateToLocalTimezone(event.end)
+        }))
+
+        this.setState({ savedEvents })
+    }
+
+    addToItinerary = async eventToAddId => {
+        try {
+            await apiCall('post', `/api/trips/${this.props.currentTrip._id}/events/${eventToAddId}/addFromSaved`)
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'success',
+                    message: 'Success!'
+                }
+            })
+
+        } catch (err) {
+            this.setState({
+                snack: {
+                    show: true,
+                    variant: 'error',
+                    message: 'An error occurred.'
+                }
+            })
+        }
+        this.getDaysAndEvents()
+        this.getDaysAndEventsFlights()
+    }
+
     render() {
         const { classes, share } = this.props
-        const { days, events, selectedDay, documents } = this.state
+        const { days, events, selectedDay, documents, savedEvents } = this.state
         const dayList = days.length ? (
             <DayList
                 selectedDay={selectedDay}
@@ -270,100 +382,86 @@ class Events extends Component {
             />
         ) : null
         const eventList = events.length ? (
+
             <EventList
                 events={events}
                 updateEvent={this.updateEvent}
+                toggleSaveEvent={this.toggleSaveEvent}
                 removeEvent={this.removeEvent}
                 trip={this.props.currentTrip}
                 documents={this.state.documents}
                 share={this.props.share}
+                savedEvents={savedEvents.map(e => e._id)}
             />
         ) : <h4 />
 
         return (
-            <Grid container className={classes.container}>
-                <Grid item xs={12} md={!share ? 8 : 12} className={classes.eventsSection}>
-                    <Typography variant="h2">Itinerary</Typography>
-                    <div className={classes.eventList}>
-                        {eventList}
-                    </div>
-                </Grid>
-                <Grid item xs={12} md={4} className={classes.sidebar}>
-                    <div className={classes.newEventContainer}>
-                        {documents &&
-                            <LeftButton
-                                onClick={this.toggleModal}
-                            >
-                                NEW activity
-                            </LeftButton>
-                        }
-                        {this.state.isOpen &&
-                            <LeftModal
-                                submit={this.createEvent}
-                                date={this.props.currentTrip.dateStart}
-                                documents={this.state.documents}
-                                trip={this.props.currentTrip}
-                                toggleModal={this.toggleModal}
-                                isOpen={this.state.isOpen}
-                                title='Create a new activity'
-                                form={EventForm}
-                            />
-                        }
-                    </div>
-                    <div>
-                        {dayList}
-                        <Card className={classes.quickEventForm}>
-                            <CreateQuickEventForm
-                                submit={this.createQuickEvent}
-                                date={this.props.currentTrip.dateStart}
-                            ></CreateQuickEventForm>
-                        </Card>
-                        <div className={classes.uploadContainer}>
-                            <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
+            <>
+                <Grid container className={classes.container}>
+                    <Grid item xs={12} md={!share ? 8 : 12} className={classes.eventsSection}>
+                        <Typography variant="h2">Itinerary</Typography>
+                        <div className={classes.eventList}>
+                            {eventList}
                         </div>
-                    </div>
+                    </Grid>
+                    <Grid item xs={12} md={4} className={classes.sidebar}>
+                        <div className={classes.newEventContainer}>
+                            {documents &&
+                                <LeftButton
+                                    onClick={this.toggleModal}
+                                    id="new-activity"
+                                >
+                                    NEW activity
+                            </LeftButton>
+                            }
+                        </div>
+                        <div>
+                            {dayList}
+                            <Card className={classes.quickEventForm}>
+                                <CreateQuickEventForm
+                                    submit={this.createQuickEvent}
+                                    date={this.props.currentTrip.dateStart}
+                                ></CreateQuickEventForm>
+                            </Card>
+                            <div className={classes.uploadContainer}>
+                                <ContainedUploader tripId={this.props.currentTrip._id} onUploadFinish={this.getDocuments}></ContainedUploader>
+                            </div>
+                            {!share &&
+                                <SavedEvents
+                                    savedEvents={this.state.savedEvents}
+                                    addToItinerary={this.addToItinerary}
+                                >
+                                </SavedEvents>
+                            }
+                        </div>
+                    </Grid>
                 </Grid>
-                {this.state.snack.show && <Snack open={this.state.snack.show} message={this.state.snack.message} variant={this.state.snack.variant} onClose={this.closeSnack}></Snack>}
-            </Grid>
+
+                {/* MODALS */}
+
+                <>
+                    {this.state.isOpen &&
+                        <LeftModal
+                            submit={this.createEvent}
+                            date={this.props.currentTrip.dateStart}
+                            documents={this.state.documents}
+                            trip={this.props.currentTrip}
+                            closeModal={this.toggleModal}
+                            title='Create a new activity'
+                            form={EventForm}
+                        />
+                    }
+                    {this.state.snack.show && <Snack
+                        open={this.state.snack.show}
+                        message={this.state.snack.message}
+                        variant={this.state.snack.variant}
+                        onClose={this.closeSnack}>
+                    </Snack>
+                    }
+                </>
+            </>
         )
     }
 }
 
 export default withStyles(styles)(Events)
-
-function formatEventForBackend(event) {
-    event.start = formatDateTime(event.date, event.start)
-    event.end = formatDateTime(event.date, event.end)
-    event.type = event.type.toUpperCase()
-    event.documents = event.selectedDocuments
-    event.links = event.links.length ? event.links.split(' ').map(link => link) : []
-    event.airline = event.airline.value
-
-    delete event.selectedDocuments
-    delete event.date
-    return event
-}
-
-//takes the UTC date and converts it to the user's timezone
-function formatDateToLocalTimezone(date) {
-    let localTimezone = moment.tz.guess(true)
-    date = moment(date).tz(localTimezone)
-    return date
-}
-
-function formatDateTime(date, dateTime) {
-    let minutes = moment(dateTime).minutes()
-    if (minutes.toString().length === 1) {
-        minutes = `0${minutes}`
-    }
-    let hours = moment(dateTime).hours()
-    if (hours.toString().length === 1) {
-        hours = `0${hours}`
-    }
-
-    return {
-        date: moment(date).format("YYYY-MM-DD"),
-        hours: hours,
-        minutes: minutes
-    }
-}

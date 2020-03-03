@@ -30,6 +30,7 @@ const form = props => {
                 placeholder="Activity name"
                 name="name"
                 fullWidth
+                style={{ marginTop: 0 }}
             />
             <MuiPickersUtilsProvider utils={MomentUtils}>
                 <KeyboardDateTimePicker

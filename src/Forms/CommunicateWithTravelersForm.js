@@ -26,7 +26,7 @@ const form = props => {
     } = props
 
     let travelerList = (
-        <div style={{ marginTop: 25 }}>
+        <div style={{ marginTop: 0 }}>
             <InputLabel id="demo-mutiple-chip-label"> Selected </InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
@@ -64,7 +64,7 @@ const form = props => {
         <>
             {travelerList}
             <form onSubmit={handleSubmit}>
-                <div style={{ marginTop: 40 }}>
+                <div style={{ marginTop: 24 }}>
                     <FormLabel component="legend" >Send As</FormLabel>
                     <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
                         <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />
@@ -95,7 +95,7 @@ const form = props => {
                     name="message"
                     fullWidth
                 />
-                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <Divider style={{ marginTop: 48, marginBottom: 16 }} />
                 <LeftButton float type="submit" disabled={isSubmitting}>
                     Send
             </LeftButton>

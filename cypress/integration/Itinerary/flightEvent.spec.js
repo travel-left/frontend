@@ -25,8 +25,8 @@ describe('creates a flight event', () => {
             endTime: '3:00 pm',
             location: 'LAX'
         }
-        cy.contains('Manage Itinerary').children().first().click()
-        cy.contains('NEW EVENT').click()
+        cy.get('div[id="itinerary-section"]').click()
+        cy.get('button[id="new-activity"]').click()
         cy.get('input[name="dateStart"]')
             .clear()
         cy.get('p').contains(startDay).click()

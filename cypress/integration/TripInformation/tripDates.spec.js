@@ -25,8 +25,6 @@ describe('change dates of trip', () => {
         cy.get('p').contains(endDay).click()
         cy.get('button[type="submit"]')
             .click()
-        cy.get('button[type="submit"]')
-            .click()
 
         cy.wait(500)
         cy.get('button[id="tripDates"]').click()

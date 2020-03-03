@@ -41,7 +41,6 @@ const form = props => {
         <div style={{ marginTop: 41 }}>
             <InputLabel id="demo-mutiple-chip-label"> Selected Documents</InputLabel>
             <Select
-                labelId="demo-mutiple-chip-label"
                 id="documents-multiple-select"
                 multiple
                 value={values.selectedDocuments || []}
@@ -52,9 +51,9 @@ const form = props => {
                 displayEmpty
                 onBlur={handleBlur}
                 input={<Input id="select-multiple-chip" />}
-                placeholder="No documents selected"
+                placeholder="None selected"
                 renderValue={selectedDocuments => (
-                    !selectedDocuments ? <em>No documents selected</em>
+                    selectedDocuments.length === 0 ? 'None selected'
                         : (<div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {selectedDocuments.map(t => (
                                 <LeftChip key={t._id} label={t.name} />
@@ -85,6 +84,7 @@ const form = props => {
                         placeholder="Activity name"
                         name="name"
                         style={{ width: 199 }}
+                        style={{ marginTop: 0 }}
                     />
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                         <KeyboardDatePicker
@@ -109,12 +109,13 @@ const form = props => {
                             KeyboardButtonProps={{
                                 'aria-label': 'change date',
                             }}
+                            style={{ marginTop: 0 }}
                         />
                     </MuiPickersUtilsProvider>
                 </div>
                 <div style={{ marginTop: 41 }}>
                     <FormLabel component="legend" >Activity type</FormLabel>
-                    <RadioGroup name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'around' }}>
+                    <RadioGroup name="type" value={values.type} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
                         <FormControlLabel value="LODGING" control={<Radio color="primary" />} label="Lodging" />
                         <FormControlLabel value="EVENT" control={<Radio color="primary" />} label="Event" />
                         <FormControlLabel value="TRANSPORTATION" control={<Radio color="primary" />} label="Transportation" />
@@ -263,7 +264,7 @@ const form = props => {
                     name="links"
                     fullWidth
                 />
-                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <Divider style={{ marginTop: 48, marginBottom: 16 }} />
                 {remove && <LeftButton onClick={remove} color="error" disabled={isSubmitting}>
                     Remove
             </LeftButton>}

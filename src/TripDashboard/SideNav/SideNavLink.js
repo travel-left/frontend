@@ -22,7 +22,7 @@ const styles = theme => ({
     }
 })
 
-export default withStyles(styles)(({ text, divider, route, classes }) => {
+export default withStyles(styles)(({ text, divider, route, classes, name }) => {
     return (
         <Card>
             {divider && <Divider />}
@@ -33,6 +33,7 @@ export default withStyles(styles)(({ text, divider, route, classes }) => {
                 <ListItem
                     button
                     className={classes.listItem}
+                    id={`${name}-section`}
                 >
                     <Typography
                         variant="h6"

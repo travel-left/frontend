@@ -27,7 +27,7 @@ const form = props => {
     return (
         <form onSubmit={handleSubmit}>
             <FormGroup>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 0 }}>
                     <span htmlFor="">Name</span>
                     <Switch checked={values.hasName} onChange={handleChange('hasName')} value="hasName" />
                 </div>
@@ -101,8 +101,8 @@ const form = props => {
                     <Switch checked={values.hasPublish} onChange={handleChange('hasPublish')} value="hasPublish" color="primary" />
                 </div>
             </FormGroup>
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
-            <LeftButton type="submit" disabled={isSubmitting}>
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
+            <LeftButton type="submit" float disabled={isSubmitting}>
                 Submit
             </LeftButton>
         </form>

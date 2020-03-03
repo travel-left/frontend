@@ -25,8 +25,9 @@ const form = props => {
                 placeholder="Your orgs name"
                 name="name"
                 fullWidth
+                style={{ marginTop: 0 }}
             />
-            <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+            <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
             </LeftButton>

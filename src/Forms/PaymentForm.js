@@ -91,7 +91,7 @@ class _CardForm extends Component {
                     letterSpacing: '0.00938em',
                 }}>Update card</label>
                 <CardElement />
-                <Divider style={{ marginTop: 40, marginBottom: 25 }} />
+                <Divider style={{ marginTop: 48, marginBottom: 16 }} />
                 <LeftButton float type="submit" onClick={this.submit}>
                     UPDATE
             </LeftButton>

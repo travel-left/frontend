@@ -33,7 +33,6 @@ export default withRouter(class TripRegistration extends Component {
 
     getTripInfo = async () => {
         let trip = await apiCall('get', `/api/trips/${this.tripId}/share`)
-
         let org = await apiCall('get', `/api/organization/${trip.coordinators[0].organization}`)
 
         this.setState({
@@ -115,7 +114,20 @@ export default withRouter(class TripRegistration extends Component {
                     <Card style={{ padding: 16, maxWidth: 600, marginTop: 32 }}>
                         {page !== 'success' && <Typography variant="h4">Register for {trip.name}</Typography>}
                         {page === 'register' && <TravelerRegistrationForm fields={formSettings} submit={this.registerTraveler}></TravelerRegistrationForm>}
-                        {page === 'payment' && <CollectTripPaymentForm connectAccountId={org.stripeConnectAccountId} amount={formSettings.paymentAmount} travelerEmail={traveler.email} onSubmit={this.handleSuccessfulRegistrationPayment}></CollectTripPaymentForm>}
+                        {page === 'payment' && (
+                            <>
+                                <div style={{ marginTop: 16, marginBottom: 16 }}>
+                                    ${formSettings.paymentAmount} is being requested for your registration.
+                                </div>
+                                <CollectTripPaymentForm
+                                    connectAccountId={org.stripeConnectAccountId}
+                                    amount={formSettings.paymentAmount}
+                                    travelerEmail={traveler.email}
+                                    onSubmit={this.handleSuccessfulRegistrationPayment}>
+                                </CollectTripPaymentForm>
+
+                            </>
+                        )}
                         {page === 'success' && <>
                             <Typography variant="h4" style={{ textAlign: 'center', marginTop: 16, marginBottom: 16 }}>You have been succesfully registered for {trip.name}!</Typography>
                             <div style={{ display: 'flex', justifyContent: 'center', }}>
@@ -124,7 +136,7 @@ export default withRouter(class TripRegistration extends Component {
                                     name={`/trips/${trip._id}/share`}
                                 >
                                     <Button className='register-button' size="large" type="submit" variant="contained" color="primary" style={{ width: '180px', height: '50px' }}>
-                                        BACK TO TRIP
+                                        BACK TO ITINERARY
                                     </Button>
                                 </NavLink>
                             </div>
