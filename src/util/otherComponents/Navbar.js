@@ -184,7 +184,7 @@ class Navbar extends Component {
                     <div className={classes.navbarLeft}>
                         <Link to={linkTo} >
                             <img
-                                src="/left.png"
+                                src={process.env.REACT_APP_THEME_LOGO}
                                 className={classes.logo}>
                             </img>
                         </Link>
