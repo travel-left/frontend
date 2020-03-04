@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { apiCall } from '../util/api'
 import Navbar from '../util/otherComponents/Navbar'
-import Image from '../util/otherComponents/Image'
-import CreateChargeForm from '../Forms/CreateChargeForm'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
+import CollectBankAccount from './CollectBankAccount'
 
 export default class CollectInfo extends Component {
 
@@ -33,7 +32,7 @@ export default class CollectInfo extends Component {
                             :
                             <div style={{ display: 'flex' }}>
                                 {/* COLLECT INFO FORM */}
-                                <h3>I am the form to collect bank info</h3>
+                                <CollectBankAccount></CollectBankAccount>
                             </div>
                         }
                     </Card>
