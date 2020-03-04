@@ -77,7 +77,7 @@ class _CardForm extends Component {
                 <p style={{ color: '#FF605F' }}>{this.state.error}</p>
                 <p style={{ color: '#0F61D8' }}>{this.state.success}</p>
                 <span><strong>Card details</strong></span>
-                <div className='mt-3 mb-4'>
+                <div className='mt-3 mb-4' style={{ marginTop: 16, marginBottom: 16 }}>
                     <CardElement />
                 </div>
                 <LeftButton type="submit" float onClick={this.submit} disabled={isSubmitting}>

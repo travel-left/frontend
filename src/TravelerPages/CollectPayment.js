@@ -53,7 +53,7 @@ export default class CollectPayment extends Component {
                             <div style={{ display: 'flex' }}>
                                 <Image src={coordinator.image} style={{ maxWidth: '20vw', marginRight: 16 }} diameter='64px'></Image>
                                 <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 16 }}>
-                                    <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for your
+                                    <span><strong>{coordinator.name}</strong> requests ${formInfo.amount} for your {' '}
                                         {coordinator.words ? coordinator.words.what.toLowerCase() : 'trip'}.</span>
                                     <span >{formInfo.message}</span>
                                     <CreateChargeForm orgId={this.state.org._id} formId={this.formId} amount={formInfo.amount} onSubmit={this.handleSubmit}></CreateChargeForm>
