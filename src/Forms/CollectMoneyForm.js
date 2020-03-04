@@ -28,47 +28,6 @@ const form = props => {
         remove
     } = props
 
-    const collect = (
-        <>
-            <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Amount"
-                value={values.amount}
-                placeholder="20.00"
-                name="amount"
-                fullWidth
-                InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-            />
-            <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Message"
-                value={values.message}
-                placeholder="Message your traveler will see"
-                name="message"
-                fullWidth
-            />
-            <div style={{ marginTop: 40 }}>
-                <FormLabel component="legend" style={{ fontSize: 11 }}>Send As</FormLabel>
-                <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
-                    <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />
-                    <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
-                </RadioGroup>
-            </div>
-        </>
-    )
-
-    const info = <Typography variant="subtitle2">
-        Your traveler will now see a "Request Reimbursement" button on their trip preview.
-        After clicking the button they will see a form to submit their bank account information.
-        Upon completion you will see their account appear in the info sidebar.
-    </Typography>
-
     return (
         <form onSubmit={handleSubmit}>
             <InputLabel style={{ marginTop: 0, fontSize: 11 }} > Selected </InputLabel>
@@ -109,9 +68,37 @@ const form = props => {
                     <FormControlLabel value="collect" control={<Radio />} label="Collect" className="m-0" />
                     <FormControlLabel value="info" control={<Radio />} label="Request bank information" className="m-0" />
                 </RadioGroup>
+                {values.moneyAction === 'collect' && <TextField
+                    required
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    label="Amount"
+                    value={values.amount}
+                    placeholder="20.00"
+                    name="amount"
+                    fullWidth
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                />}
+                <TextField
+                    required
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    label="Message"
+                    value={values.message}
+                    placeholder="Message your traveler will see"
+                    name="message"
+                    fullWidth
+                />
+                <div style={{ marginTop: 40 }}>
+                    <FormLabel component="legend" style={{ fontSize: 11 }}>Send As</FormLabel>
+                    <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
+                        <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />
+                        <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
+                    </RadioGroup>
+                </div>
             </div>
-            {values.moneyAction === 'collect' && collect}
-            {values.moneyAction === 'info' && info}
             <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
                 Submit
