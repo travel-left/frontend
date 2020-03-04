@@ -128,7 +128,7 @@ const App = () => (
                                     <Navbar />
                                     <div
                                         id="app-root"
-                                        style={{ minHeight: '90vh', backgroundColor: '#F6F6EF' }}
+                                        style={{ minHeight: '90vh', backgroundColor: process.env.REACT_APP_THEME_BACKGROUND }}
                                     >
                                         <ErrorBoundary>
                                             <Main />
