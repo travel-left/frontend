@@ -12,6 +12,7 @@ import { ThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core/styles'
 import CollectPayment from './TravelerPages/CollectPayment'
 import Share from './TravelerPages/Share'
+import CollectInfo from './TravelerPages/CollectInfo';
 
 const store = configureStore()
 
@@ -120,6 +121,10 @@ const App = () => (
                         <Route
                             path="/coordinator/:coordinatorId/form/:formId"
                             render={routeProps => <CollectPayment {...routeProps} />}
+                        />
+                        <Route
+                            path="/traveler/:travelerId/info"
+                            render={routeProps => <CollectInfo {...routeProps} />}
                         />
                         <Route
                             path=""
