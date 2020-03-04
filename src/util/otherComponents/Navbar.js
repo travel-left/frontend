@@ -184,7 +184,7 @@ class Navbar extends Component {
                     <div className={classes.navbarLeft}>
                         <Link to={linkTo} >
                             <img
-                                src="https://d1l6icgp8w0hse.cloudfront.net/assets/ycdc/ycombinator-logo-7481412385fe6d0f7d4a3339d90fe12309432ca41983e8d350b232301d5d8684.png"
+                                src={process.env.REACT_APP_THEME_LOGO}
                                 className={classes.logo}>
                             </img>
                         </Link>

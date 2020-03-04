@@ -22,10 +22,10 @@ if (localStorage.token) {
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#F06927',
+            main: process.env.REACT_APP_THEME_PRIMARY_MAIN,
         },
         secondary: {
-            main: '#2D2D2D',
+            main: process.env.REACT_APP_THEME_SECONDARY_MAIN,
         },
         error: {
             main: '#FF5555'
