@@ -709,7 +709,7 @@ class Travelers extends Component {
                     />
                     }
                     {this.state.modalOpen === 'money' && <LeftModal
-                        title="Collect money"
+                        title="Money management"
                         closeModal={this.closeModal}
                         submit={this.collectMoneyFromTravelers}
                         travelers={this.state.travelers}
