@@ -22,10 +22,10 @@ if (localStorage.token) {
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#0A58CE',
+            main: process.env.REACT_APP_THEME_PRIMARY_MAIN,
         },
         secondary: {
-            main: '#83C9F4',
+            main: process.env.REACT_APP_THEME_SECONDARY_MAIN,
         },
         error: {
             main: '#FF5555'
@@ -128,7 +128,7 @@ const App = () => (
                                     <Navbar />
                                     <div
                                         id="app-root"
-                                        style={{ minHeight: '90vh' }}
+                                        style={{ minHeight: '90vh', backgroundColor: process.env.REACT_APP_THEME_BACKGROUND }}
                                     >
                                         <ErrorBoundary>
                                             <Main />
