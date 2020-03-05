@@ -4,35 +4,46 @@ import Navbar from '../util/otherComponents/Navbar'
 import Card from '@material-ui/core/Card'
 import Typography from '@material-ui/core/Typography'
 import CollectBankAccount from './CollectBankAccount'
+import { withRouter } from 'react-router-dom'
 
-export default class CollectInfo extends Component {
+class CollectInfo extends Component {
+
+    state = {
+        submitted: false
+    }
 
     sendInfo = async info => {
+        const { travelerId } = this.props.match.params
         try {
+            console.log(info)
+
+            await apiCall('put', `/api/travelers/${travelerId}/`, {
+                bankAccountNumber: info.bankAccount
+            })
 
             localStorage.setItem("bankInfo", true);
+
+            this.setState({ submitted: true })
         } catch (err) {
             //handle error with something
+            alert('there was an error submitting, please refresh and try again')
         }
-        await apiCall('put', '/api/travelers/:id/', {
-            accountNumber: info.accountNumber
-        })
+
     }
 
     render() {
-        // localStorage.setItem("bankInfo", true);
         const submitedBankInfo = localStorage.getItem('bankInfo')
         return (
             <>
                 <Navbar></Navbar>
                 <div style={{ display: 'flex', justifyContent: 'center', }}>
                     <Card style={{ padding: 16, maxWidth: 600, marginTop: 32, }}>
-                        {submitedBankInfo ?
-                            <Typography variant="h5" style={{ textAlign: 'center', }}>Your payment has been completed!</Typography>
+                        {submitedBankInfo || this.state.submitted ?
+                            <Typography variant="h5" style={{ textAlign: 'center', }}>Your account has been successfully submitted!</Typography>
                             :
                             <div style={{ display: 'flex' }}>
                                 {/* COLLECT INFO FORM */}
-                                <CollectBankAccount></CollectBankAccount>
+                                <CollectBankAccount submit={this.sendInfo}></CollectBankAccount>
                             </div>
                         }
                     </Card>
@@ -41,3 +52,5 @@ export default class CollectInfo extends Component {
         )
     }
 }
+
+export default withRouter(CollectInfo)
