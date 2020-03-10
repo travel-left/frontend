@@ -23,6 +23,7 @@ function initializeReactGA() {
 }
 
 class Trips extends Component {
+
     state = {
         trips: [],
         filteredTrips: [],
@@ -48,7 +49,6 @@ class Trips extends Component {
         if (process.env.NODE_ENV === 'production') {
             initializeReactGA()
         }
-
         this.getAllTripsAndSetState()
     }
 
