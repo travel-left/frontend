@@ -59,7 +59,20 @@ const form = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 id="standard-required"
-                label="Full Name"
+                label="Organization name"
+                value={values.orgName}
+                placeholder="The name of your organization"
+                name="orgName"
+                error={touched.orgName && Boolean(errors.orgName)}
+                helperText={touched.orgName ? errors.orgName : ""}
+                fullWidth
+            />
+            <TextField
+                required
+                onChange={handleChange}
+                onBlur={handleBlur}
+                id="standard-required"
+                label="Your full name"
                 value={values.name}
                 placeholder="Your full name"
                 name="name"
@@ -111,17 +124,20 @@ const Form = withFormik({
     mapPropsToValues: ({
         name,
         email,
-        password
+        password,
+        orgName
     }) => {
         return {
             name: name || "",
             email: email || "",
             password: password || "",
+            orgName: orgName || ""
         };
     },
 
     validationSchema: Yup.object().shape({
         name: Yup.string().required("Required"),
+        orgName: Yup.string().required("Required"),
         email: Yup.string()
             .email("Enter a valid email")
             .required("Email is required"),
