@@ -66,7 +66,7 @@ const form = props => {
                 <FormLabel component="legend" style={{ fontSize: 11 }}>Action</FormLabel>
                 <RadioGroup name="moneyAction" value={values.moneyAction} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
                     <FormControlLabel value="collect" control={<Radio />} label="Collect" className="m-0" />
-                    <FormControlLabel value="info" control={<Radio />} label="Request bank information" className="m-0" />
+                    <FormControlLabel value="info" control={<Radio />} label="Request reimbursment information" className="m-0" />
                 </RadioGroup>
                 {values.moneyAction === 'collect' && <TextField
                     required
