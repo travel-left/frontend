@@ -13,6 +13,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import FormLabel from '@material-ui/core/FormLabel'
 import LeftChip from '../util/otherComponents/LeftChip'
 import LeftButton from '../util/otherComponents/LeftButton'
+import Typography from '@material-ui/core/Typography'
 
 const form = props => {
     const {
@@ -29,7 +30,7 @@ const form = props => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <InputLabel style={{ marginTop: 0 }} > Selected </InputLabel>
+            <InputLabel style={{ marginTop: 0, fontSize: 11 }} > Selected </InputLabel>
             <Select
                 labelId="demo-mutiple-chip-label"
                 id="demo-mutiple-chip"
@@ -60,35 +61,43 @@ const form = props => {
                     </MenuItem>
                 ))}
             </Select>
-            <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Amount"
-                value={values.amount}
-                placeholder="20.00"
-                name="amount"
-                fullWidth
-                InputProps={{
-                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-            />
-            <TextField
-                required
-                onChange={handleChange}
-                onBlur={handleBlur}
-                label="Message"
-                value={values.message}
-                placeholder="Message your traveler will see"
-                name="message"
-                fullWidth
-            />
-            <div style={{ marginTop: 40 }}>
-                <FormLabel component="legend" >Send As</FormLabel>
-                <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
-                    <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />
-                    <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
+            {/* collect money, send money, request bank account info */}
+            <div style={{ marginTop: 40, }}>
+                <FormLabel component="legend" style={{ fontSize: 11 }}>Action</FormLabel>
+                <RadioGroup name="moneyAction" value={values.moneyAction} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
+                    <FormControlLabel value="collect" control={<Radio />} label="Collect" className="m-0" />
+                    <FormControlLabel value="info" control={<Radio />} label="Request reimbursment information" className="m-0" />
                 </RadioGroup>
+                {values.moneyAction === 'collect' && <TextField
+                    required
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    label="Amount"
+                    value={values.amount}
+                    placeholder="20.00"
+                    name="amount"
+                    fullWidth
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                />}
+                <TextField
+                    required
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    label="Message"
+                    value={values.message}
+                    placeholder="Message your traveler will see"
+                    name="message"
+                    fullWidth
+                />
+                <div style={{ marginTop: 40 }}>
+                    <FormLabel component="legend" style={{ fontSize: 11 }}>Send As</FormLabel>
+                    <RadioGroup aria-label="send as" name="messageType" value={values.messageType} onChange={handleChange} style={{ display: 'flex', flexDirection: 'row' }}>
+                        <FormControlLabel value="text" control={<Radio />} label="Text" className="m-0" />
+                        <FormControlLabel value="email" control={<Radio />} label="Email" className="m-0" />
+                    </RadioGroup>
+                </div>
             </div>
             <Divider style={{ marginTop: 48, marginBottom: 16 }} />
             <LeftButton float type="submit" disabled={isSubmitting}>
@@ -106,7 +115,8 @@ const Form = withFormik({
         return {
             travelers: travelers || [],
             selectedTravelers: selectedTravelers || [],
-            messageType: "email"
+            messageType: "email",
+            moneyAction: "collect"
         }
     },
 

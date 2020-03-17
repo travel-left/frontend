@@ -13,6 +13,7 @@ import PaymentCard from './PaymentCard'
 import LeftButton from '../../util/otherComponents/LeftButton'
 import Fade from '@material-ui/core/Fade'
 import { withStyles } from '@material-ui/core'
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 
 const styles = theme => ({
     travelerInfo: {
@@ -136,7 +137,10 @@ class TravelerInfo extends Component {
                             </div>
                             <div className={classes.travelerInfoData}>
                                 <Typography variant="h6">Phone</Typography>
-                                <Typography variant="subtitle2">{phone}</Typography>
+                                <Typography variant="subtitle2">
+                                    {phone}
+                                    <a target="_blank" href={`https://wa.me/${phone}`}>{phone && <WhatsAppIcon></WhatsAppIcon>}</a>
+                                </Typography>
                             </div>
                             <div className={classes.travelerInfoData}>
                                 <Typography variant="h6">Status</Typography>

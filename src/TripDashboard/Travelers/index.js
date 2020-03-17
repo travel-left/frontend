@@ -524,29 +524,40 @@ class Travelers extends Component {
     }
 
     collectMoneyFromTravelers = async data => {
-        const { selectedTravelers, amount, message, messageType } = data
-        try {
-            await apiCall('post', '/api/coordinators/paymentForm', {
-                travelers: selectedTravelers.map(t => t._id),
-                amount,
-                message,
-                messageType
-            })
+        const { selectedTravelers, amount, message, messageType, moneyAction } = data
 
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'success',
-                    message: 'Your payment requests have been sent!'
-                }
-            })
-        } catch (err) {
-            this.setState({
-                snack: {
-                    show: true,
-                    variant: 'error',
-                    message: 'There was an error creating your form.'
-                }
+        if (moneyAction === 'collect') {
+            try {
+                await apiCall('post', '/api/coordinators/paymentForm', {
+                    travelers: selectedTravelers.map(t => t._id),
+                    amount,
+                    message,
+                    messageType
+                })
+
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'success',
+                        message: 'Your payment requests have been sent!'
+                    }
+                })
+            } catch (err) {
+                this.setState({
+                    snack: {
+                        show: true,
+                        variant: 'error',
+                        message: 'There was an error creating your form.'
+                    }
+                })
+            }
+        }
+        else if (moneyAction === 'info') {
+            await apiCall('post', '/api/travelers/collectInfo', {
+                travelers: selectedTravelers,
+                message,
+                messageType,
+                info: 'bank'
             })
         }
     }
@@ -709,7 +720,7 @@ class Travelers extends Component {
                     />
                     }
                     {this.state.modalOpen === 'money' && <LeftModal
-                        title="Collect money"
+                        title="Money management"
                         closeModal={this.closeModal}
                         submit={this.collectMoneyFromTravelers}
                         travelers={this.state.travelers}
